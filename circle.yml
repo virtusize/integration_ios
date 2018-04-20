@@ -2,10 +2,6 @@ machine:
   xcode:
     version: 9.2.0
 
-dependencies:
-  override:
-    - curl -k -L -o Buildfile https://raw.githubusercontent.com/virtusize/build_script/master/Buildfile
-
 test:
   override:
-    - make -f Buildfile test
+    - make test

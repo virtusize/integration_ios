@@ -19,8 +19,8 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## Requirements
 
-- iOS 8.0+
-- Xcode 8.3+
+- iOS 11.0+
+- Xcode 9.0+
 - Swift 3.2+
 
 ## Installation
