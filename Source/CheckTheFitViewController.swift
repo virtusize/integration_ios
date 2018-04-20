@@ -57,10 +57,29 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 		let config = WKWebViewConfiguration()
 		config.userContentController = contentController
 
-		let webView = WKWebView(frame: view.bounds, configuration: config)
-		webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		let webView = WKWebView(frame: .zero, configuration: config)
 		view.addSubview(webView)
 		self.webView = webView
+
+		webView.translatesAutoresizingMaskIntoConstraints = false
+		if #available(iOS 11.0, *) {
+			let layoutGuide = view.safeAreaLayoutGuide
+			NSLayoutConstraint.activate([
+				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+				webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+				webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+			])
+		}
+		else {
+			let layoutGuide = view.layoutMarginsGuide
+			NSLayoutConstraint.activate([
+				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+				webView.leftAnchor.constraint(equalTo: layoutGuide.leftAnchor),
+				webView.rightAnchor.constraint(equalTo: layoutGuide.rightAnchor)
+			])
+		}
 
 		guard let urlRequest = VirtusizeAPI.fitIllustratorURL(jsonResult: jsonResult) else {
 			return
