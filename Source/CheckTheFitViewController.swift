@@ -57,10 +57,29 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 		let config = WKWebViewConfiguration()
 		config.userContentController = contentController
 
-		let webView = WKWebView(frame: view.bounds, configuration: config)
-		webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		let webView = WKWebView(frame: .zero, configuration: config)
 		view.addSubview(webView)
 		self.webView = webView
+
+		webView.translatesAutoresizingMaskIntoConstraints = false
+		if #available(iOS 11.0, *) {
+			let layoutGuide = view.safeAreaLayoutGuide
+			NSLayoutConstraint.activate([
+				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+				webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+				webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+			])
+		}
+		else {
+			let layoutGuide = view.layoutMarginsGuide
+			NSLayoutConstraint.activate([
+				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+				webView.leftAnchor.constraint(equalTo: layoutGuide.leftAnchor),
+				webView.rightAnchor.constraint(equalTo: layoutGuide.rightAnchor)
+			])
+		}
 
 		guard let urlRequest = VirtusizeAPI.fitIllustratorURL(jsonResult: jsonResult) else {
 			return
@@ -75,11 +94,51 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 		guard message.name == "eventHandler" else {
 			return
 		}
-		guard let body = message.body as? [String: Any] else {
-			print("Malformed event payload")
+		let event: [String: Any]
+		if let body = message.body as? [String: Any] {
+			event = body
+		}
+		else if let data = message.body as? Data {
+			do {
+				if let deserialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+					event = deserialized
+				}
+				else {
+					print("Failed to deserialize given event payload")
+					return
+				}
+			}
+			catch {
+				print("Failed to deserialize given event payload")
+				return
+			}
+		}
+		else if let string = message.body as? String {
+			guard let data = string.data(using: .utf8) else {
+				print("Failed to convert given string to UTF-8 data")
+				return
+			}
+
+			do {
+				if let deserialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+					event = deserialized
+				}
+				else {
+					print("Failed to deserialize given event payload")
+					return
+				}
+			}
+			catch {
+				print("Failed to deserialize given event payload")
+				return
+			}
+		}
+		else {
+			print("Failed to deserialize given event payload")
 			return
 		}
-		guard let eventName: String = body["name"] as? String else {
+
+		guard let eventName: String = event["name"] as? String else {
 			print("Event payload does not contain a value for 'name'")
 			return
 		}
@@ -88,7 +147,7 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 			delegate?.checkTheFitViewControllerShouldClose(self)
 		}
 
-		let eventData: Any? = body["data"]
+		let eventData: Any? = event["data"]
 
 		delegate?.checkTheFitViewController(self, didReceiveEvent: eventName, data: eventData)
 	}
@@ -105,4 +164,3 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 	}
 
 }
-

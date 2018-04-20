@@ -53,7 +53,7 @@ public class VirtusizeButton: UIButton {
 				return
 			}
 
-			Virtusize.sendEvent(name: "user-saw-product", data: nil, previousJSONResult: nil)
+            Virtusize.sendEvent(name: "user-saw-product", data: nil, previousJSONResult: ["storeProductId": externalId])
 
 			Virtusize.productCheck(externalId: externalId) { [weak self] (data, response, error) in
 				self?.jsonResult = nil
@@ -79,7 +79,7 @@ public class VirtusizeButton: UIButton {
                         self?.isHidden = true
                         return
                     }
-                    
+
 					if let sendImageToBackend = dataObject["fetchMetaData"] as? Bool,
 						sendImageToBackend,
 						let productImageURL = self?.productImageURL {

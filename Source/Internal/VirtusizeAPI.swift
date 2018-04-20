@@ -154,7 +154,11 @@ internal class VirtusizeAPI {
         }
 
 		if let givenEventData = eventData as? [String: Any] {
-			payloadData.merge(givenEventData, uniquingKeysWith: { (a, b) -> Any in return a })
+			for (key, value) in givenEventData {
+				if payloadData[key] == nil {
+					payloadData[key] = value
+				}
+			}
 		}
 
         let payloadJSONData: Data
@@ -214,4 +218,3 @@ internal class VirtusizeAPI {
         return request
 	}
 }
-
