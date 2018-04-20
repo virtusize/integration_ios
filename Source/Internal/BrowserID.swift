@@ -67,10 +67,10 @@ internal class BrowserID {
 			var ret: String = ""
 			let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 			for _ in 0..<22 {
-				let max = UInt32(chars.characters.count)
+				let max = UInt32(chars.count)
 				let randomNumber = Int(arc4random_uniform(max))
-				let randomIndex = chars.characters.index(chars.startIndex, offsetBy: randomNumber)
-				let newCharacter = chars.characters[randomIndex]
+				let randomIndex = chars.index(chars.startIndex, offsetBy: randomNumber)
+				let newCharacter = chars[randomIndex]
 				ret += String(newCharacter)
 			}
 			return ret
