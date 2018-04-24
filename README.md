@@ -1,7 +1,7 @@
 # Virtusize iOS Integration
 
-[![CircleCI](https://circleci.com/gh/virtusize/integration_ios.svg?style=svg)](https://circleci.com/gh/virtusize/integration_ios)
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Virtusize.svg)](https://img.shields.io/cocoapods/v/Virtusize.svg)
+[![CircleCI](https://img.shields.io/circleci/project/github/virtusize/integration_ios.svg)](https://circleci.com/gh/virtusize/integration_ios)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Virtusize.svg)](https://cocoapods.org/pods/Virtusize)
 [![Platform](https://img.shields.io/cocoapods/p/Virtusize.svg?style=flat)](https://developers.virtusize.com/native-ios/index.html)
 [![Docs](https://img.shields.io/badge/docs--brightgreen.svg)](https://developers.virtusize.com/native-ios/index.html)
 [![Twitter](https://img.shields.io/badge/twitter-@virtusize-blue.svg?style=flat)](http://twitter.com/virtusize)
@@ -39,7 +39,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 1.0'
+    pod 'Virtusize', '~> 0.1'
 end
 ```
 
