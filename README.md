@@ -1,6 +1,6 @@
 # Virtusize iOS Integration
 
-[![CircleCI](https://img.shields.io/circleci/project/github/virtusize/integration_ios.svg](https://circleci.com/gh/virtusize/integration_ios)
+[![CircleCI](https://img.shields.io/circleci/project/github/virtusize/integration_ios.svg)](https://circleci.com/gh/virtusize/integration_ios)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Virtusize.svg)](https://img.shields.io/cocoapods/v/Virtusize.svg)
 [![Platform](https://img.shields.io/cocoapods/p/Virtusize.svg?style=flat)](https://developers.virtusize.com/native-ios/index.html)
 [![Docs](https://img.shields.io/badge/docs--brightgreen.svg)](https://developers.virtusize.com/native-ios/index.html)
