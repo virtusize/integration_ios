@@ -53,8 +53,6 @@ public class VirtusizeButton: UIButton {
 				return
 			}
 
-            Virtusize.sendEvent(name: "user-saw-product", data: nil, previousJSONResult: ["storeProductId": externalId])
-
 			Virtusize.productCheck(externalId: externalId) { [weak self] (data, response, error) in
 				self?.jsonResult = nil
 
@@ -74,6 +72,8 @@ public class VirtusizeButton: UIButton {
                         self?.isHidden = true
 						return
                     }
+
+                    Virtusize.sendEvent(name: "user-saw-product", data: nil, previousJSONResult: root)
 
                     guard let isValid = dataObject["validProduct"] as? Bool, isValid == true else {
                         self?.isHidden = true
