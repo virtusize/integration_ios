@@ -133,10 +133,10 @@ internal class VirtusizeAPI {
             if let storeName = d["storeName"] {
                 payloadData["storeName"] = storeName
             }
-            if let storeProductType = d["storeproductTypeName"] {
+            if let storeProductType = d["productTypeName"] {
                 payloadData["storeProductType"] = storeProductType
             }
-            if let storeProductId = root["storeProductId"] {
+            if let storeProductId = root["productId"] {
                 payloadData["storeProductExternalId"] = storeProductId
             }
             if let wardrobeActive = du["wardrobeActive"] {

@@ -15,6 +15,7 @@ Use list notation, and following prefixes:
 
 ### 0.1.1
 
+- Bugfix: Updated key names in events. (ab)
 - Bugfix: Send event once product is checked. (ab)
 
 ### 0.1.0
