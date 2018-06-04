@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 ### NEXT RELEASE
 
 
+### 0.1.2
+
+- Bugfix: Send userId in widget URL. (ab)
+
 ### 0.1.1
 
 - Bugfix: Updated key names in events. (ab)

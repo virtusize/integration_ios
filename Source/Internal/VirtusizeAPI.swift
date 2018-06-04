@@ -210,6 +210,7 @@ internal class VirtusizeAPI {
 			qi.append(URLQueryItem(name: "lang", value: Virtusize.language))
             qi.append(URLQueryItem(name: "ios", value: "true"))
             qi.append(URLQueryItem(name: "sdk", value: String(VirtusizeVersionNumber)))
+            qi.append(URLQueryItem(name: "userId", value: Virtusize.userID))
 			return qi
 		}()
 
