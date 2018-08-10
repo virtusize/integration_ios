@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 ### NEXT RELEASE
 
 
+### 0.1.3
+
+- Bugfix: Fixed layout overlap on iOS pre 11. (ab/za)
+
 ### 0.1.2
 
 - Bugfix: Send userId in widget URL. (ab)
