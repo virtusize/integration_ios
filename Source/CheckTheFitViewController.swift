@@ -72,13 +72,11 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 			])
 		}
 		else {
-			let layoutGuide = view.layoutMarginsGuide
-			NSLayoutConstraint.activate([
-				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-				webView.leftAnchor.constraint(equalTo: layoutGuide.leftAnchor),
-				webView.rightAnchor.constraint(equalTo: layoutGuide.rightAnchor)
-			])
+            let views = ["webView": webView]
+            let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[webView]-0-|", options: .alignAllTop, metrics: nil, views: views)
+            let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "|-0-[webView]-0-|", options: .alignAllLeft, metrics: nil, views: views)
+            
+			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
 		guard let urlRequest = VirtusizeAPI.fitIllustratorURL(jsonResult: jsonResult) else {
