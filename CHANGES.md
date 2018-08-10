@@ -12,6 +12,7 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+- Bugfix: Fixed layout overlap on iOS pre 11. (ab/za)
 
 ### 0.1.2
 
