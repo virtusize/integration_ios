@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 ### NEXT RELEASE
 
 
+### 0.1.4
+
+- Bugfix: Fixed Int Overflow on 32-bit architecture when casting Date. (za)
+
 ### 0.1.3
 
 - Bugfix: Fixed layout overlap on iOS pre 11. (ab/za)

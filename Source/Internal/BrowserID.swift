@@ -76,10 +76,9 @@ internal class BrowserID {
 			return ret
 		}()
 
-		let timeSince1970InMS = Int(Date().timeIntervalSince1970 * 1000)
+        let timeSince1970InMS = Int64(Date().timeIntervalSince1970 * 1000)
 		let datePart = String(timeSince1970InMS, radix: 36, uppercase: false)
 
 		return randomPart + "." + datePart
 	}
-
 }
