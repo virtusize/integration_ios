@@ -19,9 +19,9 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## Requirements
 
-- iOS 11.0+
-- Xcode 9.0+
-- Swift 3.2+
+- iOS 10.0+
+- Xcode 10.1+
+- Swift 4.2+
 
 ## Installation
 
@@ -102,6 +102,8 @@ The `CheckTheFitViewControllerDelegate` has three required methods:
 - `checkTheFitViewController(_:didReceiveError)` is called when the controller is reporting a network or deserialisation error.
 
 ## Build
+
+You need to install [SwiftLint](https://github.com/realm/SwiftLint).
 
     make build
 

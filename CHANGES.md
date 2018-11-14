@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+- Cleanup: Add support for SwiftLint. (za)
+- Cleanup: Update to iOS 10.0, swift 4.2. (za) 
+
 ### 0.2.3
 
 - Bugfix: Ensure Media.xcassets is linked to the pod. (za)
