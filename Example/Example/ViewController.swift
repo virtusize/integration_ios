@@ -39,19 +39,22 @@ class ViewController: UIViewController {
 	}
 
 	@IBAction func checkTheFit() {
-		let v = CheckTheFitViewController(virtusizeButton: checkTheFitButton)
-		v.delegate = self
-		present(v, animated: true, completion: nil)
+		let virtusize = CheckTheFitViewController(virtusizeButton: checkTheFitButton)
+		virtusize.delegate = self
+		present(virtusize, animated: true, completion: nil)
 	}
 
 }
 
-extension ViewController : CheckTheFitViewControllerDelegate {
+extension ViewController: CheckTheFitViewControllerDelegate {
 	func checkTheFitViewControllerShouldClose(_ controller: CheckTheFitViewController) {
 		dismiss(animated: true, completion: nil)
 	}
 
-	func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveEvent eventName: String, data: Any?) {
+	func checkTheFitViewController(
+        _ controller: CheckTheFitViewController,
+        didReceiveEvent eventName: String,
+        data: Any?) {
 		switch eventName {
 		case "user-opened-widget":
             return

@@ -13,6 +13,7 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+- Refactor: Align code to SwiftLint requirements. (za)
 - Cleanup: Add support for SwiftLint. (za)
 - Cleanup: Update to iOS 10.0, swift 4.2. (za) 
 

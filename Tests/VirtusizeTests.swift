@@ -22,7 +22,6 @@
 //  THE SOFTWARE.
 //
 
-
 import XCTest
 @testable import Virtusize
 
@@ -30,5 +29,4 @@ class VirtusizeTests: XCTestCase {
 
     func testVersionNumber() {
     }
-    
 }

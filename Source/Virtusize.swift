@@ -36,18 +36,21 @@ public class Virtusize {
 
     public static var region: String = ""
 
-	internal class func productCheck(externalId: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) {
+	internal class func productCheck(
+        externalId: String,
+        _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) {
         let sessionConfig = URLSessionConfiguration.default
 		let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
 
         let request = VirtusizeAPI.productCheck(externalId: externalId)
-        let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            if (error == nil) {
+        let task = session.dataTask(
+            with: request,
+            completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+            if error == nil {
 				DispatchQueue.main.async {
                 	completionHandler(data, response, nil)
 				}
-            }
-            else {
+            } else {
 				DispatchQueue.main.async {
                 	completionHandler(data, response, error)
 				}
@@ -62,8 +65,7 @@ public class Virtusize {
 		let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
 
         let request = VirtusizeAPI.sendProductImage(url: url, for: externalId, jsonResult: jsonResult)
-        let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-        })
+        let task = session.dataTask(with: request)
         task.resume()
         session.finishTasksAndInvalidate()
 	}
@@ -72,11 +74,13 @@ public class Virtusize {
         let sessionConfig = URLSessionConfiguration.default
 		let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
 
-        guard let request = VirtusizeAPI.sendEvent(name: eventName, data: eventData, previousJSONResult: previousJSONResult) else {
+        guard let request = VirtusizeAPI.sendEvent(
+            name: eventName,
+            data: eventData,
+            previousJSONResult: previousJSONResult) else {
         	return
         }
-        let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-        })
+        let task = session.dataTask(with: request)
         task.resume()
         session.finishTasksAndInvalidate()
 	}

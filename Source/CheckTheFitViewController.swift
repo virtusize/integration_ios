@@ -25,7 +25,7 @@
 import UIKit
 import WebKit
 
-public protocol CheckTheFitViewControllerDelegate : class {
+public protocol CheckTheFitViewControllerDelegate: class {
 	func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveEvent eventName: String, data: Any?)
     func checkTheFitViewControllerShouldClose(_ controller: CheckTheFitViewController)
     func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveError error: Error)
@@ -52,7 +52,7 @@ extension CheckTheFitError: CustomDebugStringConvertible {
     }
 }
 
-public final class CheckTheFitViewController : UIViewController {
+public final class CheckTheFitViewController: UIViewController {
 
 	public weak var delegate: CheckTheFitViewControllerDelegate?
 
@@ -96,9 +96,17 @@ public final class CheckTheFitViewController : UIViewController {
 			])
 		} else {
             let views = ["webView": webView]
-            let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[webView]-0-|", options: .alignAllTop, metrics: nil, views: views)
-            let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "|-0-[webView]-0-|", options: .alignAllLeft, metrics: nil, views: views)
-            
+            let verticalConstraints = NSLayoutConstraint.constraints(
+                withVisualFormat: "V:|-20-[webView]-0-|",
+                options: .alignAllTop,
+                metrics: nil,
+                views: views)
+            let horizontalConstraints = NSLayoutConstraint.constraints(
+                withVisualFormat: "|-0-[webView]-0-|",
+                options: .alignAllLeft,
+                metrics: nil,
+                views: views)
+
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
@@ -123,7 +131,7 @@ public final class CheckTheFitViewController : UIViewController {
 	}
 
     // MARK: Error Handling
-    public func reportError(error:CheckTheFitError) {
+    public func reportError(error: CheckTheFitError) {
         delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.invalidRequest)
     }
 
@@ -134,18 +142,26 @@ public final class CheckTheFitViewController : UIViewController {
 }
 
 extension CheckTheFitViewController: WKNavigationDelegate {
-    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    public func webView(
+        _ webView: WKWebView,
+        didFail navigation: WKNavigation!,
+        withError error: Error) {
         delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.navigationError(error))
     }
 
-    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    public func webView(
+        _ webView: WKWebView,
+        didFailProvisionalNavigation navigation: WKNavigation!,
+        withError error: Error) {
         delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.navigationError(error))
     }
 }
 
 extension CheckTheFitViewController: WKScriptMessageHandler {
     // MARK: Widget Callbacks
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    public func userContentController(
+        _ userContentController: WKUserContentController,
+        didReceive message: WKScriptMessage) {
         guard message.name == "eventHandler" else {
             return
         }

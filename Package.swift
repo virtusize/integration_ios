@@ -6,4 +6,4 @@
 
 import PackageDescription
 
-let package = Package(name: "Virtusize", dependencies : [], exclude: ["Tests"])
+let package = Package(name: "Virtusize", dependencies: [], exclude: ["Tests"])
