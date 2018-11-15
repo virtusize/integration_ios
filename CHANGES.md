@@ -8,12 +8,14 @@ Use list notation, and following prefixes:
 - Cleanup - any code removal or non visible maintenance change
 - Refactor - code refactoring, keeping same functionality
 - Bugfix - when fixing any major bug
+- Docs - for any improvement to documentation
 
 
 ### NEXT RELEASE
 
 - Feature: Add error reporting method to delegate protocol. (za)
 - Refactor: Reduce complexity of the view controller. (za)
+- Docs: Add roadmap for features and enhancements. (za) 
 
 ### 0.1.4
 

@@ -59,6 +59,10 @@ Then follow the steps on https://developers.virtusize.com/native-ios/index.html
 
     make test
 
+## Roadmap
+
+Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected release dates.
+
 ## License
 
 Copyright (c) 2018 Virtusize AB (https://www.virtusize.com)
