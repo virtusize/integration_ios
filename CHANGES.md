@@ -12,6 +12,8 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+- Feature: Add error reporting method to delegate protocol. (za)
+- Refactor: Reduce complexity of the view controller. (za)
 
 ### 0.1.4
 

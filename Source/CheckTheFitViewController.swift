@@ -28,9 +28,31 @@ import WebKit
 public protocol CheckTheFitViewControllerDelegate : class {
 	func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveEvent eventName: String, data: Any?)
     func checkTheFitViewControllerShouldClose(_ controller: CheckTheFitViewController)
+    func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveError error: Error)
 }
 
-public final class CheckTheFitViewController : UIViewController, WKScriptMessageHandler {
+public enum CheckTheFitError: Error {
+    case deserializationError, encodingError, invalidPayload, invalidRequest, navigationError(Error)
+}
+
+extension CheckTheFitError: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .invalidRequest:
+            return "CheckTheFit: Invalid Request - Malformed query"
+        case .deserializationError:
+            return "CheckTheFit: Failed to deserialize given event payload"
+        case .encodingError:
+            return "CheckTheFit: Failed to convert given string to UTF-8 data"
+        case .invalidPayload:
+            return "CheckTheFit: Event payload does not contain a value for 'name'"
+        case .navigationError(let error):
+            return "CheckTheFit: Navigation blocked – \(error)"
+        }
+    }
+}
+
+public final class CheckTheFitViewController : UIViewController {
 
 	public weak var delegate: CheckTheFitViewControllerDelegate?
 
@@ -58,6 +80,7 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 		config.userContentController = contentController
 
 		let webView = WKWebView(frame: .zero, configuration: config)
+        webView.navigationDelegate = self
 		view.addSubview(webView)
 		self.webView = webView
 
@@ -70,8 +93,7 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 				webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
 				webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
 			])
-		}
-		else {
+		} else {
             let views = ["webView": webView]
             let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-20-[webView]-0-|", options: .alignAllTop, metrics: nil, views: views)
             let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "|-0-[webView]-0-|", options: .alignAllLeft, metrics: nil, views: views)
@@ -79,80 +101,15 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
+        // If the request is invalid, the controller should be dismissed
 		guard let urlRequest = VirtusizeAPI.fitIllustratorURL(jsonResult: jsonResult) else {
+            reportError(error: .invalidRequest)
 			return
 		}
 		webView.load(urlRequest)
 	}
 
-
-    // MARK: Widget Callbacks
-
-	public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-		guard message.name == "eventHandler" else {
-			return
-		}
-		let event: [String: Any]
-		if let body = message.body as? [String: Any] {
-			event = body
-		}
-		else if let data = message.body as? Data {
-			do {
-				if let deserialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-					event = deserialized
-				}
-				else {
-					print("Failed to deserialize given event payload")
-					return
-				}
-			}
-			catch {
-				print("Failed to deserialize given event payload")
-				return
-			}
-		}
-		else if let string = message.body as? String {
-			guard let data = string.data(using: .utf8) else {
-				print("Failed to convert given string to UTF-8 data")
-				return
-			}
-
-			do {
-				if let deserialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-					event = deserialized
-				}
-				else {
-					print("Failed to deserialize given event payload")
-					return
-				}
-			}
-			catch {
-				print("Failed to deserialize given event payload")
-				return
-			}
-		}
-		else {
-			print("Failed to deserialize given event payload")
-			return
-		}
-
-		guard let eventName: String = event["name"] as? String else {
-			print("Event payload does not contain a value for 'name'")
-			return
-		}
-
-		if eventName == "user-closed-widget" {
-			delegate?.checkTheFitViewControllerShouldClose(self)
-		}
-
-		let eventData: Any? = event["data"]
-
-		delegate?.checkTheFitViewController(self, didReceiveEvent: eventName, data: eventData)
-	}
-
-
 	// MARK: Rotation Lock
-
 	public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 		return .portrait
 	}
@@ -161,4 +118,64 @@ public final class CheckTheFitViewController : UIViewController, WKScriptMessage
 		return .portrait
 	}
 
+    // MARK: Error Handling
+    public func reportError(error:CheckTheFitError) {
+        delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.invalidRequest)
+    }
+}
+
+extension CheckTheFitViewController: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.navigationError(error))
+    }
+
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.navigationError(error))
+    }
+}
+
+extension CheckTheFitViewController: WKScriptMessageHandler {
+    // MARK: Widget Callbacks
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard message.name == "eventHandler" else {
+            return
+        }
+        let event: [String: Any]
+
+        if let eventData = message.body as? [String: Any] {
+            event = eventData
+        } else if let data = message.body as? Data,
+            let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
+            let eventData = deserialized as? [String: Any] {
+            event = eventData
+        } else if let string = message.body as? String {
+            guard let data = string.data(using: .utf8) else {
+                reportError(error: .encodingError)
+                return
+            }
+            if let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
+                let eventData = deserialized as? [String: Any] {
+                event = eventData
+            } else {
+                reportError(error: .deserializationError)
+                return
+            }
+        } else {
+            reportError(error: .deserializationError)
+            return
+        }
+
+        guard let eventName: String = event["name"] as? String else {
+            reportError(error: .invalidPayload)
+            return
+        }
+
+        if eventName == "user-closed-widget" {
+            delegate?.checkTheFitViewControllerShouldClose(self)
+        }
+
+        let eventData: Any? = event["data"]
+
+        delegate?.checkTheFitViewController(self, didReceiveEvent: eventName, data: eventData)
+    }
 }
