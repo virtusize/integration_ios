@@ -31,19 +31,15 @@ public class VirtusizeButton: UIButton {
 	}
 
 	public func applyVirtusizeDesign() {
-		self.tintColor = .black
+		tintColor = .black
 
-		self.setTitle(NSLocalizedString("Check the fit", comment: "Check the fit button title"), for: .normal)
+		setTitle(NSLocalizedString("Check the fit", comment: "Check the fit button title"), for: .normal)
 
-		self.backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
-		self.tintColor = UIColor.white
+		backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
+		tintColor = .white
 
-		self.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-
-		let bundle = Bundle(for: type(of: self))
-		if let image = UIImage(named: "vs-v-icon-black-small", in: bundle, compatibleWith: nil) {
-			self.setImage(image, for: .normal)
-		}
+		contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        self.setImage(Assets.icon, for: .normal)
 	}
 
 	public var productId: String? {

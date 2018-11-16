@@ -63,4 +63,11 @@ extension ViewController : CheckTheFitViewControllerDelegate {
 
 	}
 
+    func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveError error: Error) {
+        guard let error = error as? CheckTheFitError else {
+            return
+        }
+        print("\(error)")
+        dismiss(animated: true, completion: nil)
+    }
 }
