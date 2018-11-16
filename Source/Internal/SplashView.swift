@@ -51,7 +51,7 @@ internal class SplashView:UIView {
         let buttonVerticalConstraints:[NSLayoutConstraint]
         if #available(iOS 11.0, *) {
             let layoutGuide = safeAreaLayoutGuide
-            buttonVerticalConstraints = [cancelButton.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 12)]
+            buttonVerticalConstraints = [cancelButton.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 9)]
         } else {
             buttonVerticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[cancelButton]", options: .alignAllTop, metrics: nil, views: views)
         }
