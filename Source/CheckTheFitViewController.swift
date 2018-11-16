@@ -57,6 +57,7 @@ public final class CheckTheFitViewController : UIViewController {
 	public weak var delegate: CheckTheFitViewControllerDelegate?
 
 	private var webView: WKWebView?
+    internal var splashView: SplashView =  SplashView()
 
 	internal var jsonResult: JSONObject?
 
@@ -101,6 +102,9 @@ public final class CheckTheFitViewController : UIViewController {
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
+        view.addSubview(splashView)
+        splashView.cancelButton.addTarget(self, action: #selector(shouldClose), for: .touchUpInside)
+
         // If the request is invalid, the controller should be dismissed
 		guard let urlRequest = VirtusizeAPI.fitIllustratorURL(jsonResult: jsonResult) else {
             reportError(error: .invalidRequest)
@@ -121,6 +125,11 @@ public final class CheckTheFitViewController : UIViewController {
     // MARK: Error Handling
     public func reportError(error:CheckTheFitError) {
         delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.invalidRequest)
+    }
+
+    // MARK: Closing view
+    @objc internal func shouldClose() {
+        delegate?.checkTheFitViewControllerShouldClose(self)
     }
 }
 
@@ -171,7 +180,16 @@ extension CheckTheFitViewController: WKScriptMessageHandler {
         }
 
         if eventName == "user-closed-widget" {
-            delegate?.checkTheFitViewControllerShouldClose(self)
+            shouldClose()
+        }
+
+        if !splashView.isHidden,
+            eventName == "user-selected-size" || eventName == "user-opened-panel-start" {
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                self?.splashView.alpha = 0
+                }, completion: { [weak self] _ in
+                self?.splashView.isHidden = true
+            })
         }
 
         let eventData: Any? = event["data"]

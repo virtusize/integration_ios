@@ -5,7 +5,7 @@
 ### Release date: 19/11/15
 
 - [x] Add error handling. (za)
-- [ ] Provide a loading view. (za)
+- [x] Provide a loading view. (za)
 
 ## 1.0.0
 

@@ -14,6 +14,7 @@ Use list notation, and following prefixes:
 ### NEXT RELEASE
 
 - Feature: Add error reporting method to delegate protocol. (za)
+- Feature: Add closable splash view with activity indicator. (za)
 - Refactor: Reduce complexity of the view controller. (za)
 - Docs: Add roadmap for features and enhancements. (za) 
 
