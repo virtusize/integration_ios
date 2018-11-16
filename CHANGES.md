@@ -14,6 +14,10 @@ Use list notation, and following prefixes:
 ### NEXT RELEASE
 
 
+### 0.2.1
+
+- Bugfix: Replace activity indicator deprecated init. (za)
+
 ### 0.2.0
 
 - Feature: Add error reporting method to delegate protocol. (za)
