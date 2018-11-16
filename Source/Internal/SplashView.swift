@@ -26,7 +26,7 @@ internal class SplashView:UIView {
         logo.translatesAutoresizingMaskIntoConstraints = false
         addSubview(logo)
 
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         addSubview(activityIndicator)
         activityIndicator.color = Assets.primaryColor
