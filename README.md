@@ -39,7 +39,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 0.1'
+    pod 'Virtusize', '~> 0.2'
 end
 ```
 
@@ -49,7 +49,57 @@ Then, run the following command:
 $ pod install
 ```
 
-Then follow the steps on https://developers.virtusize.com/native-ios/index.html
+## Setup
+
+First setup your API key and environment in the `application(_:didFinishLaunchingWithOptions:)` 
+method of the App delegate.
+
+``` Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692" // Virtusize demo store key
+		Virtusize.environment = "staging"
+    ...
+		return true
+}
+```
+
+The environment is the region you are running the integration from, either `staging`,. `global`,
+`japan` or `korea`
+
+Then in the controller where you want to use the comparison view, you will need to:
+
+1. setup the `VirtusizeButton`
+2. pass a `productImageURL` in order to populate the comparison view
+3. pass an `exernal_id` that will be used to reference that product in our API
+4. show the Virtusize view controller when the button is pressed
+5. set the `CheckTheFitViewControllerDelegate` delegate of the view controller,
+   in order to handle events and error reporting.
+
+``` Swift
+	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		checkTheFitButton.productImageURL = URL(string: "http://www.example.com/image.jpg")
+		checkTheFitButton.productId = "vs_dress"
+
+		checkTheFitButton.applyVirtusizeDesign()
+	}
+
+	@IBAction func checkTheFit() {
+		let v = CheckTheFitViewController(virtusizeButton: checkTheFitButton)
+		v.delegate = self
+		present(v, animated: true, completion: nil)
+	}
+```
+
+The `CheckTheFitViewControllerDelegate` has three required methods:
+
+- `checkTheFitViewController(_:didReceiveEvent:data:)` is called when data is exchanged between
+  the controller and our API.
+- `checkTheFitViewControllerShouldClose(_)`is called when the controller is requesting to be dismissed.
+- `checkTheFitViewController(_:didReceiveError)` is called when the controller is reporting a network or deserialisation error.
 
 ## Build
 
@@ -58,6 +108,10 @@ Then follow the steps on https://developers.virtusize.com/native-ios/index.html
 ## Run all tests
 
     make test
+
+## Roadmap
+
+Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected release dates.
 
 ## License
 

@@ -17,6 +17,8 @@
 		4DED8D2B205755C3001CA7DF /* VirtusizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D2A205755C3001CA7DF /* VirtusizeTests.swift */; };
 		4DED8D2D205755C3001CA7DF /* Virtusize.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DED8D1F205755C3001CA7DF /* Virtusize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DED8D5920575D65001CA7DF /* CheckTheFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D5820575D65001CA7DF /* CheckTheFitViewController.swift */; };
+		DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9D219D151F000B3402 /* Assets.swift */; };
+		DF6B5CA0219D3090000B3402 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9F219D3090000B3402 /* SplashView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,8 @@
 		4DED8D2A205755C3001CA7DF /* VirtusizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeTests.swift; sourceTree = "<group>"; };
 		4DED8D2C205755C3001CA7DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DED8D5820575D65001CA7DF /* CheckTheFitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckTheFitViewController.swift; sourceTree = "<group>"; };
+		DF6B5C9D219D151F000B3402 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		DF6B5C9F219D3090000B3402 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +71,10 @@
 		4D6C5794205FB9FC00DA910E /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				DF6B5C9D219D151F000B3402 /* Assets.swift */,
 				4D6C578D205FB6F400DA910E /* BrowserID.swift */,
 				4D6C5799205FCBE900DA910E /* VirtusizeAPI.swift */,
+				DF6B5C9F219D3090000B3402 /* SplashView.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -245,9 +251,11 @@
 			files = (
 				4DED8D5920575D65001CA7DF /* CheckTheFitViewController.swift in Sources */,
 				4D6C579A205FCBE900DA910E /* VirtusizeAPI.swift in Sources */,
+				DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */,
 				4D6C578E205FB6F400DA910E /* BrowserID.swift in Sources */,
 				4D6C5798205FC0C700DA910E /* VirtusizeButton.swift in Sources */,
 				4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */,
+				DF6B5CA0219D3090000B3402 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +313,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 0.1.4;
+				CURRENT_PROJECT_VERSION = 0.2.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -370,7 +378,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 0.1.4;
+				CURRENT_PROJECT_VERSION = 0.2.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
