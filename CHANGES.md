@@ -16,6 +16,7 @@ Use list notation, and following prefixes:
 - Feature: Add error reporting method to delegate protocol. (za)
 - Feature: Add closable splash view with activity indicator. (za)
 - Refactor: Reduce complexity of the view controller. (za)
+- Feature: Add branding to the Example project. (za)
 - Docs: Add roadmap for features and enhancements. (za) 
 
 ### 0.1.4
