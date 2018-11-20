@@ -14,6 +14,10 @@ Use list notation, and following prefixes:
 ### NEXT RELEASE
 
 
+### 0.2.2
+
+- Bugfix: Ensure Splashview is closed on any user-opened-panel-* event. (za)
+
 ### 0.2.1
 
 - Bugfix: Replace activity indicator deprecated init. (za)
