@@ -24,8 +24,7 @@
 
 import Foundation
 
-internal class BrowserID {
-
+final internal class BrowserID {
 	internal static let current = BrowserID()
 
 	internal var defaults: UserDefaults

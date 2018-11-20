@@ -9,14 +9,14 @@
 
 ## 1.0.0
 
-### Release date: 19/11/15
+### Release date: 20/11/15
 
-- [ ] Update to iOS 10.0, Swift 4.2. (za)
-- [ ] Rename Virtusize controller. (za)
+- [ x] Update to iOS 10.0, Swift 4.2. (za)
+- [  ] Rename Virtusize controller. (za)
 
 ## Backlog
 
-- [ ] Extend Example project. (za)
-- [ ] Document methods. (za)
-- [ ] Support purchase flow. (za)
-- [ ] Refactor serialization behavior using Codable protocol. (za)
+- [  ] Extend Example project. (za)
+- [  ] Document methods. (za)
+- [  ] Support purchase flow. (za)
+- [  ] Refactor serialization behavior using Codable protocol. (za)

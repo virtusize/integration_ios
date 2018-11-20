@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  VirtusizeEnvironment.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,19 +22,11 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-import Virtusize
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-	var window: UIWindow?
-
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-		Virtusize.environment = .staging
-		return true
-	}
+public enum VirtusizeEnvironment: String {
+    case staging="staging.virtusize.com",
+        global="www.virtusize.com",
+        japan="api.virtusize.jp",
+        korea="api.virtusize.kr"
 }

@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  VirtusizeButton.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -23,18 +23,44 @@
 //
 
 import UIKit
-import Virtusize
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+public class VirtusizeButton: UIButton {
+	public required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
 
-	var window: UIWindow?
+    private var product: VirtusizeProduct?
 
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-		Virtusize.environment = .staging
-		return true
+    public var storeProduct: VirtusizeProduct? {
+        set {
+            guard let product = newValue else {
+                isHidden = true
+                return
+            }
+
+            Virtusize.productCheck(product: product) { [weak self] product in
+                guard let product = product else {
+                    self?.isHidden = true
+                    return
+                }
+                self?.product = product
+                self?.isHidden = false
+            }
+        }
+        get {
+            return product
+        }
+    }
+
+	public func applyDefaultStyle() {
+		tintColor = .black
+
+		setTitle(NSLocalizedString("Check the fit", comment: "Check the fit button title"), for: .normal)
+
+		backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
+		tintColor = .white
+
+		contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        self.setImage(Assets.icon, for: .normal)
 	}
 }

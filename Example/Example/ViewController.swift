@@ -32,30 +32,29 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		checkTheFitButton.productImageURL = URL(string: "http://www.example.com/image.jpg")
-		checkTheFitButton.productId = "vs_dress"
-
-		checkTheFitButton.applyVirtusizeDesign()
+        checkTheFitButton.storeProduct = VirtusizeProduct(
+            externalId: "vs_dress",
+            imageURL: URL(string: "http://www.example.com/image.jpg"))
+		checkTheFitButton.applyDefaultStyle()
 	}
 
 	@IBAction func checkTheFit() {
-		let virtusize = CheckTheFitViewController(virtusizeButton: checkTheFitButton)
-		virtusize.delegate = self
-		present(virtusize, animated: true, completion: nil)
+        if let virtusize = VirtusizeViewController(
+            product: checkTheFitButton.storeProduct,
+            handler: self) {
+            present(virtusize, animated: true, completion: nil)
+        }
 	}
-
 }
 
-extension ViewController: CheckTheFitViewControllerDelegate {
-	func checkTheFitViewControllerShouldClose(_ controller: CheckTheFitViewController) {
-		dismiss(animated: true, completion: nil)
-	}
+extension ViewController: VirtusizeMessageHandler {
+    func virtusizeControllerShouldClose(_ controller: VirtusizeViewController) {
+        dismiss(animated: true, completion: nil)
+    }
 
-	func checkTheFitViewController(
-        _ controller: CheckTheFitViewController,
-        didReceiveEvent eventName: String,
-        data: Any?) {
-		switch eventName {
+    func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent) {
+        print(event)
+		switch event.name {
 		case "user-opened-widget":
             return
 		case "user-opened-panel-compare":
@@ -63,14 +62,10 @@ extension ViewController: CheckTheFitViewControllerDelegate {
 		default:
             return
 		}
-
 	}
 
-    func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveError error: Error) {
-        guard let error = error as? CheckTheFitError else {
-            return
-        }
-        print("\(error)")
+    func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError) {
+        print(error)
         dismiss(animated: true, completion: nil)
     }
 }

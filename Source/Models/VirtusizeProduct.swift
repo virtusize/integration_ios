@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  VirtusizeProduct.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,19 +22,22 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-import Virtusize
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+public struct VirtusizeProduct {
+    public let externalId: String
+    public let imageURL: URL?
+    internal var context: JSONObject?
 
-	var window: UIWindow?
+    internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
+        self.externalId = externalId
+        self.imageURL = imageURL
+        self.context = context
+    }
+}
 
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-		Virtusize.environment = .staging
-		return true
-	}
+extension VirtusizeProduct {
+    public init(externalId: String, imageURL: URL? = nil) {
+        self.init(externalId: externalId, imageURL: imageURL, context: nil)
+    }
 }

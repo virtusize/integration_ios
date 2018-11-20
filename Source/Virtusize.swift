@@ -25,63 +25,50 @@
 import Foundation
 
 public class Virtusize {
-
 	public static var APIKey: String?
-
 	public static var userID: String?
-
-	public static var environment: String = "global"
-
+	public static var environment = VirtusizeEnvironment.global
     public static var language: String = Locale.preferredLanguages[0]
+    private static let sessionConfiguration = URLSessionConfiguration.default
 
-    public static var region: String = ""
+    typealias CompletionHandler = (Data?) -> Void
 
-	internal class func productCheck(
-        externalId: String,
-        _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) {
-        let sessionConfig = URLSessionConfiguration.default
-		let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-
-        let request = VirtusizeAPI.productCheck(externalId: externalId)
-        let task = session.dataTask(
-            with: request,
-            completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            if error == nil {
-				DispatchQueue.main.async {
-                	completionHandler(data, response, nil)
-				}
-            } else {
-				DispatchQueue.main.async {
-                	completionHandler(data, response, error)
-				}
+    private class func perform(_ request: URLRequest, completion completionHandler: CompletionHandler? = nil) {
+        let session = URLSession(configuration: sessionConfiguration, delegate: nil, delegateQueue: nil)
+        let task: URLSessionDataTask
+        if let completionHandler = completionHandler {
+            task = session.dataTask(
+                with: request) { (data, _, _) in
+                DispatchQueue.main.async {
+                    completionHandler(data)
+                }
             }
-        })
+        } else {
+            task = session.dataTask(with: request)
+        }
         task.resume()
         session.finishTasksAndInvalidate()
     }
 
-	internal class func sendProductImage(url: URL, for externalId: String, jsonResult: JSONObject) {
-        let sessionConfig = URLSessionConfiguration.default
-		let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+	internal class func productCheck(
+        product: VirtusizeProduct,
+        completion completionHandler: ((VirtusizeProduct?) -> Void)?) {
+        perform(APIRequest.productCheck(product: product)) { data in
+            completionHandler?(Deserializer.product(from: product, withData: data))
+        }
+    }
 
-        let request = VirtusizeAPI.sendProductImage(url: url, for: externalId, jsonResult: jsonResult)
-        let task = session.dataTask(with: request)
-        task.resume()
-        session.finishTasksAndInvalidate()
+    internal class func sendProductImage(of product: VirtusizeProduct, forStore storeId: Int) {
+        guard let request = try? APIRequest.sendProductImage(of: product, forStore: storeId) else {
+            return
+        }
+        perform(request)
 	}
 
-	internal class func sendEvent(name eventName: String, data eventData: Any?, previousJSONResult: JSONObject?) {
-        let sessionConfig = URLSessionConfiguration.default
-		let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-
-        guard let request = VirtusizeAPI.sendEvent(
-            name: eventName,
-            data: eventData,
-            previousJSONResult: previousJSONResult) else {
-        	return
+    internal class func sendEvent(_ event: VirtusizeEvent, withContext context: JSONObject? = nil) {
+        guard let request = APIRequest.sendEvent(event, withContext: context) else {
+            return
         }
-        let task = session.dataTask(with: request)
-        task.resume()
-        session.finishTasksAndInvalidate()
+        perform(request)
 	}
 }

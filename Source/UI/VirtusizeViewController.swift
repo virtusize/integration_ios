@@ -1,5 +1,5 @@
 //
-//  CheckTheFitViewController.swift
+//  VirtusizeViewController.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -25,50 +25,30 @@
 import UIKit
 import WebKit
 
-public protocol CheckTheFitViewControllerDelegate: class {
-	func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveEvent eventName: String, data: Any?)
-    func checkTheFitViewControllerShouldClose(_ controller: CheckTheFitViewController)
-    func checkTheFitViewController(_ controller: CheckTheFitViewController, didReceiveError error: Error)
+public protocol VirtusizeMessageHandler: class {
+    func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError)
+	func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent)
+    func virtusizeControllerShouldClose(_ controller: VirtusizeViewController)
 }
 
-public enum CheckTheFitError: Error {
-    case deserializationError, encodingError, invalidPayload, invalidRequest, navigationError(Error)
-}
-
-extension CheckTheFitError: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        switch self {
-        case .invalidRequest:
-            return "CheckTheFit: Invalid Request - Malformed query"
-        case .deserializationError:
-            return "CheckTheFit: Failed to deserialize given event payload"
-        case .encodingError:
-            return "CheckTheFit: Failed to convert given string to UTF-8 data"
-        case .invalidPayload:
-            return "CheckTheFit: Event payload does not contain a value for 'name'"
-        case .navigationError(let error):
-            return "CheckTheFit: Navigation blocked – \(error)"
-        }
-    }
-}
-
-public final class CheckTheFitViewController: UIViewController {
-
-	public weak var delegate: CheckTheFitViewControllerDelegate?
+public final class VirtusizeViewController: UIViewController {
+	public weak var delegate: VirtusizeMessageHandler?
 
 	private var webView: WKWebView?
     internal var splashView: SplashView =  SplashView()
 
-	internal var jsonResult: JSONObject?
+    private var context: JSONObject = [:]
 
-	public init(virtusizeButton: VirtusizeButton) {
-		super.init(nibName: nil, bundle: nil)
-		self.jsonResult = virtusizeButton.jsonResult
-	}
+    public convenience init?(product: VirtusizeProduct? = nil, handler: VirtusizeMessageHandler? = nil) {
+        self.init(nibName: nil, bundle: nil)
+        self.delegate = handler
 
-	public required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
+        guard let context = product?.context else {
+            reportError(error: .invalidProduct)
+            return nil
+        }
+        self.context = context
+    }
 
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -114,11 +94,11 @@ public final class CheckTheFitViewController: UIViewController {
         splashView.cancelButton.addTarget(self, action: #selector(shouldClose), for: .touchUpInside)
 
         // If the request is invalid, the controller should be dismissed
-		guard let urlRequest = VirtusizeAPI.fitIllustratorURL(jsonResult: jsonResult) else {
+		guard let request = APIRequest.fitIllustratorURL(in: context) else {
             reportError(error: .invalidRequest)
 			return
 		}
-		webView.load(urlRequest)
+		webView.load(request)
 	}
 
 	// MARK: Rotation Lock
@@ -131,33 +111,33 @@ public final class CheckTheFitViewController: UIViewController {
 	}
 
     // MARK: Error Handling
-    public func reportError(error: CheckTheFitError) {
-        delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.invalidRequest)
+    public func reportError(error: VirtusizeError) {
+        delegate?.virtusizeController(self, didReceiveError: error)
     }
 
     // MARK: Closing view
     @objc internal func shouldClose() {
-        delegate?.checkTheFitViewControllerShouldClose(self)
+        delegate?.virtusizeControllerShouldClose(self)
     }
 }
 
-extension CheckTheFitViewController: WKNavigationDelegate {
+extension VirtusizeViewController: WKNavigationDelegate {
     public func webView(
         _ webView: WKWebView,
         didFail navigation: WKNavigation!,
         withError error: Error) {
-        delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.navigationError(error))
+        reportError(error: VirtusizeError.navigationError(error))
     }
 
     public func webView(
         _ webView: WKWebView,
         didFailProvisionalNavigation navigation: WKNavigation!,
         withError error: Error) {
-        delegate?.checkTheFitViewController(self, didReceiveError: CheckTheFitError.navigationError(error))
+        reportError(error: VirtusizeError.navigationError(error))
     }
 }
 
-extension CheckTheFitViewController: WKScriptMessageHandler {
+extension VirtusizeViewController: WKScriptMessageHandler {
     // MARK: Widget Callbacks
     public func userContentController(
         _ userContentController: WKUserContentController,
@@ -165,51 +145,28 @@ extension CheckTheFitViewController: WKScriptMessageHandler {
         guard message.name == "eventHandler" else {
             return
         }
-        let event: [String: Any]
+        do {
+            let event = try Deserializer.event(data: message.body)
 
-        if let eventData = message.body as? [String: Any] {
-            event = eventData
-        } else if let data = message.body as? Data,
-            let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
-            let eventData = deserialized as? [String: Any] {
-            event = eventData
-        } else if let string = message.body as? String {
-            guard let data = string.data(using: .utf8) else {
-                reportError(error: .encodingError)
-                return
+            if event.name == "user-closed-widget" {
+                shouldClose()
             }
-            if let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
-                let eventData = deserialized as? [String: Any] {
-                event = eventData
-            } else {
-                reportError(error: .deserializationError)
-                return
+
+            if !splashView.isHidden,
+                event.name == "user-selected-size" || event.name.starts(with: "user-opened-panel") {
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                        self?.splashView.alpha = 0
+                        }, completion: { [weak self] _ in
+                            self?.splashView.isHidden = true
+                    })
+                }
             }
-        } else {
-            reportError(error: .deserializationError)
-            return
+            delegate?.virtusizeController(self, didReceiveEvent: event)
+        } catch {
+            if let error = error as? VirtusizeError {
+                reportError(error: error)
+            }
         }
-
-        guard let eventName: String = event["name"] as? String else {
-            reportError(error: .invalidPayload)
-            return
-        }
-
-        if eventName == "user-closed-widget" {
-            shouldClose()
-        }
-
-        if !splashView.isHidden,
-            eventName == "user-selected-size" || eventName.starts(with: "user-opened-panel") {
-            UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                self?.splashView.alpha = 0
-                }, completion: { [weak self] _ in
-                self?.splashView.isHidden = true
-            })
-        }
-
-        let eventData: Any? = event["data"]
-
-        delegate?.checkTheFitViewController(self, didReceiveEvent: eventName, data: eventData)
     }
 }

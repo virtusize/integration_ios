@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  Assets.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,19 +22,19 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-import Virtusize
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final internal class Assets {
+    private static let bundle = Bundle(for: Assets.self)
 
-	var window: UIWindow?
-
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-		Virtusize.environment = .staging
-		return true
-	}
+    internal static let primaryColor: UIColor = #colorLiteral(red: 0.09, green: 0.78, blue: 0.73, alpha: 1)
+    internal static let icon: UIImage? = {
+        return UIImage(named: "vs-v-icon", in: bundle, compatibleWith: nil)
+    }()
+    internal static let logo: UIImage? = {
+        return UIImage(named: "vs-v-logo", in: bundle, compatibleWith: nil)
+    }()
+    internal static let cancel: UIImage? = {
+        return UIImage(named: "vs-cancel-icon", in: bundle, compatibleWith: nil)
+    }()
 }

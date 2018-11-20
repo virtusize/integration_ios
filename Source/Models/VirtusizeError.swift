@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  VirtusizeError.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,19 +22,27 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-import Virtusize
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+public enum VirtusizeError: Error {
+    case deserializationError, encodingError, invalidPayload, invalidProduct, invalidRequest, navigationError(Error)
+}
 
-	var window: UIWindow?
-
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-		Virtusize.environment = .staging
-		return true
-	}
+extension VirtusizeError: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .invalidRequest:
+            return "Virtusize: Invalid Request - Malformed query"
+        case .deserializationError:
+            return "Virtusize: Failed to deserialize given event payload"
+        case .encodingError:
+            return "Virtusize: Failed to convert given string to UTF-8 data"
+        case .invalidPayload:
+            return "Virtusize: Event payload does not contain a value for 'name'"
+        case .navigationError(let error):
+            return "Virtusize: Navigation blocked – \(error)"
+        case .invalidProduct:
+            return "Virtusize: Product is not available for comparison"
+        }
+    }
 }
