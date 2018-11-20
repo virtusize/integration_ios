@@ -184,7 +184,7 @@ extension CheckTheFitViewController: WKScriptMessageHandler {
         }
 
         if !splashView.isHidden,
-            eventName == "user-selected-size" || eventName == "user-opened-panel-start" {
+            eventName == "user-selected-size" || eventName.starts(with: "user-opened-panel") {
             UIView.animate(withDuration: 0.3, animations: { [weak self] in
                 self?.splashView.alpha = 0
                 }, completion: { [weak self] _ in
