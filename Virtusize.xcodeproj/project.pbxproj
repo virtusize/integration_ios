@@ -55,7 +55,7 @@
 		4DED8D2A205755C3001CA7DF /* VirtusizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeTests.swift; sourceTree = "<group>"; };
 		4DED8D2C205755C3001CA7DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DED8D5820575D65001CA7DF /* VirtusizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeViewController.swift; sourceTree = "<group>"; };
-		DF6B5C9D219D151F000B3402 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		DF6B5C9D219D151F000B3402 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Assets.swift; path = Source/Internal/Constants/Assets.swift; sourceTree = "<group>"; };
 		DF6B5C9F219D3090000B3402 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DF71642421A2818E002C7202 /* ROADMAP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ROADMAP.md; sourceTree = "<group>"; };
 		DF71642721A28501002C7202 /* VirtusizeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeError.swift; sourceTree = "<group>"; };
@@ -91,8 +91,8 @@
 		4D6C5794205FB9FC00DA910E /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				DFFAA95F21A39B85000F0F70 /* API */,
 				DFFAA96021A39BA4000F0F70 /* Constants */,
+				DFFAA95F21A39B85000F0F70 /* API */,
 				DFFAA96121A39BBE000F0F70 /* Workers */,
 				DFFAA96221A39BDA000F0F70 /* Views */,
 			);
@@ -127,6 +127,7 @@
 				DFFAA96321A39BFC000F0F70 /* UI */,
 				DF71642621A284E9002C7202 /* Models */,
 				4D6C5794205FB9FC00DA910E /* Internal */,
+				DF8C370E21EE1DB60007E1A2 /* Resources */,
 				4DED8D37205757F0001CA7DF /* Supporting Files */,
 			);
 			path = Source;
@@ -153,7 +154,6 @@
 		4DED8D37205757F0001CA7DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4D2208DE206511890023259D /* Media.xcassets */,
 				4DED8D1F205755C3001CA7DF /* Virtusize.h */,
 				4DED8D20205755C3001CA7DF /* Info.plist */,
 			);
@@ -169,6 +169,14 @@
 				DF71642D21A28DE8002C7202 /* VirtusizeProduct.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		DF8C370E21EE1DB60007E1A2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4D2208DE206511890023259D /* Media.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		DFFAA95F21A39B85000F0F70 /* API */ = {

@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 final internal class Assets {
     private static let bundle = Bundle(for: Assets.self)
