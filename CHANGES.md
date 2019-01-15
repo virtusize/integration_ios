@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 0.2.3
+
+- Bugfix: Ensure Media.xcassets is linked to the pod. (za)
 
 ### 0.2.2
 
