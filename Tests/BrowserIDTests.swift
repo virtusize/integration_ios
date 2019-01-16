@@ -22,7 +22,6 @@
 //  THE SOFTWARE.
 //
 
-
 import Foundation
 import XCTest
 @testable import Virtusize
@@ -114,4 +113,3 @@ class TestBrowserID: XCTestCase {
 		}
     }
 }
-

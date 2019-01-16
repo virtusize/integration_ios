@@ -1,5 +1,5 @@
 //
-//  VirtusizeTests.swift
+//  VirtusizeEnvironment.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,11 +22,11 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
+import Foundation
 
-class VirtusizeTests: XCTestCase {
-
-    func testVersionNumber() {
-    }
+public enum VirtusizeEnvironment: String {
+    case staging="staging.virtusize.com",
+        global="www.virtusize.com",
+        japan="api.virtusize.jp",
+        korea="api.virtusize.kr"
 }

@@ -1,5 +1,5 @@
 //
-//  VirtusizeTests.swift
+//  VirtusizeButton.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,11 +22,45 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
+import UIKit
 
-class VirtusizeTests: XCTestCase {
+public class VirtusizeButton: UIButton {
+	public required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
 
-    func testVersionNumber() {
+    private var product: VirtusizeProduct?
+
+    public var storeProduct: VirtusizeProduct? {
+        set {
+            guard let product = newValue else {
+                isHidden = true
+                return
+            }
+
+            Virtusize.productCheck(product: product) { [weak self] product in
+                guard let product = product else {
+                    self?.isHidden = true
+                    return
+                }
+                self?.product = product
+                self?.isHidden = false
+            }
+        }
+        get {
+            return product
+        }
     }
+
+	public func applyDefaultStyle() {
+		tintColor = .black
+
+		setTitle(NSLocalizedString("Check the fit", comment: "Check the fit button title"), for: .normal)
+
+		backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
+		tintColor = .white
+
+		contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        self.setImage(Assets.icon, for: .normal)
+	}
 }

@@ -1,5 +1,5 @@
 //
-//  VirtusizeTests.swift
+//  VirtusizeError.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,11 +22,27 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
+import Foundation
 
-class VirtusizeTests: XCTestCase {
+public enum VirtusizeError: Error {
+    case deserializationError, encodingError, invalidPayload, invalidProduct, invalidRequest, navigationError(Error)
+}
 
-    func testVersionNumber() {
+extension VirtusizeError: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .invalidRequest:
+            return "Virtusize: Invalid Request - Malformed query"
+        case .deserializationError:
+            return "Virtusize: Failed to deserialize given event payload"
+        case .encodingError:
+            return "Virtusize: Failed to convert given string to UTF-8 data"
+        case .invalidPayload:
+            return "Virtusize: Event payload does not contain a value for 'name'"
+        case .navigationError(let error):
+            return "Virtusize: Navigation blocked – \(error)"
+        case .invalidProduct:
+            return "Virtusize: Product is not available for comparison"
+        }
     }
 }
