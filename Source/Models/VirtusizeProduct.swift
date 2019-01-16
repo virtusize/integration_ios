@@ -1,5 +1,5 @@
 //
-//  VirtusizeTests.swift
+//  VirtusizeProduct.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,11 +22,22 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
+import Foundation
 
-class VirtusizeTests: XCTestCase {
+public struct VirtusizeProduct {
+    public let externalId: String
+    public let imageURL: URL?
+    internal var context: JSONObject?
 
-    func testVersionNumber() {
+    internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
+        self.externalId = externalId
+        self.imageURL = imageURL
+        self.context = context
+    }
+}
+
+extension VirtusizeProduct {
+    public init(externalId: String, imageURL: URL? = nil) {
+        self.init(externalId: externalId, imageURL: imageURL, context: nil)
     }
 }

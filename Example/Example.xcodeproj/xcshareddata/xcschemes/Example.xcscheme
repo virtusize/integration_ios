@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4DED8D1B205755C3001CA7DF"
-               BuildableName = "Virtusize.framework"
-               BlueprintName = "Virtusize"
-               ReferencedContainer = "container:Virtusize.xcodeproj">
+               BlueprintIdentifier = "4DED8D4020575A9C001CA7DF"
+               BuildableName = "Example.app"
+               BlueprintName = "Example"
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,24 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4DED8D24205755C3001CA7DF"
-               BuildableName = "VirtusizeTests.xctest"
-               BlueprintName = "VirtusizeTests"
-               ReferencedContainer = "container:Virtusize.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4DED8D1B205755C3001CA7DF"
-            BuildableName = "Virtusize.framework"
-            BlueprintName = "Virtusize"
-            ReferencedContainer = "container:Virtusize.xcodeproj">
+            BlueprintIdentifier = "4DED8D4020575A9C001CA7DF"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -61,15 +51,23 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4DED8D1B205755C3001CA7DF"
-            BuildableName = "Virtusize.framework"
-            BlueprintName = "Virtusize"
-            ReferencedContainer = "container:Virtusize.xcodeproj">
+            BlueprintIdentifier = "4DED8D4020575A9C001CA7DF"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -79,15 +77,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4DED8D1B205755C3001CA7DF"
-            BuildableName = "Virtusize.framework"
-            BlueprintName = "Virtusize"
-            ReferencedContainer = "container:Virtusize.xcodeproj">
+            BlueprintIdentifier = "4DED8D4020575A9C001CA7DF"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

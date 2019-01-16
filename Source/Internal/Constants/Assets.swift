@@ -1,5 +1,5 @@
 //
-//  VirtusizeTests.swift
+//  Assets.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,11 +22,19 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
+import UIKit
 
-class VirtusizeTests: XCTestCase {
+final internal class Assets {
+    private static let bundle = Bundle(for: Assets.self)
 
-    func testVersionNumber() {
-    }
+    internal static let primaryColor: UIColor = #colorLiteral(red: 0.09, green: 0.78, blue: 0.73, alpha: 1)
+    internal static let icon: UIImage? = {
+        return UIImage(named: "vs-v-icon", in: bundle, compatibleWith: nil)
+    }()
+    internal static let logo: UIImage? = {
+        return UIImage(named: "vs-v-logo", in: bundle, compatibleWith: nil)
+    }()
+    internal static let cancel: UIImage? = {
+        return UIImage(named: "vs-cancel-icon", in: bundle, compatibleWith: nil)
+    }()
 }

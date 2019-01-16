@@ -19,9 +19,9 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## Requirements
 
-- iOS 11.0+
-- Xcode 9.0+
-- Swift 3.2+
+- iOS 10.0+
+- Xcode 10.1+
+- Swift 4.2+
 
 ## Installation
 
@@ -39,7 +39,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 0.2'
+    pod 'Virtusize', '~> 1.0.0'
 end
 ```
 
@@ -57,14 +57,14 @@ method of the App delegate.
 ``` Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692" // Virtusize demo store key
-		Virtusize.environment = "staging"
+		Virtusize.environment = .staging
     ...
 		return true
 }
 ```
 
-The environment is the region you are running the integration from, either `staging`,. `global`,
-`japan` or `korea`
+The environment is the region you are running the integration from, either `.staging`,  `.global`,
+`.japan` or `.korea`
 
 Then in the controller where you want to use the comparison view, you will need to:
 
@@ -72,36 +72,52 @@ Then in the controller where you want to use the comparison view, you will need 
 2. pass a `productImageURL` in order to populate the comparison view
 3. pass an `exernal_id` that will be used to reference that product in our API
 4. show the Virtusize view controller when the button is pressed
-5. set the `CheckTheFitViewControllerDelegate` delegate of the view controller,
+5. set the `VirtusizeEventsDelegate` delegate of the view controller,
    in order to handle events and error reporting.
 
 ``` Swift
-	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
+@IBOutlet weak var virtusizeButton: VirtusizeButton!
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+override func viewDidLoad() {
+    super.viewDidLoad()
 
-		checkTheFitButton.productImageURL = URL(string: "http://www.example.com/image.jpg")
-		checkTheFitButton.productId = "vs_dress"
+    checkTheFitButton.storeProduct = VirtusizeProduct(
+        externalId: "vs_dress",
+        imageURL: URL(string: "http://www.example.com/image.jpg"))
+    checkTheFitButton.applyDefaultStyle()
+}
 
-		checkTheFitButton.applyVirtusizeDesign()
-	}
-
-	@IBAction func checkTheFit() {
-		let v = CheckTheFitViewController(virtusizeButton: checkTheFitButton)
-		v.delegate = self
-		present(v, animated: true, completion: nil)
-	}
+@IBAction func checkTheFit() {
+    if let virtusize = VirtusizeViewController(
+        product: checkTheFitButton.storeProduct,
+        handler: self) {
+        present(virtusize, animated: true, completion: nil)
+    }
+}
 ```
 
-The `CheckTheFitViewControllerDelegate` has three required methods:
+The `VirtusizeMessageHandler`  protocol has three required methods:
 
-- `checkTheFitViewController(_:didReceiveEvent:data:)` is called when data is exchanged between
-  the controller and our API.
-- `checkTheFitViewControllerShouldClose(_)`is called when the controller is requesting to be dismissed.
-- `checkTheFitViewController(_:didReceiveError)` is called when the controller is reporting a network or deserialisation error.
+- `virtusizeController(_:didReceiveError:)` is called when the controller is reporting a network or deserialisation error.
+- `virtusizeController(_:didReceiveEvent:)` is called when data is exchanged between
+the controller and the Virtusize API. `VirtusizeEvent` is a `struct` with a required `name` and an optional `data` property.
+- `virtusizeControllerShouldClose(_)`is called when the controller is requesting to be dismissed.
+
+## Migrate from 0.x.x version to 1.x.x
+
+Version 1.x.x has aligned its naming convention for methods, data structures and classes.
+
+-  `CheckTheFitViewController` has been renamed `VirtusizeViewController`.
+- `CheckTheFitViewControllerDelegate` has been renamed `VirtusizeMessageHandler`. All the methods of the protocol 
+have been renamed accordingly.
+- `CheckTheFitError`  has been renamed `VirtusizeError`.
+- `VirtusizeEvent` is now a proper `struct`.
+- `VirtusizeProduct` struct has been added.
+- Environment is now a `VirtusizeEnvironment` enum.
 
 ## Build
+
+You need to install [SwiftLint](https://github.com/realm/SwiftLint).
 
     make build
 
@@ -115,4 +131,4 @@ Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected re
 
 ## License
 
-Copyright (c) 2018 Virtusize AB (https://www.virtusize.com)
+Copyright (c) 2018-19 Virtusize CO LTD (https://www.virtusize.jp)

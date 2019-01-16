@@ -22,11 +22,9 @@
 //  THE SOFTWARE.
 //
 
-
 import Foundation
 
-internal class BrowserID {
-
+final internal class BrowserID {
 	internal static let current = BrowserID()
 
 	internal var defaults: UserDefaults
@@ -43,8 +41,7 @@ internal class BrowserID {
         get {
 			if let token = defaults.value(forKey: "BID") as? String {
 				return token
-			}
-			else {
+			} else {
 				let token = generateIdentifier()
 				defaults.setValue(token, forKey: "BID")
 				defaults.synchronize()

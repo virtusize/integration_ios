@@ -1,5 +1,5 @@
 //
-//  VirtusizeTests.swift
+//  VirtusizeEvent.swift
 //
 //  Copyright (c) 2018 Virtusize AB
 //
@@ -22,11 +22,15 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
+import Foundation
 
-class VirtusizeTests: XCTestCase {
+public struct VirtusizeEvent {
+    public let name: String
+    public let data: Any?
+}
 
-    func testVersionNumber() {
+extension VirtusizeEvent {
+    internal init(name: String) {
+        self.init(name: name, data: nil)
     }
 }

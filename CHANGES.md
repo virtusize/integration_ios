@@ -13,6 +13,16 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.0.0
+
+- Refactor: Rename resources prefixing public entities with Virtusize. (za)
+- Refactor: Separate data processing from view logic. (za)
+- Refactor: Prefer Enum and model Struct rather than String and Dictionary. (za)
+- Refactor: Align code to SwiftLint requirements. (za)
+- Docs: Update documentation and roadmap. (za)
+- Cleanup: Add support for SwiftLint. (za)
+- Cleanup: Update to iOS 10.0, swift 4.2. (za) 
+
 ### 0.2.3
 
 - Bugfix: Ensure Media.xcassets is linked to the pod. (za)
