@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.0.1
+
+- Bugfix: Removed `.swift-version` and added `swift_version` key to PodSpec. (za)
+
 ### 1.0.0
 
 - Refactor: Rename resources prefixing public entities with Virtusize. (za)
