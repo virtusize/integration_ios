@@ -13,6 +13,8 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.0.0
+
 - Refactor: Rename resources prefixing public entities with Virtusize. (za)
 - Refactor: Separate data processing from view logic. (za)
 - Refactor: Prefer Enum and model Struct rather than String and Dictionary. (za)

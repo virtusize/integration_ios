@@ -131,4 +131,4 @@ Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected re
 
 ## License
 
-Copyright (c) 2018 Virtusize AB (https://www.virtusize.com)
+Copyright (c) 2018-19 Virtusize CO LTD (https://www.virtusize.jp)
