@@ -39,7 +39,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 1.0.0'
+    pod 'Virtusize', '~> 1.0.1'
 end
 ```
 
