@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.1.0
+
+- Cleanup: Update to iOS 10.3, swift 5.0. (za) 
+
 ### 1.0.1
 
 - Bugfix: Removed `.swift-version` and added `swift_version` key to PodSpec. (za)
