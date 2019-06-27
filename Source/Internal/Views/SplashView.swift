@@ -91,11 +91,13 @@ final internal class SplashView: UIView {
         let buttonHorizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "[cancelButton]-12-|", options: .alignAllLeft, metrics: nil, views: views)
 
-        NSLayoutConstraint.activate(buttonVerticalConstraints
-            + buttonHorizontalConstraints
-            + activityHorizontalConstraints
-            + activityVerticalConstraints
-            + logoVerticalConstraints
-            + logoHorizontalConstraints)
+        var constraints = buttonVerticalConstraints
+        constraints += buttonHorizontalConstraints
+        constraints += activityHorizontalConstraints
+        constraints += activityVerticalConstraints
+        constraints += logoVerticalConstraints
+        constraints += logoHorizontalConstraints
+
+        NSLayoutConstraint.activate(constraints)
     }
 }
