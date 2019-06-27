@@ -19,9 +19,9 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## Requirements
 
-- iOS 10.0+
+- iOS 10.3+
 - Xcode 10.1+
-- Swift 4.2+
+- Swift 5.0+
 
 ## Installation
 
@@ -39,7 +39,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 1.0.1'
+    pod 'Virtusize', '~> 1.1.0'
 end
 ```
 
@@ -101,7 +101,7 @@ The `VirtusizeMessageHandler`  protocol has three required methods:
 - `virtusizeController(_:didReceiveError:)` is called when the controller is reporting a network or deserialisation error.
 - `virtusizeController(_:didReceiveEvent:)` is called when data is exchanged between
 the controller and the Virtusize API. `VirtusizeEvent` is a `struct` with a required `name` and an optional `data` property.
-- `virtusizeControllerShouldClose(_)`is called when the controller is requesting to be dismissed.
+- `virtusizeControllerShouldClose(_) `is called when the controller is requesting to be dismissed.
 
 ## Migrate from 0.x.x version to 1.x.x
 
