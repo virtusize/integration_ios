@@ -30,12 +30,18 @@ internal struct Deserializer {
             let rootObject = try? JSONSerialization.jsonObject(with: data, options: []),
             let root = rootObject as? JSONObject,
             let dataObject = root["data"] as? JSONObject else {
+                NotificationCenter.default.post(name: Virtusize.productDataCheckDidFail,
+                                                object: Virtusize.self,
+                                                userInfo: ["message": "serialization failed"])
             return nil
         }
 
         Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-product"), withContext: root)
 
         guard let isValid = dataObject["validProduct"] as? Bool, isValid else {
+            NotificationCenter.default.post(name: Virtusize.productDataCheckDidFail,
+                                            object: Virtusize.self,
+                                            userInfo: ["message": "product is not valid"])
             return nil
         }
 
@@ -47,6 +53,7 @@ internal struct Deserializer {
         }
 
         Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-widget-button"), withContext: root)
+        NotificationCenter.default.post(name: Virtusize.productDataCheckDidSucceed, object: Virtusize.self)
 
         // keep values of JSON response
         return VirtusizeProduct(

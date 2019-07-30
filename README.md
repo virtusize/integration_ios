@@ -103,6 +103,19 @@ The `VirtusizeMessageHandler`  protocol has three required methods:
 the controller and the Virtusize API. `VirtusizeEvent` is a `struct` with a required `name` and an optional `data` property.
 - `virtusizeControllerShouldClose(_) `is called when the controller is requesting to be dismissed.
 
+## Product Data Check
+
+When the button is initialised with an  `exernal_id`  the product call our API to check if the product has been parsed and added to our database.
+
+In order to debug that API call, you can subscribe to the `NotificationCenter` and observe two `Notification.Name`:
+
+- `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message with the cause of the failure.
+- `Virtusize.productDataCheckDidSucceed` that will be sent if the call is succesfull.
+
+If the check fail the button will be hidden.
+
+You can check the example project to see a possible implementation.
+
 ## Migrate from 0.x.x version to 1.x.x
 
 Version 1.x.x has aligned its naming convention for methods, data structures and classes.

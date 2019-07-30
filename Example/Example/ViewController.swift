@@ -31,6 +31,18 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        // NotificationCenter listener for debugging the initial product data check
+        // - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
+        // with the cause of the failure
+        // - `Virtusize.productDataCheckDidSucceed`
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(productDataCheckDidFail(_:)),
+                                               name: Virtusize.productDataCheckDidFail,
+                                               object: Virtusize.self)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(productDataCheckDidSucceed(_:)),
+                                               name: Virtusize.productDataCheckDidSucceed,
+                                               object: Virtusize.self)
 
         checkTheFitButton.storeProduct = VirtusizeProduct(
             externalId: "vs_dress",
@@ -42,9 +54,17 @@ class ViewController: UIViewController {
         if let virtusize = VirtusizeViewController(
             product: checkTheFitButton.storeProduct,
             handler: self) {
+            // POTENTIAL ANALYTICS CODE
             present(virtusize, animated: true, completion: nil)
         }
 	}
+    // You should use those to debug during development
+    @objc func productDataCheckDidFail(_ notification: Notification) {
+        print(notification)
+    }
+    @objc func productDataCheckDidSucceed(_ notification: Notification) {
+        print(notification)
+    }
 }
 
 extension ViewController: VirtusizeMessageHandler {
