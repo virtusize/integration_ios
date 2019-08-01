@@ -35,11 +35,11 @@ To integrate Virtusize SDK into your Xcode project using CocoaPods, specify it i
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 1.1.0'
+    pod 'Virtusize', '~> 1.2.0'
 end
 ```
 

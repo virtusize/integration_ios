@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.2.0
+
+- Feature: Dispatch Notification during Product Data Check. (za)
+
 ### 1.1.0
 
 - Cleanup: Update to iOS 10.3, swift 5.0. (za) 
