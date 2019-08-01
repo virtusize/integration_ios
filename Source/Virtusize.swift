@@ -28,7 +28,12 @@ public class Virtusize {
 	public static var APIKey: String?
 	public static var userID: String?
 	public static var environment = VirtusizeEnvironment.global
+    // Default to the language set fot the phone
     public static var language: String = Locale.preferredLanguages[0]
+    // `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
+    // with the cause of the failure
+    public static var productDataCheckDidFail = Notification.Name("VirtusizeProductDataCheckDidFail")
+    public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
     private static let sessionConfiguration = URLSessionConfiguration.default
 
     typealias CompletionHandler = (Data?) -> Void
