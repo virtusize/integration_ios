@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D2208DF206511890023259D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D2208DE206511890023259D /* Media.xcassets */; };
 		4D6C578E205FB6F400DA910E /* BrowserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C578D205FB6F400DA910E /* BrowserID.swift */; };
 		4D6C5790205FB76B00DA910E /* BrowserIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C578F205FB76B00DA910E /* BrowserIDTests.swift */; };
 		4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5792205FB9BA00DA910E /* Virtusize.swift */; };
@@ -42,7 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D2208DE206511890023259D /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		4D6C578D205FB6F400DA910E /* BrowserID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserID.swift; sourceTree = "<group>"; };
 		4D6C578F205FB76B00DA910E /* BrowserIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserIDTests.swift; sourceTree = "<group>"; };
 		4D6C5792205FB9BA00DA910E /* Virtusize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtusize.swift; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 				DFFAA96321A39BFC000F0F70 /* UI */,
 				DF71642621A284E9002C7202 /* Models */,
 				4D6C5794205FB9FC00DA910E /* Internal */,
-				DF8C370E21EE1DB60007E1A2 /* Resources */,
 				4DED8D37205757F0001CA7DF /* Supporting Files */,
 			);
 			path = Source;
@@ -169,14 +166,6 @@
 				DF71642D21A28DE8002C7202 /* VirtusizeProduct.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		DF8C370E21EE1DB60007E1A2 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4D2208DE206511890023259D /* Media.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		DFFAA95F21A39B85000F0F70 /* API */ = {
@@ -323,7 +312,6 @@
 			files = (
 				DFB2F0F0219BC3DA00A69D1D /* README.md in Resources */,
 				DF71642521A2818F002C7202 /* ROADMAP.md in Resources */,
-				4D2208DF206511890023259D /* Media.xcassets in Resources */,
 				DFB2F0F2219BC40E00A69D1D /* CHANGES.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
