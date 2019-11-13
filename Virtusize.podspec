@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Virtusize'
-  s.version = '1.2.1'
+  s.version = '1.2.2'
   s.license = { :type => 'Copyright', :text => 'Copyright 2018 Virtusize' }
   s.summary = 'Integrate Virtusize on iOS devices'
   s.homepage = 'https://www.virtusize.com/'
@@ -13,5 +13,4 @@ Pod::Spec.new do |s|
   s.swift_version = '5'
 
   s.source_files = 'Source/*.swift', 'Source/**/*.swift'
-  s.resources = ['Source/Resources/Media.xcassets']
 end
