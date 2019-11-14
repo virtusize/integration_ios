@@ -2,6 +2,7 @@
 
 [![CircleCI](https://img.shields.io/circleci/project/github/virtusize/integration_ios.svg)](https://circleci.com/gh/virtusize/integration_ios)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Virtusize.svg)](https://cocoapods.org/pods/Virtusize)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/cocoapods/p/Virtusize.svg?style=flat)](https://developers.virtusize.com/native-ios/index.html)
 [![Docs](https://img.shields.io/badge/docs--brightgreen.svg)](https://developers.virtusize.com/native-ios/index.html)
 [![Twitter](https://img.shields.io/badge/twitter-@virtusize-blue.svg?style=flat)](http://twitter.com/virtusize)
@@ -25,6 +26,8 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## Installation
 
+### CocoaPods
+
 Install using [CocoaPods](https://cocoapods.org) dependency manager. You can install it with the following command:
 
 ```bash
@@ -39,7 +42,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 1.2.1'
+    pod 'Virtusize', '~> 1.2.2'
 end
 ```
 
@@ -48,6 +51,27 @@ Then, run the following command:
 ```bash
 $ pod install
 ```
+### Carthage
+
+Install using [Carthage](https://github.com/Carthage/Carthage) dependency manager. You can install it with the following command:
+
+```bash
+brew install carthage
+```
+
+To integrate Virtusize SDK into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```bash
+github "virtusize/integration_ios"
+```
+
+Then, run the following command:
+
+```bash
+$ carthage update
+```
+
+Follow `Carthage` [documentation](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) for further instruction on how to link the framework and build it.
 
 ## Setup
 
