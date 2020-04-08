@@ -39,9 +39,17 @@ public final class VirtusizeViewController: UIViewController {
 
     private var context: JSONObject = [:]
 
-    public convenience init?(product: VirtusizeProduct? = nil, handler: VirtusizeMessageHandler? = nil) {
+    // Allow process pool passing to share cookies
+    private var processPool: WKProcessPool?
+
+    public convenience init?(
+        product: VirtusizeProduct? = nil,
+        handler: VirtusizeMessageHandler? = nil,
+        processPool: WKProcessPool? = nil
+    ) {
         self.init(nibName: nil, bundle: nil)
         self.delegate = handler
+        self.processPool = processPool
 
         guard let context = product?.context else {
             reportError(error: .invalidProduct)
@@ -59,6 +67,10 @@ public final class VirtusizeViewController: UIViewController {
 
 		let config = WKWebViewConfiguration()
 		config.userContentController = contentController
+
+        if let processPool = self.processPool {
+            config.processPool = processPool
+        }
 
 		let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self

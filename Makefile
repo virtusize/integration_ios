@@ -16,12 +16,12 @@ export HELP_MESSAGE
 
 build:
 
-	xcodebuild -workspace Virtusize.xcworkspace -scheme Virtusize -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.2' clean build
+	xcodebuild -workspace Virtusize.xcworkspace -scheme Virtusize -destination 'platform=iOS Simulator,name=iPhone 8,OS=13.4' clean build
 
 
 test:
 
-	xcodebuild -workspace Virtusize.xcworkspace -scheme Virtusize -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.2' clean build test
+	xcodebuild -workspace Virtusize.xcworkspace -scheme Virtusize -destination 'platform=iOS Simulator,name=iPhone 8,OS=13.4' clean build test
 
 
 clean:
