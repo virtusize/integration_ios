@@ -1,6 +1,5 @@
 # Virtusize iOS Integration
 
-[![CircleCI](https://img.shields.io/circleci/project/github/virtusize/integration_ios.svg)](https://circleci.com/gh/virtusize/integration_ios)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Virtusize.svg)](https://cocoapods.org/pods/Virtusize)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/cocoapods/p/Virtusize.svg?style=flat)](https://developers.virtusize.com/native-ios/index.html)
@@ -42,7 +41,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 1.2.2'
+    pod 'Virtusize', '~> 1.2.4'
 end
 ```
 
@@ -117,6 +116,17 @@ override func viewDidLoad() {
         handler: self) {
         present(virtusize, animated: true, completion: nil)
     }
+}
+```
+
+The `VirtusizeViewController` accept an optional `processPool:WKProcessPool` paramater, to allow cookie sharing.
+
+```Swift
+if let virtusize = VirtusizeViewController(
+    product: checkTheFitButton.storeProduct,
+    handler: self,
+    processPool: processPool) {
+    ...
 }
 ```
 
