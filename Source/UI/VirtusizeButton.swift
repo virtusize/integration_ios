@@ -24,13 +24,16 @@
 
 import UIKit
 
+/// This class is the custom Fit Illustrator Button that is added in the client's layout file.
 public class VirtusizeButton: UIButton {
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 
+    /// `VirtusizeProduct` associated with this VirtusizeButton class
     private var product: VirtusizeProduct?
 
+    /// `VirtusizeProduct` that is being set to this button
     public var storeProduct: VirtusizeProduct? {
         set {
             guard let product = newValue else {
@@ -52,6 +55,7 @@ public class VirtusizeButton: UIButton {
         }
     }
 
+    /// Applys the default style of `VirtusizeButton`
 	public func applyDefaultStyle() {
 		tintColor = .black
 

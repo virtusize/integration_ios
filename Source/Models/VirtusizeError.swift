@@ -24,11 +24,14 @@
 
 import Foundation
 
+/// This enum contains all available errors in Virtusize library
 public enum VirtusizeError: Error {
     case deserializationError, encodingError, invalidPayload, invalidProduct, invalidRequest, navigationError(Error)
 }
 
 extension VirtusizeError: CustomDebugStringConvertible {
+
+    /// Gets the error message for the VirtusizeError
     public var debugDescription: String {
         switch self {
         case .invalidRequest:

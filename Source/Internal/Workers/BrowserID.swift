@@ -24,19 +24,26 @@
 
 import Foundation
 
+/// This class is used to get the browser identifier specific to this SDK
 final internal class BrowserID {
+
+    /// A static instance of `BrowserID` used inside the SDK
 	internal static let current = BrowserID()
 
+    /// 'UserDefaults' to save the browser identifier locally
 	internal var defaults: UserDefaults
 
+    /// Initializes the 'BrowserID' class and sets up the global instance of `UserDefaults`
 	init() {
 		self.defaults = UserDefaults.standard
 	}
 
+    /// Initializes the 'BrowserID' class with a passing argument as `UserDefaults`
 	init(defaults: UserDefaults) {
 		self.defaults = defaults
 	}
 
+    /// Gets a browser identifier as String
     internal var identifier: String {
         get {
 			if let token = defaults.value(forKey: "BID") as? String {
@@ -54,11 +61,19 @@ final internal class BrowserID {
         }
     }
 
+    /// Deletes the Browser Identifier from the user defaults
 	internal func deleteIdentifier() {
 		defaults.removeObject(forKey: "BID")
 		defaults.synchronize()
 	}
 
+    /// A method to generate a random string for the Browser Identifier
+    ///
+    /// The string contains 23 random characters and 6 generated characters based on the current time
+    /// in milliseconds separated with a '.'
+    /// For example, cJhf5nGjDA0fgUXLAIz5Ls5.pfa1lp is a generated browser identifier
+    ///
+    /// - Returns: A browser identifier as String
 	private func generateIdentifier() -> String {
 		let randomPart: String = {
 			var ret: String = ""

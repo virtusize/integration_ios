@@ -24,6 +24,7 @@
 
 import Foundation
 
+/// This enum represents all available Virtusize endpoints
 internal enum APIEndpoints {
     case productDataCheck(externalId: String)
     case productMetaDataHints(
@@ -32,6 +33,8 @@ internal enum APIEndpoints {
         storeId: Int?)
     case events
     case fitIllustrator(storeId: Int, productId: Int)
+
+    // MARK: - Properties
 
     var components: URLComponents {
         var components = URLComponents()
@@ -73,17 +76,31 @@ internal enum APIEndpoints {
         return apiKey
     }
 
+    // MARK: - Helper methods
+
+    /// Builds query parameters for the API endpoint `productDataCheck`
+    ///
+    /// - Parameter externalId: A string to represent the id that will be used to reference
+    ///  this product in Virtusize API
+    /// - Returns: An array of query items for the `URLComponents`
     private func dataCheckQueryItems(externalId: String) -> [URLQueryItem] {
         var queryItem: [URLQueryItem] = []
         queryItem.append(URLQueryItem(name: "apiKey", value: apiKey))
         queryItem.append(URLQueryItem(name: "externalId", value: externalId))
         queryItem.append(URLQueryItem(name: "version", value: "1"))
-        if let userID = Virtusize.userID {
-            queryItem.append(URLQueryItem(name: "externalUserId", value: userID))
+        if let externalUserID = Virtusize.userID {
+            queryItem.append(URLQueryItem(name: "externalUserId", value: externalUserID))
         }
         return queryItem
     }
 
+    /// Builds query parameters for the API endpoint `productMetaDataHints`
+    ///
+    /// - Parameters:
+    ///   - externalId: A string to represent the id that will be used to reference this product in Virtusize API
+    ///   - imageUrl: A string that is the image URL of the product, in order to populate the comparison view
+    ///   - storeId: An interger that represents the store id from the product data
+    /// - Returns: An array of query items for the `URLComponents`
     private func metaDataHintsQueryItems(externalId: String, imageUrl: URL, storeId: Int?) -> [URLQueryItem] {
         var queryItem: [URLQueryItem] = []
         let urlString = imageUrl.absoluteString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
@@ -96,6 +113,12 @@ internal enum APIEndpoints {
         return queryItem
     }
 
+    /// Builds query parameters for the API endpoint `fitIllustrator`
+    ///
+    /// - Parameters:
+    ///   - storeId: An interger that represents the store id from the product data
+    ///   - productId: An Integer to represent the product id
+    /// - Returns: An array of query items for the `URLComponents`
     private func fitIllustratorQueryItems(storeId: Int, productId: Int) -> [URLQueryItem] {
         let bid = BrowserID.current.identifier
         var queryItem: [URLQueryItem] = []
@@ -109,8 +132,8 @@ internal enum APIEndpoints {
         queryItem.append(URLQueryItem(name: "ios", value: "true"))
         queryItem.append(URLQueryItem(name: "sdk", value: String(VirtusizeVersionNumber)))
         queryItem.append(URLQueryItem(name: "userId", value: Virtusize.userID))
-        if let userID = Virtusize.userID {
-            queryItem.append(URLQueryItem(name: "externalUserId", value: userID))
+        if let externalUserID = Virtusize.userID {
+            queryItem.append(URLQueryItem(name: "externalUserId", value: externalUserID))
         }
         return queryItem
     }
