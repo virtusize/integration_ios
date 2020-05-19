@@ -40,7 +40,7 @@ public class Virtusize {
     /// The device language that defaults to the primary device language
     public static var language: String = Locale.preferredLanguages[0]
 
-    /// NotificationCenter ob for debugging the initial product data check
+    /// NotificationCenter observers for debugging the initial product data check
     /// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
     /// with the cause of the failure
     /// - `Virtusize.productDataCheckDidSucceed`

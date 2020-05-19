@@ -55,7 +55,7 @@ public class VirtusizeButton: UIButton {
         }
     }
 
-    /// Applys the default style of `VirtusizeButton`
+    /// Applies the default style of `VirtusizeButton`
 	public func applyDefaultStyle() {
 		tintColor = .black
 
