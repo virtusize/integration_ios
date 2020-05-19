@@ -29,7 +29,7 @@ internal struct Deserializer {
 
     /// Gets `VirtusizeProduct` where the product data from the response of the `productDataCheck` request is added
     ///
-    /// - Parameters
+    /// - Parameters:
     ///   - product: `VirtusizeProduct`
     ///   - data: The product data from the response of the `productDataCheck` request.
     ///   If data is `nil`, the method returns `nil`.

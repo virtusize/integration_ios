@@ -37,7 +37,7 @@ public class Virtusize {
     /// The Virtusize environment that defaults to the `global` domain
 	public static var environment = VirtusizeEnvironment.global
 
-    /// The devie language that defaults to the primary device language
+    /// The device language that defaults to the primary device language
     public static var language: String = Locale.preferredLanguages[0]
 
     /// NotificationCenter ob for debugging the initial product data check

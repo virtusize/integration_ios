@@ -26,7 +26,7 @@ import Foundation
 
 /// This structure represents a product in Virtusize API
 public struct VirtusizeProduct {
-    /// A string to represent the id that will be used to reference this product in Virtusize API
+    /// A string to represent the ID that will be used to reference this product in Virtusize API
     public let externalId: String
 
     /// The image URL of the product, in order to populate the comparison view
@@ -35,7 +35,7 @@ public struct VirtusizeProduct {
     /// The product data from the response of the `productDataCheck` request
     internal var context: JSONObject?
 
-    /// Initializes the VirtusizeEvent structure
+    /// Initializes the VirtusizeProduct structure
     internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
         self.externalId = externalId
         self.imageURL = imageURL

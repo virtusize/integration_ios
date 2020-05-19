@@ -26,7 +26,7 @@ import Foundation
 internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]
 
-/// This enum contains supports HTTP request methods
+/// This enum contains supported HTTP request methods
 private enum APIMethod: String {
     case get = "GET", post = "POST"
 }
@@ -86,7 +86,7 @@ internal struct APIRequest {
     /// Gets the `URLRequest` for the `productMetaDataHints` request to send the image of
     /// VirtusizeProduct to the Virtusize server
     ///
-    /// - Parameters
+    /// - Parameters:
     ///   - product: `VirtusizeProduct` for which check needs to be performed
     ///   - storeId: An interger that represents the store id from the product data
     /// - Returns: A `URLRequest` for the `productMetaDataHints` request
@@ -104,7 +104,7 @@ internal struct APIRequest {
 
     /// Gets the `URLRequest` for the `sendEvent` request
     ///
-    /// - Parameters
+    /// - Parameters:
     ///   - virtusizeEvent: An event to be sent to the Virtusize server
     ///   - context: The product data from the response of the `productDataCheck` request
     /// - Returns: A `URLRequest` for the `sendEvent` request
