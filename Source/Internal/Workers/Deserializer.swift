@@ -24,7 +24,16 @@
 
 import Foundation
 
+/// A structure that helps to deserialize the models specific to the Virtusize API
 internal struct Deserializer {
+
+    /// Gets `VirtusizeProduct` where the product data from the response of the `productDataCheck` request is added
+    ///
+    /// - Parameters:
+    ///   - product: `VirtusizeProduct`
+    ///   - data: The product data from the response of the `productDataCheck` request.
+    ///   If data is `nil`, the method returns `nil`.
+    /// - Returns: `VirtusizeProduct` with the product data from the response of the `productDataCheck` request
     static func product(from product: VirtusizeProduct, withData data: Data?) -> VirtusizeProduct? {
         guard let data = data,
             let rootObject = try? JSONSerialization.jsonObject(with: data, options: []),
@@ -36,6 +45,7 @@ internal struct Deserializer {
             return nil
         }
 
+        // Send the API event where the user saw the product
         Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-product"), withContext: root)
 
         guard let isValid = dataObject["validProduct"] as? Bool, isValid else {
@@ -52,6 +62,7 @@ internal struct Deserializer {
             Virtusize.sendProductImage(of: product, forStore: storeId)
         }
 
+        // Send the API event where the user saw the widget button
         Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-widget-button"), withContext: root)
         NotificationCenter.default.post(name: Virtusize.productDataCheckDidSucceed, object: Virtusize.self)
 
@@ -62,6 +73,11 @@ internal struct Deserializer {
             context: root)
     }
 
+    /// Gets `VirtusizeEvent` with the optional data to be sent to the Virtusize server
+    ///
+    /// - Parameter data: The optional data for the event
+    /// - Throws: `VirtusizeError`
+    /// - Returns: `VirtusizeEvent`
     static func event(data: Any?) throws -> VirtusizeEvent {
         let event: [String: Any]
 

@@ -25,12 +25,15 @@
 import UIKit
 import WebKit
 
+/// The methods of this protocol notify you with Virtusize specific messages such as errors as
+/// `VirtusizeError` and events as `VirtusizeEvent` and tell you when to dismiss the view controller
 public protocol VirtusizeMessageHandler: class {
     func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError)
 	func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent)
     func virtusizeControllerShouldClose(_ controller: VirtusizeViewController)
 }
 
+/// This `UIViewController` represents the Fit Illustrator Window
 public final class VirtusizeViewController: UIViewController {
 	public weak var delegate: VirtusizeMessageHandler?
 
@@ -150,7 +153,7 @@ extension VirtusizeViewController: WKNavigationDelegate {
 }
 
 extension VirtusizeViewController: WKScriptMessageHandler {
-    // MARK: Widget Callbacks
+    // MARK: - Widget Callbacks
     public func userContentController(
         _ userContentController: WKUserContentController,
         didReceive message: WKScriptMessage) {

@@ -24,6 +24,7 @@
 
 import UIKit
 
+/// This enum contains images encoded as Base64 strings
 private enum Base64ImageString: String {
     // swiftlint:disable line_length
     case cancel = "cancel-umbrella"
@@ -79,6 +80,7 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXQAAAF0CAMAAAAEvTJhAAAACXBIWXMAAA
     }
 }
 
+/// This class wraps the assets including colors and images used in the Virtusize SDK
 final internal class Assets {
     private static let bundle = Bundle(for: Assets.self)
 

@@ -24,6 +24,7 @@
 
 import UIKit
 
+/// This `UIView` represents the splash screen of the Fit Illustrator window
 final internal class SplashView: UIView {
     private let logo: UIImageView = {
         let logo = UIImageView(image: Assets.logo)

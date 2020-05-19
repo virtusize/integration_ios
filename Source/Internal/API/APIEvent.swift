@@ -26,10 +26,16 @@ import Foundation
 
 typealias Payload = JSONObject
 
+/// A structure to build the additional payload for the event to be sent to the server
+/// and convert it from `JSONObject` to `Data`
 internal struct APIEvent {
+    /// The additional payload for the event as `Payload` (`JSONObject`)
     private var payload: Payload
+
+    /// The name of the event
     let name: String
 
+    /// Initializes the APIEvent structure
     init(withName name: String, apiKey: String) {
         self.name = name
         let screenSize = UIScreen.main.bounds.size
@@ -48,6 +54,9 @@ internal struct APIEvent {
         ]
     }
 
+    /// Adds the response from Virtusize API for the `productDataCheck` request to payload
+    ///
+    /// - Parameter json: The product data from the response of the `productDataCheck` request
     mutating func align(withContext json: JSONObject?) {
         guard let root = json,
             let data = root["data"] as? JSONObject,
@@ -80,6 +89,9 @@ internal struct APIEvent {
         }
     }
 
+    /// Adds the additional data in the event to the payload
+    ///
+    /// - Parameter payload: The additional data in the event
     mutating func align(withPayload payload: Payload?) {
         guard let payload = payload else {
             return
@@ -89,6 +101,7 @@ internal struct APIEvent {
         }
     }
 
+    /// The additional payload for the event as `Data`
     var jsonPayload: Data? {
         return try? JSONSerialization.data(withJSONObject: payload, options: [])
     }

@@ -24,11 +24,18 @@
 
 import Foundation
 
+/// This structure represents a product in Virtusize API
 public struct VirtusizeProduct {
+    /// A string to represent the ID that will be used to reference this product in Virtusize API
     public let externalId: String
+
+    /// The URL of the product image that is fully qualified with the domain and the protocol
     public let imageURL: URL?
+
+    /// The product data from the response of the `productDataCheck` request
     internal var context: JSONObject?
 
+    /// Initializes the VirtusizeProduct structure
     internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
         self.externalId = externalId
         self.imageURL = imageURL

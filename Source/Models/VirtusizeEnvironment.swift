@@ -24,6 +24,7 @@
 
 import Foundation
 
+/// This enum contains all available Virtusize environments
 public enum VirtusizeEnvironment: String {
     case staging="staging.virtusize.com",
         global="www.virtusize.com",
