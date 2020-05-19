@@ -29,7 +29,7 @@ public struct VirtusizeProduct {
     /// A string to represent the ID that will be used to reference this product in Virtusize API
     public let externalId: String
 
-    /// The image URL of the product, in order to populate the comparison view
+    /// The URL of the product image that is fully qualified with the domain and the protocol
     public let imageURL: URL?
 
     /// The product data from the response of the `productDataCheck` request

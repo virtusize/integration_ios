@@ -88,7 +88,7 @@ internal struct APIRequest {
     ///
     /// - Parameters:
     ///   - product: `VirtusizeProduct` for which check needs to be performed
-    ///   - storeId: An interger that represents the store id from the product data
+    ///   - storeId: An integer that represents the store id from the product data
     /// - Returns: A `URLRequest` for the `productMetaDataHints` request
     internal static func sendProductImage(of product: VirtusizeProduct, forStore storeId: Int) throws -> URLRequest {
         guard let imageURL = product.imageURL else {

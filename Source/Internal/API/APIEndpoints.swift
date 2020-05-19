@@ -98,8 +98,8 @@ internal enum APIEndpoints {
     ///
     /// - Parameters:
     ///   - externalId: A string to represent the id that will be used to reference this product in Virtusize API
-    ///   - imageUrl: A string that is the image URL of the product, in order to populate the comparison view
-    ///   - storeId: An interger that represents the store id from the product data
+    ///   - imageUrl: The URL of the product image that is fully qualified with the domain and the protocol
+    ///   - storeId: An integer that represents the store id from the product data
     /// - Returns: An array of query items for the `URLComponents`
     private func metaDataHintsQueryItems(externalId: String, imageUrl: URL, storeId: Int?) -> [URLQueryItem] {
         var queryItem: [URLQueryItem] = []
@@ -116,7 +116,7 @@ internal enum APIEndpoints {
     /// Builds query parameters for the API endpoint `fitIllustrator`
     ///
     /// - Parameters:
-    ///   - storeId: An interger that represents the store id from the product data
+    ///   - storeId: An integer that represents the store id from the product data
     ///   - productId: An Integer to represent the product id
     /// - Returns: An array of query items for the `URLComponents`
     private func fitIllustratorQueryItems(storeId: Int, productId: Int) -> [URLQueryItem] {

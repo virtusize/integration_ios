@@ -94,7 +94,7 @@ public class Virtusize {
     ///
     /// - Parameters:
     ///   - product: `VirtusizeProduct` whose image needs to be sent to the Virtusize server
-    ///   - storeId: An interger that represents the store id from the product data
+    ///   - storeId: An integer that represents the store id from the product data
     internal class func sendProductImage(of product: VirtusizeProduct, forStore storeId: Int) {
         guard let request = try? APIRequest.sendProductImage(of: product, forStore: storeId) else {
             return
