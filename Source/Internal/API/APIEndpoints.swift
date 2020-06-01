@@ -88,9 +88,6 @@ internal enum APIEndpoints {
         queryItem.append(URLQueryItem(name: "apiKey", value: apiKey))
         queryItem.append(URLQueryItem(name: "externalId", value: externalId))
         queryItem.append(URLQueryItem(name: "version", value: "1"))
-        if let externalUserID = Virtusize.userID {
-            queryItem.append(URLQueryItem(name: "externalUserId", value: externalUserID))
-        }
         return queryItem
     }
 
