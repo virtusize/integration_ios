@@ -1,7 +1,7 @@
 //
-//  AppDelegate.swift
+//  VirtusizeOrderItem.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2020 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,27 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-import Virtusize
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-	var window: UIWindow?
-
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-        Virtusize.userID = "123"
-		Virtusize.environment = .staging
-		return true
-	}
+public struct VirtusizeOrderItem: Codable {
+    // Id provided by the client, must be unique for a product
+    private let productId: String
+    // Name of the size e.g. `M`
+    private let size: String
+    // Alias of the size if not identical from the product page
+    private let sizeAlias: String?
+    // Eventual variant id if several products
+    private let variantId: String?
+    // The imageURL of the item. The image that will be shared with Virtusize
+    private let imageUrl: String
+    // The color of the item
+    private let color: String?
+    // An identifier for the gender
+    private let gender: String?
+    // Unit price is a Decimal type in the DB (12,2)
+    private let unitPrice: Float
+    // If not passed should be set to 1
+    private let quantity: Int
+    // Product page url if any
+    private let url: String?
 }

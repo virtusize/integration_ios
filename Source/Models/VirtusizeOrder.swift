@@ -1,7 +1,7 @@
 //
-//  AppDelegate.swift
+//  VirtusizeOrder.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2020 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,28 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-import Virtusize
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+/// This structure wraps the parameters for the API request of sending the order
+public struct VirtusizeOrder: Codable {
+    /// The order ID provided by the client
+    private let externalOrderId: String
+    /// The unique user ID from the client system.
+    /// `Virtusize.userId` should be set for sending the order
+    internal var externalUserId: String?
+    /// A country code is set for each region i.e. ISO-3166.
+    /// This is set by the response of the request that retrieves the specific store info
+    internal var region: String?
+    /// An array of the order items.
+    public var items: [VirtusizeOrderItem]
+}
 
-	var window: UIWindow?
+extension VirtusizeOrder {
+    public init(externalOrderId: String) {
+        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: [])
+    }
 
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-        Virtusize.userID = "123"
-		Virtusize.environment = .staging
-		return true
-	}
+    public init(externalOrderId: String, items: [VirtusizeOrderItem]) {
+        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: items)
+    }
 }

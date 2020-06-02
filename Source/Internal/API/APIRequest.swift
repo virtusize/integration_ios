@@ -137,4 +137,24 @@ internal struct APIRequest {
         let endpoint = APIEndpoints.fitIllustrator(storeId: storeId, productId: productId)
         return HTTPRequest(components: endpoint.components)
 	}
+
+    /// Gets the `URLRequest` for the `storeViewApiKey` request
+    ///
+    /// - Returns: A `URLRequest` for the `storeViewApiKey` request
+    internal static func retrieveStoreInfo() -> URLRequest? {
+        let endpoint = APIEndpoints.storeViewApiKey
+        return apiRequest(components: endpoint.components)
+    }
+
+    /// Gets the `URLRequest` for the `orders` request
+    ///
+    /// - Parameter order: A `VirtusizeOrder` that includes the info of the order and the items that the user purchased
+    /// - Returns: A `URLRequest` for the `orders` request
+    internal static func sendOrder(_ order: VirtusizeOrder) -> URLRequest? {
+        guard let jsonData = try? JSONEncoder().encode(order) else {
+            return nil
+        }
+        let endpoint = APIEndpoints.orders
+        return apiRequest(components: endpoint.components, withPayload: jsonData)
+    }
 }
