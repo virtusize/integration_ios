@@ -33,6 +33,8 @@ internal enum APIEndpoints {
         storeId: Int?)
     case events
     case fitIllustrator(storeId: Int, productId: Int)
+    case storeViewApiKey
+    case orders
 
     // MARK: - Properties
 
@@ -61,6 +63,14 @@ internal enum APIEndpoints {
             components.queryItems = fitIllustratorQueryItems(
                 storeId: storeId,
                 productId: productId)
+
+        case .storeViewApiKey:
+            components.path = "/a/api/v3/stores/api-key/\(apiKey)"
+            components.queryItems = storeViewApiKeyQueryItems()
+
+        case .orders:
+            components.path = "/a/api/v3/orders"
+
         }
         return components
     }
@@ -88,9 +98,6 @@ internal enum APIEndpoints {
         queryItem.append(URLQueryItem(name: "apiKey", value: apiKey))
         queryItem.append(URLQueryItem(name: "externalId", value: externalId))
         queryItem.append(URLQueryItem(name: "version", value: "1"))
-        if let externalUserID = Virtusize.userID {
-            queryItem.append(URLQueryItem(name: "externalUserId", value: externalUserID))
-        }
         return queryItem
     }
 
@@ -135,6 +142,15 @@ internal enum APIEndpoints {
         if let externalUserID = Virtusize.userID {
             queryItem.append(URLQueryItem(name: "externalUserId", value: externalUserID))
         }
+        return queryItem
+    }
+
+    /// Builds query parameters for the API endpoint `storeViewApiKey`
+    ///
+    /// - Returns: An array of query items for the `URLComponents`
+    private func storeViewApiKeyQueryItems() -> [URLQueryItem] {
+        var queryItem: [URLQueryItem] = []
+        queryItem.append(URLQueryItem(name: "format", value: "json"))
         return queryItem
     }
 }

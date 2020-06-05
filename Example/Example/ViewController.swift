@@ -47,8 +47,48 @@ class ViewController: UIViewController {
         checkTheFitButton.storeProduct = VirtusizeProduct(
             externalId: "vs_dress",
             imageURL: URL(string: "http://www.example.com/image.jpg"))
-		checkTheFitButton.applyDefaultStyle()
+        checkTheFitButton.applyDefaultStyle()
+
+        sendOrderSample()
 	}
+
+    /// Demonstrates how to send an order to the Virtusize server
+    ///
+    /// - Note:
+    /// The properties `sizeAlias`, `variantId`, `color`, `gender` and `url`
+    /// for `VirtusizeOrderItem` are optional
+    ///
+    /// If `quantity` is not provided, it will be set to 1 automatically
+    ///
+    private func sendOrderSample() {
+        var virtusizeOrder = VirtusizeOrder(externalOrderId: "4000111032")
+        let item = VirtusizeOrderItem(
+            productId: "A00001",
+            size: "L",
+            sizeAlias: "Large",
+            variantId: "A00001_SIZEL_RED",
+            imageUrl: "http://images.example.com/products/A00001/red/image1xl.jpg",
+            color: "Red",
+            gender: "W",
+            unitPrice: 5100.00,
+            currency: "JPY",
+            quantity: 1,
+            url: "http://example.com/products/A00001"
+        )
+        virtusizeOrder.items = [item]
+
+        Virtusize.sendOrder(
+            virtusizeOrder,
+            // This optional success callback is called when the app successfully sends the order
+            onSuccess: {
+                print("Successfully sent the order")
+        },
+            // This optional error callback is called when an error occurs
+            // when the app is sending the order
+            onError: { error in
+                print("Failed to send the order, error: \(error.debugDescription)")
+        })
+    }
 
 	@IBAction func checkTheFit() {
         if let virtusize = VirtusizeViewController(

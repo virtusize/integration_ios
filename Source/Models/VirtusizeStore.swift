@@ -1,7 +1,7 @@
 //
-//  AppDelegate.swift
+//  VirtusizeStore.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2020 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,19 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-import Virtusize
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-	var window: UIWindow?
-
-	func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-        Virtusize.userID = "123"
-		Virtusize.environment = .staging
-		return true
-	}
+/// This structure represents the response of the request that retrieves the specific store info
+internal struct VirtusizeStore: Codable {
+    private let id: Int
+    private let surveyLink: String
+    private let name: String
+    private let shortName: String
+    private let lengthUnitId: Int
+    private let apiKey: String
+    private let created: String
+    private let updated: String
+    private let disabled: Bool?
+    private let typemapperEnabled: Bool
+    internal var region: String?
 }
