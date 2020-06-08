@@ -79,11 +79,11 @@ class ViewController: UIViewController {
 
         Virtusize.sendOrder(
             virtusizeOrder,
-            // This optional success callback is called when the app successfully sends the order
+            // This success callback is optional and gets called when the app successfully sends the order
             onSuccess: {
                 print("Successfully sent the order")
         },
-            // This optional error callback is called when an error occurs
+            // This error callback is optional and gets called when an error occurs
             // when the app is sending the order
             onError: { error in
                 print("Failed to send the order, error: \(error.debugDescription)")

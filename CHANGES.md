@@ -13,6 +13,11 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.3.0
+
+- Feature: The Order API
+- Docs: Update documentation to the README.
+
 ### 1.2.0
 
 - Feature: Dispatch Notification during Product Data Check. (za)
