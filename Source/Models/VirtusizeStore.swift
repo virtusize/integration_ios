@@ -34,7 +34,7 @@ internal struct VirtusizeStore: Codable {
     private let apiKey: String
     private let created: String
     private let updated: String
-    private let disabled: Bool?
+    private let disabled: String?
     private let typemapperEnabled: Bool
     internal var region: String?
 }
