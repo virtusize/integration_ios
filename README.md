@@ -165,6 +165,7 @@ Virtusize.userID = "123"
 #### 2. Create a *VirtusizeOrder* structure for order data
 
 The ***VirtusizeOrder*** structure gets passed to the `Virtusize.sendOrder` method, and has the following properties:
+
 __**Note:**__ * means the property is required
 
 **VirtusizeOrder**
@@ -188,7 +189,7 @@ __**Note:**__ * means the property is required
 | quantity*  | Int       | 1                                        | The number of the item purchased. If it's not passed, It will be set to 1 |
 | url        | String    | "http[]()://example.com/products/A001"   | The URL of the product page. Please make sure this is a URL that users can access |
 
-**Samples**
+**Sample**
 
 ```Swift
 var virtusizeOrder = VirtusizeOrder(externalOrderId: "2020060812345")
