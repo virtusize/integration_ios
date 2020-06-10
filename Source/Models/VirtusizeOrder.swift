@@ -36,6 +36,18 @@ public struct VirtusizeOrder: Codable {
     internal var region: String?
     /// An array of the order items.
     public var items: [VirtusizeOrderItem]
+
+    /// Initializes the VirtusizeOrder structure
+    private init(externalOrderId: String,
+                 externalUserId: String? = nil,
+                 region: String? = nil,
+                 items: [VirtusizeOrderItem] = []
+    ) {
+        self.externalOrderId = externalOrderId
+        self.externalUserId = externalUserId
+        self.region = region
+        self.items = items
+    }
 }
 
 extension VirtusizeOrder {
