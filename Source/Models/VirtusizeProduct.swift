@@ -42,3 +42,9 @@ public struct VirtusizeProduct {
         self.context = context
     }
 }
+
+extension VirtusizeProduct {
+    public init(externalId: String, imageURL: URL? = nil) {
+        self.init(externalId: externalId, imageURL: imageURL, context: nil)
+    }
+}

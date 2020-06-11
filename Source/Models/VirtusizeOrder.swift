@@ -48,3 +48,13 @@ public struct VirtusizeOrder: Codable {
         self.items = items
     }
 }
+
+extension VirtusizeOrder {
+    public init(externalOrderId: String) {
+        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: [])
+    }
+
+    public init(externalOrderId: String, items: [VirtusizeOrderItem]) {
+        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: items)
+    }
+}
