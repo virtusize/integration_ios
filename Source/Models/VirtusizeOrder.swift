@@ -41,21 +41,10 @@ public struct VirtusizeOrder: Codable {
     private init(externalOrderId: String,
                  externalUserId: String? = nil,
                  region: String? = nil,
-                 items: [VirtusizeOrderItem] = []
-    ) {
+                 items: [VirtusizeOrderItem] = []) {
         self.externalOrderId = externalOrderId
         self.externalUserId = externalUserId
         self.region = region
         self.items = items
-    }
-}
-
-extension VirtusizeOrder {
-    public init(externalOrderId: String) {
-        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: [])
-    }
-
-    public init(externalOrderId: String, items: [VirtusizeOrderItem]) {
-        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: items)
     }
 }
