@@ -104,9 +104,6 @@ class APIEndpointsTests: XCTestCase {
     func testFitIllustratorEndpoint_returnExpectedComponents() {
         Virtusize.environment = .japan
 
-        let mockDefaults = MockNSUserDefaults()
-        let browserID = BrowserID(defaults: mockDefaults)
-        browserID.identifier = "browserID"
         let endpoint = APIEndpoints.fitIllustrator(
             storeId: 2,
             productId: 694,

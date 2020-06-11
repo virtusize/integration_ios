@@ -20,6 +20,7 @@
 		9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956C8247E730A0014DF51 /* VirtusizeOrder.swift */; };
 		9C5956CD2484F6280014DF51 /* VirtusizeOrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956CC2484F6280014DF51 /* VirtusizeOrderItem.swift */; };
 		9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */; };
+		9CB0390C24921FDA008CCD84 /* APIEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB0390B24921FDA008CCD84 /* APIEventTests.swift */; };
 		DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9D219D151F000B3402 /* Assets.swift */; };
 		DF6B5CA0219D3090000B3402 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9F219D3090000B3402 /* SplashView.swift */; };
 		DF71642521A2818F002C7202 /* ROADMAP.md in Resources */ = {isa = PBXBuildFile; fileRef = DF71642421A2818E002C7202 /* ROADMAP.md */; };
@@ -61,6 +62,7 @@
 		9C5956C8247E730A0014DF51 /* VirtusizeOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeOrder.swift; sourceTree = "<group>"; };
 		9C5956CC2484F6280014DF51 /* VirtusizeOrderItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeOrderItem.swift; sourceTree = "<group>"; };
 		9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeStore.swift; sourceTree = "<group>"; };
+		9CB0390B24921FDA008CCD84 /* APIEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEventTests.swift; sourceTree = "<group>"; };
 		DF6B5C9D219D151F000B3402 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Assets.swift; path = Source/Internal/Constants/Assets.swift; sourceTree = "<group>"; };
 		DF6B5C9F219D3090000B3402 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DF71642421A2818E002C7202 /* ROADMAP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ROADMAP.md; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				9C4B9D712491EC5D0065808E /* APIEndpointsTests.swift */,
+				9CB0390B24921FDA008CCD84 /* APIEventTests.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DED8D2B205755C3001CA7DF /* VirtusizeTests.swift in Sources */,
+				9CB0390C24921FDA008CCD84 /* APIEventTests.swift in Sources */,
 				4D6C5790205FB76B00DA910E /* BrowserIDTests.swift in Sources */,
 				9C4B9D722491EC5D0065808E /* APIEndpointsTests.swift in Sources */,
 			);
