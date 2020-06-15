@@ -1,11 +1,26 @@
 //
 //  APIEventTests.swift
-//  VirtusizeTests
 //
-//  Created by Kuei-Jung Hu on 2020/06/11.
-//  Copyright © 2020 Virtusize AB. All rights reserved.
+//  Copyright (c) 2020 Virtusize AB
 //
-
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 import XCTest
 @testable import Virtusize
 
@@ -42,7 +57,7 @@ class APIEventTests: XCTestCase {
     }
 
     func testAPIEventAlighProductDataCheckContext_hasExpectedPayload() {
-        let data = TestEvironment.productDataCheckJsonString.data(using: .utf8)!
+        let data = TestFixtures.productDataCheckJsonResponse.data(using: .utf8)!
         let productDataCheckJsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 
         event?.align(withContext: productDataCheckJsonObject)
@@ -61,7 +76,7 @@ class APIEventTests: XCTestCase {
     }
 
     func testAPIEventAlighAddtionalEventData_hasExpectedPayload() {
-        let data = TestEvironment.additionalEventData.data(using: .utf8)!
+        let data = TestFixtures.additionalEventData.data(using: .utf8)!
         let addtionalEventDataJsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 
         event?.align(withPayload: addtionalEventDataJsonObject)
@@ -74,37 +89,4 @@ class APIEventTests: XCTestCase {
         XCTAssertEqual(addtionalEventPayloadJson?["size"] as? String ?? "", "medium")
         XCTAssertEqual(addtionalEventPayloadJson?["wardrobeBoughtItem"] as? Int ?? -1, 3)
     }
-}
-
-struct TestEvironment {
-    static var productDataCheckJsonString =
-    """
-        {
-            "data":{
-                "productTypeName": "pants",
-                "storeName": "virtusize",
-                "storeId": 2,
-                "validProduct": true,
-                "fetchMetaData": false,
-                "productDataId": 7110384,
-                "productTypeId": 5,
-                "userData": {
-                        "should_see_ph_tooltip": false,
-                        "wardrobeActive": true
-                    }
-            },
-            "name": "backend-checked-product",
-            "productId": "694"
-        }
-    """
-
-    static var additionalEventData =
-    """
-        {
-            "cloudinaryPublicId": "testCloudinaryPublicId",
-            "productTypeId": 5,
-            "size": "medium",
-            "wardrobeBoughtItem": 3
-        }
-    """
 }

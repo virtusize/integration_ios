@@ -55,41 +55,14 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNotNil(queryParamters["version"], "1")
     }
 
-    func testProductMetaDataHintsEndpoint_withValidArguments_returnExpectedComponents() {
+    func testProductMetaDataHintsEndpoint_returnExpectedComponents() {
         Virtusize.environment = .global
-        let imageUrl = URL.init(string: "https://www.testimage.com/xxx.jpg")!
-        let endpoint = APIEndpoints.productMetaDataHints(
-            externalId: dummyExternalId,
-            imageUrl: imageUrl,
-            storeId: 2
-        )
-
-        XCTAssertEqual(endpoint.components.queryItems?.count, 4)
+        let endpoint = APIEndpoints.productMetaDataHints
 
         XCTAssertEqual(endpoint.components.host, "www.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/rest-api/v1/product-meta-data-hints")
 
-        let queryParamters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
-
-        XCTAssertEqual(queryParamters["apiKey"], "test_APIKey")
-        XCTAssertEqual(queryParamters["externalId"], "694")
-        XCTAssertEqual(queryParamters["imageUrl"], "https%3A%2F%2Fwww.testimage.com%2Fxxx.jpg")
-        XCTAssertEqual(queryParamters["storeId"], "2")
-    }
-
-    func testProductMetaDataHintsEndpoint_withNullStoreId_returnExpectedStoreId() {
-        let imageUrl = URL.init(string: "https://www.testimage.com/xxx.jpg")!
-        let endpoint = APIEndpoints.productMetaDataHints(
-            externalId: dummyExternalId,
-            imageUrl: imageUrl,
-            storeId: nil
-        )
-
-        XCTAssertEqual(endpoint.components.queryItems?.count, 3)
-
-        let queryParamters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
-
-        XCTAssertNil(queryParamters["storeId"])
+        XCTAssertNil(endpoint.components.queryItems)
     }
 
     func testEventsEndpoint_returnExpectedComponents() {
