@@ -79,8 +79,7 @@ class APIEndpointsTests: XCTestCase {
 
         let endpoint = APIEndpoints.fitIllustrator(
             storeId: 2,
-            productId: 694,
-            randomNumber: 621383807
+            productId: 694
         )
 
         XCTAssertEqual(endpoint.components.host, "api.virtusize.jp")
@@ -94,7 +93,7 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertEqual(queryParamters["bid"], BrowserID.current.identifier)
         XCTAssertEqual(queryParamters["addToCartEnabled"], "false")
         XCTAssertEqual(queryParamters["storeId"], "2")
-        XCTAssertEqual(queryParamters["_"], "621383807")
+        XCTAssert((0 ... 1519982555).contains(Int(queryParamters["_"] ?? "-1") ?? -1))
         XCTAssertEqual(queryParamters["spid"], "694")
         XCTAssertEqual(queryParamters["lang"], "en")
         XCTAssertEqual(queryParamters["ios"], "true")

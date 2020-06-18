@@ -29,7 +29,7 @@ internal enum APIEndpoints {
     case productDataCheck(externalId: String)
     case productMetaDataHints
     case events
-    case fitIllustrator(storeId: Int, productId: Int, randomNumber: UInt32? = nil)
+    case fitIllustrator(storeId: Int, productId: Int)
     case storeViewApiKey
     case orders
 
@@ -51,12 +51,11 @@ internal enum APIEndpoints {
         case .events:
             components.path = "/a/api/v3/events"
 
-        case .fitIllustrator(let storeId, let productId, let randomNumber):
+        case .fitIllustrator(let storeId, let productId):
             components.path = "/a/fit-illustrator/v1/index.html"
             components.queryItems = fitIllustratorQueryItems(
                 storeId: storeId,
-                productId: productId,
-                randomNumber: randomNumber)
+                productId: productId)
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -101,14 +100,14 @@ internal enum APIEndpoints {
     ///   - storeId: An integer that represents the store id from the product data
     ///   - productId: An Integer to represent the product id
     /// - Returns: An array of query items for the `URLComponents`
-    private func fitIllustratorQueryItems(storeId: Int, productId: Int, randomNumber: UInt32?) -> [URLQueryItem] {
+    private func fitIllustratorQueryItems(storeId: Int, productId: Int) -> [URLQueryItem] {
         let bid = BrowserID.current.identifier
         var queryItem: [URLQueryItem] = []
         queryItem.append(URLQueryItem(name: "detached", value: "false"))
         queryItem.append(URLQueryItem(name: "bid", value: bid))
         queryItem.append(URLQueryItem(name: "addToCartEnabled", value: "false"))
         queryItem.append(URLQueryItem(name: "storeId", value: String(storeId)))
-        queryItem.append(URLQueryItem(name: "_", value: String(randomNumber ?? arc4random_uniform(1519982555))))
+        queryItem.append(URLQueryItem(name: "_", value: String(arc4random_uniform(1519982555))))
         queryItem.append(URLQueryItem(name: "spid", value: String(productId)))
         queryItem.append(URLQueryItem(name: "lang", value: Virtusize.language))
         queryItem.append(URLQueryItem(name: "ios", value: "true"))
