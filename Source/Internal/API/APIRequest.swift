@@ -90,16 +90,20 @@ internal struct APIRequest {
     ///   - product: `VirtusizeProduct` for which check needs to be performed
     ///   - storeId: An integer that represents the store id from the product data
     /// - Returns: A `URLRequest` for the `productMetaDataHints` request
-    internal static func sendProductImage(of product: VirtusizeProduct, forStore storeId: Int) throws -> URLRequest {
+    internal static func sendProductImage(of product: VirtusizeProduct, forStore storeId: Int) throws -> URLRequest? {
         guard let imageURL = product.imageURL else {
             fatalError("Image url is not defined")
         }
 
-        let endpoint = APIEndpoints.productMetaDataHints(
-            externalId: product.externalId,
-            imageUrl: imageURL,
-            storeId: storeId)
-        return apiRequest(components: endpoint.components, method: .post)
+        let endpoint = APIEndpoints.productMetaDataHints
+        let productImageMetaData = VirtusizeProductMetaData(storeId: storeId,
+                                                            externalId: product.externalId,
+                                                            imageUrl: imageURL.absoluteString,
+                                                            apiKey: endpoint.apiKey)
+        guard let jsonData = try? JSONEncoder().encode(productImageMetaData) else {
+            return nil
+        }
+        return apiRequest(components: endpoint.components, withPayload: jsonData)
 	}
 
     /// Gets the `URLRequest` for the `sendEvent` request
@@ -151,10 +155,10 @@ internal struct APIRequest {
     /// - Parameter order: A `VirtusizeOrder` that includes the info of the order and the items that the user purchased
     /// - Returns: A `URLRequest` for the `orders` request
     internal static func sendOrder(_ order: VirtusizeOrder) -> URLRequest? {
+        let endpoint = APIEndpoints.orders
         guard let jsonData = try? JSONEncoder().encode(order) else {
             return nil
         }
-        let endpoint = APIEndpoints.orders
         return apiRequest(components: endpoint.components, withPayload: jsonData)
     }
 }

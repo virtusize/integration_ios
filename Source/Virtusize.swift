@@ -50,6 +50,11 @@ public class Virtusize {
     /// A default session configuration object for a URL session.
     private static let sessionConfiguration = URLSessionConfiguration.default
 
+    /// A session that confirms to `APISessionProtocol` for mocking API responses in testing
+    internal static var session: APISessionProtocol = URLSession(configuration: Virtusize.sessionConfiguration,
+                                                        delegate: nil,
+                                                        delegateQueue: nil)
+
     /// A closure that is called when the operation completes
     typealias CompletionHandler = (Data?) -> Void
 
@@ -64,11 +69,9 @@ public class Virtusize {
     ///   - request: A URL load request for an API request
     ///   - completionHandler: A callback to pass data back when an API request is successful
     ///   - error: A callback to pass `VirtusizeError` back when an API request is unsuccessful
-    private class func perform(
-        _ request: URLRequest,
-        completion completionHandler: CompletionHandler? = nil,
-        error errorHandler: ErrorHandler? = nil) {
-        let session = URLSession(configuration: sessionConfiguration, delegate: nil, delegateQueue: nil)
+    private class func perform(_ request: URLRequest,
+                               completion completionHandler: CompletionHandler? = nil,
+                               error errorHandler: ErrorHandler? = nil) {
         let task: URLSessionDataTask
         task = session.dataTask(with: request) { (data, _, error) in
             guard error == nil else {
@@ -82,7 +85,7 @@ public class Virtusize {
             }
         }
         task.resume()
-        session.finishTasksAndInvalidate()
+        URLSession.shared.finishTasksAndInvalidate()
     }
 
     /// The API request for product check
@@ -90,9 +93,8 @@ public class Virtusize {
     /// - Parameters:
     ///   - product: `VirtusizeProduct` for which check needs to be performed
     ///   - completionHandler: A callback to pass `VirtusizeProduct` back when an API request is successful
-	internal class func productCheck(
-        product: VirtusizeProduct,
-        completion completionHandler: ((VirtusizeProduct?) -> Void)?) {
+    internal class func productCheck(product: VirtusizeProduct,
+                                     completion completionHandler: ((VirtusizeProduct?) -> Void)?) {
         perform(APIRequest.productCheck(product: product), completion: { data in
             completionHandler?(Deserializer.product(from: product, withData: data))
         })
@@ -103,11 +105,19 @@ public class Virtusize {
     /// - Parameters:
     ///   - product: `VirtusizeProduct` whose image needs to be sent to the Virtusize server
     ///   - storeId: An integer that represents the store id from the product data
-    internal class func sendProductImage(of product: VirtusizeProduct, forStore storeId: Int) {
+    internal class func sendProductImage(of product: VirtusizeProduct,
+                                         forStore storeId: Int,
+                                         completion completionHandler: ((JSONObject?) -> Void)? = nil) {
         guard let request = try? APIRequest.sendProductImage(of: product, forStore: storeId) else {
             return
         }
-        perform(request)
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
+            completionHandler?(jsonObject)
+        })
 	}
 
     /// The API request for logging an event and sending it to the Virtusize server
@@ -115,11 +125,19 @@ public class Virtusize {
     /// - Parameters:
     ///   - event: An event to be sent to the Virtusize server
     ///   - context: The product data from the response of the `productDataCheck` request
-    internal class func sendEvent(_ event: VirtusizeEvent, withContext context: JSONObject? = nil) {
+    internal class func sendEvent(_ event: VirtusizeEvent,
+                                  withContext context: JSONObject? = nil,
+                                  completion completionHandler: ((JSONObject?) -> Void)? = nil) {
         guard let request = APIRequest.sendEvent(event, withContext: context) else {
             return
         }
-        perform(request)
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
+            completionHandler?(jsonObject)
+        })
 	}
 
     /// The API request for retrieving the specific store info from the API key
@@ -130,9 +148,8 @@ public class Virtusize {
     ///   retrieve the store info is successful
     ///   - errorHandler: A callback to pass `VirtusizeError` back when the request to retrieve the
     ///   store info is unsuccessful
-    internal class func retrieveStoreInfo(
-        completion: @escaping (_ region: String?) -> Void,
-        errorHandler: ((VirtusizeError) -> Void)? = nil) {
+    internal class func retrieveStoreInfo(completion: @escaping (_ region: String?) -> Void,
+                                          errorHandler: ((VirtusizeError) -> Void)? = nil) {
         guard let request = APIRequest.retrieveStoreInfo() else {
             return
         }
@@ -157,29 +174,35 @@ public class Virtusize {
     ///   - onSuccess: A callback to be called when the request to send an order is successful
     ///   - onError: A callback to pass `VirtusizeError` back when the request to send an order is
     ///    unsuccessful
-    public class func sendOrder(
-        _ order: VirtusizeOrder,
-        onSuccess: (() -> Void)? = nil,
-        onError: ((VirtusizeError) -> Void)? = nil) {
-        var mutualOrder = order
-
+    public class func sendOrder(_ order: VirtusizeOrder,
+                                onSuccess: (() -> Void)? = nil,
+                                onError: ((VirtusizeError) -> Void)? = nil) {
         guard let externalUserId = Virtusize.userID else {
             fatalError("Please set Virtusize.userID")
         }
+        var mutualOrder = order
         mutualOrder.externalUserId = externalUserId
 
         retrieveStoreInfo(completion: { region in
             mutualOrder.region = region
-            guard let request = APIRequest.sendOrder(mutualOrder) else {
-                return
-            }
-            perform(request, completion: { _ in
-                onSuccess?()
-            }, error: { error in
-                onError?(VirtusizeError.apiRequestError(request.url, error))
-            })
+            sendOrderWithRegion(mutualOrder, onSuccess: onSuccess, onError: onError)
         }, errorHandler: { error in
-                onError?(error)
+            onError?(error)
+        })
+    }
+
+    /// Helper function for sending order after making the request to retrieve the store info
+    internal class func sendOrderWithRegion(
+        _ order: VirtusizeOrder,
+        onSuccess: (() -> Void)? = nil,
+        onError: ((VirtusizeError) -> Void)? = nil) {
+        guard let request = APIRequest.sendOrder(order) else {
+            return
+        }
+        perform(request, completion: { _ in
+            onSuccess?()
+        }, error: { error in
+            onError?(VirtusizeError.apiRequestError(request.url, error))
         })
     }
 }

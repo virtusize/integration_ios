@@ -27,10 +27,7 @@ import Foundation
 /// This enum represents all available Virtusize endpoints
 internal enum APIEndpoints {
     case productDataCheck(externalId: String)
-    case productMetaDataHints(
-        externalId: String,
-        imageUrl: URL,
-        storeId: Int?)
+    case productMetaDataHints
     case events
     case fitIllustrator(storeId: Int, productId: Int)
     case storeViewApiKey
@@ -48,12 +45,8 @@ internal enum APIEndpoints {
             components.path = "/integration/v3/product-data-check"
             components.queryItems = dataCheckQueryItems(externalId: externalId)
 
-        case .productMetaDataHints(let externalId, let imageUrl, let storeId):
+        case .productMetaDataHints:
             components.path = "/rest-api/v1/product-meta-data-hints"
-            components.queryItems = metaDataHintsQueryItems(
-                externalId: externalId,
-                imageUrl: imageUrl,
-                storeId: storeId)
 
         case .events:
             components.path = "/a/api/v3/events"
@@ -98,25 +91,6 @@ internal enum APIEndpoints {
         queryItem.append(URLQueryItem(name: "apiKey", value: apiKey))
         queryItem.append(URLQueryItem(name: "externalId", value: externalId))
         queryItem.append(URLQueryItem(name: "version", value: "1"))
-        return queryItem
-    }
-
-    /// Builds query parameters for the API endpoint `productMetaDataHints`
-    ///
-    /// - Parameters:
-    ///   - externalId: A string to represent the id that will be used to reference this product in Virtusize API
-    ///   - imageUrl: The URL of the product image that is fully qualified with the domain and the protocol
-    ///   - storeId: An integer that represents the store id from the product data
-    /// - Returns: An array of query items for the `URLComponents`
-    private func metaDataHintsQueryItems(externalId: String, imageUrl: URL, storeId: Int?) -> [URLQueryItem] {
-        var queryItem: [URLQueryItem] = []
-        let urlString = imageUrl.absoluteString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        queryItem.append(URLQueryItem(name: "apiKey", value: apiKey))
-        queryItem.append(URLQueryItem(name: "externalId", value: externalId))
-        queryItem.append(URLQueryItem(name: "imageUrl", value: urlString))
-        if let storeId = storeId {
-            queryItem.append(URLQueryItem(name: "storeId", value: String(storeId)))
-        }
         return queryItem
     }
 

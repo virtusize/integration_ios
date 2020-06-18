@@ -41,8 +41,7 @@ public struct VirtusizeOrder: Codable {
     private init(externalOrderId: String,
                  externalUserId: String? = nil,
                  region: String? = nil,
-                 items: [VirtusizeOrderItem] = []
-    ) {
+                 items: [VirtusizeOrderItem] = []) {
         self.externalOrderId = externalOrderId
         self.externalUserId = externalUserId
         self.region = region

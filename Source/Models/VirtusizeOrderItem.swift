@@ -22,8 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 /// This structure wraps the parameters of the order item for the API request of sending the order
 public struct VirtusizeOrderItem: Codable {
     /// The provide ID provided by the client. It must be unique for a product.
