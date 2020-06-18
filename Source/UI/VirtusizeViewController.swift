@@ -77,6 +77,7 @@ public final class VirtusizeViewController: UIViewController {
 
 		let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
+        webView.uiDelegate = self
 		view.addSubview(webView)
 		self.webView = webView
 
@@ -136,7 +137,7 @@ public final class VirtusizeViewController: UIViewController {
     }
 }
 
-extension VirtusizeViewController: WKNavigationDelegate {
+extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
     public func webView(
         _ webView: WKWebView,
         didFail navigation: WKNavigation!,
@@ -149,6 +150,22 @@ extension VirtusizeViewController: WKNavigationDelegate {
         didFailProvisionalNavigation navigation: WKNavigation!,
         withError error: Error) {
         reportError(error: VirtusizeError.navigationError(error))
+    }
+
+    public func webView(
+        _ webView: WKWebView,
+        createWebViewWith configuration: WKWebViewConfiguration,
+        for navigationAction: WKNavigationAction,
+        windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let url = navigationAction.request.url else {
+            return nil
+        }
+
+        guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
+            webView.load(URLRequest(url: url))
+            return nil
+        }
+        return nil
     }
 }
 
