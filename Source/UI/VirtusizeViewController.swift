@@ -162,10 +162,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         }
 
         guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
-            // To prevent a crash from loading a non-secure website
-            if url.absoluteString.contains("https") {
                 webView.load(URLRequest(url: url))
-            }
             return nil
         }
         return nil

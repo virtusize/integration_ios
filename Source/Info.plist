@@ -18,6 +18,14 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>ExceptionDomains</key>
+		<dict>
+			<key>www.virtusize.com</key>
+			<string></string>
+		</dict>
+	</dict>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>
