@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.3.2
+
+- Bugfix: Fix the null regoin value for the Order API
+
 ### 1.3.1
 
 - Bugfix: Fix hyperlinks on the side menu.

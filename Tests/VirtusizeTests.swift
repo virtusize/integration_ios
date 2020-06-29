@@ -114,12 +114,33 @@ class VirtusizeTests: XCTestCase {
         XCTAssertEqual(actualObject?["name"] as? String ?? "", "user-saw-product")
     }
 
-    func testRetrieveStoreInfo_success_hasExpectedRegion() {
+    func testRetrieveFullStoreInfo_success_hasExpectedRegion() {
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualRegion: String?
-        Virtusize.session = MockURLSession(data: TestFixtures.retrieveStoreInfoJsonResponse.data(using: .utf8),
+        Virtusize.session = MockURLSession(data: TestFixtures.fullStoreInfoJsonResponse.data(using: .utf8),
                                                   urlResponse: nil,
                                                   error: nil)
+        Virtusize.retrieveStoreInfo(completion: { region in
+            actualRegion = region
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertEqual(actualRegion ?? "", "KR")
+    }
+
+    func testRetrieveStoreInfoWithSomeNullValues_success_hasExpectedRegion() {
+        let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
+        var actualRegion: String?
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.storeInfoWithSomeNullValuesJsonResponse.data(using: .utf8),
+            urlResponse: nil,
+            error: nil)
         Virtusize.retrieveStoreInfo(completion: { region in
             actualRegion = region
             expectation.fulfill()
