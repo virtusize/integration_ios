@@ -157,7 +157,7 @@ public class Virtusize {
             if let data = data {
                 do {
                     let store = try JSONDecoder().decode(VirtusizeStore.self, from: data)
-                    completion(store.region)
+                    completion(store.region ?? "JP")
                 } catch {
                     errorHandler?(VirtusizeError.jsonDecodingFailed("VirtusizeStore", error))
                 }

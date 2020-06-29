@@ -101,7 +101,24 @@ struct TestFixtures {
         }
     """
 
-    static let retrieveStoreInfoJsonResponse =
+    static let fullStoreInfoJsonResponse =
+    """
+        {
+            "id": 2,
+            "surveyLink": "https://www.surveyLink.com",
+            "name": "Virtusize",
+            "shortName": "virtusize",
+            "lengthUnitId": 2,
+            "apiKey": "\(apiKey)",
+            "created": "2011-01-01T00:00:00Z",
+            "updated": "2020-04-20T02:33:58Z",
+            "disabled": "2018-05-29 04:32:45",
+            "typemapperEnabled": false,
+            "region": "KR"
+        }
+    """
+
+    static let storeInfoWithSomeNullValuesJsonResponse =
     """
         {
             "id": 2,
@@ -114,7 +131,7 @@ struct TestFixtures {
             "updated": "2020-04-20T02:33:58Z",
             "disabled": null,
             "typemapperEnabled": false,
-            "region": "JP"
+            "region": null
         }
     """
 
