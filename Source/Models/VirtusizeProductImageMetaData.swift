@@ -1,5 +1,5 @@
 //
-//  VirtusizeOrderItem.swift
+//  VirtusizeProductImageMetaData.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -22,27 +22,22 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-public struct VirtusizeOrderItem: Codable {
-    // Id provided by the client, must be unique for a product
-    private let productId: String
-    // Name of the size e.g. `M`
-    private let size: String
-    // Alias of the size if not identical from the product page
-    private let sizeAlias: String?
-    // Eventual variant id if several products
-    private let variantId: String?
-    // The imageURL of the item. The image that will be shared with Virtusize
+/// This structure wraps the parameters of product image meta data for the API request `sendProductImage`
+internal struct VirtusizeProductMetaData: Codable {
+    /// An integer that represents the store id from the product data
+    private let storeId: Int?
+    /// A string to represent the id that will be used to reference this product in Virtusize API
+    private let externalId: String
+    /// The URL string of the product image that is fully qualified with the domain and the protocol
     private let imageUrl: String
-    // The color of the item
-    private let color: String?
-    // An identifier for the gender
-    private let gender: String?
-    // Unit price is a Decimal type in the DB (12,2)
-    private let unitPrice: Float
-    // If not passed should be set to 1
-    private let quantity: Int
-    // Product page url if any
-    private let url: String?
+    /// The API key that is unique and provided for Virtusize clients
+    private let apiKey: String
+
+    /// Initializes the VirtusizeProductMetaData structure
+    public init(storeId: Int?, externalId: String, imageUrl: String, apiKey: String) {
+        self.storeId = storeId
+        self.externalId = externalId
+        self.imageUrl = imageUrl
+        self.apiKey = apiKey
+    }
 }

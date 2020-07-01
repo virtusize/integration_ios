@@ -13,6 +13,21 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.3.2
+
+- Bugfix: Fix the null regoin value for the Order API
+
+### 1.3.1
+
+- Bugfix: Fix hyperlinks on the side menu.
+- Bugfix: Ensure sending product image info to the server is working.
+- Feature: Add unit testing for network code
+
+### 1.3.0
+
+- Feature: The Order API
+- Docs: Update documentation to the README.
+
 ### 1.2.0
 
 - Feature: Dispatch Notification during Product Data Check. (za)

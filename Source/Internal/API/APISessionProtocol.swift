@@ -1,5 +1,5 @@
 //
-//  VirtusizeStore.swift
+//  APISessionProtocol.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -22,19 +22,22 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+/// `URLSession` is extended to conform to `APISessionProtocol`
+extension URLSession: APISessionProtocol {
+}
 
-/// This structure represents the response of the request that retrieves the specific store info
-internal struct VirtusizeStore: Codable {
-    private let id: Int
-    private let surveyLink: String
-    private let name: String
-    private let shortName: String
-    private let lengthUnitId: Int
-    private let apiKey: String
-    private let created: String
-    private let updated: String
-    private let disabled: String?
-    private let typemapperEnabled: Bool
-    internal var region: String?
+/// A protocol type for sessions, implemented by `URLSession`
+protocol APISessionProtocol {
+
+    /// Uses requests of type `URLRequest` to produce responses of type `Data` and errors of type `Error`for dataTask
+    ///
+    /// - Parameters:
+    ///   - with: A `URLRequest`
+    ///   - completionHandler: The completion callback to pass responses of type `Data` and errors of type `Error`
+    ///   
+    /// - Returns: `URLSessionDataTask`
+    func dataTask(
+        with request: URLRequest,
+        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
+        -> URLSessionDataTask
 }

@@ -41,7 +41,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-    pod 'Virtusize', '~> 1.2.4'
+pod 'Virtusize', '~> 1.3.2'
 end
 ```
 
@@ -150,6 +150,84 @@ If the check fail the button will be hidden.
 
 You can check the example project to see a possible implementation.
 
+## The Order API
+
+The order API enables Virtusize to show your customers the items they have recently purchased as part of their `Purchase History`, and use those items to compare with new items they want to buy.
+
+#### 1. Initialization
+
+Make sure to set up the **user ID** in the `application(_:didFinishLaunchingWithOptions:)` method of the App delegate before you start.
+
+```Swift
+Virtusize.userID = "123"
+```
+
+#### 2. Create a *VirtusizeOrder* structure for order data
+
+The ***VirtusizeOrder*** structure gets passed to the `Virtusize.sendOrder` method, and has the following properties:
+
+__**Note:**__ * means the property is required
+
+**VirtusizeOrder**
+| Property        | Data Type                              | Example             | Description                         |
+| ---------------- | -------------------------------------- | ------------------- | ----------------------------------- |
+| externalOrderId* | String                                 | "20200601586"       | The order ID provided by the client |
+| items*           | An array of `VirtusizeOrderItem` structures | See the table below | A array of the order items.          |
+
+**VirtusizeOrderItem**
+| Property  | Data Type | Example                                  | Description                                                  |
+| ---------- | --------- | ---------------------------------------- | ------------------------------------------------------------ |
+| productId* | String    | "A001"                                   | The provide ID provided by the client. It must be unique for a product. |
+| size*      | String    | "S", "M", etc.                           | The name of the size                                         |
+| sizeAlias  | String    | "Small", "Large", etc.                   | The alias of the size is added if the size name is not identical from the product page |
+| variantId  | String    | "A001_SIZES_RED"                         | An ID that is set on the product SKU, color, or size if there are several options for the item |
+| imageUrl*  | String    | "http[]()://images.example.com/coat.jpg" | The image URL of the item                                    |
+| color      | String    | "RED", "R', etc.                         | The color of the item                                        |
+| gender     | String    | "W", "Women", etc.                       | An identifier for the gender                                 |
+| unitPrice* | Float    | 5100.00                                  | The product price that is a float number with a maximum of 12 digits and 2 decimals (12, 2) |
+| currency*  | String    | "JPY", "KRW", "USD", etc.                | Currency code                                                |
+| quantity*  | Int       | 1                                        | The number of the item purchased. If it's not passed, It will be set to 1 |
+| url        | String    | "http[]()://example.com/products/A001"   | The URL of the product page. Please make sure this is a URL that users can access |
+
+**Sample**
+
+```Swift
+var virtusizeOrder = VirtusizeOrder(externalOrderId: "2020060812345")
+let item = VirtusizeOrderItem(
+    productId: "A00001",
+    size: "L",
+    sizeAlias: "Large",
+    variantId: "A00001_SIZEL_RED",
+    imageUrl: "http://images.example.com/products/A00001/red/image1xl.jpg",
+    color: "Red",
+    gender: "W",
+    unitPrice: 5100.00,
+    currency: "JPY",
+    quantity: 1,
+    url: "http://example.com/products/A00001"
+)
+virtusizeOrder.items = [item]
+```
+
+#### 3. Send an Order
+
+Call the `Virtusize.sendOrder` method in your activity or fragment when the user places an order.
+The `onSuccess` and `onError` callbacks are optional.
+
+```Swift
+Virtusize.sendOrder(
+    virtusizeOrder,
+    // This success callback is optional and gets called when the app successfully sends the order
+    onSuccess: {
+        print("Successfully sent the order")
+},
+    // This error callback is optional and gets called when an error occurs
+    // when the app is sending the order
+    onError: { error in
+        print("Failed to send the order, error: \(error.debugDescription)")
+})
+```
+
 ## Migrate from 0.x.x version to 1.x.x
 
 Version 1.x.x has aligned its naming convention for methods, data structures and classes.
@@ -178,4 +256,4 @@ Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected re
 
 ## License
 
-Copyright (c) 2018-19 Virtusize CO LTD (https://www.virtusize.jp)
+Copyright (c) 2018-20 Virtusize CO LTD (https://www.virtusize.jp)

@@ -1,5 +1,11 @@
 # ROADMAP
 
+## 1.3.0
+
+### Release date: 20/06/08
+
+- [x] Add the Order API
+
 ## 1.0.1
 
 ### Release date: 19/01/16
