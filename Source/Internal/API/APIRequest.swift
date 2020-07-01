@@ -1,7 +1,7 @@
 //
 //  APIRequest.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 import Foundation
+import AdSupport
 
 internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]
@@ -49,7 +50,7 @@ internal struct APIRequest {
         return request
     }
 
-    /// Gets the `URLRequest` for the HTTP request where the Browser Identifier is added
+    /// Gets the `URLRequest` for the HTTP request where the Browser Identifier and a unique device ID are added
     ///
     /// - Parameters:
     ///   - components: `URLComponents` to obtain the `URL`
@@ -58,6 +59,9 @@ internal struct APIRequest {
     private static func apiRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = HTTPRequest(components: components, method: method)
         request.addValue(BrowserID.current.identifier, forHTTPHeaderField: "x-vs-bid")
+        if let uniqueDeviceID = DeviceIdentifier.getUniqueDeviceId() {
+            request.addValue(uniqueDeviceID, forHTTPHeaderField: "x-vs-device-id")
+        }
         return request
     }
 
