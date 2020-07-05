@@ -22,7 +22,6 @@
 //  THE SOFTWARE.
 //
 import Foundation
-import AdSupport
 
 internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]
