@@ -20,11 +20,6 @@
 		9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956C8247E730A0014DF51 /* VirtusizeOrder.swift */; };
 		9C5956CD2484F6280014DF51 /* VirtusizeOrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956CC2484F6280014DF51 /* VirtusizeOrderItem.swift */; };
 		9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */; };
-		9C775F762487CEF100A33234 /* AoyamaInfoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C775F752487CEF100A33234 /* AoyamaInfoCategory.swift */; };
-		9C775F782487D28000A33234 /* AoyamaEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C775F772487D28000A33234 /* AoyamaEnvironment.swift */; };
-		9C8F153B2487C95900F28802 /* AoyamaParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8F153A2487C95900F28802 /* AoyamaParams.swift */; };
-		9C8F153D2487C9F700F28802 /* AoyamaLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8F153C2487C9F700F28802 /* AoyamaLanguage.swift */; };
-		9CA657AC2487D2D800CD58AA /* AoyamaRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA657AB2487D2D800CD58AA /* AoyamaRegion.swift */; };
 		9C633F2624937CCB009C4392 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F2524937CCB009C4392 /* APIRequestTests.swift */; };
 		9C633F28249388EB009C4392 /* TestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F27249388EB009C4392 /* TestFixtures.swift */; };
 		9C633F2A2493C7ED009C4392 /* VirtusizeProductImageMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */; };
@@ -71,11 +66,6 @@
 		9C5956C8247E730A0014DF51 /* VirtusizeOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeOrder.swift; sourceTree = "<group>"; };
 		9C5956CC2484F6280014DF51 /* VirtusizeOrderItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeOrderItem.swift; sourceTree = "<group>"; };
 		9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeStore.swift; sourceTree = "<group>"; };
-		9C775F752487CEF100A33234 /* AoyamaInfoCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaInfoCategory.swift; sourceTree = "<group>"; };
-		9C775F772487D28000A33234 /* AoyamaEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaEnvironment.swift; sourceTree = "<group>"; };
-		9C8F153A2487C95900F28802 /* AoyamaParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaParams.swift; sourceTree = "<group>"; };
-		9C8F153C2487C9F700F28802 /* AoyamaLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaLanguage.swift; sourceTree = "<group>"; };
-		9CA657AB2487D2D800CD58AA /* AoyamaRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaRegion.swift; sourceTree = "<group>"; };
 		9C633F2524937CCB009C4392 /* APIRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestTests.swift; sourceTree = "<group>"; };
 		9C633F27249388EB009C4392 /* TestFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFixtures.swift; sourceTree = "<group>"; };
 		9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImageMetaData.swift; sourceTree = "<group>"; };
@@ -185,16 +175,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9C8F15392487C93200F28802 /* Aoyama */ = {
-			isa = PBXGroup;
-			children = (
-				9C775F752487CEF100A33234 /* AoyamaInfoCategory.swift */,
-				9C8F153C2487C9F700F28802 /* AoyamaLanguage.swift */,
-				9C8F153A2487C95900F28802 /* AoyamaParams.swift */,
-				9CA657AB2487D2D800CD58AA /* AoyamaRegion.swift */,
-				9C775F772487D28000A33234 /* AoyamaEnvironment.swift */,
-			);
-			path = Aoyama;
 		9C4B9D732491FF790065808E /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,7 +206,6 @@
 		DF71642621A284E9002C7202 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9C8F15392487C93200F28802 /* Aoyama */,
 				9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */,
 				DF71642721A28501002C7202 /* VirtusizeError.swift */,
 				DF71642921A28858002C7202 /* VirtusizeEvent.swift */,
@@ -425,22 +404,17 @@
 				4DED8D5920575D65001CA7DF /* VirtusizeViewController.swift in Sources */,
 				DFFAA95A21A2DF19000F0F70 /* Deserializer.swift in Sources */,
 				DF71642A21A28858002C7202 /* VirtusizeEvent.swift in Sources */,
-				9C8F153B2487C95900F28802 /* AoyamaParams.swift in Sources */,
 				9C7DA17324973FBD00AD6B42 /* APISessionProtocol.swift in Sources */,
 				9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */,
 				9C633F28249388EB009C4392 /* TestFixtures.swift in Sources */,
 				9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */,
 				4D6C579A205FCBE900DA910E /* APIRequest.swift in Sources */,
-				9C775F782487D28000A33234 /* AoyamaEnvironment.swift in Sources */,
 				DF71642C21A28939002C7202 /* VirtusizeEnvironment.swift in Sources */,
 				DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */,
-				9C8F153D2487C9F700F28802 /* AoyamaLanguage.swift in Sources */,
 				4D6C578E205FB6F400DA910E /* BrowserID.swift in Sources */,
 				9C5956CD2484F6280014DF51 /* VirtusizeOrderItem.swift in Sources */,
-				9CA657AC2487D2D800CD58AA /* AoyamaRegion.swift in Sources */,
 				9C633F2A2493C7ED009C4392 /* VirtusizeProductImageMetaData.swift in Sources */,
 				4D6C5798205FC0C700DA910E /* VirtusizeButton.swift in Sources */,
-				9C775F762487CEF100A33234 /* AoyamaInfoCategory.swift in Sources */,
 				4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */,
 				DF71642821A28501002C7202 /* VirtusizeError.swift in Sources */,
 				DFFAA95E21A39AC0000F0F70 /* APIEndpoints.swift in Sources */,
