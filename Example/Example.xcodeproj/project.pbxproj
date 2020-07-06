@@ -14,6 +14,7 @@
 		4DED8D4A20575A9C001CA7DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4820575A9C001CA7DF /* Main.storyboard */; };
 		4DED8D4C20575A9C001CA7DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4B20575A9C001CA7DF /* Assets.xcassets */; };
 		4DED8D4F20575A9C001CA7DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4D20575A9C001CA7DF /* LaunchScreen.storyboard */; };
+		9CA589EF24AC4EA600AE4F07 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA589EB24AC4D2B00AE4F07 /* AdSupport.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		4DED8D4B20575A9C001CA7DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DED8D4E20575A9C001CA7DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DED8D5020575A9C001CA7DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CA589EB24AC4D2B00AE4F07 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DD0B42E20577289004ABA07 /* Virtusize.framework in Frameworks */,
+				9CA589EF24AC4EA600AE4F07 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +131,7 @@
 		4DED8D5A20576946001CA7DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CA589EB24AC4D2B00AE4F07 /* AdSupport.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -73,19 +73,39 @@ public class Virtusize {
                                completion completionHandler: CompletionHandler? = nil,
                                error errorHandler: ErrorHandler? = nil) {
         let task: URLSessionDataTask
-        task = session.dataTask(with: request) { (data, _, error) in
+        task = session.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
                 DispatchQueue.main.async {
                     errorHandler?(VirtusizeError.apiRequestError(request.url, error!))
                 }
                 return
             }
+
+            if let response = response as? HTTPURLResponse {
+                checkAndUpdateBrowserID(response: response)
+            }
+
             DispatchQueue.main.async {
                 completionHandler?(data)
             }
         }
         task.resume()
         URLSession.shared.finishTasksAndInvalidate()
+    }
+
+    /// Checks if the bid in the response header is different from the bid saved locally.
+    /// If it is, update and store the new bid.
+    ///
+    /// - Parameter response: A response to an HTTP URL load
+    private class func checkAndUpdateBrowserID(response: HTTPURLResponse) {
+        if let url = response.url,
+            let headerFields = response.allHeaderFields as? [String: String] {
+            let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
+            for cookie in cookies
+                where cookie.name == "virtusize.bid" && cookie.value != BrowserID.current.identifier {
+                    BrowserID.current.identifier = cookie.value
+            }
+        }
     }
 
     /// The API request for product check
