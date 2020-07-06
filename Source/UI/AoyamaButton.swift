@@ -1,7 +1,7 @@
 //
-//  VirtusizeButton.swift
+//  AoyamaButton.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,10 @@
 import UIKit
 
 /// This class is the custom Fit Illustrator Button that is added in the client's layout file.
-public class VirtusizeButton: UIButton {
-	public required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
+public class AoyamaButton: UIButton, CAAnimationDelegate {
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 
     /// `VirtusizeProduct` associated with this VirtusizeButton class
     private var product: VirtusizeProduct?
@@ -56,15 +56,16 @@ public class VirtusizeButton: UIButton {
     }
 
     /// Applies the default style of `VirtusizeButton`
-	public func applyDefaultStyle() {
-		tintColor = .black
+    public func applyDefaultStyle() {
+        tintColor = .black
 
-		setTitle(NSLocalizedString("Check the fit", comment: "Check the fit button title"), for: .normal)
+        setTitle(NSLocalizedString("Check size", bundle: Bundle(for: type(of: self)), comment: "Check the fit button title"), for: .normal)
 
-		backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
-		tintColor = .white
+        backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
+        tintColor = .white
+        layer.cornerRadius = 20
 
-		contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
         self.setImage(Assets.icon, for: .normal)
-	}
+    }
 }

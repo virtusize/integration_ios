@@ -27,7 +27,7 @@ import Virtusize
 
 class ViewController: UIViewController {
 
-	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
+	@IBOutlet weak var checkTheFitButton: AoyamaButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()

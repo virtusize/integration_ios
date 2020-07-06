@@ -25,6 +25,6 @@
 import Foundation
 
 public enum AoyamaEnvironment: String {
-    case STAGE = "staging"
+    case STAGE = "testing"
     case PRODUCTION = "production"
 }

@@ -10,7 +10,7 @@
 		4D6C578E205FB6F400DA910E /* BrowserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C578D205FB6F400DA910E /* BrowserID.swift */; };
 		4D6C5790205FB76B00DA910E /* BrowserIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C578F205FB76B00DA910E /* BrowserIDTests.swift */; };
 		4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5792205FB9BA00DA910E /* Virtusize.swift */; };
-		4D6C5798205FC0C700DA910E /* VirtusizeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5797205FC0C700DA910E /* VirtusizeButton.swift */; };
+		4D6C5798205FC0C700DA910E /* AoyamaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5797205FC0C700DA910E /* AoyamaButton.swift */; };
 		4D6C579A205FCBE900DA910E /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5799205FCBE900DA910E /* APIRequest.swift */; };
 		4DED8D26205755C3001CA7DF /* Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DED8D1C205755C3001CA7DF /* Virtusize.framework */; };
 		4DED8D2B205755C3001CA7DF /* VirtusizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D2A205755C3001CA7DF /* VirtusizeTests.swift */; };
@@ -25,6 +25,12 @@
 		9C633F2A2493C7ED009C4392 /* VirtusizeProductImageMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */; };
 		9C7DA17324973FBD00AD6B42 /* APISessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7DA17224973FBD00AD6B42 /* APISessionProtocol.swift */; };
 		9CB0390C24921FDA008CCD84 /* APIEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB0390B24921FDA008CCD84 /* APIEventTests.swift */; };
+		9CB98B9924B2C5B400C51F20 /* AoyamaEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9824B2C5B400C51F20 /* AoyamaEnvironment.swift */; };
+		9CB98B9A24B2C5B400C51F20 /* AoyamaInfoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9524B2C5B400C51F20 /* AoyamaInfoCategory.swift */; };
+		9CB98B9B24B2C5B400C51F20 /* AoyamaParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9724B2C5B400C51F20 /* AoyamaParams.swift */; };
+		9CB98B9C24B2C5B400C51F20 /* AoyamaRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9624B2C5B400C51F20 /* AoyamaRegion.swift */; };
+		9CB98B9D24B2C5B400C51F20 /* AoyamaLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9424B2C5B400C51F20 /* AoyamaLanguage.swift */; };
+		9CB98BB624B2FB4B00C51F20 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9D219D151F000B3402 /* Assets.swift */; };
 		DF6B5CA0219D3090000B3402 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9F219D3090000B3402 /* SplashView.swift */; };
 		DF71642521A2818F002C7202 /* ROADMAP.md in Resources */ = {isa = PBXBuildFile; fileRef = DF71642421A2818E002C7202 /* ROADMAP.md */; };
@@ -53,7 +59,7 @@
 		4D6C578D205FB6F400DA910E /* BrowserID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserID.swift; sourceTree = "<group>"; };
 		4D6C578F205FB76B00DA910E /* BrowserIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserIDTests.swift; sourceTree = "<group>"; };
 		4D6C5792205FB9BA00DA910E /* Virtusize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtusize.swift; sourceTree = "<group>"; };
-		4D6C5797205FC0C700DA910E /* VirtusizeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeButton.swift; sourceTree = "<group>"; };
+		4D6C5797205FC0C700DA910E /* AoyamaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaButton.swift; sourceTree = "<group>"; };
 		4D6C5799205FCBE900DA910E /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4DED8D1C205755C3001CA7DF /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DED8D1F205755C3001CA7DF /* Virtusize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Virtusize.h; sourceTree = "<group>"; };
@@ -71,6 +77,11 @@
 		9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImageMetaData.swift; sourceTree = "<group>"; };
 		9C7DA17224973FBD00AD6B42 /* APISessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISessionProtocol.swift; sourceTree = "<group>"; };
 		9CB0390B24921FDA008CCD84 /* APIEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEventTests.swift; sourceTree = "<group>"; };
+		9CB98B9424B2C5B400C51F20 /* AoyamaLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaLanguage.swift; sourceTree = "<group>"; };
+		9CB98B9524B2C5B400C51F20 /* AoyamaInfoCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaInfoCategory.swift; sourceTree = "<group>"; };
+		9CB98B9624B2C5B400C51F20 /* AoyamaRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaRegion.swift; sourceTree = "<group>"; };
+		9CB98B9724B2C5B400C51F20 /* AoyamaParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaParams.swift; sourceTree = "<group>"; };
+		9CB98B9824B2C5B400C51F20 /* AoyamaEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaEnvironment.swift; sourceTree = "<group>"; };
 		DF6B5C9D219D151F000B3402 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Assets.swift; path = Source/Internal/Constants/Assets.swift; sourceTree = "<group>"; };
 		DF6B5C9F219D3090000B3402 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DF71642421A2818E002C7202 /* ROADMAP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ROADMAP.md; sourceTree = "<group>"; };
@@ -206,6 +217,11 @@
 		DF71642621A284E9002C7202 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9CB98B9824B2C5B400C51F20 /* AoyamaEnvironment.swift */,
+				9CB98B9524B2C5B400C51F20 /* AoyamaInfoCategory.swift */,
+				9CB98B9424B2C5B400C51F20 /* AoyamaLanguage.swift */,
+				9CB98B9724B2C5B400C51F20 /* AoyamaParams.swift */,
+				9CB98B9624B2C5B400C51F20 /* AoyamaRegion.swift */,
 				9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */,
 				DF71642721A28501002C7202 /* VirtusizeError.swift */,
 				DF71642921A28858002C7202 /* VirtusizeEvent.swift */,
@@ -258,7 +274,7 @@
 		DFFAA96321A39BFC000F0F70 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				4D6C5797205FC0C700DA910E /* VirtusizeButton.swift */,
+				4D6C5797205FC0C700DA910E /* AoyamaButton.swift */,
 				4DED8D5820575D65001CA7DF /* VirtusizeViewController.swift */,
 			);
 			path = UI;
@@ -343,6 +359,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
 				Base,
 			);
 			mainGroup = 4DED8D12205755C3001CA7DF;
@@ -362,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFB2F0F0219BC3DA00A69D1D /* README.md in Resources */,
+				9CB98BB624B2FB4B00C51F20 /* (null) in Resources */,
 				DF71642521A2818F002C7202 /* ROADMAP.md in Resources */,
 				DFB2F0F2219BC40E00A69D1D /* CHANGES.md in Resources */,
 			);
@@ -402,25 +420,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DED8D5920575D65001CA7DF /* VirtusizeViewController.swift in Sources */,
+				9CB98B9C24B2C5B400C51F20 /* AoyamaRegion.swift in Sources */,
 				DFFAA95A21A2DF19000F0F70 /* Deserializer.swift in Sources */,
 				DF71642A21A28858002C7202 /* VirtusizeEvent.swift in Sources */,
 				9C7DA17324973FBD00AD6B42 /* APISessionProtocol.swift in Sources */,
 				9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */,
 				9C633F28249388EB009C4392 /* TestFixtures.swift in Sources */,
 				9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */,
+				9CB98B9924B2C5B400C51F20 /* AoyamaEnvironment.swift in Sources */,
 				4D6C579A205FCBE900DA910E /* APIRequest.swift in Sources */,
 				DF71642C21A28939002C7202 /* VirtusizeEnvironment.swift in Sources */,
 				DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */,
 				4D6C578E205FB6F400DA910E /* BrowserID.swift in Sources */,
+				9CB98B9D24B2C5B400C51F20 /* AoyamaLanguage.swift in Sources */,
 				9C5956CD2484F6280014DF51 /* VirtusizeOrderItem.swift in Sources */,
 				9C633F2A2493C7ED009C4392 /* VirtusizeProductImageMetaData.swift in Sources */,
-				4D6C5798205FC0C700DA910E /* VirtusizeButton.swift in Sources */,
+				4D6C5798205FC0C700DA910E /* AoyamaButton.swift in Sources */,
+				9CB98B9A24B2C5B400C51F20 /* AoyamaInfoCategory.swift in Sources */,
 				4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */,
 				DF71642821A28501002C7202 /* VirtusizeError.swift in Sources */,
 				DFFAA95E21A39AC0000F0F70 /* APIEndpoints.swift in Sources */,
 				DFFAA95C21A39A75000F0F70 /* APIEvent.swift in Sources */,
 				DF71642E21A28DE8002C7202 /* VirtusizeProduct.swift in Sources */,
 				DF6B5CA0219D3090000B3402 /* SplashView.swift in Sources */,
+				9CB98B9B24B2C5B400C51F20 /* AoyamaParams.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +475,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -519,6 +543,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

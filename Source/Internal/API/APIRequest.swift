@@ -126,11 +126,11 @@ internal struct APIRequest {
         return apiRequest(components: endpoint.components, withPayload: payloadData)
 	}
 
-    /// Gets the `URLRequest` for the `fitIllustrator` request
+    /// Gets the `URLRequest` for the `aoyama` request
     ///
     /// - Parameter context: The product data from the response of the `productDataCheck` request
-    /// - Returns: A `URLRequest` for the `fitIllustrator` request
-	internal static func fitIllustratorURL(in context: Any?) -> URLRequest? {
+    /// - Returns: A `URLRequest` for the `aoyama` request
+	internal static func aoyamaURL(in context: Any?) -> URLRequest? {
 		guard let rootObject = context as? JSONObject,
             let dataObject = rootObject["data"] as? JSONObject,
             let storeId = dataObject["storeId"] as? Int,
@@ -138,7 +138,7 @@ internal struct APIRequest {
 			return nil
 		}
 
-        let endpoint = APIEndpoints.fitIllustrator(storeId: storeId, productId: productId)
+        let endpoint = APIEndpoints.aoyama(env: .STAGE, region: .JP)
         return HTTPRequest(components: endpoint.components)
 	}
 

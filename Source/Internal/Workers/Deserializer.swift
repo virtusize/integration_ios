@@ -101,7 +101,7 @@ internal struct Deserializer {
             throw VirtusizeError.deserializationError
         }
 
-        guard let eventName: String = event["name"] as? String else {
+        guard let eventName: String = event["eventName"] as? String else {
             throw VirtusizeError.invalidPayload
         }
 

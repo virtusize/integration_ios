@@ -29,7 +29,7 @@ internal enum APIEndpoints {
     case productDataCheck(externalId: String)
     case productMetaDataHints
     case events
-    case fitIllustrator(storeId: Int, productId: Int)
+    case aoyama(env: AoyamaEnvironment, region: AoyamaRegion)
     case storeViewApiKey
     case orders
 
@@ -51,11 +51,9 @@ internal enum APIEndpoints {
         case .events:
             components.path = "/a/api/v3/events"
 
-        case .fitIllustrator(let storeId, let productId):
-            components.path = "/a/fit-illustrator/v1/index.html"
-            components.queryItems = fitIllustratorQueryItems(
-                storeId: storeId,
-                productId: productId)
+        case .aoyama(let env, let region):
+            components.host = "static.api.virtusize.\(region.rawValue)"
+            components.path = "/a/aoyama/\(env.rawValue)/sdk-integration/sdk-webview.html"
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -63,7 +61,6 @@ internal enum APIEndpoints {
 
         case .orders:
             components.path = "/a/api/v3/orders"
-
         }
         return components
     }

@@ -25,8 +25,8 @@
 import Foundation
 
 public enum AoyamaInfoCategory: String, CaseIterable {
-    case MODEL_INFO = "modelInfo"
-    case GENERAL_FIT = "generalFit"
-    case BRAND_SIZING = "brandSizing"
+    case MODELINFO = "modelInfo"
+    case GENERALFIT = "generalFit"
+    case BRANDSIZING = "brandSizing"
     case MATERIAL = "material"
 }

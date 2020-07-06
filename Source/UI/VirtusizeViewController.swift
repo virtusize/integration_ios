@@ -38,7 +38,7 @@ public final class VirtusizeViewController: UIViewController {
 	public weak var delegate: VirtusizeMessageHandler?
 
 	private var webView: WKWebView?
-    internal var splashView: SplashView =  SplashView()
+    private var popupWebView: WKWebView?
 
     private var context: JSONObject = [:]
 
@@ -106,11 +106,8 @@ public final class VirtusizeViewController: UIViewController {
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
-        view.addSubview(splashView)
-        splashView.cancelButton.addTarget(self, action: #selector(shouldClose), for: .touchUpInside)
-
         // If the request is invalid, the controller should be dismissed
-		guard let request = APIRequest.fitIllustratorURL(in: context) else {
+		guard let request = APIRequest.aoyamaURL(in: context) else {
             reportError(error: .invalidRequest)
 			return
 		}
@@ -138,10 +135,24 @@ public final class VirtusizeViewController: UIViewController {
 }
 
 extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let vsParamsFromSDKScript = "vsParamsFromSDK({" +
+            "apiKey: '52140a6c9e0870294e4c5df4ebc39b47c8237bfa', " +
+            "externalProductId: '18575990709', " +
+            "env: 'staging', " +
+        "language: 'en'})"
+        webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
+    }
+
     public func webView(
         _ webView: WKWebView,
         didFail navigation: WKNavigation!,
         withError error: Error) {
+        // The error is caused by cancel the current load that is not finished yet
+        // We should ignore this error. Otherwise, the webview will be closed automatically
+        if error._code == NSURLErrorCancelled {
+            return
+        }
         reportError(error: VirtusizeError.navigationError(error))
     }
 
@@ -157,15 +168,23 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         createWebViewWith configuration: WKWebViewConfiguration,
         for navigationAction: WKNavigationAction,
         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        guard let url = navigationAction.request.url else {
+        guard navigationAction.request.url != nil else {
             return nil
         }
 
         guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
-                webView.load(URLRequest(url: url))
-            return nil
+            configuration.applicationNameForUserAgent = "Version/8.0.2 Safari/600.2.5"
+            popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
+            popupWebView!.navigationDelegate = self
+            popupWebView!.uiDelegate = self
+            self.view.addSubview(popupWebView!)
+            return popupWebView
         }
         return nil
+    }
+
+    public func webViewDidClose(_ webView: WKWebView) {
+        webView.removeFromSuperview()
     }
 }
 
@@ -179,20 +198,8 @@ extension VirtusizeViewController: WKScriptMessageHandler {
         }
         do {
             let event = try Deserializer.event(data: message.body)
-
             if event.name == "user-closed-widget" {
                 shouldClose()
-            }
-
-            if !splashView.isHidden,
-                event.name == "user-selected-size" || event.name.starts(with: "user-opened-panel") {
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                        self?.splashView.alpha = 0
-                        }, completion: { [weak self] _ in
-                            self?.splashView.isHidden = true
-                    })
-                }
             }
             delegate?.virtusizeController(self, didReceiveEvent: event)
         } catch {
