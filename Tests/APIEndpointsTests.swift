@@ -77,29 +77,12 @@ class APIEndpointsTests: XCTestCase {
     func testFitIllustratorEndpoint_returnExpectedComponents() {
         Virtusize.environment = .japan
 
-        let endpoint = APIEndpoints.fitIllustrator(
-            storeId: 2,
-            productId: 694
-        )
+        let endpoint = APIEndpoints.aoyama(env: .STAGE, region: .Japan)
 
-        XCTAssertEqual(endpoint.components.host, "api.virtusize.jp")
-        XCTAssertEqual(endpoint.components.path, "/a/fit-illustrator/v1/index.html")
+        XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
+        XCTAssertEqual(endpoint.components.path, "/a/aoyama/testing/sdk-integration/sdk-webview.html")
 
-        XCTAssertEqual(endpoint.components.queryItems?.count, 11)
-
-        let queryParamters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
-
-        XCTAssertEqual(queryParamters["detached"], "false")
-        XCTAssertEqual(queryParamters["bid"], BrowserID.current.identifier)
-        XCTAssertEqual(queryParamters["addToCartEnabled"], "false")
-        XCTAssertEqual(queryParamters["storeId"], "2")
-        XCTAssert((0 ... 1519982555).contains(Int(queryParamters["_"] ?? "-1") ?? -1))
-        XCTAssertEqual(queryParamters["spid"], "694")
-        XCTAssertEqual(queryParamters["lang"], "en")
-        XCTAssertEqual(queryParamters["ios"], "true")
-        XCTAssertEqual(queryParamters["sdk"], "0.2")
-        XCTAssertEqual(queryParamters["userId"], "123")
-        XCTAssertEqual(queryParamters["externalUserId"], "123")
+        XCTAssertNil(endpoint.components.queryItems)
     }
 
     func testStoreViewApiKeyEndpoint_returnExpectedComponents() {

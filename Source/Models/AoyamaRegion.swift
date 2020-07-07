@@ -26,6 +26,6 @@ import Foundation
 
 public enum AoyamaRegion: String {
     case COM = "com"
-    case JP = "jp"
-    case KR = "kr"
+    case JAPAN = "jp"
+    case KOREA = "kr"
 }

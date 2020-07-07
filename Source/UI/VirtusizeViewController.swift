@@ -1,7 +1,7 @@
 //
 //  VirtusizeViewController.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -107,7 +107,7 @@ public final class VirtusizeViewController: UIViewController {
 		}
 
         // If the request is invalid, the controller should be dismissed
-		guard let request = APIRequest.aoyamaURL(in: context) else {
+		guard let request = APIRequest.aoyamaURL() else {
             reportError(error: .invalidRequest)
 			return
 		}

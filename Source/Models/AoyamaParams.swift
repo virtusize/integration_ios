@@ -36,15 +36,15 @@ public struct AoyamaParams {
     private let externalUserId: String?
     private let showSGI: Bool
     private let detailsPanelCards: [AoyamaInfoCategory]
-    
+
     init(region: AoyamaRegion = AoyamaRegion.COM,
-    env: AoyamaEnvironment = AoyamaEnvironment.STAGE,
-    language: AoyamaLanguage = AoyamaLanguage.EN,
-    allowedLanguages: [AoyamaLanguage] = AoyamaLanguage.allCases,
-    storeProductId: Int,
-    storeId: Int,
-    showSGI: Bool = true,
-    detailsPanelCards: [AoyamaInfoCategory] = AoyamaInfoCategory.allCases) {
+         env: AoyamaEnvironment = AoyamaEnvironment.STAGE,
+         language: AoyamaLanguage = AoyamaLanguage.ENGLISH,
+         allowedLanguages: [AoyamaLanguage] = AoyamaLanguage.allCases,
+         storeProductId: Int,
+         storeId: Int,
+         showSGI: Bool = true,
+         detailsPanelCards: [AoyamaInfoCategory] = AoyamaInfoCategory.allCases) {
         self.region = region
         self.env = env
         self.language = language

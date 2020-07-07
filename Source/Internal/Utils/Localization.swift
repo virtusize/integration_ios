@@ -1,5 +1,5 @@
 //
-//  AoyamaLanguage.swift
+//  Localization.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -24,19 +24,21 @@
 
 import Foundation
 
-public enum AoyamaLanguage: String, CaseIterable {
-    case ENGLISH = "en"
-    case JAPANESE = "jp"
-    case KOREAN = "ko"
+/// This class is used to localize texts in the SDK
+class Localization {
 
-    var label: String {
-        switch self {
-        case .ENGLISH:
-            return "English"
-        case .JAPANESE:
-            return  "日本語"
-        case .KOREAN:
-            return  "한국어"
+    static let shared: Localization = Localization()
+
+    /// Localizes a text corresponding to a key
+    ///
+    /// - Parameter key: The key for a string in the table identified by tableName.
+    /// - Returns: A localized string based on the device's default language
+    func localize(_ key: String) -> String {
+        guard let path = Bundle(for: Localization.self).path(
+            forResource: Locale.preferredLanguages[0],
+            ofType: "lproj") else {
+            return key
         }
+        return Bundle(path: path)?.localizedString(forKey: key, value: nil, table: "VirtusizeLocalizable") ?? key
     }
 }

@@ -130,15 +130,8 @@ internal struct APIRequest {
     ///
     /// - Parameter context: The product data from the response of the `productDataCheck` request
     /// - Returns: A `URLRequest` for the `aoyama` request
-	internal static func aoyamaURL(in context: Any?) -> URLRequest? {
-		guard let rootObject = context as? JSONObject,
-            let dataObject = rootObject["data"] as? JSONObject,
-            let storeId = dataObject["storeId"] as? Int,
-            let productId = dataObject["productDataId"] as? Int else {
-			return nil
-		}
-
-        let endpoint = APIEndpoints.aoyama(env: .STAGE, region: .JP)
+	internal static func aoyamaURL() -> URLRequest? {
+        let endpoint = APIEndpoints.aoyama(env: .STAGE, region: .JAPAN)
         return HTTPRequest(components: endpoint.components)
 	}
 

@@ -1,7 +1,7 @@
 //
 //  AoyamaButton.swift
 //
-//  Copyright (c) 2018-20 Virtusize AB
+//  Copyright (c) 2020 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,13 @@
 
 import UIKit
 
-/// This class is the custom Fit Illustrator Button that is added in the client's layout file.
+/// This class is the custom Aoyama Button that is added in the client's layout file.
 public class AoyamaButton: UIButton, CAAnimationDelegate {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    /// `VirtusizeProduct` associated with this VirtusizeButton class
+    /// `VirtusizeProduct` associated with this AoyamaButton class
     private var product: VirtusizeProduct?
 
     /// `VirtusizeProduct` that is being set to this button
@@ -55,11 +55,11 @@ public class AoyamaButton: UIButton, CAAnimationDelegate {
         }
     }
 
-    /// Applies the default style of `VirtusizeButton`
+    /// Applies the default style of `AoyamaButton`
     public func applyDefaultStyle() {
         tintColor = .black
 
-        setTitle(NSLocalizedString("Check size", bundle: Bundle(for: type(of: self)), comment: "Check the fit button title"), for: .normal)
+        setTitle(Localization.shared.localize("Check size"), for: .normal)
 
         backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
         tintColor = .white
