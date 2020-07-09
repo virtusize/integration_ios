@@ -61,7 +61,7 @@ public class AoyamaParams {
             paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
         }
         paramsScript += "\(ParamKey.showSGI): \(showSGI), "
-        paramsScript += "\(ParamKey.allowedLanguages): \(allowedLanguages.map { lang in "{ label : \"\(lang.label)\", value : \"\(lang.rawValue)\"}" }), "
+        paramsScript += "\(ParamKey.allowedLanguages): \(getAllowedLanguagesScript(allowedLanguages)), "
         paramsScript += "\(ParamKey.detailsPanelsCards): \(detailsPanelCards.map { category in category.rawValue }), "
         paramsScript += "\(ParamKey.language): '\(language.rawValue)', "
         paramsScript += "\(ParamKey.region): '\(region.rawValue)', "
@@ -69,7 +69,19 @@ public class AoyamaParams {
         print(paramsScript)
         return paramsScript
     }
-    
+
+    private func getAllowedLanguagesScript(_ allowedLanguages: [AoyamaLanguage]) -> String {
+        var script = "["
+        for index in 0...allowedLanguages.count-1 {
+            script += "{ label : \"\(allowedLanguages[index].label)\", value : \"\(allowedLanguages[index].rawValue)\"}"
+            if index != allowedLanguages.count-1 {
+                script += ", "
+            }
+        }
+        script += "]"
+        return script
+    }
+
     enum ParamKey {
         static let API = "apiKey"
         static let region = "region"
@@ -81,4 +93,5 @@ public class AoyamaParams {
         static let allowedLanguages = "allowedLanguages"
         static let detailsPanelsCards = "detailsPanelsCards"
     }
+
 }
