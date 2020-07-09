@@ -43,8 +43,8 @@ class APIEndpointsTests: XCTestCase {
     func testProductDataCheckEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.productDataCheck(externalId: dummyExternalId)
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
-        XCTAssertEqual(endpoint.components.path, "/integration/v3/product-data-check")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/stg/product/check")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 3)
 
@@ -77,7 +77,7 @@ class APIEndpointsTests: XCTestCase {
     func testFitIllustratorEndpoint_returnExpectedComponents() {
         Virtusize.environment = .japan
 
-        let endpoint = APIEndpoints.aoyama(env: .STAGE, region: .Japan)
+        let endpoint = APIEndpoints.aoyama(region: .JAPAN)
 
         XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
         XCTAssertEqual(endpoint.components.path, "/a/aoyama/testing/sdk-integration/sdk-webview.html")

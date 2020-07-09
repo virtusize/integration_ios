@@ -30,4 +30,8 @@ public enum VirtusizeEnvironment: String {
         global="www.virtusize.com",
         japan="api.virtusize.jp",
         korea="api.virtusize.kr"
+
+    internal func productDataCheckUrl() -> String {
+        return "services.virtusize.com"
+    }
 }

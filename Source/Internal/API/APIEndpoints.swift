@@ -42,8 +42,9 @@ internal enum APIEndpoints {
 
         switch self {
         case .productDataCheck(let externalId):
-            components.path = "/integration/v3/product-data-check"
+            components.path = (Virtusize.environment == .staging) ? "/stg/product/check" : "product/check"
             components.queryItems = dataCheckQueryItems(externalId: externalId)
+            print(components)
 
         case .productMetaDataHints:
             components.path = "/rest-api/v1/product-meta-data-hints"
@@ -70,6 +71,9 @@ internal enum APIEndpoints {
     }
 
     var hostname: String {
+        if case .productDataCheck = self {
+            return Virtusize.environment.productDataCheckUrl()
+        }
         return Virtusize.environment.rawValue
     }
 
