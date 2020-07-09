@@ -30,28 +30,29 @@ public class AoyamaButton: UIButton, CAAnimationDelegate {
         super.init(coder: aDecoder)
     }
 
-    /// `VirtusizeProduct` associated with this AoyamaButton class
-    private var product: VirtusizeProduct?
+    /// `AoyamaParams` associated with this AoyamaButton class
+    private var params: AoyamaParams?
 
-    /// `VirtusizeProduct` that is being set to this button
-    public var storeProduct: VirtusizeProduct? {
+    /// `AoyamaParams` that is being set to this button
+    public var aoyamaParams: AoyamaParams? {
         set {
-            guard let product = newValue else {
-                isHidden = true
-                return
+            guard let params = newValue,
+                let product = params.virtusizeProduct else {
+                    isHidden = true
+                    return
             }
-
             Virtusize.productCheck(product: product) { [weak self] product in
                 guard let product = product else {
                     self?.isHidden = true
                     return
                 }
-                self?.product = product
+                self?.params = params
+                self?.params?.virtusizeProduct = product
                 self?.isHidden = false
             }
         }
         get {
-            return product
+            return params
         }
     }
 

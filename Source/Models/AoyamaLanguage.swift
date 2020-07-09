@@ -22,11 +22,9 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 public enum AoyamaLanguage: String, CaseIterable {
     case ENGLISH = "en"
-    case JAPANESE = "jp"
+    case JAPANESE = "ja"
     case KOREAN = "ko"
 
     var label: String {

@@ -35,6 +35,7 @@
 		9CE7787924B419B700E4A127 /* ROADMAP.md in Resources */ = {isa = PBXBuildFile; fileRef = DF71642421A2818E002C7202 /* ROADMAP.md */; };
 		9CE7787A24B419B700E4A127 /* CHANGES.md in Resources */ = {isa = PBXBuildFile; fileRef = DFB2F0F1219BC40E00A69D1D /* CHANGES.md */; };
 		9CE7787B24B419B700E4A127 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DFB2F0EF219BC3D900A69D1D /* README.md */; };
+		9CE7787D24B6F79700E4A127 /* AoyamaParamsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE7787C24B6F79700E4A127 /* AoyamaParamsBuilder.swift */; };
 		DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9D219D151F000B3402 /* Assets.swift */; };
 		DF6B5CA0219D3090000B3402 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9F219D3090000B3402 /* SplashView.swift */; };
 		DF71642821A28501002C7202 /* VirtusizeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF71642721A28501002C7202 /* VirtusizeError.swift */; };
@@ -85,6 +86,7 @@
 		9CE7785724B3794500E4A127 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		9CE7786A24B4121E00E4A127 /* Virtusize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Virtusize.h; sourceTree = "<group>"; };
 		9CE7786B24B4121E00E4A127 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
+		9CE7787C24B6F79700E4A127 /* AoyamaParamsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoyamaParamsBuilder.swift; sourceTree = "<group>"; };
 		DF6B5C9D219D151F000B3402 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Assets.swift; path = Source/Internal/Constants/Assets.swift; sourceTree = "<group>"; };
 		DF6B5C9F219D3090000B3402 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		DF71642421A2818E002C7202 /* ROADMAP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ROADMAP.md; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				9CB98B9824B2C5B400C51F20 /* AoyamaEnvironment.swift */,
 				9CB98B9524B2C5B400C51F20 /* AoyamaInfoCategory.swift */,
 				9CB98B9424B2C5B400C51F20 /* AoyamaLanguage.swift */,
+				9CE7787C24B6F79700E4A127 /* AoyamaParamsBuilder.swift */,
 				9CB98B9724B2C5B400C51F20 /* AoyamaParams.swift */,
 				9CB98B9624B2C5B400C51F20 /* AoyamaRegion.swift */,
 				9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */,
@@ -425,6 +428,7 @@
 			files = (
 				4DED8D5920575D65001CA7DF /* VirtusizeViewController.swift in Sources */,
 				9CB98B9C24B2C5B400C51F20 /* AoyamaRegion.swift in Sources */,
+				9CE7787D24B6F79700E4A127 /* AoyamaParamsBuilder.swift in Sources */,
 				DFFAA95A21A2DF19000F0F70 /* Deserializer.swift in Sources */,
 				DF71642A21A28858002C7202 /* VirtusizeEvent.swift in Sources */,
 				9C7DA17324973FBD00AD6B42 /* APISessionProtocol.swift in Sources */,

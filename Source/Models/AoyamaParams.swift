@@ -22,39 +22,63 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-public struct AoyamaParams {
-    private let region: AoyamaRegion
+public class AoyamaParams {
+    internal let region: AoyamaRegion
     private let env: AoyamaEnvironment
     private let language: AoyamaLanguage
     private let allowedLanguages: [AoyamaLanguage]
-    private let customTexts: String?
-    private let storeProductId: Int?
-    private let bid: String
-    private let storeId: Int?
-    private let externalUserId: String?
+    internal var virtusizeProduct: VirtusizeProduct?
     private let showSGI: Bool
     private let detailsPanelCards: [AoyamaInfoCategory]
 
-    init(region: AoyamaRegion = AoyamaRegion.COM,
-         env: AoyamaEnvironment = AoyamaEnvironment.STAGE,
-         language: AoyamaLanguage = AoyamaLanguage.ENGLISH,
-         allowedLanguages: [AoyamaLanguage] = AoyamaLanguage.allCases,
-         storeProductId: Int,
-         storeId: Int,
-         showSGI: Bool = true,
-         detailsPanelCards: [AoyamaInfoCategory] = AoyamaInfoCategory.allCases) {
+    init(region: AoyamaRegion,
+         env: AoyamaEnvironment,
+         language: AoyamaLanguage,
+         allowedLanguages: [AoyamaLanguage],
+         virtusizeProduct: VirtusizeProduct?,
+         showSGI: Bool,
+         detailsPanelCards: [AoyamaInfoCategory]) {
         self.region = region
         self.env = env
         self.language = language
         self.allowedLanguages = allowedLanguages
-        self.customTexts = nil
-        self.storeProductId = nil
-        self.bid = BrowserID.current.identifier
-        self.storeId = nil
-        self.externalUserId = Virtusize.userID
+        self.virtusizeProduct = virtusizeProduct
         self.showSGI = showSGI
         self.detailsPanelCards = detailsPanelCards
+    }
+
+    func getVsParamsFromSDKScript() -> String {
+        var paramsScript = "vsParamsFromSDK("
+        guard let apiKey = Virtusize.APIKey else {
+            fatalError("Please set Virtusize.APIKey")
+        }
+        guard let storeProductId = virtusizeProduct?.externalId else {
+            fatalError("product ID is invalid")
+        }
+        paramsScript += "{\(ParamKey.API): '\(apiKey)', "
+        paramsScript += "\(ParamKey.storeProductID): '\(storeProductId)', "
+        if let userId = Virtusize.userID {
+            paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
+        }
+        paramsScript += "\(ParamKey.showSGI): \(showSGI), "
+        paramsScript += "\(ParamKey.allowedLanguages): \(allowedLanguages.map { lang in "{ label : \"\(lang.label)\", value : \"\(lang.rawValue)\"}" }), "
+        paramsScript += "\(ParamKey.detailsPanelsCards): \(detailsPanelCards.map { category in category.rawValue }), "
+        paramsScript += "\(ParamKey.language): '\(language.rawValue)', "
+        paramsScript += "\(ParamKey.region): '\(region.rawValue)', "
+        paramsScript += "\(ParamKey.environment): '\(env.rawValue)'})"
+        print(paramsScript)
+        return paramsScript
+    }
+    
+    enum ParamKey {
+        static let API = "apiKey"
+        static let region = "region"
+        static let environment = "env"
+        static let storeProductID = "externalProductId"
+        static let externalUserID = "externalUserId"
+        static let language = "language"
+        static let showSGI = "showSGI"
+        static let allowedLanguages = "allowedLanguages"
+        static let detailsPanelsCards = "detailsPanelsCards"
     }
 }

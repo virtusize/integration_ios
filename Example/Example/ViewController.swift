@@ -44,9 +44,14 @@ class ViewController: UIViewController {
                                                name: Virtusize.productDataCheckDidSucceed,
                                                object: Virtusize.self)
 
-        checkTheFitButton.storeProduct = VirtusizeProduct(
-            externalId: "vs_dress",
-            imageURL: URL(string: "http://www.example.com/image.jpg"))
+        checkTheFitButton.aoyamaParams = AoyamaParamsBuilder()
+            .setRegion(.JAPAN)
+            .setLanguage(.ENGLISH)
+            .setEnvironment(.STAGE)
+            .setVirtusizeProduct(VirtusizeProduct(
+                externalId: "vs_dress",
+                imageURL: URL(string: "http://www.example.com/image.jpg")))
+            .build()
         checkTheFitButton.applyDefaultStyle()
 
         sendOrderSample()
@@ -92,7 +97,7 @@ class ViewController: UIViewController {
 
 	@IBAction func checkTheFit() {
         if let virtusize = VirtusizeViewController(
-            product: checkTheFitButton.storeProduct,
+            params: checkTheFitButton.aoyamaParams,
             handler: self) {
             // POTENTIAL ANALYTICS CODE
             present(virtusize, animated: true, completion: nil)

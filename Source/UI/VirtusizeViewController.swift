@@ -40,25 +40,25 @@ public final class VirtusizeViewController: UIViewController {
 	private var webView: WKWebView?
     private var popupWebView: WKWebView?
 
-    private var context: JSONObject = [:]
+    private weak var params: AoyamaParams!
 
     // Allow process pool passing to share cookies
     private var processPool: WKProcessPool?
 
     public convenience init?(
-        product: VirtusizeProduct? = nil,
+        params: AoyamaParams? = nil,
         handler: VirtusizeMessageHandler? = nil,
         processPool: WKProcessPool? = nil
     ) {
         self.init(nibName: nil, bundle: nil)
+        self.params = params ?? AoyamaParamsBuilder().build()
         self.delegate = handler
         self.processPool = processPool
 
-        guard let context = product?.context else {
+        guard (self.params.virtusizeProduct?.context) != nil else {
             reportError(error: .invalidProduct)
             return nil
         }
-        self.context = context
     }
 
 	public override func viewDidLoad() {
@@ -107,7 +107,7 @@ public final class VirtusizeViewController: UIViewController {
 		}
 
         // If the request is invalid, the controller should be dismissed
-		guard let request = APIRequest.aoyamaURL() else {
+        guard let request = APIRequest.aoyamaURL(region: params.region) else {
             reportError(error: .invalidRequest)
 			return
 		}
@@ -136,12 +136,7 @@ public final class VirtusizeViewController: UIViewController {
 
 extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let vsParamsFromSDKScript = "vsParamsFromSDK({" +
-            "apiKey: '52140a6c9e0870294e4c5df4ebc39b47c8237bfa', " +
-            "externalProductId: '18575990709', " +
-            "env: 'staging', " +
-        "language: 'en'})"
-        webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
+        webView.evaluateJavaScript(params.getVsParamsFromSDKScript(), completionHandler: nil)
     }
 
     public func webView(

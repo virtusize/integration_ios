@@ -22,9 +22,7 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 public enum AoyamaEnvironment: String {
-    case STAGE = "testing"
+    case STAGE = "staging"
     case PRODUCTION = "production"
 }

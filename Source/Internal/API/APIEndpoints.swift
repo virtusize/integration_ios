@@ -29,7 +29,7 @@ internal enum APIEndpoints {
     case productDataCheck(externalId: String)
     case productMetaDataHints
     case events
-    case aoyama(env: AoyamaEnvironment, region: AoyamaRegion)
+    case aoyama(region: AoyamaRegion)
     case storeViewApiKey
     case orders
 
@@ -51,9 +51,13 @@ internal enum APIEndpoints {
         case .events:
             components.path = "/a/api/v3/events"
 
-        case .aoyama(let env, let region):
+        case .aoyama(let region):
             components.host = "static.api.virtusize.\(region.rawValue)"
-            components.path = "/a/aoyama/\(env.rawValue)/sdk-integration/sdk-webview.html"
+            #if DEBUG
+                components.path = "/a/aoyama/testing/sdk-integration/sdk-webview.html"
+            #else
+                components.path = "/a/aoyama/lastest/sdk-integration/sdk-webview.html"
+            #endif
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
