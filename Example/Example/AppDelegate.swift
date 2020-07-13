@@ -33,9 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
+        Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
         Virtusize.userID = "123"
-		Virtusize.environment = .staging
+        Virtusize.environment = .staging
+        Virtusize.params = VirtusizeParamsBuilder()
+            .setLanguage(.JAPANESE)
+            .setShowSGI(true)
+            .setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE])
+            .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
+            .build()
 		return true
 	}
 }

@@ -40,22 +40,19 @@ public final class VirtusizeViewController: UIViewController {
 	private var webView: WKWebView?
     private var popupWebView: WKWebView?
 
-    private weak var params: AoyamaParams!
-
     // Allow process pool passing to share cookies
     private var processPool: WKProcessPool?
 
     public convenience init?(
-        params: AoyamaParams? = nil,
         handler: VirtusizeMessageHandler? = nil,
         processPool: WKProcessPool? = nil
     ) {
         self.init(nibName: nil, bundle: nil)
-        self.params = params ?? AoyamaParamsBuilder().build()
+        self.modalPresentationStyle = .fullScreen
         self.delegate = handler
         self.processPool = processPool
 
-        guard (self.params.virtusizeProduct?.context) != nil else {
+        guard Virtusize.product?.context != nil else {
             reportError(error: .invalidProduct)
             return nil
         }
@@ -107,7 +104,7 @@ public final class VirtusizeViewController: UIViewController {
 		}
 
         // If the request is invalid, the controller should be dismissed
-        guard let request = APIRequest.aoyamaURL(region: params.region) else {
+        guard let request = APIRequest.virtusizeURL(region: Virtusize.params?.region) else {
             reportError(error: .invalidRequest)
 			return
 		}
@@ -136,7 +133,11 @@ public final class VirtusizeViewController: UIViewController {
 
 extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.evaluateJavaScript(params.getVsParamsFromSDKScript(), completionHandler: nil)
+        guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript() else {
+            reportError(error: .invalidRequest)
+            return
+        }
+        webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
     }
 
     public func webView(

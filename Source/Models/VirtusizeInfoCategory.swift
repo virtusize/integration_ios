@@ -1,5 +1,5 @@
 //
-//  AoyamaLanguage.swift
+//  VirtusizeInfoCategory.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -22,19 +22,9 @@
 //  THE SOFTWARE.
 //
 
-public enum AoyamaLanguage: String, CaseIterable {
-    case ENGLISH = "en"
-    case JAPANESE = "ja"
-    case KOREAN = "ko"
-
-    var label: String {
-        switch self {
-        case .ENGLISH:
-            return "English"
-        case .JAPANESE:
-            return  "日本語"
-        case .KOREAN:
-            return  "한국어"
-        }
-    }
+public enum VirtusizeInfoCategory: String, CaseIterable {
+    case MODELINFO = "modelInfo"
+    case GENERALFIT = "generalFit"
+    case BRANDSIZING = "brandSizing"
+    case MATERIAL = "material"
 }

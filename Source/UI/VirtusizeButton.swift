@@ -1,5 +1,5 @@
 //
-//  AoyamaButton.swift
+//  VirtusizeButton.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -24,20 +24,16 @@
 
 import UIKit
 
-/// This class is the custom Aoyama Button that is added in the client's layout file.
-public class AoyamaButton: UIButton, CAAnimationDelegate {
+/// This class is the custom Virtusize Button that is added in the client's layout file.
+public class VirtusizeButton: UIButton, CAAnimationDelegate {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    /// `AoyamaParams` associated with this AoyamaButton class
-    private var params: AoyamaParams?
-
-    /// `AoyamaParams` that is being set to this button
-    public var aoyamaParams: AoyamaParams? {
+    /// `VirtusizeProduct` that is being set to this button
+    public var storeProduct: VirtusizeProduct? {
         set {
-            guard let params = newValue,
-                let product = params.virtusizeProduct else {
+            guard let product = newValue else {
                     isHidden = true
                     return
             }
@@ -46,17 +42,16 @@ public class AoyamaButton: UIButton, CAAnimationDelegate {
                     self?.isHidden = true
                     return
                 }
-                self?.params = params
-                self?.params?.virtusizeProduct = product
+                Virtusize.product = product
                 self?.isHidden = false
             }
         }
         get {
-            return params
+            return Virtusize.product
         }
     }
 
-    /// Applies the default style of `AoyamaButton`
+    /// Applies the default style of `VirtusizeButton`
     public func applyDefaultStyle() {
         tintColor = .black
 

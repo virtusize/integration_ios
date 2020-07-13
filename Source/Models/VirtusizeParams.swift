@@ -1,5 +1,5 @@
 //
-//  AoyamaParams.swift
+//  VirtusizeParams.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -22,27 +22,21 @@
 //  THE SOFTWARE.
 //
 
-public class AoyamaParams {
-    internal let region: AoyamaRegion
-    private let env: AoyamaEnvironment
-    private let language: AoyamaLanguage
-    private let allowedLanguages: [AoyamaLanguage]
-    internal var virtusizeProduct: VirtusizeProduct?
+public class VirtusizeParams {
+    internal let region: VirtusizeRegion
+    private let language: VirtusizeLanguage
+    private let allowedLanguages: [VirtusizeLanguage]
     private let showSGI: Bool
-    private let detailsPanelCards: [AoyamaInfoCategory]
+    private let detailsPanelCards: [VirtusizeInfoCategory]
 
-    init(region: AoyamaRegion,
-         env: AoyamaEnvironment,
-         language: AoyamaLanguage,
-         allowedLanguages: [AoyamaLanguage],
-         virtusizeProduct: VirtusizeProduct?,
+    init(region: VirtusizeRegion,
+         language: VirtusizeLanguage,
+         allowedLanguages: [VirtusizeLanguage],
          showSGI: Bool,
-         detailsPanelCards: [AoyamaInfoCategory]) {
+         detailsPanelCards: [VirtusizeInfoCategory]) {
         self.region = region
-        self.env = env
         self.language = language
         self.allowedLanguages = allowedLanguages
-        self.virtusizeProduct = virtusizeProduct
         self.showSGI = showSGI
         self.detailsPanelCards = detailsPanelCards
     }
@@ -52,7 +46,7 @@ public class AoyamaParams {
         guard let apiKey = Virtusize.APIKey else {
             fatalError("Please set Virtusize.APIKey")
         }
-        guard let storeProductId = virtusizeProduct?.externalId else {
+        guard let storeProductId = Virtusize.product?.externalId else {
             fatalError("product ID is invalid")
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
@@ -62,15 +56,15 @@ public class AoyamaParams {
         }
         paramsScript += "\(ParamKey.showSGI): \(showSGI), "
         paramsScript += "\(ParamKey.allowedLanguages): \(getAllowedLanguagesScript(allowedLanguages)), "
-        paramsScript += "\(ParamKey.detailsPanelsCards): \(detailsPanelCards.map { category in category.rawValue }), "
+        paramsScript += "\(ParamKey.detailsPanelCards): \(detailsPanelCards.map { category in category.rawValue }), "
         paramsScript += "\(ParamKey.language): '\(language.rawValue)', "
         paramsScript += "\(ParamKey.region): '\(region.rawValue)', "
-        paramsScript += "\(ParamKey.environment): '\(env.rawValue)'})"
+        paramsScript += "\(ParamKey.environment): 'production'})"
         print(paramsScript)
         return paramsScript
     }
 
-    private func getAllowedLanguagesScript(_ allowedLanguages: [AoyamaLanguage]) -> String {
+    private func getAllowedLanguagesScript(_ allowedLanguages: [VirtusizeLanguage]) -> String {
         var script = "["
         for index in 0...allowedLanguages.count-1 {
             script += "{ label : \"\(allowedLanguages[index].label)\", value : \"\(allowedLanguages[index].rawValue)\"}"
@@ -91,7 +85,7 @@ public class AoyamaParams {
         static let language = "language"
         static let showSGI = "showSGI"
         static let allowedLanguages = "allowedLanguages"
-        static let detailsPanelsCards = "detailsPanelsCards"
+        static let detailsPanelCards = "detailsPanelCards"
     }
 
 }

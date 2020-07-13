@@ -34,4 +34,15 @@ public enum VirtusizeEnvironment: String {
     internal func productDataCheckUrl() -> String {
         return "services.virtusize.com"
     }
+
+    internal func virtusizeRegion() -> VirtusizeRegion {
+        switch self {
+        case .staging, .japan:
+            return VirtusizeRegion.JAPAN
+        case .global:
+            return VirtusizeRegion.COM
+        case .korea:
+            return VirtusizeRegion.KOREA
+        }
+    }
 }

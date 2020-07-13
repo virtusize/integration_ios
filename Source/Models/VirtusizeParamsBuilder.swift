@@ -1,5 +1,5 @@
 //
-//  AoyamaParamsBuilder.swift
+//  VirtusizeParamsBuilder.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -22,50 +22,42 @@
 //  THE SOFTWARE.
 //
 
-public class AoyamaParamsBuilder {
-
-    private var region: AoyamaRegion = AoyamaRegion.JAPAN
-    private var env: AoyamaEnvironment = AoyamaEnvironment.PRODUCTION
-    private var language: AoyamaLanguage = AoyamaLanguage.JAPANESE
-    private var allowedLanguages: [AoyamaLanguage] = AoyamaLanguage.allCases
+public class VirtusizeParamsBuilder {
+    private var region: VirtusizeRegion = VirtusizeRegion.JAPAN
+    private var language: VirtusizeLanguage = VirtusizeLanguage.JAPANESE
+    private var allowedLanguages: [VirtusizeLanguage] = VirtusizeLanguage.allCases
     private var virtusizeProduct: VirtusizeProduct?
     private var showSGI: Bool = false
-    private var detailsPanelCards: [AoyamaInfoCategory] = AoyamaInfoCategory.allCases
+    private var detailsPanelCards: [VirtusizeInfoCategory] = VirtusizeInfoCategory.allCases
 
     public init() {}
 
-    public func setRegion(_ value: AoyamaRegion) -> AoyamaParamsBuilder {
-        region = value
-        return self
-    }
-
-    public func setEnvironment(_ value: AoyamaEnvironment) -> AoyamaParamsBuilder {
-        env = value
-        return self
-    }
-
-    public func setLanguage(_ value: AoyamaLanguage) -> AoyamaParamsBuilder {
+    public func setLanguage(_ value: VirtusizeLanguage) -> VirtusizeParamsBuilder {
         language = value
         return self
     }
 
-    public func setAllowedLanguages(_ value: [AoyamaLanguage]) -> AoyamaParamsBuilder {
+    public func setAllowedLanguages(_ value: [VirtusizeLanguage]) -> VirtusizeParamsBuilder {
         allowedLanguages = value
         return self
     }
 
-    public func setVirtusizeProduct(_ value: VirtusizeProduct) -> AoyamaParamsBuilder {
-        virtusizeProduct = value
+    public func setShowSGI(_ value: Bool) -> VirtusizeParamsBuilder {
+        showSGI = value
         return self
     }
 
-    public func build() -> AoyamaParams {
-        return AoyamaParams(
+    public func setDetailsPanelCards(_ value: [VirtusizeInfoCategory]) -> VirtusizeParamsBuilder {
+        detailsPanelCards = value
+        return self
+    }
+
+    public func build() -> VirtusizeParams {
+        region = Virtusize.environment.virtusizeRegion()
+        return VirtusizeParams(
             region: region,
-            env: env,
             language: language,
             allowedLanguages: allowedLanguages,
-            virtusizeProduct: virtusizeProduct,
             showSGI: showSGI,
             detailsPanelCards: detailsPanelCards
         )

@@ -27,7 +27,7 @@ import Virtusize
 
 class ViewController: UIViewController {
 
-	@IBOutlet weak var checkTheFitButton: AoyamaButton!
+	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -44,14 +44,9 @@ class ViewController: UIViewController {
                                                name: Virtusize.productDataCheckDidSucceed,
                                                object: Virtusize.self)
 
-        checkTheFitButton.aoyamaParams = AoyamaParamsBuilder()
-            .setRegion(.JAPAN)
-            .setLanguage(.ENGLISH)
-            .setEnvironment(.STAGE)
-            .setVirtusizeProduct(VirtusizeProduct(
-                externalId: "vs_dress",
-                imageURL: URL(string: "http://www.example.com/image.jpg")))
-            .build()
+        checkTheFitButton.storeProduct = VirtusizeProduct(
+            externalId: "vs_dress",
+            imageURL: URL(string: "http://www.example.com/image.jpg"))
         checkTheFitButton.applyDefaultStyle()
 
         sendOrderSample()
@@ -95,10 +90,8 @@ class ViewController: UIViewController {
         })
     }
 
-	@IBAction func checkTheFit() {
-        if let virtusize = VirtusizeViewController(
-            params: checkTheFitButton.aoyamaParams,
-            handler: self) {
+    @IBAction func checkTheFit() {
+        if let virtusize = VirtusizeViewController(handler: self) {
             // POTENTIAL ANALYTICS CODE
             present(virtusize, animated: true, completion: nil)
         }

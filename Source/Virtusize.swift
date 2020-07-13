@@ -29,16 +29,19 @@ public class Virtusize {
     // MARK: - Properties
 
     /// The API key that is unique and provided for Virtusize clients
-	public static var APIKey: String?
+    public static var APIKey: String?
 
     /// The user id that is the unique user id from the client system
-	public static var userID: String?
+    public static var userID: String?
 
     /// The Virtusize environment that defaults to the `global` domain
-	public static var environment = VirtusizeEnvironment.global
+    public static var environment = VirtusizeEnvironment.global
 
-    /// The device language that defaults to the primary device language
-    public static var language: String = Locale.preferredLanguages[0]
+    /// TODO
+    public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
+    
+    /// TODO
+    internal static var product: VirtusizeProduct?
 
     /// NotificationCenter observers for debugging the initial product data check
     /// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
@@ -177,7 +180,7 @@ public class Virtusize {
     public class func sendOrder(_ order: VirtusizeOrder,
                                 onSuccess: (() -> Void)? = nil,
                                 onError: ((VirtusizeError) -> Void)? = nil) {
-        guard let externalUserId = Virtusize.userID else {
+        guard let externalUserId = userID else {
             fatalError("Please set Virtusize.userID")
         }
         var mutualOrder = order

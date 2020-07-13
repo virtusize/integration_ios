@@ -1,5 +1,5 @@
 //
-//  AoyamaRegion.swift
+//  VirtusizeRegion.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -22,9 +22,7 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-public enum AoyamaRegion: String {
+public enum VirtusizeRegion: String {
     case COM = "com"
     case JAPAN = "jp"
     case KOREA = "kr"

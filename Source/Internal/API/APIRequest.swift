@@ -21,7 +21,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-import Foundation
 
 internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]
@@ -126,12 +125,12 @@ internal struct APIRequest {
         return apiRequest(components: endpoint.components, withPayload: payloadData)
 	}
 
-    /// Gets the `URLRequest` for the `aoyama` request
+    /// Gets the `URLRequest` for the `Virtusize` request
     ///
     /// - Parameter context: The product data from the response of the `productDataCheck` request
-    /// - Returns: A `URLRequest` for the `aoyama` request
-    internal static func aoyamaURL(region: AoyamaRegion = .JAPAN) -> URLRequest? {
-        let endpoint = APIEndpoints.aoyama(region: region)
+    /// - Returns: A `URLRequest` for the `Virtusize` request
+    internal static func virtusizeURL(region: VirtusizeRegion?) -> URLRequest? {
+        let endpoint = APIEndpoints.virtusize(region: region ?? .JAPAN)
         return HTTPRequest(components: endpoint.components)
 	}
 

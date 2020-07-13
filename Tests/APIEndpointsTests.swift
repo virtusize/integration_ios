@@ -33,7 +33,6 @@ class APIEndpointsTests: XCTestCase {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
         Virtusize.environment = .staging
-        Virtusize.language = "en"
     }
 
     override func tearDownWithError() throws {
@@ -74,10 +73,10 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNil(endpoint.components.queryItems)
     }
 
-    func testFitIllustratorEndpoint_returnExpectedComponents() {
+    func testVirtusizeEndpoint_returnExpectedComponents() {
         Virtusize.environment = .japan
 
-        let endpoint = APIEndpoints.aoyama(region: .JAPAN)
+        let endpoint = APIEndpoints.virtusize(region: .JAPAN)
 
         XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
         XCTAssertEqual(endpoint.components.path, "/a/aoyama/testing/sdk-integration/sdk-webview.html")

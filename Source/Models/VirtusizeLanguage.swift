@@ -1,5 +1,5 @@
 //
-//  AoyamaEnvironment.swift
+//  VirtusizeLanguage.swift
 //
 //  Copyright (c) 2020 Virtusize AB
 //
@@ -22,7 +22,19 @@
 //  THE SOFTWARE.
 //
 
-public enum AoyamaEnvironment: String {
-    case STAGE = "staging"
-    case PRODUCTION = "production"
+public enum VirtusizeLanguage: String, CaseIterable {
+    case ENGLISH = "en"
+    case JAPANESE = "ja"
+    case KOREAN = "ko"
+
+    var label: String {
+        switch self {
+        case .ENGLISH:
+            return "English"
+        case .JAPANESE:
+            return  "日本語"
+        case .KOREAN:
+            return  "한국어"
+        }
+    }
 }

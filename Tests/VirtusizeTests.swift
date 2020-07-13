@@ -31,7 +31,6 @@ class VirtusizeTests: XCTestCase {
         Virtusize.APIKey = TestFixtures.apiKey
         Virtusize.userID = "123"
         Virtusize.environment = .staging
-        Virtusize.language = "en"
     }
 
     func testProductDataCheck_hasExpectedCallbackData() {

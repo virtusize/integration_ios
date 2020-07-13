@@ -22,14 +22,12 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 /// This enum represents all available Virtusize endpoints
 internal enum APIEndpoints {
     case productDataCheck(externalId: String)
     case productMetaDataHints
     case events
-    case aoyama(region: AoyamaRegion)
+    case virtusize(region: VirtusizeRegion)
     case storeViewApiKey
     case orders
 
@@ -42,9 +40,8 @@ internal enum APIEndpoints {
 
         switch self {
         case .productDataCheck(let externalId):
-            components.path = (Virtusize.environment == .staging) ? "/stg/product/check" : "product/check"
+            components.path = (Virtusize.environment == .staging) ? "/stg/product/check" : "/product/check"
             components.queryItems = dataCheckQueryItems(externalId: externalId)
-            print(components)
 
         case .productMetaDataHints:
             components.path = "/rest-api/v1/product-meta-data-hints"
@@ -52,13 +49,9 @@ internal enum APIEndpoints {
         case .events:
             components.path = "/a/api/v3/events"
 
-        case .aoyama(let region):
+        case .virtusize(let region):
             components.host = "static.api.virtusize.\(region.rawValue)"
-            #if DEBUG
-                components.path = "/a/aoyama/testing/sdk-integration/sdk-webview.html"
-            #else
-                components.path = "/a/aoyama/lastest/sdk-integration/sdk-webview.html"
-            #endif
+            components.path = "/a/aoyama/testing/sdk-integration/sdk-webview.html"
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -96,31 +89,6 @@ internal enum APIEndpoints {
         queryItem.append(URLQueryItem(name: "apiKey", value: apiKey))
         queryItem.append(URLQueryItem(name: "externalId", value: externalId))
         queryItem.append(URLQueryItem(name: "version", value: "1"))
-        return queryItem
-    }
-
-    /// Builds query parameters for the API endpoint `fitIllustrator`
-    ///
-    /// - Parameters:
-    ///   - storeId: An integer that represents the store id from the product data
-    ///   - productId: An Integer to represent the product id
-    /// - Returns: An array of query items for the `URLComponents`
-    private func fitIllustratorQueryItems(storeId: Int, productId: Int) -> [URLQueryItem] {
-        let bid = BrowserID.current.identifier
-        var queryItem: [URLQueryItem] = []
-        queryItem.append(URLQueryItem(name: "detached", value: "false"))
-        queryItem.append(URLQueryItem(name: "bid", value: bid))
-        queryItem.append(URLQueryItem(name: "addToCartEnabled", value: "false"))
-        queryItem.append(URLQueryItem(name: "storeId", value: String(storeId)))
-        queryItem.append(URLQueryItem(name: "_", value: String(arc4random_uniform(1519982555))))
-        queryItem.append(URLQueryItem(name: "spid", value: String(productId)))
-        queryItem.append(URLQueryItem(name: "lang", value: Virtusize.language))
-        queryItem.append(URLQueryItem(name: "ios", value: "true"))
-        queryItem.append(URLQueryItem(name: "sdk", value: String(VirtusizeVersionNumber)))
-        queryItem.append(URLQueryItem(name: "userId", value: Virtusize.userID))
-        if let externalUserID = Virtusize.userID {
-            queryItem.append(URLQueryItem(name: "externalUserId", value: externalUserID))
-        }
         return queryItem
     }
 
