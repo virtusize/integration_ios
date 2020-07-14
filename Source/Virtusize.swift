@@ -1,7 +1,7 @@
 //
 //  Virtusize.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,10 +37,10 @@ public class Virtusize {
     /// The Virtusize environment that defaults to the `global` domain
     public static var environment = VirtusizeEnvironment.global
 
-    /// TODO
+    /// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
     public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
-    
-    /// TODO
+
+    /// The Virtusize product to get the value from the`productDataCheck` request
     internal static var product: VirtusizeProduct?
 
     /// NotificationCenter observers for debugging the initial product data check

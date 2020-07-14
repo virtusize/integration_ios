@@ -134,7 +134,7 @@ public final class VirtusizeViewController: UIViewController {
 extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript() else {
-            reportError(error: .invalidRequest)
+            reportError(error: .invalidVsParamScript)
             return
         }
         webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
@@ -144,7 +144,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         _ webView: WKWebView,
         didFail navigation: WKNavigation!,
         withError error: Error) {
-        // The error is caused by cancel the current load that is not finished yet
+        // The error is caused by canceling the current load that is not finished yet
         // We should ignore this error. Otherwise, the webview will be closed automatically
         if error._code == NSURLErrorCancelled {
             return
@@ -169,7 +169,9 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         }
 
         guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
-            configuration.applicationNameForUserAgent = "Version/8.0.2 Safari/600.2.5"
+            // By default, The Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a Webview.
+            // By setting up the user agent, Google recognizes the web view as a Safari browser
+            configuration.applicationNameForUserAgent = "Version/10.0 Safari/604.1"
             popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
             popupWebView!.navigationDelegate = self
             popupWebView!.uiDelegate = self

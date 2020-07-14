@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+/// The builder patten to help initialize the `VirtusizeParams` object
 public class VirtusizeParamsBuilder {
     private var region: VirtusizeRegion = VirtusizeRegion.JAPAN
     private var language: VirtusizeLanguage = VirtusizeLanguage.JAPANESE
@@ -53,6 +54,7 @@ public class VirtusizeParamsBuilder {
     }
 
     public func build() -> VirtusizeParams {
+        /// Assigns the region value to a default one corresponding the Virtusize environment
         region = Virtusize.environment.virtusizeRegion()
         return VirtusizeParams(
             region: region,

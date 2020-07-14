@@ -22,13 +22,20 @@
 //  THE SOFTWARE.
 //
 
+/// The class that wraps the parameters we can pass to the Virtusize web app
 public class VirtusizeParams {
+    /// The `VirtusizeRegion` that is used to set the region of the config url domains within the Virtusize web app
     internal let region: VirtusizeRegion
+    /// The `VirtusizeLanguage` that sets the initial language the Virtusize web app will load in
     private let language: VirtusizeLanguage
+    /// The languages that the user can switch to using the Language Selector
     private let allowedLanguages: [VirtusizeLanguage]
+    /// The Boolean value to determine whether the Virtusize web app will fetch SGI and use SGI flow for users to add user generated items to their wardrobe
     private let showSGI: Bool
+    /// The info categories that will be displayed in the Product Details tab
     private let detailsPanelCards: [VirtusizeInfoCategory]
 
+    /// Initializes the VirtusizeParams class
     init(region: VirtusizeRegion,
          language: VirtusizeLanguage,
          allowedLanguages: [VirtusizeLanguage],
@@ -41,6 +48,9 @@ public class VirtusizeParams {
         self.detailsPanelCards = detailsPanelCards
     }
 
+    /// Gets the script in JavaScript to be called to pass params to the Virtusize web app
+    ///
+    /// - Returns: A string value of the script in JavaScript
     func getVsParamsFromSDKScript() -> String {
         var paramsScript = "vsParamsFromSDK("
         guard let apiKey = Virtusize.APIKey else {
@@ -60,10 +70,13 @@ public class VirtusizeParams {
         paramsScript += "\(ParamKey.language): '\(language.rawValue)', "
         paramsScript += "\(ParamKey.region): '\(region.rawValue)', "
         paramsScript += "\(ParamKey.environment): 'production'})"
-        print(paramsScript)
         return paramsScript
     }
 
+    /// Gets the script specific for allowedLanguages
+    ///
+    /// - Parameter allowedLanguages: A list of `VirtusizeLanguage`
+    /// - Returns: A string value of the script in JavaScript
     private func getAllowedLanguagesScript(_ allowedLanguages: [VirtusizeLanguage]) -> String {
         var script = "["
         for index in 0...allowedLanguages.count-1 {

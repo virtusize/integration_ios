@@ -1,7 +1,7 @@
 //
 //  VirtusizeEnvironment.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize AB
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 /// This enum contains all available Virtusize environments
 public enum VirtusizeEnvironment: String {
     case staging="staging.virtusize.com",
@@ -31,10 +29,12 @@ public enum VirtusizeEnvironment: String {
         japan="api.virtusize.jp",
         korea="api.virtusize.kr"
 
+    /// Gets the URL for the `productDataCheck` request
     internal func productDataCheckUrl() -> String {
         return "services.virtusize.com"
     }
 
+    /// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
     internal func virtusizeRegion() -> VirtusizeRegion {
         switch self {
         case .staging, .japan:

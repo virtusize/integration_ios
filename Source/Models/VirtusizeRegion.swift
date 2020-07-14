@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+/// This enum contains all the possible regions that set the region of the config url domains within the Virtusize web app
 public enum VirtusizeRegion: String {
     case COM = "com"
     case JAPAN = "jp"
