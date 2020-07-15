@@ -60,6 +60,7 @@ public class VirtusizeParams {
             fatalError("product ID is invalid")
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
+        paramsScript += "\(ParamKey.browserID): '\(BrowserID.current.identifier)', "
         paramsScript += "\(ParamKey.storeProductID): '\(storeProductId)', "
         if let userId = Virtusize.userID {
             paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
@@ -91,6 +92,7 @@ public class VirtusizeParams {
 
     enum ParamKey {
         static let API = "apiKey"
+        static let browserID = "bid"
         static let region = "region"
         static let environment = "env"
         static let storeProductID = "externalProductId"

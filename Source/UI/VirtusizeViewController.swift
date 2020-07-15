@@ -33,7 +33,7 @@ public protocol VirtusizeMessageHandler: class {
     func virtusizeControllerShouldClose(_ controller: VirtusizeViewController)
 }
 
-/// This `UIViewController` represents the Fit Illustrator Window
+/// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeViewController: UIViewController {
 	public weak var delegate: VirtusizeMessageHandler?
 
@@ -42,6 +42,8 @@ public final class VirtusizeViewController: UIViewController {
 
     // Allow process pool passing to share cookies
     private var processPool: WKProcessPool?
+    
+    private static let COOKIE_BID_KEY = "virtusize.bid"
 
     public convenience init?(
         handler: VirtusizeMessageHandler? = nil,
@@ -138,6 +140,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
             return
         }
         webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
+        checkAndUpdateBrowserID()
     }
 
     public func webView(
@@ -183,6 +186,29 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
 
     public func webViewDidClose(_ webView: WKWebView) {
         webView.removeFromSuperview()
+    }
+
+    /// Checks if the bid in the web cookies is different from the bid saved locally.
+    /// If it is, update and store the new bid.
+    private func checkAndUpdateBrowserID() {
+        if #available(iOSApplicationExtension 11.0, *) {
+            WKWebsiteDataStore.default().httpCookieStore.getAllCookies({ cookies in
+                for cookie in cookies {
+                    if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
+                        if cookie.name == VirtusizeViewController.COOKIE_BID_KEY && cookieValue != BrowserID.current.identifier {
+                            BrowserID.current.identifier = cookie.value
+                        }
+                    }
+                }
+            })
+        } else {
+            if let cookies = HTTPCookieStorage.shared.cookies {
+                for cookie in cookies
+                    where cookie.name == VirtusizeViewController.COOKIE_BID_KEY && cookie.value != BrowserID.current.identifier {
+                        BrowserID.current.identifier = cookie.value
+                }
+            }
+        }
     }
 }
 
