@@ -29,21 +29,21 @@ import WebKit
 /// `VirtusizeError` and events as `VirtusizeEvent` and tell you when to dismiss the view controller
 public protocol VirtusizeMessageHandler: class {
     func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError)
-	func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent)
+    func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent)
     func virtusizeControllerShouldClose(_ controller: VirtusizeViewController)
 }
 
 /// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeViewController: UIViewController {
-	public weak var delegate: VirtusizeMessageHandler?
+    public weak var delegate: VirtusizeMessageHandler?
 
-	private var webView: WKWebView?
+    private var webView: WKWebView?
     private var popupWebView: WKWebView?
 
     // Allow process pool passing to share cookies
     private var processPool: WKProcessPool?
-    
-    private static let COOKIE_BID_KEY = "virtusize.bid"
+
+    private static let cookieBidKey = "virtusize.bid"
 
     public convenience init?(
         handler: VirtusizeMessageHandler? = nil,
@@ -60,36 +60,36 @@ public final class VirtusizeViewController: UIViewController {
         }
     }
 
-	public override func viewDidLoad() {
-		super.viewDidLoad()
-		view.backgroundColor = .white
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
 
-		let contentController = WKUserContentController()
+        let contentController = WKUserContentController()
         contentController.add(self, name: "eventHandler")
 
-		let config = WKWebViewConfiguration()
-		config.userContentController = contentController
+        let config = WKWebViewConfiguration()
+        config.userContentController = contentController
 
         if let processPool = self.processPool {
             config.processPool = processPool
         }
 
-		let webView = WKWebView(frame: .zero, configuration: config)
+        let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
         webView.uiDelegate = self
-		view.addSubview(webView)
-		self.webView = webView
+        view.addSubview(webView)
+        self.webView = webView
 
-		webView.translatesAutoresizingMaskIntoConstraints = false
-		if #available(iOS 11.0, *) {
-			let layoutGuide = view.safeAreaLayoutGuide
-			NSLayoutConstraint.activate([
-				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-				webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
-				webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
-			])
-		} else {
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            let layoutGuide = view.safeAreaLayoutGuide
+            NSLayoutConstraint.activate([
+                webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+                webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+                webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+            ])
+        } else {
             let views = ["webView": webView]
             let verticalConstraints = NSLayoutConstraint.constraints(
                 withVisualFormat: "V:|-20-[webView]-0-|",
@@ -102,25 +102,25 @@ public final class VirtusizeViewController: UIViewController {
                 metrics: nil,
                 views: views)
 
-			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
-		}
+            NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
+        }
 
         // If the request is invalid, the controller should be dismissed
         guard let request = APIRequest.virtusizeURL(region: Virtusize.params?.region) else {
             reportError(error: .invalidRequest)
-			return
-		}
-		webView.load(request)
-	}
+            return
+        }
+        webView.load(request)
+    }
 
-	// MARK: Rotation Lock
-	public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		return .portrait
-	}
+    // MARK: Rotation Lock
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
 
-	public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-		return .portrait
-	}
+    public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
 
     // MARK: Error Handling
     public func reportError(error: VirtusizeError) {
@@ -167,8 +167,15 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         createWebViewWith configuration: WKWebViewConfiguration,
         for navigationAction: WKNavigationAction,
         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        guard navigationAction.request.url != nil else {
+        guard let url = navigationAction.request.url else {
             return nil
+        }
+
+        if isExternalLinks(url: url.absoluteString) {
+            if let sharedApplication = UIApplication.safeShared {
+                sharedApplication.openURL(url)
+                return nil
+            }
         }
 
         guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
@@ -184,18 +191,24 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         return nil
     }
 
+    /// Checks if a URL is an external link to be open on the Safari browser
+    private func isExternalLinks(url: String?) -> Bool {
+        return url != nil && (url!.contains("surveymonkey") || url!.contains("privacy"))
+    }
+
     public func webViewDidClose(_ webView: WKWebView) {
         webView.removeFromSuperview()
     }
 
-    /// Checks if the bid in the web cookies is different from the bid saved locally.
+    /// Checks if the bid in the web cookies  is different from the bid saved locally.
     /// If it is, update and store the new bid.
     private func checkAndUpdateBrowserID() {
         if #available(iOSApplicationExtension 11.0, *) {
             WKWebsiteDataStore.default().httpCookieStore.getAllCookies({ cookies in
                 for cookie in cookies {
                     if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
-                        if cookie.name == VirtusizeViewController.COOKIE_BID_KEY && cookieValue != BrowserID.current.identifier {
+                        if cookie.name == VirtusizeViewController.cookieBidKey &&
+                            cookieValue != BrowserID.current.identifier {
                             BrowserID.current.identifier = cookie.value
                         }
                     }
@@ -204,8 +217,9 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         } else {
             if let cookies = HTTPCookieStorage.shared.cookies {
                 for cookie in cookies
-                    where cookie.name == VirtusizeViewController.COOKIE_BID_KEY && cookie.value != BrowserID.current.identifier {
-                        BrowserID.current.identifier = cookie.value
+                    where cookie.name == VirtusizeViewController.cookieBidKey &&
+                        cookie.value != BrowserID.current.identifier {
+                            BrowserID.current.identifier = cookie.value
                 }
             }
         }
