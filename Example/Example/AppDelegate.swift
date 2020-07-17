@@ -44,9 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .setLanguage(.JAPANESE)
              // By default, ShowSGI is false
             .setShowSGI(true)
-             // By default, Aoyama allows all the possible languages including English, Japanese and Korean
+             // By default, Virtusize allows all the possible languages including English, Japanese and Korean
             .setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE])
-             // By default, Aoyama displays all the possible info categories in the Product Details tab,
+             // By default, Virtusize displays all the possible info categories in the Product Details tab,
              // including "modelInfo", "generalFit", "brandSizing" and "material".
             .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
             .build()
