@@ -79,7 +79,7 @@ class APIEndpointsTests: XCTestCase {
         let endpoint = APIEndpoints.virtusize(region: .JAPAN)
 
         XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
-        XCTAssertEqual(endpoint.components.path, "/a/aoyama/testing/sdk-integration/sdk-webview.html")
+        XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-integration/sdk-webview.html")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
