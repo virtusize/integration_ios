@@ -25,6 +25,8 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## Installation
 
+If you would like to continue to use the old Version 1.x.x, refer to the branch [v1](https://github.com/virtusize/integration_ios/tree/v1).
+
 ### CocoaPods
 
 Install using [CocoaPods](https://cocoapods.org) dependency manager. You can install it with the following command:
@@ -41,7 +43,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 1.3.2'
+pod 'Virtusize', '~> 2.0.0'
 end
 ```
 
@@ -74,26 +76,51 @@ Follow `Carthage` [documentation](https://github.com/Carthage/Carthage#adding-fr
 
 ## Setup
 
-First setup your API key and environment in the `application(_:didFinishLaunchingWithOptions:)` 
+First setup the SDK in the `application(_:didFinishLaunchingWithOptions:)` 
 method of the App delegate.
 
 ``` Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692" // Virtusize demo store key
-		Virtusize.environment = .staging
-    ...
-		return true
+    // Virtusize.APIKey is required
+    Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
+    // For using the Order API, Virtusize.userID is required
+    Virtusize.userID = "123"
+    // By default, the Virtusize environment will be set to .global
+    Virtusize.environment = .staging
+    Virtusize.params = VirtusizeParamsBuilder()
+        // By default, the initial language will be set based on the Virtusize environment
+        .setLanguage(.JAPANESE)
+        // By default, ShowSGI is false
+        .setShowSGI(true)
+        // By default, Virtusize allows all the possible languages including English, Japanese and Korean
+        .setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE])
+        // By default, Virtusize displays all the possible info categories in the Product Details tab,
+        // including "modelInfo", "generalFit", "brandSizing" and "material".
+        .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
+        .build()
+        return true
 }
 ```
 
 The environment is the region you are running the integration from, either `.staging`,  `.global`,
 `.japan` or `.korea`
 
+You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to change the configuration of the integration. Possible configuration methods are shown as the following table: 
+
+**VirtusizeParamsBuilder**
+
+| Method               | Argument Type                     | Example                                                      | Description                                                  | Requirement                                                  |
+| -------------------- | --------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| setLanguage          | VirtusizeLanguage                 | setLanguage(.JAPANESE)                                       | It sets the initial language that the integration will load in. The possible values are `VirtusizeLanguage.ENGLISH`, `VirtusizeLanguage.JAPANESE` and `VirtusizeLanguage.KOREAN` | No, by default, the initial language will be set based on the Virtusize environment. |
+| setShowSGI           | Boolean                           | setShowSGI(true)                                             | It determines whether the integration will fetch SGI and use SGI flow for users to add user generated items to their wardrobe. | No, by default, ShowSGI is set to false                      |
+| setAllowedLanguages  | A list of `VirtusizeLanguage`     | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | The languages that the user can switch to using the Language Selector | No, by default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
+| setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories that will be display in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No, by default, the integration displays all the possible info categories in the Product Details tab. |
+
 Then in the controller where you want to use the comparison view, you will need to:
 
 1. setup the `VirtusizeButton`
 2. pass a `productImageURL` in order to populate the comparison view
-3. pass an `exernal_id` that will be used to reference that product in our API
+3. pass an `exernalId` that will be used to reference that product in our API
 4. show the Virtusize view controller when the button is pressed
 5. set the `VirtusizeEventsDelegate` delegate of the view controller,
    in order to handle events and error reporting.
@@ -112,7 +139,6 @@ override func viewDidLoad() {
 
 @IBAction func checkTheFit() {
     if let virtusize = VirtusizeViewController(
-        product: checkTheFitButton.storeProduct,
         handler: self) {
         present(virtusize, animated: true, completion: nil)
     }
@@ -123,7 +149,6 @@ The `VirtusizeViewController` accept an optional `processPool:WKProcessPool` par
 
 ```Swift
 if let virtusize = VirtusizeViewController(
-    product: checkTheFitButton.storeProduct,
     handler: self,
     processPool: processPool) {
     ...
@@ -139,7 +164,7 @@ the controller and the Virtusize API. `VirtusizeEvent` is a `struct` with a requ
 
 ## Product Data Check
 
-When the button is initialised with an  `exernal_id`  the product call our API to check if the product has been parsed and added to our database.
+When the button is initialised with an  `exernalId`  the product call our API to check if the product has been parsed and added to our database.
 
 In order to debug that API call, you can subscribe to the `NotificationCenter` and observe two `Notification.Name`:
 
@@ -227,18 +252,6 @@ Virtusize.sendOrder(
         print("Failed to send the order, error: \(error.debugDescription)")
 })
 ```
-
-## Migrate from 0.x.x version to 1.x.x
-
-Version 1.x.x has aligned its naming convention for methods, data structures and classes.
-
--  `CheckTheFitViewController` has been renamed `VirtusizeViewController`.
-- `CheckTheFitViewControllerDelegate` has been renamed `VirtusizeMessageHandler`. All the methods of the protocol 
-have been renamed accordingly.
-- `CheckTheFitError`  has been renamed `VirtusizeError`.
-- `VirtusizeEvent` is now a proper `struct`.
-- `VirtusizeProduct` struct has been added.
-- Environment is now a `VirtusizeEnvironment` enum.
 
 ## Build
 
