@@ -1,5 +1,11 @@
 # ROADMAP
 
+## 2.0.0
+
+### Release date: 20/07/20
+
+- [x] A new version of the integration
+
 ## 1.3.0
 
 ### Release date: 20/06/08

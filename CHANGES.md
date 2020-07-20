@@ -11,7 +11,12 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 
-### NEXT RELEASE
+## NEXT RELEASE for Version 2.x.x
+
+### 2.0.0
+- Feature: A new version of the integration
+
+## NEXT RELEASE for Version 1.x.x
 
 ### 1.3.2
 
