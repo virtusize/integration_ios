@@ -1,7 +1,7 @@
 //
 //  APIRequest.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-import Foundation
 
 internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]
@@ -126,19 +125,12 @@ internal struct APIRequest {
         return apiRequest(components: endpoint.components, withPayload: payloadData)
 	}
 
-    /// Gets the `URLRequest` for the `fitIllustrator` request
+    /// Gets the `URLRequest` for the `Virtusize` request
     ///
     /// - Parameter context: The product data from the response of the `productDataCheck` request
-    /// - Returns: A `URLRequest` for the `fitIllustrator` request
-	internal static func fitIllustratorURL(in context: Any?) -> URLRequest? {
-		guard let rootObject = context as? JSONObject,
-            let dataObject = rootObject["data"] as? JSONObject,
-            let storeId = dataObject["storeId"] as? Int,
-            let productId = dataObject["productDataId"] as? Int else {
-			return nil
-		}
-
-        let endpoint = APIEndpoints.fitIllustrator(storeId: storeId, productId: productId)
+    /// - Returns: A `URLRequest` for the `Virtusize` request
+    internal static func virtusizeURL(region: VirtusizeRegion?) -> URLRequest? {
+        let endpoint = APIEndpoints.virtusize(region: region ?? .JAPAN)
         return HTTPRequest(components: endpoint.components)
 	}
 

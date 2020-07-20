@@ -1,7 +1,7 @@
 //
-//  VirtusizeEvent.swift
+//  VirtusizeInfoCategory.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,10 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-/// A structure represents the event in Virtusize API
-public struct VirtusizeEvent {
-    /// The name of the event
-    public let name: String
-
-    /// The additional data in the event
-    public let data: Any?
-}
-
-extension VirtusizeEvent {
-
-    /// Initializes the VirtusizeEvent structure
-    internal init(name: String) {
-        self.init(name: name, data: nil)
-    }
+/// This enum contains all the possible info categories that will be displayed in the Product Details tab of the Virtusize web app
+public enum VirtusizeInfoCategory: String, CaseIterable {
+    case MODELINFO = "modelInfo"
+    case GENERALFIT = "generalFit"
+    case BRANDSIZING = "brandSizing"
+    case MATERIAL = "material"
 }

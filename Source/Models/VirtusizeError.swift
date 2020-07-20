@@ -1,7 +1,7 @@
 //
 //  VirtusizeError.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ public enum VirtusizeError: Error {
     case invalidPayload
     case invalidProduct
     case invalidRequest
+    case invalidVsParamScript
     case navigationError(Error)
     case jsonDecodingFailed(String, Error)
     case apiRequestError(URL?, Error)
@@ -49,10 +50,12 @@ extension VirtusizeError: CustomDebugStringConvertible {
             return "Virtusize: Failed to convert given string to UTF-8 data"
         case .invalidPayload:
             return "Virtusize: Event payload does not contain a value for 'name'"
-        case .navigationError(let error):
-            return "Virtusize: Navigation blocked – \(error)"
         case .invalidProduct:
             return "Virtusize: Product is not available for comparison"
+        case .invalidVsParamScript:
+            return "Virtusize: Failed to fetch the Virtusize parameter script"
+        case .navigationError(let error):
+            return "Virtusize: Navigation blocked – \(error)"
         case .jsonDecodingFailed(let structName, let error):
             return "Virtusize: Failed to decode the data response to the struct \(structName). \(error)"
         case .apiRequestError(let url, let error):

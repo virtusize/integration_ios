@@ -1,7 +1,7 @@
 //
 //  VirtusizeViewController.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,68 +29,67 @@ import WebKit
 /// `VirtusizeError` and events as `VirtusizeEvent` and tell you when to dismiss the view controller
 public protocol VirtusizeMessageHandler: class {
     func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError)
-	func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent)
+    func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent)
     func virtusizeControllerShouldClose(_ controller: VirtusizeViewController)
 }
 
-/// This `UIViewController` represents the Fit Illustrator Window
+/// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeViewController: UIViewController {
-	public weak var delegate: VirtusizeMessageHandler?
+    public weak var delegate: VirtusizeMessageHandler?
 
-	private var webView: WKWebView?
-    internal var splashView: SplashView =  SplashView()
-
-    private var context: JSONObject = [:]
+    private var webView: WKWebView?
+    private var popupWebView: WKWebView?
 
     // Allow process pool passing to share cookies
     private var processPool: WKProcessPool?
 
+    private static let cookieBidKey = "virtusize.bid"
+
     public convenience init?(
-        product: VirtusizeProduct? = nil,
         handler: VirtusizeMessageHandler? = nil,
         processPool: WKProcessPool? = nil
     ) {
         self.init(nibName: nil, bundle: nil)
+        self.modalPresentationStyle = .fullScreen
         self.delegate = handler
         self.processPool = processPool
 
-        guard let context = product?.context else {
+        guard Virtusize.product?.context != nil else {
             reportError(error: .invalidProduct)
             return nil
         }
-        self.context = context
     }
 
-	public override func viewDidLoad() {
-		super.viewDidLoad()
-		view.backgroundColor = .white
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
 
-		let contentController = WKUserContentController()
+        let contentController = WKUserContentController()
         contentController.add(self, name: "eventHandler")
 
-		let config = WKWebViewConfiguration()
-		config.userContentController = contentController
+        let config = WKWebViewConfiguration()
+        config.userContentController = contentController
 
         if let processPool = self.processPool {
             config.processPool = processPool
         }
 
-		let webView = WKWebView(frame: .zero, configuration: config)
+        let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
         webView.uiDelegate = self
-		view.addSubview(webView)
-		self.webView = webView
+        view.addSubview(webView)
+        self.webView = webView
 
-		webView.translatesAutoresizingMaskIntoConstraints = false
-		if #available(iOS 11.0, *) {
-			let layoutGuide = view.safeAreaLayoutGuide
-			NSLayoutConstraint.activate([
-				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-				webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
-				webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
-			])
-		} else {
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            let layoutGuide = view.safeAreaLayoutGuide
+            NSLayoutConstraint.activate([
+                webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+                webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+                webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+            ])
+        } else {
             let views = ["webView": webView]
             let verticalConstraints = NSLayoutConstraint.constraints(
                 withVisualFormat: "V:|-20-[webView]-0-|",
@@ -103,28 +102,25 @@ public final class VirtusizeViewController: UIViewController {
                 metrics: nil,
                 views: views)
 
-			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
-		}
-
-        view.addSubview(splashView)
-        splashView.cancelButton.addTarget(self, action: #selector(shouldClose), for: .touchUpInside)
+            NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
+        }
 
         // If the request is invalid, the controller should be dismissed
-		guard let request = APIRequest.fitIllustratorURL(in: context) else {
+        guard let request = APIRequest.virtusizeURL(region: Virtusize.params?.region) else {
             reportError(error: .invalidRequest)
-			return
-		}
-		webView.load(request)
-	}
+            return
+        }
+        webView.load(request)
+    }
 
-	// MARK: Rotation Lock
-	public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		return .portrait
-	}
+    // MARK: Rotation Lock
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
 
-	public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-		return .portrait
-	}
+    public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
 
     // MARK: Error Handling
     public func reportError(error: VirtusizeError) {
@@ -138,10 +134,24 @@ public final class VirtusizeViewController: UIViewController {
 }
 
 extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript() else {
+            reportError(error: .invalidVsParamScript)
+            return
+        }
+        webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
+        checkAndUpdateBrowserID()
+    }
+
     public func webView(
         _ webView: WKWebView,
         didFail navigation: WKNavigation!,
         withError error: Error) {
+        // The error is caused by canceling the current load that is not finished yet
+        // We should ignore this error. Otherwise, the webview will be closed automatically
+        if error._code == NSURLErrorCancelled {
+            return
+        }
         reportError(error: VirtusizeError.navigationError(error))
     }
 
@@ -161,11 +171,58 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
             return nil
         }
 
+        if isExternalLinks(url: url.absoluteString) {
+            if let sharedApplication = UIApplication.safeShared {
+                sharedApplication.openURL(url)
+                return nil
+            }
+        }
+
         guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
-                webView.load(URLRequest(url: url))
-            return nil
+            // By default, The Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a Webview.
+            // By setting up the user agent, Google recognizes the web view as a Safari browser
+            configuration.applicationNameForUserAgent = "Version/10.0 Safari/604.1"
+            popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
+            popupWebView!.navigationDelegate = self
+            popupWebView!.uiDelegate = self
+            self.view.addSubview(popupWebView!)
+            return popupWebView
         }
         return nil
+    }
+
+    /// Checks if a URL is an external link to be open on the Safari browser
+    private func isExternalLinks(url: String?) -> Bool {
+        return url != nil && (url!.contains("survey") || url!.contains("privacy"))
+    }
+
+    public func webViewDidClose(_ webView: WKWebView) {
+        webView.removeFromSuperview()
+    }
+
+    /// Checks if the bid in the web cookies  is different from the bid saved locally.
+    /// If it is, update and store the new bid.
+    private func checkAndUpdateBrowserID() {
+        if #available(iOSApplicationExtension 11.0, *) {
+            WKWebsiteDataStore.default().httpCookieStore.getAllCookies({ cookies in
+                for cookie in cookies {
+                    if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
+                        if cookie.name == VirtusizeViewController.cookieBidKey &&
+                            cookieValue != BrowserID.current.identifier {
+                            BrowserID.current.identifier = cookie.value
+                        }
+                    }
+                }
+            })
+        } else {
+            if let cookies = HTTPCookieStorage.shared.cookies {
+                for cookie in cookies
+                    where cookie.name == VirtusizeViewController.cookieBidKey &&
+                        cookie.value != BrowserID.current.identifier {
+                            BrowserID.current.identifier = cookie.value
+                }
+            }
+        }
     }
 }
 
@@ -179,20 +236,8 @@ extension VirtusizeViewController: WKScriptMessageHandler {
         }
         do {
             let event = try Deserializer.event(data: message.body)
-
             if event.name == "user-closed-widget" {
                 shouldClose()
-            }
-
-            if !splashView.isHidden,
-                event.name == "user-selected-size" || event.name.starts(with: "user-opened-panel") {
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                        self?.splashView.alpha = 0
-                        }, completion: { [weak self] _ in
-                            self?.splashView.isHidden = true
-                    })
-                }
             }
             delegate?.virtusizeController(self, didReceiveEvent: event)
         } catch {

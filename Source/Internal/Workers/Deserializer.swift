@@ -1,7 +1,7 @@
 //
 //  Deserializer.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -101,7 +101,7 @@ internal struct Deserializer {
             throw VirtusizeError.deserializationError
         }
 
-        guard let eventName: String = event["name"] as? String else {
+        guard let eventName: String = event["eventName"] as? String else {
             throw VirtusizeError.invalidPayload
         }
 

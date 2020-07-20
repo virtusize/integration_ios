@@ -1,7 +1,7 @@
 //
 //  APIEndpointsTests.swift
 //
-//  Copyright (c) 2020 Virtusize AB
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,6 @@ class APIEndpointsTests: XCTestCase {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
         Virtusize.environment = .staging
-        Virtusize.language = "en"
     }
 
     override func tearDownWithError() throws {
@@ -43,8 +42,8 @@ class APIEndpointsTests: XCTestCase {
     func testProductDataCheckEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.productDataCheck(externalId: dummyExternalId)
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
-        XCTAssertEqual(endpoint.components.path, "/integration/v3/product-data-check")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/stg/product/check")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 3)
 
@@ -74,32 +73,15 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNil(endpoint.components.queryItems)
     }
 
-    func testFitIllustratorEndpoint_returnExpectedComponents() {
+    func testVirtusizeEndpoint_returnExpectedComponents() {
         Virtusize.environment = .japan
 
-        let endpoint = APIEndpoints.fitIllustrator(
-            storeId: 2,
-            productId: 694
-        )
+        let endpoint = APIEndpoints.virtusize(region: .JAPAN)
 
-        XCTAssertEqual(endpoint.components.host, "api.virtusize.jp")
-        XCTAssertEqual(endpoint.components.path, "/a/fit-illustrator/v1/index.html")
+        XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
+        XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-webview.html")
 
-        XCTAssertEqual(endpoint.components.queryItems?.count, 11)
-
-        let queryParamters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
-
-        XCTAssertEqual(queryParamters["detached"], "false")
-        XCTAssertEqual(queryParamters["bid"], BrowserID.current.identifier)
-        XCTAssertEqual(queryParamters["addToCartEnabled"], "false")
-        XCTAssertEqual(queryParamters["storeId"], "2")
-        XCTAssert((0 ... 1519982555).contains(Int(queryParamters["_"] ?? "-1") ?? -1))
-        XCTAssertEqual(queryParamters["spid"], "694")
-        XCTAssertEqual(queryParamters["lang"], "en")
-        XCTAssertEqual(queryParamters["ios"], "true")
-        XCTAssertEqual(queryParamters["sdk"], "0.2")
-        XCTAssertEqual(queryParamters["userId"], "123")
-        XCTAssertEqual(queryParamters["externalUserId"], "123")
+        XCTAssertNil(endpoint.components.queryItems)
     }
 
     func testStoreViewApiKeyEndpoint_returnExpectedComponents() {

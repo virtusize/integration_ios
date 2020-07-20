@@ -1,7 +1,7 @@
 //
 //  VirtusizeTests.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,6 @@ class VirtusizeTests: XCTestCase {
         Virtusize.APIKey = TestFixtures.apiKey
         Virtusize.userID = "123"
         Virtusize.environment = .staging
-        Virtusize.language = "en"
     }
 
     func testProductDataCheck_hasExpectedCallbackData() {

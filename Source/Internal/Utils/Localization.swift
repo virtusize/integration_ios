@@ -1,7 +1,7 @@
 //
-//  VirtusizeEvent.swift
+//  Localization.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2020 Virtusize KKs
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,21 @@
 
 import Foundation
 
-/// A structure represents the event in Virtusize API
-public struct VirtusizeEvent {
-    /// The name of the event
-    public let name: String
+/// This class is used to localize texts in the SDK
+class Localization {
 
-    /// The additional data in the event
-    public let data: Any?
-}
+    static let shared: Localization = Localization()
 
-extension VirtusizeEvent {
-
-    /// Initializes the VirtusizeEvent structure
-    internal init(name: String) {
-        self.init(name: name, data: nil)
+    /// Localizes a text corresponding to a key
+    ///
+    /// - Parameter key: The key for a string in the table identified by tableName.
+    /// - Returns: A localized string based on the device's default language
+    func localize(_ key: String) -> String {
+        guard let path = Bundle(for: Localization.self).path(
+            forResource: Locale.preferredLanguages[0],
+            ofType: "lproj") else {
+            return key
+        }
+        return Bundle(path: path)?.localizedString(forKey: key, value: nil, table: "VirtusizeLocalizable") ?? key
     }
 }

@@ -1,7 +1,7 @@
 //
-//  VirtusizeEvent.swift
+//  VirtusizeLanguage.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,21 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+/// This enum contains all the possible display languages of the Virtusize web app
+public enum VirtusizeLanguage: String, CaseIterable {
+    case ENGLISH = "en"
+    case JAPANESE = "ja"
+    case KOREAN = "ko"
 
-/// A structure represents the event in Virtusize API
-public struct VirtusizeEvent {
-    /// The name of the event
-    public let name: String
-
-    /// The additional data in the event
-    public let data: Any?
-}
-
-extension VirtusizeEvent {
-
-    /// Initializes the VirtusizeEvent structure
-    internal init(name: String) {
-        self.init(name: name, data: nil)
+    /// The default label for the language selector
+    var label: String {
+        switch self {
+        case .ENGLISH:
+            return "English"
+        case .JAPANESE:
+            return  "日本語"
+        case .KOREAN:
+            return  "한국어"
+        }
     }
 }

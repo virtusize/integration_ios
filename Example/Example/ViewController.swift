@@ -1,7 +1,7 @@
 //
 //  ViewController.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2018-20 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -90,10 +90,8 @@ class ViewController: UIViewController {
         })
     }
 
-	@IBAction func checkTheFit() {
-        if let virtusize = VirtusizeViewController(
-            product: checkTheFitButton.storeProduct,
-            handler: self) {
+    @IBAction func checkTheFit() {
+        if let virtusize = VirtusizeViewController(handler: self) {
             // POTENTIAL ANALYTICS CODE
             present(virtusize, animated: true, completion: nil)
         }

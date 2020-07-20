@@ -1,7 +1,7 @@
 //
 //  VirtusizeButton.swift
 //
-//  Copyright (c) 2018 Virtusize AB
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,47 +24,44 @@
 
 import UIKit
 
-/// This class is the custom Fit Illustrator Button that is added in the client's layout file.
-public class VirtusizeButton: UIButton {
-	public required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
-
-    /// `VirtusizeProduct` associated with this VirtusizeButton class
-    private var product: VirtusizeProduct?
+/// This class is the custom Virtusize Button that is added in the client's layout file.
+public class VirtusizeButton: UIButton, CAAnimationDelegate {
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 
     /// `VirtusizeProduct` that is being set to this button
     public var storeProduct: VirtusizeProduct? {
         set {
             guard let product = newValue else {
-                isHidden = true
-                return
+                    isHidden = true
+                    return
             }
-
             Virtusize.productCheck(product: product) { [weak self] product in
                 guard let product = product else {
                     self?.isHidden = true
                     return
                 }
-                self?.product = product
+                Virtusize.product = product
                 self?.isHidden = false
             }
         }
         get {
-            return product
+            return Virtusize.product
         }
     }
 
     /// Applies the default style of `VirtusizeButton`
-	public func applyDefaultStyle() {
-		tintColor = .black
+    public func applyDefaultStyle() {
+        tintColor = .black
 
-		setTitle(NSLocalizedString("Check the fit", comment: "Check the fit button title"), for: .normal)
+        setTitle(Localization.shared.localize("Check size"), for: .normal)
 
-		backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
-		tintColor = .white
+        backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
+        tintColor = .white
+        layer.cornerRadius = 20
 
-		contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
         self.setImage(Assets.icon, for: .normal)
-	}
+    }
 }
