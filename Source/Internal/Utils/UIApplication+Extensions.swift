@@ -37,7 +37,7 @@ extension UIApplication {
     }
 
     /// A safe accessor to call the function that opens a URL
-    func openURL(_ url: URL) {
+    func safeOpenURL(_ url: URL) {
         guard self.canOpenURL(url) else { return }
         guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
             return

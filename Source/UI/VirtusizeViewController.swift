@@ -173,7 +173,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
 
         if isExternalLinks(url: url.absoluteString) {
             if let sharedApplication = UIApplication.safeShared {
-                sharedApplication.openURL(url)
+                sharedApplication.safeOpenURL(url)
                 return nil
             }
         }
@@ -203,7 +203,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
     /// Checks if the bid in the web cookies  is different from the bid saved locally.
     /// If it is, update and store the new bid.
     private func checkAndUpdateBrowserID() {
-        if #available(iOSApplicationExtension 11.0, *) {
+        if #available(iOS 11.0, *) {
             WKWebsiteDataStore.default().httpCookieStore.getAllCookies({ cookies in
                 for cookie in cookies {
                     if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
