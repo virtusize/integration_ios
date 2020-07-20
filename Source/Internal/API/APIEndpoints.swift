@@ -51,7 +51,7 @@ internal enum APIEndpoints {
 
         case .virtusize(let region):
             components.host = "static.api.virtusize.\(region.rawValue)"
-            components.path = "/a/aoyama/latest/sdk-integration/sdk-webview.html"
+            components.path = "/a/aoyama/latest/sdk-webview.html"
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
