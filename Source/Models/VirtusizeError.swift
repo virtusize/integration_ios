@@ -1,7 +1,7 @@
 //
 //  VirtusizeError.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2018-20 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ public enum VirtusizeError: Error {
     case invalidVsParamScript
     case navigationError(Error)
     case jsonDecodingFailed(String, Error)
-    case apiRequestError(URL?, Error)
+    case apiRequestError(URL?, String?)
 }
 
 extension VirtusizeError: CustomDebugStringConvertible {
@@ -58,8 +58,8 @@ extension VirtusizeError: CustomDebugStringConvertible {
             return "Virtusize: Navigation blocked – \(error)"
         case .jsonDecodingFailed(let structName, let error):
             return "Virtusize: Failed to decode the data response to the struct \(structName). \(error)"
-        case .apiRequestError(let url, let error):
-            return "Virtusize: API Request \(url?.absoluteString ?? "") - \(error.localizedDescription)"
+        case .apiRequestError(let url, let errorDebugDescription):
+            return "Virtusize: API Request \(url?.absoluteString ?? "") - \(errorDebugDescription ?? "")"
         }
     }
 }

@@ -26,6 +26,8 @@ import Foundation
 
 /// This structure wraps the parameters for the API request of sending the order
 public struct VirtusizeOrder: Codable {
+    /// The API key that is unique and provided for Virtusize clients
+    private let apiKey: String?
     /// The order ID provided by the client
     private let externalOrderId: String
     /// The unique user ID from the client system.
@@ -42,6 +44,7 @@ public struct VirtusizeOrder: Codable {
                  externalUserId: String? = nil,
                  region: String? = nil,
                  items: [VirtusizeOrderItem] = []) {
+        self.apiKey = Virtusize.APIKey
         self.externalOrderId = externalOrderId
         self.externalUserId = externalUserId
         self.region = region
