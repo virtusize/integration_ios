@@ -24,8 +24,8 @@
 
 /// This structure wraps the parameters of the order item for the API request of sending the order
 public struct VirtusizeOrderItem: Codable {
-    /// The provide ID provided by the client. It must be unique for a product.
-    private let productId: String
+    /// The external provide ID provided by the client. It must be unique for a product.
+    private let externalProductId: String
     /// The name of the size, e.g. "S", "M", etc.
     private let size: String
     /// The alias of the size is added if the size name is not identical from the product page
@@ -51,7 +51,7 @@ public struct VirtusizeOrderItem: Codable {
     public init(productId: String, size: String, sizeAlias: String? = nil, variantId: String? = nil,
                 imageUrl: String, color: String? = nil, gender: String? = nil, unitPrice: Float,
                 currency: String, quantity: Int = 1, url: String) {
-        self.productId = productId
+        self.externalProductId = productId
         self.size = size
         self.sizeAlias = sizeAlias
         self.variantId = variantId
