@@ -24,7 +24,7 @@
 
 /// This structure wraps the parameters of the order item for the API request of sending the order
 public struct VirtusizeOrderItem: Codable {
-    /// The extenral provide ID provided by the client. It must be unique for a product.
+    /// The external provide ID provided by the client. It must be unique for a product.
     private let externalProductId: String
     /// The name of the size, e.g. "S", "M", etc.
     private let size: String
