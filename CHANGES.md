@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.0.1
+- Bugfix: Fix the Order API error
+
 ### 2.0.0
 - Feature: A new version of the integration
 
