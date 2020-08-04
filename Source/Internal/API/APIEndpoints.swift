@@ -30,6 +30,7 @@ internal enum APIEndpoints {
     case virtusize(region: VirtusizeRegion)
     case storeViewApiKey
     case orders
+    case storeProducts(productId: Int)
 
     // MARK: - Properties
 
@@ -55,10 +56,14 @@ internal enum APIEndpoints {
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
-            components.queryItems = storeViewApiKeyQueryItems()
+            components.queryItems = jsonFormatQueryItems()
 
         case .orders:
             components.path = "/a/api/v3/orders"
+            
+        case .storeProducts(let productId):
+            components.path = "/a/api/v3/store-products/\(productId)"
+            components.queryItems = jsonFormatQueryItems()
         }
         return components
     }
@@ -92,10 +97,10 @@ internal enum APIEndpoints {
         return queryItem
     }
 
-    /// Builds query parameters for the API endpoint `storeViewApiKey`
+    /// Gets an array of query items with the name "format" whose key is "json"
     ///
     /// - Returns: An array of query items for the `URLComponents`
-    private func storeViewApiKeyQueryItems() -> [URLQueryItem] {
+    private func jsonFormatQueryItems() -> [URLQueryItem] {
         var queryItem: [URLQueryItem] = []
         queryItem.append(URLQueryItem(name: "format", value: "json"))
         return queryItem
