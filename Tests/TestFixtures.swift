@@ -28,6 +28,8 @@ struct TestFixtures {
     static let prodcutId = "694"
     static let productImageUrl = "http://www.example.com/image.jpg"
 
+    static let emptyResponse = "{}"
+
     static let productDataCheckJsonResponse =
     """
         {
