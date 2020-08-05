@@ -31,6 +31,7 @@ internal enum APIEndpoints {
     case storeViewApiKey
     case orders
     case storeProducts(productId: Int)
+    case productTypes
 
     // MARK: - Properties
 
@@ -64,6 +65,9 @@ internal enum APIEndpoints {
         case .storeProducts(let productId):
             components.path = "/a/api/v3/store-products/\(productId)"
             components.queryItems = jsonFormatQueryItems()
+
+        case .productTypes:
+            components.path = "/a/api/v3/product-types"
         }
         return components
     }

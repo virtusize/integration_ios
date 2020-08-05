@@ -79,4 +79,16 @@ class APIRequestTests: XCTestCase {
         )
     }
 
+    func testGetProductTypes_expectedHeaders() {
+        let apiRequest = APIRequest.getProductTypes()
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://staging.virtusize.com/a/api/v3/product-types"
+        )
+    }
+
 }
