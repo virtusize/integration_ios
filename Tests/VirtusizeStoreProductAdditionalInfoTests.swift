@@ -28,7 +28,10 @@ import XCTest
 class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
 
     func testDecoding_validStoreProductAdditionalInfoData_shouldReturnExpectedStructure() {
-        let storeProductAdditionalInfo = try? JSONDecoder().decode(VirtusizeStoreProductAdditionalInfo.self, from: storeProductAdditionalInfoFixture)
+        let storeProductAdditionalInfo = try? JSONDecoder().decode(
+            VirtusizeStoreProductAdditionalInfo.self,
+            from: storeProductAdditionalInfoFixture
+        )
 
         XCTAssertEqual(storeProductAdditionalInfo?.fit, "wide")
         XCTAssertEqual(storeProductAdditionalInfo?.brandSizing?.compare, "true")

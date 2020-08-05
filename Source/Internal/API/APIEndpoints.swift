@@ -60,7 +60,7 @@ internal enum APIEndpoints {
 
         case .orders:
             components.path = "/a/api/v3/orders"
-            
+
         case .storeProducts(let productId):
             components.path = "/a/api/v3/store-products/\(productId)"
             components.queryItems = jsonFormatQueryItems()
