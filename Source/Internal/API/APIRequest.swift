@@ -158,4 +158,9 @@ internal struct APIRequest {
         let endpoint = APIEndpoints.storeProducts(productId: productId)
         return apiRequest(components: endpoint.components)
     }
+
+    internal static func getProductTypes() -> URLRequest? {
+        let endpoint = APIEndpoints.productTypes
+        return apiRequest(components: endpoint.components)
+    }
 }

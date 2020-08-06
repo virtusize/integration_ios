@@ -119,6 +119,15 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertEqual(queryParameters["format"], "json")
     }
 
+    func testProductTypesEndpoint_returnExpectedComponents() {
+        let endpoint = APIEndpoints.productTypes
+
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/a/api/v3/product-types")
+
+        XCTAssertNil(endpoint.components.queryItems)
+    }
+
     private func getQueryParametersDict(queryItems: [URLQueryItem]?) -> [String: String] {
         guard let items = queryItems else {
             return [:]

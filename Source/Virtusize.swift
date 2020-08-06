@@ -242,4 +242,25 @@ public class Virtusize {
             onError?(error)
         })
     }
+
+    internal class func getProductTypes(
+        onSuccess: (([VirtusizeProductType]) -> Void)? = nil,
+        onError: ((VirtusizeError) -> Void)? = nil) {
+        guard let request = APIRequest.getProductTypes() else {
+            return
+        }
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            do {
+                let productTypes = try JSONDecoder().decode([VirtusizeProductType].self, from: data)
+                onSuccess?(productTypes)
+            } catch {
+                onError?(VirtusizeError.jsonDecodingFailed("[VirtusizeProductType]", error))
+            }
+        }, error: { error in
+            onError?(error)
+        })
+    }
 }

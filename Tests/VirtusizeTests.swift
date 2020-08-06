@@ -272,6 +272,34 @@ class VirtusizeTests: XCTestCase {
         XCTAssertNotNil(virtusizeError?.debugDescription)
         XCTAssertTrue(virtusizeError!.debugDescription.contains(TestFixtures.notFoundResponse))
     }
+
+    func testGetProductTypes_hasExpectedProductTypes() {
+        let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
+        var actualProductTypes: [VirtusizeProductType] = []
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.productTypeArrayJsonResponse.data(using: .utf8),
+            urlResponse: nil,
+            error: nil
+        )
+
+        Virtusize.getProductTypes(onSuccess: { productTypes in
+            actualProductTypes = productTypes
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertEqual(actualProductTypes.count, 2)
+        XCTAssertEqual(actualProductTypes[0].id, 1)
+        XCTAssertEqual(actualProductTypes[0].weights, ["bust": 1, "waist": 1, "height": 0.25])
+        XCTAssertEqual(actualProductTypes[1].id, 18)
+        XCTAssertEqual(actualProductTypes[1].weights, ["depth": 1, "width": 2, "height": 1])
+    }
 }
 
 extension VirtusizeTests {
