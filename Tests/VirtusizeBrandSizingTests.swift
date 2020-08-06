@@ -1,7 +1,7 @@
 //
-//  VirtusizeProduct.swift
+//  VirtusizeBrandSizingTests.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,33 @@
 //  THE SOFTWARE.
 //
 
-/// This structure represents a product in the Virtusize SDK
-public struct VirtusizeProduct {
-    /// A string to represent the ID that will be used to reference this product in Virtusize API
-    public let externalId: String
+import XCTest
+@testable import Virtusize
 
-    /// The URL of the product image that is fully qualified with the domain and the protocol
-    public let imageURL: URL?
+class VirtusizeBrandSizingTests: XCTestCase {
 
-    /// The product data from the response of the `productDataCheck` request
-    internal var context: JSONObject?
+    func testDecoding_validBrandSizingData_shouldReturnExpectedStructure() {
+        let brandSizing = try? JSONDecoder().decode(VirtusizeBrandSizing.self, from: brandSizingFixture)
 
-    /// Initializes the VirtusizeProduct structure
-    internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
-        self.externalId = externalId
-        self.imageURL = imageURL
-        self.context = context
+        XCTAssertEqual(brandSizing?.compare, "small")
+        XCTAssertEqual(brandSizing?.itemBrand, false)
     }
-}
 
-extension VirtusizeProduct {
-    public init(externalId: String, imageURL: URL? = nil) {
-        self.init(externalId: externalId, imageURL: imageURL, context: nil)
+    func testDecoding_emptyJsonData_shouldReturnNil() {
+        let brandSizing = try? JSONDecoder().decode(
+            VirtusizeBrandSizing.self,
+            from: Data(TestFixtures.emptyResponse.utf8)
+        )
+
+        XCTAssertNil(brandSizing)
     }
+
+    private let brandSizingFixture = Data(
+        """
+            {
+                "compare":"small",
+                "itemBrand":false
+            }
+        """.utf8
+    )
 }

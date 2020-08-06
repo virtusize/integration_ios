@@ -53,7 +53,7 @@ class VirtusizeTests: XCTestCase {
         let dataObject = acutalProduct?.context?["data"] as? JSONObject
         let userData = dataObject?["userData"] as? JSONObject
 
-        XCTAssertEqual(acutalProduct?.externalId, TestFixtures.prodcutId)
+        XCTAssertEqual(acutalProduct?.externalId, TestFixtures.externalProductId)
         XCTAssertEqual(acutalProduct?.imageURL, URL(string: TestFixtures.productImageUrl))
         XCTAssertEqual(dataObject?["productDataId"] as? Int ?? -1, 7110384)
         XCTAssertEqual(dataObject?["storeName"] as? String ?? "", "virtusize")
@@ -84,7 +84,7 @@ class VirtusizeTests: XCTestCase {
 
         XCTAssertEqual(actualObject?["apiKey"] as? String ?? "", Virtusize.APIKey)
         XCTAssertTrue(actualObject?["cloudinaryPublicId"] is String)
-        XCTAssertEqual(actualObject?["externalProductId"] as? String ?? "", TestFixtures.prodcutId)
+        XCTAssertEqual(actualObject?["externalProductId"] as? String ?? "", TestFixtures.externalProductId)
         XCTAssertEqual(actualObject?["imageUrl"] as? String ?? "", TestFixtures.productImageUrl)
     }
 
@@ -201,6 +201,76 @@ class VirtusizeTests: XCTestCase {
         }
 
         XCTAssertTrue(isSuccessful)
+    }
+
+    func testGetStoreProductInfo_withValidProductId_hasExpectedStoreProduct() {
+        let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
+        var actualStoreProduct: VirtusizeStoreProduct?
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.storeProductJsonResponse.data(using: .utf8),
+            urlResponse: nil,
+            error: nil
+        )
+
+        Virtusize.getStoreProductInfo(productId: TestFixtures.productId, onSuccess: { storeProduct in
+            actualStoreProduct = storeProduct
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertEqual(actualStoreProduct?.id, TestFixtures.productId)
+        XCTAssertEqual(actualStoreProduct?.sizes.count, 3)
+        XCTAssertEqual(actualStoreProduct?.sizes[0].name, "35")
+        XCTAssertEqual(actualStoreProduct?.sizes[0].measurements, ["height": 740, "bust": 630, "sleeve": 805])
+        XCTAssertEqual(actualStoreProduct?.sizes[1].name, "37")
+        XCTAssertEqual(actualStoreProduct?.sizes[2].name, "36")
+        XCTAssertEqual(actualStoreProduct?.externalId, TestFixtures.externalProductId)
+        XCTAssertEqual(actualStoreProduct?.productType, 8)
+        XCTAssertEqual(actualStoreProduct?.name, "Test Product Name")
+        XCTAssertEqual(actualStoreProduct?.store, 2)
+        XCTAssertEqual(actualStoreProduct?.storeProductMeta?.id, 1)
+        XCTAssertEqual(actualStoreProduct?.storeProductMeta?.additionalInfo?.fit, "regular")
+        XCTAssertEqual(actualStoreProduct?.storeProductMeta?.additionalInfo?.brandSizing?.compare, "large")
+    }
+
+    func testGetStoreProductInfo_productNotFound_hasExpectedErrorMessage() {
+        let storeProductId = 123456789
+        let storeProductUrl = "https://staging.virtusize.com/a/api/v3/store-products/\(storeProductId)?format=json"
+        let notFoundURLResponse = HTTPURLResponse(url: URL(string: storeProductUrl)!,
+                                                  statusCode: 404,
+                                                  httpVersion: nil,
+                                                  headerFields: [:])!
+
+        let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
+        var virtusizeError: VirtusizeError?
+
+        Virtusize.session = MockURLSession(
+                   data: TestFixtures.notFoundResponse.data(using: .utf8),
+                   urlResponse: notFoundURLResponse,
+                   error: nil
+               )
+
+        Virtusize.getStoreProductInfo(
+            productId: storeProductId,
+            onError: { error in
+                virtusizeError = error
+                expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertNotNil(virtusizeError?.debugDescription)
+        XCTAssertTrue(virtusizeError!.debugDescription.contains(TestFixtures.notFoundResponse))
     }
 }
 

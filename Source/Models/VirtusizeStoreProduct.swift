@@ -1,7 +1,7 @@
 //
-//  VirtusizeProduct.swift
+//  VirtusizeStoreProduct.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,27 @@
 //  THE SOFTWARE.
 //
 
-/// This structure represents a product in the Virtusize SDK
-public struct VirtusizeProduct {
-    /// A string to represent the ID that will be used to reference this product in Virtusize API
-    public let externalId: String
+internal class VirtusizeStoreProduct: Codable {
+    let id: Int
+    let sizes: [VirtusizeProductSize]
+    let externalId: String
+    let productType: Int
+    let name: String
+    let store: Int
+    let storeProductMeta: VirtusizeStoreProductMeta?
 
-    /// The URL of the product image that is fully qualified with the domain and the protocol
-    public let imageURL: URL?
-
-    /// The product data from the response of the `productDataCheck` request
-    internal var context: JSONObject?
-
-    /// Initializes the VirtusizeProduct structure
-    internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
-        self.externalId = externalId
-        self.imageURL = imageURL
-        self.context = context
+    private enum CodingKeys: String, CodingKey {
+        case id, sizes, externalId, productType, name, store, storeProductMeta
     }
-}
 
-extension VirtusizeProduct {
-    public init(externalId: String, imageURL: URL? = nil) {
-        self.init(externalId: externalId, imageURL: imageURL, context: nil)
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        sizes = try values.decode([VirtusizeProductSize].self, forKey: .sizes)
+        externalId = try values.decode(String.self, forKey: .externalId)
+        productType = try values.decode(Int.self, forKey: .productType)
+        name = try values.decode(String.self, forKey: .name)
+        store = try values.decode(Int.self, forKey: .store)
+        storeProductMeta = try? values.decode(VirtusizeStoreProductMeta.self, forKey: .storeProductMeta)
     }
 }

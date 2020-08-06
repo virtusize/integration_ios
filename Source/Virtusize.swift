@@ -85,7 +85,7 @@ public class Virtusize {
             }
 
             if let httpResponse = response as? HTTPURLResponse, !httpResponse.isSuccessful() {
-                var errorDebugDescription = ""
+                var errorDebugDescription = "Unknown Error"
                 if let data = data {
                     errorDebugDescription = String(decoding: data, as: UTF8.self)
                 }
@@ -168,16 +168,17 @@ public class Virtusize {
             return
         }
         perform(request, completion: { data in
-            if let data = data {
-                do {
-                    let store = try JSONDecoder().decode(VirtusizeStore.self, from: data)
-                    completion(store.region ?? "JP")
-                } catch {
-                    errorHandler?(VirtusizeError.jsonDecodingFailed("VirtusizeStore", error))
-                }
+            guard let data = data else {
+                return
+            }
+            do {
+                let store = try JSONDecoder().decode(VirtusizeStore.self, from: data)
+                completion(store.region ?? "JP")
+            } catch {
+                errorHandler?(VirtusizeError.jsonDecodingFailed("VirtusizeStore", error))
             }
         }, error: { error in
-            errorHandler?(VirtusizeError.apiRequestError(request.url, error.debugDescription))
+            errorHandler?(error)
         })
     }
 
@@ -216,7 +217,29 @@ public class Virtusize {
         perform(request, completion: { _ in
             onSuccess?()
         }, error: { error in
-            onError?(VirtusizeError.apiRequestError(request.url, error.debugDescription))
+            onError?(error)
+        })
+    }
+
+    internal class func getStoreProductInfo(
+        productId: Int,
+        onSuccess: ((VirtusizeStoreProduct) -> Void)? = nil,
+        onError: ((VirtusizeError) -> Void)? = nil) {
+        guard let request = APIRequest.getStoreProductInfo(productId: productId) else {
+            return
+        }
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            do {
+                let storeProduct = try JSONDecoder().decode(VirtusizeStoreProduct.self, from: data)
+                onSuccess?(storeProduct)
+            } catch {
+                onError?(VirtusizeError.jsonDecodingFailed("VirtusizeStoreProduct", error))
+            }
+        }, error: { error in
+            onError?(error)
         })
     }
 }

@@ -38,24 +38,45 @@ class APIRequestTests: XCTestCase {
     }
 
     func testRetrieveStoreInfo_expectedHeaders() {
-        let apiReuqest = APIRequest.retrieveStoreInfo()
+        let apiRequest = APIRequest.retrieveStoreInfo()
 
-        XCTAssertEqual(apiReuqest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
+        XCTAssertNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://staging.virtusize.com/a/api/v3/stores/api-key/\(Virtusize.APIKey!)?format=json"
+        )
     }
 
     func testSendOrder_expectedHeadersAndHttpBody() {
         TestFixtures.virtusizeOrder.externalUserId = Virtusize.userID
-        let apiReuqest = APIRequest.sendOrder(TestFixtures.virtusizeOrder)
+        let apiRequest = APIRequest.sendOrder(TestFixtures.virtusizeOrder)
 
-        XCTAssertEqual(apiReuqest?.allHTTPHeaderFields?["Content-Type"] ?? "", "application/json")
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Content-Type"] ?? "", "application/json")
 
         let orderJsonObject = try? JSONSerialization.jsonObject(
-            with: apiReuqest?.httpBody ?? Data(), options: []) as? JSONObject
+            with: apiRequest?.httpBody ?? Data(), options: []) as? JSONObject
         let orderItemJsonObject = orderJsonObject?["items"] as? [JSONObject]
 
+        XCTAssertEqual(apiRequest?.url?.absoluteString, "https://staging.virtusize.com/a/api/v3/orders")
         XCTAssertEqual(orderJsonObject?["externalOrderId"] as? String ?? "", "4000111032")
         XCTAssertEqual(orderJsonObject?["externalUserId"] as? String ?? "", "123")
         XCTAssertEqual(orderItemJsonObject?[0]["currency"] as? String ?? "", "JPY")
+    }
+
+    func testGetStoreProductInfo_expectedHeadersAndHttpBody() {
+
+        let apiRequest = APIRequest.getStoreProductInfo(productId: TestFixtures.productId)
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://staging.virtusize.com/a/api/v3/store-products/\(TestFixtures.productId)?format=json"
+        )
     }
 
 }

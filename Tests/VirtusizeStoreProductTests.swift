@@ -1,0 +1,59 @@
+//
+//  VirtusizeStoreProductTests.swift
+//
+//  Copyright (c) 2020 Virtusize KK
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
+
+import XCTest
+@testable import Virtusize
+
+class VirtusizeStoreProductTests: XCTestCase {
+
+    func testDecoding_validStoreProductData_shouldReturnExpectedStructure() {
+        let storeProduct = try? JSONDecoder().decode(VirtusizeStoreProduct.self, from: storeProductFixture)
+
+        XCTAssertEqual(storeProduct?.id, TestFixtures.productId)
+        XCTAssertEqual(storeProduct?.sizes.count, 3)
+        XCTAssertEqual(storeProduct?.sizes[0].name, "35")
+        XCTAssertEqual(storeProduct?.sizes[0].measurements, ["height": 740, "bust": 630, "sleeve": 805])
+        XCTAssertEqual(storeProduct?.sizes[1].name, "37")
+        XCTAssertEqual(storeProduct?.sizes[2].name, "36")
+        XCTAssertEqual(storeProduct?.externalId, TestFixtures.externalProductId)
+        XCTAssertEqual(storeProduct?.productType, 8)
+        XCTAssertEqual(storeProduct?.name, "Test Product Name")
+        XCTAssertEqual(storeProduct?.store, 2)
+        XCTAssertEqual(storeProduct?.storeProductMeta?.id, 1)
+        XCTAssertEqual(storeProduct?.storeProductMeta?.additionalInfo?.fit, "regular")
+        XCTAssertEqual(storeProduct?.storeProductMeta?.additionalInfo?.brandSizing?.compare, "large")
+        XCTAssertEqual(storeProduct?.storeProductMeta?.additionalInfo?.brandSizing?.itemBrand, false)
+    }
+
+    func testDecoding_emptyJsonData_shouldReturnNil() {
+        let storeProduct = try? JSONDecoder().decode(
+            VirtusizeStoreProduct.self,
+            from: Data(TestFixtures.emptyResponse.utf8)
+        )
+
+        XCTAssertNil(storeProduct)
+    }
+
+    private let storeProductFixture = Data(TestFixtures.storeProductJsonResponse.utf8)
+}

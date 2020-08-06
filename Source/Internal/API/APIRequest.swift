@@ -26,7 +26,7 @@ internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]
 
 /// This enum contains supported HTTP request methods
-private enum APIMethod: String {
+internal enum APIMethod: String {
     case get = "GET", post = "POST"
 }
 
@@ -152,5 +152,10 @@ internal struct APIRequest {
             return nil
         }
         return apiRequest(components: endpoint.components, withPayload: jsonData)
+    }
+
+    internal static func getStoreProductInfo(productId: Int) -> URLRequest? {
+        let endpoint = APIEndpoints.storeProducts(productId: productId)
+        return apiRequest(components: endpoint.components)
     }
 }

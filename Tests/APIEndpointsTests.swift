@@ -47,11 +47,11 @@ class APIEndpointsTests: XCTestCase {
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 3)
 
-        let queryParamters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
+        let queryParameters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
 
-        XCTAssertEqual(queryParamters["apiKey"], "test_APIKey")
-        XCTAssertEqual(queryParamters["externalId"], "694")
-        XCTAssertNotNil(queryParamters["version"], "1")
+        XCTAssertEqual(queryParameters["apiKey"], "test_APIKey")
+        XCTAssertEqual(queryParameters["externalId"], "694")
+        XCTAssertNotNil(queryParameters["version"], "1")
     }
 
     func testProductMetaDataHintsEndpoint_returnExpectedComponents() {
@@ -92,9 +92,9 @@ class APIEndpointsTests: XCTestCase {
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 1)
 
-        let queryParamters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
+        let queryParameters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
 
-        XCTAssertEqual(queryParamters["format"], "json")
+        XCTAssertEqual(queryParameters["format"], "json")
     }
 
     func testOrdersEndpoint_returnExpectedComponents() {
@@ -104,6 +104,19 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/orders")
 
         XCTAssertNil(endpoint.components.queryItems)
+    }
+
+    func testStoreProductsEndpoint_returnExpectedComponents() {
+        let endpoint = APIEndpoints.storeProducts(productId: 7110384)
+
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/a/api/v3/store-products/7110384")
+
+        XCTAssertEqual(endpoint.components.queryItems?.count, 1)
+
+        let queryParameters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
+
+        XCTAssertEqual(queryParameters["format"], "json")
     }
 
     private func getQueryParametersDict(queryItems: [URLQueryItem]?) -> [String: String] {
