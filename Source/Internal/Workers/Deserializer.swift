@@ -48,17 +48,23 @@ internal struct Deserializer {
         // Send the API event where the user saw the product
         Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-product"), withContext: root)
 
-        guard let isValid = dataObject["validProduct"] as? Bool, isValid else {
+        var productCheckData: VirtusizeProductCheckData?
+
+        if let data = try? JSONSerialization.data(withJSONObject: dataObject, options: .prettyPrinted) {
+           productCheckData = try? JSONDecoder().decode(VirtusizeProductCheckData.self, from: data)
+        }
+
+        guard let isValid = productCheckData?.validProduct, isValid else {
             NotificationCenter.default.post(name: Virtusize.productDataCheckDidFail,
                                             object: Virtusize.self,
                                             userInfo: ["message": "product is not valid"])
             return nil
         }
 
-        if let sendImageToBackend = dataObject["fetchMetaData"] as? Bool,
+        if let sendImageToBackend = productCheckData?.fetchMetaData,
             sendImageToBackend,
             product.imageURL != nil,
-            let storeId = dataObject["storeId"] as? Int {
+            let storeId = productCheckData?.storeId {
             Virtusize.sendProductImage(of: product, forStore: storeId)
         }
 
@@ -70,7 +76,7 @@ internal struct Deserializer {
         return VirtusizeProduct(
             externalId: product.externalId,
             imageURL: product.imageURL,
-            context: root)
+            productCheckData: productCheckData)
     }
 
     /// Gets `VirtusizeEvent` with the optional data to be sent to the Virtusize server

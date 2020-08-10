@@ -35,12 +35,12 @@ class VirtusizeTests: XCTestCase {
 
     func testProductDataCheck_hasExpectedCallbackData() {
         let expectation = self.expectation(description: "Virtusize.productCheck reaches the callback")
-        var acutalProduct: VirtusizeProduct?
+        var actualProduct: VirtusizeProduct?
         Virtusize.session = MockURLSession(data: TestFixtures.productDataCheckJsonResponse.data(using: .utf8),
                                            urlResponse: nil,
                                            error: nil)
         Virtusize.productCheck(product: TestFixtures.virtusizeProduct, completion: { product in
-            acutalProduct = product
+            actualProduct = product
             expectation.fulfill()
         })
 
@@ -50,19 +50,18 @@ class VirtusizeTests: XCTestCase {
             }
         }
 
-        let dataObject = acutalProduct?.context?["data"] as? JSONObject
-        let userData = dataObject?["userData"] as? JSONObject
+        let productCheckData = actualProduct?.productCheckData
 
-        XCTAssertEqual(acutalProduct?.externalId, TestFixtures.externalProductId)
-        XCTAssertEqual(acutalProduct?.imageURL, URL(string: TestFixtures.productImageUrl))
-        XCTAssertEqual(dataObject?["productDataId"] as? Int ?? -1, 7110384)
-        XCTAssertEqual(dataObject?["storeName"] as? String ?? "", "virtusize")
-        XCTAssertEqual(dataObject?["storeId"] as? Int ?? -1, 2)
-        XCTAssertEqual(dataObject?["productTypeName"] as? String ?? "", "pants")
-        XCTAssertEqual(userData?["should_see_ph_tooltip"] as? Bool ?? true, false)
-        XCTAssertEqual(dataObject?["fetchMetaData"] as? Bool ?? true, false)
-        XCTAssertEqual(dataObject?["productTypeId"] as? Int ?? -1, 5)
-        XCTAssertEqual(dataObject?["validProduct"] as? Bool ?? false, true)
+        XCTAssertEqual(actualProduct?.externalId, TestFixtures.externalProductId)
+        XCTAssertEqual(actualProduct?.imageURL, URL(string: TestFixtures.productImageUrl))
+        XCTAssertEqual(productCheckData?.productDataId, 7110384)
+        XCTAssertEqual(productCheckData?.storeName, "virtusize")
+        XCTAssertEqual(productCheckData?.storeId, 2)
+        XCTAssertEqual(productCheckData?.productTypeName, "pants")
+        XCTAssertEqual(productCheckData?.userData?.shouldSeePhTooltip, false)
+        XCTAssertEqual(productCheckData?.fetchMetaData, false)
+        XCTAssertEqual(productCheckData?.productTypeId, 5)
+        XCTAssertEqual(productCheckData?.validProduct, true)
     }
 
     func testSendProductImage_hasExpectedCallbackData() {
@@ -208,7 +207,7 @@ class VirtusizeTests: XCTestCase {
         var actualStoreProduct: VirtusizeStoreProduct?
 
         Virtusize.session = MockURLSession(
-            data: TestFixtures.storeProductJsonResponse.data(using: .utf8),
+            data: TestFixtures.getStoreProductJsonResponse().data(using: .utf8),
             urlResponse: nil,
             error: nil
         )

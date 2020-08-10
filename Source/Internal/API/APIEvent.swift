@@ -75,16 +75,16 @@ internal struct APIEvent {
         if let storeProductId = root["productId"] {
             payload["storeProductExternalId"] = storeProductId
         }
-        if let wardrobeActive = userData["wardrobeActive"] {
+        if let wardrobeActive = userData["wardrobe_active"] {
             payload["wardrobeActive"] = wardrobeActive
         }
-        if let wardrobeHasM = userData["wardrobeHasM"] {
+        if let wardrobeHasM = userData["wardrobe_has_m"] {
             payload["wardrobeHasM"] = wardrobeHasM
         }
-        if let wardrobeHasP = userData["wardrobeHasP"] {
+        if let wardrobeHasP = userData["wardrobe_has_p"] {
             payload["wardrobeHasP"] = wardrobeHasP
         }
-        if let wardrobeHasR = userData["wardrobeHasR"] {
+        if let wardrobeHasR = userData["wardrobe_has_r"] {
             payload["wardrobeHasR"] = wardrobeHasR
         }
     }

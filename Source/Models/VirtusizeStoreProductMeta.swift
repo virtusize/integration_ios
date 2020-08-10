@@ -25,4 +25,14 @@
 internal class VirtusizeStoreProductMeta: Codable {
     let id: Int
     let additionalInfo: VirtusizeStoreProductAdditionalInfo?
+
+    private enum CodingKeys: String, CodingKey {
+        case id, additionalInfo
+    }
+
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        additionalInfo = try? values.decode(VirtusizeStoreProductAdditionalInfo.self, forKey: .additionalInfo)
+    }
 }

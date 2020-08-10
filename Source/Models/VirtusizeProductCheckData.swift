@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProductAdditionalInfo.swift
+//  VirtusizeProductCheckData.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,29 +22,29 @@
 //  THE SOFTWARE.
 //
 
-internal class VirtusizeStoreProductAdditionalInfo: Codable {
-    let fit: String?
-    let brandSizing: VirtusizeBrandSizing?
+internal class VirtusizeProductCheckData: Codable {
+    let validProduct: Bool
+    let fetchMetaData: Bool
+    let userData: VirtusizeUserData?
+    let productDataId: Int
+    let productTypeName: String
+    let storeName: String
+    let storeId: Int
+    let productTypeId: Int
 
     private enum CodingKeys: String, CodingKey {
-        case fit, brandSizing
+           case validProduct, fetchMetaData, userData, productDataId, productTypeName, storeName, storeId, productTypeId
     }
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        fit = try? values.decode(String.self, forKey: .fit)
-        brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
-    }
-
-    func getGeneralFitKey() -> String? {
-        if fit == nil {
-            return nil
-        }
-        if ["loose", "wide", "flared"].contains(fit) {
-            return "loose"
-        } else if ["tight", "slim"].contains(fit) {
-            return "tight"
-        }
-        return "regular"
+        validProduct = try values.decode(Bool.self, forKey: .validProduct)
+        fetchMetaData = try values.decode(Bool.self, forKey: .fetchMetaData)
+        userData = try? values.decode(VirtusizeUserData.self, forKey: .userData)
+        productDataId = try values.decode(Int.self, forKey: .productDataId)
+        productTypeName = try values.decode(String.self, forKey: .productTypeName)
+        storeName = try values.decode(String.self, forKey: .storeName)
+        storeId = try values.decode(Int.self, forKey: .storeId)
+        productTypeId = try values.decode(Int.self, forKey: .productTypeId)
     }
 }

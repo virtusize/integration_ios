@@ -45,4 +45,22 @@ internal class VirtusizeStoreProduct: Codable {
         store = try values.decode(Int.self, forKey: .store)
         storeProductMeta = try? values.decode(VirtusizeStoreProductMeta.self, forKey: .storeProductMeta)
     }
+
+    func getRecommendationText() -> String {
+        var text = Localization.shared.localize("inpage_default_text")
+        if isAccessory() {
+            text = Localization.shared.localize("inpage_default_accessory_text")
+        } else if let brandSizing = storeProductMeta?.additionalInfo?.brandSizing {
+            text = Localization.shared.localize(
+                "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
+            )
+        } else if let generalFitKey = storeProductMeta?.additionalInfo?.getGeneralFitKey() {
+            text = Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
+        }
+        return text
+    }
+
+    private func isAccessory() -> Bool {
+        return productType == 18 || productType == 19 || productType == 25 || productType == 26
+    }
 }

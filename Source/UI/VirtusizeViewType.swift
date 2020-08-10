@@ -1,5 +1,5 @@
 //
-//  VirtusizeBrandSizing.swift
+//  VirtusizeViewType.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,20 +22,7 @@
 //  THE SOFTWARE.
 //
 
-internal struct VirtusizeBrandSizing: Codable {
-    let compare: String
-    let itemBrand: Bool
-
-    internal init(compare: String, itemBrand: Bool) {
-        self.compare = compare
-        self.itemBrand = itemBrand
-    }
-
-    func getBrandKey() -> String {
-        if itemBrand {
-            return "itemBrand"
-        } else {
-            return "mostBrands"
-        }
-    }
+public enum VirtusizeViewType: String {
+    case BUTTON = "Button"
+    case INPAGE = "InPage"
 }
