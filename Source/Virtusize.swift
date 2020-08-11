@@ -73,15 +73,26 @@ public class Virtusize {
                                completion completionHandler: CompletionHandler? = nil,
                                error errorHandler: ErrorHandler? = nil) {
         let task: URLSessionDataTask
-        task = session.dataTask(with: request) { (data, _, error) in
+        task = session.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
                 DispatchQueue.main.async {
-                    errorHandler?(VirtusizeError.apiRequestError(request.url, error!))
+                    errorHandler?(VirtusizeError.apiRequestError(request.url, error!.localizedDescription))
                 }
                 return
             }
-            DispatchQueue.main.async {
-                completionHandler?(data)
+
+            if let httpResponse = response as? HTTPURLResponse, !httpResponse.isSuccessful() {
+                var errorDebugDescription = ""
+                if let data = data {
+                    errorDebugDescription = String(decoding: data, as: UTF8.self)
+                }
+                DispatchQueue.main.async {
+                    errorHandler?(VirtusizeError.apiRequestError(request.url, errorDebugDescription))
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completionHandler?(data)
+                }
             }
         }
         task.resume()
@@ -163,7 +174,7 @@ public class Virtusize {
                 }
             }
         }, error: { error in
-            errorHandler?(VirtusizeError.apiRequestError(request.url, error))
+            errorHandler?(VirtusizeError.apiRequestError(request.url, error.debugDescription))
         })
     }
 
@@ -202,7 +213,7 @@ public class Virtusize {
         perform(request, completion: { _ in
             onSuccess?()
         }, error: { error in
-            onError?(VirtusizeError.apiRequestError(request.url, error))
+            onError?(VirtusizeError.apiRequestError(request.url, error.debugDescription))
         })
     }
 }
