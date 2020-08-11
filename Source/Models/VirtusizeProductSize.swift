@@ -22,7 +22,10 @@
 //  THE SOFTWARE.
 //
 
+/// This class represents the product size info
 internal class VirtusizeProductSize: Codable {
+    /// The size name
     let name: String
+    /// The measurements of the size, that is a dictionary with pairs of measurement names and measurement values
     let measurements: [String: Int?]
 }

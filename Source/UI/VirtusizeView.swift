@@ -27,9 +27,10 @@ import UIKit
 /// This class is the custom Virtusize View that is added in the client's layout file.
 public class VirtusizeView: UIButton, CAAnimationDelegate {
 
+    /// the `VirtusizeViewType` to determine the UI of this VirtusizeView
     var virtusizeViewType = VirtusizeViewType.BUTTON
 
-    @IBInspectable var viewType: String {
+    @IBInspectable private var viewType: String {
         set {
             self.virtusizeViewType = VirtusizeViewType(rawValue: newValue) ?? VirtusizeViewType.BUTTON
             setup()
@@ -39,7 +40,7 @@ public class VirtusizeView: UIButton, CAAnimationDelegate {
         }
     }
 
-    /// `VirtusizeProduct` that is being set to this button
+    /// `VirtusizeProduct` that is being set to this view
     public var storeProduct: VirtusizeProduct? {
         set {
             guard let product = newValue else {
@@ -99,6 +100,11 @@ public class VirtusizeView: UIButton, CAAnimationDelegate {
         self.setImage(Assets.icon, for: .normal)
     }
 
+    /// Sets up the InPage text by the product info
+    /// 
+    /// - Parameters:
+    ///   - product: `VirtusizeProduct`
+    ///   - onCompletion: The callback for the completion of setting up the InPage text
     private func setupInPageText(product: VirtusizeProduct, onCompletion: (() -> Void)? = nil) {
         if let productId = product.productCheckData?.productDataId {
             Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
