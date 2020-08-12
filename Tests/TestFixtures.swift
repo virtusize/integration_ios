@@ -143,7 +143,7 @@ struct TestFixtures {
     """
 
     static let virtusizeOrderitem = VirtusizeOrderItem(
-        productId: "A00001",
+        externalProductId: "A00001",
         size: "L",
         sizeAlias: "Large",
         variantId: "A00001_SIZEL_RED",

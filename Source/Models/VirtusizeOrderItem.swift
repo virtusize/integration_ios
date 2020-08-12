@@ -48,10 +48,10 @@ public struct VirtusizeOrderItem: Codable {
     private let url: String?
 
     /// Initializes the VirtusizeOrderItem structure
-    public init(productId: String, size: String, sizeAlias: String? = nil, variantId: String? = nil,
+    public init(externalProductId: String, size: String, sizeAlias: String? = nil, variantId: String? = nil,
                 imageUrl: String, color: String? = nil, gender: String? = nil, unitPrice: Float,
                 currency: String, quantity: Int = 1, url: String) {
-        self.externalProductId = productId
+        self.externalProductId = externalProductId
         self.size = size
         self.sizeAlias = sizeAlias
         self.variantId = variantId

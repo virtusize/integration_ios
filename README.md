@@ -41,7 +41,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 1.3.2'
+pod 'Virtusize', '~> 1.3.3'
 end
 ```
 
@@ -177,7 +177,7 @@ __**Note:**__ * means the property is required
 **VirtusizeOrderItem**
 | Property  | Data Type | Example                                  | Description                                                  |
 | ---------- | --------- | ---------------------------------------- | ------------------------------------------------------------ |
-| productId* | String    | "A001"                                   | The provide ID provided by the client. It must be unique for a product. |
+| externalProductId* | String    | "A001"                                   | The external product ID provided by the client. It must be unique for a product. |
 | size*      | String    | "S", "M", etc.                           | The name of the size                                         |
 | sizeAlias  | String    | "Small", "Large", etc.                   | The alias of the size is added if the size name is not identical from the product page |
 | variantId  | String    | "A001_SIZES_RED"                         | An ID that is set on the product SKU, color, or size if there are several options for the item |
@@ -194,7 +194,7 @@ __**Note:**__ * means the property is required
 ```Swift
 var virtusizeOrder = VirtusizeOrder(externalOrderId: "2020060812345")
 let item = VirtusizeOrderItem(
-    productId: "A00001",
+    externalProductId: "A00001",
     size: "L",
     sizeAlias: "Large",
     variantId: "A00001_SIZEL_RED",

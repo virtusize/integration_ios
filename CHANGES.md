@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.3.3
+- Bugfix: Fix the Order API error
+
 ### 1.3.2
 
 - Bugfix: Fix the null regoin value for the Order API
