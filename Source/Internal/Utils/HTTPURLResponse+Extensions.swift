@@ -1,5 +1,5 @@
 //
-//  UIApplication+Extensions.swift
+//  HTTPURLResponse+Extensions.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //

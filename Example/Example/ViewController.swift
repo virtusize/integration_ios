@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     private func sendOrderSample() {
         var virtusizeOrder = VirtusizeOrder(externalOrderId: "4000111032")
         let item = VirtusizeOrderItem(
-            productId: "A00001",
+            externalProductId: "A00001",
             size: "L",
             sizeAlias: "Large",
             variantId: "A00001_SIZEL_RED",
