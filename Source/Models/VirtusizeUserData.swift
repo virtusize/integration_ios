@@ -24,25 +24,13 @@
 
 internal class VirtusizeUserData: Codable {
     let shouldSeePhTooltip: Bool?
-    let wardrobeHasP: Bool?
-    let wardrobeHasR: Bool?
-    let wardrobeHasM: Bool?
-    let wardrobeActive: Bool?
 
     private enum CodingKeys: String, CodingKey {
         case shouldSeePhTooltip = "should_see_ph_tooltip"
-        case wardrobeHasP = "wardrobe_has_p"
-        case wardrobeHasR = "wardrobe_has_r"
-        case wardrobeHasM = "wardrobe_has_m"
-        case wardrobeActive = "wardrobe_active"
     }
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         shouldSeePhTooltip = try? values.decode(Bool.self, forKey: .shouldSeePhTooltip)
-        wardrobeHasP = try? values.decode(Bool.self, forKey: .wardrobeHasP)
-        wardrobeHasR = try? values.decode(Bool.self, forKey: .wardrobeHasR)
-        wardrobeHasM = try? values.decode(Bool.self, forKey: .wardrobeHasM)
-        wardrobeActive = try? values.decode(Bool.self, forKey: .wardrobeActive)
     }
 }

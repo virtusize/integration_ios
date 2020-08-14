@@ -45,8 +45,7 @@ struct TestFixtures {
                 "productDataId": 7110384,
                 "productTypeId": 5,
                 "userData": {
-                        "should_see_ph_tooltip": false,
-                        "wardrobe_active": true
+                        "should_see_ph_tooltip": false
                     }
             },
             "name": "backend-checked-product",

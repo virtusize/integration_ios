@@ -69,10 +69,6 @@ class APIEventTests: XCTestCase {
         XCTAssertEqual(productDataCheckPayloadJson?["storeName"] as? String ?? "", "virtusize")
         XCTAssertEqual(productDataCheckPayloadJson?["storeProductType"] as? String ?? "", "pants")
         XCTAssertEqual(productDataCheckPayloadJson?["storeProductExternalId"] as? String ?? "", "694")
-        XCTAssertEqual(productDataCheckPayloadJson?["wardrobeActive"] as? Bool ?? false, true)
-        XCTAssertNil(productDataCheckPayloadJson?["wardrobeHasM"])
-        XCTAssertNil(productDataCheckPayloadJson?["wardrobeHasP"])
-        XCTAssertNil(productDataCheckPayloadJson?["wardrobeHasR"])
     }
 
     func testAPIEvent_alignAddtionalEventData_hasExpectedPayload() {
