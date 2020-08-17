@@ -33,7 +33,7 @@ public enum VirtusizeError: Error {
     case invalidRequest
     case navigationError(Error)
     case jsonDecodingFailed(String, Error)
-    case apiRequestError(URL?, Error)
+    case apiRequestError(URL?, String?)
 }
 
 extension VirtusizeError: CustomDebugStringConvertible {
@@ -55,8 +55,8 @@ extension VirtusizeError: CustomDebugStringConvertible {
             return "Virtusize: Product is not available for comparison"
         case .jsonDecodingFailed(let structName, let error):
             return "Virtusize: Failed to decode the data response to the struct \(structName). \(error)"
-        case .apiRequestError(let url, let error):
-            return "Virtusize: API Request \(url?.absoluteString ?? "") - \(error.localizedDescription)"
+        case .apiRequestError(let url, let errorDebugDescription):
+            return "Virtusize: API Request \(url?.absoluteString ?? "") - \(errorDebugDescription ?? "")"
         }
     }
 }
