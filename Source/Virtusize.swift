@@ -245,7 +245,8 @@ public class Virtusize {
 
     internal class func getProductTypes(
         onSuccess: (([VirtusizeProductType]) -> Void)? = nil,
-        onError: ((VirtusizeError) -> Void)? = nil) {
+        onError: ((VirtusizeError) -> Void)? = nil
+    ) {
         guard let request = APIRequest.getProductTypes() else {
             return
         }
@@ -259,6 +260,31 @@ public class Virtusize {
             } catch {
                 onError?(VirtusizeError.jsonDecodingFailed("[VirtusizeProductType]", error))
             }
+        }, error: { error in
+            onError?(error)
+        })
+    }
+
+    /// The API request for getting i18 localization texts
+    ///
+    /// - Parameters:
+    ///   - onSuccess: A callback to be called when the request to get i18n texts is successful
+    ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
+    internal class func getI18nTexts(
+        onSuccess: ((VirtusizeI18nLocalization) -> Void)? = nil,
+        onError: ((VirtusizeError) -> Void)? = nil
+    ) {
+        guard let virtusizeParams = Virtusize.params,
+            let request = APIRequest.getI18n(
+                langCode: virtusizeParams.language.rawValue
+            ) else {
+                return
+        }
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            onSuccess?(Deserializer.i18n(data: data))
         }, error: { error in
             onError?(error)
         })

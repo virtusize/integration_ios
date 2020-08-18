@@ -128,6 +128,15 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNil(endpoint.components.queryItems)
     }
 
+    func testI18nEndpoint_returnExpectedComponents() {
+        let endpoint = APIEndpoints.i18n(langCode: VirtusizeLanguage.JAPANESE.rawValue)
+
+        XCTAssertEqual(endpoint.components.host, "i18n.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/bundle-payloads/aoyama/ja")
+
+        XCTAssertNil(endpoint.components.queryItems)
+    }
+
     private func getQueryParametersDict(queryItems: [URLQueryItem]?) -> [String: String] {
         guard let items = queryItems else {
             return [:]

@@ -32,6 +32,7 @@ internal enum APIEndpoints {
     case orders
     case storeProducts(productId: Int)
     case productTypes
+    case i18n(langCode: String)
 
     // MARK: - Properties
 
@@ -68,6 +69,9 @@ internal enum APIEndpoints {
 
         case .productTypes:
             components.path = "/a/api/v3/product-types"
+
+        case .i18n(let langCode):
+            components.path = "/bundle-payloads/aoyama/\(langCode)"
         }
         return components
     }
@@ -75,6 +79,8 @@ internal enum APIEndpoints {
     var hostname: String {
         if case .productDataCheck = self {
             return Virtusize.environment.productDataCheckUrl()
+        } else if case .i18n = self {
+            return Virtusize.environment.i18nUrl()
         }
         return Virtusize.environment.rawValue
     }

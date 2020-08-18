@@ -1,7 +1,7 @@
 //
-//  VirtusizeEnvironment.swift
+//  TestUtils.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +22,19 @@
 //  THE SOFTWARE.
 //
 
-/// This enum contains all available Virtusize environments
-public enum VirtusizeEnvironment: String {
-    case staging="staging.virtusize.com",
-        global="www.virtusize.com",
-        japan="api.virtusize.jp",
-        korea="api.virtusize.kr"
+import Foundation
 
-    /// Gets the URL for the `productDataCheck` request
-    internal func productDataCheckUrl() -> String {
-        return "services.virtusize.com"
-    }
+class TestUtils: NSObject {
 
-    /// Gets the URL for the `i18n` request
-    internal func i18nUrl() -> String {
-        return "i18n.virtusize.com"
-    }
+    static let shared = TestUtils()
 
-    /// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
-    internal func virtusizeRegion() -> VirtusizeRegion {
-        switch self {
-        case .staging, .japan:
-            return VirtusizeRegion.JAPAN
-        case .global:
-            return VirtusizeRegion.COM
-        case .korea:
-            return VirtusizeRegion.KOREA
-        }
+    /// Loads a local JSON file for testing
+    ///
+    /// - Parameter jsonFileName: the JSON file name
+    /// - Returns: `Data`
+    func loadTestJsonFile(jsonFileName: String) -> Data? {
+        let bundle = Bundle(for: DeserializerTests.self)
+        let path = bundle.path(forResource: jsonFileName, ofType: "json")
+        return try? Data(contentsOf: URL(fileURLWithPath: path!))
     }
 }

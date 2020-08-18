@@ -163,4 +163,13 @@ internal struct APIRequest {
         let endpoint = APIEndpoints.productTypes
         return apiRequest(components: endpoint.components)
     }
+
+    /// Gets the `URLRequest` for the request to get i18n texts
+    ///
+    /// - Parameter langCode: The language code to get the texts in a specific language
+    /// - Returns: A `URLRequest` for the request to get i18n texts
+    internal static func getI18n(langCode: String) -> URLRequest? {
+        let endpoint = APIEndpoints.i18n(langCode: langCode)
+        return apiRequest(components: endpoint.components)
+    }
 }

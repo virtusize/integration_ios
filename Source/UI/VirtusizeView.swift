@@ -102,7 +102,15 @@ public class VirtusizeView: UIButton, CAAnimationDelegate {
     private func setupInPageText(product: VirtusizeProduct, onCompletion: (() -> Void)? = nil) {
         if let productId = product.productCheckData?.productDataId {
             Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
-                self.setTitle(storeProduct.getRecommendationText(), for: .normal)
+                Virtusize.getI18nTexts(
+                    onSuccess: { i18nLocalization in
+                        self.setTitle(
+                            storeProduct.getRecommendationText(i18nLocalization: i18nLocalization),
+                            for: .normal
+                        )
+                }, onError: { error in
+                    print(error.debugDescription)
+                })
                 onCompletion?()
             }, onError: { error in
                 print(error.debugDescription)
