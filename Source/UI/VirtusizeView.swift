@@ -108,10 +108,10 @@ public class VirtusizeView: UIButton, CAAnimationDelegate {
                             storeProduct.getRecommendationText(i18nLocalization: i18nLocalization),
                             for: .normal
                         )
+                        onCompletion?()
                 }, onError: { error in
                     print(error.debugDescription)
                 })
-                onCompletion?()
             }, onError: { error in
                 print(error.debugDescription)
             })
