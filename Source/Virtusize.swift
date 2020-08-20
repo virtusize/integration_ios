@@ -221,6 +221,12 @@ public class Virtusize {
         })
     }
 
+    /// The API request for getting the store product info from the Virtusize server
+    ///
+    /// - Parameters:
+    ///   - productId: The internal product ID from the Virtusize server
+    ///   - onSuccess: A callback to pass `VirtusizeStoreProduct` when the request is successful
+    ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
     internal class func getStoreProductInfo(
         productId: Int,
         onSuccess: ((VirtusizeStoreProduct) -> Void)? = nil,
@@ -243,6 +249,11 @@ public class Virtusize {
         })
     }
 
+    /// The API request for getting the list of all the product types from the Virtusize server
+    ///
+    /// - Parameters:
+    ///   - onSuccess: A callback to pass the list of `VirtusizeProductType` when the request is successful
+    ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
     internal class func getProductTypes(
         onSuccess: (([VirtusizeProductType]) -> Void)? = nil,
         onError: ((VirtusizeError) -> Void)? = nil) {

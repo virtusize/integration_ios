@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+/// This enum contains all the possible Virtusize view types
 public enum VirtusizeViewType: String {
     case BUTTON = "Button"
     case INPAGE = "InPage"

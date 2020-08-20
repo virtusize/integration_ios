@@ -31,7 +31,9 @@ class Localization {
 
     /// Localizes a text corresponding to a key
     ///
-    /// - Parameter key: The key for a string in the table identified by tableName.
+    /// - Parameters:
+    ///   - key: The key for a string in the table identified by tableName.
+    ///   - language: Pass `VirtusizeLanguage` if you'd like to localize the text in a designated language
     /// - Returns: A localized string based on the device's default language
     func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
         let path = Bundle(for: Localization.self).path(

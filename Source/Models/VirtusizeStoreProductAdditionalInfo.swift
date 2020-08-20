@@ -22,8 +22,11 @@
 //  THE SOFTWARE.
 //
 
+/// This class represents the additional info of a store product
 internal class VirtusizeStoreProductAdditionalInfo: Codable {
+    /// The general fit key
     let fit: String?
+    /// The brand sizing info
     let brandSizing: VirtusizeBrandSizing?
 
     private enum CodingKeys: String, CodingKey {
@@ -36,6 +39,7 @@ internal class VirtusizeStoreProductAdditionalInfo: Codable {
         brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
     }
 
+    /// Gets the general fit key for the fitting related InPage texts
     func getGeneralFitKey() -> String? {
         if fit == nil {
             return nil
