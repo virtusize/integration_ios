@@ -22,13 +22,21 @@
 //  THE SOFTWARE.
 //
 
+/// This structure represents a store product from the Virtusize server
 internal class VirtusizeStoreProduct: Codable {
+    /// An integer to represent the internal product ID in the Virtusize server
     let id: Int
+    /// The list of the `VirtusizeProductSize` that this product has
     let sizes: [VirtusizeProductSize]
+    /// A string to represent the external product ID from the client's store
     let externalId: String
+    /// The ID of the product type of this product
     let productType: Int
+    /// The product name
     let name: String
+    /// The ID of the store that this product belongs to
     let store: Int
+    /// The additional data of type `VirtusizeStoreProductMeta`  represents the product
     let storeProductMeta: VirtusizeStoreProductMeta?
 
     private enum CodingKeys: String, CodingKey {
@@ -44,5 +52,28 @@ internal class VirtusizeStoreProduct: Codable {
         name = try values.decode(String.self, forKey: .name)
         store = try values.decode(Int.self, forKey: .store)
         storeProductMeta = try? values.decode(VirtusizeStoreProductMeta.self, forKey: .storeProductMeta)
+    }
+
+    /// Gets the InPage recommendation text based on the product info
+    func getRecommendationText() -> String {
+        var text = Localization.shared.localize("inpage_default_text")
+        if isAccessory() {
+            text = Localization.shared.localize("inpage_default_accessory_text")
+        } else if let brandSizing = storeProductMeta?.additionalInfo?.brandSizing {
+            text = Localization.shared.localize(
+                "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
+            )
+        } else if let generalFitKey = storeProductMeta?.additionalInfo?.getGeneralFitKey() {
+            text = Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
+        }
+        return text
+    }
+
+    /// Checks if the product is an accessory
+    ///
+    /// - Note: 18 is for bags, 19 is for clutches, 25 is for wallets and 26 is for props
+    ///
+    private func isAccessory() -> Bool {
+        return productType == 18 || productType == 19 || productType == 25 || productType == 26
     }
 }

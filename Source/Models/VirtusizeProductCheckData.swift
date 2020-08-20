@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProductMeta.swift
+//  VirtusizeProductCheckData.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,20 +22,30 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the meta data of a store product
-internal class VirtusizeStoreProductMeta: Codable {
-    /// The ID of the store product meta
-    let id: Int
-    /// The additional info of a store product
-    let additionalInfo: VirtusizeStoreProductAdditionalInfo?
+/// This class represents the response for the API request `productDataCheck`
+internal class VirtusizeProductCheckData: Codable {
+    let validProduct: Bool
+    let fetchMetaData: Bool
+    let userData: VirtusizeUserData?
+    let productDataId: Int
+    let productTypeName: String
+    let storeName: String
+    let storeId: Int
+    let productTypeId: Int
 
     private enum CodingKeys: String, CodingKey {
-        case id, additionalInfo
+           case validProduct, fetchMetaData, userData, productDataId, productTypeName, storeName, storeId, productTypeId
     }
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(Int.self, forKey: .id)
-        additionalInfo = try? values.decode(VirtusizeStoreProductAdditionalInfo.self, forKey: .additionalInfo)
+        validProduct = try values.decode(Bool.self, forKey: .validProduct)
+        fetchMetaData = try values.decode(Bool.self, forKey: .fetchMetaData)
+        userData = try? values.decode(VirtusizeUserData.self, forKey: .userData)
+        productDataId = try values.decode(Int.self, forKey: .productDataId)
+        productTypeName = try values.decode(String.self, forKey: .productTypeName)
+        storeName = try values.decode(String.self, forKey: .storeName)
+        storeId = try values.decode(Int.self, forKey: .storeId)
+        productTypeId = try values.decode(Int.self, forKey: .productTypeId)
     }
 }

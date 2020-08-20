@@ -31,18 +31,18 @@ public struct VirtusizeProduct {
     public let imageURL: URL?
 
     /// The product data from the response of the `productDataCheck` request
-    internal var context: JSONObject?
+    internal var productCheckData: VirtusizeProductCheckData?
 
     /// Initializes the VirtusizeProduct structure
-    internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
+    internal init(externalId: String, imageURL: URL? = nil, productCheckData: VirtusizeProductCheckData? = nil) {
         self.externalId = externalId
         self.imageURL = imageURL
-        self.context = context
+        self.productCheckData = productCheckData
     }
 }
 
 extension VirtusizeProduct {
     public init(externalId: String, imageURL: URL? = nil) {
-        self.init(externalId: externalId, imageURL: imageURL, context: nil)
+        self.init(externalId: externalId, imageURL: imageURL, productCheckData: nil)
     }
 }

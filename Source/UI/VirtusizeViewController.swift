@@ -54,7 +54,7 @@ public final class VirtusizeViewController: UIViewController {
         self.delegate = handler
         self.processPool = processPool
 
-        guard Virtusize.product?.context != nil else {
+        guard Virtusize.product?.productCheckData != nil else {
             reportError(error: .invalidProduct)
             return nil
         }

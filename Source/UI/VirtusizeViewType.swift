@@ -1,5 +1,5 @@
 //
-//  HTTPURLResponse+Extensions.swift
+//  VirtusizeViewType.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,10 +22,8 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-extension HTTPURLResponse {
-     func isSuccessful() -> Bool {
-      return (200...299).contains(self.statusCode)
-     }
+/// This enum contains all the possible Virtusize view types
+public enum VirtusizeViewType: String {
+    case BUTTON = "Button"
+    case INPAGE = "InPage"
 }

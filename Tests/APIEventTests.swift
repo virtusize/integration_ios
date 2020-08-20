@@ -56,7 +56,7 @@ class APIEventTests: XCTestCase {
         XCTAssertEqual(payloadJson?["snippetVersion"], "0.0")
     }
 
-    func testAPIEventAlighProductDataCheckContext_hasExpectedPayload() {
+    func testAPIEvent_alignProductDataCheckContext_hasExpectedPayload() {
         let data = TestFixtures.productDataCheckJsonResponse.data(using: .utf8)!
         let productDataCheckJsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 
@@ -69,13 +69,9 @@ class APIEventTests: XCTestCase {
         XCTAssertEqual(productDataCheckPayloadJson?["storeName"] as? String ?? "", "virtusize")
         XCTAssertEqual(productDataCheckPayloadJson?["storeProductType"] as? String ?? "", "pants")
         XCTAssertEqual(productDataCheckPayloadJson?["storeProductExternalId"] as? String ?? "", "694")
-        XCTAssertEqual(productDataCheckPayloadJson?["wardrobeActive"] as? Bool ?? false, true)
-        XCTAssertNil(productDataCheckPayloadJson?["wardrobeHasM"])
-        XCTAssertNil(productDataCheckPayloadJson?["wardrobeHasP"])
-        XCTAssertNil(productDataCheckPayloadJson?["wardrobeHasR"])
     }
 
-    func testAPIEventAlighAddtionalEventData_hasExpectedPayload() {
+    func testAPIEvent_alignAddtionalEventData_hasExpectedPayload() {
         let data = TestFixtures.additionalEventData.data(using: .utf8)!
         let addtionalEventDataJsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 

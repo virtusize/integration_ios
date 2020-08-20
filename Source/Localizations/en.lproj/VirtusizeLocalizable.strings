@@ -1,1 +1,12 @@
-"Check size" = "Check size";
+"check_size" = "Check size";
+"inpage_default_text" = "This item’s brand is true to size.";
+"inpage_default_accessory_text" = "See how everyday items fit";
+"inpage_sizing_itemBrand_large_text" = "This item sizes larger than the brand\'s average.";
+"inpage_sizing_itemBrand_true_text" = "This item sizes true to fit to the brand.";
+"inpage_sizing_itemBrand_small_text" = "This item sizes smaller than the brand\'s average.";
+"inpage_sizing_mostBrands_large_text" = "This item\'s brand sizes larger than the average brand.";
+"inpage_sizing_mostBrands_true_text" = "This item\'s brand is true to size.";
+"inpage_sizing_mostBrands_small_text" = "This item\'s brand sizes smaller than the average brand.";
+"inpage_fit_loose_text" = "This item has a loose fit.";
+"inpage_fit_regular_text" = "This item has a regular fit.";
+"inpage_fit_tight_text" = "This item has a tight fit.";

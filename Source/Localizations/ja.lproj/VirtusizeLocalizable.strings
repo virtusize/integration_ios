@@ -1,1 +1,11 @@
-"Check size" = "サイズチェック";
+"check_size" = "サイズチェック";
+"inpage_default_text" = "この商品は平均的なサイズ感です。";
+"inpage_sizing_itemBrand_large_text" = "このブランドの平均サイズより大きめです。";
+"inpage_sizing_itemBrand_true_text" = "このブランドの平均的なサイズ感です。";
+"inpage_sizing_itemBrand_small_text" = "このブランドの平均サイズより小さめです。";
+"inpage_sizing_mostBrands_large_text" = "この商品は大きめのつくりです。";
+"inpage_sizing_mostBrands_true_text" = "この商品は平均的なサイズ感です。";
+"inpage_sizing_mostBrands_small_text" = "この商品は小さめのつくりです。";
+"inpage_fit_loose_text" = "この商品はルーズフィットです。";
+"inpage_fit_regular_text" = "この商品はレギュラーフィットです。";
+"inpage_fit_tight_text" = "この商品はタイトフィットです。";

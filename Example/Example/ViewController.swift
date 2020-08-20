@@ -27,7 +27,7 @@ import Virtusize
 
 class ViewController: UIViewController {
 
-	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
+	@IBOutlet weak var checkTheFitButton: VirtusizeView!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         checkTheFitButton.storeProduct = VirtusizeProduct(
             externalId: "vs_dress",
             imageURL: URL(string: "http://www.example.com/image.jpg"))
-        checkTheFitButton.applyDefaultStyle()
+        checkTheFitButton.applyDefaultButtonStyle()
 
         sendOrderSample()
 	}
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     private func sendOrderSample() {
         var virtusizeOrder = VirtusizeOrder(externalOrderId: "4000111032")
         let item = VirtusizeOrderItem(
-            productId: "A00001",
+            externalProductId: "A00001",
             size: "L",
             sizeAlias: "Large",
             variantId: "A00001_SIZEL_RED",

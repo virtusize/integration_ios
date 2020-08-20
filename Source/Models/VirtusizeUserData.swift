@@ -1,5 +1,5 @@
 //
-//  HTTPURLResponse+Extensions.swift
+//  VirtusizeUserData.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,10 +22,16 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+/// This class represents the response for the user data field in the data field of ProductCheck
+internal class VirtusizeUserData: Codable {
+    let shouldSeePhTooltip: Bool?
 
-extension HTTPURLResponse {
-     func isSuccessful() -> Bool {
-      return (200...299).contains(self.statusCode)
-     }
+    private enum CodingKeys: String, CodingKey {
+        case shouldSeePhTooltip = "should_see_ph_tooltip"
+    }
+
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        shouldSeePhTooltip = try? values.decode(Bool.self, forKey: .shouldSeePhTooltip)
+    }
 }

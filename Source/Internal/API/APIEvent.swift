@@ -59,8 +59,7 @@ internal struct APIEvent {
     /// - Parameter json: The product data from the response of the `productDataCheck` request
     mutating func align(withContext productDataCheck: JSONObject?) {
         guard let root = productDataCheck,
-            let data = root["data"] as? JSONObject,
-            let userData = data["userData"] as? JSONObject else {
+            let data = root["data"] as? JSONObject else {
                 return
         }
         if let storeId = data["storeId"] {
@@ -74,18 +73,6 @@ internal struct APIEvent {
         }
         if let storeProductId = root["productId"] {
             payload["storeProductExternalId"] = storeProductId
-        }
-        if let wardrobeActive = userData["wardrobeActive"] {
-            payload["wardrobeActive"] = wardrobeActive
-        }
-        if let wardrobeHasM = userData["wardrobeHasM"] {
-            payload["wardrobeHasM"] = wardrobeHasM
-        }
-        if let wardrobeHasP = userData["wardrobeHasP"] {
-            payload["wardrobeHasP"] = wardrobeHasP
-        }
-        if let wardrobeHasR = userData["wardrobeHasR"] {
-            payload["wardrobeHasR"] = wardrobeHasR
         }
     }
 

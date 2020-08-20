@@ -27,6 +27,8 @@ import XCTest
 
 class VirtusizeStoreProductTests: XCTestCase {
 
+    private let storeProductFixture = Data(TestFixtures.getStoreProductJsonResponse().utf8)
+
     func testDecoding_validStoreProductData_shouldReturnExpectedStructure() {
         let storeProduct = try? JSONDecoder().decode(VirtusizeStoreProduct.self, from: storeProductFixture)
 
@@ -55,5 +57,105 @@ class VirtusizeStoreProductTests: XCTestCase {
         XCTAssertNil(storeProduct)
     }
 
-    private let storeProductFixture = Data(TestFixtures.storeProductJsonResponse.utf8)
+    func testGetRecommendationText_productIsAnAccessory_returnDefaultAccessoryText() {
+        let defaultAccessoryText = Localization.shared.localize("inpage_default_accessory_text")
+        let storeProduct18 = getStoreProduct(productType: 18)
+        XCTAssertEqual(storeProduct18?.getRecommendationText(), defaultAccessoryText)
+        let storeProduct19 = getStoreProduct(productType: 19)
+        XCTAssertEqual(storeProduct19?.getRecommendationText(), defaultAccessoryText)
+         let storeProduct25 = getStoreProduct(productType: 25)
+        XCTAssertEqual(storeProduct25?.getRecommendationText(), defaultAccessoryText)
+         let storeProduct26 = getStoreProduct(productType: 26)
+        XCTAssertEqual(storeProduct26?.getRecommendationText(), defaultAccessoryText)
+    }
+
+    func testGetRecommendationText_brandSizingIsNotNull_returnBrandSizingText() {
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 1,
+                brandSizing: VirtusizeBrandSizing(compare: "large", itemBrand: true))?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_sizing_itemBrand_large_text")
+        )
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 15,
+                brandSizing: VirtusizeBrandSizing(compare: "true", itemBrand: true))?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_sizing_itemBrand_true_text")
+        )
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 20,
+                brandSizing: VirtusizeBrandSizing(compare: "small", itemBrand: false))?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_sizing_mostBrands_small_text")
+        )
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 24,
+                brandSizing: VirtusizeBrandSizing(compare: "true", itemBrand: false))?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_sizing_mostBrands_true_text")
+        )
+    }
+
+    func testGetRecommendationText_brandSizingIsNullAndGeneralFitIsNotNull_returnGeneralFitText() {
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 4,
+                brandSizing: nil,
+                fit: "regular")?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_fit_regular_text")
+        )
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 6,
+                brandSizing: nil,
+                fit: "loose")?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_fit_loose_text")
+        )
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 8,
+                brandSizing: nil,
+                fit: "flared")?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_fit_loose_text")
+        )
+        XCTAssertEqual(
+            getStoreProduct(
+                productType: 10,
+                brandSizing: nil,
+                fit: "slim")?
+                .getRecommendationText(),
+            Localization.shared.localize("inpage_fit_tight_text")
+        )
+        XCTAssertEqual(
+                   getStoreProduct(
+                       productType: 12,
+                       brandSizing: nil,
+                       fit: "random")?
+                       .getRecommendationText(),
+                   Localization.shared.localize("inpage_fit_regular_text")
+               )
+    }
+
+    private func getStoreProduct(
+        productType: Int = 8,
+        brandSizing: VirtusizeBrandSizing? = VirtusizeBrandSizing(compare: "large", itemBrand: false),
+        fit: String = "regular"
+    ) -> VirtusizeStoreProduct? {
+        return try? JSONDecoder().decode(
+            VirtusizeStoreProduct.self,
+            from: Data(
+                TestFixtures.getStoreProductJsonResponse(
+                    productType: productType,
+                    brandSizing: brandSizing,
+                    fit: fit).utf8
+                )
+            )
+    }
 }

@@ -44,7 +44,8 @@ class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
             from: Data(TestFixtures.emptyResponse.utf8)
         )
 
-        XCTAssertNil(storeProductAdditionalInfo)
+        XCTAssertNil(storeProductAdditionalInfo?.fit)
+        XCTAssertNil(storeProductAdditionalInfo?.brandSizing)
     }
 
     private let storeProductAdditionalInfoFixture = Data(
