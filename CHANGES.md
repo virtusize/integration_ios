@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ### NEXT RELEASE
 
+### 1.4.0
+- Feature: Change to the new fit illustrator URL
+
 ### 1.3.3
 - Bugfix: Fix the Order API error
 
