@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+/// This class represents the response for the API request `productDataCheck`
 internal class VirtusizeProductCheckData: Codable {
     let validProduct: Bool
     let fetchMetaData: Bool

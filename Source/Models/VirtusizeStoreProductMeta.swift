@@ -22,8 +22,11 @@
 //  THE SOFTWARE.
 //
 
+/// This class represents the meta data of a store product
 internal class VirtusizeStoreProductMeta: Codable {
+    /// The ID of the store product meta
     let id: Int
+    /// The additional info of a store product
     let additionalInfo: VirtusizeStoreProductAdditionalInfo?
 
     private enum CodingKeys: String, CodingKey {

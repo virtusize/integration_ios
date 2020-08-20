@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+/// This class represents the response for the user data field in the data field of ProductCheck
 internal class VirtusizeUserData: Codable {
     let shouldSeePhTooltip: Bool?
 

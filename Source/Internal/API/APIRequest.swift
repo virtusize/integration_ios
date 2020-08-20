@@ -154,11 +154,18 @@ internal struct APIRequest {
         return apiRequest(components: endpoint.components, withPayload: jsonData)
     }
 
+    /// Gets the `URLRequest` for the `storeProducts` request
+    ///
+    /// - Parameter productId: The ID of the product
+    /// - Returns: A `URLRequest` for the `storeProducts` request
     internal static func getStoreProductInfo(productId: Int) -> URLRequest? {
         let endpoint = APIEndpoints.storeProducts(productId: productId)
         return apiRequest(components: endpoint.components)
     }
 
+    /// Gets the `URLRequest` for the `productTypes` request
+    ///
+    /// - Returns: A `URLRequest` for the `productTypes` request
     internal static func getProductTypes() -> URLRequest? {
         let endpoint = APIEndpoints.productTypes
         return apiRequest(components: endpoint.components)
