@@ -82,8 +82,8 @@ class APIEndpointsTests: XCTestCase {
             productId: 694
         )
 
-        XCTAssertEqual(endpoint.components.host, "api.virtusize.jp")
-        XCTAssertEqual(endpoint.components.path, "/a/fit-illustrator/v1/index.html")
+        XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
+        XCTAssertEqual(endpoint.components.path, "/a/fit-illustrator/v2/latest/index.html")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 11)
 
