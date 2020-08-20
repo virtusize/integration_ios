@@ -27,7 +27,16 @@ import Foundation
 /// This enum contains all available Virtusize environments
 public enum VirtusizeEnvironment: String {
     case staging="staging.virtusize.com",
-        global="www.virtusize.com",
-        japan="api.virtusize.jp",
-        korea="api.virtusize.kr"
+    global="www.virtusize.com",
+    japan="api.virtusize.jp",
+    korea="api.virtusize.kr"
+
+    /// Gets the fit illustrator URL
+    internal func fitIllustratorUrl() -> String {
+        switch self {
+        case .staging, .global: return "static.api.virtusize.com"
+        case .japan: return "static.api.virtusize.jp"
+        case .korea: return "static.api.virtusize.kr"
+        }
+    }
 }

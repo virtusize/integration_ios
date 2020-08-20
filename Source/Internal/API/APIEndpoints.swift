@@ -52,7 +52,8 @@ internal enum APIEndpoints {
             components.path = "/a/api/v3/events"
 
         case .fitIllustrator(let storeId, let productId):
-            components.path = "/a/fit-illustrator/v1/index.html"
+            let env = Virtusize.environment == VirtusizeEnvironment.staging ? "staging" : "latest"
+            components.path = "/a/fit-illustrator/v2/\(env)/index.html"
             components.queryItems = fitIllustratorQueryItems(
                 storeId: storeId,
                 productId: productId)
@@ -69,6 +70,9 @@ internal enum APIEndpoints {
     }
 
     var hostname: String {
+        if case .fitIllustrator = self {
+            return Virtusize.environment.fitIllustratorUrl()
+        }
         return Virtusize.environment.rawValue
     }
 

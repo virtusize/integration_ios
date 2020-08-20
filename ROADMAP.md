@@ -1,5 +1,8 @@
 # ROADMAP
 
+## 1.4.0
+- Feature: Change to the new fit illustrator URL
+
 ## 1.3.0
 
 ### Release date: 20/06/08
