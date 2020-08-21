@@ -1,5 +1,6 @@
 "check_size" = "サイズチェック";
 "inpage_default_text" = "この商品は平均的なサイズ感です。";
+"inpage_default_accessory_text" = "日用品と比較する";
 "inpage_sizing_itemBrand_large_text" = "このブランドの平均サイズより大きめです。";
 "inpage_sizing_itemBrand_true_text" = "このブランドの平均的なサイズ感です。";
 "inpage_sizing_itemBrand_small_text" = "このブランドの平均サイズより小さめです。";

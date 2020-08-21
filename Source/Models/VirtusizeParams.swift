@@ -27,7 +27,7 @@ public class VirtusizeParams {
     /// The `VirtusizeRegion` that is used to set the region of the config url domains within the Virtusize web app
     internal let region: VirtusizeRegion
     /// The `VirtusizeLanguage` that sets the initial language the Virtusize web app will load in
-    private let language: VirtusizeLanguage
+    internal let language: VirtusizeLanguage
     /// The languages that the user can switch to using the Language Selector
     private let allowedLanguages: [VirtusizeLanguage]
     /// The Boolean value to determine whether the Virtusize web app will fetch SGI and use SGI flow for users to add user generated items to their wardrobe

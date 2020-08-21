@@ -299,6 +299,59 @@ class VirtusizeTests: XCTestCase {
         XCTAssertEqual(actualProductTypes[1].id, 18)
         XCTAssertEqual(actualProductTypes[1].weights, ["depth": 1, "width": 2, "height": 1])
     }
+
+    func testGetI18nTexts_hasExpectedI18nLocalization() {
+        let expectation = self.expectation(description: "Virtusize.getI18nTexts reaches the callback")
+        var actualI18nLocalization: VirtusizeI18nLocalization?
+
+        Virtusize.session = MockURLSession(
+            data: TestUtils.shared.loadTestJsonFile(jsonFileName: "i18n_ko"),
+            urlResponse: nil,
+            error: nil
+        )
+
+        Virtusize.getI18nTexts(onSuccess: { i18nLocalization in
+            actualI18nLocalization = i18nLocalization
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        let localizedLang = VirtusizeLanguage.KOREAN
+
+        XCTAssertEqual(
+            actualI18nLocalization?.defaultText,
+            Localization.shared.localize("inpage_default_text", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization?.defaultAccessoryText,
+            Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization?.sizingItemBrandTrueText,
+            Localization.shared.localize("inpage_sizing_itemBrand_true_text", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization?.sizingItemBrandSmallText,
+            Localization.shared.localize("inpage_sizing_itemBrand_small_text", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization?.sizingMostBrandsLargeText,
+            Localization.shared.localize("inpage_sizing_mostBrands_large_text", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization?.fitRegularText,
+            Localization.shared.localize("inpage_fit_regular_text", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization?.fitTightText,
+            Localization.shared.localize("inpage_fit_tight_text", language: localizedLang)
+        )
+    }
 }
 
 extension VirtusizeTests {

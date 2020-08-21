@@ -113,4 +113,52 @@ internal struct Deserializer {
 
         return VirtusizeEvent(name: eventName, data: event["data"])
     }
+
+    /// Gets `VirtusizeI18nLocalization` from the data response from the i18n request
+    ///
+    /// - Parameter data: The data for the localization texts
+    /// - Returns: `VirtusizeI18nLocalization`
+    static func i18n(data: Data?) -> VirtusizeI18nLocalization {
+        let i18nLocalization = VirtusizeI18nLocalization()
+        guard let data = data,
+            let rootObject = try? JSONSerialization.jsonObject(with: data, options: []),
+            let root = rootObject as? JSONObject,
+            let keysJSONObject = root["keys"] as? JSONObject,
+            let appsJSONObject = keysJSONObject["apps"] as? JSONObject,
+            let aoyamaJSONObject = appsJSONObject["aoyama"] as? JSONObject else {
+                return i18nLocalization
+        }
+
+        let inpageJSONObject = aoyamaJSONObject["inpage"] as? JSONObject
+        let detailsScreenJSONObject = aoyamaJSONObject["detailsScreen"] as? JSONObject
+        let sizingJSONObject = detailsScreenJSONObject?["sizing"] as? JSONObject
+        let itemBrandJSONObject = sizingJSONObject?["itemBrand"] as? JSONObject
+        let mostBrandsJSONObject = sizingJSONObject?["mostBrands"] as? JSONObject
+        let fitJSONObject = detailsScreenJSONObject?["fit"] as? JSONObject
+
+        i18nLocalization.defaultText = trimI18nText(detailsScreenJSONObject?["defaultText"] as? String)
+        i18nLocalization.defaultAccessoryText = trimI18nText(inpageJSONObject?["defaultAccessoryText"] as? String)
+
+        i18nLocalization.sizingItemBrandLargeText = trimI18nText(itemBrandJSONObject?["large"] as? String)
+        i18nLocalization.sizingItemBrandTrueText = trimI18nText(itemBrandJSONObject?["true"] as? String)
+        i18nLocalization.sizingItemBrandSmallText = trimI18nText(itemBrandJSONObject?["small"] as? String)
+
+        i18nLocalization.sizingMostBrandsLargeText = trimI18nText(mostBrandsJSONObject?["large"] as? String)
+        i18nLocalization.sizingMostBrandsTrueText = trimI18nText(mostBrandsJSONObject?["true"] as? String)
+        i18nLocalization.sizingMostBrandsSmallText = trimI18nText(mostBrandsJSONObject?["small"] as? String)
+
+        i18nLocalization.fitLooseText = trimI18nText(fitJSONObject?["loose"] as? String)
+        i18nLocalization.fitRegularText = trimI18nText(fitJSONObject?["regular"] as? String)
+        i18nLocalization.fitTightText = trimI18nText(fitJSONObject?["tight"] as? String)
+
+        return i18nLocalization
+    }
+
+    /// Trims the text from i18n
+    private static func trimI18nText(_ text: String?) -> String {
+        guard let text = text else {
+            return ""
+        }
+        return text.replacingOccurrences(of: "%{boldStart}", with: "").replacingOccurrences(of: "%{boldEnd}", with: "")
+    }
 }

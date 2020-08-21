@@ -55,16 +55,19 @@ internal class VirtusizeStoreProduct: Codable {
     }
 
     /// Gets the InPage recommendation text based on the product info
-    func getRecommendationText() -> String {
-        var text = Localization.shared.localize("inpage_default_text")
+    func getRecommendationText(i18nLocalization: VirtusizeI18nLocalization) -> String {
+        var text = i18nLocalization.defaultText ?? Localization.shared.localize("inpage_default_text")
         if isAccessory() {
-            text = Localization.shared.localize("inpage_default_accessory_text")
+            text = i18nLocalization.defaultAccessoryText ??
+                Localization.shared.localize("inpage_default_accessory_text")
         } else if let brandSizing = storeProductMeta?.additionalInfo?.brandSizing {
-            text = Localization.shared.localize(
+            text = i18nLocalization.getSizingText(brandSizing: brandSizing) ??
+                Localization.shared.localize(
                 "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
             )
         } else if let generalFitKey = storeProductMeta?.additionalInfo?.getGeneralFitKey() {
-            text = Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
+            text = i18nLocalization.getFitText(generalFitKey: generalFitKey) ??
+                Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
         }
         return text
     }

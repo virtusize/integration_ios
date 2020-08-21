@@ -91,4 +91,16 @@ class APIRequestTests: XCTestCase {
         )
     }
 
+    func testGetI18nTexts_expectedApiRequest() {
+        let apiRequest = APIRequest.getI18n(langCode: VirtusizeLanguage.KOREAN.rawValue)
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://i18n.virtusize.com/bundle-payloads/aoyama/ko"
+        )
+    }
+
 }
