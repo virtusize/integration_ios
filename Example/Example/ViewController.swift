@@ -27,7 +27,7 @@ import Virtusize
 
 class ViewController: UIViewController {
 
-	@IBOutlet weak var checkTheFitButton: VirtusizeView!
+	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -44,10 +44,25 @@ class ViewController: UIViewController {
                                                name: Virtusize.productDataCheckDidSucceed,
                                                object: Virtusize.self)
 
-        checkTheFitButton.storeProduct = VirtusizeProduct(
+        Virtusize.product = VirtusizeProduct(
             externalId: "vs_dress",
-            imageURL: URL(string: "http://www.example.com/image.jpg"))
-        checkTheFitButton.applyDefaultButtonStyle()
+            imageURL: URL(string: "http://www.example.com/image.jpg")
+        )
+
+        Virtusize.setVirtusizeView(checkTheFitButton)
+        checkTheFitButton.addTarget(self, action: #selector(sizeCheck), for: .touchUpInside)
+        checkTheFitButton.style = .BLACK
+
+        let inPageMini = VirtusizeButton()
+        Virtusize.setVirtusizeView(inPageMini)
+        inPageMini.addTarget(self, action: #selector(sizeCheck), for: .touchUpInside)
+        inPageMini.style = .TEAL
+
+        view.addSubview(inPageMini)
+
+        inPageMini.translatesAutoresizingMaskIntoConstraints = false
+        inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        inPageMini.centerYAnchor.constraint(equalTo: checkTheFitButton.bottomAnchor, constant: 32).isActive = true
 
         sendOrderSample()
 	}
@@ -90,7 +105,7 @@ class ViewController: UIViewController {
         })
     }
 
-    @IBAction func checkTheFit() {
+    @objc func sizeCheck() {
         if let virtusize = VirtusizeViewController(handler: self) {
             // POTENTIAL ANALYTICS CODE
             present(virtusize, animated: true, completion: nil)

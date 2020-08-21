@@ -40,8 +40,32 @@ public class Virtusize {
     /// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
     public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
 
+    private static var views: [VirtusizeView] = []
+
+    private static var _product: VirtusizeProduct?
     /// The Virtusize product to get the value from the`productDataCheck` request
-    internal static var product: VirtusizeProduct?
+    public static var product: VirtusizeProduct? {
+        set {
+            guard let product = newValue else {
+                return
+            }
+            productCheck(product: product, completion: { product in
+                guard let product = product else {
+                    return
+                }
+                _product = product
+                for index in 0...views.count-1 {
+                    views[index].setupProductDataCheck()
+                }
+                views.removeAll()
+            }, failure: { _ in
+                views.removeAll()
+            })
+        }
+        get {
+            return _product
+        }
+    }
 
     /// NotificationCenter observers for debugging the initial product data check
     /// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
@@ -101,6 +125,10 @@ public class Virtusize {
         task.resume()
         URLSession.shared.finishTasksAndInvalidate()
     }
+    
+    public class func setVirtusizeView(_ view: VirtusizeView) {
+        views.append(view)
+    }
 
     /// The API request for product check
     ///
@@ -108,9 +136,12 @@ public class Virtusize {
     ///   - product: `VirtusizeProduct` for which check needs to be performed
     ///   - completionHandler: A callback to pass `VirtusizeProduct` back when an API request is successful
     internal class func productCheck(product: VirtusizeProduct,
-                                     completion completionHandler: ((VirtusizeProduct?) -> Void)?) {
+                                     completion completionHandler: ((VirtusizeProduct?) -> Void)?,
+                                     failure: ((VirtusizeError) -> Void)? = nil) {
         perform(APIRequest.productCheck(product: product), completion: { data in
             completionHandler?(Deserializer.product(from: product, withData: data))
+        }, error: { error in
+            failure?(error)
         })
     }
 

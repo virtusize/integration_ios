@@ -16,15 +16,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3C-Eg-THm" customClass="VirtusizeView" customModule="Virtusize">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3C-Eg-THm" customClass="VirtusizeButton" customModule="Virtusize">
                                 <rect key="frame" x="163" y="433" width="88" height="30"/>
                                 <state key="normal" title="Check the fit"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="viewType" value="InPage"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="checkTheFit" destination="BYZ-38-t0r" eventType="touchUpInside" id="TV9-Ok-Wbn"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

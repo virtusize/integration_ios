@@ -1,5 +1,5 @@
 //
-//  VirtusizeView.swift
+//  VirtusizeViewStyle.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -25,7 +25,8 @@
 import Foundation
 
 /// TODO
-public protocol VirtusizeView {
-    var style: VirtusizeViewStyle { get }
-    func setupProductDataCheck()
+public enum VirtusizeViewStyle: String {
+    case NONE = "None"
+    case BLACK = "Black"
+    case TEAL = "Teal"
 }
