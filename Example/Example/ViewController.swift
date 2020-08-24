@@ -28,6 +28,7 @@ import Virtusize
 class ViewController: UIViewController {
 
 	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
+    @IBOutlet weak var inPageMini: VirtusizeInPageMini!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -52,15 +53,16 @@ class ViewController: UIViewController {
         Virtusize.setVirtusizeView(self, checkTheFitButton)
         checkTheFitButton.style = .BLACK
 
-        let inPageMini = VirtusizeInPageMini()
+        // If you add the InPageMini view programmatically
+//        let inPageMini = VirtusizeInPageMini()
+//        view.addSubview(inPageMini)
+//        inPageMini.setupHorizontalMargin(view: view, margin: 16)
+        // Set up constraints if needed
+//        inPageMini.translatesAutoresizingMaskIntoConstraints = false
+//        inPageMini.topAnchor.constraint(equalTo: checkTheFitButton.bottomAnchor, constant: 16).isActive = true
+//
         Virtusize.setVirtusizeView(self, inPageMini)
-        inPageMini.style = .TEAL
-
-        view.addSubview(inPageMini)
-
-        inPageMini.translatesAutoresizingMaskIntoConstraints = false
-        inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        inPageMini.centerYAnchor.constraint(equalTo: checkTheFitButton.bottomAnchor, constant: 32).isActive = true
+//        inPageMini.style = .BLACK
 
         sendOrderSample()
 	}

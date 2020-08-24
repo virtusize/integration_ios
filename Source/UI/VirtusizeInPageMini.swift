@@ -33,29 +33,39 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
 
-    public let horizontalEdgePadding: CGFloat = 16
-    public let imageLabelPadding: CGFloat = 8
-    public let verticalPadding: CGFloat = 10
+    private let horizontalEdgePadding: CGFloat = 8
+    private let imageLabelPadding: CGFloat = 8
+    private let verticalPadding: CGFloat = 5
 
-    public let inPageMiniMessageLabel: UILabel = UILabel()
-    public let inPageMiniSizeCheckButton: UIButton = UIButton()
+    private let inPageMiniMessageLabel: UILabel = UILabel()
+    private let inPageMiniSizeCheckButton: UIButton = UIButton()
 
     required init?(coder aDecoder: NSCoder) {
-         super.init(coder: aDecoder)
-         isHidden = true
-     }
+        super.init(coder: aDecoder)
+        isHidden = true
+        setup()
+    }
 
-     public init() {
-         super.init(frame: .zero)
-         isHidden = true
-         setup()
-     }
+    public init() {
+        super.init(frame: .zero)
+        isHidden = true
+        setup()
+    }
 
-    func setup() {
+    public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
+        view.addConstraint(
+            NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: margin)
+        )
+        view.addConstraint(
+            NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: margin)
+        )
+    }
+
+    private func setup() {
         addSubviews()
-        setContent()
         setConstraints()
-
+        setStyle()
+   
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
         addGestureRecognizer(gestureRecognizer)
     }
@@ -74,12 +84,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         addSubview(inPageMiniSizeCheckButton)
     }
 
-    private func setContent() {
-        clipsToBounds = true
-    }
-
     private func setConstraints() {
-
         inPageMiniMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         inPageMiniSizeCheckButton.translatesAutoresizingMaskIntoConstraints = false
 
@@ -87,21 +92,57 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         let metrics = ["edgePadding": horizontalEdgePadding, "verticalPadding": verticalPadding, "imageLabelPadding": imageLabelPadding]
 
         let horizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-edgePadding-[messageLabel]-imageLabelPadding-[sizeCheckButton]-(edgePadding)-|",
+            withVisualFormat: "H:|-edgePadding-[messageLabel]-(>=imageLabelPadding)-[sizeCheckButton]-(edgePadding)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
         )
 
-        let verticalConstraints = NSLayoutConstraint.constraints(
+        let messageLabelVerticalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "V:|-verticalPadding-[messageLabel]-verticalPadding-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
         )
 
+        let sizeCheckButtonVerticalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-(>=verticalPadding)-[sizeCheckButton]-(>=verticalPadding)-|",
+            options: [.alignAllCenterY],
+            metrics: metrics,
+            views: views
+        )
+
         addConstraints(horizontalConstraints)
-        addConstraints(verticalConstraints)
+        addConstraints(messageLabelVerticalConstraints)
+        addConstraints(sizeCheckButtonVerticalConstraints)
+        addConstraint(inPageMiniSizeCheckButton.centerYAnchor.constraint(equalTo: self.centerYAnchor))
+    }
+
+    private func setStyle() {
+        if style == .TEAL {
+            backgroundColor = Assets.vsTealColor
+        } else {
+            backgroundColor = Assets.gray900color
+        }
+
+        inPageMiniMessageLabel.numberOfLines = 0
+        inPageMiniMessageLabel.textColor = UIColor.white
+        inPageMiniMessageLabel.font = .systemFont(ofSize: 12)
+        inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
+
+        inPageMiniSizeCheckButton.isHidden = false
+        inPageMiniSizeCheckButton.backgroundColor = UIColor.white
+        inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 3, left: 5, bottom: 2, right: 6)
+        inPageMiniSizeCheckButton.layer.cornerRadius = 8
+        inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
+        inPageMiniSizeCheckButton.titleLabel?.font = .systemFont(ofSize: 10)
+        if style == .TEAL {
+            inPageMiniSizeCheckButton.setTitleColor(Assets.vsTealColor, for: .normal)
+        } else {
+            inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
+        }
+  
+        inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
     @objc func openVirtusizeWebView() {

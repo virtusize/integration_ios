@@ -20,21 +20,29 @@
                                 <rect key="frame" x="163" y="433" width="88" height="30"/>
                                 <state key="normal" title="Check the fit"/>
                             </button>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="fih-qK-nOb" customClass="VirtusizeInPageMini" customModule="Virtusize">
+                                <rect key="frame" x="16" y="479" width="382" height="30"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="fih-qK-nOb" firstAttribute="leading" secondItem="a7D-ow-IdL" secondAttribute="leading" constant="16" id="FOj-0k-ElL"/>
+                            <constraint firstItem="a7D-ow-IdL" firstAttribute="trailing" secondItem="fih-qK-nOb" secondAttribute="trailing" constant="16" id="MWQ-KJ-KiN"/>
                             <constraint firstItem="I3C-Eg-THm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PMi-FD-eLI"/>
+                            <constraint firstItem="fih-qK-nOb" firstAttribute="top" secondItem="I3C-Eg-THm" secondAttribute="bottom" constant="16" id="kqm-OI-WSd"/>
                             <constraint firstItem="I3C-Eg-THm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="s6S-eh-wAa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a7D-ow-IdL"/>
                     </view>
                     <connections>
                         <outlet property="checkTheFitButton" destination="I3C-Eg-THm" id="KOX-DK-Amz"/>
+                        <outlet property="inPageMini" destination="fih-qK-nOb" id="QhZ-X2-KG6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="116"/>
+            <point key="canvasLocation" x="137.68115942028987" y="115.84821428571428"/>
         </scene>
     </scenes>
 </document>
