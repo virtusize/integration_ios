@@ -43,9 +43,13 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
         }
     }
 
+    public var presentingViewController: UIViewController?
+    public var messageHandler: VirtusizeMessageHandler?
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         isHidden = true
+
     }
 
     public init() {
@@ -89,5 +93,11 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
 
         setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
         setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
+
+        addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
+    }
+
+    @objc func openVirtusizeWebView() {
+        clickOnVirtusizeView()
     }
 }

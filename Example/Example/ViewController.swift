@@ -49,13 +49,11 @@ class ViewController: UIViewController {
             imageURL: URL(string: "http://www.example.com/image.jpg")
         )
 
-        Virtusize.setVirtusizeView(checkTheFitButton)
-        checkTheFitButton.addTarget(self, action: #selector(sizeCheck), for: .touchUpInside)
+        Virtusize.setVirtusizeView(self, checkTheFitButton)
         checkTheFitButton.style = .BLACK
 
-        let inPageMini = VirtusizeButton()
-        Virtusize.setVirtusizeView(inPageMini)
-        inPageMini.addTarget(self, action: #selector(sizeCheck), for: .touchUpInside)
+        let inPageMini = VirtusizeInPageMini()
+        Virtusize.setVirtusizeView(self, inPageMini)
         inPageMini.style = .TEAL
 
         view.addSubview(inPageMini)
@@ -105,12 +103,6 @@ class ViewController: UIViewController {
         })
     }
 
-    @objc func sizeCheck() {
-        if let virtusize = VirtusizeViewController(handler: self) {
-            // POTENTIAL ANALYTICS CODE
-            present(virtusize, animated: true, completion: nil)
-        }
-	}
     // You should use those to debug during development
     @objc func productDataCheckDidFail(_ notification: Notification) {
         print(notification)

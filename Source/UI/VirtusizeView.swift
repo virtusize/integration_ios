@@ -27,5 +27,16 @@ import Foundation
 /// TODO
 public protocol VirtusizeView {
     var style: VirtusizeViewStyle { get }
+    var presentingViewController: UIViewController? { get set }
+    var messageHandler: VirtusizeMessageHandler? { get set }
+
     func setupProductDataCheck()
+}
+
+extension VirtusizeView {
+    func clickOnVirtusizeView() {
+        if let virtusize = VirtusizeViewController(handler: messageHandler) {
+            presentingViewController?.present(virtusize, animated: true, completion: nil)
+        }
+    }
 }

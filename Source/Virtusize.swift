@@ -125,9 +125,12 @@ public class Virtusize {
         task.resume()
         URLSession.shared.finishTasksAndInvalidate()
     }
-    
-    public class func setVirtusizeView(_ view: VirtusizeView) {
-        views.append(view)
+
+    public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
+        var mutableView = view
+        mutableView.messageHandler = any as? VirtusizeMessageHandler
+        mutableView.presentingViewController = any as? UIViewController
+        views.append(mutableView)
     }
 
     /// The API request for product check
