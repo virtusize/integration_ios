@@ -30,6 +30,12 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         }
     }
 
+    public var inPageMiniBackgroundColor: UIColor = Assets.gray900color {
+        didSet {
+            setStyle()
+        }
+    }
+
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
 
@@ -54,10 +60,26 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         view.addConstraint(
-            NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: margin)
+            NSLayoutConstraint(
+                item: self,
+                attribute: .leading,
+                relatedBy: .equal,
+                toItem: view,
+                attribute: .leading,
+                multiplier: 1,
+                constant: margin
+            )
         )
         view.addConstraint(
-            NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: margin)
+            NSLayoutConstraint(
+                item: view,
+                attribute: .trailing,
+                relatedBy: .equal,
+                toItem: self,
+                attribute: .trailing,
+                multiplier: 1,
+                constant: margin
+            )
         )
     }
 
@@ -65,7 +87,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         addSubviews()
         setConstraints()
         setStyle()
-   
+
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
         addGestureRecognizer(gestureRecognizer)
     }
@@ -121,31 +143,49 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
     private func setStyle() {
         if style == .TEAL {
             backgroundColor = Assets.vsTealColor
-        } else {
+        } else if style == .BLACK {
             backgroundColor = Assets.gray900color
+        } else {
+            backgroundColor = inPageMiniBackgroundColor
         }
 
         inPageMiniMessageLabel.numberOfLines = 0
         inPageMiniMessageLabel.textColor = UIColor.white
-        inPageMiniMessageLabel.font = .systemFont(ofSize: 12)
+        switch Virtusize.params?.language {
+        case .ENGLISH:
+            inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
+        case .JAPANESE:
+            inPageMiniMessageLabel.font = Font.notoSansCJKJPRegular(size: 12)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJPRegular(size: 10)
+        case .KOREAN:
+            inPageMiniMessageLabel.font = Font.notoSansCJKKRRegular(size: 12)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKRRegular(size: 10)
+        default:
+            inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
+        }
+
         inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
 
         inPageMiniSizeCheckButton.isHidden = false
         inPageMiniSizeCheckButton.backgroundColor = UIColor.white
         inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 3, left: 5, bottom: 2, right: 6)
-        inPageMiniSizeCheckButton.layer.cornerRadius = 8
+        inPageMiniSizeCheckButton.layer.cornerRadius = 10
         inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
-        inPageMiniSizeCheckButton.titleLabel?.font = .systemFont(ofSize: 10)
+
         if style == .TEAL {
             inPageMiniSizeCheckButton.setTitleColor(Assets.vsTealColor, for: .normal)
-        } else {
+        } else if style == .BLACK {
             inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
+        } else {
+            inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
         }
-  
+
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
-    @objc func openVirtusizeWebView() {
+    @objc private func openVirtusizeWebView() {
         clickOnVirtusizeView()
     }
 

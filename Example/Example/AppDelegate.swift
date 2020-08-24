@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Virtusize.environment = .staging
         Virtusize.params = VirtusizeParamsBuilder()
             // By default, the initial language will be set based on the Virtusize environment
-            .setLanguage(.JAPANESE)
+            .setLanguage(.ENGLISH)
              // By default, ShowSGI is false
             .setShowSGI(true)
              // By default, Virtusize allows all the possible languages including English, Japanese and Korean
