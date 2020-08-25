@@ -1,5 +1,5 @@
 //
-//  VirtusizeView.swift
+//  UIImage+Extensions.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,21 +22,12 @@
 //  THE SOFTWARE.
 //
 
-import WebKit
+extension UIImage {
 
-/// TODO: Comment
-public protocol VirtusizeView {
-    var style: VirtusizeViewStyle { get }
-    var presentingViewController: UIViewController? { get set }
-    var messageHandler: VirtusizeMessageHandler? { get set }
-
-    func setupProductDataCheck()
-}
-
-extension VirtusizeView {
-    func clickOnVirtusizeView() {
-        if let virtusize = VirtusizeViewController(handler: messageHandler, processPool: Virtusize.processPool) {
-            presentingViewController?.present(virtusize, animated: true, completion: nil)
-        }
+    /// Creates a `UIImage` object in the Virtusize framework bundle.
+    ///
+    /// - Parameter name: The image name.
+    convenience init?(bundleNamed name: String) {
+        self.init(named: name, in: Bundle(for: Virtusize.self), compatibleWith: nil)
     }
 }

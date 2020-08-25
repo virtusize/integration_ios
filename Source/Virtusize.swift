@@ -43,7 +43,7 @@ public class Virtusize {
 
     /// TODO: Comment
     private static var views: [VirtusizeView] = []
-    
+
     /// TODO: Comment
     public static var processPool: WKProcessPool?
 

@@ -112,7 +112,11 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         inPageMiniSizeCheckButton.translatesAutoresizingMaskIntoConstraints = false
 
         let views = ["messageLabel": inPageMiniMessageLabel, "sizeCheckButton": inPageMiniSizeCheckButton]
-        let metrics = ["edgePadding": horizontalEdgePadding, "verticalPadding": verticalPadding, "imageLabelPadding": imageLabelPadding]
+        let metrics = [
+            "edgePadding": horizontalEdgePadding,
+            "verticalPadding": verticalPadding,
+            "imageLabelPadding": imageLabelPadding
+        ]
 
         let horizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-edgePadding-[messageLabel]-(>=imageLabelPadding)-[sizeCheckButton]-(edgePadding)-|",
@@ -179,12 +183,20 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
             inPageMiniSizeCheckButton.layer.cornerRadius = 12
         }
 
+        inPageMiniSizeCheckButton.setImage(
+            Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate),
+            for: .normal
+        )
+        inPageMiniSizeCheckButton.semanticContentAttribute = .forceRightToLeft
         if inPageMiniBackgroundColor != nil {
             inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = inPageMiniBackgroundColor
         } else if style == .TEAL {
             inPageMiniSizeCheckButton.setTitleColor(Assets.vsTealColor, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = Assets.vsTealColor
         } else {
             inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = Assets.gray900color
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
