@@ -40,9 +40,9 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
 
-    private let horizontalEdgePadding: CGFloat = 8
-    private let imageLabelPadding: CGFloat = 8
-    private let verticalPadding: CGFloat = 5
+    private let horizontalEdgeMargin: CGFloat = 8
+    private let messageAndButtonMargin: CGFloat = 8
+    private let verticalMargin: CGFloat = 5
 
     private let inPageMiniMessageLabel: UILabel = UILabel()
     private let inPageMiniSizeCheckButton: UIButton = UIButton()
@@ -113,27 +113,27 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
         let views = ["messageLabel": inPageMiniMessageLabel, "sizeCheckButton": inPageMiniSizeCheckButton]
         let metrics = [
-            "edgePadding": horizontalEdgePadding,
-            "verticalPadding": verticalPadding,
-            "imageLabelPadding": imageLabelPadding
+            "horizontalEdgeMargin": horizontalEdgeMargin,
+            "verticalMargin": verticalMargin,
+            "messageAndButtonMargin": messageAndButtonMargin
         ]
 
         let horizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-edgePadding-[messageLabel]-(>=imageLabelPadding)-[sizeCheckButton]-(edgePadding)-|",
+            withVisualFormat: "H:|-horizontalEdgeMargin-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-(horizontalEdgeMargin)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
         )
 
         let messageLabelVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-verticalPadding-[messageLabel]-verticalPadding-|",
+            withVisualFormat: "V:|-verticalMargin-[messageLabel]-verticalMargin-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
         )
 
         let sizeCheckButtonVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=verticalPadding)-[sizeCheckButton]-(>=verticalPadding)-|",
+            withVisualFormat: "V:|-(>=verticalMargin)-[sizeCheckButton]-(>=verticalMargin)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
