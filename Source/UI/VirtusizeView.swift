@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import WebKit
 
 /// TODO
 public protocol VirtusizeView {
@@ -35,7 +35,7 @@ public protocol VirtusizeView {
 
 extension VirtusizeView {
     func clickOnVirtusizeView() {
-        if let virtusize = VirtusizeViewController(handler: messageHandler) {
+        if let virtusize = VirtusizeViewController(handler: messageHandler, processPool: Virtusize.processPool) {
             presentingViewController?.present(virtusize, animated: true, completion: nil)
         }
     }

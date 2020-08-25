@@ -24,7 +24,7 @@
 
 import Foundation
 
-/// TODO
+/// TODO: Comment
 public enum VirtusizeViewStyle: String {
     case NONE = "None"
     case BLACK = "Black"

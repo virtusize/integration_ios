@@ -217,7 +217,6 @@
 		4DED8D1E205755C3001CA7DF /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				9C74F78824F40EBD00A8C686 /* fonts */,
 				4D6C5792205FB9BA00DA910E /* Virtusize.swift */,
 				DFFAA96321A39BFC000F0F70 /* UI */,
 				DF71642621A284E9002C7202 /* Models */,
@@ -240,6 +239,7 @@
 		4DED8D37205757F0001CA7DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9C74F78824F40EBD00A8C686 /* Fonts */,
 				9CE7786A24B4121E00E4A127 /* Virtusize.h */,
 				9CE7784E24B3450C00E4A127 /* VirtusizeLocalizable.strings */,
 			);
@@ -296,14 +296,14 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
-		9C74F78824F40EBD00A8C686 /* fonts */ = {
+		9C74F78824F40EBD00A8C686 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				9CF9666E24F414AB001D3458 /* NotoSansCJKJP-Regular.ttf */,
 				9CF9666D24F414AB001D3458 /* NotoSansCJKKR-Regular.otf */,
 				9CF9666B24F41485001D3458 /* ProximaNova-Regular.otf */,
 			);
-			path = fonts;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		9C969FD424EBE47D00DD642F /* JSON Test Files */ = {

@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import WebKit
 
 /// The main class used by Virtusize clients to perform all available operations related to fit check
 public class Virtusize {
@@ -40,7 +41,11 @@ public class Virtusize {
     /// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
     public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
 
+    /// TODO: Comment
     private static var views: [VirtusizeView] = []
+    
+    /// TODO: Comment
+    public static var processPool: WKProcessPool?
 
     private static var _product: VirtusizeProduct?
     /// The Virtusize product to get the value from the`productDataCheck` request
@@ -126,6 +131,7 @@ public class Virtusize {
         URLSession.shared.finishTasksAndInvalidate()
     }
 
+    /// TODO: Comment
     public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
         var mutableView = view
         mutableView.messageHandler = any as? VirtusizeMessageHandler

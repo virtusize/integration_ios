@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+/// TODO: Comment
 public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
@@ -30,7 +31,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         }
     }
 
-    public var inPageMiniBackgroundColor: UIColor = Assets.gray900color {
+    public var inPageMiniBackgroundColor: UIColor? {
         didSet {
             setStyle()
         }
@@ -141,12 +142,12 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
     }
 
     private func setStyle() {
-        if style == .TEAL {
-            backgroundColor = Assets.vsTealColor
-        } else if style == .BLACK {
-            backgroundColor = Assets.gray900color
-        } else {
+        if inPageMiniBackgroundColor != nil {
             backgroundColor = inPageMiniBackgroundColor
+        } else if style == .TEAL {
+            backgroundColor = Assets.vsTealColor
+        } else {
+            backgroundColor = Assets.gray900color
         }
 
         inPageMiniMessageLabel.numberOfLines = 0
@@ -174,12 +175,12 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         inPageMiniSizeCheckButton.layer.cornerRadius = 10
         inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
 
-        if style == .TEAL {
-            inPageMiniSizeCheckButton.setTitleColor(Assets.vsTealColor, for: .normal)
-        } else if style == .BLACK {
-            inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
-        } else {
+        if inPageMiniBackgroundColor != nil {
             inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
+        } else if style == .TEAL {
+            inPageMiniSizeCheckButton.setTitleColor(Assets.vsTealColor, for: .normal)
+        } else {
+            inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
         }
 
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)

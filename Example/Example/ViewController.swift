@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import WebKit
 import Virtusize
 
 class ViewController: UIViewController {
@@ -45,26 +46,47 @@ class ViewController: UIViewController {
                                                name: Virtusize.productDataCheckDidSucceed,
                                                object: Virtusize.self)
 
+        // Set up the product information in order to populate the Virtusize view
         Virtusize.product = VirtusizeProduct(
             externalId: "vs_dress",
             imageURL: URL(string: "http://www.example.com/image.jpg")
         )
 
+        // Optional: Set up WKProcessPool to allow cookie sharing.
+         Virtusize.processPool = WKProcessPool()
+
+        // MARK: VirtusizeButton
+        // 1. Set up checkTheFitButton that is added in Interface Builder
         Virtusize.setVirtusizeView(self, checkTheFitButton)
-        checkTheFitButton.style = .BLACK
+        checkTheFitButton.style = .TEAL
 
-        // If you add the InPageMini view programmatically
-//        let inPageMini = VirtusizeInPageMini()
-//        view.addSubview(inPageMini)
-//        inPageMini.setupHorizontalMargin(view: view, margin: 16)
+        // 2. Add the VirtusizeButton programmatically
+        let checkTheFitButton2 = VirtusizeButton()
+        view.addSubview(checkTheFitButton2)
+        Virtusize.setVirtusizeView(self, checkTheFitButton2)
+        checkTheFitButton2.style = .BLACK
         // Set up constraints if needed
-//        inPageMini.translatesAutoresizingMaskIntoConstraints = false
-//        inPageMini.topAnchor.constraint(equalTo: checkTheFitButton.bottomAnchor, constant: 16).isActive = true
-//
-        Virtusize.setVirtusizeView(self, inPageMini)
-//        inPageMini.inPageMiniBackgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-        inPageMini.style = .TEAL
+        checkTheFitButton2.translatesAutoresizingMaskIntoConstraints = false
+        checkTheFitButton2.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        checkTheFitButton2.bottomAnchor.constraint(equalTo: checkTheFitButton.topAnchor, constant: -16).isActive = true
 
+        // MARK: VirtusizeInPageMini
+        // 1. Set up inPageMini that is added in Interface Builder
+        Virtusize.setVirtusizeView(self, inPageMini)
+        inPageMini.style = .BLACK
+
+        // 2. If you add the InPageMini view programmatically
+        let inPageMini2 = VirtusizeInPageMini()
+        view.addSubview(inPageMini2)
+        Virtusize.setVirtusizeView(self, inPageMini2)
+        inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
+        // You can set up horizontal margins by using `setupHorizontalMargin`
+        inPageMini2.setupHorizontalMargin(view: view, margin: 16)
+        // Set up constraints if needed
+        inPageMini2.translatesAutoresizingMaskIntoConstraints = false
+        inPageMini2.topAnchor.constraint(equalTo: inPageMini.bottomAnchor, constant: 16).isActive = true
+
+        // MARK: The Order API
         sendOrderSample()
 	}
 

@@ -24,7 +24,7 @@
 
 import UIKit
 
-/// This class is the custom Virtusize View that is added in the client's layout file.
+/// This class is the custom Virtusize button that is added in the client's layout file.
 public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
 
     override public var isHighlighted: Bool {
@@ -39,7 +39,7 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
 
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
         didSet {
-           setup()
+           setStyle()
         }
     }
 
@@ -55,7 +55,7 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
     public init() {
         super.init(frame: .zero)
         isHidden = true
-        setup()
+        setStyle()
     }
 
     public func setupProductDataCheck() {
@@ -67,8 +67,8 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
         }
     }
 
-    /// Set up the style of `VirtusizeView`
-    private func setup() {
+    /// Set up the style of `VirtusizeButton`
+    private func setStyle() {
         if style == .NONE {
             setTitle(Localization.shared.localize("check_size"), for: .normal)
             setTitleColor(Assets.gray900color, for: .normal)
