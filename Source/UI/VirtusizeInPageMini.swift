@@ -130,7 +130,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
         let sizeCheckButtonVerticalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "V:|-(>=verticalPadding)-[sizeCheckButton]-(>=verticalPadding)-|",
-            options: [.alignAllCenterY],
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
         )
@@ -152,7 +152,14 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
         inPageMiniMessageLabel.numberOfLines = 0
         inPageMiniMessageLabel.textColor = UIColor.white
-        switch Virtusize.params?.language {
+        inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
+
+        inPageMiniSizeCheckButton.isHidden = false
+        inPageMiniSizeCheckButton.backgroundColor = UIColor.white
+        inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
+        inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
+        let displayLanguage = Virtusize.params?.language
+        switch displayLanguage {
         case .ENGLISH:
             inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
             inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
@@ -166,14 +173,11 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
             inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
             inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
         }
-
-        inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
-
-        inPageMiniSizeCheckButton.isHidden = false
-        inPageMiniSizeCheckButton.backgroundColor = UIColor.white
-        inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 3, left: 5, bottom: 2, right: 6)
-        inPageMiniSizeCheckButton.layer.cornerRadius = 10
-        inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
+        if displayLanguage == VirtusizeLanguage.JAPANESE || displayLanguage == VirtusizeLanguage.KOREAN {
+            inPageMiniSizeCheckButton.layer.cornerRadius = 10
+        } else {
+            inPageMiniSizeCheckButton.layer.cornerRadius = 12
+        }
 
         if inPageMiniBackgroundColor != nil {
             inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
@@ -182,7 +186,6 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         } else {
             inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
         }
-
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
