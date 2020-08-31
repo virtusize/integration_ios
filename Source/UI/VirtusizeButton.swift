@@ -39,7 +39,7 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
 
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
         didSet {
-           setStyle()
+            setStyle()
         }
     }
 
@@ -49,7 +49,6 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         isHidden = true
-
     }
 
     public init() {

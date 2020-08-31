@@ -28,9 +28,9 @@ import Virtusize
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-	var window: UIWindow?
+    var window: UIWindow?
 
-	func application(
+    func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Virtusize.APIKey is required
@@ -42,14 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Virtusize.params = VirtusizeParamsBuilder()
             // By default, the initial language will be set based on the Virtusize environment
             .setLanguage(.ENGLISH)
-             // By default, ShowSGI is false
+            // By default, ShowSGI is false
             .setShowSGI(true)
-             // By default, Virtusize allows all the possible languages including English, Japanese and Korean
+            // By default, Virtusize allows all the possible languages including English, Japanese and Korean
             .setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE])
-             // By default, Virtusize displays all the possible info categories in the Product Details tab,
-             // including "modelInfo", "generalFit", "brandSizing" and "material".
+            // By default, Virtusize displays all the possible info categories in the Product Details tab,
+            // including "modelInfo", "generalFit", "brandSizing" and "material".
             .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
             .build()
-		return true
-	}
+        return true
+    }
 }

@@ -24,10 +24,10 @@
 
 /// This enum contains all available Virtusize environments
 public enum VirtusizeEnvironment: String {
-    case staging="staging.virtusize.com",
-        global="www.virtusize.com",
-        japan="api.virtusize.jp",
-        korea="api.virtusize.kr"
+    case staging="staging.virtusize.com"
+    case global="www.virtusize.com"
+    case japan="api.virtusize.jp"
+    case korea="api.virtusize.kr"
 
     /// Gets the URL for the `productDataCheck` request
     internal func productDataCheckUrl() -> String {

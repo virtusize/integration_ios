@@ -69,8 +69,8 @@ class Font {
             let data = NSData(contentsOfFile: path),
             let dataProvider = CGDataProvider(data: data),
             let fontReference = CGFont(dataProvider)
-        else {
-            return false
+            else {
+                return false
         }
 
         var errorRef: Unmanaged<CFError>?

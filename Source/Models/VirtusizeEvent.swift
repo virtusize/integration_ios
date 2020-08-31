@@ -22,8 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 /// A structure represents the event in Virtusize API
 public struct VirtusizeEvent {
     /// The name of the event

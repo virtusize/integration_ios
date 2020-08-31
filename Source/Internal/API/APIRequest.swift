@@ -77,10 +77,10 @@ internal struct APIRequest {
     ///
     /// - Parameter product: `VirtusizeProduct` for which check needs to be performed
     /// - Returns: A `URLRequest` for the `productCheck` request
-	internal static func productCheck(product: VirtusizeProduct) -> URLRequest {
+    internal static func productCheck(product: VirtusizeProduct) -> URLRequest {
         let endpoint = APIEndpoints.productDataCheck(externalId: product.externalId)
         return apiRequest(components: endpoint.components)
-	}
+    }
 
     /// Gets the `URLRequest` for the `productMetaDataHints` request to send the image of
     /// VirtusizeProduct to the Virtusize server
@@ -103,7 +103,7 @@ internal struct APIRequest {
             return nil
         }
         return apiRequest(components: endpoint.components, withPayload: jsonData)
-	}
+    }
 
     /// Gets the `URLRequest` for the `sendEvent` request
     ///
@@ -111,7 +111,7 @@ internal struct APIRequest {
     ///   - virtusizeEvent: An event to be sent to the Virtusize server
     ///   - context: The product data from the response of the `productDataCheck` request
     /// - Returns: A `URLRequest` for the `sendEvent` request
-	internal static func sendEvent(
+    internal static func sendEvent(
         _ virtusizeEvent: VirtusizeEvent, withContext context: JSONObject?) -> URLRequest? {
         let endpoint = APIEndpoints.events
 
@@ -123,7 +123,7 @@ internal struct APIRequest {
             return nil
         }
         return apiRequest(components: endpoint.components, withPayload: payloadData)
-	}
+    }
 
     /// Gets the `URLRequest` for the `Virtusize` request
     ///
@@ -132,7 +132,7 @@ internal struct APIRequest {
     internal static func virtusizeURL(region: VirtusizeRegion?) -> URLRequest? {
         let endpoint = APIEndpoints.virtusize(region: region ?? .JAPAN)
         return HTTPRequest(components: endpoint.components)
-	}
+    }
 
     /// Gets the `URLRequest` for the `storeViewApiKey` request
     ///

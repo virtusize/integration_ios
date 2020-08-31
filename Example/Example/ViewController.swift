@@ -28,11 +28,11 @@ import Virtusize
 
 class ViewController: UIViewController {
 
-	@IBOutlet weak var checkTheFitButton: VirtusizeButton!
+    @IBOutlet weak var checkTheFitButton: VirtusizeButton!
     @IBOutlet weak var inPageMini: VirtusizeInPageMini!
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         // NotificationCenter listener for debugging the initial product data check
         // - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
         // with the cause of the failure
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         )
 
         // Optional: Set up WKProcessPool to allow cookie sharing.
-         Virtusize.processPool = WKProcessPool()
+        Virtusize.processPool = WKProcessPool()
 
         // MARK: VirtusizeButton
         // 1. Set up checkTheFitButton that is added in Interface Builder
@@ -88,7 +88,7 @@ class ViewController: UIViewController {
 
         // MARK: The Order API
         sendOrderSample()
-	}
+    }
 
     /// Demonstrates how to send an order to the Virtusize server
     ///
@@ -144,15 +144,15 @@ extension ViewController: VirtusizeMessageHandler {
 
     func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent) {
         print(event)
-		switch event.name {
-		case "user-opened-widget":
+        switch event.name {
+        case "user-opened-widget":
             return
-		case "user-opened-panel-compare":
+        case "user-opened-panel-compare":
             return
-		default:
+        default:
             return
-		}
-	}
+        }
+    }
 
     func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError) {
         print(error)
