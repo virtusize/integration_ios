@@ -71,6 +71,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
         inPageStandardView.addGestureRecognizer(gestureRecognizer)
+        checkSizeButton.addGestureRecognizer(gestureRecognizer)
     }
 
     private func addSubviews() {
@@ -197,7 +198,13 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         topMessageLabel.numberOfLines = 0
         bottomMessageLabel.numberOfLines = 0
 
-        checkSizeButton.backgroundColor = Assets.vsTealColor
+        if inPageStandardButtonBackgroundColor != nil {
+            checkSizeButton.backgroundColor = inPageStandardButtonBackgroundColor
+        } else if style == .TEAL {
+            checkSizeButton.backgroundColor = Assets.vsTealColor
+        } else {
+            checkSizeButton.backgroundColor = Assets.gray900color
+        }
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         checkSizeButton.setContentCompressionResistancePriority(.required, for: .horizontal)

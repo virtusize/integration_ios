@@ -94,6 +94,7 @@ class ViewController: UIViewController {
         inPageStandard.topAnchor.constraint(equalTo: inPageMini2.bottomAnchor, constant: 16).isActive = true
         Virtusize.setVirtusizeView(self, inPageStandard)
         inPageStandard.setupHorizontalMargin(view: view, margin: 16)
+        inPageStandard.style = .BLACK
 
         // MARK: The Order API
         sendOrderSample()
