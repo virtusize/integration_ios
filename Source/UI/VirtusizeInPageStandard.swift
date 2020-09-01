@@ -40,7 +40,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
     public var messageHandler: VirtusizeMessageHandler?
 
     private let inPageStandardView: UIView = UIView()
-    private let productImageView: UIImageView = UIImageView()
+    private let productImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
     private let messageStackView: UIStackView = UIStackView()
     private let topMessageLabel: UILabel = UILabel()
     private let bottomMessageLabel: UILabel = UILabel()
@@ -176,7 +176,6 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         privacyPolicyLink.text = "Privacy Policy"
 
         productImageView.image = #imageLiteral(resourceName: "logo-vs-horizontal-color")
-        productImageView.contentMode = .scaleAspectFit
 
         messageStackView.axis = .vertical
         messageStackView.distribution = .equalSpacing
@@ -186,7 +185,6 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
 
         bottomMessageLabel.text = "Bottom text Bottom text"
         bottomMessageLabel.numberOfLines = 0
-        bottomMessageLabel.isHidden = true
 
         checkSizeButton.backgroundColor = Assets.vsTealColor
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
