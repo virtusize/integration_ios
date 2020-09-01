@@ -78,13 +78,22 @@ class ViewController: UIViewController {
         // 2. If you add the InPageMini view programmatically
         let inPageMini2 = VirtusizeInPageMini()
         view.addSubview(inPageMini2)
+        // Set up constraints if needed
+        inPageMini2.translatesAutoresizingMaskIntoConstraints = false
+        inPageMini2.topAnchor.constraint(equalTo: inPageMini.bottomAnchor, constant: 16).isActive = true
         Virtusize.setVirtusizeView(self, inPageMini2)
         inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
         // You can set up horizontal margins by using `setupHorizontalMargin`
         inPageMini2.setupHorizontalMargin(view: view, margin: 16)
-        // Set up constraints if needed
-        inPageMini2.translatesAutoresizingMaskIntoConstraints = false
-        inPageMini2.topAnchor.constraint(equalTo: inPageMini.bottomAnchor, constant: 16).isActive = true
+
+        // MARK: VirtusizeInPageStandard
+        let inPageStandard = VirtusizeInPageStandard()
+        view.addSubview(inPageStandard)
+        inPageStandard.translatesAutoresizingMaskIntoConstraints = false
+        inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        inPageStandard.topAnchor.constraint(equalTo: inPageMini2.bottomAnchor, constant: 16).isActive = true
+        Virtusize.setVirtusizeView(self, inPageStandard)
+        inPageStandard.setupHorizontalMargin(view: view, margin: 16)
 
         // MARK: The Order API
         sendOrderSample()

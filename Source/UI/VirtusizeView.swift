@@ -34,9 +34,54 @@ public protocol VirtusizeView {
 }
 
 extension VirtusizeView {
-    func clickOnVirtusizeView() {
+    internal func clickOnVirtusizeView() {
         if let virtusize = VirtusizeViewController(handler: messageHandler, processPool: Virtusize.processPool) {
             presentingViewController?.present(virtusize, animated: true, completion: nil)
         }
     }
+
+    /// Sets up the InPage text by the product info
+    ///
+    /// - Parameters:
+    ///   - product: `VirtusizeProduct`
+    ///   - onCompletion: The callback to pass `VirtusizeStoreProduct` and  `VirtusizeI18nLocalization` for setting up the InPage text
+    internal func setupInPageText(product: VirtusizeProduct, onCompletion: ((VirtusizeStoreProduct, VirtusizeI18nLocalization) -> Void)? = nil) {
+        if let productId = product.productCheckData?.productDataId {
+            Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
+                Virtusize.getI18nTexts(
+                    onSuccess: { i18nLocalization in
+                        onCompletion?(storeProduct, i18nLocalization)
+                }, onError: { error in
+                    print(error.debugDescription)
+                })
+            }, onError: { error in
+                print(error.debugDescription)
+            })
+        }
+    }
+
+    internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
+          view.addConstraint(
+              NSLayoutConstraint(
+                  item: self,
+                  attribute: .leading,
+                  relatedBy: .equal,
+                  toItem: view,
+                  attribute: .leading,
+                  multiplier: 1,
+                  constant: margin
+              )
+          )
+          view.addConstraint(
+              NSLayoutConstraint(
+                  item: view,
+                  attribute: .trailing,
+                  relatedBy: .equal,
+                  toItem: self,
+                  attribute: .trailing,
+                  multiplier: 1,
+                  constant: margin
+              )
+          )
+      }
 }

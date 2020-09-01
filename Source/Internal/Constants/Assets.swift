@@ -103,4 +103,8 @@ final internal class Assets {
     internal static let rightArrow: UIImage? = {
         return UIImage(bundleNamed: "right_arrow")
     }()
+
+    internal static let vsSignature: UIImage? = {
+           return UIImage(bundleNamed: "vs_signature")
+       }()
 }

@@ -60,28 +60,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
     }
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: self,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: view,
-                attribute: .leading,
-                multiplier: 1,
-                constant: margin
-            )
-        )
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: view,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: margin
-            )
-        )
+        setHorizontalMargins(view: view, margin: margin)
     }
 
     private func setup() {
@@ -97,7 +76,11 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         guard let product = Virtusize.product else {
             return
         }
-        self.setupInPageText(product: product, onCompletion: {
+
+        setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
+            self.inPageMiniMessageLabel.text = storeProduct.getRecommendationText(
+                i18nLocalization: i18nLocalization
+            )
             self.isHidden = false
         })
     }
@@ -158,7 +141,6 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         inPageMiniMessageLabel.textColor = UIColor.white
         inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
 
-        inPageMiniSizeCheckButton.isHidden = false
         inPageMiniSizeCheckButton.backgroundColor = UIColor.white
         inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
         inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
@@ -177,11 +159,8 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
             inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
             inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
         }
-        if displayLanguage == VirtusizeLanguage.JAPANESE || displayLanguage == VirtusizeLanguage.KOREAN {
-            inPageMiniSizeCheckButton.layer.cornerRadius = 10
-        } else {
-            inPageMiniSizeCheckButton.layer.cornerRadius = 12
-        }
+
+        inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2
 
         inPageMiniSizeCheckButton.setImage(
             Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate),
@@ -203,27 +182,5 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
     @objc private func openVirtusizeWebView() {
         clickOnVirtusizeView()
-    }
-
-    /// Sets up the InPage text by the product info
-    ///
-    /// - Parameters:
-    ///   - product: `VirtusizeProduct`
-    ///   - onCompletion: The callback for the completion of setting up the InPage text
-    private func setupInPageText(product: VirtusizeProduct, onCompletion: (() -> Void)? = nil) {
-        if let productId = product.productCheckData?.productDataId {
-            Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
-                Virtusize.getI18nTexts(
-                    onSuccess: { i18nLocalization in
-                        self.inPageMiniMessageLabel.text =
-                            storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
-                        onCompletion?()
-                }, onError: { error in
-                    print(error.debugDescription)
-                })
-            }, onError: { error in
-                print(error.debugDescription)
-            })
-        }
     }
 }
