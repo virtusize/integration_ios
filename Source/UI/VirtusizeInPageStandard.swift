@@ -171,6 +171,13 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
     }
 
     private func setStyle() {
+        inPageStandardView.backgroundColor = .white
+        inPageStandardView.layer.masksToBounds = false
+        inPageStandardView.layer.shadowColor = Assets.inPageShadowColor.cgColor
+        inPageStandardView.layer.shadowOpacity = 1
+        inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        inPageStandardView.layer.shadowRadius = 14
+
         virtusizeImageView.image = Assets.vsSignature
 
         privacyPolicyLink.text = "Privacy Policy"
