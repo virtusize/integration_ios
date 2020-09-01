@@ -126,8 +126,14 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
                    views: views
         )
 
-        privacyPolicyLink.trailingAnchor.constraint(equalTo: inPageStandardView.trailingAnchor, constant: 0).isActive = true
-        virtusizeImageView.centerYAnchor.constraint(equalTo: privacyPolicyLink.centerYAnchor, constant: 0).isActive = true
+        privacyPolicyLink.trailingAnchor.constraint(
+            equalTo: inPageStandardView.trailingAnchor,
+            constant: 0
+        ).isActive = true
+        virtusizeImageView.centerYAnchor.constraint(
+            equalTo: privacyPolicyLink.centerYAnchor,
+            constant: 0
+        ).isActive = true
 
         let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-8-[productImageView(==40)]-4-[messageStackView]-(>=8)-[checkSizeButton]-8-|",
@@ -188,9 +194,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         messageStackView.distribution = .equalSpacing
         messageStackView.spacing = 2
 
-        topMessageLabel.text = "Top text"
-
-        bottomMessageLabel.text = "Bottom text Bottom text"
+        topMessageLabel.numberOfLines = 0
         bottomMessageLabel.numberOfLines = 0
 
         checkSizeButton.backgroundColor = Assets.vsTealColor
@@ -209,6 +213,16 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
             return
         }
         setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
+            let recommendationText = storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
+            let breakTag = VirtusizeI18nLocalization.TrimType.MULTIPLELINES.rawValue
+            let recommendationTextArray = recommendationText.components(separatedBy: breakTag)
+            if recommendationTextArray.count == 2 {
+                self.topMessageLabel.text = recommendationTextArray[0]
+                self.bottomMessageLabel.text = recommendationTextArray[1]
+            } else {
+                self.topMessageLabel.isHidden = true
+                self.bottomMessageLabel.text = recommendationText
+            }
             self.isHidden = false
         })
     }

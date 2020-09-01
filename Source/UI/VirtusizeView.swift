@@ -44,11 +44,18 @@ extension VirtusizeView {
     ///
     /// - Parameters:
     ///   - product: `VirtusizeProduct`
-    ///   - onCompletion: The callback to pass `VirtusizeStoreProduct` and  `VirtusizeI18nLocalization` for setting up the InPage text
-    internal func setupInPageText(product: VirtusizeProduct, onCompletion: ((VirtusizeStoreProduct, VirtusizeI18nLocalization) -> Void)? = nil) {
+    ///   - onCompletion: The callback to pass `VirtusizeStoreProduct` and  `VirtusizeI18nLocalization`
+    ///   for setting up the InPage text
+    internal func setupInPageText(
+        product: VirtusizeProduct,
+        onCompletion: ((VirtusizeStoreProduct, VirtusizeI18nLocalization) -> Void)? = nil
+    ) {
         if let productId = product.productCheckData?.productDataId {
             Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
                 Virtusize.getI18nTexts(
+                    trimType: (self is VirtusizeInPageStandard) ?
+                        VirtusizeI18nLocalization.TrimType.MULTIPLELINES :
+                        VirtusizeI18nLocalization.TrimType.ONELINE,
                     onSuccess: { i18nLocalization in
                         onCompletion?(storeProduct, i18nLocalization)
                 }, onError: { error in
