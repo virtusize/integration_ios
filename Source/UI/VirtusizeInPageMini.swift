@@ -147,17 +147,17 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         let displayLanguage = Virtusize.params?.language
         switch displayLanguage {
         case .ENGLISH:
-            inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
+            inPageMiniMessageLabel.font = Font.proximaNova(size: 14)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: 12)
         case .JAPANESE:
-            inPageMiniMessageLabel.font = Font.notoSansCJKJPRegular(size: 12)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJPRegular(size: 10)
+            inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: 12)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: 10)
         case .KOREAN:
-            inPageMiniMessageLabel.font = Font.notoSansCJKKRRegular(size: 12)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKRRegular(size: 10)
+            inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: 12)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: 10)
         default:
-            inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
+            inPageMiniMessageLabel.font = Font.proximaNova(size: 14)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: 12)
         }
 
         inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2

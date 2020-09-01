@@ -121,14 +121,14 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         )
 
         let footerHorizontalConstraints = NSLayoutConstraint.constraints(
-                   withVisualFormat: "H:|-0-[inPageStandardView]|",
+                   withVisualFormat: "H:|-0-[virtusizeImageView(>=10)]-(>=0)-[privacyPolicyLink(>=15)]-0-|",
                    options: NSLayoutConstraint.FormatOptions(rawValue: 0),
                    metrics: nil,
                    views: views
         )
 
-        privacyPolicyLink.trailingAnchor.constraint(
-            equalTo: inPageStandardView.trailingAnchor,
+        privacyPolicyLink.centerYAnchor.constraint(
+            equalTo: virtusizeImageView.centerYAnchor,
             constant: 0
         ).isActive = true
         virtusizeImageView.centerYAnchor.constraint(
@@ -187,7 +187,8 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
 
         virtusizeImageView.image = Assets.vsSignature
 
-        privacyPolicyLink.text = "Privacy Policy"
+        privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
+        privacyPolicyLink.setContentHuggingPriority(.required, for: .vertical)
 
         productImageView.image = #imageLiteral(resourceName: "logo-vs-horizontal-color")
 
@@ -196,7 +197,9 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         messageStackView.spacing = 2
 
         topMessageLabel.numberOfLines = 0
+        topMessageLabel.textColor = Assets.gray900color
         bottomMessageLabel.numberOfLines = 0
+        bottomMessageLabel.textColor = Assets.gray900color
 
         if inPageStandardButtonBackgroundColor != nil {
             checkSizeButton.backgroundColor = inPageStandardButtonBackgroundColor
@@ -209,6 +212,33 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         checkSizeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
+        checkSizeButton.setImage(
+            Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate),
+            for: .normal
+        )
+        checkSizeButton.semanticContentAttribute = .forceRightToLeft
+        checkSizeButton.imageView?.tintColor = UIColor.white
+
+        let displayLanguage = Virtusize.params?.language
+        switch displayLanguage {
+        case .ENGLISH:
+            topMessageLabel.font = Font.proximaNova(size: 14)
+            bottomMessageLabel.font = Font.proximaNova(size: 18, weight: .bold)
+            checkSizeButton.titleLabel?.font = Font.proximaNova(size: 14)
+            privacyPolicyLink.font = Font.proximaNova(size: 12)
+        case .JAPANESE:
+            topMessageLabel.font = Font.notoSansCJKJP(size: 12)
+            bottomMessageLabel.font = Font.notoSansCJKJP(size: 16, weight: .bold)
+            checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
+            privacyPolicyLink.font = Font.notoSansCJKJP(size: 10)
+        case .KOREAN:
+            topMessageLabel.font = Font.notoSansCJKKR(size: 12)
+            bottomMessageLabel.font = Font.notoSansCJKKR(size: 16, weight: .bold)
+            checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: 12)
+            privacyPolicyLink.font = Font.notoSansCJKKR(size: 10)
+        default:
+            break
+        }
     }
 
     @objc private func openVirtusizeWebView() {
