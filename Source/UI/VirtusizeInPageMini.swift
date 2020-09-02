@@ -78,9 +78,9 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         }
 
         setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
-            self.inPageMiniMessageLabel.text = storeProduct.getRecommendationText(
-                i18nLocalization: i18nLocalization
-            )
+            self.inPageMiniMessageLabel.attributedText = NSAttributedString(string:
+                storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
+            ).lineSpacing(self.verticalMargin/2)
             self.isHidden = false
         })
     }
