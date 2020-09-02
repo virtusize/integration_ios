@@ -85,12 +85,6 @@ private enum Base64ImageString: String {
 final internal class Assets {
     private static let bundle = Bundle(for: Assets.self)
 
-    internal static let gray900color: UIColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
-    internal static let gray900PressedColor: UIColor = #colorLiteral(red: 0.1960784314, green: 0.1960784314, blue: 0.1960784314, alpha: 1)
-    internal static let vsTealColor: UIColor = #colorLiteral(red: 0.2431372549, green: 0.8235294118, blue: 0.7294117647, alpha: 1)
-    internal static let vsTealPressedColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1)
-    internal static let inPageShadowColor: UIColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-
     internal static let icon: UIImage? = {
         return Base64ImageString.icon.image
     }()
@@ -108,4 +102,13 @@ final internal class Assets {
     internal static let vsSignature: UIImage? = {
            return UIImage(bundleNamed: "vs_signature")
        }()
+
+    static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
+        var placeholderImage = UIImage(bundleNamed: "\(productType)")
+        if let style = style,
+            let productTypeWithStyleImage = UIImage(bundleNamed: "\(productType)_\(style)") {
+            placeholderImage = productTypeWithStyleImage
+        }
+        return placeholderImage
+    }
 }

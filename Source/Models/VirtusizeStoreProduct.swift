@@ -24,6 +24,7 @@
 
 /// This structure represents a store product from the Virtusize server
 internal class VirtusizeStoreProduct: Codable {
+    // swiftlint:disable identifier_name
     /// An integer to represent the internal product ID in the Virtusize server
     let id: Int
     /// The list of the `VirtusizeProductSize` that this product has
@@ -34,13 +35,16 @@ internal class VirtusizeStoreProduct: Codable {
     let productType: Int
     /// The product name
     let name: String
+    /// The Cloudinary public ID corresponding to this store product
+    let cloudinaryPublicId: String
     /// The ID of the store that this product belongs to
     let store: Int
     /// The additional data of type `VirtusizeStoreProductMeta`  represents the product
     let storeProductMeta: VirtusizeStoreProductMeta?
 
     private enum CodingKeys: String, CodingKey {
-        case id, sizes, externalId, productType, name, store, storeProductMeta
+        // swiftlint:disable identifier_name
+        case id, sizes, externalId, productType, name, cloudinaryPublicId, store, storeProductMeta
     }
 
     required init(from decoder: Decoder) throws {
@@ -50,6 +54,7 @@ internal class VirtusizeStoreProduct: Codable {
         externalId = try values.decode(String.self, forKey: .externalId)
         productType = try values.decode(Int.self, forKey: .productType)
         name = try values.decode(String.self, forKey: .name)
+        cloudinaryPublicId = try values.decode(String.self, forKey: .cloudinaryPublicId)
         store = try values.decode(Int.self, forKey: .store)
         storeProductMeta = try? values.decode(VirtusizeStoreProductMeta.self, forKey: .storeProductMeta)
     }

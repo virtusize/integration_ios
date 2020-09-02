@@ -70,6 +70,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
         addGestureRecognizer(gestureRecognizer)
+        inPageMiniSizeCheckButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
     }
 
     public func setupProductDataCheck() {
@@ -101,6 +102,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
             "messageAndButtonMargin": messageAndButtonMargin
         ]
 
+        // swiftlint:disable line_length
         let horizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-horizontalEdgeMargin-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-(horizontalEdgeMargin)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
@@ -128,13 +130,14 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         addConstraint(inPageMiniSizeCheckButton.centerYAnchor.constraint(equalTo: self.centerYAnchor))
     }
 
+    // swiftlint:disable function_body_length
     private func setStyle() {
         if inPageMiniBackgroundColor != nil {
             backgroundColor = inPageMiniBackgroundColor
         } else if style == .TEAL {
-            backgroundColor = Assets.vsTealColor
+            backgroundColor = Colors.vsTealColor
         } else {
-            backgroundColor = Assets.gray900color
+            backgroundColor = Colors.gray900Color
         }
 
         inPageMiniMessageLabel.numberOfLines = 0
@@ -162,20 +165,19 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
 
         inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2
 
-        inPageMiniSizeCheckButton.setImage(
-            Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate),
-            for: .normal
-        )
+        let rightArrowImageTemplate = Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .normal)
+        inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .highlighted)
         inPageMiniSizeCheckButton.semanticContentAttribute = .forceRightToLeft
         if inPageMiniBackgroundColor != nil {
             inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
             inPageMiniSizeCheckButton.imageView?.tintColor = inPageMiniBackgroundColor
         } else if style == .TEAL {
-            inPageMiniSizeCheckButton.setTitleColor(Assets.vsTealColor, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = Assets.vsTealColor
+            inPageMiniSizeCheckButton.setTitleColor(Colors.vsTealColor, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = Colors.vsTealColor
         } else {
-            inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = Assets.gray900color
+            inPageMiniSizeCheckButton.setTitleColor(Colors.gray900Color, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = Colors.gray900Color
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }

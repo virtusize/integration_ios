@@ -26,16 +26,19 @@
 internal class VirtusizeStoreProductAdditionalInfo: Codable {
     /// The general fit key
     let fit: String?
+    /// The store product style
+    let style: String?
     /// The brand sizing info
     let brandSizing: VirtusizeBrandSizing?
 
     private enum CodingKeys: String, CodingKey {
-        case fit, brandSizing
+        case fit, style, brandSizing
     }
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         fit = try? values.decode(String.self, forKey: .fit)
+        style = try? values.decode(String.self, forKey: .style)
         brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
     }
 

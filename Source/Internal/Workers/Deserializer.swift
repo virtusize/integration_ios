@@ -114,6 +114,7 @@ internal struct Deserializer {
         return VirtusizeEvent(name: eventName, data: event["data"])
     }
 
+    // swiftlint:disable function_body_length
     /// Gets `VirtusizeI18nLocalization` from the data response from the i18n request
     ///
     /// - Parameter data: The data for the localization texts
@@ -180,7 +181,7 @@ internal struct Deserializer {
 
         return i18nLocalization
     }
-    
+
     /// Trims the text from i18n
     private static func trimI18nText(_ trimType: String, _ text: String?) -> String {
         guard let text = text else {

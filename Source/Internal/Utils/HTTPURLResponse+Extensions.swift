@@ -24,7 +24,7 @@
 
 import Foundation
 
-extension HTTPURLResponse {
+internal extension HTTPURLResponse {
     func isSuccessful() -> Bool {
         return (200...299).contains(self.statusCode)
     }

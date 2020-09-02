@@ -1,5 +1,5 @@
 //
-//  UIImage+Extensions.swift
+//  Image+Extensions.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,12 +22,45 @@
 //  THE SOFTWARE.
 //
 
-extension UIImage {
+internal extension UIImage {
 
     /// Creates a `UIImage` object in the Virtusize framework bundle.
     ///
     /// - Parameter name: The image name.
     convenience init?(bundleNamed name: String) {
         self.init(named: name, in: Bundle(for: Virtusize.self), compatibleWith: nil)
+    }
+
+    func withPadding(inset: CGFloat) -> UIImage? {
+        return withInsets(insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
+    }
+
+    func withInsets(insets: UIEdgeInsets) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(
+            CGSize(width: self.size.width + insets.left + insets.right,
+                   height: self.size.height + insets.top + insets.bottom), false, self.scale)
+        let origin = CGPoint(x: insets.left, y: insets.top)
+        self.draw(at: origin)
+        guard let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext() else {
+            return nil
+        }
+        UIGraphicsEndImageContext()
+        return imageWithInsets
+    }
+}
+
+internal extension UIImageView {
+    func load(url: URL, success: ((UIImage) -> Void)? = nil, failure: (() -> Void)? = nil) {
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    success?(image)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    failure?()
+                }
+            }
+        }
     }
 }

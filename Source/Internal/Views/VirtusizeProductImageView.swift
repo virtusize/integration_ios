@@ -54,20 +54,65 @@ internal class VirtusizeProductImageView: UIView {
     private func setup() {
         addSubview(productImageView)
 
-        frame.size = CGSize(width: imageSize, height: imageSize)
+        frame = CGRect(x: 0, y: 0, width: imageSize, height: imageSize)
         layer.cornerRadius = imageSize / 2
         layer.borderWidth = 0.5
-        layer.borderColor = UIColor.black.cgColor
+        layer.borderColor = Colors.gray800Color.cgColor
 
         setStyle()
     }
 
     private func setStyle() {
         productImageView.center = center
-        productImageView.frame.size = CGSize(width: imageSize - 4, height: imageSize - 4)
+        productImageView.frame = CGRect(x: 2, y: 2, width: imageSize - 4, height: imageSize - 4)
         productImageView.layer.cornerRadius = (imageSize - 4) / 2
-        productImageView.backgroundColor = UIColor.gray
         productImageView.layer.masksToBounds = true
-        productImageView.contentMode = .scaleAspectFit
+        productImageView.contentMode = .scaleAspectFill
+    }
+
+    func setImage(storeProduct: VirtusizeStoreProduct, localImageUrl: URL?) {
+        if localImageUrl != nil {
+            loadImageUrl(url: localImageUrl!, storeProduct: storeProduct, failure: {
+                self.setImage(storeProduct: storeProduct, localImageUrl: nil)
+            })
+            return
+        }
+        if let remoteImageUrl = getCloudinaryImageUrl(storeProduct.cloudinaryPublicId) {
+            loadImageUrl(url: remoteImageUrl, storeProduct: storeProduct, failure: {
+                self.setProductTypeImage(
+                    productType: storeProduct.productType,
+                    style: storeProduct.storeProductMeta?.additionalInfo?.style
+                )
+            })
+        } else {
+            setProductTypeImage(
+                productType: storeProduct.productType,
+                style: storeProduct.storeProductMeta?.additionalInfo?.style
+            )
+        }
+    }
+
+    private func loadImageUrl(url: URL, storeProduct: VirtusizeStoreProduct, failure: (() -> Void)? = nil) {
+        productImageView.load(url: url, success: { image in
+            self.image = image.withPadding(inset: 4)
+        }, failure: {
+            failure?()
+        })
+    }
+
+    private func getCloudinaryImageUrl(_ cloudinaryPublicId: String) -> URL? {
+        return URL(string:
+            "https://res.cloudinary.com/virtusize/image/upload/t_product-large-retina-v1/\(cloudinaryPublicId).jpg"
+            ) ?? nil
+    }
+
+    private func setProductTypeImage(productType: Int, style: String?) {
+        print(productType)
+        self.productImageView.image = Assets.getProductPlaceholderImage(
+            productType: productType,
+            style: style
+        )?.withPadding(inset: 6)
+        self.productImageView.contentMode = .scaleAspectFit
+        self.productImageView.backgroundColor = Colors.gray200Color
     }
 }

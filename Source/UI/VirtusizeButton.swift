@@ -30,9 +30,9 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
     override public var isHighlighted: Bool {
         didSet {
             if style == .BLACK {
-                backgroundColor = isHighlighted ? Assets.gray900PressedColor : Assets.gray900color
+                backgroundColor = isHighlighted ? Colors.gray900PressedColor : Colors.gray900Color
             } else if style == .TEAL {
-                backgroundColor = isHighlighted ? Assets.vsTealPressedColor : Assets.vsTealColor
+                backgroundColor = isHighlighted ? Colors.vsTealPressedColor : Colors.vsTealColor
             }
         }
     }
@@ -70,15 +70,15 @@ public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
     private func setStyle() {
         if style == .NONE {
             setTitle(Localization.shared.localize("check_size"), for: .normal)
-            setTitleColor(Assets.gray900color, for: .normal)
-            setTitleColor(Assets.gray900PressedColor, for: .highlighted)
+            setTitleColor(Colors.gray900Color, for: .normal)
+            setTitleColor(Colors.gray900PressedColor, for: .highlighted)
             return
         }
 
         if style == .BLACK {
-            backgroundColor = Assets.gray900color
+            backgroundColor = Colors.gray900Color
         } else if style == .TEAL {
-            backgroundColor = Assets.vsTealColor
+            backgroundColor = Colors.vsTealColor
         }
 
         setTitle(Localization.shared.localize("check_size"), for: .normal)

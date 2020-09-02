@@ -48,6 +48,8 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
     private let virtusizeImageView: UIImageView = UIImageView()
     private let privacyPolicyLink: UILabel = UILabel()
 
+    private var messageLineSpacing: CGFloat = 6
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         isHidden = true
@@ -71,7 +73,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
         inPageStandardView.addGestureRecognizer(gestureRecognizer)
-        checkSizeButton.addGestureRecognizer(gestureRecognizer)
+        checkSizeButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
     }
 
     private func addSubviews() {
@@ -85,6 +87,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         inPageStandardView.addSubview(checkSizeButton)
     }
 
+    // swiftlint:disable function_body_length
     private func setConstraints() {
         inPageStandardView.translatesAutoresizingMaskIntoConstraints = false
         virtusizeImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -177,10 +180,11 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         addConstraint(checkSizeButton.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
     }
 
+    // swiftlint:disable function_body_length
     private func setStyle() {
         inPageStandardView.backgroundColor = .white
         inPageStandardView.layer.masksToBounds = false
-        inPageStandardView.layer.shadowColor = Assets.inPageShadowColor.cgColor
+        inPageStandardView.layer.shadowColor = Colors.inPageShadowColor.cgColor
         inPageStandardView.layer.shadowOpacity = 1
         inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 4)
         inPageStandardView.layer.shadowRadius = 14
@@ -188,34 +192,33 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         virtusizeImageView.image = Assets.vsSignature
 
         privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
+        privacyPolicyLink.textColor = Colors.gray900Color
         privacyPolicyLink.setContentHuggingPriority(.required, for: .vertical)
-
-        productImageView.image = #imageLiteral(resourceName: "logo-vs-horizontal-color")
 
         messageStackView.axis = .vertical
         messageStackView.distribution = .equalSpacing
-        messageStackView.spacing = 2
 
         topMessageLabel.numberOfLines = 0
-        topMessageLabel.textColor = Assets.gray900color
+        topMessageLabel.textColor = Colors.gray900Color
         bottomMessageLabel.numberOfLines = 0
-        bottomMessageLabel.textColor = Assets.gray900color
+        bottomMessageLabel.textColor = Colors.gray900Color
 
         if inPageStandardButtonBackgroundColor != nil {
             checkSizeButton.backgroundColor = inPageStandardButtonBackgroundColor
         } else if style == .TEAL {
-            checkSizeButton.backgroundColor = Assets.vsTealColor
+            checkSizeButton.backgroundColor = Colors.vsTealColor
         } else {
-            checkSizeButton.backgroundColor = Assets.gray900color
+            checkSizeButton.backgroundColor = Colors.gray900Color
         }
-        checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
+        checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 7, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         checkSizeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
-        checkSizeButton.setImage(
-            Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate),
-            for: .normal
-        )
+
+        let rightArrowImageTemplate = Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        checkSizeButton.setImage(rightArrowImageTemplate, for: .normal)
+        checkSizeButton.setImage(rightArrowImageTemplate, for: .highlighted)
+
         checkSizeButton.semanticContentAttribute = .forceRightToLeft
         checkSizeButton.imageView?.tintColor = UIColor.white
 
@@ -226,19 +229,23 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
             bottomMessageLabel.font = Font.proximaNova(size: 18, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.proximaNova(size: 14)
             privacyPolicyLink.font = Font.proximaNova(size: 12)
+            messageLineSpacing = 2
         case .JAPANESE:
             topMessageLabel.font = Font.notoSansCJKJP(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKJP(size: 16, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKJP(size: 10)
+            messageLineSpacing = 6
         case .KOREAN:
             topMessageLabel.font = Font.notoSansCJKKR(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKKR(size: 16, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKKR(size: 10)
+            messageLineSpacing = 6
         default:
             break
         }
+        messageStackView.spacing = messageLineSpacing
     }
 
     @objc private func openVirtusizeWebView() {
@@ -250,15 +257,22 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
             return
         }
         setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
+            self.productImageView.setImage(storeProduct: storeProduct, localImageUrl: Virtusize.product?.imageURL)
             let recommendationText = storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
             let breakTag = VirtusizeI18nLocalization.TrimType.MULTIPLELINES.rawValue
             let recommendationTextArray = recommendationText.components(separatedBy: breakTag)
             if recommendationTextArray.count == 2 {
-                self.topMessageLabel.text = recommendationTextArray[0]
-                self.bottomMessageLabel.text = recommendationTextArray[1]
+                self.topMessageLabel.attributedText = NSAttributedString(
+                    string: recommendationTextArray[0]
+                ).lineSpacing(self.messageLineSpacing)
+                self.bottomMessageLabel.attributedText = NSAttributedString(
+                    string: recommendationTextArray[1]
+                ).lineSpacing(self.messageLineSpacing)
             } else {
                 self.topMessageLabel.isHidden = true
-                self.bottomMessageLabel.text = recommendationText
+                self.bottomMessageLabel.attributedText = NSAttributedString(
+                    string: recommendationText
+                ).lineSpacing(self.messageLineSpacing)
             }
             self.isHidden = false
         })
