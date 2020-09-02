@@ -68,8 +68,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         setConstraints()
         setStyle()
 
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
-        addGestureRecognizer(gestureRecognizer)
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView)))
         inPageMiniSizeCheckButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
     }
 

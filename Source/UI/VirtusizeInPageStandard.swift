@@ -71,9 +71,16 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         setConstraints()
         setStyle()
 
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
-        inPageStandardView.addGestureRecognizer(gestureRecognizer)
+        inPageStandardView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
+        )
+
         checkSizeButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
+
+        privacyPolicyLink.isUserInteractionEnabled = true
+        privacyPolicyLink.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(openPrivacyPolicyLink))
+        )
     }
 
     private func addSubviews() {
@@ -250,6 +257,13 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
 
     @objc private func openVirtusizeWebView() {
         clickOnVirtusizeView()
+    }
+
+    @objc private func openPrivacyPolicyLink() {
+        if let sharedApplication = UIApplication.safeShared,
+            let url = URL(string: Localization.shared.localize("privacy_policy_link")) {
+            sharedApplication.safeOpenURL(url)
+        }
     }
 
     public func setupProductDataCheck() {
