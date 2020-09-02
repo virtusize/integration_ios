@@ -1,7 +1,7 @@
 //
 //  Localization.swift
 //
-//  Copyright (c) 2020 Virtusize KKs
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ class Localization {
     /// - Returns: A localized string based on the device's default language
     func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
         let path = Bundle(for: Localization.self).path(
-            forResource: language?.rawValue ?? Locale.current.languageCode,
+            forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
             ofType: "lproj") ?? Bundle(for: Localization.self).path(
                 forResource: VirtusizeLanguage.ENGLISH.rawValue,
                 ofType: "lproj"

@@ -22,105 +22,21 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
+import WebKit
 
-/// This class is the custom Virtusize View that is added in the client's layout file.
-public class VirtusizeView: UIButton, CAAnimationDelegate {
+/// TODO: Comment
+public protocol VirtusizeView {
+    var style: VirtusizeViewStyle { get }
+    var presentingViewController: UIViewController? { get set }
+    var messageHandler: VirtusizeMessageHandler? { get set }
 
-    /// the `VirtusizeViewType` to determine the UI of this VirtusizeView
-    var virtusizeViewType = VirtusizeViewType.BUTTON
+    func setupProductDataCheck()
+}
 
-    @IBInspectable private var viewType: String {
-        set {
-            self.virtusizeViewType = VirtusizeViewType(rawValue: newValue) ?? VirtusizeViewType.BUTTON
-            setup()
-        }
-        get {
-            return virtusizeViewType.rawValue
-        }
-    }
-
-    /// `VirtusizeProduct` that is being set to this view
-    public var storeProduct: VirtusizeProduct? {
-        set {
-            guard let product = newValue else {
-                isHidden = true
-                return
-            }
-            Virtusize.productCheck(product: product) { [weak self] product in
-                guard let product = product else {
-                    self?.isHidden = true
-                    return
-                }
-                Virtusize.product = product
-                if self?.virtusizeViewType == VirtusizeViewType.INPAGE {
-                    self?.setupInPageText(product: product, onCompletion: {
-                        self?.isHidden = false
-                    })
-                } else {
-                    self?.isHidden = false
-                }
-            }
-        }
-        get {
-            return Virtusize.product
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-
-    init(virtusizeViewType: VirtusizeViewType) {
-        super.init(frame: .zero)
-        self.virtusizeViewType = virtusizeViewType
-    }
-
-    private func setup() {
-        if self.virtusizeViewType == VirtusizeViewType.INPAGE {
-            setTitle("", for: .normal)
-        }
-    }
-
-    /// Applies the default style of `VirtusizeView`
-    public func applyDefaultButtonStyle() {
-        guard self.virtusizeViewType == VirtusizeViewType.BUTTON else {
-            return
-        }
-        tintColor = .black
-
-        setTitle(Localization.shared.localize("check_size"), for: .normal)
-
-        backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
-        tintColor = .white
-        layer.cornerRadius = 20
-
-        contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
-        self.setImage(Assets.icon, for: .normal)
-    }
-
-    /// Sets up the InPage text by the product info
-    /// 
-    /// - Parameters:
-    ///   - product: `VirtusizeProduct`
-    ///   - onCompletion: The callback for the completion of setting up the InPage text
-    private func setupInPageText(product: VirtusizeProduct, onCompletion: (() -> Void)? = nil) {
-        if let productId = product.productCheckData?.productDataId {
-            Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
-                Virtusize.getI18nTexts(
-                    onSuccess: { i18nLocalization in
-                        self.setTitle(
-                            storeProduct.getRecommendationText(i18nLocalization: i18nLocalization),
-                            for: .normal
-                        )
-                        onCompletion?()
-                }, onError: { error in
-                    print(error.debugDescription)
-                })
-            }, onError: { error in
-                print(error.debugDescription)
-            })
+extension VirtusizeView {
+    func clickOnVirtusizeView() {
+        if let virtusize = VirtusizeViewController(handler: messageHandler, processPool: Virtusize.processPool) {
+            presentingViewController?.present(virtusize, animated: true, completion: nil)
         }
     }
 }

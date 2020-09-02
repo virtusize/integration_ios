@@ -42,7 +42,7 @@ internal struct Deserializer {
                 NotificationCenter.default.post(name: Virtusize.productDataCheckDidFail,
                                                 object: Virtusize.self,
                                                 userInfo: ["message": "serialization failed"])
-            return nil
+                return nil
         }
 
         // Send the API event where the user saw the product
@@ -51,7 +51,7 @@ internal struct Deserializer {
         var productCheckData: VirtusizeProductCheckData?
 
         if let data = try? JSONSerialization.data(withJSONObject: dataObject, options: .prettyPrinted) {
-           productCheckData = try? JSONDecoder().decode(VirtusizeProductCheckData.self, from: data)
+            productCheckData = try? JSONDecoder().decode(VirtusizeProductCheckData.self, from: data)
         }
 
         guard let isValid = productCheckData?.validProduct, isValid else {

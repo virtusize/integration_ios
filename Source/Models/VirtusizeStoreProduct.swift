@@ -63,7 +63,7 @@ internal class VirtusizeStoreProduct: Codable {
         } else if let brandSizing = storeProductMeta?.additionalInfo?.brandSizing {
             text = i18nLocalization.getSizingText(brandSizing: brandSizing) ??
                 Localization.shared.localize(
-                "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
+                    "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
             )
         } else if let generalFitKey = storeProductMeta?.additionalInfo?.getGeneralFitKey() {
             text = i18nLocalization.getFitText(generalFitKey: generalFitKey) ??

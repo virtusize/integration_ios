@@ -34,7 +34,7 @@ internal class VirtusizeProductCheckData: Codable {
     let productTypeId: Int
 
     private enum CodingKeys: String, CodingKey {
-           case validProduct, fetchMetaData, userData, productDataId, productTypeName, storeName, storeId, productTypeId
+        case validProduct, fetchMetaData, userData, productDataId, productTypeName, storeName, storeId, productTypeId
     }
 
     required init(from decoder: Decoder) throws {
