@@ -220,7 +220,6 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 7, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         checkSizeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-        checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
 
         let rightArrowImageTemplate = Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         checkSizeButton.setImage(rightArrowImageTemplate, for: .normal)
@@ -252,6 +251,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         default:
             break
         }
+        checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
         messageStackView.spacing = messageLineSpacing
     }
 
