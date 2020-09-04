@@ -70,21 +70,27 @@ internal class VirtusizeProductImageView: UIView {
         productImageView.contentMode = .scaleAspectFill
     }
 
-    func setImage(storeProduct: VirtusizeStoreProduct, localImageUrl: URL?) {
+    func setImage(storeProduct: VirtusizeStoreProduct, localImageUrl: URL?, completion: (() -> Void)? = nil) {
         if localImageUrl != nil {
-            loadImageUrl(url: localImageUrl!, storeProduct: storeProduct, failure: {
-                self.setImage(storeProduct: storeProduct, localImageUrl: nil)
+            loadImageUrl(url: localImageUrl!, storeProduct: storeProduct, success: {
+                completion?()
+            }, failure: {
+                self.setImage(storeProduct: storeProduct, localImageUrl: nil, completion: completion)
             })
             return
         }
         if let remoteImageUrl = getCloudinaryImageUrl(storeProduct.cloudinaryPublicId) {
-            loadImageUrl(url: remoteImageUrl, storeProduct: storeProduct, failure: {
+            loadImageUrl(url: remoteImageUrl, storeProduct: storeProduct, success: {
+                completion?()
+            }, failure: {
                 self.setProductTypeImage(
                     productType: storeProduct.productType,
                     style: storeProduct.storeProductMeta?.additionalInfo?.style
                 )
+                completion?()
             })
         } else {
+            completion?()
             setProductTypeImage(
                 productType: storeProduct.productType,
                 style: storeProduct.storeProductMeta?.additionalInfo?.style
@@ -92,9 +98,15 @@ internal class VirtusizeProductImageView: UIView {
         }
     }
 
-    private func loadImageUrl(url: URL, storeProduct: VirtusizeStoreProduct, failure: (() -> Void)? = nil) {
+    private func loadImageUrl(
+        url: URL,
+        storeProduct: VirtusizeStoreProduct,
+        success: (() -> Void)? = nil,
+        failure: (() -> Void)? = nil
+    ) {
         productImageView.load(url: url, success: { image in
             self.image = image.withPadding(inset: 4)
+            success?()
         }, failure: {
             failure?()
         })
@@ -114,5 +126,17 @@ internal class VirtusizeProductImageView: UIView {
         )?.withPadding(inset: 6)
         self.productImageView.contentMode = .scaleAspectFit
         self.productImageView.backgroundColor = Colors.gray200Color
+    }
+
+    internal func showCircleBorder() {
+        layer.cornerRadius = imageSize / 2
+        layer.borderWidth = 0.5
+        productImageView.layer.cornerRadius = (imageSize - 4) / 2
+    }
+
+    internal func hideCircleBorder() {
+        layer.cornerRadius = 0
+        layer.borderWidth = 0
+        productImageView.layer.cornerRadius = 0
     }
 }

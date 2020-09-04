@@ -23,22 +23,13 @@
 //
 
 /// TODO: Comment
-public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
-
-    public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
-        didSet {
-            setup()
-        }
-    }
+public class VirtusizeInPageMini: VirtusizeInPageView {
 
     public var inPageMiniBackgroundColor: UIColor? {
         didSet {
             setStyle()
         }
     }
-
-    public var presentingViewController: UIViewController?
-    public var messageHandler: VirtusizeMessageHandler?
 
     private let horizontalEdgeMargin: CGFloat = 8
     private let messageAndButtonMargin: CGFloat = 8
@@ -47,23 +38,11 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
     private let inPageMiniMessageLabel: UILabel = UILabel()
     private let inPageMiniSizeCheckButton: UIButton = UIButton()
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        isHidden = true
-        setup()
-    }
-
-    public init() {
-        super.init(frame: .zero)
-        isHidden = true
-        setup()
-    }
-
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
     }
 
-    private func setup() {
+    internal override func setup() {
         addSubviews()
         setConstraints()
         setStyle()
@@ -72,7 +51,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         inPageMiniSizeCheckButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
     }
 
-    public func setupProductDataCheck() {
+    public override func setupProductDataCheck() {
         guard let product = Virtusize.product else {
             return
         }
@@ -179,9 +158,5 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
             inPageMiniSizeCheckButton.imageView?.tintColor = Colors.gray900Color
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-    }
-
-    @objc private func openVirtusizeWebView() {
-        clickOnVirtusizeView()
     }
 }

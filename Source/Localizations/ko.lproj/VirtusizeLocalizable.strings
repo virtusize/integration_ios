@@ -12,3 +12,4 @@
 "inpage_fit_loose_text" = "This item has a loose fit.";
 "inpage_fit_regular_text" = "This item has a regular fit.";
 "inpage_fit_tight_text" = "This item has a tight fit.";
+"inpage_standard_loading_text" = "사이즈 분석 중";

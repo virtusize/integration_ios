@@ -66,29 +66,4 @@ extension VirtusizeView {
             })
         }
     }
-
-    internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
-          view.addConstraint(
-              NSLayoutConstraint(
-                  item: self,
-                  attribute: .leading,
-                  relatedBy: .equal,
-                  toItem: view,
-                  attribute: .leading,
-                  multiplier: 1,
-                  constant: margin
-              )
-          )
-          view.addConstraint(
-              NSLayoutConstraint(
-                  item: view,
-                  attribute: .trailing,
-                  relatedBy: .equal,
-                  toItem: self,
-                  attribute: .trailing,
-                  multiplier: 1,
-                  constant: margin
-              )
-          )
-      }
 }
