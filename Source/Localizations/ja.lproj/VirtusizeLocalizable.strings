@@ -13,3 +13,4 @@
 "inpage_fit_regular_text" = "この商品はレギュラーフィットです。";
 "inpage_fit_tight_text" = "この商品はタイトフィットです。";
 "inpage_standard_loading_text" = "サイズを分析中";
+"inpage_mini_loading_text" = "読み込み中";

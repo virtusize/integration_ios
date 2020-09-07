@@ -119,7 +119,6 @@ internal class VirtusizeProductImageView: UIView {
     }
 
     private func setProductTypeImage(productType: Int, style: String?) {
-        print(productType)
         self.productImageView.image = Assets.getProductPlaceholderImage(
             productType: productType,
             style: style

@@ -13,3 +13,4 @@
 "inpage_fit_regular_text" = "This item has a regular fit.";
 "inpage_fit_tight_text" = "This item has a tight fit.";
 "inpage_standard_loading_text" = "Analyzing the size";
+"inpage_mini_loading_text" = "Loading";

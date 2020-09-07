@@ -78,7 +78,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         clickOnVirtusizeView()
     }
 
-    func startLoadingAnimation(label: UILabel, text: String) {
+    internal func startLoadingAnimation(label: UILabel, text: String) {
         var tempDots = 0
         label.text = text
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
@@ -92,7 +92,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         }
     }
 
-    func stopLoadingAnimation() {
+    internal func stopLoadingAnimation() {
         timer?.invalidate()
     }
 }
