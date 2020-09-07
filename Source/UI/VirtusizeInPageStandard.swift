@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+// swiftlint:disable type_body_length
 public class VirtusizeInPageStandard: VirtusizeInPageView {
 
     public var inPageStandardButtonBackgroundColor: UIColor? {
@@ -55,7 +56,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         inPageStandardView.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
         )
-
+        
         checkSizeButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
 
         privacyPolicyLink.isUserInteractionEnabled = true
@@ -336,6 +337,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
     private func showErrorScreen() {
         inPageStandardView.layer.shadowOpacity = 0
+        inPageStandardView.isUserInteractionEnabled = false
         productImageView.isHidden = true
         bottomMessageLabel.isHidden = true
         checkSizeButton.isHidden = true
