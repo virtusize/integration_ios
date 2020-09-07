@@ -38,6 +38,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     private let checkSizeButton: UIButton = UIButton()
     private let vsSignatureImageView: UIImageView = UIImageView()
     private let privacyPolicyLink: UILabel = UILabel()
+    private let errorImageView: UIImageView = UIImageView()
+    private let errorText: UILabel = UILabel()
 
     private var messageLineSpacing: CGFloat = 6
 
@@ -71,6 +73,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         messageStackView.addArrangedSubview(topMessageLabel)
         messageStackView.addArrangedSubview(bottomMessageLabel)
         inPageStandardView.addSubview(checkSizeButton)
+        inPageStandardView.addSubview(errorImageView)
+        inPageStandardView.addSubview(errorText)
     }
 
     // swiftlint:disable function_body_length
@@ -83,6 +87,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         checkSizeButton.translatesAutoresizingMaskIntoConstraints = false
+        errorImageView.translatesAutoresizingMaskIntoConstraints = false
+        errorText.translatesAutoresizingMaskIntoConstraints = false
 
         let views = [
             "inPageStandardView": inPageStandardView,
@@ -92,7 +98,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             "messageStackView": messageStackView,
             "topMessageLabel": topMessageLabel,
             "bottomMessageLabel": bottomMessageLabel,
-            "checkSizeButton": checkSizeButton
+            "checkSizeButton": checkSizeButton,
+            "errorImageView": errorImageView,
+            "errorText": errorText
         ]
 
         let inPageStandardViewHorizontalConstraints = NSLayoutConstraint.constraints(
@@ -114,6 +122,27 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
                    options: NSLayoutConstraint.FormatOptions(rawValue: 0),
                    metrics: nil,
                    views: views
+        )
+
+        let errorScreenVerticalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-8-[errorImageView(40)]-8-[errorText]-8-|",
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+            metrics: nil,
+            views: views
+        )
+
+        let errorImageViewHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(>=8)-[errorImageView(40)]-(>=8)-|",
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+            metrics: nil,
+            views: views
+        )
+
+        let errorTextHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(>=8)-[errorText]-(>=8)-|",
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+            metrics: nil,
+            views: views
         )
 
         privacyPolicyLink.centerYAnchor.constraint(
@@ -160,10 +189,15 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         addConstraints(productImageViewVerticalConstraints)
         addConstraints(messageStackViewVerticalConstraints)
         addConstraints(checkSizeButtonVerticalConstraints)
+        addConstraints(errorScreenVerticalConstraints)
+        addConstraints(errorImageViewHorizontalConstraints)
+        addConstraints(errorTextHorizontalConstraints)
 
         addConstraint(productImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
         addConstraint(messageStackView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
         addConstraint(checkSizeButton.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+        addConstraint(errorImageView.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
+        addConstraint(errorText.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
     }
 
     // swiftlint:disable function_body_length
@@ -207,6 +241,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         checkSizeButton.semanticContentAttribute = .forceRightToLeft
         checkSizeButton.imageView?.tintColor = UIColor.white
 
+        errorImageView.image = Assets.errorHanger
+        errorImageView.contentMode = .scaleAspectFit
+        errorImageView.isHidden = true
+
+        errorText.numberOfLines = 0
+        errorText.textColor = Colors.gray700Color
+        errorText.isHidden = true
+
         let displayLanguage = Virtusize.params?.language
         switch displayLanguage {
         case .ENGLISH:
@@ -214,18 +256,21 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             bottomMessageLabel.font = Font.proximaNova(size: 18, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.proximaNova(size: 14)
             privacyPolicyLink.font = Font.proximaNova(size: 12)
+            errorText.font = Font.proximaNova(size: 12)
             messageLineSpacing = 2
         case .JAPANESE:
             topMessageLabel.font = Font.notoSansCJKJP(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKJP(size: 16, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKJP(size: 10)
+            errorText.font = Font.notoSansCJKJP(size: 10)
             messageLineSpacing = 6
         case .KOREAN:
             topMessageLabel.font = Font.notoSansCJKKR(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKKR(size: 16, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKKR(size: 10)
+            errorText.font = Font.notoSansCJKKR(size: 10)
             messageLineSpacing = 6
         default:
             break
@@ -267,6 +312,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
                     ).lineSpacing(self.messageLineSpacing)
                 }
             }
+        }, failure: {
+           self.showErrorScreen()
         })
     }
 
@@ -285,5 +332,18 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             productImageView.showCircleBorder()
             stopLoadingAnimation()
         }
+    }
+
+    private func showErrorScreen() {
+        inPageStandardView.layer.shadowOpacity = 0
+        productImageView.isHidden = true
+        bottomMessageLabel.isHidden = true
+        checkSizeButton.isHidden = true
+        errorImageView.isHidden = false
+        errorText.isHidden = false
+        errorText.attributedText = NSAttributedString(
+            string: Localization.shared.localize("inpage_error_long_text")
+        ).lineSpacing(self.messageLineSpacing)
+        errorText.textAlignment = .center
     }
 }

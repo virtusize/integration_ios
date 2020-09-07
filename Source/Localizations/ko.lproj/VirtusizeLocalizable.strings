@@ -14,3 +14,4 @@
 "inpage_fit_tight_text" = "This item has a tight fit.";
 "inpage_standard_loading_text" = "사이즈 분석 중";
 "inpage_mini_loading_text" = "로딩 중";
+"inpage_error_long_text" = "현재 버츄사이즈 서비스를 이용할 수 없습니다.\n 즐거운 쇼핑되세요.";

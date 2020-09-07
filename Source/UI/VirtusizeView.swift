@@ -48,7 +48,8 @@ extension VirtusizeView {
     ///   for setting up the InPage text
     internal func setupInPageText(
         product: VirtusizeProduct,
-        onCompletion: ((VirtusizeStoreProduct, VirtusizeI18nLocalization) -> Void)? = nil
+        onCompletion: ((VirtusizeStoreProduct, VirtusizeI18nLocalization) -> Void)? = nil,
+        failure: (() -> Void)? = nil
     ) {
         if let productId = product.productCheckData?.productDataId {
             Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
@@ -60,9 +61,11 @@ extension VirtusizeView {
                         onCompletion?(storeProduct, i18nLocalization)
                 }, onError: { error in
                     print(error.debugDescription)
+                    failure?()
                 })
             }, onError: { error in
                 print(error.debugDescription)
+                failure?()
             })
         }
     }
