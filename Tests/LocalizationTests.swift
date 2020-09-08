@@ -28,22 +28,25 @@ import XCTest
 class LocalizationTests: XCTestCase {
 
     func testLocalization_ExistingLocalizableStrings() {
-        XCTAssertEqual(Localization.shared.localize("inpage_default_accessory_text"), "See how everyday items fit")
+        XCTAssertEqual(
+            Localization.shared.localize("inpage_default_accessory_text", language: .ENGLISH),
+            "See how everyday items fit"
+        )
         XCTAssertEqual(
             Localization.shared.localize("inpage_sizing_itemBrand_large_text", language: .ENGLISH),
-            "This item sizes larger than the brand\'s average."
+            "This item sizes %{boldStart}larger than the brand's average.%{boldEnd}"
         )
         XCTAssertEqual(
             Localization.shared.localize("inpage_sizing_mostBrands_true_text", language: .JAPANESE),
-            "この商品は平均的なサイズ感です。"
+            "この商品は%{boldStart}平均的なサイズ感です。%{boldEnd}"
         )
         XCTAssertEqual(
             Localization.shared.localize("inpage_sizing_mostBrands_small_text", language: .KOREAN),
-            "이 브랜드의 사이즈는 평균보다 작습니다."
+            "이 브랜드의 사이즈는 %{boldStart}평균보다 작습니다.%{boldEnd}"
         )
         XCTAssertEqual(
             Localization.shared.localize("inpage_fit_tight_text", language: .KOREAN),
-            "This item has a tight fit."
+            "이 상품은 %{boldStart}꽉 조이는 핏입니다.%{boldEnd}"
         )
     }
 

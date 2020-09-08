@@ -81,7 +81,7 @@ private enum Base64ImageString: String {
     }
 }
 
-/// This class wraps the assets including colors and images used in the Virtusize SDK
+/// This class wraps the image assets used in the Virtusize SDK
 final internal class Assets {
     private static let bundle = Bundle(for: Assets.self)
 
@@ -107,6 +107,12 @@ final internal class Assets {
         return UIImage(bundleNamed: "error_hanger")
     }()
 
+    /// Gets the product placeholder image by the product type and style
+    ///
+    /// - Parameters:
+    ///   - productType: The product type, which is fetched from the store product info
+    ///   - style: The product style, which is fetched from the store product info
+    /// - Returns: The  product type placeholder`UIImage`
     static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
         var placeholderImage = UIImage(bundleNamed: "\(productType)")
         if let style = style,

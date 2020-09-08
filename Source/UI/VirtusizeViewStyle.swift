@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-/// TODO: Comment
+/// This enum contains all the styles that can be applied to the Virtusize view
 public enum VirtusizeViewStyle: String {
     case NONE = "None"
     case BLACK = "Black"

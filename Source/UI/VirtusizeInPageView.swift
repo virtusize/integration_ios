@@ -23,6 +23,7 @@
 //
 public class VirtusizeInPageView: UIView, VirtusizeView {
 
+    /// The property to set the Virtusize view style that this SDK provides
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
         didSet {
             setup()
@@ -32,6 +33,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
     public func setupProductDataCheck() {}
+
+    internal let defaultMargin: CGFloat = 8
 
     internal var timer: Timer?
 
@@ -74,8 +77,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         )
     }
 
-    @objc internal func openVirtusizeWebView() {
-        clickOnVirtusizeView()
+    @objc internal func clickInPageViewAction() {
+        openVirtusizeWebView()
     }
 
     internal func startLoadingAnimation(label: UILabel, text: String) {

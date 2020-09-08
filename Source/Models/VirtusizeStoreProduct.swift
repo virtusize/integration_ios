@@ -35,7 +35,7 @@ internal class VirtusizeStoreProduct: Codable {
     let productType: Int
     /// The product name
     let name: String
-    /// The Cloudinary public ID corresponding to this store product
+    /// The Cloudinary public ID for getting the store product image URL corresponding to this store product
     let cloudinaryPublicId: String
     /// The ID of the store that this product belongs to
     let store: Int
@@ -60,19 +60,23 @@ internal class VirtusizeStoreProduct: Codable {
     }
 
     /// Gets the InPage recommendation text based on the product info
-    func getRecommendationText(i18nLocalization: VirtusizeI18nLocalization) -> String {
-        var text = i18nLocalization.defaultText ?? Localization.shared.localize("inpage_default_text")
+    func getRecommendationText(
+        i18nLocalization: VirtusizeI18nLocalization,
+        trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
+    ) -> String {
+        var text = i18nLocalization.defaultText?.trimI18nText(trimType) ??
+            Localization.shared.localize("inpage_default_text").trimI18nText(trimType)
         if isAccessory() {
-            text = i18nLocalization.defaultAccessoryText ??
-                Localization.shared.localize("inpage_default_accessory_text")
+            text = i18nLocalization.defaultAccessoryText?.trimI18nText(trimType) ??
+                Localization.shared.localize("inpage_default_accessory_text").trimI18nText(trimType)
         } else if let brandSizing = storeProductMeta?.additionalInfo?.brandSizing {
-            text = i18nLocalization.getSizingText(brandSizing: brandSizing) ??
+            text = i18nLocalization.getSizingText(brandSizing: brandSizing)?.trimI18nText(trimType) ??
                 Localization.shared.localize(
                     "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
-            )
+            ).trimI18nText(trimType)
         } else if let generalFitKey = storeProductMeta?.additionalInfo?.getGeneralFitKey() {
-            text = i18nLocalization.getFitText(generalFitKey: generalFitKey) ??
-                Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
+            text = i18nLocalization.getFitText(generalFitKey: generalFitKey)?.trimI18nText(trimType) ??
+                Localization.shared.localize("inpage_fit_\(generalFitKey)_text").trimI18nText(trimType)
         }
         return text
     }

@@ -22,14 +22,16 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
+/// This class to used to get UIFonts from font files
 class Font {
+
+    /// This enum contains all available font weights used in this SDK
     internal enum FontWeight: String {
         case regular = "-Regular"
         case bold = "-Bold"
     }
 
+    /// This enum contains all available font names used in this SDK
     private enum FontName: String {
         case proximaNova = "ProximaNova"
         case notoSansCJKJP = "NotoSansCJKJP"
@@ -56,17 +58,20 @@ class Font {
             return existedFont
         }
 
-        if register(fontFileName: fontFileName, type: type, bundle: Bundle(for: self)) {
+        if register(fontFileName: fontFileName, type: type) {
             font = UIFont(name: fontFileName, size: size)
         }
 
         return font ?? UIFont.systemFont(ofSize: size)
     }
 
-    private static func register(fontFileName: String, type: String, bundle: Bundle?) -> Bool {
+    /// Registers a specified graphics font
+    /// - Parameters:
+    ///   - fontFileName: The font file name
+    ///   - type: The font file type, such as otf or ttf
+    private static func register(fontFileName: String, type: String) -> Bool {
         guard
-            let bundle = bundle,
-            let path = bundle.path(forResource: fontFileName, ofType: type),
+            let path = Bundle(for: self).path(forResource: fontFileName, ofType: type),
             let data = NSData(contentsOfFile: path),
             let dataProvider = CGDataProvider(data: data),
             let fontReference = CGFont(dataProvider)

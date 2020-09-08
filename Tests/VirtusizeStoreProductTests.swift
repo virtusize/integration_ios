@@ -97,28 +97,28 @@ class VirtusizeStoreProductTests: XCTestCase {
                 productType: 1,
                 brandSizing: VirtusizeBrandSizing(compare: "large", itemBrand: true))?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_sizing_itemBrand_large_text")
+            Localization.shared.localize("inpage_sizing_itemBrand_large_text").trimI18nText()
         )
         XCTAssertEqual(
             getStoreProduct(
                 productType: 15,
                 brandSizing: VirtusizeBrandSizing(compare: "true", itemBrand: true))?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_sizing_itemBrand_true_text")
+            Localization.shared.localize("inpage_sizing_itemBrand_true_text").trimI18nText()
         )
         XCTAssertEqual(
             getStoreProduct(
                 productType: 20,
                 brandSizing: VirtusizeBrandSizing(compare: "small", itemBrand: false))?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_sizing_mostBrands_small_text")
+            Localization.shared.localize("inpage_sizing_mostBrands_small_text").trimI18nText()
         )
         XCTAssertEqual(
             getStoreProduct(
                 productType: 24,
                 brandSizing: VirtusizeBrandSizing(compare: "true", itemBrand: false))?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_sizing_mostBrands_true_text")
+            Localization.shared.localize("inpage_sizing_mostBrands_true_text").trimI18nText()
         )
     }
 
@@ -129,7 +129,7 @@ class VirtusizeStoreProductTests: XCTestCase {
                 brandSizing: nil,
                 fit: "regular")?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_fit_regular_text")
+            Localization.shared.localize("inpage_fit_regular_text").trimI18nText()
         )
         XCTAssertEqual(
             getStoreProduct(
@@ -137,7 +137,7 @@ class VirtusizeStoreProductTests: XCTestCase {
                 brandSizing: nil,
                 fit: "loose")?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_fit_loose_text")
+            Localization.shared.localize("inpage_fit_loose_text").trimI18nText()
         )
         XCTAssertEqual(
             getStoreProduct(
@@ -145,7 +145,7 @@ class VirtusizeStoreProductTests: XCTestCase {
                 brandSizing: nil,
                 fit: "flared")?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_fit_loose_text")
+            Localization.shared.localize("inpage_fit_loose_text").trimI18nText()
         )
         XCTAssertEqual(
             getStoreProduct(
@@ -153,7 +153,7 @@ class VirtusizeStoreProductTests: XCTestCase {
                 brandSizing: nil,
                 fit: "slim")?
                 .getRecommendationText(i18nLocalization: i18nLocalization),
-            Localization.shared.localize("inpage_fit_tight_text")
+            Localization.shared.localize("inpage_fit_tight_text").trimI18nText()
         )
         XCTAssertEqual(
                    getStoreProduct(
@@ -161,7 +161,7 @@ class VirtusizeStoreProductTests: XCTestCase {
                        brandSizing: nil,
                        fit: "random")?
                        .getRecommendationText(i18nLocalization: i18nLocalization),
-                   Localization.shared.localize("inpage_fit_regular_text")
+                   Localization.shared.localize("inpage_fit_regular_text").trimI18nText()
                )
     }
 

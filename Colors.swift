@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+/// This class wraps the colors used in the Virtusize SDK
 final internal class Colors {
     internal static let gray200Color: UIColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
     internal static let gray700Color: UIColor = #colorLiteral(red: 0.7176470588, green: 0.7254901961, blue: 0.7254901961, alpha: 1)

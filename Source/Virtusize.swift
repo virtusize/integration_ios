@@ -41,12 +41,13 @@ public class Virtusize {
     /// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
     public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
 
-    /// TODO: Comment
-    private static var views: [VirtusizeView] = []
+    /// The array of `VirtusizeView` that clients use on their mobile application
+    private static var virtusizeViews: [VirtusizeView] = []
 
-    /// TODO: Comment
+    /// Allow process pool to be set to share cookies
     public static var processPool: WKProcessPool?
 
+    /// The private property for product
     private static var _product: VirtusizeProduct?
     /// The Virtusize product to get the value from the`productDataCheck` request
     public static var product: VirtusizeProduct? {
@@ -59,12 +60,14 @@ public class Virtusize {
                     return
                 }
                 _product = product
-                for index in 0...views.count-1 {
-                    views[index].setupProductDataCheck()
+                // When the product data check is complete,
+                // call the function setupProductDataCheck to set up Virtusize views with the store product info
+                for index in 0...virtusizeViews.count-1 {
+                    virtusizeViews[index].setupProductDataCheck()
                 }
-                views.removeAll()
+                virtusizeViews.removeAll()
             }, failure: { _ in
-                views.removeAll()
+                virtusizeViews.removeAll()
             })
         }
         get {
@@ -131,12 +134,12 @@ public class Virtusize {
         URLSession.shared.finishTasksAndInvalidate()
     }
 
-    /// TODO: Comment
+    /// Sets up the VirtusizeView and adds it to `virtusizeViews`
     public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
         var mutableView = view
         mutableView.messageHandler = any as? VirtusizeMessageHandler
         mutableView.presentingViewController = any as? UIViewController
-        views.append(mutableView)
+        virtusizeViews.append(mutableView)
     }
 
     /// The API request for product check
@@ -322,7 +325,6 @@ public class Virtusize {
     ///   - onSuccess: A callback to be called when the request to get i18n texts is successful
     ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
     internal class func getI18nTexts(
-        trimType: VirtusizeI18nLocalization.TrimType,
         onSuccess: ((VirtusizeI18nLocalization) -> Void)? = nil,
         onError: ((VirtusizeError) -> Void)? = nil
     ) {
@@ -336,7 +338,7 @@ public class Virtusize {
             guard let data = data else {
                 return
             }
-            onSuccess?(Deserializer.i18n(data: data, trimType: trimType))
+            onSuccess?(Deserializer.i18n(data: data))
         }, error: { error in
             onError?(error)
         })

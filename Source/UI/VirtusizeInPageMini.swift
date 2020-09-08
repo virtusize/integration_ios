@@ -22,16 +22,16 @@
 //  THE SOFTWARE.
 //
 
-/// TODO: Comment
+/// This class is the custom Virtusize InPage Mini view that can be added in the client's layout file.
 public class VirtusizeInPageMini: VirtusizeInPageView {
 
+    /// The property to set the background color of the InPage Mini view
     public var inPageMiniBackgroundColor: UIColor? {
         didSet {
             setStyle()
         }
     }
 
-    private let horizontalEdgeMargin: CGFloat = 8
     private let messageAndButtonMargin: CGFloat = 8
     private let verticalMargin: CGFloat = 5
 
@@ -39,6 +39,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
     private let inPageMiniMessageLabel: UILabel = UILabel()
     private let inPageMiniSizeCheckButton: UIButton = UIButton()
 
+    /// The function to set the horizontal margin between the edges of the app screen and the InPage Mini view
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
     }
@@ -48,8 +49,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         setConstraints()
         setStyle()
 
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView)))
-        inPageMiniSizeCheckButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickInPageViewAction)))
+        inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
     }
 
     public override func setupProductDataCheck() {
@@ -61,7 +62,10 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
             self.setLoadingScreen(loading: false)
             self.inPageMiniMessageLabel.attributedText = NSAttributedString(string:
-                storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
+                storeProduct.getRecommendationText(
+                    i18nLocalization: i18nLocalization,
+                    trimType: VirtusizeI18nLocalization.TrimType.ONELINE
+                )
             ).lineSpacing(self.verticalMargin/2)
         }, failure: {
             self.showErrorScreen()
@@ -85,14 +89,14 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             "sizeCheckButton": inPageMiniSizeCheckButton
         ]
         let metrics = [
-            "horizontalEdgeMargin": horizontalEdgeMargin,
+            "horizontalMargin": defaultMargin,
             "verticalMargin": verticalMargin,
             "messageAndButtonMargin": messageAndButtonMargin
         ]
 
         // swiftlint:disable line_length
         let horizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-horizontalEdgeMargin-[inPageMiniImageView]-0-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-horizontalEdgeMargin-|",
+            withVisualFormat: "H:|-horizontalMargin-[inPageMiniImageView]-0-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-horizontalMargin-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views

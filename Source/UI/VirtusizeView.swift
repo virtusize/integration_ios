@@ -24,18 +24,22 @@
 
 import WebKit
 
-/// TODO: Comment
+/// A protocol for the Virtusize specific views such as `VirtusizeButton` and `VirtusizeInPageView`
 public protocol VirtusizeView {
     var style: VirtusizeViewStyle { get }
     var presentingViewController: UIViewController? { get set }
     var messageHandler: VirtusizeMessageHandler? { get set }
 
+    /// Sets up the view with the product check data received from Virtusize API
     func setupProductDataCheck()
 }
 
+/// Extension functions for `VirtusizeView`
 extension VirtusizeView {
-    internal func clickOnVirtusizeView() {
-        if let virtusize = VirtusizeViewController(handler: messageHandler, processPool: Virtusize.processPool) {
+
+    /// Opens the Virtusize web view
+    internal func openVirtusizeWebView() {
+        if let virtusize = VirtusizeWebViewController(handler: messageHandler, processPool: Virtusize.processPool) {
             presentingViewController?.present(virtusize, animated: true, completion: nil)
         }
     }
@@ -53,12 +57,8 @@ extension VirtusizeView {
     ) {
         if let productId = product.productCheckData?.productDataId {
             Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
-                Virtusize.getI18nTexts(
-                    trimType: (self is VirtusizeInPageStandard) ?
-                        VirtusizeI18nLocalization.TrimType.MULTIPLELINES :
-                        VirtusizeI18nLocalization.TrimType.ONELINE,
-                    onSuccess: { i18nLocalization in
-                        onCompletion?(storeProduct, i18nLocalization)
+                Virtusize.getI18nTexts(onSuccess: { i18nLocalization in
+                    onCompletion?(storeProduct, i18nLocalization)
                 }, onError: { error in
                     print(error.debugDescription)
                     failure?()

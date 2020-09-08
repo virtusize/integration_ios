@@ -37,6 +37,7 @@ public class VirtusizeButton: UIButton, VirtusizeView {
         }
     }
 
+    /// The property to set the Virtusize view style that this SDK provides
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
         didSet {
             setStyle()
@@ -93,10 +94,10 @@ public class VirtusizeButton: UIButton, VirtusizeView {
         setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
         setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
 
-        addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
+        addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
     }
 
-    @objc private func openVirtusizeWebView() {
-        clickOnVirtusizeView()
+    @objc private func clickButtonAction() {
+        openVirtusizeWebView()
     }
 }
