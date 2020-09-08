@@ -211,6 +211,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         inPageMiniMessageLabel.textColor = Colors.gray700Color
         inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")
         inPageMiniSizeCheckButton.isHidden = true
+        inPageMiniSizeCheckButton.widthAnchor.constraint(equalToConstant: 0).isActive = true
         setupTextsStyle(messageLabelIsBold: false)
         isUserInteractionEnabled = false
     }
