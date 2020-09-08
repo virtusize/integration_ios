@@ -64,21 +64,20 @@ internal class VirtusizeStoreProduct: Codable {
         i18nLocalization: VirtusizeI18nLocalization,
         trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
     ) -> String {
-        var text = i18nLocalization.defaultText?.trimI18nText(trimType) ??
-            Localization.shared.localize("inpage_default_text").trimI18nText(trimType)
+        var text = i18nLocalization.defaultText ?? Localization.shared.localize("inpage_default_text")
         if isAccessory() {
-            text = i18nLocalization.defaultAccessoryText?.trimI18nText(trimType) ??
-                Localization.shared.localize("inpage_default_accessory_text").trimI18nText(trimType)
+            text = i18nLocalization.defaultAccessoryText ??
+                Localization.shared.localize("inpage_default_accessory_text")
         } else if let brandSizing = storeProductMeta?.additionalInfo?.brandSizing {
-            text = i18nLocalization.getSizingText(brandSizing: brandSizing)?.trimI18nText(trimType) ??
+            text = i18nLocalization.getSizingText(brandSizing: brandSizing) ??
                 Localization.shared.localize(
                     "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
-            ).trimI18nText(trimType)
+            )
         } else if let generalFitKey = storeProductMeta?.additionalInfo?.getGeneralFitKey() {
-            text = i18nLocalization.getFitText(generalFitKey: generalFitKey)?.trimI18nText(trimType) ??
-                Localization.shared.localize("inpage_fit_\(generalFitKey)_text").trimI18nText(trimType)
+            text = i18nLocalization.getFitText(generalFitKey: generalFitKey) ??
+                Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
         }
-        return text
+        return text.trimI18nText(trimType)
     }
 
     /// Checks if the product is an accessory
