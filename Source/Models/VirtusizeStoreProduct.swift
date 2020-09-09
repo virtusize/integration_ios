@@ -35,7 +35,7 @@ internal class VirtusizeStoreProduct: Codable {
     let productType: Int
     /// The product name
     let name: String
-    /// The Cloudinary public ID corresponding to this store product
+    /// The Cloudinary public ID for getting the store product image URL corresponding to this store product
     let cloudinaryPublicId: String
     /// The ID of the store that this product belongs to
     let store: Int
@@ -60,7 +60,10 @@ internal class VirtusizeStoreProduct: Codable {
     }
 
     /// Gets the InPage recommendation text based on the product info
-    func getRecommendationText(i18nLocalization: VirtusizeI18nLocalization) -> String {
+    func getRecommendationText(
+        i18nLocalization: VirtusizeI18nLocalization,
+        trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
+    ) -> String {
         var text = i18nLocalization.defaultText ?? Localization.shared.localize("inpage_default_text")
         if isAccessory() {
             text = i18nLocalization.defaultAccessoryText ??
@@ -74,7 +77,7 @@ internal class VirtusizeStoreProduct: Codable {
             text = i18nLocalization.getFitText(generalFitKey: generalFitKey) ??
                 Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
         }
-        return text
+        return text.trimI18nText(trimType)
     }
 
     /// Checks if the product is an accessory

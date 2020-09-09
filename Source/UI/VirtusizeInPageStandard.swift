@@ -23,8 +23,10 @@
 //
 
 // swiftlint:disable type_body_length
+/// This class is the custom Virtusize InPage Standard view that can be added in the client's layout file.
 public class VirtusizeInPageStandard: VirtusizeInPageView {
 
+    /// The property to set the background color of the size check button
     public var inPageStandardButtonBackgroundColor: UIColor? {
         didSet {
             setStyle()
@@ -54,10 +56,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         setStyle()
 
         inPageStandardView.addGestureRecognizer(
-            UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
+            UITapGestureRecognizer(target: self, action: #selector(clickInPageViewAction))
         )
-        
-        checkSizeButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
+
+        checkSizeButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
 
         privacyPolicyLink.isUserInteractionEnabled = true
         privacyPolicyLink.addGestureRecognizer(
@@ -104,6 +106,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             "errorText": errorText
         ]
 
+        let metrics = [
+            "defaultMargin": defaultMargin
+        ]
+
         let inPageStandardViewHorizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-0-[inPageStandardView]-0-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
@@ -126,23 +132,23 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         )
 
         let errorScreenVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-8-[errorImageView(40)]-8-[errorText]-8-|",
+            withVisualFormat: "V:|-defaultMargin-[errorImageView(40)]-defaultMargin-[errorText]-defaultMargin-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
+            metrics: metrics,
             views: views
         )
 
         let errorImageViewHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-(>=8)-[errorImageView(40)]-(>=8)-|",
+            withVisualFormat: "H:|-(>=defaultMargin)-[errorImageView(40)]-(>=defaultMargin)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
+            metrics: metrics,
             views: views
         )
 
         let errorTextHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-(>=8)-[errorText]-(>=8)-|",
+            withVisualFormat: "H:|-(>=defaultMargin)-[errorText]-(>=defaultMargin)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
+            metrics: metrics,
             views: views
         )
 
@@ -155,10 +161,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             constant: 0
         ).isActive = true
 
+        // swiftlint:disable line_length
         let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-8-[productImageView(==40)]-4-[messageStackView]-(>=8)-[checkSizeButton]-8-|",
+            withVisualFormat: "H:|-defaultMargin-[productImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
+            metrics: metrics,
             views: views
         )
 
@@ -296,26 +303,33 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
             self.productImageView.setImage(storeProduct: storeProduct, localImageUrl: Virtusize.product?.imageURL) {
                 self.setLoadingScreen(loading: false)
-                let recommendationText = storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
-                let breakTag = VirtusizeI18nLocalization.TrimType.MULTIPLELINES.rawValue
-                let recommendationTextArray = recommendationText.components(separatedBy: breakTag)
-                if recommendationTextArray.count == 2 {
-                    self.topMessageLabel.attributedText = NSAttributedString(
-                        string: recommendationTextArray[0]
-                    ).lineSpacing(self.messageLineSpacing)
-                    self.bottomMessageLabel.attributedText = NSAttributedString(
-                        string: recommendationTextArray[1]
-                    ).lineSpacing(self.messageLineSpacing)
-                } else {
-                    self.topMessageLabel.isHidden = true
-                    self.bottomMessageLabel.attributedText = NSAttributedString(
-                        string: recommendationText
-                    ).lineSpacing(self.messageLineSpacing)
-                }
+                self.setMessageLabelTexts(storeProduct: storeProduct, i18nLocalization: i18nLocalization)
             }
         }, failure: {
            self.showErrorScreen()
         })
+    }
+
+    private func setMessageLabelTexts(storeProduct: VirtusizeStoreProduct, i18nLocalization: VirtusizeI18nLocalization) {
+        let trimType = VirtusizeI18nLocalization.TrimType.MULTIPLELINES
+        let recommendationText = storeProduct.getRecommendationText(
+            i18nLocalization: i18nLocalization,
+            trimType: trimType
+        )
+        let recommendationTextArray = recommendationText.components(separatedBy: trimType.rawValue)
+        if recommendationTextArray.count == 2 {
+            self.topMessageLabel.attributedText = NSAttributedString(
+                string: recommendationTextArray[0]
+            ).lineSpacing(self.messageLineSpacing)
+            self.bottomMessageLabel.attributedText = NSAttributedString(
+                string: recommendationTextArray[1]
+            ).lineSpacing(self.messageLineSpacing)
+        } else {
+            self.topMessageLabel.isHidden = true
+            self.bottomMessageLabel.attributedText = NSAttributedString(
+                string: recommendationText
+            ).lineSpacing(self.messageLineSpacing)
+        }
     }
 
     private func setLoadingScreen(loading: Bool) {

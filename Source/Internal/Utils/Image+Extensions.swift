@@ -31,11 +31,14 @@ internal extension UIImage {
         self.init(named: name, in: Bundle(for: Virtusize.self), compatibleWith: nil)
     }
 
+    /// Adds the padding to a `UIImage`
+    ///
+    /// - Parameter inset: the padding in CGFloat
     func withPadding(inset: CGFloat) -> UIImage? {
         return withInsets(insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
     }
 
-    func withInsets(insets: UIEdgeInsets) -> UIImage? {
+    private func withInsets(insets: UIEdgeInsets) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(
             CGSize(width: self.size.width + insets.left + insets.right,
                    height: self.size.height + insets.top + insets.bottom), false, self.scale)
@@ -50,6 +53,13 @@ internal extension UIImage {
 }
 
 internal extension UIImageView {
+
+    /// Loads the image from a URL
+    ///
+    /// - Parameters:
+    ///   - url: The image URL
+    ///   - success: The successful callback to pass the loaded image
+    ///   - failure: The failure callback
     func load(url: URL, success: ((UIImage) -> Void)? = nil, failure: (() -> Void)? = nil) {
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {

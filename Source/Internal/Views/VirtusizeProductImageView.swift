@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+/// The custom view for setting up the store product image view from a URL
+/// or replacing it with a product type placeholder image when the image URL is not available
 internal class VirtusizeProductImageView: UIView {
 
     private var imageSize: CGFloat = 40
@@ -70,7 +72,7 @@ internal class VirtusizeProductImageView: UIView {
         productImageView.contentMode = .scaleAspectFill
     }
 
-    func setImage(storeProduct: VirtusizeStoreProduct, localImageUrl: URL?, completion: (() -> Void)? = nil) {
+    internal func setImage(storeProduct: VirtusizeStoreProduct, localImageUrl: URL?, completion: (() -> Void)? = nil) {
         if localImageUrl != nil {
             loadImageUrl(url: localImageUrl!, storeProduct: storeProduct, success: {
                 completion?()

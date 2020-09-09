@@ -1,5 +1,5 @@
 //
-//  VirtusizeViewController.swift
+//  VirtusizeWebViewController.swift
 //
 //  Copyright (c) 2018-20 Virtusize KK
 //
@@ -28,13 +28,13 @@ import WebKit
 /// The methods of this protocol notify you with Virtusize specific messages such as errors as
 /// `VirtusizeError` and events as `VirtusizeEvent` and tell you when to dismiss the view controller
 public protocol VirtusizeMessageHandler: class {
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError)
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent)
-    func virtusizeControllerShouldClose(_ controller: VirtusizeViewController)
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError)
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent)
+    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController)
 }
 
 /// This `UIViewController` represents the Virtusize Window
-public final class VirtusizeViewController: UIViewController {
+public final class VirtusizeWebViewController: UIViewController {
     public weak var delegate: VirtusizeMessageHandler?
 
     private var webView: WKWebView?
@@ -133,7 +133,7 @@ public final class VirtusizeViewController: UIViewController {
     }
 }
 
-extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
+extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript() else {
             reportError(error: .invalidVsParamScript)
@@ -208,7 +208,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
             WKWebsiteDataStore.default().httpCookieStore.getAllCookies({ cookies in
                 for cookie in cookies {
                     if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
-                        if cookie.name == VirtusizeViewController.cookieBidKey &&
+                        if cookie.name == VirtusizeWebViewController.cookieBidKey &&
                             cookieValue != BrowserID.current.identifier {
                             BrowserID.current.identifier = cookie.value
                         }
@@ -218,7 +218,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
         } else {
             if let cookies = HTTPCookieStorage.shared.cookies {
                 for cookie in cookies
-                    where cookie.name == VirtusizeViewController.cookieBidKey &&
+                    where cookie.name == VirtusizeWebViewController.cookieBidKey &&
                         cookie.value != BrowserID.current.identifier {
                             BrowserID.current.identifier = cookie.value
                 }
@@ -227,7 +227,7 @@ extension VirtusizeViewController: WKNavigationDelegate, WKUIDelegate {
     }
 }
 
-extension VirtusizeViewController: WKScriptMessageHandler {
+extension VirtusizeWebViewController: WKScriptMessageHandler {
     // MARK: - Widget Callbacks
     public func userContentController(
         _ userContentController: WKUserContentController,

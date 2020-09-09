@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTheFitButton: VirtusizeButton!
     @IBOutlet weak var inPageMini: VirtusizeInPageMini!
 
+    // swiftlint:disable function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
         // NotificationCenter listener for debugging the initial product data check
@@ -58,6 +59,7 @@ class ViewController: UIViewController {
         // MARK: VirtusizeButton
         // 1. Set up checkTheFitButton that is added in Interface Builder
         Virtusize.setVirtusizeView(self, checkTheFitButton)
+        // You can set up the Virtusize button style
         checkTheFitButton.style = .TEAL
 
         // 2. Add the VirtusizeButton programmatically
@@ -73,28 +75,34 @@ class ViewController: UIViewController {
         // MARK: VirtusizeInPageMini
         // 1. Set up inPageMini that is added in Interface Builder
         Virtusize.setVirtusizeView(self, inPageMini)
+        // You can set up the Virtusize InPage Mini style
         inPageMini.style = .BLACK
 
         // 2. If you add the InPageMini view programmatically
         let inPageMini2 = VirtusizeInPageMini()
         view.addSubview(inPageMini2)
+        Virtusize.setVirtusizeView(self, inPageMini2)
+        inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
+        // You can set up the horizontal margins by using `setupHorizontalMargin`
+        inPageMini2.setupHorizontalMargin(view: view, margin: 16)
         // Set up constraints if needed
         inPageMini2.translatesAutoresizingMaskIntoConstraints = false
         inPageMini2.topAnchor.constraint(equalTo: inPageMini.bottomAnchor, constant: 16).isActive = true
-        Virtusize.setVirtusizeView(self, inPageMini2)
-        inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
-        // You can set up horizontal margins by using `setupHorizontalMargin`
-        inPageMini2.setupHorizontalMargin(view: view, margin: 16)
 
         // MARK: VirtusizeInPageStandard
+        // If you add the InPageMini view programmatically
         let inPageStandard = VirtusizeInPageStandard()
         view.addSubview(inPageStandard)
+        Virtusize.setVirtusizeView(self, inPageStandard)
+        // You can set up the horizontal margins by using `setupHorizontalMargin`
+        inPageStandard.setupHorizontalMargin(view: view, margin: 16)
+        // You can set up the Virtusize InPage Standard style
+        inPageStandard.style = .BLACK
+        inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+        // Set up constraints if needed
         inPageStandard.translatesAutoresizingMaskIntoConstraints = false
         inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         inPageStandard.topAnchor.constraint(equalTo: inPageMini2.bottomAnchor, constant: 16).isActive = true
-        Virtusize.setVirtusizeView(self, inPageStandard)
-        inPageStandard.setupHorizontalMargin(view: view, margin: 16)
-        inPageStandard.style = .BLACK
 
         // MARK: The Order API
         sendOrderSample()
@@ -148,11 +156,11 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeControllerShouldClose(_ controller: VirtusizeViewController) {
+    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
         dismiss(animated: true, completion: nil)
     }
 
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent) {
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
         case "user-opened-widget":
@@ -164,7 +172,7 @@ extension ViewController: VirtusizeMessageHandler {
         }
     }
 
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError) {
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
         print(error)
         dismiss(animated: true, completion: nil)
     }
