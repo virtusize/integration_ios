@@ -103,6 +103,10 @@ final internal class Assets {
            return UIImage(bundleNamed: "vs_signature")
        }()
 
+    internal static let errorHanger: UIImage? = {
+        return UIImage(bundleNamed: "error_hanger")
+    }()
+
     static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
         var placeholderImage = UIImage(bundleNamed: "\(productType)")
         if let style = style,

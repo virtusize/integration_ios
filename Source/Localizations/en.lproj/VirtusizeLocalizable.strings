@@ -14,3 +14,5 @@
 "inpage_fit_tight_text" = "This item has a tight fit.";
 "inpage_standard_loading_text" = "Analyzing the size";
 "inpage_mini_loading_text" = "Loading";
+"inpage_error_long_text" = "Virtusize is not available at the moment.\nPlease enjoy shopping without us.";
+"inpage_error_short_text" = "Virtusize is not available at the moment.";

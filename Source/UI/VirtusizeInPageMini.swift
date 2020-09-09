@@ -63,6 +63,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             self.inPageMiniMessageLabel.attributedText = NSAttributedString(string:
                 storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
             ).lineSpacing(self.verticalMargin/2)
+        }, failure: {
+            self.showErrorScreen()
         })
     }
 
@@ -200,5 +202,17 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             stopLoadingAnimation()
         }
         inPageMiniSizeCheckButton.isHidden = loading ? true: false
+    }
+
+    private func showErrorScreen() {
+        backgroundColor = .white
+        stopLoadingAnimation()
+        inPageMiniImageView.image = Assets.errorHanger
+        inPageMiniMessageLabel.textColor = Colors.gray700Color
+        inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")
+        inPageMiniSizeCheckButton.isHidden = true
+        inPageMiniSizeCheckButton.widthAnchor.constraint(equalToConstant: 0).isActive = true
+        setupTextsStyle(messageLabelIsBold: false)
+        isUserInteractionEnabled = false
     }
 }

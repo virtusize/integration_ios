@@ -14,3 +14,5 @@
 "inpage_fit_tight_text" = "この商品はタイトフィットです。";
 "inpage_standard_loading_text" = "サイズを分析中";
 "inpage_mini_loading_text" = "読み込み中";
+"inpage_error_long_text" = "現在バーチャサイズは使えませんが、\nそのままでお買い物をお楽しみください。";
+"inpage_error_short_text" = "現在バーチャサイズは使えません。";
