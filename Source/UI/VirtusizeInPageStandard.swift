@@ -22,13 +22,7 @@
 //  THE SOFTWARE.
 //
 
-public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate {
-
-    public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
-        didSet {
-            setup()
-        }
-    }
+public class VirtusizeInPageStandard: VirtusizeInPageView {
 
     public var inPageStandardButtonBackgroundColor: UIColor? {
         didSet {
@@ -36,37 +30,22 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         }
     }
 
-    public var presentingViewController: UIViewController?
-    public var messageHandler: VirtusizeMessageHandler?
-
     private let inPageStandardView: UIView = UIView()
     private let productImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
     private let messageStackView: UIStackView = UIStackView()
     private let topMessageLabel: UILabel = UILabel()
     private let bottomMessageLabel: UILabel = UILabel()
     private let checkSizeButton: UIButton = UIButton()
-    private let virtusizeImageView: UIImageView = UIImageView()
+    private let vsSignatureImageView: UIImageView = UIImageView()
     private let privacyPolicyLink: UILabel = UILabel()
 
     private var messageLineSpacing: CGFloat = 6
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        isHidden = true
-        setup()
-    }
-
-    public init() {
-        super.init(frame: .zero)
-        isHidden = true
-        setup()
-    }
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
     }
 
-    private func setup() {
+    internal override func setup() {
         addSubviews()
         setConstraints()
         setStyle()
@@ -85,7 +64,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
 
     private func addSubviews() {
         addSubview(inPageStandardView)
-        addSubview(virtusizeImageView)
+        addSubview(vsSignatureImageView)
         addSubview(privacyPolicyLink)
         inPageStandardView.addSubview(productImageView)
         inPageStandardView.addSubview(messageStackView)
@@ -97,7 +76,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
     // swiftlint:disable function_body_length
     private func setConstraints() {
         inPageStandardView.translatesAutoresizingMaskIntoConstraints = false
-        virtusizeImageView.translatesAutoresizingMaskIntoConstraints = false
+        vsSignatureImageView.translatesAutoresizingMaskIntoConstraints = false
         privacyPolicyLink.translatesAutoresizingMaskIntoConstraints = false
         productImageView.translatesAutoresizingMaskIntoConstraints = false
         messageStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -107,7 +86,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
 
         let views = [
             "inPageStandardView": inPageStandardView,
-            "virtusizeImageView": virtusizeImageView,
+            "virtusizeImageView": vsSignatureImageView,
             "privacyPolicyLink": privacyPolicyLink,
             "productImageView": productImageView,
             "messageStackView": messageStackView,
@@ -138,10 +117,10 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         )
 
         privacyPolicyLink.centerYAnchor.constraint(
-            equalTo: virtusizeImageView.centerYAnchor,
+            equalTo: vsSignatureImageView.centerYAnchor,
             constant: 0
         ).isActive = true
-        virtusizeImageView.centerYAnchor.constraint(
+        vsSignatureImageView.centerYAnchor.constraint(
             equalTo: privacyPolicyLink.centerYAnchor,
             constant: 0
         ).isActive = true
@@ -196,7 +175,7 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 4)
         inPageStandardView.layer.shadowRadius = 14
 
-        virtusizeImageView.image = Assets.vsSignature
+        vsSignatureImageView.image = Assets.vsSignature
 
         privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
         privacyPolicyLink.textColor = Colors.gray900Color
@@ -255,10 +234,6 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         messageStackView.spacing = messageLineSpacing
     }
 
-    @objc private func openVirtusizeWebView() {
-        clickOnVirtusizeView()
-    }
-
     @objc private func openPrivacyPolicyLink() {
         if let sharedApplication = UIApplication.safeShared,
             let url = URL(string: Localization.shared.localize("privacy_policy_link")) {
@@ -266,29 +241,49 @@ public class VirtusizeInPageStandard: UIView, VirtusizeView, CAAnimationDelegate
         }
     }
 
-    public func setupProductDataCheck() {
+    public override func setupProductDataCheck() {
         guard let product = Virtusize.product else {
             return
         }
+        self.isHidden = false
+        setLoadingScreen(loading: true)
         setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
-            self.productImageView.setImage(storeProduct: storeProduct, localImageUrl: Virtusize.product?.imageURL)
-            let recommendationText = storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
-            let breakTag = VirtusizeI18nLocalization.TrimType.MULTIPLELINES.rawValue
-            let recommendationTextArray = recommendationText.components(separatedBy: breakTag)
-            if recommendationTextArray.count == 2 {
-                self.topMessageLabel.attributedText = NSAttributedString(
-                    string: recommendationTextArray[0]
-                ).lineSpacing(self.messageLineSpacing)
-                self.bottomMessageLabel.attributedText = NSAttributedString(
-                    string: recommendationTextArray[1]
-                ).lineSpacing(self.messageLineSpacing)
-            } else {
-                self.topMessageLabel.isHidden = true
-                self.bottomMessageLabel.attributedText = NSAttributedString(
-                    string: recommendationText
-                ).lineSpacing(self.messageLineSpacing)
+            self.productImageView.setImage(storeProduct: storeProduct, localImageUrl: Virtusize.product?.imageURL) {
+                self.setLoadingScreen(loading: false)
+                let recommendationText = storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
+                let breakTag = VirtusizeI18nLocalization.TrimType.MULTIPLELINES.rawValue
+                let recommendationTextArray = recommendationText.components(separatedBy: breakTag)
+                if recommendationTextArray.count == 2 {
+                    self.topMessageLabel.attributedText = NSAttributedString(
+                        string: recommendationTextArray[0]
+                    ).lineSpacing(self.messageLineSpacing)
+                    self.bottomMessageLabel.attributedText = NSAttributedString(
+                        string: recommendationTextArray[1]
+                    ).lineSpacing(self.messageLineSpacing)
+                } else {
+                    self.topMessageLabel.isHidden = true
+                    self.bottomMessageLabel.attributedText = NSAttributedString(
+                        string: recommendationText
+                    ).lineSpacing(self.messageLineSpacing)
+                }
             }
-            self.isHidden = false
         })
+    }
+
+    private func setLoadingScreen(loading: Bool) {
+        vsSignatureImageView.isHidden = loading ? true : false
+        privacyPolicyLink.isHidden = loading ? true : false
+        topMessageLabel.isHidden = loading ? true : false
+        if loading {
+            productImageView.image = Assets.icon
+            productImageView.hideCircleBorder()
+            startLoadingAnimation(
+                label: bottomMessageLabel,
+                text: Localization.shared.localize("inpage_standard_loading_text")
+            )
+        } else {
+            productImageView.showCircleBorder()
+            stopLoadingAnimation()
+        }
     }
 }

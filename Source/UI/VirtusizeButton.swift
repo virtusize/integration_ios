@@ -25,7 +25,7 @@
 import UIKit
 
 /// This class is the custom Virtusize button that is added in the client's layout file.
-public class VirtusizeButton: UIButton, VirtusizeView, CAAnimationDelegate {
+public class VirtusizeButton: UIButton, VirtusizeView {
 
     override public var isHighlighted: Bool {
         didSet {

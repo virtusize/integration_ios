@@ -22,8 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 /// TODO: Comment
 public enum VirtusizeViewStyle: String {
     case NONE = "None"

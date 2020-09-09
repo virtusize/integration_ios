@@ -25,6 +25,7 @@
 		9C106EC424FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EC324FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf */; };
 		9C106EC624FF40AA0012EE51 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EC524FF40AA0012EE51 /* Colors.swift */; };
 		9C106EEE24FF99390012EE51 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EED24FF99390012EE51 /* String+Extensions.swift */; };
+		9C32A14B250279D00062C11D /* VirtusizeInPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */; };
 		9C4B9D722491EC5D0065808E /* APIEndpointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B9D712491EC5D0065808E /* APIEndpointsTests.swift */; };
 		9C58751C24EF7D2500352474 /* VirtusizeInPageMini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C58751B24EF7D2500352474 /* VirtusizeInPageMini.swift */; };
 		9C58751E24EF7D5000352474 /* VirtusizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C58751D24EF7D5000352474 /* VirtusizeView.swift */; };
@@ -116,6 +117,7 @@
 		9C106EC324FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Regular.ttf"; sourceTree = "<group>"; };
 		9C106EC524FF40AA0012EE51 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9C106EED24FF99390012EE51 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageView.swift; sourceTree = "<group>"; };
 		9C4B9D712491EC5D0065808E /* APIEndpointsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsTests.swift; sourceTree = "<group>"; };
 		9C58751B24EF7D2500352474 /* VirtusizeInPageMini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageMini.swift; sourceTree = "<group>"; };
 		9C58751D24EF7D5000352474 /* VirtusizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeView.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				9C58751D24EF7D5000352474 /* VirtusizeView.swift */,
 				9C58751F24EF7DC200352474 /* VirtusizeViewStyle.swift */,
 				9C106EAF24FCE0C70012EE51 /* VirtusizeInPageStandard.swift */,
+				9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -617,6 +620,7 @@
 				9C58751C24EF7D2500352474 /* VirtusizeInPageMini.swift in Sources */,
 				9CEAB7BD24D943F400F969E1 /* VirtusizeStoreProductMeta.swift in Sources */,
 				9C6DDE3524DD317F0021073A /* StoreProductFixtures.swift in Sources */,
+				9C32A14B250279D00062C11D /* VirtusizeInPageView.swift in Sources */,
 				9CB98B9D24B2C5B400C51F20 /* VirtusizeLanguage.swift in Sources */,
 				9C5956CD2484F6280014DF51 /* VirtusizeOrderItem.swift in Sources */,
 				9C633F2A2493C7ED009C4392 /* VirtusizeProductImageMetaData.swift in Sources */,
