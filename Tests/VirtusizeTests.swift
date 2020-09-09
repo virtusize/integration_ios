@@ -25,6 +25,7 @@
 import XCTest
 @testable import Virtusize
 
+// swiftlint:disable type_body_length
 class VirtusizeTests: XCTestCase {
 
     override func setUpWithError() throws {

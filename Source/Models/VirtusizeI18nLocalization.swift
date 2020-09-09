@@ -91,4 +91,9 @@ internal class VirtusizeI18nLocalization {
             return nil
         }
     }
+
+    enum TrimType: String {
+        case ONELINE = ""
+        case MULTIPLELINES = "<br>"
+    }
 }

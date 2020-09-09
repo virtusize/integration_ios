@@ -322,6 +322,7 @@ public class Virtusize {
     ///   - onSuccess: A callback to be called when the request to get i18n texts is successful
     ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
     internal class func getI18nTexts(
+        trimType: VirtusizeI18nLocalization.TrimType,
         onSuccess: ((VirtusizeI18nLocalization) -> Void)? = nil,
         onError: ((VirtusizeError) -> Void)? = nil
     ) {
@@ -335,7 +336,7 @@ public class Virtusize {
             guard let data = data else {
                 return
             }
-            onSuccess?(Deserializer.i18n(data: data))
+            onSuccess?(Deserializer.i18n(data: data, trimType: trimType))
         }, error: { error in
             onError?(error)
         })

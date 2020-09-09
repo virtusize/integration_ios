@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+// swiftlint:disable line_length
 /// This enum contains all the possible info categories that will be displayed in the Product Details tab of the Virtusize web app
 public enum VirtusizeInfoCategory: String, CaseIterable {
     case MODELINFO = "modelInfo"

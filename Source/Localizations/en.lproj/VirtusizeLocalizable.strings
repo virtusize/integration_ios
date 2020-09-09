@@ -1,4 +1,6 @@
 "check_size" = "Check size";
+"privacy_policy" = "Privacy Policy";
+"privacy_policy_link" = "http://www.virtusize.com/site/privacy-policy";
 "inpage_default_text" = "This item’s brand is true to size.";
 "inpage_default_accessory_text" = "See how everyday items fit";
 "inpage_sizing_itemBrand_large_text" = "This item sizes larger than the brand\'s average.";

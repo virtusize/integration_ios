@@ -30,6 +30,7 @@ public class VirtusizeParams {
     internal let language: VirtusizeLanguage
     /// The languages that the user can switch to using the Language Selector
     private let allowedLanguages: [VirtusizeLanguage]
+    // swiftlint:disable line_length
     /// The Boolean value to determine whether the Virtusize web app will fetch SGI and use SGI flow for users to add user generated items to their wardrobe
     private let showSGI: Bool
     /// The info categories that will be displayed in the Product Details tab

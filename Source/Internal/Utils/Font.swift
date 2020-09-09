@@ -25,8 +25,9 @@
 import Foundation
 
 class Font {
-    private enum FontWeight: String {
+    internal enum FontWeight: String {
         case regular = "-Regular"
+        case bold = "-Bold"
     }
 
     private enum FontName: String {
@@ -35,16 +36,16 @@ class Font {
         case notoSansCJKKR = "NotoSansCJKKR"
     }
 
-    static func proximaNovaRegular(size: CGFloat) -> UIFont {
-        return font(fontName: .proximaNova, type: "otf", weight: .regular, size: size)
+    static func proximaNova(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+        return font(fontName: .proximaNova, type: "otf", weight: weight, size: size)
     }
 
-    static func notoSansCJKJPRegular(size: CGFloat) -> UIFont {
-        return font(fontName: .notoSansCJKJP, type: "ttf", weight: .regular, size: size)
+    static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+        return font(fontName: .notoSansCJKJP, type: "ttf", weight: weight, size: size)
     }
 
-    static func notoSansCJKKRRegular(size: CGFloat) -> UIFont {
-        return font(fontName: .notoSansCJKKR, type: "otf", weight: .regular, size: size)
+    static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+        return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
     }
 
     private static func font(fontName: FontName, type: String, weight: FontWeight, size: CGFloat) -> UIFont {

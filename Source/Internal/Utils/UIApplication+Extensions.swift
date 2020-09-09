@@ -23,7 +23,7 @@
 //
 
 #if !os(watchOS)
-extension UIApplication {
+internal extension UIApplication {
 
     /// A safe accessor for `UIApplication.shared`
     ///

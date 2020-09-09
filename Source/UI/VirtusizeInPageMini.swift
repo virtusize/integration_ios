@@ -60,28 +60,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
     }
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: self,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: view,
-                attribute: .leading,
-                multiplier: 1,
-                constant: margin
-            )
-        )
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: view,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: margin
-            )
-        )
+        setHorizontalMargins(view: view, margin: margin)
     }
 
     private func setup() {
@@ -89,15 +68,19 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         setConstraints()
         setStyle()
 
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView))
-        addGestureRecognizer(gestureRecognizer)
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openVirtusizeWebView)))
+        inPageMiniSizeCheckButton.addTarget(self, action: #selector(openVirtusizeWebView), for: .touchUpInside)
     }
 
     public func setupProductDataCheck() {
         guard let product = Virtusize.product else {
             return
         }
-        self.setupInPageText(product: product, onCompletion: {
+
+        setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
+            self.inPageMiniMessageLabel.attributedText = NSAttributedString(string:
+                storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
+            ).lineSpacing(self.verticalMargin/2)
             self.isHidden = false
         })
     }
@@ -118,6 +101,7 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
             "messageAndButtonMargin": messageAndButtonMargin
         ]
 
+        // swiftlint:disable line_length
         let horizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-horizontalEdgeMargin-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-(horizontalEdgeMargin)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
@@ -145,85 +129,59 @@ public class VirtusizeInPageMini: UIView, VirtusizeView, CAAnimationDelegate {
         addConstraint(inPageMiniSizeCheckButton.centerYAnchor.constraint(equalTo: self.centerYAnchor))
     }
 
+    // swiftlint:disable function_body_length
     private func setStyle() {
         if inPageMiniBackgroundColor != nil {
             backgroundColor = inPageMiniBackgroundColor
         } else if style == .TEAL {
-            backgroundColor = Assets.vsTealColor
+            backgroundColor = Colors.vsTealColor
         } else {
-            backgroundColor = Assets.gray900color
+            backgroundColor = Colors.gray900Color
         }
 
         inPageMiniMessageLabel.numberOfLines = 0
         inPageMiniMessageLabel.textColor = UIColor.white
         inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
 
-        inPageMiniSizeCheckButton.isHidden = false
         inPageMiniSizeCheckButton.backgroundColor = UIColor.white
         inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
         inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         let displayLanguage = Virtusize.params?.language
         switch displayLanguage {
         case .ENGLISH:
-            inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
+            inPageMiniMessageLabel.font = Font.proximaNova(size: 14)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: 12)
         case .JAPANESE:
-            inPageMiniMessageLabel.font = Font.notoSansCJKJPRegular(size: 12)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJPRegular(size: 10)
+            inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: 12)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: 10)
         case .KOREAN:
-            inPageMiniMessageLabel.font = Font.notoSansCJKKRRegular(size: 12)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKRRegular(size: 10)
+            inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: 12)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: 10)
         default:
-            inPageMiniMessageLabel.font = Font.proximaNovaRegular(size: 14)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNovaRegular(size: 12)
-        }
-        if displayLanguage == VirtusizeLanguage.JAPANESE || displayLanguage == VirtusizeLanguage.KOREAN {
-            inPageMiniSizeCheckButton.layer.cornerRadius = 10
-        } else {
-            inPageMiniSizeCheckButton.layer.cornerRadius = 12
+            inPageMiniMessageLabel.font = Font.proximaNova(size: 14)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: 12)
         }
 
-        inPageMiniSizeCheckButton.setImage(
-            Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate),
-            for: .normal
-        )
+        inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2
+
+        let rightArrowImageTemplate = Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .normal)
+        inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .highlighted)
         inPageMiniSizeCheckButton.semanticContentAttribute = .forceRightToLeft
         if inPageMiniBackgroundColor != nil {
             inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
             inPageMiniSizeCheckButton.imageView?.tintColor = inPageMiniBackgroundColor
         } else if style == .TEAL {
-            inPageMiniSizeCheckButton.setTitleColor(Assets.vsTealColor, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = Assets.vsTealColor
+            inPageMiniSizeCheckButton.setTitleColor(Colors.vsTealColor, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = Colors.vsTealColor
         } else {
-            inPageMiniSizeCheckButton.setTitleColor(Assets.gray900color, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = Assets.gray900color
+            inPageMiniSizeCheckButton.setTitleColor(Colors.gray900Color, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = Colors.gray900Color
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
     @objc private func openVirtusizeWebView() {
         clickOnVirtusizeView()
-    }
-
-    /// Sets up the InPage text by the product info
-    ///
-    /// - Parameters:
-    ///   - product: `VirtusizeProduct`
-    ///   - onCompletion: The callback for the completion of setting up the InPage text
-    private func setupInPageText(product: VirtusizeProduct, onCompletion: (() -> Void)? = nil) {
-        if let productId = product.productCheckData?.productDataId {
-            Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
-                Virtusize.getI18nTexts(
-                    onSuccess: { i18nLocalization in
-                        self.inPageMiniMessageLabel.text =
-                            storeProduct.getRecommendationText(i18nLocalization: i18nLocalization)
-                        onCompletion?()
-                }, onError: { error in
-                    print(error.debugDescription)
-                })
-            }, onError: { error in
-                print(error.debugDescription)
-            })
-        }
     }
 }
