@@ -1,5 +1,12 @@
 # ROADMAP
 
+## 2.1.0
+
+### Release date: 
+
+- [x] InPage integration
+
+
 ## 2.0.0
 
 ### Release date: 20/07/20
