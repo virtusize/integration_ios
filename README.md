@@ -326,7 +326,7 @@ There are two types of InPage in the Virtusize SDK.
 
       <img src="https://user-images.githubusercontent.com/7802052/92836755-ba956700-f417-11ea-8fb4-e9d9e2291031.png" style="zoom:70%;" />
     
-      Be sure to set up constraints for InPage Standard and then go to the Size inspector -> find *Intrinsic Size* -> Select *Placeholder * in order to have the dynamic height dependent on its content.
+      Be sure to set up constraints for InPage Standard and then go to the Size inspector -> find *Intrinsic Size* -> Select *Placeholder* in order to have the dynamic height dependent on its content.
     
       <img src="https://user-images.githubusercontent.com/7802052/92836828-ce40cd80-f417-11ea-94a7-999cb3e063a4.png" style="zoom:70%;" />
     
@@ -462,7 +462,7 @@ This is a mini version of InPage which can be placed in your application. The di
     inPageMini.widthAnchor.constraint(equalToConstant: 350).isActive = true
     ```
 
-- **Connect the Virtusize InPage Mini to the Virtusize API by using the ** `Virtusize.setVirtusizeView`**method.**
+- **Connect the Virtusize InPage Mini to the Virtusize API by using the**  `Virtusize.setVirtusizeView` **method.**
 
   ```swift
   Virtusize.setVirtusizeView(self, inPageMini)
