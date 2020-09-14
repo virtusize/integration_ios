@@ -32,12 +32,8 @@ class DeserializerTests: XCTestCase {
 
         let actualI18nLocalization = Deserializer.i18n(data: TestFixtures.emptyResponse.data(using: .utf8))
 
-        XCTAssertNil(actualI18nLocalization.defaultText)
         XCTAssertNil(actualI18nLocalization.defaultAccessoryText)
-        XCTAssertNil(actualI18nLocalization.sizingItemBrandLargeText)
-        XCTAssertNil(actualI18nLocalization.sizingMostBrandsTrueText)
-        XCTAssertNil(actualI18nLocalization.sizingMostBrandsSmallText)
-        XCTAssertNil(actualI18nLocalization.fitRegularText)
+        XCTAssertNil(actualI18nLocalization.noDataText)
     }
 
     func testI18n_verifyEnglishLocalization_returnExpectedLocalizationTexts() {
@@ -46,50 +42,13 @@ class DeserializerTests: XCTestCase {
         let localizedLang = VirtusizeLanguage.ENGLISH
 
         XCTAssertEqual(
-            actualI18nLocalization.defaultText,
-            Localization.shared.localize("inpage_default_text", language: localizedLang)
-        )
-        XCTAssertEqual(
             actualI18nLocalization.defaultAccessoryText,
             Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
         )
         XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandLargeText,
-            Localization.shared.localize("inpage_sizing_itemBrand_large_text", language: localizedLang)
+            actualI18nLocalization.noDataText,
+            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
         )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandTrueText,
-            Localization.shared.localize("inpage_sizing_itemBrand_true_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandSmallText,
-            Localization.shared.localize("inpage_sizing_itemBrand_small_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsLargeText,
-            Localization.shared.localize("inpage_sizing_mostBrands_large_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsTrueText,
-            Localization.shared.localize("inpage_sizing_mostBrands_true_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsSmallText,
-            Localization.shared.localize("inpage_sizing_mostBrands_small_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitLooseText,
-            Localization.shared.localize("inpage_fit_loose_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitRegularText,
-            Localization.shared.localize("inpage_fit_regular_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitTightText,
-            Localization.shared.localize("inpage_fit_tight_text", language: localizedLang)
-        )
-
     }
 
     func testI18n_verifyJapaneseLocalization_returnExpectedLocalizationTexts() {
@@ -97,49 +56,13 @@ class DeserializerTests: XCTestCase {
         let actualI18nLocalization = Deserializer.i18n(data: data)
         let localizedLang = VirtusizeLanguage.JAPANESE
 
-        XCTAssertEqual(
-            actualI18nLocalization.defaultText,
-            Localization.shared.localize("inpage_default_text", language: localizedLang)
-        )
-        XCTAssertEqual(
+         XCTAssertEqual(
             actualI18nLocalization.defaultAccessoryText,
             Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
         )
         XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandLargeText,
-            Localization.shared.localize("inpage_sizing_itemBrand_large_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandTrueText,
-            Localization.shared.localize("inpage_sizing_itemBrand_true_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandSmallText,
-            Localization.shared.localize("inpage_sizing_itemBrand_small_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsLargeText,
-            Localization.shared.localize("inpage_sizing_mostBrands_large_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsTrueText,
-            Localization.shared.localize("inpage_sizing_mostBrands_true_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsSmallText,
-            Localization.shared.localize("inpage_sizing_mostBrands_small_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitLooseText,
-            Localization.shared.localize("inpage_fit_loose_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitRegularText,
-            Localization.shared.localize("inpage_fit_regular_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitTightText,
-            Localization.shared.localize("inpage_fit_tight_text", language: localizedLang)
+            actualI18nLocalization.noDataText,
+            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
         )
     }
 
@@ -149,48 +72,12 @@ class DeserializerTests: XCTestCase {
         let localizedLang = VirtusizeLanguage.KOREAN
 
         XCTAssertEqual(
-            actualI18nLocalization.defaultText,
-            Localization.shared.localize("inpage_default_text", language: localizedLang)
-        )
-        XCTAssertEqual(
             actualI18nLocalization.defaultAccessoryText,
             Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
         )
         XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandLargeText,
-            Localization.shared.localize("inpage_sizing_itemBrand_large_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandTrueText,
-            Localization.shared.localize("inpage_sizing_itemBrand_true_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingItemBrandSmallText,
-            Localization.shared.localize("inpage_sizing_itemBrand_small_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsLargeText,
-            Localization.shared.localize("inpage_sizing_mostBrands_large_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsTrueText,
-            Localization.shared.localize("inpage_sizing_mostBrands_true_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.sizingMostBrandsSmallText,
-            Localization.shared.localize("inpage_sizing_mostBrands_small_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitLooseText,
-            Localization.shared.localize("inpage_fit_loose_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitRegularText,
-            Localization.shared.localize("inpage_fit_regular_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.fitTightText,
-            Localization.shared.localize("inpage_fit_tight_text", language: localizedLang)
+            actualI18nLocalization.noDataText,
+            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
         )
     }
 }

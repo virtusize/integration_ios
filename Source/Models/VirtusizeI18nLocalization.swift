@@ -24,72 +24,13 @@
 
 /// The class that wraps the localization texts from the i18n endpoint
 internal class VirtusizeI18nLocalization {
-    var defaultText: String?
     var defaultAccessoryText: String?
-    var sizingItemBrandLargeText: String?
-    var sizingItemBrandTrueText: String?
-    var sizingItemBrandSmallText: String?
-    var sizingMostBrandsLargeText: String?
-    var sizingMostBrandsTrueText: String?
-    var sizingMostBrandsSmallText: String?
-    var fitLooseText: String?
-    var fitRegularText: String?
-    var fitTightText: String?
+    var noDataText: String?
 
     /// Initializes the VirtusizeI18nLocalization structure
     init() {
-        self.defaultText = nil
         self.defaultAccessoryText = nil
-        self.sizingItemBrandLargeText = nil
-        self.sizingItemBrandTrueText = nil
-        self.sizingItemBrandSmallText = nil
-        self.sizingMostBrandsLargeText = nil
-        self.sizingMostBrandsTrueText = nil
-        self.sizingMostBrandsSmallText = nil
-        self.fitLooseText = nil
-        self.fitRegularText = nil
-        self.fitTightText = nil
-    }
-
-    /// Gets the sizing text based on the brand sizing info
-    func getSizingText(brandSizing: VirtusizeBrandSizing) -> String? {
-        if brandSizing.itemBrand {
-            switch brandSizing.compare {
-            case "large":
-                return self.sizingItemBrandLargeText
-            case "true":
-                return self.sizingItemBrandTrueText
-            case "small":
-                return self.sizingItemBrandSmallText
-            default:
-                return nil
-            }
-        } else {
-            switch brandSizing.compare {
-            case "large":
-                return self.sizingMostBrandsLargeText
-            case "true":
-                return self.sizingMostBrandsTrueText
-            case "small":
-                return self.sizingMostBrandsSmallText
-            default:
-                return nil
-            }
-        }
-    }
-
-    /// Gets the general fit text based on the general fit key
-    func getFitText(generalFitKey: String) -> String? {
-        switch generalFitKey {
-        case "loose":
-            return self.fitLooseText
-        case "regular":
-            return self.fitRegularText
-        case "tight":
-            return self.fitTightText
-        default:
-            return nil
-        }
+        self.noDataText = nil
     }
 
     enum TrimType: String {

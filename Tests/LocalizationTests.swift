@@ -33,20 +33,8 @@ class LocalizationTests: XCTestCase {
             "See how everyday items fit"
         )
         XCTAssertEqual(
-            Localization.shared.localize("inpage_sizing_itemBrand_large_text", language: .ENGLISH),
-            "This item sizes %{boldStart}larger than the brand's average.%{boldEnd}"
-        )
-        XCTAssertEqual(
-            Localization.shared.localize("inpage_sizing_mostBrands_true_text", language: .JAPANESE),
-            "この商品は%{boldStart}平均的なサイズ感です。%{boldEnd}"
-        )
-        XCTAssertEqual(
-            Localization.shared.localize("inpage_sizing_mostBrands_small_text", language: .KOREAN),
-            "이 브랜드의 사이즈는 %{boldStart}평균보다 작습니다.%{boldEnd}"
-        )
-        XCTAssertEqual(
-            Localization.shared.localize("inpage_fit_tight_text", language: .KOREAN),
-            "이 상품은 %{boldStart}꽉 조이는 핏입니다.%{boldEnd}"
+            Localization.shared.localize("inpage_no_data_text", language: .ENGLISH),
+            "Find the right size before purchasing"
         )
     }
 
