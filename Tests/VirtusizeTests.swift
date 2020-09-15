@@ -325,32 +325,12 @@ class VirtusizeTests: XCTestCase {
         let localizedLang = VirtusizeLanguage.KOREAN
 
         XCTAssertEqual(
-            actualI18nLocalization?.defaultText,
-            Localization.shared.localize("inpage_default_text", language: localizedLang)
-        )
-        XCTAssertEqual(
             actualI18nLocalization?.defaultAccessoryText,
             Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
         )
         XCTAssertEqual(
-            actualI18nLocalization?.sizingItemBrandTrueText,
-            Localization.shared.localize("inpage_sizing_itemBrand_true_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization?.sizingItemBrandSmallText,
-            Localization.shared.localize("inpage_sizing_itemBrand_small_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization?.sizingMostBrandsLargeText,
-            Localization.shared.localize("inpage_sizing_mostBrands_large_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization?.fitRegularText,
-            Localization.shared.localize("inpage_fit_regular_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization?.fitTightText,
-            Localization.shared.localize("inpage_fit_tight_text", language: localizedLang)
+            actualI18nLocalization?.noDataText,
+            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
         )
     }
 }

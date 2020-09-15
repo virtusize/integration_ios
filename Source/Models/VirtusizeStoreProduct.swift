@@ -64,18 +64,10 @@ internal class VirtusizeStoreProduct: Codable {
         i18nLocalization: VirtusizeI18nLocalization,
         trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
     ) -> String {
-        var text = i18nLocalization.defaultText ?? Localization.shared.localize("inpage_default_text")
+        var text = i18nLocalization.noDataText ?? Localization.shared.localize("inpage_no_data_text")
         if isAccessory() {
             text = i18nLocalization.defaultAccessoryText ??
                 Localization.shared.localize("inpage_default_accessory_text")
-        } else if let brandSizing = storeProductMeta?.additionalInfo?.brandSizing {
-            text = i18nLocalization.getSizingText(brandSizing: brandSizing) ??
-                Localization.shared.localize(
-                    "inpage_sizing_\(brandSizing.getBrandKey())_\(brandSizing.compare)_text"
-            )
-        } else if let generalFitKey = storeProductMeta?.additionalInfo?.getGeneralFitKey() {
-            text = i18nLocalization.getFitText(generalFitKey: generalFitKey) ??
-                Localization.shared.localize("inpage_fit_\(generalFitKey)_text")
         }
         return text.trimI18nText(trimType)
     }

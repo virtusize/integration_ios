@@ -130,26 +130,9 @@ internal struct Deserializer {
         }
 
         let inpageJSONObject = aoyamaJSONObject["inpage"] as? JSONObject
-        let detailsScreenJSONObject = aoyamaJSONObject["detailsScreen"] as? JSONObject
-        let sizingJSONObject = detailsScreenJSONObject?["sizing"] as? JSONObject
-        let itemBrandJSONObject = sizingJSONObject?["itemBrand"] as? JSONObject
-        let mostBrandsJSONObject = sizingJSONObject?["mostBrands"] as? JSONObject
-        let fitJSONObject = detailsScreenJSONObject?["fit"] as? JSONObject
 
-        i18nLocalization.defaultText = detailsScreenJSONObject?["defaultText"] as? String
         i18nLocalization.defaultAccessoryText = inpageJSONObject?["defaultAccessoryText"] as? String
-
-        i18nLocalization.sizingItemBrandLargeText = itemBrandJSONObject?["large"] as? String
-        i18nLocalization.sizingItemBrandTrueText = itemBrandJSONObject?["true"] as? String
-        i18nLocalization.sizingItemBrandSmallText = itemBrandJSONObject?["small"] as? String
-
-        i18nLocalization.sizingMostBrandsLargeText = mostBrandsJSONObject?["large"] as? String
-        i18nLocalization.sizingMostBrandsTrueText = mostBrandsJSONObject?["true"] as? String
-        i18nLocalization.sizingMostBrandsSmallText = mostBrandsJSONObject?["small"] as? String
-
-        i18nLocalization.fitLooseText = fitJSONObject?["loose"] as? String
-        i18nLocalization.fitRegularText = fitJSONObject?["regular"] as? String
-        i18nLocalization.fitTightText = fitJSONObject?["tight"] as? String
+        i18nLocalization.noDataText = inpageJSONObject?["noDataText"] as? String
 
         return i18nLocalization
     }
