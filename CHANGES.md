@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.1.0
+- Feature: InPage integration
+
 ### 2.0.1
 - Bugfix: Fix the Order API error
 
