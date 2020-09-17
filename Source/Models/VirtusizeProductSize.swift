@@ -25,7 +25,20 @@
 /// This class represents the product size info
 internal class VirtusizeProductSize: Codable {
     /// The size name
-    let name: String
+    let name: String?
     /// The measurements of the size, that is a dictionary with pairs of measurement names and measurement values
     let measurements: [String: Int?]
+
+    private enum CodingKeys: String, CodingKey {
+        case name, measurements
+    }
+
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        name = try? values.decode(String.self, forKey: .name)
+        measurements = try values.decode([String: Int?].self, forKey: .measurements)
+            .filter { _, value in
+                return value != nil
+        }
+    }
 }

@@ -57,6 +57,9 @@ internal struct APIRequest {
     private static func apiRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = HTTPRequest(components: components, method: method)
         request.addValue(BrowserID.current.identifier, forHTTPHeaderField: "x-vs-bid")
+        if components.path.contains(APIEndpoints.userProducts.components.path) {
+            request.addValue("Token \(Virtusize.authToken)", forHTTPHeaderField: "Authorization")
+        }
         return request
     }
 
@@ -160,6 +163,15 @@ internal struct APIRequest {
     /// - Returns: A `URLRequest` for the `storeProducts` request
     internal static func getStoreProductInfo(productId: Int) -> URLRequest? {
         let endpoint = APIEndpoints.storeProducts(productId: productId)
+        return apiRequest(components: endpoint.components)
+    }
+
+    /// Gets the `URLRequest` for the `storeProducts` request
+    ///
+    /// - Parameter productId: The ID of the product
+    /// - Returns: A `URLRequest` for the `storeProducts` request
+    internal static func getUserProducts() -> URLRequest? {
+        let endpoint = APIEndpoints.userProducts
         return apiRequest(components: endpoint.components)
     }
 

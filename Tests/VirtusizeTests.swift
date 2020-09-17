@@ -273,6 +273,102 @@ class VirtusizeTests: XCTestCase {
         XCTAssertTrue(virtusizeError!.debugDescription.contains(TestFixtures.notFoundResponse))
     }
 
+    func testGetUserProducts_hasExpectedUserProductList() {
+        let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
+        var actualUserProductList: [VirtusizeStoreProduct]?
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.userProductArrayJsonResponse.data(using: .utf8),
+            urlResponse: nil,
+            error: nil
+        )
+
+        Virtusize.getUserProducts(onSuccess: { userProductList in
+            actualUserProductList = userProductList
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertEqual(actualUserProductList?.count, 2)
+        XCTAssertEqual(actualUserProductList?[0].id, 123456)
+        XCTAssertEqual(actualUserProductList?[0].sizes.count, 1)
+        XCTAssertEqual(actualUserProductList?[0].sizes[0].name, "S")
+        XCTAssertEqual(actualUserProductList?[1].id, 654321)
+        XCTAssertEqual(actualUserProductList?[1].sizes[0].name, nil)
+        XCTAssertEqual(
+            actualUserProductList?[1].sizes[0].measurements,
+            [
+                "height": 820,
+                "bust": 520,
+                "sleeve": 930
+            ]
+        )
+        XCTAssertEqual(actualUserProductList?[1].productType, 2)
+        XCTAssertEqual(actualUserProductList?[1].name, "test2")
+        XCTAssertEqual(actualUserProductList?[1].cloudinaryPublicId, "")
+        XCTAssertEqual(actualUserProductList?[1].isFavorite, true)
+    }
+
+    func testGetUserProducts_userHasAnEmptyWardrobe_hasExpectedEmptyUserProductList() {
+        let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
+        var actualUserProductList: [VirtusizeStoreProduct]?
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.emptyProductArrayJsonResponse.data(using: .utf8),
+            urlResponse: nil,
+            error: nil
+        )
+
+        Virtusize.getUserProducts(onSuccess: { userProductList in
+            actualUserProductList = userProductList
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertEqual(actualUserProductList?.count, 0)
+    }
+
+    func testGetUserProducts_userWardrobeDoesNotExist_return404error() {
+        let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
+        var actualError: VirtusizeError?
+
+        let userProductUrl = "https://staging.virtusize.com/a/api/v3/user-products"
+        let notFoundURLResponse = HTTPURLResponse(url: URL(string: userProductUrl)!,
+                                                  statusCode: 404,
+                                                  httpVersion: nil,
+                                                  headerFields: [:])!
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.wardrobeNotFoundErrorJsonResponse.data(using: .utf8),
+            urlResponse: notFoundURLResponse,
+            error: nil
+        )
+
+        Virtusize.getUserProducts(onError: { error in
+            actualError = error
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertNotNil(actualError)
+        XCTAssertTrue(actualError!.debugDescription.contains("{\"detail\": \"No wardrobe found\"}"))
+    }
+
     func testGetProductTypes_hasExpectedProductTypes() {
         let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
         var actualProductTypes: [VirtusizeProductType] = []

@@ -31,6 +31,7 @@ class APIRequestTests: XCTestCase {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
         Virtusize.environment = .staging
+        Virtusize.authToken = "auth_token"
     }
 
     override func tearDownWithError() throws {
@@ -76,6 +77,20 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
             "https://staging.virtusize.com/a/api/v3/store-products/\(TestFixtures.productId)?format=json"
+        )
+    }
+
+    func testGetUserProducts_expectedHeadersAndHttpBody() {
+
+        let apiRequest = APIRequest.getUserProducts()
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken)")
+        XCTAssertNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://staging.virtusize.com/a/api/v3/user-products"
         )
     }
 

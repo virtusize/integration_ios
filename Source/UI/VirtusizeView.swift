@@ -56,6 +56,11 @@ extension VirtusizeView {
         failure: (() -> Void)? = nil
     ) {
         if let productId = product.productCheckData?.productDataId {
+            Virtusize.getUserProducts(onSuccess: { _ in
+                // TODO
+            }, onError: { error in
+                print(error.debugDescription)
+            })
             Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
                 Virtusize.getI18nTexts(onSuccess: { i18nLocalization in
                     onCompletion?(storeProduct, i18nLocalization)
