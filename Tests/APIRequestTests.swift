@@ -118,4 +118,18 @@ class APIRequestTests: XCTestCase {
         )
     }
 
+     func testGetUserBodyProfile_expectedHeadersAndHttpBody() {
+
+        let apiRequest = APIRequest.getUserBodyProfile()
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken)")
+        XCTAssertNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://staging.virtusize.com/a/api/v3/user-body-measurements"
+        )
+    }
+
 }
