@@ -372,4 +372,27 @@ public class Virtusize {
             onError?(error)
         })
     }
+
+    // TODO: add comment
+    internal class func getUserBodyProfile(
+        onSuccess: ((VirtusizeUserBodyProfile) -> Void)? = nil,
+        onError: ((VirtusizeError) -> Void)? = nil
+    ) {
+        guard let request = APIRequest.getUserBodyProfile() else {
+            return
+        }
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            do {
+                let userBodyProfile = try JSONDecoder().decode(VirtusizeUserBodyProfile.self, from: data)
+                onSuccess?(userBodyProfile)
+            } catch {
+                onError?(VirtusizeError.jsonDecodingFailed("VirtusizeUserBodyProfile", error))
+            }
+        }, error: { error in
+            onError?(error)
+        })
+    }
 }

@@ -71,11 +71,12 @@ class VirtusizeUserBodyProfileTests: XCTestCase {
             from: TestFixtures.emptyUserBodyProfileFixture
         )
 
-        XCTAssertNil(userBodyProfile)
-        XCTAssertNil(userBodyProfile?.gender)
+        XCTAssertNotNil(userBodyProfile)
+        XCTAssertEqual(userBodyProfile?.gender, "")
         XCTAssertNil(userBodyProfile?.age)
         XCTAssertNil(userBodyProfile?.height)
         XCTAssertNil(userBodyProfile?.weight)
+        XCTAssertNil(userBodyProfile?.bodyData)
     }
 
     func testDecoding_emptyJsonData_shouldReturnNil() {

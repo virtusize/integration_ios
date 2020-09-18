@@ -59,7 +59,7 @@ internal struct APIRequest {
         request.addValue(BrowserID.current.identifier, forHTTPHeaderField: "x-vs-bid")
         return request
     }
-    
+
     private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = apiRequest(components: components, method: method)
         request.addValue("Token \(Virtusize.authToken)", forHTTPHeaderField: "Authorization")
@@ -194,7 +194,7 @@ internal struct APIRequest {
         let endpoint = APIEndpoints.i18n(langCode: langCode)
         return apiRequest(components: endpoint.components)
     }
-    
+
     // TODO: comment
     internal static func getUserBodyProfile() -> URLRequest? {
         let endpoint = APIEndpoints.userBodyMeasurements

@@ -24,9 +24,9 @@
 
 // TODO: comment
 internal class VirtusizeUserBodyProfile: Codable {
-    let gender: String?
-    let age: Int
-    let height: Int
-    let weight: String
-    let bodyData: [String: Int?]
+    let gender: String
+    let age: Int?
+    let height: Int?
+    let weight: String?
+    let bodyData: [String: Int?]?
 }

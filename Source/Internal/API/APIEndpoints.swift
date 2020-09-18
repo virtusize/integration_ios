@@ -77,7 +77,7 @@ internal enum APIEndpoints {
 
         case .i18n(let langCode):
             components.path = "/bundle-payloads/aoyama/\(langCode)"
-            
+
         case .userBodyMeasurements:
            components.path = "/a/api/v3/user-body-measurements"
         }
