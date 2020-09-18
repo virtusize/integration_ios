@@ -56,8 +56,12 @@ extension VirtusizeView {
         failure: (() -> Void)? = nil
     ) {
         if let productId = product.productCheckData?.productDataId {
+            // TODO: Remove Testing API endpoints
             Virtusize.getUserProducts(onSuccess: { _ in
-                // TODO
+            }, onError: { error in
+                print(error.debugDescription)
+            })
+            Virtusize.getUserBodyProfile(onSuccess: { _ in
             }, onError: { error in
                 print(error.debugDescription)
             })
