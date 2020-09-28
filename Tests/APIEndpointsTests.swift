@@ -146,6 +146,15 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNil(endpoint.components.queryItems)
     }
 
+    func testUserBodyMeasurementsEndpoint_returnExpectedComponents() {
+        let endpoint = APIEndpoints.userBodyMeasurements
+
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-body-measurements")
+
+        XCTAssertNil(endpoint.components.queryItems)
+    }
+
     private func getQueryParametersDict(queryItems: [URLQueryItem]?) -> [String: String] {
         guard let items = queryItems else {
             return [:]

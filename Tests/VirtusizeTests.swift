@@ -338,7 +338,7 @@ class VirtusizeTests: XCTestCase {
         XCTAssertEqual(actualUserProductList?.count, 0)
     }
 
-    func testGetUserProducts_userWardrobeDoesNotExist_return404error() {
+    func testGetUserProducts_userWardrobeDoesNotExist_return404Error() {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
         var actualError: VirtusizeError?
 
@@ -428,6 +428,119 @@ class VirtusizeTests: XCTestCase {
             actualI18nLocalization?.noDataText,
             Localization.shared.localize("inpage_no_data_text", language: localizedLang)
         )
+    }
+
+    func testGetUserBodyProfile_whenRecieveValidUserBodyProfile_hasExpectedUserBodyProfile() {
+        let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
+        var actualUserBodyProfile: VirtusizeUserBodyProfile?
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.userBodyProfileFixture,
+            urlResponse: nil,
+            error: nil
+        )
+
+        Virtusize.getUserBodyProfile(onSuccess: { userBodyProfile in
+            actualUserBodyProfile = userBodyProfile
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertEqual(actualUserBodyProfile?.gender, "female")
+        XCTAssertEqual(actualUserBodyProfile?.age, 32)
+        XCTAssertEqual(actualUserBodyProfile?.height, 1630)
+        XCTAssertEqual(actualUserBodyProfile?.weight, "50.00")
+        XCTAssertEqual(
+            actualUserBodyProfile?.bodyData,
+            [
+                "hip": 830,
+                "bust": 755,
+                "neck": 300,
+                "rise": 215,
+                "bicep": 220,
+                "thigh": 480,
+                "waist": 630,
+                "inseam": 700,
+                "sleeve": 720,
+                "shoulder": 370,
+                "hipWidth": 300,
+                "bustWidth": 245,
+                "hipHeight": 750,
+                "headHeight": 215,
+                "kneeHeight": 395,
+                "waistWidth": 225,
+                "waistHeight": 920,
+                "armpitHeight": 1130,
+                "sleeveLength": 520,
+                "shoulderWidth": 340,
+                "shoulderHeight": 1240
+            ]
+        )
+    }
+
+    func testGetUserBodyProfile_whenRecieveEmptyUserBodyProfile_hasExpectedUserBodyProfile() {
+        let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
+        var actualUserBodyProfile: VirtusizeUserBodyProfile?
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.emptyUserBodyProfileFixture,
+            urlResponse: nil,
+            error: nil
+        )
+
+        Virtusize.getUserBodyProfile(onSuccess: { userBodyProfile in
+            actualUserBodyProfile = userBodyProfile
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertNotNil(actualUserBodyProfile)
+        XCTAssertEqual(actualUserBodyProfile?.gender, "")
+        XCTAssertNil(actualUserBodyProfile?.age)
+        XCTAssertNil(actualUserBodyProfile?.height)
+        XCTAssertNil(actualUserBodyProfile?.weight)
+        XCTAssertNil(actualUserBodyProfile?.bodyData)
+    }
+
+    func testGetUserBodyProfile_userWardrobeDoesNotExist_return404Error() {
+        let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
+        var actualError: VirtusizeError?
+
+        let userBodyMeasurementsUrl = "https://staging.virtusize.com/a/api/v3/user-body-measurements"
+        let notFoundURLResponse = HTTPURLResponse(url: URL(string: userBodyMeasurementsUrl)!,
+                                                  statusCode: 404,
+                                                  httpVersion: nil,
+                                                  headerFields: [:])!
+
+        Virtusize.session = MockURLSession(
+            data: TestFixtures.wardrobeNotFoundErrorJsonResponse.data(using: .utf8),
+            urlResponse: notFoundURLResponse,
+            error: nil
+        )
+
+        Virtusize.getUserBodyProfile(onError: { error in
+            actualError = error
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertNotNil(actualError)
+        XCTAssertTrue(actualError!.debugDescription.contains("{\"detail\": \"No wardrobe found\"}"))
     }
 }
 

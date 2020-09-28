@@ -57,9 +57,12 @@ internal struct APIRequest {
     private static func apiRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = HTTPRequest(components: components, method: method)
         request.addValue(BrowserID.current.identifier, forHTTPHeaderField: "x-vs-bid")
-        if components.path.contains(APIEndpoints.userProducts.components.path) {
-            request.addValue("Token \(Virtusize.authToken)", forHTTPHeaderField: "Authorization")
-        }
+        return request
+    }
+
+    private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
+        var request = apiRequest(components: components, method: method)
+        request.addValue("Token \(Virtusize.authToken)", forHTTPHeaderField: "Authorization")
         return request
     }
 
@@ -172,7 +175,7 @@ internal struct APIRequest {
     /// - Returns: A `URLRequest` for the `storeProducts` request
     internal static func getUserProducts() -> URLRequest? {
         let endpoint = APIEndpoints.userProducts
-        return apiRequest(components: endpoint.components)
+        return apiRequestWithAuthorization(components: endpoint.components)
     }
 
     /// Gets the `URLRequest` for the `productTypes` request
@@ -190,5 +193,11 @@ internal struct APIRequest {
     internal static func getI18n(langCode: String) -> URLRequest? {
         let endpoint = APIEndpoints.i18n(langCode: langCode)
         return apiRequest(components: endpoint.components)
+    }
+
+    // TODO: comment
+    internal static func getUserBodyProfile() -> URLRequest? {
+        let endpoint = APIEndpoints.userBodyMeasurements
+        return apiRequestWithAuthorization(components: endpoint.components)
     }
 }
