@@ -44,6 +44,7 @@
 		9C6DDE3324DD31530021073A /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDE3124DD314B0021073A /* LocalizationTests.swift */; };
 		9C6DDE3524DD317F0021073A /* StoreProductFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDE3424DD317F0021073A /* StoreProductFixtures.swift */; };
 		9C7DA17324973FBD00AD6B42 /* APISessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7DA17224973FBD00AD6B42 /* APISessionProtocol.swift */; };
+		9C90F97D2512FF6C008FEFD6 /* UserProductFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90F97C2512FF6C008FEFD6 /* UserProductFixtures.swift */; };
 		9C969FD124EB5F8A00DD642F /* VirtusizeI18nLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */; };
 		9C969FD324EBE0C400DD642F /* DeserializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD224EBE0C300DD642F /* DeserializerTests.swift */; };
 		9C969FD824EBF71200DD642F /* i18n_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C969FD524EBF71200DD642F /* i18n_en.json */; };
@@ -137,6 +138,7 @@
 		9C6DDE3124DD314B0021073A /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		9C6DDE3424DD317F0021073A /* StoreProductFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProductFixtures.swift; sourceTree = "<group>"; };
 		9C7DA17224973FBD00AD6B42 /* APISessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISessionProtocol.swift; sourceTree = "<group>"; };
+		9C90F97C2512FF6C008FEFD6 /* UserProductFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProductFixtures.swift; sourceTree = "<group>"; };
 		9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeI18nLocalization.swift; sourceTree = "<group>"; };
 		9C969FD224EBE0C300DD642F /* DeserializerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeserializerTests.swift; sourceTree = "<group>"; };
 		9C969FD524EBF71200DD642F /* i18n_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = i18n_en.json; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				9C633F27249388EB009C4392 /* TestFixtures.swift */,
 				9C6DDE2624DB06A50021073A /* ProductTypeFixtures.swift */,
 				9C6DDE3424DD317F0021073A /* StoreProductFixtures.swift */,
+				9C90F97C2512FF6C008FEFD6 /* UserProductFixtures.swift */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				9C58752024EF7DC200352474 /* VirtusizeViewStyle.swift in Sources */,
 				9C106EEE24FF99390012EE51 /* String+Extensions.swift in Sources */,
 				9C6DDE2724DB06A50021073A /* ProductTypeFixtures.swift in Sources */,
+				9C90F97D2512FF6C008FEFD6 /* UserProductFixtures.swift in Sources */,
 				4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */,
 				9CEAB7C924D9676200F969E1 /* VirtusizeStoreProduct.swift in Sources */,
 				9C58751E24EF7D5000352474 /* VirtusizeView.swift in Sources */,

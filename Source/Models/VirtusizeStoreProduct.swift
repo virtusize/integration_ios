@@ -39,23 +39,38 @@ internal class VirtusizeStoreProduct: Codable {
     let cloudinaryPublicId: String
     /// The ID of the store that this product belongs to
     let store: Int
+    /// The boolean value to show if this product is marked as a favorite
+    let isFavorite: Bool?
     /// The additional data of type `VirtusizeStoreProductMeta`  represents the product
     let storeProductMeta: VirtusizeStoreProductMeta?
 
     private enum CodingKeys: String, CodingKey {
         // swiftlint:disable identifier_name
-        case id, sizes, externalId, productType, name, cloudinaryPublicId, store, storeProductMeta
+        case id, sizes, externalId, productType, name, cloudinaryPublicId, store, isFavorite, storeProductMeta
     }
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
         sizes = try values.decode([VirtusizeProductSize].self, forKey: .sizes)
-        externalId = try values.decode(String.self, forKey: .externalId)
+        if let externalId = try? values.decode(String.self, forKey: .externalId) {
+            self.externalId = externalId
+        } else {
+            self.externalId = ""
+        }
         productType = try values.decode(Int.self, forKey: .productType)
         name = try values.decode(String.self, forKey: .name)
-        cloudinaryPublicId = try values.decode(String.self, forKey: .cloudinaryPublicId)
-        store = try values.decode(Int.self, forKey: .store)
+        if let cloudinaryPublicId = try? values.decode(String.self, forKey: .cloudinaryPublicId) {
+            self.cloudinaryPublicId = cloudinaryPublicId
+        } else {
+            self.cloudinaryPublicId = ""
+        }
+        if let store = try? values.decode(Int.self, forKey: .store) {
+            self.store = store
+        } else {
+            self.store = 0
+        }
+        isFavorite = try? values.decode(Bool.self, forKey: .isFavorite)
         storeProductMeta = try? values.decode(VirtusizeStoreProductMeta.self, forKey: .storeProductMeta)
     }
 

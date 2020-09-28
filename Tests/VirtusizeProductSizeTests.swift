@@ -42,11 +42,7 @@ class VirtusizeProductSizeTests: XCTestCase {
             productSize?.measurements, [
                 "height": 560,
                 "bust": 450,
-                "sleeve": 730,
-                "shoulder": nil,
-                "waist": nil,
-                "hem": nil,
-                "bicep": nil
+                "sleeve": 730
             ]
         )
     }

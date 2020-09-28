@@ -44,6 +44,9 @@ public class Virtusize {
     /// The array of `VirtusizeView` that clients use on their mobile application
     private static var virtusizeViews: [VirtusizeView] = []
 
+    /// The API key that is unique and provided for Virtusize clients
+    internal static var authToken: String = ""
+
     /// Allow process pool to be set to share cookies
     public static var processPool: WKProcessPool?
 
@@ -284,6 +287,32 @@ public class Virtusize {
             do {
                 let storeProduct = try JSONDecoder().decode(VirtusizeStoreProduct.self, from: data)
                 onSuccess?(storeProduct)
+            } catch {
+                onError?(VirtusizeError.jsonDecodingFailed("VirtusizeStoreProduct", error))
+            }
+        }, error: { error in
+            onError?(error)
+        })
+    }
+
+    /// The API request for getting the list of user products from the Virtusize server
+    ///
+    /// - Parameters:
+    ///   - onSuccess: A callback to pass `[VirtusizeStoreProduct]` when the request is successful
+    ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
+    internal class func getUserProducts(
+        onSuccess: (([VirtusizeStoreProduct]) -> Void)? = nil,
+        onError: ((VirtusizeError) -> Void)? = nil) {
+        guard let request = APIRequest.getUserProducts() else {
+            return
+        }
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            do {
+                let userProduct = try JSONDecoder().decode([VirtusizeStoreProduct].self, from: data)
+                onSuccess?(userProduct)
             } catch {
                 onError?(VirtusizeError.jsonDecodingFailed("VirtusizeStoreProduct", error))
             }

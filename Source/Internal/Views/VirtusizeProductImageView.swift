@@ -114,9 +114,12 @@ internal class VirtusizeProductImageView: UIView {
         })
     }
 
-    private func getCloudinaryImageUrl(_ cloudinaryPublicId: String) -> URL? {
+    private func getCloudinaryImageUrl(_ cloudinaryPublicId: String?) -> URL? {
+        if cloudinaryPublicId == nil {
+            return nil
+        }
         return URL(string:
-            "https://res.cloudinary.com/virtusize/image/upload/t_product-large-retina-v1/\(cloudinaryPublicId).jpg"
+            "https://res.cloudinary.com/virtusize/image/upload/t_product-large-retina-v1/\(cloudinaryPublicId!).jpg"
             ) ?? nil
     }
 
