@@ -24,6 +24,14 @@
 
 /// This class represents the additional info of a store product
 internal class VirtusizeStoreProductAdditionalInfo: Codable {
+    /// The brand of the store product
+    let brand: String
+    /// The gender for the store product
+    let gender: String?
+    /// The list of the product sizes
+    let sizes: [String: [String: Int?]]
+    /// The model info
+    let modelInfo: [String: VirtusizeAnyCodable]?
     /// The general fit key
     let fit: String?
     /// The store product style
@@ -32,14 +40,28 @@ internal class VirtusizeStoreProductAdditionalInfo: Codable {
     let brandSizing: VirtusizeBrandSizing?
 
     private enum CodingKeys: String, CodingKey {
-        case fit, style, brandSizing
+        case brand, gender, sizes, modelInfo, fit, style, brandSizing
     }
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        brand = try values.decode(String.self, forKey: .brand)
+        gender = try? values.decode(String.self, forKey: .gender)
+        if let productSizes = try? values.decode([String: [String: Int?]].self, forKey: .sizes) {
+            sizes = productSizes
+        } else {
+            sizes = [:]
+        }
+        modelInfo = try? values.decode([String: VirtusizeAnyCodable].self, forKey: .modelInfo)
         fit = try? values.decode(String.self, forKey: .fit)
         style = try? values.decode(String.self, forKey: .style)
         brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let data = try JSONSerialization.data(withJSONObject: container, options: [])
+        try container.encode(data, forKey: .modelInfo)
     }
 
     /// Gets the general fit key for the fitting related InPage texts

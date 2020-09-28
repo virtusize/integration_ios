@@ -25,6 +25,7 @@
 		9C106EC424FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EC324FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf */; };
 		9C106EC624FF40AA0012EE51 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EC524FF40AA0012EE51 /* Colors.swift */; };
 		9C106EEE24FF99390012EE51 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EED24FF99390012EE51 /* String+Extensions.swift */; };
+		9C11691F2521DEB1006827B9 /* VirtusizeAnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */; };
 		9C1F83AB25147EF10061B777 /* VirtusizeUserBodyProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F83A925147E8F0061B777 /* VirtusizeUserBodyProfileTests.swift */; };
 		9C1F83AD25147F4C0061B777 /* VirtusizeUserBodyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */; };
 		9C1F83B5251480FF0061B777 /* TestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F27249388EB009C4392 /* TestFixtures.swift */; };
@@ -121,6 +122,7 @@
 		9C106EC324FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Regular.ttf"; sourceTree = "<group>"; };
 		9C106EC524FF40AA0012EE51 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9C106EED24FF99390012EE51 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAnyCodable.swift; sourceTree = "<group>"; };
 		9C1F83A925147E8F0061B777 /* VirtusizeUserBodyProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfileTests.swift; sourceTree = "<group>"; };
 		9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfile.swift; sourceTree = "<group>"; };
 		9C1F83AE25147FCF0061B777 /* UserBodyProfileFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBodyProfileFixtures.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				9C6DDE2D24DCF2A70021073A /* VirtusizeUserData.swift */,
 				9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */,
 				9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */,
+				9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -516,7 +519,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Virtusize AB";
 				TargetAttributes = {
 					4DED8D1B205755C3001CA7DF = {
@@ -621,6 +624,7 @@
 				9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */,
 				9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */,
 				9C106EC624FF40AA0012EE51 /* Colors.swift in Sources */,
+				9C11691F2521DEB1006827B9 /* VirtusizeAnyCodable.swift in Sources */,
 				4D6C579A205FCBE900DA910E /* APIRequest.swift in Sources */,
 				9C106EB024FCE0C70012EE51 /* VirtusizeInPageStandard.swift in Sources */,
 				DF71642C21A28939002C7202 /* VirtusizeEnvironment.swift in Sources */,
@@ -738,6 +742,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -806,6 +811,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -849,7 +855,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
@@ -871,7 +877,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
@@ -890,7 +896,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z57T9D7E3B;
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -907,7 +913,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z57T9D7E3B;
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
