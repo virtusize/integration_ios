@@ -118,6 +118,10 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "value": 220,
                         "predicted": true
                     },
+                    "chest": {
+                        "value": 755,
+                        "predicted": true
+                    },
                     "shoulderHeight": {
                         "value": 1240,
                         "predicted": true

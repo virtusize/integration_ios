@@ -60,17 +60,9 @@ internal struct APIRequest {
         return request
     }
 
-    private static func apiRequestWithAuthorization(
-        components: URLComponents,
-        method: APIMethod = .get,
-        withPayload payload: Data? = nil
-    ) -> URLRequest {
+    private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = apiRequest(components: components, method: method)
         request.addValue("Token \(Virtusize.authToken)", forHTTPHeaderField: "Authorization")
-        if payload != nil {
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = payload
-        }
         return request
     }
 
@@ -225,6 +217,6 @@ internal struct APIRequest {
         ) else {
             return nil
         }
-        return apiRequestWithAuthorization(components: endpoint.components, withPayload: jsonData)
+        return apiRequest(components: endpoint.components, withPayload: jsonData)
     }
 }

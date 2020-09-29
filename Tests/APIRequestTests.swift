@@ -132,4 +132,66 @@ class APIRequestTests: XCTestCase {
         )
     }
 
+    // swiftlint:disable function_body_length
+    func testGetBodyProfileRecommendedSize_expectedHeadersAndHttpBody() {
+        guard let storeProduct = TestFixtures.getStoreProduct(gender: "male") else {
+            return
+        }
+
+        guard let userBodyProfile = TestFixtures.getUserBodyProfile() else {
+            return
+        }
+        let apiRequest = APIRequest.getBodyProfileRecommendedSize(
+            productTypes: TestFixtures.getProductTypes(),
+            storeProduct: storeProduct,
+            userBodyProfile: userBodyProfile)
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertNotNil(apiRequest?.httpBody)
+        let actualParams = try? JSONDecoder().decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
+        XCTAssertNotNil(actualParams)
+        XCTAssertEqual(actualParams?.additionalInfo.count, 5)
+        XCTAssertEqual(actualParams?.additionalInfo["gender"]?.value as? String, "male")
+        XCTAssertEqual(
+            actualParams?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
+            ["37": [
+                "sleeve": 845,
+                "bust": 660,
+                "height": 760
+            ],
+            "36": [
+                "sleeve": 825,
+                "bust": 645,
+                "height": 750
+            ],
+            "35": [
+                "sleeve": 805,
+                "bust": 630,
+                "height": 740
+            ]
+            ]
+        )
+        XCTAssertEqual(
+            (actualParams?.additionalInfo["model_info"]?.value as? [String: Any])?["size"] as? String,
+            "38"
+        )
+        XCTAssertEqual(
+            (actualParams?.additionalInfo["model_info"]?.value as? [String: Any])?["hip"] as? Int,
+            85
+        )
+        XCTAssertEqual(actualParams?.additionalInfo["brand"]?.value as? String, "Virtusize")
+        XCTAssertEqual(actualParams?.additionalInfo["fit"]?.value as? String, "regular")
+        XCTAssertEqual(actualParams?.bodyData.count, 22)
+        XCTAssertEqual((actualParams?.bodyData["chest"])?["value"]?.value as? Int, 755)
+        XCTAssertEqual(actualParams?.itemSizes.count, 3)
+        XCTAssertEqual(actualParams?.itemSizes["36"]?["bust"], 645)
+        XCTAssertEqual(actualParams?.userGender, "female")
+        XCTAssertEqual(actualParams?.productType, "jacket")
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://services.virtusize.com/stg/ds-functions/size-rec/get-size"
+        )
+    }
+
 }

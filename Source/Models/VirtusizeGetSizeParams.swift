@@ -58,17 +58,6 @@ internal struct VirtusizeGetSizeParams: Codable {
                 storeProduct.storeProductMeta?.additionalInfo?.gender ?? storeProduct.storeProductMeta?.gender ?? nil
             )
         ]
-        var bodyDataDict: [String: [String: VirtusizeAnyCodable]] = [:]
-        if let bodyData = userBodyProfile?.bodyData {
-            for (name, measurement) in bodyData {
-                if let measurement = measurement {
-                    bodyDataDict[name] = [
-                        "value": VirtusizeAnyCodable(measurement),
-                        "predicted": VirtusizeAnyCodable(true)
-                    ]
-                }
-            }
-        }
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
         itemSizes = getItemSizesDict(storeProduct: storeProduct)
         if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
@@ -102,6 +91,12 @@ internal struct VirtusizeGetSizeParams: Codable {
                         "value": VirtusizeAnyCodable(measurement),
                         "predicted": VirtusizeAnyCodable(true)
                     ]
+                    if name == "bust" {
+                        bodyDataDict["chest"] = [
+                            "value": VirtusizeAnyCodable(measurement),
+                            "predicted": VirtusizeAnyCodable(true)
+                        ]
+                    }
                 }
             }
         }
