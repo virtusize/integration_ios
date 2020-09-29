@@ -58,12 +58,6 @@ internal class VirtusizeStoreProductAdditionalInfo: Codable {
         brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
     }
 
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        let data = try JSONSerialization.data(withJSONObject: container, options: [])
-        try container.encode(data, forKey: .modelInfo)
-    }
-
     /// Gets the general fit key for the fitting related InPage texts
     func getGeneralFitKey() -> String? {
         if fit == nil {

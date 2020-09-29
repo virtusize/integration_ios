@@ -49,7 +49,7 @@ class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
     func testDecoding_validStoreProductAdditionalInfoWithEmptySizesAndModelInfo_shouldReturnExpectedStructure() {
         let storeProductAdditionalInfo = try? JSONDecoder().decode(
             VirtusizeStoreProductAdditionalInfo.self,
-            from: productAdditionalInfoFixtureWithEmptyInfo
+            from: productEmptyAdditionalInfoFixture
         )
 
         XCTAssertEqual(storeProductAdditionalInfo?.brand, "Virtusize")
@@ -105,7 +105,7 @@ class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
         """.utf8
     )
 
-    private let productAdditionalInfoFixtureWithEmptyInfo = Data(
+    private let productEmptyAdditionalInfoFixture = Data(
         """
             {
                 "brand":"Virtusize",

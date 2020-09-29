@@ -81,9 +81,10 @@ internal enum APIEndpoints {
 
         case .userBodyMeasurements:
            components.path = "/a/api/v3/user-body-measurements"
-            
+
         case .getSize:
-            components.path = (Virtusize.environment == .staging) ? "/stg/ds-functions/size-rec/get-size" : "/ds-functions/size-rec/get-size"
+            components.path = (Virtusize.environment == .staging)
+                ? "/stg/ds-functions/size-rec/get-size" : "/ds-functions/size-rec/get-size"
         }
         return components
     }

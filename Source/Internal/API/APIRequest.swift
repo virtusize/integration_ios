@@ -60,9 +60,17 @@ internal struct APIRequest {
         return request
     }
 
-    private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
+    private static func apiRequestWithAuthorization(
+        components: URLComponents,
+        method: APIMethod = .get,
+        withPayload payload: Data? = nil
+    ) -> URLRequest {
         var request = apiRequest(components: components, method: method)
         request.addValue("Token \(Virtusize.authToken)", forHTTPHeaderField: "Authorization")
+        if payload != nil {
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = payload
+        }
         return request
     }
 
@@ -199,5 +207,24 @@ internal struct APIRequest {
     internal static func getUserBodyProfile() -> URLRequest? {
         let endpoint = APIEndpoints.userBodyMeasurements
         return apiRequestWithAuthorization(components: endpoint.components)
+    }
+
+    // TODO: comment
+    internal static func getBodyProfileRecommendedSize(
+        productTypes: [VirtusizeProductType],
+        storeProduct: VirtusizeStoreProduct,
+        userBodyProfile: VirtusizeUserBodyProfile
+    ) -> URLRequest? {
+        let endpoint = APIEndpoints.getSize
+        guard let jsonData = try? JSONEncoder().encode(
+            VirtusizeGetSizeParams(
+                productTypes: productTypes,
+                storeProduct: storeProduct,
+                userBodyProfile: userBodyProfile
+            )
+        ) else {
+            return nil
+        }
+        return apiRequestWithAuthorization(components: endpoint.components, withPayload: jsonData)
     }
 }

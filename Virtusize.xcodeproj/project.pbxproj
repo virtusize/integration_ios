@@ -26,6 +26,8 @@
 		9C106EC624FF40AA0012EE51 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EC524FF40AA0012EE51 /* Colors.swift */; };
 		9C106EEE24FF99390012EE51 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EED24FF99390012EE51 /* String+Extensions.swift */; };
 		9C11691F2521DEB1006827B9 /* VirtusizeAnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */; };
+		9C1169342521F270006827B9 /* VirtusizeGetSizeParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1169332521F270006827B9 /* VirtusizeGetSizeParams.swift */; };
+		9C11693E2521F683006827B9 /* VirtusizeGetSizeParamsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1169372521F664006827B9 /* VirtusizeGetSizeParamsTests.swift */; };
 		9C1F83AB25147EF10061B777 /* VirtusizeUserBodyProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F83A925147E8F0061B777 /* VirtusizeUserBodyProfileTests.swift */; };
 		9C1F83AD25147F4C0061B777 /* VirtusizeUserBodyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */; };
 		9C1F83B5251480FF0061B777 /* TestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F27249388EB009C4392 /* TestFixtures.swift */; };
@@ -123,6 +125,8 @@
 		9C106EC524FF40AA0012EE51 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9C106EED24FF99390012EE51 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAnyCodable.swift; sourceTree = "<group>"; };
+		9C1169332521F270006827B9 /* VirtusizeGetSizeParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeParams.swift; sourceTree = "<group>"; };
+		9C1169372521F664006827B9 /* VirtusizeGetSizeParamsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeParamsTests.swift; sourceTree = "<group>"; };
 		9C1F83A925147E8F0061B777 /* VirtusizeUserBodyProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfileTests.swift; sourceTree = "<group>"; };
 		9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfile.swift; sourceTree = "<group>"; };
 		9C1F83AE25147FCF0061B777 /* UserBodyProfileFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBodyProfileFixtures.swift; sourceTree = "<group>"; };
@@ -382,6 +386,7 @@
 				9CEAB7CA24D967B800F969E1 /* VirtusizeStoreProductTests.swift */,
 				9C6DDE1E24DB02180021073A /* VirtusizeProductTypeTests.swift */,
 				9C1F83A925147E8F0061B777 /* VirtusizeUserBodyProfileTests.swift */,
+				9C1169372521F664006827B9 /* VirtusizeGetSizeParamsTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -413,6 +418,7 @@
 				9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */,
 				9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */,
 				9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */,
+				9C1169332521F270006827B9 /* VirtusizeGetSizeParams.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */,
 				9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */,
 				9C106EC624FF40AA0012EE51 /* Colors.swift in Sources */,
+				9C1169342521F270006827B9 /* VirtusizeGetSizeParams.swift in Sources */,
 				9C11691F2521DEB1006827B9 /* VirtusizeAnyCodable.swift in Sources */,
 				4D6C579A205FCBE900DA910E /* APIRequest.swift in Sources */,
 				9C106EB024FCE0C70012EE51 /* VirtusizeInPageStandard.swift in Sources */,
@@ -679,6 +686,7 @@
 				4DED8D2B205755C3001CA7DF /* VirtusizeTests.swift in Sources */,
 				9CEAB7C024D9582E00F969E1 /* VirtusizeStoreProductMetaTests.swift in Sources */,
 				9CB0390C24921FDA008CCD84 /* APIEventTests.swift in Sources */,
+				9C11693E2521F683006827B9 /* VirtusizeGetSizeParamsTests.swift in Sources */,
 				9C969FD324EBE0C400DD642F /* DeserializerTests.swift in Sources */,
 				9C6DDE2024DB021B0021073A /* VirtusizeProductTypeTests.swift in Sources */,
 				4D6C5790205FB76B00DA910E /* BrowserIDTests.swift in Sources */,

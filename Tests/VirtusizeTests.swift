@@ -208,7 +208,7 @@ class VirtusizeTests: XCTestCase {
         var actualStoreProduct: VirtusizeStoreProduct?
 
         Virtusize.session = MockURLSession(
-            data: TestFixtures.getStoreProductJsonResponse().data(using: .utf8),
+            data: TestFixtures.getStoreProductJsonResponse(gender: nil).data(using: .utf8),
             urlResponse: nil,
             error: nil
         )
@@ -390,11 +390,11 @@ class VirtusizeTests: XCTestCase {
             }
         }
 
-        XCTAssertEqual(actualProductTypes.count, 2)
+        XCTAssertEqual(actualProductTypes.count, 3)
         XCTAssertEqual(actualProductTypes[0].id, 1)
         XCTAssertEqual(actualProductTypes[0].weights, ["bust": 1, "waist": 1, "height": 0.25])
-        XCTAssertEqual(actualProductTypes[1].id, 18)
-        XCTAssertEqual(actualProductTypes[1].weights, ["depth": 1, "width": 2, "height": 1])
+        XCTAssertEqual(actualProductTypes[2].id, 18)
+        XCTAssertEqual(actualProductTypes[2].weights, ["depth": 1, "width": 2, "height": 1])
     }
 
     func testGetI18nTexts_hasExpectedI18nLocalization() {

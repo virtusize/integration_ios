@@ -31,6 +31,7 @@ class VirtusizeProductTypeTests: XCTestCase {
         let productType = try? JSONDecoder().decode(VirtusizeProductType.self, from: productTypeFixture)
 
         XCTAssertEqual(productType?.id, 1)
+        XCTAssertEqual(productType?.name, "dress")
         XCTAssertEqual(productType?.weights, ["bust": 1, "waist": 1, "height": 0.25])
     }
 
