@@ -1,5 +1,5 @@
 //
-//  VirtusizeView.swift
+//  APIResponse.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,25 +22,49 @@
 //  THE SOFTWARE.
 //
 
-import WebKit
+// TODO: add comment
+internal struct APIResponse {
+    var data: Data?
+    var response: URLResponse?
+    var error: Error?
+    var virtusizeError: VirtusizeError? = nil
 
-/// A protocol for the Virtusize specific views such as `VirtusizeButton` and `VirtusizeInPageView`
-public protocol VirtusizeView {
-    var style: VirtusizeViewStyle { get }
-    var presentingViewController: UIViewController? { get set }
-    var messageHandler: VirtusizeMessageHandler? { get set }
-
-    /// Sets up the InPage text
-    func setInPageText()
+    init(data: Data?, response: URLResponse?, error: Error?) {
+        self.data = data
+        self.response = response
+        self.error = error
+    }
 }
 
-/// Extension functions for `VirtusizeView`
-extension VirtusizeView {
+internal enum APIResult<Value> {
+    case success(Value)
+    case failure(VirtusizeError?)
+}
 
-    /// Opens the Virtusize web view
-    internal func openVirtusizeWebView() {
-        if let virtusize = VirtusizeWebViewController(handler: messageHandler, processPool: Virtusize.processPool) {
-            presentingViewController?.present(virtusize, animated: true, completion: nil)
+extension APIResult {
+
+    var string: String {
+        switch self {
+        case let .success(value):
+            return "\(value)"
+        case let .failure(error):
+            return error?.debugDescription ?? "Unknown Error"
+        }
+    }
+
+    var success: Value? {
+        if case .success(let value) = self {
+            return value
+        } else {
+            return nil
+        }
+    }
+
+    var failure: VirtusizeError? {
+        if case .failure(let error) = self {
+            return error
+        } else {
+            return nil
         }
     }
 }

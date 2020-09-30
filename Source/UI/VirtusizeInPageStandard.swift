@@ -293,21 +293,20 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             sharedApplication.safeOpenURL(url)
         }
     }
-
-    public override func setupProductDataCheck() {
-        guard let product = Virtusize.product else {
+    
+    public override func setInPageText() {
+        isHidden = false
+        setLoadingScreen(loading: true)
+        guard let storeProduct = Virtusize.storeProduct,
+              let i18nLocalization = Virtusize.i18nLocalization else {
+            self.showErrorScreen()
             return
         }
-        self.isHidden = false
-        setLoadingScreen(loading: true)
-        setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
-            self.productImageView.setImage(storeProduct: storeProduct, localImageUrl: Virtusize.product?.imageURL) {
-                self.setLoadingScreen(loading: false)
-                self.setMessageLabelTexts(storeProduct: storeProduct, i18nLocalization: i18nLocalization)
-            }
-        }, failure: {
-           self.showErrorScreen()
-        })
+
+        self.productImageView.setImage(storeProduct: storeProduct, localImageUrl: Virtusize.product?.imageURL) {
+            self.setLoadingScreen(loading: false)
+            self.setMessageLabelTexts(storeProduct: storeProduct, i18nLocalization: i18nLocalization)
+        }
     }
 
     private func setMessageLabelTexts(storeProduct: VirtusizeStoreProduct, i18nLocalization: VirtusizeI18nLocalization) {

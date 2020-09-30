@@ -1,5 +1,5 @@
 //
-//  VirtusizeView.swift
+//  VirtusizeBodyProfileRecommendedSize.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,25 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import WebKit
-
-/// A protocol for the Virtusize specific views such as `VirtusizeButton` and `VirtusizeInPageView`
-public protocol VirtusizeView {
-    var style: VirtusizeViewStyle { get }
-    var presentingViewController: UIViewController? { get set }
-    var messageHandler: VirtusizeMessageHandler? { get set }
-
-    /// Sets up the InPage text
-    func setInPageText()
-}
-
-/// Extension functions for `VirtusizeView`
-extension VirtusizeView {
-
-    /// Opens the Virtusize web view
-    internal func openVirtusizeWebView() {
-        if let virtusize = VirtusizeWebViewController(handler: messageHandler, processPool: Virtusize.processPool) {
-            presentingViewController?.present(virtusize, animated: true, completion: nil)
-        }
-    }
+internal struct VirtusizeBodyProfileRecommendedSize: Codable {
+    let sizeName: String
 }
