@@ -27,7 +27,7 @@ internal struct APIResponse {
     var data: Data?
     var response: URLResponse?
     var error: Error?
-    var virtusizeError: VirtusizeError? = nil
+    var virtusizeError: VirtusizeError?
 
     init(data: Data?, response: URLResponse?, error: Error?) {
         self.data = data

@@ -25,6 +25,7 @@
 import Foundation
 import WebKit
 
+// swiftlint:disable type_body_length
 /// The main class used by Virtusize clients to perform all available operations related to fit check
 public class Virtusize {
     // MARK: - Properties
@@ -65,26 +66,35 @@ public class Virtusize {
                     return
                 }
                 _product = product
-                if let productId = _product!.productCheckData?.productDataId {
-                    storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
-                    i18nLocalization = Virtusize.getI18nTextsAsync().success
-                    // TODO: Test API endpoints
-                    let productTypes = Virtusize.getProductTypesAsync().success
-                    let userBodyProfile = Virtusize.getUserBodyProfileAsync().success
-                    if productTypes != nil && storeProduct != nil && userBodyProfile != nil {
-                        print(
-                            Virtusize.getBodyProfileRecommendedSizeAsync(
-                                productTypes: productTypes!,
-                                storeProduct: storeProduct!,
-                                userBodyProfile: userBodyProfile!
-                            ).success
-                        )
+                DispatchQueue.global().async {
+                    if let productId = _product!.productCheckData?.productDataId {
+                        DispatchQueue.main.async {
+                            for index in 0...virtusizeViews.count-1 {
+                                virtusizeViews[index].isLoading()
+                            }
+                        }
+                        storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
+                        i18nLocalization = Virtusize.getI18nTextsAsync().success
+                        // TODO: Remove testing API endpoints
+                        let productTypes = Virtusize.getProductTypesAsync().success
+                        let userBodyProfile = Virtusize.getUserBodyProfileAsync().success
+                        if productTypes != nil && storeProduct != nil && userBodyProfile != nil {
+                            print(
+                                Virtusize.getBodyProfileRecommendedSizeAsync(
+                                    productTypes: productTypes!,
+                                    storeProduct: storeProduct!,
+                                    userBodyProfile: userBodyProfile!
+                                ).success ?? "No size recommendation"
+                            )
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        for index in 0...virtusizeViews.count-1 {
+                            virtusizeViews[index].setInPageText()
+                        }
+                        virtusizeViews.removeAll()
                     }
                 }
-                for index in 0...virtusizeViews.count-1 {
-                    virtusizeViews[index].setInPageText()
-                }
-                virtusizeViews.removeAll()
             }, failure: { _ in
                 virtusizeViews.removeAll()
             })
@@ -176,7 +186,7 @@ public class Virtusize {
             onError?(error)
         })
     }
-    
+
     /// TODO: add comment
     private class func performAsync(_ request: URLRequest) -> APIResponse? {
         var apiResponse: APIResponse?
@@ -188,15 +198,18 @@ public class Virtusize {
         }
         task.resume()
         URLSession.shared.finishTasksAndInvalidate()
-        
+
         _ = semaphore.wait(timeout: .distantFuture)
-        
+
         guard apiResponse != nil else {
             return apiResponse
         }
-        
+
         guard apiResponse!.error == nil else {
-            apiResponse!.virtusizeError = VirtusizeError.apiRequestError(request.url, apiResponse!.error!.localizedDescription)
+            apiResponse!.virtusizeError = VirtusizeError.apiRequestError(
+            request.url,
+            apiResponse!.error!.localizedDescription
+            )
             return apiResponse
         }
 
@@ -207,10 +220,9 @@ public class Virtusize {
             }
             apiResponse!.virtusizeError = VirtusizeError.apiRequestError(request.url, errorDebugDescription)
         }
-        
         return apiResponse
     }
-    
+
     /// TODO: add comment
     private class func getAPIResultAsync<T: Decodable>(request: URLRequest, type: T.Type) -> APIResult<T> {
         let apiResponse = performAsync(request)
@@ -362,7 +374,7 @@ public class Virtusize {
     /// - Parameters:
     ///   - productId: The internal product ID from the Virtusize server
     /// - Return:
-    internal class func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeStoreProduct> {
+internal class func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeStoreProduct> {
         guard let request = APIRequest.getStoreProductInfo(productId: productId) else {
             return .failure(nil)
         }
@@ -405,14 +417,14 @@ public class Virtusize {
             ) else {
             return .failure(nil)
         }
-        
+
         let apiResponse = performAsync(request)
-        
+
         guard apiResponse?.virtusizeError == nil,
             let data = apiResponse?.data else {
             return .failure(apiResponse?.virtusizeError)
         }
-        
+
         return .success(Deserializer.i18n(data: data))
     }
 
@@ -423,12 +435,12 @@ public class Virtusize {
         }
         return getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
     }
-    
+
     internal class func getBodyProfileRecommendedSizeAsync(
         productTypes: [VirtusizeProductType],
         storeProduct: VirtusizeStoreProduct,
         userBodyProfile: VirtusizeUserBodyProfile
-    ) -> APIResult<VirtusizeBodyProfileRecommendedSize>  {
+    ) -> APIResult<VirtusizeBodyProfileRecommendedSize> {
         guard let request = APIRequest.getBodyProfileRecommendedSize(
                 productTypes: productTypes,
                 storeProduct: storeProduct,

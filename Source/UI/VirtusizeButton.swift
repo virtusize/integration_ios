@@ -58,9 +58,11 @@ public class VirtusizeButton: UIButton, VirtusizeView {
         setStyle()
     }
 
-    public func setInPageText() {
+    public func isLoading() {
         isHidden = false
     }
+
+    public func setInPageText() {}
 
     /// Set up the style of `VirtusizeButton`
     private func setStyle() {

@@ -50,6 +50,10 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         setup()
     }
 
+    public func isLoading() {
+        isHidden = false
+    }
+
     internal func setup() {}
 
     internal func setHorizontalMargins(view: UIView, margin: CGFloat) {

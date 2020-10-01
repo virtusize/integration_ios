@@ -293,10 +293,13 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             sharedApplication.safeOpenURL(url)
         }
     }
-    
-    public override func setInPageText() {
-        isHidden = false
+
+    public override func isLoading() {
+        super.isLoading()
         setLoadingScreen(loading: true)
+    }
+
+    public override func setInPageText() {
         guard let storeProduct = Virtusize.storeProduct,
               let i18nLocalization = Virtusize.i18nLocalization else {
             self.showErrorScreen()

@@ -30,6 +30,7 @@ public protocol VirtusizeView {
     var presentingViewController: UIViewController? { get set }
     var messageHandler: VirtusizeMessageHandler? { get set }
 
+    func isLoading()
     /// Sets up the InPage text
     func setInPageText()
 }
