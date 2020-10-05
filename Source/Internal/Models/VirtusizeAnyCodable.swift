@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-public struct VirtusizeAnyCodable {
+internal struct VirtusizeAnyCodable {
     public var value: Any
 
     public init<T>(_ value: T?) {
