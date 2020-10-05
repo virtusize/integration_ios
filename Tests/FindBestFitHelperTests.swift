@@ -104,7 +104,7 @@ class FindBestFitHelperTests: XCTestCase {
     ]
 
     func testGetStoreProductFitInfo_withUserShirtXS_shouldHaveExpectedFitInfo() {
-        let actualStoreProductFitInfo = FindBestFitHelper.getStoreFitInfo(
+        let actualStoreProductFitInfo = FindBestFitHelper.getStoreProductFitInfo(
             userProductSize: userShirtXS.sizes[0],
             storeProductSize: storeShirt.sizes[0],
             storeProductTypeScoreWeights: shirtProductWeights
@@ -114,7 +114,7 @@ class FindBestFitHelperTests: XCTestCase {
     }
 
     func testGetStoreProductFitInfo_withUserShirtS_shouldHaveExpectedFitInfo() {
-        let actualStoreProductFitInfo = FindBestFitHelper.getStoreFitInfo(
+        let actualStoreProductFitInfo = FindBestFitHelper.getStoreProductFitInfo(
             userProductSize: userShirtS.sizes[0],
             storeProductSize: storeShirt.sizes[0],
             storeProductTypeScoreWeights: shirtProductWeights
@@ -124,7 +124,7 @@ class FindBestFitHelperTests: XCTestCase {
     }
 
     func testGetStoreProductFitInfo_withUserShirtM_shouldHaveExpectedFitInfo() {
-        let actualStoreProductFitInfo = FindBestFitHelper.getStoreFitInfo(
+        let actualStoreProductFitInfo = FindBestFitHelper.getStoreProductFitInfo(
             userProductSize: userShirtM.sizes[0],
             storeProductSize: storeShirt.sizes[0],
             storeProductTypeScoreWeights: shirtProductWeights
@@ -134,7 +134,7 @@ class FindBestFitHelperTests: XCTestCase {
     }
 
     func testGetStoreProductFitInfo_withUserShirtL_shouldHaveExpectedFitInfo() {
-        let actualStoreProductFitInfo = FindBestFitHelper.getStoreFitInfo(
+        let actualStoreProductFitInfo = FindBestFitHelper.getStoreProductFitInfo(
             userProductSize: userShirtL.sizes[0],
             storeProductSize: storeShirt.sizes[0],
             storeProductTypeScoreWeights: shirtProductWeights
@@ -142,6 +142,18 @@ class FindBestFitHelperTests: XCTestCase {
         XCTAssertEqual(actualStoreProductFitInfo.fitScore, 89.75)
         XCTAssertTrue(actualStoreProductFitInfo.isSmaller!)
     }
+
+    func testGetFindBestMatch_shouldReturnExpectedRecommendedSize() {
+        let userShirts = [userShirtXS, userShirtS, userShirtM, userShirtL]
+        let userProductRecommendedSize = FindBestFitHelper.findBestMatchedProductSize(
+            userProducts: userShirts,
+            storeProduct: storeShirt,
+            productTypes: TestFixtures.getProductTypes()
+        )
+        XCTAssertEqual(userProductRecommendedSize?.bestFitScore, 96.25)
+        XCTAssertEqual(userProductRecommendedSize?.bestUserProduct?.name, userShirts[2].name)
+        XCTAssertTrue(userProductRecommendedSize!.isStoreProductSmaller!)
+     }
 
     private static func getStoreProduct(
         productId: Int,

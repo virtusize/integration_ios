@@ -24,7 +24,35 @@
 
 class FindBestFitHelper {
 
-    static func getStoreFitInfo(
+    static func findBestMatchedProductSize(
+        userProducts: [VirtusizeStoreProduct],
+        storeProduct: VirtusizeStoreProduct,
+        productTypes: [VirtusizeProductType]
+    ) -> UserProductRecommendedSize? {
+        let storeProductType = productTypes.first(where: { $0.id == storeProduct.productType })
+        let compatibleUserProducts = userProducts.filter {
+            (storeProductType?.compatibleWith.contains($0.productType) ?? false)
+        }
+        var userProductRecommendedSize = UserProductRecommendedSize()
+        compatibleUserProducts.forEach({ userProduct in
+            let userProductSize = userProduct.sizes[0]
+            storeProduct.sizes.forEach({ storeProductSize in
+                let storeProductFitInfo = getStoreProductFitInfo(
+                    userProductSize: userProductSize,
+                    storeProductSize: storeProductSize,
+                    storeProductTypeScoreWeights: storeProductType?.weights ?? [:]
+                )
+                if storeProductFitInfo.fitScore > userProductRecommendedSize.bestFitScore {
+                    userProductRecommendedSize.bestFitScore = storeProductFitInfo.fitScore
+                    userProductRecommendedSize.bestUserProduct = userProduct
+                    userProductRecommendedSize.isStoreProductSmaller = storeProductFitInfo.isSmaller
+                }
+            })
+        })
+        return userProductRecommendedSize
+    }
+
+    static func getStoreProductFitInfo(
         userProductSize: VirtusizeProductSize,
         storeProductSize: VirtusizeProductSize,
         storeProductTypeScoreWeights: [String: Double]

@@ -440,13 +440,13 @@ internal class func getStoreProductInfoAsync(productId: Int) -> APIResult<Virtus
         productTypes: [VirtusizeProductType],
         storeProduct: VirtusizeStoreProduct,
         userBodyProfile: VirtusizeUserBodyProfile
-    ) -> APIResult<VirtusizeBodyProfileRecommendedSize> {
+    ) -> APIResult<BodyProfileRecommendedSize> {
         guard let request = APIRequest.getBodyProfileRecommendedSize(
                 productTypes: productTypes,
                 storeProduct: storeProduct,
                 userBodyProfile: userBodyProfile) else {
             return .failure(nil)
         }
-        return getAPIResultAsync(request: request, type: VirtusizeBodyProfileRecommendedSize.self)
+        return getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
     }
 }
