@@ -76,15 +76,23 @@ public class Virtusize {
                         storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
                         i18nLocalization = Virtusize.getI18nTextsAsync().success
                         // TODO: Remove testing API endpoints
+                        let userProducts = Virtusize.getUserProductsAsync().success
                         let productTypes = Virtusize.getProductTypesAsync().success
                         let userBodyProfile = Virtusize.getUserBodyProfileAsync().success
-                        if productTypes != nil && storeProduct != nil && userBodyProfile != nil {
+                        if userProducts != nil && productTypes != nil && storeProduct != nil && userBodyProfile != nil {
                             print(
                                 Virtusize.getBodyProfileRecommendedSizeAsync(
                                     productTypes: productTypes!,
                                     storeProduct: storeProduct!,
                                     userBodyProfile: userBodyProfile!
                                 ).success ?? "No size recommendation"
+                            )
+                            print(
+                                FindBestFitHelper.findBestMatchedProductSize(
+                                    userProducts: userProducts!,
+                                    storeProduct: storeProduct!,
+                                   productTypes: productTypes!
+                                )
                             )
                         }
                     }
