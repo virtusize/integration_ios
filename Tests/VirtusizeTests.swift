@@ -412,11 +412,11 @@ class VirtusizeTests: XCTestCase {
             }
         }
 
-        XCTAssertEqual(actualProductTypes.count, 3)
+        XCTAssertEqual(actualProductTypes.count, 4)
         XCTAssertEqual(actualProductTypes[0].id, 1)
         XCTAssertEqual(actualProductTypes[0].weights, ["bust": 1, "waist": 1, "height": 0.25])
-        XCTAssertEqual(actualProductTypes[2].id, 18)
-        XCTAssertEqual(actualProductTypes[2].weights, ["depth": 1, "width": 2, "height": 1])
+        XCTAssertEqual(actualProductTypes[3].id, 18)
+        XCTAssertEqual(actualProductTypes[3].weights, ["depth": 1, "width": 2, "height": 1])
     }
 
     func testGetI18nTexts_hasExpectedI18nLocalization() {
@@ -583,7 +583,7 @@ class VirtusizeTests: XCTestCase {
 
     func testGetUserBodyRecommendedSize() {
         let expectation = self.expectation(description: "Virtusize.getUserBodyRecommendedSize reaches the callback")
-        var actualRecommendedSize: VirtusizeBodyProfileRecommendedSize?
+        var actualRecommendedSize: BodyProfileRecommendedSize?
 
         Virtusize.session = MockURLSession(
             data: "{\"sizeName\": \"35\"}".data(using: .utf8),

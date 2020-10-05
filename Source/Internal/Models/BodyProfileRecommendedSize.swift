@@ -1,5 +1,5 @@
 //
-//  VirtusizeProductType.swift
+//  BodyProfileRecommendedSize.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,15 +22,6 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the product type info
-internal class VirtusizeProductType: Codable {
-    // swiftlint:disable identifier_name
-    /// The ID of a product type
-    let id: Int
-    /// The name of a product type
-    let name: String
-    /// The weights of this product type for the calculation of the fitting score
-    let weights: [String: Double]
-    /// The product type list that this product type is compatible with
-    let compatibleWith: [Int]
+internal struct BodyProfileRecommendedSize: Codable {
+    let sizeName: String
 }
