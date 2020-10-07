@@ -130,8 +130,22 @@ internal struct Deserializer {
         }
 
         let inpageJSONObject = aoyamaJSONObject["inpage"] as? JSONObject
+		let oneSizeJSONObject = inpageJSONObject?["oneSize"] as? JSONObject
+		let multiSizeJSONObject = inpageJSONObject?["multiSize"] as? JSONObject
+		let accessoryJSONObject = inpageJSONObject?["accessory"] as? JSONObject
 
         i18nLocalization.defaultAccessoryText = inpageJSONObject?["defaultAccessoryText"] as? String
+		i18nLocalization.hasProductAccessoryTopText = accessoryJSONObject?["hasProductLead"] as? String
+		i18nLocalization.hasProductAccessoryBottomText = accessoryJSONObject?["hasProduct"] as? String
+		i18nLocalization.oneSizeCloseTopText = oneSizeJSONObject?["closeLead"] as? String
+		i18nLocalization.oneSizeSmallerTopText = oneSizeJSONObject?["smallerLead"] as? String
+		i18nLocalization.oneSizeLargerTopText = oneSizeJSONObject?["largerLead"] as? String
+		i18nLocalization.oneSizeCloseBottomText = oneSizeJSONObject?["close"] as? String
+		i18nLocalization.oneSizeSmallerBottomText = oneSizeJSONObject?["smaller"] as? String
+		i18nLocalization.oneSizeLargerBottomText = oneSizeJSONObject?["larger"] as? String
+		i18nLocalization.bodyProfileOneSizeText = oneSizeJSONObject?["bodyProfile"] as? String
+		i18nLocalization.sizeComparisonMultiSizeText = multiSizeJSONObject?["sizeComparison"] as? String
+		i18nLocalization.bodyProfileMultiSizeText = multiSizeJSONObject?["bodyProfile"] as? String
         i18nLocalization.noDataText = inpageJSONObject?["noDataText"] as? String
 
         return i18nLocalization

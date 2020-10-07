@@ -30,9 +30,8 @@ public protocol VirtusizeView {
     var presentingViewController: UIViewController? { get set }
     var messageHandler: VirtusizeMessageHandler? { get set }
 
+	/// Sets up the loading UI
     func isLoading()
-    /// Sets up the InPage text
-    func setInPageText()
 }
 
 /// Extension functions for `VirtusizeView`

@@ -88,7 +88,7 @@
 		9CEC8D852529CF58001CBDFB /* FindBestFitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D842529CF58001CBDFB /* FindBestFitHelper.swift */; };
 		9CEC8D8C252AB963001CBDFB /* StoreProductFitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D8B252AB963001CBDFB /* StoreProductFitInfo.swift */; };
 		9CEC8D93252AC606001CBDFB /* FindBestFitHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D8F252AC54F001CBDFB /* FindBestFitHelperTests.swift */; };
-		9CEC8D99252B1986001CBDFB /* UserProductRecommendedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D98252B1986001CBDFB /* UserProductRecommendedSize.swift */; };
+		9CEC8D99252B1986001CBDFB /* SizeComparisonRecommendedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */; };
 		9CF9666A24F41191001D3458 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9666924F41191001D3458 /* Font.swift */; };
 		DF6B5C9E219D151F000B3402 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B5C9D219D151F000B3402 /* Assets.swift */; };
 		DF71642821A28501002C7202 /* VirtusizeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF71642721A28501002C7202 /* VirtusizeError.swift */; };
@@ -192,7 +192,7 @@
 		9CEC8D842529CF58001CBDFB /* FindBestFitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBestFitHelper.swift; sourceTree = "<group>"; };
 		9CEC8D8B252AB963001CBDFB /* StoreProductFitInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProductFitInfo.swift; sourceTree = "<group>"; };
 		9CEC8D8F252AC54F001CBDFB /* FindBestFitHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBestFitHelperTests.swift; sourceTree = "<group>"; };
-		9CEC8D98252B1986001CBDFB /* UserProductRecommendedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProductRecommendedSize.swift; sourceTree = "<group>"; };
+		9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeComparisonRecommendedSize.swift; sourceTree = "<group>"; };
 		9CF9666924F41191001D3458 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		DF6B5C9D219D151F000B3402 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Assets.swift; path = Source/Internal/Constants/Assets.swift; sourceTree = "<group>"; };
 		DF71642421A2818E002C7202 /* ROADMAP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ROADMAP.md; sourceTree = "<group>"; };
@@ -425,7 +425,7 @@
 				9CEAB7AF24D930F000F969E1 /* VirtusizeBrandSizing.swift */,
 				9CEC8D8B252AB963001CBDFB /* StoreProductFitInfo.swift */,
 				9C33F698252449E1008DBF41 /* BodyProfileRecommendedSize.swift */,
-				9CEC8D98252B1986001CBDFB /* UserProductRecommendedSize.swift */,
+				9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -669,7 +669,7 @@
 				9CEAB7B024D930F000F969E1 /* VirtusizeBrandSizing.swift in Sources */,
 				9C1F83AD25147F4C0061B777 /* VirtusizeUserBodyProfile.swift in Sources */,
 				9C1F83B7251481040061B777 /* StoreProductFixtures.swift in Sources */,
-				9CEC8D99252B1986001CBDFB /* UserProductRecommendedSize.swift in Sources */,
+				9CEC8D99252B1986001CBDFB /* SizeComparisonRecommendedSize.swift in Sources */,
 				4D6C578E205FB6F400DA910E /* BrowserID.swift in Sources */,
 				9C58751C24EF7D2500352474 /* VirtusizeInPageMini.swift in Sources */,
 				9CEC8D852529CF58001CBDFB /* FindBestFitHelper.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  UserProductRecommendedSize.swift
+//  SizeComparisonRecommendedSize.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,7 +22,8 @@
 //  THE SOFTWARE.
 //
 
-internal struct UserProductRecommendedSize {
+// TODO: add comment
+internal struct SizeComparisonRecommendedSize {
     var bestFitScore: Double
     var bestUserProduct: VirtusizeStoreProduct?
     var isStoreProductSmaller: Bool?

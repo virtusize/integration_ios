@@ -308,16 +308,28 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
         self.productImageView.setImage(storeProduct: storeProduct, localImageUrl: Virtusize.product?.imageURL) {
             self.setLoadingScreen(loading: false)
-            self.setMessageLabelTexts(storeProduct: storeProduct, i18nLocalization: i18nLocalization)
+            self.setMessageLabelTexts(
+				storeProduct,
+				i18nLocalization,
+				Virtusize.sizeComparisonRecommendedSize,
+				Virtusize.bodyProfileRecommendedSize?.sizeName
+			)
         }
     }
 
-    private func setMessageLabelTexts(storeProduct: VirtusizeStoreProduct, i18nLocalization: VirtusizeI18nLocalization) {
+	private func setMessageLabelTexts(
+		_ storeProduct: VirtusizeStoreProduct,
+		_ i18nLocalization: VirtusizeI18nLocalization,
+		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
+		_ bodyProfileRecommendedSizeName: String?
+	) {
         let trimType = VirtusizeI18nLocalization.TrimType.MULTIPLELINES
-        let recommendationText = storeProduct.getRecommendationText(
-            i18nLocalization: i18nLocalization,
-            trimType: trimType
-        )
+		let recommendationText = storeProduct.getRecommendationText(
+			i18nLocalization,
+			sizeComparisonRecommendedSize,
+			bodyProfileRecommendedSizeName,
+			trimType
+		)
         let recommendationTextArray = recommendationText.components(separatedBy: trimType.rawValue)
         if recommendationTextArray.count == 2 {
             self.topMessageLabel.attributedText = NSAttributedString(
