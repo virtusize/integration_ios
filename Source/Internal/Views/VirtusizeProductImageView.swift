@@ -119,7 +119,7 @@ internal class VirtusizeProductImageView: UIView {
             return nil
         }
         return URL(string:
-            "https://res.cloudinary.com/virtusize/image/upload/t_product-large-retina-v1/\(cloudinaryPublicId).jpg"
+            "https://res.cloudinary.com/virtusize/image/upload/q_auto,f_auto/\(cloudinaryPublicId).jpg"
             )
     }
 
