@@ -103,11 +103,9 @@ internal class VirtusizeStoreProduct: Codable {
         _ bodyProfileRecommendedSizeName: String?,
         _ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
     ) -> String {
-        var text = noDataText(i18nLocalization)
+		var text = i18nLocalization.getNoDataText()
         if isAccessory() {
-            if let accessoryText = accessoryText(i18nLocalization, sizeComparisonRecommendedSize) {
-                text = accessoryText
-            }
+			text = accessoryText(i18nLocalization, sizeComparisonRecommendedSize)
         } else if self.sizes.count == 1 {
             text = oneSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName)
         } else {
@@ -117,16 +115,12 @@ internal class VirtusizeStoreProduct: Codable {
     }
 
 	// TODO: add comment
-    private func noDataText(_ i18nLocalization: VirtusizeI18nLocalization) -> String {
-        return i18nLocalization.noDataText ?? Localization.shared.localize("inpage_no_data_text")
-    }
-
     private func accessoryText(
         _ i18nLocalization: VirtusizeI18nLocalization,
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
-    ) -> String? {
+    ) -> String {
         return sizeComparisonRecommendedSize?.bestUserProduct?.sizes[0].name != nil ?
-            i18nLocalization.getHasProductAccessoryText() : i18nLocalization.defaultAccessoryText
+            i18nLocalization.getHasProductAccessoryText() : i18nLocalization.getDefaultAccessoryText()
     }
 
     private func oneSizeText(
@@ -134,17 +128,13 @@ internal class VirtusizeStoreProduct: Codable {
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
         _ bodyProfileRecommendedSizeName: String?
     ) -> String {
-		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize,
-		   let sizeComparisonOneSizeText = i18nLocalization.getSizeComparisonOneSizeText(
-			sizeComparisonRecommendedSize
-		   ) {
-			return sizeComparisonOneSizeText
+		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize {
+		   return i18nLocalization.getSizeComparisonOneSizeText(sizeComparisonRecommendedSize)
 		}
-        if bodyProfileRecommendedSizeName != nil,
-           let bodyProfileOneSizeText = i18nLocalization.bodyProfileOneSizeText {
-            return bodyProfileOneSizeText
+        if bodyProfileRecommendedSizeName != nil {
+			return i18nLocalization.getBodyProfileOneSizeText()
         }
-        return noDataText(i18nLocalization)
+		return i18nLocalization.getNoDataText()
     }
 
     private func multiSizeText(
@@ -152,17 +142,13 @@ internal class VirtusizeStoreProduct: Codable {
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
         _ bodyProfileRecommendedSizeName: String?
     ) -> String {
-		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestUserProduct?.sizes[0].name,
-		   let sizeComparisonMultiSizeText = i18nLocalization.getSizeComparisonMultiSizeText(
-			sizeComparisonRecommendedSizeName
-		   ) {
-			return sizeComparisonMultiSizeText
+		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestUserProduct?.sizes[0].name {
+			return i18nLocalization.getSizeComparisonMultiSizeText(sizeComparisonRecommendedSizeName)
 		}
-        if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName,
-           let bodyProfileMultiSizeText = i18nLocalization.getBodyProfileMultiSizeText(bodyProfileRecommendedSizeName) {
-            return bodyProfileMultiSizeText
+        if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName {
+            return i18nLocalization.getBodyProfileMultiSizeText(bodyProfileRecommendedSizeName)
         }
-        return noDataText(i18nLocalization)
+        return i18nLocalization.getNoDataText()
     }
 
     /// Checks if the product is an accessory

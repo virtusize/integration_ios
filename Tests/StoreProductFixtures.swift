@@ -24,6 +24,34 @@
 
 extension TestFixtures {
 
+	static func getOneSizeProduct() -> VirtusizeStoreProduct? {
+		return try? JSONDecoder().decode(
+			VirtusizeStoreProduct.self,
+			from: Data(
+				TestFixtures.getStoreProductJsonResponse(
+					productType: 8,
+					brandSizing: nil,
+					fit: "",
+					noSizes: false,
+					brand: "",
+					modelInfo: "",
+					gender: nil,
+					sizes:
+						"""
+						{
+							"name": "Free",
+							"measurements": {
+								"height": 740,
+								"bust": 630,
+								"sleeve": 805
+							}
+						}
+						"""
+				).utf8
+			)
+		)
+	}
+
     static func getStoreProduct(
         productType: Int = 8,
         brandSizing: VirtusizeBrandSizing? = VirtusizeBrandSizing(compare: "large", itemBrand: false),
@@ -56,49 +84,50 @@ extension TestFixtures {
     }
 
     static func getStoreProductJsonResponse( // swiftlint:disable:this function_body_length
-        productType: Int = 8,
-        brandSizing: VirtusizeBrandSizing? = VirtusizeBrandSizing(compare: "large", itemBrand: false),
-        fit: String = "regular",
-        noSizes: Bool = false,
-        brand: String = "Virtusize",
-        modelInfo: String = """
+		productType: Int = 8,
+		brandSizing: VirtusizeBrandSizing? = VirtusizeBrandSizing(compare: "large", itemBrand: false),
+		fit: String = "regular",
+		noSizes: Bool = false,
+		brand: String = "Virtusize",
+		modelInfo: String = """
             "hip": 85,
             "size": "38",
             "waist": 56,
             "bust": 78,
             "height": 165
         """,
-        gender: String?
+		gender: String?,
+		sizes: String = """
+		{
+			"name": "35",
+			"measurements": {
+				"height": 740,
+				"bust": 630,
+				"sleeve": 805
+			}
+		},
+		{
+			"name": "37",
+			"measurements": {
+				"height": 760,
+				"bust": 660,
+				"sleeve": 845
+			}
+		},
+		{
+			"name": "36",
+			"measurements": {
+				"height": 750,
+				"bust": 645,
+				"sleeve": 825
+			}
+		}
+		"""
     ) -> String {
         return """
         {
             "id":\(productId),
-            "sizes": [\(noSizes ? "" : """
-                {
-                    "name": "35",
-                    "measurements": {
-                        "height": 740,
-                        "bust": 630,
-                        "sleeve": 805
-                    }
-                },
-                {
-                    "name": "37",
-                    "measurements": {
-                        "height": 760,
-                        "bust": 660,
-                        "sleeve": 845
-                    }
-                },
-                {
-                    "name": "36",
-                    "measurements": {
-                        "height": 750,
-                        "bust": 645,
-                        "sleeve": 825
-                    }
-                }
-            """)],
+            "sizes": [\(noSizes ? "" : sizes)],
             "isSgi": false,
             "created": "2020-01-29T09:48:55Z",
             "updated": "2020-01-29T09:52:01Z",

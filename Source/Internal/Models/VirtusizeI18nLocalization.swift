@@ -61,48 +61,58 @@ internal class VirtusizeI18nLocalization {
     }
 
 	// TODO: add comment
-    internal func getHasProductAccessoryText() -> String? {
-        guard let hasProductAccessoryTopText = hasProductAccessoryTopText,
-              let hasProductAccessoryBottomText = hasProductAccessoryBottomText else {
-            return nil
-        }
+	internal func getNoDataText() -> String {
+		return noDataText ?? Localization.shared.localize("inpage_no_data_text")
+	}
+
+	internal func getDefaultAccessoryText() -> String {
+		return "\(defaultAccessoryText ?? Localization.shared.localize("inpage_default_accessory_text"))"
+	}
+
+    internal func getHasProductAccessoryText() -> String {
+		let hasProductAccessoryTopText = self.hasProductAccessoryTopText ??
+			Localization.shared.localize("inpage_has_product_top_text")
+		let hasProductAccessoryBottomText = self.hasProductAccessoryBottomText ??
+			Localization.shared.localize("inpage_has_product_bottom_text")
         return "\(hasProductAccessoryTopText) %{boldStart}\(hasProductAccessoryBottomText)%{boldEnd}"
     }
 
 	internal func getSizeComparisonOneSizeText(
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize
-	) -> String? {
+	) -> String {
         if sizeComparisonRecommendedSize.bestFitScore > 84 {
-            guard let oneSizeCloseTopText = oneSizeCloseTopText,
-                  let oneSizeCloseBottomText = oneSizeCloseBottomText else {
-                return nil
-            }
+			let oneSizeCloseTopText = self.oneSizeCloseTopText ??
+				Localization.shared.localize("inpage_one_size_close_top_text")
+			let oneSizeCloseBottomText = self.oneSizeCloseBottomText ??
+				Localization.shared.localize("inpage_one_size_close_bottom_text")
             return "\(oneSizeCloseTopText) %{boldStart}\(oneSizeCloseBottomText)%{boldEnd}"
         } else if sizeComparisonRecommendedSize.isStoreProductSmaller == true {
-            guard let oneSizeSmallerTopText = oneSizeSmallerTopText,
-                  let oneSizeSmallerBottomText = oneSizeSmallerBottomText else {
-                return nil
-            }
+			let oneSizeSmallerTopText = self.oneSizeSmallerTopText ??
+				Localization.shared.localize("inpage_one_size_smaller_top_text")
+			let oneSizeSmallerBottomText = self.oneSizeSmallerBottomText ??
+				Localization.shared.localize("inpage_one_size_smaller_bottom_text")
             return "\(oneSizeSmallerTopText) %{boldStart}\(oneSizeSmallerBottomText)%{boldEnd}"
         }
-        guard let oneSizeLargerTopText = oneSizeLargerTopText,
-              let oneSizeLargerBottomText = oneSizeLargerBottomText else {
-            return nil
-        }
+		let oneSizeLargerTopText = self.oneSizeLargerTopText ??
+			Localization.shared.localize("inpage_one_size_larger_top_text")
+		let oneSizeLargerBottomText = self.oneSizeLargerBottomText ??
+			Localization.shared.localize("inpage_one_size_larger_bottom_text")
         return "\(oneSizeLargerTopText) %{boldStart}\(oneSizeLargerBottomText)%{boldEnd}"
     }
 
-    internal func getSizeComparisonMultiSizeText(_ sizeComparisonRecommendedSizeName: String) -> String? {
-        guard let sizeComparisonMultiSizeText = sizeComparisonMultiSizeText else {
-            return nil
-        }
+	internal func getBodyProfileOneSizeText() -> String {
+		return bodyProfileOneSizeText ?? Localization.shared.localize("inpage_one_size_body_profile_text")
+	}
+
+    internal func getSizeComparisonMultiSizeText(_ sizeComparisonRecommendedSizeName: String) -> String {
+		let sizeComparisonMultiSizeText = self.sizeComparisonMultiSizeText ??
+			Localization.shared.localize("inpage_multi_size_comparison_text")
         return "\(sizeComparisonMultiSizeText) %{boldStart}\(sizeComparisonRecommendedSizeName)%{boldEnd}"
     }
 
-    internal func getBodyProfileMultiSizeText(_ bodyProfileRecommendedSizeName: String) -> String? {
-        guard let bodyProfileMultiSizeText = bodyProfileMultiSizeText else {
-            return nil
-        }
+    internal func getBodyProfileMultiSizeText(_ bodyProfileRecommendedSizeName: String) -> String {
+		let bodyProfileMultiSizeText = self.sizeComparisonMultiSizeText ??
+			Localization.shared.localize("inpage_multi_size_body_profile_text")
         return "\(bodyProfileMultiSizeText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"
     }
 }
