@@ -203,7 +203,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         if loading {
             startLoadingAnimation(
                 label: inPageMiniMessageLabel,
-                text: Localization.shared.localize("inpage_mini_loading_text")
+                text: Localization.shared.localize("inpage_loading_text")
             )
         } else {
             stopLoadingAnimation()
