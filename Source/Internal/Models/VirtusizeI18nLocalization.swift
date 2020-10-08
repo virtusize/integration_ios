@@ -111,7 +111,7 @@ internal class VirtusizeI18nLocalization {
     }
 
     internal func getBodyProfileMultiSizeText(_ bodyProfileRecommendedSizeName: String) -> String {
-		let bodyProfileMultiSizeText = self.sizeComparisonMultiSizeText ??
+		let bodyProfileMultiSizeText = self.bodyProfileMultiSizeText ??
 			Localization.shared.localize("inpage_multi_size_body_profile_text")
         return "\(bodyProfileMultiSizeText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"
     }
