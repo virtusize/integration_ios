@@ -104,14 +104,14 @@ internal class VirtusizeStoreProduct: Codable {
         _ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
     ) -> String {
 		var text = i18nLocalization.getNoDataText()
-        if isAccessory() {
+		if isAccessory() {
 			text = accessoryText(i18nLocalization, sizeComparisonRecommendedSize)
-        } else if self.sizes.count == 1 {
-            text = oneSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName)
-        } else {
-            text = multiSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName)
-        }
-        return text.trimI18nText(trimType)
+		} else if self.sizes.count == 1 {
+			text = oneSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName)
+		} else {
+			text = multiSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName)
+		}
+		return text.trimI18nText(trimType)
     }
 
 	// TODO: add comment

@@ -36,8 +36,7 @@ extension TestFixtures {
 					brand: "",
 					modelInfo: "",
 					gender: nil,
-					sizes:
-						"""
+					sizes: """
 						{
 							"name": "Free",
 							"measurements": {
@@ -46,7 +45,7 @@ extension TestFixtures {
 								"sleeve": 805
 							}
 						}
-						"""
+					"""
 				).utf8
 			)
 		)
