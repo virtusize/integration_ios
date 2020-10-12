@@ -52,7 +52,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     public func isLoading() {
         isHidden = false
-    }
+	}
 
     internal func setup() {}
 

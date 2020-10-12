@@ -49,7 +49,8 @@ internal extension String {
     func trimI18nText(
         _ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
     ) -> String {
-        return self.replacingOccurrences(of: "%{boldStart}", with: trimType.rawValue)
+        return self.replacingOccurrences(of: "<br>", with: "")
+			.replacingOccurrences(of: "%{boldStart}", with: trimType.rawValue)
             .replacingOccurrences(of: "%{boldEnd}", with: "")
     }
 }

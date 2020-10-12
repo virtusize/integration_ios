@@ -2,6 +2,17 @@
 "privacy_policy" = "Privacy Policy";
 "privacy_policy_link" = "http://www.virtusize.com/site/privacy-policy";
 "inpage_default_accessory_text" = "See how everyday items fit";
+"inpage_has_product_top_text" = "See the size difference from";
+"inpage_has_product_bottom_text" = "your own item";
+"inpage_one_size_close_top_text" = "This item size is";
+"inpage_one_size_smaller_top_text" = "This item size is";
+"inpage_one_size_larger_top_text" = "This item size is";
+"inpage_one_size_close_bottom_text" = "close to your item";
+"inpage_one_size_smaller_bottom_text" = "smaller than your item";
+"inpage_one_size_larger_bottom_text" = "larger than your item";
+"inpage_one_size_body_profile_text" = "Try it on and find your size";
+"inpage_multi_size_comparison_text" = "The closest size to your item is";
+"inpage_multi_size_body_profile_text" = "Your recommended size is";
 "inpage_no_data_text" = "Find the right size before purchasing";
 "inpage_standard_loading_text" = "Analyzing the size";
 "inpage_mini_loading_text" = "Loading";

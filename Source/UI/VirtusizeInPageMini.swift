@@ -67,8 +67,10 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         setLoadingScreen(loading: false)
         inPageMiniMessageLabel.attributedText = NSAttributedString(string:
             storeProduct.getRecommendationText(
-                i18nLocalization: i18nLocalization,
-                trimType: VirtusizeI18nLocalization.TrimType.ONELINE
+                i18nLocalization,
+				Virtusize.sizeComparisonRecommendedSize,
+				Virtusize.bodyProfileRecommendedSize?.sizeName,
+                VirtusizeI18nLocalization.TrimType.ONELINE
             )
         ).lineSpacing(self.verticalMargin/2)
     }

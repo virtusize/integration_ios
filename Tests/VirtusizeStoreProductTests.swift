@@ -31,8 +31,21 @@ class VirtusizeStoreProductTests: XCTestCase {
 
     private var i18nLocalization = VirtusizeI18nLocalization()
 
+	private let oneSizeProduct = TestFixtures.getOneSizeProduct()
+
     override func setUpWithError() throws {
         i18nLocalization.defaultAccessoryText = Localization.shared.localize("inpage_default_accessory_text")
+		i18nLocalization.hasProductAccessoryTopText = Localization.shared.localize("inpage_has_product_top_text")
+		i18nLocalization.hasProductAccessoryBottomText = Localization.shared.localize("inpage_has_product_bottom_text")
+		i18nLocalization.oneSizeCloseTopText = Localization.shared.localize("inpage_one_size_close_top_text")
+		i18nLocalization.oneSizeSmallerTopText = Localization.shared.localize("inpage_one_size_smaller_top_text")
+		i18nLocalization.oneSizeLargerTopText = Localization.shared.localize("inpage_one_size_larger_top_text")
+		i18nLocalization.oneSizeCloseBottomText = Localization.shared.localize("inpage_one_size_close_bottom_text")
+		i18nLocalization.oneSizeSmallerBottomText = Localization.shared.localize("inpage_one_size_smaller_bottom_text")
+		i18nLocalization.oneSizeLargerBottomText = Localization.shared.localize("inpage_one_size_larger_bottom_text")
+		i18nLocalization.bodyProfileOneSizeText = Localization.shared.localize("inpage_one_size_body_profile_text")
+		i18nLocalization.sizeComparisonMultiSizeText = Localization.shared.localize("inpage_multi_size_comparison_text")
+		i18nLocalization.bodyProfileMultiSizeText = Localization.shared.localize("inpage_multi_size_body_profile_text")
         i18nLocalization.noDataText = Localization.shared.localize("inpage_no_data_text")
     }
 
@@ -64,27 +77,149 @@ class VirtusizeStoreProductTests: XCTestCase {
         XCTAssertNil(storeProduct)
     }
 
-    func testGetRecommendationText_productIsAnAccessory_returnDefaultAccessoryText() {
-        let defaultAccessoryText = Localization.shared.localize("inpage_default_accessory_text")
-        let storeProduct18 = TestFixtures.getStoreProduct(productType: 18, gender: nil)
-        XCTAssertEqual(storeProduct18?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
-        let storeProduct19 = TestFixtures.getStoreProduct(productType: 19, gender: nil)
-        XCTAssertEqual(storeProduct19?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
-        let storeProduct25 = TestFixtures.getStoreProduct(productType: 25, gender: nil)
-        XCTAssertEqual(storeProduct25?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
-        let storeProduct26 = TestFixtures.getStoreProduct(productType: 26, gender: nil)
-        XCTAssertEqual(storeProduct26?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
-    }
+	func testGetRecommendationText_productIsAnAccessory_returnDefaultAccessoryText() {
+		let storeProduct18 = TestFixtures.getStoreProduct(productType: 18, gender: nil)
+		XCTAssertEqual(
+			storeProduct18?.getRecommendationText(i18nLocalization, nil, nil),
+			i18nLocalization.defaultAccessoryText
+		)
+		let storeProduct19 = TestFixtures.getStoreProduct(productType: 19, gender: nil)
+		XCTAssertEqual(
+			storeProduct19?.getRecommendationText(i18nLocalization, nil, nil),
+			i18nLocalization.defaultAccessoryText
+		)
+		let storeProduct25 = TestFixtures.getStoreProduct(productType: 25, gender: nil)
+		XCTAssertEqual(
+			storeProduct25?.getRecommendationText(i18nLocalization, nil, nil),
+			i18nLocalization.defaultAccessoryText)
+	}
 
-    func testGetRecommendationText_productIsNotAnAccessory_returnNoDataText() {
-        let noDataText = Localization.shared.localize("inpage_no_data_text")
-        let storeProduct1 = TestFixtures.getStoreProduct(productType: 1, gender: nil)
-        XCTAssertEqual(storeProduct1?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-        let storeProduct15 = TestFixtures.getStoreProduct(productType: 15, gender: nil)
-        XCTAssertEqual(storeProduct15?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-        let storeProduct20 = TestFixtures.getStoreProduct(productType: 20, gender: nil)
-        XCTAssertEqual(storeProduct20?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-        let storeProduct24 = TestFixtures.getStoreProduct(productType: 24, gender: nil)
-        XCTAssertEqual(storeProduct24?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-    }
+	func testGetRecommendationText_productIsAnAccessory_hasSizeComparisonRecommendedSize_returnHasProductAccessoryText() {
+		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
+		sizeComparisonRecommendedSize.bestUserProduct = TestFixtures.getStoreProduct(productType: 26, gender: nil)
+		let storeProduct26 = TestFixtures.getStoreProduct(productType: 26, gender: nil)
+		XCTAssertTrue(
+			storeProduct26!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.hasProductAccessoryTopText!)
+		)
+		XCTAssertTrue(
+			storeProduct26!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.hasProductAccessoryBottomText!)
+		)
+	}
+
+	func testGetRecommendationText_oneSizeProduct_fitScoreLargerThan84_returnSizeComparisonOneSizeCloseText() {
+		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
+		sizeComparisonRecommendedSize.bestFitScore = 84.5
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.oneSizeCloseTopText!)
+		)
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.oneSizeCloseBottomText!)
+		)
+	}
+
+	func testGetRecommendationText_oneSizeProduct_storeProductIsSmaller_returnSizeComparisonOneSizeSmallerText() {
+		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
+		sizeComparisonRecommendedSize.isStoreProductSmaller = true
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.oneSizeSmallerTopText!)
+		)
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.oneSizeSmallerBottomText!)
+		)
+	}
+
+	func testGetRecommendationText_oneSizeProduct_storeProductIsLarger_returnSizeComparisonOneSizeLargerText() {
+		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
+		sizeComparisonRecommendedSize.bestFitScore = 60.0
+		sizeComparisonRecommendedSize.isStoreProductSmaller = false
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.oneSizeLargerTopText!)
+		)
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.oneSizeLargerBottomText!)
+		)
+	}
+
+	func testGetRecommendationText_oneSizeProduct_onlyHasBodyProfileRecommendedSize_returnOneSizeBodyProfileText() {
+		let bodyProfileRecommendedSizeName = "Small"
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				nil,
+				bodyProfileRecommendedSizeName
+			).contains(i18nLocalization.bodyProfileOneSizeText!)
+		)
+		XCTAssertTrue(
+			oneSizeProduct!.getRecommendationText(
+				i18nLocalization,
+				nil,
+				bodyProfileRecommendedSizeName
+			).contains(i18nLocalization.bodyProfileOneSizeText!)
+		)
+	}
+
+	func testGetRecommendationText_multiSizeProduct_hasSizeComparisonRecommendedSize_returnMultiSizeComparisonText() {
+		let storeProduct1 = TestFixtures.getStoreProduct(productType: 1, gender: nil)
+		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
+		sizeComparisonRecommendedSize.bestUserProduct = storeProduct1
+		XCTAssertTrue(
+			storeProduct1!.getRecommendationText(
+				i18nLocalization,
+				sizeComparisonRecommendedSize,
+				nil
+			).contains(i18nLocalization.sizeComparisonMultiSizeText!)
+		)
+	}
+
+	func testGetRecommendationText_multiSizeProduct_hasBodyProfileRecommendedSize_returnMultiSizeBodyProfileText() {
+		let storeProduct4 = TestFixtures.getStoreProduct(productType: 4, gender: nil)
+		let bodyProfileRecommendedSizeName = "S"
+		XCTAssertTrue(
+			storeProduct4!.getRecommendationText(
+				i18nLocalization,
+				nil,
+				bodyProfileRecommendedSizeName
+			).contains(i18nLocalization.bodyProfileMultiSizeText!)
+		)
+	}
+
+	func testGetRecommendationText_multiSizeProduct_noRecommendedSizes_returnNoDataText() {
+		let storeProduct7 = TestFixtures.getStoreProduct(productType: 7, gender: nil)
+		XCTAssertEqual(
+			storeProduct7!.getRecommendationText(i18nLocalization, nil, nil),
+			i18nLocalization.noDataText!
+		)
+	}
 }

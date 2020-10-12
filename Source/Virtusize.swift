@@ -39,8 +39,8 @@ public class Virtusize {
     /// The Virtusize environment that defaults to the `global` domain
     public static var environment = VirtusizeEnvironment.global
 
-    /// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
-    public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
+	/// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
+	public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
 
     /// The array of `VirtusizeView` that clients use on their mobile application
     private static var virtusizeViews: [VirtusizeView] = []
@@ -51,10 +51,15 @@ public class Virtusize {
     /// Allow process pool to be set to share cookies
     public static var processPool: WKProcessPool?
 
+	internal static var storeProduct: VirtusizeStoreProduct?
+	internal static var i18nLocalization: VirtusizeI18nLocalization?
+	internal static var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	internal static var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
+
     /// The private property for product
-    private static var _product: VirtusizeProduct?
+	private static var _product: VirtusizeProduct?
     /// The Virtusize product to get the value from the`productDataCheck` request
-    public static var product: VirtusizeProduct? {
+	public static var product: VirtusizeProduct? {
         set {
             guard let product = newValue else {
                 virtusizeViews.removeAll()
@@ -63,45 +68,40 @@ public class Virtusize {
             productCheck(product: product, completion: { product in
                 guard let product = product else {
                     virtusizeViews.removeAll()
-                    return
+					return
                 }
-                _product = product
-                DispatchQueue.global().async {
-                    if let productId = _product!.productCheckData?.productDataId {
-                        DispatchQueue.main.async {
-                            for index in 0...virtusizeViews.count-1 {
-                                virtusizeViews[index].isLoading()
-                            }
-                        }
-                        storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
-                        i18nLocalization = Virtusize.getI18nTextsAsync().success
-                        // TODO: Remove testing API endpoints
-                        let userProducts = Virtusize.getUserProductsAsync().success
-                        let productTypes = Virtusize.getProductTypesAsync().success
-                        let userBodyProfile = Virtusize.getUserBodyProfileAsync().success
-                        if userProducts != nil && productTypes != nil && storeProduct != nil && userBodyProfile != nil {
-                            print(
-                                Virtusize.getBodyProfileRecommendedSizeAsync(
-                                    productTypes: productTypes!,
-                                    storeProduct: storeProduct!,
-                                    userBodyProfile: userBodyProfile!
-                                ).success ?? "No size recommendation"
-                            )
-                            print(
-                                FindBestFitHelper.findBestMatchedProductSize(
-                                    userProducts: userProducts!,
-                                    storeProduct: storeProduct!,
-                                   productTypes: productTypes!
-                                )
-                            )
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        for index in 0...virtusizeViews.count-1 {
-                            virtusizeViews[index].setInPageText()
-                        }
-                        virtusizeViews.removeAll()
-                    }
+				_product = product
+				DispatchQueue.global().async {
+					if let productId = _product!.productCheckData?.productDataId {
+						DispatchQueue.main.async {
+							for index in 0...virtusizeViews.count-1 {
+								virtusizeViews[index].isLoading()
+							}
+						}
+						storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
+						i18nLocalization = Virtusize.getI18nTextsAsync().success
+						let userProducts = Virtusize.getUserProductsAsync().success
+						let productTypes = Virtusize.getProductTypesAsync().success
+						let userBodyProfile = Virtusize.getUserBodyProfileAsync().success
+						if userProducts != nil && productTypes != nil && storeProduct != nil && userBodyProfile != nil {
+							bodyProfileRecommendedSize = Virtusize.getBodyProfileRecommendedSizeAsync(
+								productTypes: productTypes!,
+								storeProduct: storeProduct!,
+								userBodyProfile: userBodyProfile!
+							).success
+							sizeComparisonRecommendedSize = FindBestFitHelper.findBestMatchedProductSize(
+								userProducts: userProducts!,
+								storeProduct: storeProduct!,
+								productTypes: productTypes!
+							)
+						}
+						DispatchQueue.main.async {
+							for index in 0...virtusizeViews.count-1 {
+								(virtusizeViews[index] as? VirtusizeInPageView)?.setInPageText()
+							}
+							virtusizeViews.removeAll()
+						}
+					}
                 }
             }, failure: { _ in
                 virtusizeViews.removeAll()
@@ -111,9 +111,6 @@ public class Virtusize {
             return _product
         }
     }
-
-    internal static var storeProduct: VirtusizeStoreProduct?
-    internal static var i18nLocalization: VirtusizeI18nLocalization?
 
     /// NotificationCenter observers for debugging the initial product data check
     /// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message

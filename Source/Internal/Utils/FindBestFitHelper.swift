@@ -22,18 +22,19 @@
 //  THE SOFTWARE.
 //
 
+// TODO: add comment
 class FindBestFitHelper {
 
     static func findBestMatchedProductSize(
         userProducts: [VirtusizeStoreProduct],
         storeProduct: VirtusizeStoreProduct,
         productTypes: [VirtusizeProductType]
-    ) -> UserProductRecommendedSize? {
+    ) -> SizeComparisonRecommendedSize? {
         let storeProductType = productTypes.first(where: { $0.id == storeProduct.productType })
         let compatibleUserProducts = userProducts.filter {
             (storeProductType?.compatibleWith.contains($0.productType) ?? false)
         }
-        var userProductRecommendedSize = UserProductRecommendedSize()
+        var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
         compatibleUserProducts.forEach({ userProduct in
             let userProductSize = userProduct.sizes[0]
             storeProduct.sizes.forEach({ storeProductSize in
@@ -42,14 +43,14 @@ class FindBestFitHelper {
                     storeProductSize: storeProductSize,
                     storeProductTypeScoreWeights: storeProductType?.weights ?? [:]
                 )
-                if storeProductFitInfo.fitScore > userProductRecommendedSize.bestFitScore {
-                    userProductRecommendedSize.bestFitScore = storeProductFitInfo.fitScore
-                    userProductRecommendedSize.bestUserProduct = userProduct
-                    userProductRecommendedSize.isStoreProductSmaller = storeProductFitInfo.isSmaller
+                if storeProductFitInfo.fitScore > sizeComparisonRecommendedSize.bestFitScore {
+                    sizeComparisonRecommendedSize.bestFitScore = storeProductFitInfo.fitScore
+                    sizeComparisonRecommendedSize.bestUserProduct = userProduct
+                    sizeComparisonRecommendedSize.isStoreProductSmaller = storeProductFitInfo.isSmaller
                 }
             })
         })
-        return userProductRecommendedSize
+        return sizeComparisonRecommendedSize
     }
 
     static func getStoreProductFitInfo(

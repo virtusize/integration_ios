@@ -45,6 +45,26 @@ class DeserializerTests: XCTestCase {
             actualI18nLocalization.defaultAccessoryText,
             Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
         )
+		XCTAssertEqual(
+			actualI18nLocalization.hasProductAccessoryTopText,
+			Localization.shared.localize("inpage_has_product_top_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.oneSizeCloseTopText,
+			Localization.shared.localize("inpage_one_size_close_top_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.oneSizeCloseBottomText,
+			Localization.shared.localize("inpage_one_size_close_bottom_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.bodyProfileOneSizeText,
+			Localization.shared.localize("inpage_one_size_body_profile_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.sizeComparisonMultiSizeText,
+			Localization.shared.localize("inpage_multi_size_comparison_text", language: localizedLang)
+		)
         XCTAssertEqual(
             actualI18nLocalization.noDataText,
             Localization.shared.localize("inpage_no_data_text", language: localizedLang)
@@ -56,14 +76,30 @@ class DeserializerTests: XCTestCase {
         let actualI18nLocalization = Deserializer.i18n(data: data)
         let localizedLang = VirtusizeLanguage.JAPANESE
 
-         XCTAssertEqual(
-            actualI18nLocalization.defaultAccessoryText,
-            Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
-        )
-        XCTAssertEqual(
-            actualI18nLocalization.noDataText,
-            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
-        )
+		XCTAssertEqual(
+			actualI18nLocalization.defaultAccessoryText,
+			Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.hasProductAccessoryBottomText,
+			Localization.shared.localize("inpage_has_product_bottom_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.oneSizeSmallerTopText,
+			Localization.shared.localize("inpage_one_size_smaller_top_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.oneSizeSmallerBottomText,
+			Localization.shared.localize("inpage_one_size_smaller_bottom_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.bodyProfileMultiSizeText,
+			Localization.shared.localize("inpage_multi_size_body_profile_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.noDataText,
+			Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+		)
     }
 
     func testI18n_verifyKoreanLocalization_returnExpectedLocalizationTexts() {
@@ -75,6 +111,18 @@ class DeserializerTests: XCTestCase {
             actualI18nLocalization.defaultAccessoryText,
             Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
         )
+		XCTAssertEqual(
+			actualI18nLocalization.hasProductAccessoryBottomText,
+			Localization.shared.localize("inpage_has_product_bottom_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.oneSizeLargerTopText,
+			Localization.shared.localize("inpage_one_size_larger_top_text", language: localizedLang)
+		)
+		XCTAssertEqual(
+			actualI18nLocalization.oneSizeLargerBottomText,
+			Localization.shared.localize("inpage_one_size_larger_bottom_text", language: localizedLang)
+		)
         XCTAssertEqual(
             actualI18nLocalization.noDataText,
             Localization.shared.localize("inpage_no_data_text", language: localizedLang)
