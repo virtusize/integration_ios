@@ -1,5 +1,5 @@
 //
-//  VirtusizeProductTypeTests.swift
+//  APIResponse.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,27 +22,49 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
+// TODO: add comment
+internal struct APIResponse {
+    var data: Data?
+    var response: URLResponse?
+    var error: Error?
+    var virtusizeError: VirtusizeError?
 
-class VirtusizeProductTypeTests: XCTestCase {
+    init(data: Data?, response: URLResponse?, error: Error?) {
+        self.data = data
+        self.response = response
+        self.error = error
+    }
+}
 
-    func testDecoding_validProductTypeData_shouldReturnExpectedStructure() {
-        let productType = try? JSONDecoder().decode(VirtusizeProductType.self, from: productTypeFixture)
+internal enum APIResult<Value> {
+    case success(Value)
+    case failure(VirtusizeError?)
+}
 
-        XCTAssertEqual(productType?.id, 1)
-        XCTAssertEqual(productType?.name, "dress")
-        XCTAssertEqual(productType?.weights, ["bust": 1, "waist": 1, "height": 0.25])
+extension APIResult {
+
+    var string: String {
+        switch self {
+        case let .success(value):
+            return "\(value)"
+        case let .failure(error):
+            return error?.debugDescription ?? "Unknown Error"
+        }
     }
 
-    func testDecoding_emptyJsonData_shouldReturnNil() {
-        let productType = try? JSONDecoder().decode(
-            VirtusizeProductType.self,
-            from: Data(TestFixtures.emptyResponse.utf8)
-        )
-
-        XCTAssertNil(productType)
+    var success: Value? {
+        if case .success(let value) = self {
+            return value
+        } else {
+            return nil
+        }
     }
 
-    private let productTypeFixture = Data(TestFixtures.productTypeOneJsonResponse.utf8)
+    var failure: VirtusizeError? {
+        if case .failure(let error) = self {
+            return error
+        } else {
+            return nil
+        }
+    }
 }

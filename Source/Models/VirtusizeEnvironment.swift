@@ -29,8 +29,8 @@ public enum VirtusizeEnvironment: String {
     case japan="api.virtusize.jp"
     case korea="api.virtusize.kr"
 
-    /// Gets the URL for the `productDataCheck` request
-    internal func productDataCheckUrl() -> String {
+    /// Gets the services URL for the `productDataCheck` and `getSize` requests
+    internal func servicesUrl() -> String {
         return "services.virtusize.com"
     }
 

@@ -27,7 +27,7 @@ import XCTest
 
 class VirtusizeStoreProductTests: XCTestCase {
 
-    private let storeProductFixture = Data(TestFixtures.getStoreProductJsonResponse().utf8)
+    private let storeProductFixture = Data(TestFixtures.getStoreProductJsonResponse(gender: nil).utf8)
 
     private var i18nLocalization = VirtusizeI18nLocalization()
 
@@ -66,41 +66,25 @@ class VirtusizeStoreProductTests: XCTestCase {
 
     func testGetRecommendationText_productIsAnAccessory_returnDefaultAccessoryText() {
         let defaultAccessoryText = Localization.shared.localize("inpage_default_accessory_text")
-        let storeProduct18 = getStoreProduct(productType: 18)
+        let storeProduct18 = TestFixtures.getStoreProduct(productType: 18, gender: nil)
         XCTAssertEqual(storeProduct18?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
-        let storeProduct19 = getStoreProduct(productType: 19)
+        let storeProduct19 = TestFixtures.getStoreProduct(productType: 19, gender: nil)
         XCTAssertEqual(storeProduct19?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
-         let storeProduct25 = getStoreProduct(productType: 25)
+        let storeProduct25 = TestFixtures.getStoreProduct(productType: 25, gender: nil)
         XCTAssertEqual(storeProduct25?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
-         let storeProduct26 = getStoreProduct(productType: 26)
+        let storeProduct26 = TestFixtures.getStoreProduct(productType: 26, gender: nil)
         XCTAssertEqual(storeProduct26?.getRecommendationText(i18nLocalization: i18nLocalization), defaultAccessoryText)
     }
 
     func testGetRecommendationText_productIsNotAnAccessory_returnNoDataText() {
         let noDataText = Localization.shared.localize("inpage_no_data_text")
-        let storeProduct1 = getStoreProduct(productType: 1)
+        let storeProduct1 = TestFixtures.getStoreProduct(productType: 1, gender: nil)
         XCTAssertEqual(storeProduct1?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-        let storeProduct15 = getStoreProduct(productType: 15)
+        let storeProduct15 = TestFixtures.getStoreProduct(productType: 15, gender: nil)
         XCTAssertEqual(storeProduct15?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-         let storeProduct20 = getStoreProduct(productType: 20)
+        let storeProduct20 = TestFixtures.getStoreProduct(productType: 20, gender: nil)
         XCTAssertEqual(storeProduct20?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-         let storeProduct24 = getStoreProduct(productType: 24)
+        let storeProduct24 = TestFixtures.getStoreProduct(productType: 24, gender: nil)
         XCTAssertEqual(storeProduct24?.getRecommendationText(i18nLocalization: i18nLocalization), noDataText)
-    }
-
-    private func getStoreProduct(
-        productType: Int = 8,
-        brandSizing: VirtusizeBrandSizing? = VirtusizeBrandSizing(compare: "large", itemBrand: false),
-        fit: String = "regular"
-    ) -> VirtusizeStoreProduct? {
-        return try? JSONDecoder().decode(
-            VirtusizeStoreProduct.self,
-            from: Data(
-                TestFixtures.getStoreProductJsonResponse(
-                    productType: productType,
-                    brandSizing: brandSizing,
-                    fit: fit).utf8
-                )
-            )
     }
 }

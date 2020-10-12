@@ -27,15 +27,38 @@ import XCTest
 
 class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
 
-    func testDecoding_validStoreProductAdditionalInfoData_shouldReturnExpectedStructure() {
+    func testDecoding_validStoreProductAdditionalInfo_shouldReturnExpectedStructure() {
         let storeProductAdditionalInfo = try? JSONDecoder().decode(
             VirtusizeStoreProductAdditionalInfo.self,
-            from: storeProductAdditionalInfoFixture
+            from: productAdditionalInfoFixture
         )
 
+        XCTAssertEqual(storeProductAdditionalInfo?.brand, "Virtusize")
+        XCTAssertEqual(storeProductAdditionalInfo?.gender, "male")
+        XCTAssertEqual(storeProductAdditionalInfo?.sizes.count, 2)
+        XCTAssertEqual(storeProductAdditionalInfo?.sizes["38"]?.count, 3)
+        XCTAssertEqual(storeProductAdditionalInfo?.sizes["36"]?["height"], 750)
+        XCTAssertEqual(storeProductAdditionalInfo?.modelInfo?.count, 5)
+        XCTAssertEqual(storeProductAdditionalInfo?.modelInfo?["size"]?.value as? String, "38")
+        XCTAssertEqual(storeProductAdditionalInfo?.modelInfo?["waist"]?.value as? Int, 56)
         XCTAssertEqual(storeProductAdditionalInfo?.fit, "wide")
         XCTAssertEqual(storeProductAdditionalInfo?.brandSizing?.compare, "true")
         XCTAssertEqual(storeProductAdditionalInfo?.brandSizing?.itemBrand, true)
+    }
+
+    func testDecoding_validStoreProductAdditionalInfoWithEmptySizesAndModelInfo_shouldReturnExpectedStructure() {
+        let storeProductAdditionalInfo = try? JSONDecoder().decode(
+            VirtusizeStoreProductAdditionalInfo.self,
+            from: productEmptyAdditionalInfoFixture
+        )
+
+        XCTAssertEqual(storeProductAdditionalInfo?.brand, "Virtusize")
+        XCTAssertEqual(storeProductAdditionalInfo?.gender, "female")
+        XCTAssertEqual(storeProductAdditionalInfo?.sizes.count, 0)
+        XCTAssertEqual(storeProductAdditionalInfo?.modelInfo?.count, 0)
+        XCTAssertEqual(storeProductAdditionalInfo?.fit, "loose")
+        XCTAssertEqual(storeProductAdditionalInfo?.brandSizing?.compare, "small")
+        XCTAssertEqual(storeProductAdditionalInfo?.brandSizing?.itemBrand, false)
     }
 
     func testDecoding_emptyJsonData_shouldReturnNil() {
@@ -44,23 +67,57 @@ class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
             from: Data(TestFixtures.emptyResponse.utf8)
         )
 
-        XCTAssertNil(storeProductAdditionalInfo?.fit)
-        XCTAssertNil(storeProductAdditionalInfo?.brandSizing)
+        XCTAssertNil(storeProductAdditionalInfo)
     }
 
-    private let storeProductAdditionalInfoFixture = Data(
+    private let productAdditionalInfoFixture = Data(
         """
             {
                 "brand":"Virtusize",
-                "gender":"null",
-                "sizes":{},
-                "modelInfo":{},
+                "gender":"male",
+                "sizes":{
+                    "38":{
+                        "height":760,
+                        "bust":660,
+                        "sleeve":845
+                    },
+                    "36":{
+                        "height":750,
+                        "bust":645,
+                        "sleeve":825
+                    }
+                },
+                "modelInfo":{
+                    "hip":85,
+                    "size":"38",
+                    "waist":56,
+                    "bust":78,
+                    "height":165
+                },
                 "type":"wide",
                 "style":"regular",
                 "fit":"wide",
                 "brandSizing":{
                     "compare":"true",
                     "itemBrand":true
+                }
+            }
+        """.utf8
+    )
+
+    private let productEmptyAdditionalInfoFixture = Data(
+        """
+            {
+                "brand":"Virtusize",
+                "gender":"female",
+                "sizes":{},
+                "modelInfo":{},
+                "type":"loose",
+                "style":"fashionable",
+                "fit":"loose",
+                "brandSizing":{
+                    "compare":"small",
+                    "itemBrand":false
                 }
             }
         """.utf8

@@ -1,5 +1,5 @@
 //
-//  VirtusizeProductTypeTests.swift
+//  VirtusizeBodyProfileRecommendedSize.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,27 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import XCTest
-@testable import Virtusize
-
-class VirtusizeProductTypeTests: XCTestCase {
-
-    func testDecoding_validProductTypeData_shouldReturnExpectedStructure() {
-        let productType = try? JSONDecoder().decode(VirtusizeProductType.self, from: productTypeFixture)
-
-        XCTAssertEqual(productType?.id, 1)
-        XCTAssertEqual(productType?.name, "dress")
-        XCTAssertEqual(productType?.weights, ["bust": 1, "waist": 1, "height": 0.25])
-    }
-
-    func testDecoding_emptyJsonData_shouldReturnNil() {
-        let productType = try? JSONDecoder().decode(
-            VirtusizeProductType.self,
-            from: Data(TestFixtures.emptyResponse.utf8)
-        )
-
-        XCTAssertNil(productType)
-    }
-
-    private let productTypeFixture = Data(TestFixtures.productTypeOneJsonResponse.utf8)
+internal struct VirtusizeBodyProfileRecommendedSize: Codable {
+    let sizeName: String
 }

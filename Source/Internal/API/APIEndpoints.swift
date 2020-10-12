@@ -35,6 +35,7 @@ internal enum APIEndpoints {
     case productTypes
     case i18n(langCode: String)
     case userBodyMeasurements
+    case getSize
 
     // MARK: - Properties
 
@@ -80,17 +81,23 @@ internal enum APIEndpoints {
 
         case .userBodyMeasurements:
            components.path = "/a/api/v3/user-body-measurements"
+
+        case .getSize:
+            components.path = (Virtusize.environment == .staging)
+                ? "/stg/ds-functions/size-rec/get-size" : "/ds-functions/size-rec/get-size"
         }
         return components
     }
 
     var hostname: String {
-        if case .productDataCheck = self {
-            return Virtusize.environment.productDataCheckUrl()
-        } else if case .i18n = self {
+        switch self {
+        case .productDataCheck, .getSize:
+            return Virtusize.environment.servicesUrl()
+        case .i18n:
             return Virtusize.environment.i18nUrl()
+        default:
+            return Virtusize.environment.rawValue
         }
-        return Virtusize.environment.rawValue
     }
 
     var apiKey: String {

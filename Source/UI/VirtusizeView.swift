@@ -30,8 +30,9 @@ public protocol VirtusizeView {
     var presentingViewController: UIViewController? { get set }
     var messageHandler: VirtusizeMessageHandler? { get set }
 
-    /// Sets up the view with the product check data received from Virtusize API
-    func setupProductDataCheck()
+    func isLoading()
+    /// Sets up the InPage text
+    func setInPageText()
 }
 
 /// Extension functions for `VirtusizeView`
@@ -41,41 +42,6 @@ extension VirtusizeView {
     internal func openVirtusizeWebView() {
         if let virtusize = VirtusizeWebViewController(handler: messageHandler, processPool: Virtusize.processPool) {
             presentingViewController?.present(virtusize, animated: true, completion: nil)
-        }
-    }
-
-    /// Sets up the InPage text by the product info
-    ///
-    /// - Parameters:
-    ///   - product: `VirtusizeProduct`
-    ///   - onCompletion: The callback to pass `VirtusizeStoreProduct` and  `VirtusizeI18nLocalization`
-    ///   for setting up the InPage text
-    internal func setupInPageText(
-        product: VirtusizeProduct,
-        onCompletion: ((VirtusizeStoreProduct, VirtusizeI18nLocalization) -> Void)? = nil,
-        failure: (() -> Void)? = nil
-    ) {
-        if let productId = product.productCheckData?.productDataId {
-            // TODO: Remove Testing API endpoints
-            Virtusize.getUserProducts(onSuccess: { _ in
-            }, onError: { error in
-                print(error.debugDescription)
-            })
-            Virtusize.getUserBodyProfile(onSuccess: { _ in
-            }, onError: { error in
-                print(error.debugDescription)
-            })
-            Virtusize.getStoreProductInfo(productId: productId, onSuccess: { storeProduct in
-                Virtusize.getI18nTexts(onSuccess: { i18nLocalization in
-                    onCompletion?(storeProduct, i18nLocalization)
-                }, onError: { error in
-                    print(error.debugDescription)
-                    failure?()
-                })
-            }, onError: { error in
-                print(error.debugDescription)
-                failure?()
-            })
         }
     }
 }

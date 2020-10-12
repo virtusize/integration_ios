@@ -74,4 +74,8 @@ extension TestFixtures {
         }
     """.utf8
     )
+
+    static func getUserBodyProfile() -> VirtusizeUserBodyProfile? {
+        return try? JSONDecoder().decode(VirtusizeUserBodyProfile.self, from: Data(userBodyProfileFixture))
+    }
 }

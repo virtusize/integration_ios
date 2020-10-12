@@ -27,6 +27,8 @@ internal class VirtusizeProductType: Codable {
     // swiftlint:disable identifier_name
     /// The ID of a product type
     let id: Int
+    /// The name of a product type
+    let name: String
     /// The weights of this product type for the calculation of the fitting score
     let weights: [String: Float]
 }

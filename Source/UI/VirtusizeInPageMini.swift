@@ -53,23 +53,24 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
     }
 
-    public override func setupProductDataCheck() {
-        guard let product = Virtusize.product else {
+    public override func isLoading() {
+        super.isLoading()
+        setLoadingScreen(loading: true)
+    }
+
+    public override func setInPageText() {
+        guard let storeProduct = Virtusize.storeProduct,
+              let i18nLocalization = Virtusize.i18nLocalization else {
+            self.showErrorScreen()
             return
         }
-        self.isHidden = false
-        setLoadingScreen(loading: true)
-        setupInPageText(product: product, onCompletion: { storeProduct, i18nLocalization in
-            self.setLoadingScreen(loading: false)
-            self.inPageMiniMessageLabel.attributedText = NSAttributedString(string:
-                storeProduct.getRecommendationText(
-                    i18nLocalization: i18nLocalization,
-                    trimType: VirtusizeI18nLocalization.TrimType.ONELINE
-                )
-            ).lineSpacing(self.verticalMargin/2)
-        }, failure: {
-            self.showErrorScreen()
-        })
+        setLoadingScreen(loading: false)
+        inPageMiniMessageLabel.attributedText = NSAttributedString(string:
+            storeProduct.getRecommendationText(
+                i18nLocalization: i18nLocalization,
+                trimType: VirtusizeI18nLocalization.TrimType.ONELINE
+            )
+        ).lineSpacing(self.verticalMargin/2)
     }
 
     private func addSubviews() {

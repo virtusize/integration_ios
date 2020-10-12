@@ -32,7 +32,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
-    public func setupProductDataCheck() {}
+    public func setInPageText() {}
 
     internal let defaultMargin: CGFloat = 8
 
@@ -48,6 +48,10 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         super.init(frame: .zero)
         isHidden = true
         setup()
+    }
+
+    public func isLoading() {
+        isHidden = false
     }
 
     internal func setup() {}

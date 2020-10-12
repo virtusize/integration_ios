@@ -34,6 +34,8 @@ class VirtusizeStoreProductMetaTests: XCTestCase {
         XCTAssertEqual(storeProductMeta?.additionalInfo?.fit, "loose")
         XCTAssertEqual(storeProductMeta?.additionalInfo?.brandSizing?.compare, "small")
         XCTAssertEqual(storeProductMeta?.additionalInfo?.brandSizing?.itemBrand, true)
+        XCTAssertEqual(storeProductMeta?.brand, "Virtusize")
+        XCTAssertEqual(storeProductMeta?.gender, "female")
     }
 
     func testDecoding_emptyJsonData_shouldReturnNil() {

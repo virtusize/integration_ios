@@ -25,6 +25,7 @@
 import Foundation
 import WebKit
 
+// swiftlint:disable type_body_length
 /// The main class used by Virtusize clients to perform all available operations related to fit check
 public class Virtusize {
     // MARK: - Properties
@@ -56,19 +57,44 @@ public class Virtusize {
     public static var product: VirtusizeProduct? {
         set {
             guard let product = newValue else {
+                virtusizeViews.removeAll()
                 return
             }
             productCheck(product: product, completion: { product in
                 guard let product = product else {
+                    virtusizeViews.removeAll()
                     return
                 }
                 _product = product
-                // When the product data check is complete,
-                // call the function setupProductDataCheck to set up Virtusize views with the store product info
-                for index in 0...virtusizeViews.count-1 {
-                    virtusizeViews[index].setupProductDataCheck()
+                DispatchQueue.global().async {
+                    if let productId = _product!.productCheckData?.productDataId {
+                        DispatchQueue.main.async {
+                            for index in 0...virtusizeViews.count-1 {
+                                virtusizeViews[index].isLoading()
+                            }
+                        }
+                        storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
+                        i18nLocalization = Virtusize.getI18nTextsAsync().success
+                        // TODO: Remove testing API endpoints
+                        let productTypes = Virtusize.getProductTypesAsync().success
+                        let userBodyProfile = Virtusize.getUserBodyProfileAsync().success
+                        if productTypes != nil && storeProduct != nil && userBodyProfile != nil {
+                            print(
+                                Virtusize.getBodyProfileRecommendedSizeAsync(
+                                    productTypes: productTypes!,
+                                    storeProduct: storeProduct!,
+                                    userBodyProfile: userBodyProfile!
+                                ).success ?? "No size recommendation"
+                            )
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        for index in 0...virtusizeViews.count-1 {
+                            virtusizeViews[index].setInPageText()
+                        }
+                        virtusizeViews.removeAll()
+                    }
                 }
-                virtusizeViews.removeAll()
             }, failure: { _ in
                 virtusizeViews.removeAll()
             })
@@ -77,6 +103,9 @@ public class Virtusize {
             return _product
         }
     }
+
+    internal static var storeProduct: VirtusizeStoreProduct?
+    internal static var i18nLocalization: VirtusizeI18nLocalization?
 
     /// NotificationCenter observers for debugging the initial product data check
     /// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
@@ -135,6 +164,79 @@ public class Virtusize {
         }
         task.resume()
         URLSession.shared.finishTasksAndInvalidate()
+    }
+
+    /// TODO: add comment
+    private class func getAPIResult<T: Decodable>(
+        request: URLRequest,
+        onSuccess: ((T) -> Void)? = nil,
+        onError: ((VirtusizeError) -> Void)? = nil
+    ) {
+        perform(request, completion: { data in
+            guard let data = data else {
+                return
+            }
+            do {
+                let result = try JSONDecoder().decode(T.self, from: data)
+                onSuccess?(result)
+            } catch {
+                onError?(VirtusizeError.jsonDecodingFailed(String(describing: T.self), error))
+            }
+        }, error: { error in
+            onError?(error)
+        })
+    }
+
+    /// TODO: add comment
+    private class func performAsync(_ request: URLRequest) -> APIResponse? {
+        var apiResponse: APIResponse?
+        let semaphore = DispatchSemaphore(value: 0)
+        let task: URLSessionDataTask
+        task = session.dataTask(with: request) { (data, response, error) in
+            apiResponse = APIResponse(data: data, response: response, error: error)
+            semaphore.signal()
+        }
+        task.resume()
+        URLSession.shared.finishTasksAndInvalidate()
+
+        _ = semaphore.wait(timeout: .distantFuture)
+
+        guard apiResponse != nil else {
+            return apiResponse
+        }
+
+        guard apiResponse!.error == nil else {
+            apiResponse!.virtusizeError = VirtusizeError.apiRequestError(
+            request.url,
+            apiResponse!.error!.localizedDescription
+            )
+            return apiResponse
+        }
+
+        if let httpResponse = apiResponse!.response as? HTTPURLResponse, !httpResponse.isSuccessful() {
+            var errorDebugDescription = "Unknown Error"
+            if let data = apiResponse?.data {
+                errorDebugDescription = String(decoding: data, as: UTF8.self)
+            }
+            apiResponse!.virtusizeError = VirtusizeError.apiRequestError(request.url, errorDebugDescription)
+        }
+        return apiResponse
+    }
+
+    /// TODO: add comment
+    private class func getAPIResultAsync<T: Decodable>(request: URLRequest, type: T.Type) -> APIResult<T> {
+        let apiResponse = performAsync(request)
+        guard apiResponse?.virtusizeError == nil,
+              let data = apiResponse?.data else {
+            return .failure(apiResponse?.virtusizeError)
+        }
+
+        do {
+            let result = try JSONDecoder().decode(type, from: data)
+            return .success(result)
+        } catch {
+            return .failure(VirtusizeError.jsonDecodingFailed(String(describing: type), error))
+        }
     }
 
     /// Sets up the VirtusizeView and adds it to `virtusizeViews`
@@ -271,28 +373,12 @@ public class Virtusize {
     ///
     /// - Parameters:
     ///   - productId: The internal product ID from the Virtusize server
-    ///   - onSuccess: A callback to pass `VirtusizeStoreProduct` when the request is successful
-    ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
-    internal class func getStoreProductInfo(
-        productId: Int,
-        onSuccess: ((VirtusizeStoreProduct) -> Void)? = nil,
-        onError: ((VirtusizeError) -> Void)? = nil) {
+    /// - Return:
+internal class func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeStoreProduct> {
         guard let request = APIRequest.getStoreProductInfo(productId: productId) else {
-            return
+            return .failure(nil)
         }
-        perform(request, completion: { data in
-            guard let data = data else {
-                return
-            }
-            do {
-                let storeProduct = try JSONDecoder().decode(VirtusizeStoreProduct.self, from: data)
-                onSuccess?(storeProduct)
-            } catch {
-                onError?(VirtusizeError.jsonDecodingFailed("VirtusizeStoreProduct", error))
-            }
-        }, error: { error in
-            onError?(error)
-        })
+        return getAPIResultAsync(request: request, type: VirtusizeStoreProduct.self)
     }
 
     /// The API request for getting the list of user products from the Virtusize server
@@ -300,25 +386,11 @@ public class Virtusize {
     /// - Parameters:
     ///   - onSuccess: A callback to pass `[VirtusizeStoreProduct]` when the request is successful
     ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
-    internal class func getUserProducts(
-        onSuccess: (([VirtusizeStoreProduct]) -> Void)? = nil,
-        onError: ((VirtusizeError) -> Void)? = nil) {
+    internal class func getUserProductsAsync() -> APIResult<[VirtusizeStoreProduct]> {
         guard let request = APIRequest.getUserProducts() else {
-            return
+            return .failure(nil)
         }
-        perform(request, completion: { data in
-            guard let data = data else {
-                return
-            }
-            do {
-                let userProduct = try JSONDecoder().decode([VirtusizeStoreProduct].self, from: data)
-                onSuccess?(userProduct)
-            } catch {
-                onError?(VirtusizeError.jsonDecodingFailed("VirtusizeStoreProduct", error))
-            }
-        }, error: { error in
-            onError?(error)
-        })
+        return getAPIResultAsync(request: request, type: [VirtusizeStoreProduct].self)
     }
 
     /// The API request for getting the list of all the product types from the Virtusize server
@@ -326,26 +398,11 @@ public class Virtusize {
     /// - Parameters:
     ///   - onSuccess: A callback to pass the list of `VirtusizeProductType` when the request is successful
     ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
-    internal class func getProductTypes(
-        onSuccess: (([VirtusizeProductType]) -> Void)? = nil,
-        onError: ((VirtusizeError) -> Void)? = nil
-    ) {
+    internal class func getProductTypesAsync() -> APIResult<[VirtusizeProductType]> {
         guard let request = APIRequest.getProductTypes() else {
-            return
+            return .failure(nil)
         }
-        perform(request, completion: { data in
-            guard let data = data else {
-                return
-            }
-            do {
-                let productTypes = try JSONDecoder().decode([VirtusizeProductType].self, from: data)
-                onSuccess?(productTypes)
-            } catch {
-                onError?(VirtusizeError.jsonDecodingFailed("[VirtusizeProductType]", error))
-            }
-        }, error: { error in
-            onError?(error)
-        })
+        return getAPIResultAsync(request: request, type: [VirtusizeProductType].self)
     }
 
     /// The API request for getting i18 localization texts
@@ -353,46 +410,43 @@ public class Virtusize {
     /// - Parameters:
     ///   - onSuccess: A callback to be called when the request to get i18n texts is successful
     ///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
-    internal class func getI18nTexts(
-        onSuccess: ((VirtusizeI18nLocalization) -> Void)? = nil,
-        onError: ((VirtusizeError) -> Void)? = nil
-    ) {
+    internal class func getI18nTextsAsync() -> APIResult<VirtusizeI18nLocalization> {
         guard let virtusizeParams = Virtusize.params,
             let request = APIRequest.getI18n(
                 langCode: virtusizeParams.language.rawValue
             ) else {
-                return
+            return .failure(nil)
         }
-        perform(request, completion: { data in
-            guard let data = data else {
-                return
-            }
-            onSuccess?(Deserializer.i18n(data: data))
-        }, error: { error in
-            onError?(error)
-        })
+
+        let apiResponse = performAsync(request)
+
+        guard apiResponse?.virtusizeError == nil,
+            let data = apiResponse?.data else {
+            return .failure(apiResponse?.virtusizeError)
+        }
+
+        return .success(Deserializer.i18n(data: data))
     }
 
     // TODO: add comment
-    internal class func getUserBodyProfile(
-        onSuccess: ((VirtusizeUserBodyProfile) -> Void)? = nil,
-        onError: ((VirtusizeError) -> Void)? = nil
-    ) {
+    internal class func getUserBodyProfileAsync() -> APIResult<VirtusizeUserBodyProfile> {
         guard let request = APIRequest.getUserBodyProfile() else {
-            return
+            return .failure(nil)
         }
-        perform(request, completion: { data in
-            guard let data = data else {
-                return
-            }
-            do {
-                let userBodyProfile = try JSONDecoder().decode(VirtusizeUserBodyProfile.self, from: data)
-                onSuccess?(userBodyProfile)
-            } catch {
-                onError?(VirtusizeError.jsonDecodingFailed("VirtusizeUserBodyProfile", error))
-            }
-        }, error: { error in
-            onError?(error)
-        })
+        return getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
+    }
+
+    internal class func getBodyProfileRecommendedSizeAsync(
+        productTypes: [VirtusizeProductType],
+        storeProduct: VirtusizeStoreProduct,
+        userBodyProfile: VirtusizeUserBodyProfile
+    ) -> APIResult<VirtusizeBodyProfileRecommendedSize> {
+        guard let request = APIRequest.getBodyProfileRecommendedSize(
+                productTypes: productTypes,
+                storeProduct: storeProduct,
+                userBodyProfile: userBodyProfile) else {
+            return .failure(nil)
+        }
+        return getAPIResultAsync(request: request, type: VirtusizeBodyProfileRecommendedSize.self)
     }
 }

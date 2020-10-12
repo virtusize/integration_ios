@@ -208,17 +208,21 @@ class VirtusizeTests: XCTestCase {
         var actualStoreProduct: VirtusizeStoreProduct?
 
         Virtusize.session = MockURLSession(
-            data: TestFixtures.getStoreProductJsonResponse().data(using: .utf8),
+            data: TestFixtures.getStoreProductJsonResponse(gender: nil).data(using: .utf8),
             urlResponse: nil,
             error: nil
         )
 
-        Virtusize.getStoreProductInfo(productId: TestFixtures.productId, onSuccess: { storeProduct in
-            actualStoreProduct = storeProduct
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
 
-        waitForExpectations(timeout: 5) { error in
+            actualStoreProduct = Virtusize.getStoreProductInfoAsync(productId: TestFixtures.productId).success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
+
+        self.waitForExpectations(timeout: 5) { error in
             if let error = error {
                 XCTFail("waitForExpectations error: \(error)")
             }
@@ -256,12 +260,14 @@ class VirtusizeTests: XCTestCase {
                    error: nil
                )
 
-        Virtusize.getStoreProductInfo(
-            productId: storeProductId,
-            onError: { error in
-                virtusizeError = error
+        DispatchQueue.global().async {
+
+            virtusizeError = Virtusize.getStoreProductInfoAsync(productId: storeProductId).failure
+
+            DispatchQueue.main.async {
                 expectation.fulfill()
-        })
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -283,10 +289,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getUserProducts(onSuccess: { userProductList in
-            actualUserProductList = userProductList
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualUserProductList = Virtusize.getUserProductsAsync().success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -324,10 +334,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getUserProducts(onSuccess: { userProductList in
-            actualUserProductList = userProductList
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualUserProductList = Virtusize.getUserProductsAsync().success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -354,10 +368,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getUserProducts(onError: { error in
-            actualError = error
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualError = Virtusize.getUserProductsAsync().failure
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -379,10 +397,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getProductTypes(onSuccess: { productTypes in
-            actualProductTypes = productTypes
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualProductTypes = Virtusize.getProductTypesAsync().success ?? []
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -390,11 +412,11 @@ class VirtusizeTests: XCTestCase {
             }
         }
 
-        XCTAssertEqual(actualProductTypes.count, 2)
+        XCTAssertEqual(actualProductTypes.count, 3)
         XCTAssertEqual(actualProductTypes[0].id, 1)
         XCTAssertEqual(actualProductTypes[0].weights, ["bust": 1, "waist": 1, "height": 0.25])
-        XCTAssertEqual(actualProductTypes[1].id, 18)
-        XCTAssertEqual(actualProductTypes[1].weights, ["depth": 1, "width": 2, "height": 1])
+        XCTAssertEqual(actualProductTypes[2].id, 18)
+        XCTAssertEqual(actualProductTypes[2].weights, ["depth": 1, "width": 2, "height": 1])
     }
 
     func testGetI18nTexts_hasExpectedI18nLocalization() {
@@ -407,10 +429,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getI18nTexts(onSuccess: { i18nLocalization in
-            actualI18nLocalization = i18nLocalization
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualI18nLocalization = Virtusize.getI18nTextsAsync().success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -440,10 +466,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getUserBodyProfile(onSuccess: { userBodyProfile in
-            actualUserBodyProfile = userBodyProfile
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualUserBodyProfile = Virtusize.getUserBodyProfileAsync().success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -493,10 +523,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getUserBodyProfile(onSuccess: { userBodyProfile in
-            actualUserBodyProfile = userBodyProfile
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualUserBodyProfile = Virtusize.getUserBodyProfileAsync().success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -528,10 +562,14 @@ class VirtusizeTests: XCTestCase {
             error: nil
         )
 
-        Virtusize.getUserBodyProfile(onError: { error in
-            actualError = error
-            expectation.fulfill()
-        })
+        DispatchQueue.global().async {
+
+            actualError = Virtusize.getUserBodyProfileAsync().failure
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -541,6 +579,39 @@ class VirtusizeTests: XCTestCase {
 
         XCTAssertNotNil(actualError)
         XCTAssertTrue(actualError!.debugDescription.contains("{\"detail\": \"No wardrobe found\"}"))
+    }
+
+    func testGetUserBodyRecommendedSize() {
+        let expectation = self.expectation(description: "Virtusize.getUserBodyRecommendedSize reaches the callback")
+        var actualRecommendedSize: VirtusizeBodyProfileRecommendedSize?
+
+        Virtusize.session = MockURLSession(
+            data: "{\"sizeName\": \"35\"}".data(using: .utf8),
+            urlResponse: nil,
+            error: nil
+        )
+
+        DispatchQueue.global().async {
+
+            actualRecommendedSize = Virtusize.getBodyProfileRecommendedSizeAsync(
+                productTypes: TestFixtures.getProductTypes(),
+                storeProduct: TestFixtures.getStoreProduct(gender: "female")!,
+                userBodyProfile: TestFixtures.getUserBodyProfile()!
+            ).success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertNotNil(actualRecommendedSize)
+        XCTAssertEqual(actualRecommendedSize?.sizeName, "35")
     }
 }
 

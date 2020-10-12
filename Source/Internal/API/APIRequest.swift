@@ -200,4 +200,23 @@ internal struct APIRequest {
         let endpoint = APIEndpoints.userBodyMeasurements
         return apiRequestWithAuthorization(components: endpoint.components)
     }
+
+    // TODO: comment
+    internal static func getBodyProfileRecommendedSize(
+        productTypes: [VirtusizeProductType],
+        storeProduct: VirtusizeStoreProduct,
+        userBodyProfile: VirtusizeUserBodyProfile
+    ) -> URLRequest? {
+        let endpoint = APIEndpoints.getSize
+        guard let jsonData = try? JSONEncoder().encode(
+            VirtusizeGetSizeParams(
+                productTypes: productTypes,
+                storeProduct: storeProduct,
+                userBodyProfile: userBodyProfile
+            )
+        ) else {
+            return nil
+        }
+        return apiRequest(components: endpoint.components, withPayload: jsonData)
+    }
 }

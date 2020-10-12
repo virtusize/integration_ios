@@ -58,14 +58,11 @@ public class VirtusizeButton: UIButton, VirtusizeView {
         setStyle()
     }
 
-    public func setupProductDataCheck() {
-        guard let product = Virtusize.product else {
-            return
-        }
-        if product.productCheckData?.validProduct ?? false {
-            self.isHidden = false
-        }
+    public func isLoading() {
+        isHidden = false
     }
+
+    public func setInPageText() {}
 
     /// Set up the style of `VirtusizeButton`
     private func setStyle() {
