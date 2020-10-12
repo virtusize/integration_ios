@@ -1,5 +1,5 @@
 //
-//  VirtusizeBodyProfileRecommendedSize.swift
+//  StoreProductFitInfo.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
-internal struct VirtusizeBodyProfileRecommendedSize: Codable {
-    let sizeName: String
+internal struct StoreProductFitInfo {
+    let fitScore: Double
+    let isSmaller: Bool?
 }

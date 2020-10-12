@@ -33,6 +33,11 @@ internal class VirtusizeProductSize: Codable {
         case name, measurements
     }
 
+    init(_ name: String?, _ measurements: [String: Int?]) {
+        self.name = name
+        self.measurements = measurements
+    }
+
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try? values.decode(String.self, forKey: .name)

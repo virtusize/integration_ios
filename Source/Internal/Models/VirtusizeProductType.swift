@@ -30,5 +30,7 @@ internal class VirtusizeProductType: Codable {
     /// The name of a product type
     let name: String
     /// The weights of this product type for the calculation of the fitting score
-    let weights: [String: Float]
+    let weights: [String: Double]
+    /// The product type list that this product type is compatible with
+    let compatibleWith: [Int]
 }

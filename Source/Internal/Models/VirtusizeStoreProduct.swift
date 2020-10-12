@@ -49,6 +49,28 @@ internal class VirtusizeStoreProduct: Codable {
         case id, sizes, externalId, productType, name, cloudinaryPublicId, store, isFavorite, storeProductMeta
     }
 
+    init(id: Int,
+         sizes: [VirtusizeProductSize],
+         externalId: String,
+         productType: Int,
+         name: String,
+         cloudinaryPublicId: String,
+         store: Int,
+         isFavorite: Bool?,
+         storeProductMeta: VirtusizeStoreProductMeta?
+    ) {
+        self.id = id
+        self.sizes = sizes
+        self.externalId = externalId
+        self.productType = productType
+        self.name = name
+        self.cloudinaryPublicId = cloudinaryPublicId
+        self.store = store
+        self.isFavorite = isFavorite
+        self.storeProductMeta = storeProductMeta
+
+    }
+
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
