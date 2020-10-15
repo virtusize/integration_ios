@@ -209,8 +209,8 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
                 for cookie in cookies {
                     if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
                         if cookie.name == VirtusizeWebViewController.cookieBidKey &&
-                            cookieValue != BrowserID.current.identifier {
-                            BrowserID.current.identifier = cookie.value
+                            cookieValue != UserDefaultsHelper.current.identifier {
+                            UserDefaultsHelper.current.identifier = cookie.value
                         }
                     }
                 }
@@ -219,8 +219,8 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
             if let cookies = HTTPCookieStorage.shared.cookies {
                 for cookie in cookies
                     where cookie.name == VirtusizeWebViewController.cookieBidKey &&
-                        cookie.value != BrowserID.current.identifier {
-                            BrowserID.current.identifier = cookie.value
+                        cookie.value != UserDefaultsHelper.current.identifier {
+                            UserDefaultsHelper.current.identifier = cookie.value
                 }
             }
         }
@@ -240,6 +240,15 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
             if event.name == "user-closed-widget" {
                 shouldClose()
             }
+			if event.name == "user-auth-data" {
+				if let bid = (event.data as? [String: Any])?["bid"] as? String {
+					UserDefaultsHelper.current.identifier = bid
+				}
+				if let auth = (event.data as? [String: Any])?["x-vs-auth"] as? String,
+				   !auth.isEmpty {
+					UserDefaultsHelper.current.authHeader = auth
+				}
+			}
             delegate?.virtusizeController(self, didReceiveEvent: event)
         } catch {
             if let error = error as? VirtusizeError {

@@ -56,13 +56,23 @@ internal struct APIRequest {
     /// - Returns: A `URLRequest` for this HTTP request
     private static func apiRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = HTTPRequest(components: components, method: method)
-        request.addValue(BrowserID.current.identifier, forHTTPHeaderField: "x-vs-bid")
+        request.addValue(UserDefaultsHelper.current.identifier, forHTTPHeaderField: "x-vs-bid")
         return request
     }
 
+	// TODO
+	private static func apiRequestWithAuthHeader(components: URLComponents) -> URLRequest {
+		var request = apiRequest(components: components, method: .post)
+		request.addValue(UserDefaultsHelper.current.authHeader ?? "", forHTTPHeaderField: "x-vs-auth")
+		return request
+	}
+
     private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = apiRequest(components: components, method: method)
-        request.addValue("Token \(Virtusize.authToken)", forHTTPHeaderField: "Authorization")
+		guard let authToken = Virtusize.authToken else {
+			return request
+		}
+        request.addValue("Token \(authToken)", forHTTPHeaderField: "Authorization")
         return request
     }
 
@@ -169,6 +179,20 @@ internal struct APIRequest {
         return apiRequest(components: endpoint.components)
     }
 
+	/// Gets the `URLRequest` for the `productTypes` request
+	///
+	/// - Returns: A `URLRequest` for the `productTypes` request
+	internal static func getProductTypes() -> URLRequest? {
+		let endpoint = APIEndpoints.productTypes
+		return apiRequest(components: endpoint.components)
+	}
+
+	// TODO: comment
+	internal static func getSessions() -> URLRequest? {
+		let endpoint = APIEndpoints.sessions
+		return apiRequestWithAuthHeader(components: endpoint.components)
+	}
+
     /// Gets the `URLRequest` for the `storeProducts` request
     ///
     /// - Parameter productId: The ID of the product
@@ -176,23 +200,6 @@ internal struct APIRequest {
     internal static func getUserProducts() -> URLRequest? {
         let endpoint = APIEndpoints.userProducts
         return apiRequestWithAuthorization(components: endpoint.components)
-    }
-
-    /// Gets the `URLRequest` for the `productTypes` request
-    ///
-    /// - Returns: A `URLRequest` for the `productTypes` request
-    internal static func getProductTypes() -> URLRequest? {
-        let endpoint = APIEndpoints.productTypes
-        return apiRequest(components: endpoint.components)
-    }
-
-    /// Gets the `URLRequest` for the request to get i18n texts
-    ///
-    /// - Parameter langCode: The language code to get the texts in a specific language
-    /// - Returns: A `URLRequest` for the request to get i18n texts
-    internal static func getI18n(langCode: String) -> URLRequest? {
-        let endpoint = APIEndpoints.i18n(langCode: langCode)
-        return apiRequest(components: endpoint.components)
     }
 
     // TODO: comment
@@ -219,4 +226,13 @@ internal struct APIRequest {
         }
         return apiRequest(components: endpoint.components, withPayload: jsonData)
     }
+
+	/// Gets the `URLRequest` for the request to get i18n texts
+	///
+	/// - Parameter langCode: The language code to get the texts in a specific language
+	/// - Returns: A `URLRequest` for the request to get i18n texts
+	internal static func getI18n(langCode: String) -> URLRequest? {
+		let endpoint = APIEndpoints.i18n(langCode: langCode)
+		return apiRequest(components: endpoint.components)
+	}
 }

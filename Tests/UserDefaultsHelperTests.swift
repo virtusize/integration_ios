@@ -1,5 +1,5 @@
 //
-//  BrowserIDTests.swift
+//  UserDefaultsHelperTests.swift
 //
 //  Copyright (c) 2018-20 Virtusize KK
 //
@@ -26,7 +26,7 @@ import Foundation
 import XCTest
 @testable import Virtusize
 
-class TestBrowserID: XCTestCase {
+class UserDefaultsHelperTests: XCTestCase {
 
 	class MockNSUserDefaults: UserDefaults {
 		let set: NSMutableDictionary = NSMutableDictionary()
@@ -48,7 +48,7 @@ class TestBrowserID: XCTestCase {
 		let mockDefaults = MockNSUserDefaults()
 		XCTAssertNil(mockDefaults.value(forKey: "BID"))
 
-		let installation = BrowserID(defaults: mockDefaults)
+		let installation = UserDefaultsHelper(defaults: mockDefaults)
 
 		// there should be a identifier created if calling it
 		// and it should be saved in the defaults
@@ -70,7 +70,7 @@ class TestBrowserID: XCTestCase {
 		let mockDefaults = MockNSUserDefaults()
 		XCTAssertNil(mockDefaults.value(forKey: "BID"))
 
-		let installation = BrowserID(defaults: mockDefaults)
+		let installation = UserDefaultsHelper(defaults: mockDefaults)
 
 		// there should be a identifier created if calling it
 		// and it should be saved in the defaults
@@ -93,7 +93,7 @@ class TestBrowserID: XCTestCase {
 		let mockDefaults = MockNSUserDefaults()
 		XCTAssertNil(mockDefaults.value(forKey: "BID"))
 
-		let installation = BrowserID(defaults: mockDefaults)
+		let installation = UserDefaultsHelper(defaults: mockDefaults)
 
 		// there should be a identifier created if calling it
 		// and it should be saved in the defaults

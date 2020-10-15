@@ -41,12 +41,12 @@ class APIRequestTests: XCTestCase {
     func testRetrieveStoreInfo_expectedHeaders() {
         let apiRequest = APIRequest.retrieveStoreInfo()
 
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://staging.virtusize.com/a/api/v3/stores/api-key/\(Virtusize.APIKey!)?format=json"
+            "https://staging.virtusize.jp/a/api/v3/stores/api-key/\(Virtusize.APIKey!)?format=json"
         )
     }
 
@@ -61,7 +61,7 @@ class APIRequestTests: XCTestCase {
             with: apiRequest?.httpBody ?? Data(), options: []) as? JSONObject
         let orderItemJsonObject = orderJsonObject?["items"] as? [JSONObject]
 
-        XCTAssertEqual(apiRequest?.url?.absoluteString, "https://staging.virtusize.com/a/api/v3/orders")
+        XCTAssertEqual(apiRequest?.url?.absoluteString, "https://staging.virtusize.jp/a/api/v3/orders")
         XCTAssertEqual(orderJsonObject?["externalOrderId"] as? String ?? "", "4000111032")
         XCTAssertEqual(orderJsonObject?["externalUserId"] as? String ?? "", "123")
         XCTAssertEqual(orderItemJsonObject?[0]["currency"] as? String ?? "", "JPY")
@@ -72,11 +72,11 @@ class APIRequestTests: XCTestCase {
         let apiRequest = APIRequest.getStoreProductInfo(productId: TestFixtures.productId)
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://staging.virtusize.com/a/api/v3/store-products/\(TestFixtures.productId)?format=json"
+            "https://staging.virtusize.jp/a/api/v3/store-products/\(TestFixtures.productId)?format=json"
         )
     }
 
@@ -85,12 +85,12 @@ class APIRequestTests: XCTestCase {
         let apiRequest = APIRequest.getUserProducts()
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken)")
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken!)")
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://staging.virtusize.com/a/api/v3/user-products"
+            "https://staging.virtusize.jp/a/api/v3/user-products"
         )
     }
 
@@ -98,11 +98,11 @@ class APIRequestTests: XCTestCase {
         let apiRequest = APIRequest.getProductTypes()
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://staging.virtusize.com/a/api/v3/product-types"
+            "https://staging.virtusize.jp/a/api/v3/product-types"
         )
     }
 
@@ -110,7 +110,7 @@ class APIRequestTests: XCTestCase {
         let apiRequest = APIRequest.getI18n(langCode: VirtusizeLanguage.KOREAN.rawValue)
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
@@ -123,12 +123,12 @@ class APIRequestTests: XCTestCase {
         let apiRequest = APIRequest.getUserBodyProfile()
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken)")
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken!)")
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://staging.virtusize.com/a/api/v3/user-body-measurements"
+            "https://staging.virtusize.jp/a/api/v3/user-body-measurements"
         )
     }
 
@@ -147,7 +147,7 @@ class APIRequestTests: XCTestCase {
             userBodyProfile: userBodyProfile)
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", BrowserID.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
         XCTAssertNotNil(apiRequest?.httpBody)
         let actualParams = try? JSONDecoder().decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
         XCTAssertNotNil(actualParams)
@@ -190,7 +190,7 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(actualParams?.productType, "jacket")
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://services.virtusize.com/stg/ds-functions/size-rec/get-size"
+            "https://services.virtusize.jp/stg/ds-functions/size-rec/get-size"
         )
     }
 

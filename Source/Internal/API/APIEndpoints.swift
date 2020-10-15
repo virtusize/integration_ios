@@ -31,11 +31,12 @@ internal enum APIEndpoints {
     case storeViewApiKey
     case orders
     case storeProducts(productId: Int)
-    case userProducts
-    case productTypes
-    case i18n(langCode: String)
-    case userBodyMeasurements
+	case productTypes
+	case sessions
+	case userProducts
+	case userBodyMeasurements
     case getSize
+	case i18n(langCode: String)
 
     // MARK: - Properties
 
@@ -57,7 +58,7 @@ internal enum APIEndpoints {
 
         case .virtusize(let region):
             components.host = "static.api.virtusize.\(region.rawValue)"
-            components.path = "/a/aoyama/latest/sdk-webview.html"
+            components.path = "/a/aoyama/testing/auth-sdk-events/sdk-webview.html"
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -70,14 +71,14 @@ internal enum APIEndpoints {
             components.path = "/a/api/v3/store-products/\(productId)"
             components.queryItems = jsonFormatQueryItems()
 
+        case .productTypes:
+			components.path = "/a/api/v3/product-types"
+
+        case .sessions:
+			components.path = "/a/api/v3/sessions"
+
         case .userProducts:
             components.path = "/a/api/v3/user-products"
-
-        case .productTypes:
-            components.path = "/a/api/v3/product-types"
-
-        case .i18n(let langCode):
-            components.path = "/bundle-payloads/aoyama/\(langCode)"
 
         case .userBodyMeasurements:
            components.path = "/a/api/v3/user-body-measurements"
@@ -85,6 +86,9 @@ internal enum APIEndpoints {
         case .getSize:
             components.path = (Virtusize.environment == .staging)
                 ? "/stg/ds-functions/size-rec/get-size" : "/ds-functions/size-rec/get-size"
+
+        case .i18n(let langCode):
+			components.path = "/bundle-payloads/aoyama/\(langCode)"
         }
         return components
     }

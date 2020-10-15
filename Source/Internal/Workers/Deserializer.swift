@@ -111,7 +111,7 @@ internal struct Deserializer {
             throw VirtusizeError.invalidPayload
         }
 
-        return VirtusizeEvent(name: eventName, data: event["data"])
+        return VirtusizeEvent(name: eventName, data: event)
     }
 
     /// Gets `VirtusizeI18nLocalization` from the data response from the i18n request
