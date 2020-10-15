@@ -142,7 +142,7 @@ internal class VirtusizeStoreProduct: Codable {
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
         _ bodyProfileRecommendedSizeName: String?
     ) -> String {
-		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestUserProduct?.sizes[0].name {
+		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestSize?.name {
 			return i18nLocalization.getSizeComparisonMultiSizeText(sizeComparisonRecommendedSizeName)
 		}
         if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName {

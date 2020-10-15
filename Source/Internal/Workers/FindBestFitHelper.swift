@@ -23,7 +23,7 @@
 //
 
 // TODO: add comment
-class FindBestFitHelper {
+internal class FindBestFitHelper {
 
     static func findBestMatchedProductSize(
         userProducts: [VirtusizeStoreProduct],
@@ -45,6 +45,7 @@ class FindBestFitHelper {
                 )
                 if storeProductFitInfo.fitScore > sizeComparisonRecommendedSize.bestFitScore {
                     sizeComparisonRecommendedSize.bestFitScore = storeProductFitInfo.fitScore
+					sizeComparisonRecommendedSize.bestSize = storeProductSize
                     sizeComparisonRecommendedSize.bestUserProduct = userProduct
                     sizeComparisonRecommendedSize.isStoreProductSmaller = storeProductFitInfo.isSmaller
                 }

@@ -25,11 +25,13 @@
 // TODO: add comment
 internal struct SizeComparisonRecommendedSize {
     var bestFitScore: Double
+	var bestSize: VirtusizeProductSize?
     var bestUserProduct: VirtusizeStoreProduct?
     var isStoreProductSmaller: Bool?
 
     init() {
         bestFitScore = 0.0
+		bestSize = nil
         bestUserProduct = nil
         isStoreProductSmaller = false
     }

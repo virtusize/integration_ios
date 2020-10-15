@@ -388,7 +388,6 @@
 				9CF9666924F41191001D3458 /* Font.swift */,
 				9CB2DD5C24F4BD24004D4E08 /* Image+Extensions.swift */,
 				9C106EED24FF99390012EE51 /* String+Extensions.swift */,
-				9CEC8D842529CF58001CBDFB /* FindBestFitHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -476,6 +475,7 @@
 		DFFAA96121A39BBE000F0F70 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				9CEC8D842529CF58001CBDFB /* FindBestFitHelper.swift */,
 				4D6C578D205FB6F400DA910E /* UserDefaultsHelper.swift */,
 				DFFAA95921A2DF19000F0F70 /* Deserializer.swift */,
 			);
