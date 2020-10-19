@@ -26,8 +26,8 @@
 internal class FindBestFitHelper {
 
     static func findBestMatchedProductSize(
-        userProducts: [VirtusizeStoreProduct],
-        storeProduct: VirtusizeStoreProduct,
+        userProducts: [VirtusizeInternalProduct],
+        storeProduct: VirtusizeInternalProduct,
         productTypes: [VirtusizeProductType]
     ) -> SizeComparisonRecommendedSize? {
         let storeProductType = productTypes.first(where: { $0.id == storeProduct.productType })

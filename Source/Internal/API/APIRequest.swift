@@ -211,7 +211,7 @@ internal struct APIRequest {
     // TODO: comment
     internal static func getBodyProfileRecommendedSize(
         productTypes: [VirtusizeProductType],
-        storeProduct: VirtusizeStoreProduct,
+        storeProduct: VirtusizeInternalProduct,
         userBodyProfile: VirtusizeUserBodyProfile
     ) -> URLRequest? {
         let endpoint = APIEndpoints.getSize

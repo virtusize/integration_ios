@@ -50,7 +50,7 @@ class VirtusizeStoreProductTests: XCTestCase {
     }
 
     func testDecoding_validStoreProductData_shouldReturnExpectedStructure() {
-        let storeProduct = try? JSONDecoder().decode(VirtusizeStoreProduct.self, from: storeProductFixture)
+        let storeProduct = try? JSONDecoder().decode(VirtusizeInternalProduct.self, from: storeProductFixture)
 
         XCTAssertEqual(storeProduct?.id, TestFixtures.productId)
         XCTAssertEqual(storeProduct?.sizes.count, 3)
@@ -70,7 +70,7 @@ class VirtusizeStoreProductTests: XCTestCase {
 
     func testDecoding_emptyJsonData_shouldReturnNil() {
         let storeProduct = try? JSONDecoder().decode(
-            VirtusizeStoreProduct.self,
+			VirtusizeInternalProduct.self,
             from: Data(TestFixtures.emptyResponse.utf8)
         )
 
@@ -193,7 +193,7 @@ class VirtusizeStoreProductTests: XCTestCase {
 	func testGetRecommendationText_multiSizeProduct_hasSizeComparisonRecommendedSize_returnMultiSizeComparisonText() {
 		let storeProduct1 = TestFixtures.getStoreProduct(productType: 1, gender: nil)
 		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
-		sizeComparisonRecommendedSize.bestUserProduct = storeProduct1
+		sizeComparisonRecommendedSize.bestSize = storeProduct1?.sizes[0]
 		XCTAssertTrue(
 			storeProduct1!.getRecommendationText(
 				i18nLocalization,

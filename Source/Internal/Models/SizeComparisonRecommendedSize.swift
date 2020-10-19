@@ -26,7 +26,7 @@
 internal struct SizeComparisonRecommendedSize {
     var bestFitScore: Double
 	var bestSize: VirtusizeProductSize?
-    var bestUserProduct: VirtusizeStoreProduct?
+    var bestUserProduct: VirtusizeInternalProduct?
     var isStoreProductSmaller: Bool?
 
     init() {

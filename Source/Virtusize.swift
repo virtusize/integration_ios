@@ -51,7 +51,7 @@ public class Virtusize {
     /// Allow process pool to be set to share cookies
     public static var processPool: WKProcessPool?
 
-	internal static var storeProduct: VirtusizeStoreProduct?
+	internal static var storeProduct: VirtusizeInternalProduct?
 	internal static var i18nLocalization: VirtusizeI18nLocalization?
 	internal static var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	internal static var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
@@ -206,7 +206,7 @@ public class Virtusize {
         task.resume()
         URLSession.shared.finishTasksAndInvalidate()
 
-        _ = semaphore.wait(timeout: .distantFuture)
+		_ = semaphore.wait(timeout: .distantFuture)
 
         guard apiResponse != nil else {
             return apiResponse
@@ -381,11 +381,11 @@ public class Virtusize {
     /// - Parameters:
     ///   - productId: The internal product ID from the Virtusize server
     /// - Return:
-    internal class func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeStoreProduct> {
+    internal class func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeInternalProduct> {
         guard let request = APIRequest.getStoreProductInfo(productId: productId) else {
             return .failure(nil)
         }
-        return getAPIResultAsync(request: request, type: VirtusizeStoreProduct.self)
+        return getAPIResultAsync(request: request, type: VirtusizeInternalProduct.self)
     }
 
     /// The API request for getting the list of all the product types from the Virtusize server
@@ -413,11 +413,11 @@ public class Virtusize {
 	/// - Parameters:
 	///   - onSuccess: A callback to pass `[VirtusizeStoreProduct]` when the request is successful
 	///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
-	internal class func getUserProductsAsync() -> APIResult<[VirtusizeStoreProduct]> {
+	internal class func getUserProductsAsync() -> APIResult<[VirtusizeInternalProduct]> {
 		guard let request = APIRequest.getUserProducts() else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: [VirtusizeStoreProduct].self)
+		return getAPIResultAsync(request: request, type: [VirtusizeInternalProduct].self)
 	}
 
 	// TODO: add comment
@@ -430,7 +430,7 @@ public class Virtusize {
 
 	internal class func getBodyProfileRecommendedSizeAsync(
 		productTypes: [VirtusizeProductType],
-		storeProduct: VirtusizeStoreProduct,
+		storeProduct: VirtusizeInternalProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
 	) -> APIResult<BodyProfileRecommendedSize> {
 		guard let request = APIRequest.getBodyProfileRecommendedSize(

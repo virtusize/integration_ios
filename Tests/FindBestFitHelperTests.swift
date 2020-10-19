@@ -158,8 +158,8 @@ class FindBestFitHelperTests: XCTestCase {
     private static func getStoreProduct(
         productId: Int,
         sizes: [VirtusizeProductSize]
-    ) -> VirtusizeStoreProduct {
-        return VirtusizeStoreProduct(
+    ) -> VirtusizeInternalProduct {
+        return VirtusizeInternalProduct(
             id: productId,
             sizes: sizes,
             externalId: "",
