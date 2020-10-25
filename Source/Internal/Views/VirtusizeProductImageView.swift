@@ -32,10 +32,10 @@ internal class VirtusizeProductImageView: UIView {
 		}
 		set(value) {
 			super.isHidden = value
-			if value {
-				circleBorderLayer.isHidden = true
-			} else if productImageType == .USER {
+			if !value && productImageType == .USER {
 				circleBorderLayer.isHidden = false
+			} else {
+				circleBorderLayer.isHidden = true
 			}
 		}
 	}
@@ -167,10 +167,10 @@ internal class VirtusizeProductImageView: UIView {
         self.productImageView.image = Assets.getProductPlaceholderImage(
             productType: productType,
             style: style
-        )?.withPadding(inset: 6)?.withRenderingMode(.alwaysTemplate)
-        self.productImageView.contentMode = .scaleAspectFit
+        )?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
 		if productImageType == .STORE {
 			self.productImageView.backgroundColor = Colors.gray200Color
+			self.productImageView.tintColor = UIColor.black
 		} else {
 			self.productImageView.backgroundColor = UIColor.white
 			self.productImageView.tintColor = Colors.vsTealColor

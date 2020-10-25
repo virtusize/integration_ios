@@ -37,8 +37,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	private var metrics: [String: CGFloat] = [:]
     private let inPageStandardView: UIView = UIView()
 	private let vsIconImageView: UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
-    private let leftProductImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
-	private let rightProductImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
+    private let userProductImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
+	private let storeProductImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
     private let messageStackView: UIStackView = UIStackView()
     private let topMessageLabel: UILabel = UILabel()
     private let bottomMessageLabel: UILabel = UILabel()
@@ -49,11 +49,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     private let errorText: UILabel = UILabel()
 
     private var messageLineSpacing: CGFloat = 6
-	private var leftProjectImageSize: CGFloat = 0
+	private var userProjectImageSize: CGFloat = 0
 	private var productImageViewOffset: CGFloat = 0
 	private var minimumInPageWidthForTwoThumbnails: CGFloat = 343
 
 	private var loadingImageSemaphore = DispatchSemaphore(value: 1)
+	private var storeProductImageIsSet = false
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
@@ -80,8 +81,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         addSubview(inPageStandardView)
         addSubview(vsSignatureImageView)
         addSubview(privacyPolicyLink)
-		inPageStandardView.addSubview(leftProductImageView)
-        inPageStandardView.addSubview(rightProductImageView)
+		inPageStandardView.addSubview(userProductImageView)
+        inPageStandardView.addSubview(storeProductImageView)
 		inPageStandardView.addSubview(vsIconImageView)
         inPageStandardView.addSubview(messageStackView)
         messageStackView.addArrangedSubview(topMessageLabel)
@@ -93,12 +94,13 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
     // swiftlint:disable function_body_length
     private func setConstraints() {
+		translatesAutoresizingMaskIntoConstraints = false
         inPageStandardView.translatesAutoresizingMaskIntoConstraints = false
 		vsIconImageView.translatesAutoresizingMaskIntoConstraints = false
         vsSignatureImageView.translatesAutoresizingMaskIntoConstraints = false
         privacyPolicyLink.translatesAutoresizingMaskIntoConstraints = false
-		leftProductImageView.translatesAutoresizingMaskIntoConstraints = false
-        rightProductImageView.translatesAutoresizingMaskIntoConstraints = false
+		userProductImageView.translatesAutoresizingMaskIntoConstraints = false
+        storeProductImageView.translatesAutoresizingMaskIntoConstraints = false
         messageStackView.translatesAutoresizingMaskIntoConstraints = false
         bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -111,8 +113,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			"vsIconImageView": vsIconImageView,
             "virtusizeImageView": vsSignatureImageView,
             "privacyPolicyLink": privacyPolicyLink,
-			"leftProductImageView": leftProductImageView,
-            "rightProductImageView": rightProductImageView,
+			"userProductImageView": userProductImageView,
+            "storeProductImageView": storeProductImageView,
             "messageStackView": messageStackView,
             "topMessageLabel": topMessageLabel,
             "bottomMessageLabel": bottomMessageLabel,
@@ -123,7 +125,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	    metrics = [
 			"defaultMargin": defaultMargin,
-			"leftProjectImageSize": leftProjectImageSize,
+			"userProjectImageSize": userProjectImageSize,
 			"productImageViewOffset": productImageViewOffset
         ]
 
@@ -171,7 +173,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
         // swiftlint:disable line_length
 		let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-defaultMargin-[leftProductImageView(==leftProjectImageSize)]-(productImageViewOffset)-[rightProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
+            withVisualFormat: "H:|-defaultMargin-[userProductImageView(==userProjectImageSize)]-(productImageViewOffset)-[storeProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
@@ -185,14 +187,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		)
 
         let leftProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=14)-[leftProductImageView(==40)]-(>=14)-|",
+            withVisualFormat: "V:|-(>=14)-[userProductImageView(==40)]-(>=14)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: nil,
             views: views
         )
 
-		let rightProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-(>=14)-[rightProductImageView(==40)]-(>=14)-|",
+		let storeProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-(>=14)-[storeProductImageView(==40)]-(>=14)-|",
 			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
 			metrics: nil,
 			views: views
@@ -227,7 +229,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		addConstraints(inPageStandardViewsHorizontalConstraints)
         addConstraints(footerHorizontalConstraints)
         addConstraints(leftProductImageViewVerticalConstraints)
-		addConstraints(rightProductImageViewVerticalConstraints)
+		addConstraints(storeProductImageViewVerticalConstraints)
         addConstraints(messageStackViewVerticalConstraints)
         addConstraints(checkSizeButtonVerticalConstraints)
         addConstraints(errorScreenVerticalConstraints)
@@ -235,8 +237,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         addConstraints(errorTextHorizontalConstraints)
 
 		addConstraint(vsIconImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
-		addConstraint(leftProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
-        addConstraint(rightProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+		addConstraint(userProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+        addConstraint(storeProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
         addConstraint(messageStackView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
         addConstraint(checkSizeButton.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
         addConstraint(errorImageView.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
@@ -254,8 +256,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		vsIconImageView.image = Assets.icon
 
-		leftProductImageView.productImageType = .USER
-		rightProductImageView.productImageType = .STORE
+		userProductImageView.productImageType = .USER
+		storeProductImageView.productImageType = .STORE
 
         vsSignatureImageView.image = Assets.vsSignature
 
@@ -340,55 +342,57 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     }
 
 	public override func setInPageText() {
-		guard let storeProduct = Virtusize.storeProduct,
-			  let i18nLocalization = Virtusize.i18nLocalization else {
-			self.showErrorScreen()
-			return
-		}
+		super.setInPageText()
 
 		let semaphore = DispatchSemaphore(value: 0)
 
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global().async {
 			let bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct
 			if bestFitUserProduct != nil {
-				self.leftProductImageView.setImage(product: bestFitUserProduct!, localImageUrl: nil) {
+				self.userProductImageView.setImage(product: bestFitUserProduct!, localImageUrl: nil) {
 					semaphore.signal()
 				}
 				semaphore.wait()
-				self.rightProductImageView.setImage(product: storeProduct, localImageUrl: Virtusize.product?.imageURL) {
+				if !self.storeProductImageIsSet {
+					self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
+						self.storeProductImageIsSet = true
+						semaphore.signal()
+					}
+					semaphore.wait()
+				}
+				DispatchQueue.main.async {
+					if self.inPageStandardView.frame.size.width >= self.minimumInPageWidthForTwoThumbnails {
+						self.removeConstraints(self.constraints)
+						self.userProjectImageSize = 40
+						self.productImageViewOffset = -2
+						self.setConstraints()
+					}
+				}
+			} else {
+				self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
 					semaphore.signal()
 				}
 				semaphore.wait()
 				DispatchQueue.main.async {
 					if self.inPageStandardView.frame.size.width >= self.minimumInPageWidthForTwoThumbnails {
 						self.removeConstraints(self.constraints)
-						self.translatesAutoresizingMaskIntoConstraints = true
-						self.leftProjectImageSize = 40
-						self.productImageViewOffset = -2
+						self.userProjectImageSize = 0
+						self.productImageViewOffset = 0
 						self.setConstraints()
 					}
 				}
-			} else {
-				DispatchQueue.main.async {
-					self.leftProductImageView.isHidden = true
-				}
-				self.rightProductImageView.setImage(product: storeProduct, localImageUrl: Virtusize.product?.imageURL) {
-					semaphore.signal()
-				}
-				semaphore.wait()
 			}
 			DispatchQueue.main.async {
-				print("\(self.inPageStandardView.frame.size.width)")
-				if self.inPageStandardView.frame.size.width < self.minimumInPageWidthForTwoThumbnails {
-					self.crossFadeBetweenTwoProductImages(self.leftProductImageView, self.rightProductImageView)
+				if self.inPageStandardView.frame.size.width < self.minimumInPageWidthForTwoThumbnails && bestFitUserProduct != nil {
+					self.crossFadeBetweenTwoProductImages(self.userProductImageView, self.storeProductImageView)
 				}
 				self.setMessageLabelTexts(
-					storeProduct,
-					i18nLocalization,
+					Virtusize.storeProduct!,
+					Virtusize.i18nLocalization!,
 					Virtusize.sizeComparisonRecommendedSize,
 					Virtusize.bodyProfileRecommendedSize?.sizeName
 				)
-				self.setLoadingScreen(loading: false)
+				self.setLoadingScreen(loading: false, bestFitUserProduct: bestFitUserProduct)
 			}
 		}
 	}
@@ -432,19 +436,20 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             ).lineSpacing(self.messageLineSpacing)
         } else {
             self.topMessageLabel.isHidden = true
+			self.topMessageLabel.text = ""
             self.bottomMessageLabel.attributedText = NSAttributedString(
                 string: recommendationText
             ).lineSpacing(self.messageLineSpacing)
         }
     }
 
-    private func setLoadingScreen(loading: Bool) {
+	private func setLoadingScreen(loading: Bool, bestFitUserProduct: VirtusizeInternalProduct? = nil) {
         vsSignatureImageView.isHidden = loading ? true : false
         privacyPolicyLink.isHidden = loading ? true : false
         topMessageLabel.isHidden = loading ? true : false
 		vsIconImageView.isHidden = loading ? false : true
-		leftProductImageView.isHidden = loading ? true : false
-		rightProductImageView.isHidden = loading ? true : false
+		userProductImageView.isHidden = (loading || bestFitUserProduct == nil) ? true : false
+		storeProductImageView.isHidden = loading ? true : false
         if loading {
             startLoadingAnimation(
                 label: bottomMessageLabel,
@@ -455,12 +460,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         }
     }
 
-    private func showErrorScreen() {
+	internal override func showErrorScreen() {
         inPageStandardView.layer.shadowOpacity = 0
         inPageStandardView.isUserInteractionEnabled = false
 		vsIconImageView.isHidden = true
-		leftProductImageView.isHidden = true
-        rightProductImageView.isHidden = true
+		userProductImageView.isHidden = true
+        storeProductImageView.isHidden = true
         bottomMessageLabel.isHidden = true
         checkSizeButton.isHidden = true
         errorImageView.isHidden = false

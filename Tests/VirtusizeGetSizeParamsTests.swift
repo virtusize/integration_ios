@@ -249,8 +249,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             return
         }
 
-        print(String(decoding: try JSONEncoder().encode(actualGetSizeParams), as: UTF8.self))
-
         guard let expectedDict = expectedJsonObject as? NSDictionary else {
             XCTFail("Failed casting expected JSON object (i.e. \(expectedJsonObject)) to an NSDictionary")
             return
