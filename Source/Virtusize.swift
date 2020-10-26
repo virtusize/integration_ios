@@ -212,9 +212,15 @@ public class Virtusize {
 		authToken = userSessionInfoResponse.success?.id
 	}
 
-	internal class func setupRecommendation(selectedUserProductId: Int? = nil) {
-		let userProducts = Virtusize.getUserProductsAsync().success
-		let userBodyProfile = Virtusize.getUserBodyProfileAsync().success
+	internal class func setupRecommendation(selectedUserProductId: Int? = nil, loggedOutUser: Bool = false) {
+		var userProducts: [VirtusizeInternalProduct]?
+		var userBodyProfile: VirtusizeUserBodyProfile?
+		bodyProfileRecommendedSize = nil
+		sizeComparisonRecommendedSize = nil
+		if !loggedOutUser {
+			userProducts = Virtusize.getUserProductsAsync().success
+			userBodyProfile = Virtusize.getUserBodyProfileAsync().success
+		}
 		if userProducts != nil && productTypes != nil && storeProduct != nil && userBodyProfile != nil {
 			bodyProfileRecommendedSize = Virtusize.getBodyProfileRecommendedSizeAsync(
 				productTypes: productTypes!,
@@ -227,9 +233,6 @@ public class Virtusize {
 				storeProduct: storeProduct!,
 				productTypes: productTypes!
 			)
-		} else {
-			bodyProfileRecommendedSize = nil
-			sizeComparisonRecommendedSize = nil
 		}
 		DispatchQueue.main.async {
 			for index in 0...virtusizeViews.count-1 {

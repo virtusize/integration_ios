@@ -139,7 +139,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		UserDefaultsHelper.current.authHeader = ""
 		DispatchQueue.global().async {
 			Virtusize.updateSession()
-			Virtusize.setupRecommendation()
+			Virtusize.setupRecommendation(selectedUserProductId: nil, loggedOutUser: true)
 		}
 	}
 
