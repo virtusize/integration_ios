@@ -52,9 +52,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	private var userProjectImageSize: CGFloat = 0
 	private var productImageViewOffset: CGFloat = 0
 	private var minimumInPageWidthForTwoThumbnails: CGFloat = 343
+	private var productImagesAreAnimating: Bool = false
 
 	private var loadingImageSemaphore = DispatchSemaphore(value: 1)
 	private var storeProductImageIsSet = false
+	private var crossFadeInAnimator: UIViewPropertyAnimator?
+	private var crossFadeOutAnimator: UIViewPropertyAnimator?
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
@@ -369,10 +372,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 					}
 				}
 			} else {
-				self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
-					semaphore.signal()
+				if !self.storeProductImageIsSet {
+					self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
+						semaphore.signal()
+					}
+					semaphore.wait()
 				}
-				semaphore.wait()
 				DispatchQueue.main.async {
 					if self.inPageStandardView.frame.size.width >= self.minimumInPageWidthForTwoThumbnails {
 						self.removeConstraints(self.constraints)
@@ -383,8 +388,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 				}
 			}
 			DispatchQueue.main.async {
-				if self.inPageStandardView.frame.size.width < self.minimumInPageWidthForTwoThumbnails && bestFitUserProduct != nil {
-					self.crossFadeBetweenTwoProductImages(self.userProductImageView, self.storeProductImageView)
+				if self.inPageStandardView.frame.size.width < self.minimumInPageWidthForTwoThumbnails {
+					if bestFitUserProduct != nil {
+						if !self.productImagesAreAnimating {
+							self.startCrossFadeProductImageViews()
+						}
+					} else {
+						self.stopCrossFadeProductImageViews()
+					}
 				}
 				self.setMessageLabelTexts(
 					Virtusize.storeProduct!,
@@ -397,22 +408,45 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		}
 	}
 
-	private func crossFadeBetweenTwoProductImages(
+	private func startCrossFadeProductImageViews() {
+		productImagesAreAnimating = true
+		if self.userProductImageView.alpha == 1.0 {
+			fadeInAnimation(self.storeProductImageView, self.userProductImageView)
+			fadeOutAnimation(self.userProductImageView)
+		} else {
+			fadeInAnimation(self.userProductImageView, self.storeProductImageView)
+			fadeOutAnimation(self.storeProductImageView)
+		}
+	}
+
+	private func fadeInAnimation(
 		_ productImageOne: VirtusizeProductImageView,
 		_ productImageTwo: VirtusizeProductImageView
 	) {
 		productImageOne.alpha = 0.0
-		UIView.animate(withDuration: 0.75, delay: 2.5, options: .curveEaseIn, animations: {
+		crossFadeInAnimator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.75, delay: 2.5, options: [.curveEaseIn], animations: {
 			productImageOne.alpha = 1.0
 		})
-		productImageTwo.alpha = 1.0
-		UIView.animate(withDuration: 0.75, delay: 2.5, options: .curveEaseOut, animations: {
-			productImageTwo.alpha = 0.0
-		}, completion: { _ in
-			self.crossFadeBetweenTwoProductImages(productImageTwo, productImageOne)
-		})
+		crossFadeInAnimator?.startAnimation()
 	}
 
+	private func fadeOutAnimation(_ productImage: VirtusizeProductImageView) {
+		productImage.alpha = 1.0
+		crossFadeOutAnimator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.75, delay: 2.5, options: [.curveEaseOut], animations: {
+			productImage.alpha = 0.0
+		}, completion: { _ in
+			self.startCrossFadeProductImageViews()
+		})
+		crossFadeOutAnimator?.startAnimation()
+	}
+
+	private func stopCrossFadeProductImageViews() {
+		crossFadeInAnimator?.stopAnimation(true)
+		crossFadeOutAnimator?.stopAnimation(true)
+		userProductImageView.alpha = 1.0
+		storeProductImageView.alpha = 1.0
+		productImagesAreAnimating = false
+	}
 	private func setMessageLabelTexts(
 		_ storeProduct: VirtusizeInternalProduct,
 		_ i18nLocalization: VirtusizeI18nLocalization,
