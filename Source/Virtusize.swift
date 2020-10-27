@@ -67,7 +67,9 @@ public class Virtusize {
     typealias ErrorHandler = (VirtusizeError) -> Void
 
 	/// Todo
-	internal static var authToken: String?
+	internal static var authToken: String? {
+		return UserDefaultsHelper.current.accessToken
+	}
 
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	private static var virtusizeViews: [VirtusizeView] = []
@@ -209,7 +211,12 @@ public class Virtusize {
 
 	internal class func updateSession() {
 		let userSessionInfoResponse = Virtusize.getUserSessionInfoAsync()
-		authToken = userSessionInfoResponse.success?.id
+		if let accessToken = userSessionInfoResponse.success?.id {
+			UserDefaultsHelper.current.accessToken = accessToken
+		}
+		if let authHeader = userSessionInfoResponse.success?.authHeader, !authHeader.isEmpty {
+			UserDefaultsHelper.current.authHeader = authHeader
+		}
 	}
 
 	internal class func setupRecommendation(selectedUserProductId: Int? = nil, loggedOutUser: Bool = false) {

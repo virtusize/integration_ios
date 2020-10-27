@@ -109,7 +109,7 @@ internal class VirtusizeProductImageView: UIView {
         productImageView.frame = CGRect(x: 2, y: 2, width: imageSize - 4, height: imageSize - 4)
         productImageView.layer.cornerRadius = (imageSize - 4) / 2
         productImageView.layer.masksToBounds = true
-        productImageView.contentMode = .scaleAspectFill
+		productImageView.contentMode = .scaleAspectFit
     }
 
     internal func setImage(product: VirtusizeInternalProduct, localImageUrl: URL?, completion: (() -> Void)? = nil) {
