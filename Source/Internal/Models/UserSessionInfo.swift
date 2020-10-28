@@ -24,22 +24,28 @@
 
 /// This class represents the user session information
 internal class UserSessionInfo: Codable {
-	let id: String
+	/// The access token
+	let accessToken: String
+	/// The user data
 	let user: User
-	let authHeader: String
+	/// The auth token
+	let authToken: String
 
 	class User: Codable {
+		/// The browser ID
 		let bid: String
 	}
 
 	private enum CodingKeys: String, CodingKey {
-		case id, user, authHeader = "x-vs-auth"
+		case accessToken = "id"
+		case user = "user"
+		case authToken = "x-vs-auth"
 	}
 
 	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		id = try values.decode(String.self, forKey: .id)
+		accessToken = try values.decode(String.self, forKey: .accessToken)
 		user = try values.decode(User.self, forKey: .user)
-		authHeader = try values.decode(String.self, forKey: .authHeader)
+		authToken = try values.decode(String.self, forKey: .authToken)
 	}
 }

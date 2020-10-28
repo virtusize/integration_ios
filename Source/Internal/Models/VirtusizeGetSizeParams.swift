@@ -22,11 +22,18 @@
 //  THE SOFTWARE.
 //
 
+// swiftlint:disable line_length
+/// The structure that wraps the parameters for the API request to get the recommended size based on a user's body profile
 internal struct VirtusizeGetSizeParams: Codable {
+	/// The store product additional info
     var additionalInfo: [String: VirtusizeAnyCodable] = [:]
+	/// The user body data
     var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
+	/// The store product size info
     var itemSizes: [String: [String: Int?]] = [:]
+	/// The store product type
     var productType: String = ""
+	/// The user's gender
     var userGender: String = ""
 
     private enum CodingKeys: String, CodingKey {
@@ -37,6 +44,12 @@ internal struct VirtusizeGetSizeParams: Codable {
         case userGender = "user_gender"
     }
 
+	/// Initializes the VirtusizeGetSizeParams structure
+	///
+	/// - Parameters:
+	///   - productTypes: The list of available `VirtusizeProductType`
+	///   - storeProduct: The store product info in the type of `VirtusizeInternalProduct`
+	///   - userBodyProfile: The user body profile
     init(productTypes: [VirtusizeProductType],
          storeProduct: VirtusizeInternalProduct,
          userBodyProfile: VirtusizeUserBodyProfile?
@@ -66,6 +79,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         userGender = userBodyProfile?.gender ?? ""
     }
 
+	/// Gets the dictionary of the model info
     private func getModelInfoDict(storeProduct: VirtusizeInternalProduct) -> [String: Any] {
         var modelInfoDict: [String: Any] = [:]
         if let modelInfo = storeProduct.storeProductMeta?.additionalInfo?.modelInfo {
@@ -80,6 +94,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         return modelInfoDict
     }
 
+	/// Gets the dictionary of the user body data
     private func getBodyDataDict(
         userBodyProfile: VirtusizeUserBodyProfile?
     ) -> [String: [String: VirtusizeAnyCodable]] {
@@ -103,6 +118,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         return bodyDataDict
     }
 
+	/// Gets the dictionary of the store product size info
     private func getItemSizesDict(storeProduct: VirtusizeInternalProduct) -> [String: [String: Int?]] {
         var itemSizesDict: [String: [String: Int?]] = [:]
         for productSize in storeProduct.sizes {

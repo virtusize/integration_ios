@@ -33,7 +33,8 @@ public protocol VirtusizeMessageHandler: class {
     func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController)
 }
 
-// Todo
+// swiftlint:disable line_length
+/// The virtusize user event callback to receive event data from the web view and make UI changes based on the event data
 public protocol VirtusizeEventHandler {
 	func userAuthData(bid: String?, auth: String?)
 	func userLoggedIn()

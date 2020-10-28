@@ -31,7 +31,7 @@ class APIRequestTests: XCTestCase {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
         Virtusize.environment = .staging
-        Virtusize.authToken = "auth_token"
+        Virtusize.accessToken = "access_token"
     }
 
     override func tearDownWithError() throws {
@@ -86,7 +86,7 @@ class APIRequestTests: XCTestCase {
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken!)")
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.accessToken!)")
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
@@ -124,7 +124,7 @@ class APIRequestTests: XCTestCase {
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.authToken!)")
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.accessToken!)")
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,

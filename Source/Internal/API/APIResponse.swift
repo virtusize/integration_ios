@@ -22,11 +22,15 @@
 //  THE SOFTWARE.
 //
 
-// TODO: add comment
+// The wrapper for the API response
 internal struct APIResponse {
+	/// The API response data
     var data: Data?
+	/// The API response in `URLResponse`
     var response: URLResponse?
+	/// The API response error
     var error: Error?
+	/// The API response error in the format of `VirtusizeError`
     var virtusizeError: VirtusizeError?
 
     init(data: Data?, response: URLResponse?, error: Error?) {
@@ -43,6 +47,7 @@ internal enum APIResult<Value> {
 
 extension APIResult {
 
+	/// The string of the API result 
     var string: String {
         switch self {
         case let .success(value):
@@ -52,6 +57,7 @@ extension APIResult {
         }
     }
 
+	/// The API result when the request is successful
     var success: Value? {
         if case .success(let value) = self {
             return value
@@ -60,6 +66,7 @@ extension APIResult {
         }
     }
 
+	/// The API result when the request fails
     var failure: VirtusizeError? {
         if case .failure(let error) = self {
             return error

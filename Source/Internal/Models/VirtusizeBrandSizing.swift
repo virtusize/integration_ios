@@ -34,13 +34,4 @@ internal struct VirtusizeBrandSizing: Codable {
         self.compare = compare
         self.itemBrand = itemBrand
     }
-
-    /// Gets the brand key for the brand comparing InPage texts
-    func getBrandKey() -> String {
-        if itemBrand {
-            return "itemBrand"
-        } else {
-            return "mostBrands"
-        }
-    }
 }

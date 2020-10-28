@@ -22,10 +22,16 @@
 //  THE SOFTWARE.
 //
 
-// TODO: add comment
+// This class contains the functions that get the best fit result based on product comparison
 internal class FindBestFitHelper {
 
-    static func findBestMatchedProductSize(
+	/// Finds the size of the best fit product by comparing user products with the store product
+	///
+	/// - Parameters:
+	///   - userProducts: The list of user products
+	///   - storeProduct: The store product
+	///   - productTypes: The list of available product types
+    static func findBestFitProductSize(
         userProducts: [VirtusizeInternalProduct],
         storeProduct: VirtusizeInternalProduct,
         productTypes: [VirtusizeProductType]
@@ -45,7 +51,7 @@ internal class FindBestFitHelper {
                 )
                 if storeProductFitInfo.fitScore > sizeComparisonRecommendedSize.bestFitScore {
                     sizeComparisonRecommendedSize.bestFitScore = storeProductFitInfo.fitScore
-					sizeComparisonRecommendedSize.bestSize = storeProductSize
+					sizeComparisonRecommendedSize.bestStoreProductSize = storeProductSize
                     sizeComparisonRecommendedSize.bestUserProduct = userProduct
                     sizeComparisonRecommendedSize.isStoreProductSmaller = storeProductFitInfo.isSmaller
                 }
@@ -54,11 +60,17 @@ internal class FindBestFitHelper {
         return sizeComparisonRecommendedSize
     }
 
+	/// Gets the product comparison fit info
+	///
+	/// - Parameters:
+	///   - userProductSize: The size of a user product
+	///   - storeProductSize: The size of a store product
+	///   - storeProductTypeScoreWeights: The weights of the store product for calculation
     static func getStoreProductFitInfo(
         userProductSize: VirtusizeProductSize,
         storeProductSize: VirtusizeProductSize,
         storeProductTypeScoreWeights: [String: Double]
-    ) -> StoreProductFitInfo {
+    ) -> ProductComparisonFitInfo {
         var rawScore = 0.0
         var isSmaller: Bool?
 
@@ -78,6 +90,6 @@ internal class FindBestFitHelper {
         let adjustScore = rawScore / 10.0
         let fitScore = max(100 - adjustScore, 20)
 
-        return StoreProductFitInfo(fitScore: fitScore, isSmaller: isSmaller)
+        return ProductComparisonFitInfo(fitScore: fitScore, isSmaller: isSmaller)
     }
 }

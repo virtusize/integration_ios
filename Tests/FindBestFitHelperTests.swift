@@ -145,7 +145,7 @@ class FindBestFitHelperTests: XCTestCase {
 
     func testGetFindBestMatch_shouldReturnExpectedRecommendedSize() {
         let userShirts = [userShirtXS, userShirtS, userShirtM, userShirtL]
-        let userProductRecommendedSize = FindBestFitHelper.findBestMatchedProductSize(
+        let userProductRecommendedSize = FindBestFitHelper.findBestFitProductSize(
             userProducts: userShirts,
             storeProduct: storeShirt,
             productTypes: TestFixtures.getProductTypes()

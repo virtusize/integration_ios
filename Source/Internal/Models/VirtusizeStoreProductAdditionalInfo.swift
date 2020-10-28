@@ -57,17 +57,4 @@ internal class VirtusizeStoreProductAdditionalInfo: Codable {
         style = try? values.decode(String.self, forKey: .style)
         brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
     }
-
-    /// Gets the general fit key for the fitting related InPage texts
-    func getGeneralFitKey() -> String? {
-        if fit == nil {
-            return nil
-        }
-        if ["loose", "wide", "flared"].contains(fit) {
-            return "loose"
-        } else if ["tight", "slim"].contains(fit) {
-            return "tight"
-        }
-        return "regular"
-    }
 }

@@ -60,15 +60,17 @@ internal class VirtusizeI18nLocalization {
         case MULTIPLELINES = "<br>"
     }
 
-	// TODO: add comment
+	/// Gets the default text where the recommendation is not available
 	internal func getNoDataText() -> String {
 		return noDataText ?? Localization.shared.localize("inpage_no_data_text")
 	}
 
+	/// Gets the default text for an accessory
 	internal func getDefaultAccessoryText() -> String {
 		return "\(defaultAccessoryText ?? Localization.shared.localize("inpage_default_accessory_text"))"
 	}
 
+	/// Gets the text for an accessory where the recommendation for product comparison is provided
     internal func getHasProductAccessoryText() -> String {
 		let hasProductAccessoryTopText = self.hasProductAccessoryTopText ??
 			Localization.shared.localize("inpage_has_product_top_text")
@@ -77,7 +79,8 @@ internal class VirtusizeI18nLocalization {
         return "\(hasProductAccessoryTopText) %{boldStart}\(hasProductAccessoryBottomText)%{boldEnd}"
     }
 
-	internal func getSizeComparisonOneSizeText(
+	/// Gets the product comparison text for a one-size product
+	internal func getOneSizeProductComparisonText(
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize
 	) -> String {
         if sizeComparisonRecommendedSize.bestFitScore > 84 {
@@ -100,17 +103,20 @@ internal class VirtusizeI18nLocalization {
         return "\(oneSizeLargerTopText) %{boldStart}\(oneSizeLargerBottomText)%{boldEnd}"
     }
 
-	internal func getBodyProfileOneSizeText() -> String {
+	/// Gets the product comparison text for a multi-size product
+	internal func getMultiSizeProductionComparisonText(_ sizeComparisonRecommendedSizeName: String) -> String {
+		let sizeComparisonMultiSizeText = self.sizeComparisonMultiSizeText ??
+			Localization.shared.localize("inpage_multi_size_comparison_text")
+		return "\(sizeComparisonMultiSizeText) %{boldStart}\(sizeComparisonRecommendedSizeName)%{boldEnd}"
+	}
+
+	/// Gets the recommendation text for an one-size product based on a user body profile
+	internal func getOneSizeBodyProfileText() -> String {
 		return bodyProfileOneSizeText ?? Localization.shared.localize("inpage_one_size_body_profile_text")
 	}
 
-    internal func getSizeComparisonMultiSizeText(_ sizeComparisonRecommendedSizeName: String) -> String {
-		let sizeComparisonMultiSizeText = self.sizeComparisonMultiSizeText ??
-			Localization.shared.localize("inpage_multi_size_comparison_text")
-        return "\(sizeComparisonMultiSizeText) %{boldStart}\(sizeComparisonRecommendedSizeName)%{boldEnd}"
-    }
-
-    internal func getBodyProfileMultiSizeText(_ bodyProfileRecommendedSizeName: String) -> String {
+	/// Gets the recommendation text for a multi-size product based on a user body profile
+    internal func getMultiSizeBodyProfileText(_ bodyProfileRecommendedSizeName: String) -> String {
 		let bodyProfileMultiSizeText = self.bodyProfileMultiSizeText ??
 			Localization.shared.localize("inpage_multi_size_body_profile_text")
         return "\(bodyProfileMultiSizeText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"

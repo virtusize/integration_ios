@@ -55,6 +55,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	private var productImagesAreAnimating: Bool = false
 
 	private var loadingImageSemaphore = DispatchSemaphore(value: 1)
+	/// Once the store product image is set, set the value to true to avoid loading repetitively
 	private var storeProductImageIsSet = false
 	private var crossFadeInAnimator: UIViewPropertyAnimator?
 	private var crossFadeOutAnimator: UIViewPropertyAnimator?
@@ -344,8 +345,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-	public override func setInPageText() {
-		super.setInPageText()
+	public override func setInPageRecommendation() {
+		super.setInPageRecommendation()
 
 		let semaphore = DispatchSemaphore(value: 0)
 
@@ -419,6 +420,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		}
 	}
 
+	/// Fades in an image
+	///
+	/// - Parameters:
+	///   - productImageOne: The image to be faded in
+	///   - productImageTwo: The image to be set invisible after the animation is done
 	private func fadeInAnimation(
 		_ productImageOne: VirtusizeProductImageView,
 		_ productImageTwo: VirtusizeProductImageView
@@ -430,6 +436,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		crossFadeInAnimator?.startAnimation()
 	}
 
+	/// Fades out an image
+	///
+	/// - Parameter productImage: The image to be faded out
 	private func fadeOutAnimation(_ productImage: VirtusizeProductImageView) {
 		productImage.alpha = 1.0
 		crossFadeOutAnimator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.75, delay: 2.5, options: [.curveEaseOut], animations: {
@@ -440,6 +449,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		crossFadeOutAnimator?.startAnimation()
 	}
 
+	/// Stops the cross fade animation
 	private func stopCrossFadeProductImageViews() {
 		crossFadeInAnimator?.stopAnimation(true)
 		crossFadeOutAnimator?.stopAnimation(true)
@@ -447,6 +457,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		storeProductImageView.alpha = 1.0
 		productImagesAreAnimating = false
 	}
+
 	private func setMessageLabelTexts(
 		_ storeProduct: VirtusizeInternalProduct,
 		_ i18nLocalization: VirtusizeI18nLocalization,
@@ -477,6 +488,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         }
     }
 
+	/// Sets up the styles for the loading screen and the screen after finishing loading
+	///
+	/// - Parameters:
+	///   - loading: Pass true when it's loading, and pass false when finishing loading
+	///   - userBestFitProduct: Pass the user best fit product to determine whether to display the user product image or not
 	private func setLoadingScreen(loading: Bool, bestFitUserProduct: VirtusizeInternalProduct? = nil) {
         vsSignatureImageView.isHidden = loading ? true : false
         privacyPolicyLink.isHidden = loading ? true : false
@@ -485,12 +501,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		userProductImageView.isHidden = (loading || bestFitUserProduct == nil) ? true : false
 		storeProductImageView.isHidden = loading ? true : false
         if loading {
-            startLoadingAnimation(
+            startLoadingTextAnimation(
                 label: bottomMessageLabel,
                 text: Localization.shared.localize("inpage_loading_text")
             )
         } else {
-            stopLoadingAnimation()
+            stopLoadingTextAnimation()
         }
     }
 

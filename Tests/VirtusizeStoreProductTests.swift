@@ -193,7 +193,7 @@ class VirtusizeStoreProductTests: XCTestCase {
 	func testGetRecommendationText_multiSizeProduct_hasSizeComparisonRecommendedSize_returnMultiSizeComparisonText() {
 		let storeProduct1 = TestFixtures.getStoreProduct(productType: 1, gender: nil)
 		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
-		sizeComparisonRecommendedSize.bestSize = storeProduct1?.sizes[0]
+		sizeComparisonRecommendedSize.bestStoreProductSize = storeProduct1?.sizes[0]
 		XCTAssertTrue(
 			storeProduct1!.getRecommendationText(
 				i18nLocalization,

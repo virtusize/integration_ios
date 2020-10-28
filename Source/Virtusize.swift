@@ -66,9 +66,14 @@ public class Virtusize {
     /// A closure that is called when the operation fails
     typealias ErrorHandler = (VirtusizeError) -> Void
 
-	/// Todo
-	internal static var authToken: String? {
-		return UserDefaultsHelper.current.accessToken
+	/// The access token for the API request to get user data
+	internal static var accessToken: String? {
+		set {
+			UserDefaultsHelper.current.accessToken = newValue
+		}
+		get {
+			return UserDefaultsHelper.current.accessToken
+		}
 	}
 
 	/// The array of `VirtusizeView` that clients use on their mobile application
@@ -104,7 +109,7 @@ public class Virtusize {
 						productTypes = Virtusize.getProductTypesAsync().success
 						i18nLocalization = Virtusize.getI18nTextsAsync().success
 						updateSession()
-						setupRecommendation()
+						updateInPageRecommendation()
 					}
 				}
 			})
@@ -152,7 +157,12 @@ public class Virtusize {
         URLSession.shared.finishTasksAndInvalidate()
     }
 
-    /// TODO: add comment
+	/// Gets the result of an API request
+	///
+	/// - Parameters:
+	///   - request: A URL load request for an API request
+	///   - onSuccess: A callback to pass back the data in a generic type when an API request is successful
+	///   - onError: A callback to pass `VirtusizeError` back when an API request is unsuccessful
     private class func getAPIResult<T: Decodable>(
         request: URLRequest,
         onSuccess: ((T) -> Void)? = nil,
@@ -173,7 +183,10 @@ public class Virtusize {
         })
     }
 
-    /// TODO: add comment
+	/// Performs an API request asynchronously
+	///
+	/// - Parameter request: A URL load request for an API request
+	/// - Returns the `APIResponse`
     private class func performAsync(_ request: URLRequest) -> APIResponse? {
         var apiResponse: APIResponse?
         let semaphore = DispatchSemaphore(value: 0)
@@ -209,22 +222,49 @@ public class Virtusize {
         return apiResponse
     }
 
-	internal class func updateSession() {
-		let userSessionInfoResponse = Virtusize.getUserSessionInfoAsync()
-		if let accessToken = userSessionInfoResponse.success?.id {
-			UserDefaultsHelper.current.accessToken = accessToken
+	/// Gets the result of an asynchronous API request
+	///
+	/// - Parameters:
+	///   - request: A URL load request for an API request
+	///   - type: The API result data in the generic type
+	private class func getAPIResultAsync<T: Decodable>(request: URLRequest, type: T.Type) -> APIResult<T> {
+		let apiResponse = performAsync(request)
+		guard apiResponse?.virtusizeError == nil,
+			  let data = apiResponse?.data else {
+			return .failure(apiResponse?.virtusizeError)
 		}
-		if let authHeader = userSessionInfoResponse.success?.authHeader, !authHeader.isEmpty {
-			UserDefaultsHelper.current.authHeader = authHeader
+
+		do {
+			let result = try JSONDecoder().decode(type, from: data)
+			return .success(result)
+		} catch {
+			return .failure(VirtusizeError.jsonDecodingFailed(String(describing: type), error))
 		}
 	}
 
-	internal class func setupRecommendation(selectedUserProductId: Int? = nil, loggedOutUser: Bool = false) {
+	/// Updates the user session by calling the session API
+	internal class func updateSession() {
+		let userSessionInfoResponse = Virtusize.getUserSessionInfoAsync()
+		if let accessToken = userSessionInfoResponse.success?.accessToken {
+			UserDefaultsHelper.current.accessToken = accessToken
+		}
+		if let authToken = userSessionInfoResponse.success?.authToken, !authToken.isEmpty {
+			UserDefaultsHelper.current.authToken = authToken
+		}
+	}
+
+	// swiftlint:disable line_length
+	/// Updates the recommendation for InPage
+	///
+	/// - Parameters:
+	///   - selectedUserProductId: Pass the selected product Id from the web view to decide a specific user product to compare with the store product
+	///   - ignoreUserData: Pass the boolean vale to determine whether to ignore the API requests that is related to the user data
+	internal class func updateInPageRecommendation(selectedUserProductId: Int? = nil, ignoreUserData: Bool = false) {
 		var userProducts: [VirtusizeInternalProduct]?
 		var userBodyProfile: VirtusizeUserBodyProfile?
 		bodyProfileRecommendedSize = nil
 		sizeComparisonRecommendedSize = nil
-		if !loggedOutUser {
+		if !ignoreUserData {
 			userProducts = Virtusize.getUserProductsAsync().success
 			userBodyProfile = Virtusize.getUserBodyProfileAsync().success
 		}
@@ -234,35 +274,21 @@ public class Virtusize {
 				storeProduct: storeProduct!,
 				userBodyProfile: userBodyProfile!
 			).success
-			sizeComparisonRecommendedSize = FindBestFitHelper.findBestMatchedProductSize(
-				userProducts: selectedUserProductId != nil ? userProducts!.filter({ product in
-					return product.id == selectedUserProductId }) : userProducts!,
+			let userProducts = selectedUserProductId != nil
+				? userProducts!.filter({ product in return product.id == selectedUserProductId })
+				: userProducts!
+			sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
+				userProducts: userProducts,
 				storeProduct: storeProduct!,
 				productTypes: productTypes!
 			)
 		}
 		DispatchQueue.main.async {
 			for index in 0...virtusizeViews.count-1 {
-				(virtusizeViews[index] as? VirtusizeInPageView)?.setInPageText()
+				(virtusizeViews[index] as? VirtusizeInPageView)?.setInPageRecommendation()
 			}
 		}
 	}
-
-    /// TODO: add comment
-    private class func getAPIResultAsync<T: Decodable>(request: URLRequest, type: T.Type) -> APIResult<T> {
-        let apiResponse = performAsync(request)
-        guard apiResponse?.virtusizeError == nil,
-              let data = apiResponse?.data else {
-            return .failure(apiResponse?.virtusizeError)
-        }
-
-        do {
-            let result = try JSONDecoder().decode(type, from: data)
-            return .success(result)
-        } catch {
-            return .failure(VirtusizeError.jsonDecodingFailed(String(describing: type), error))
-        }
-    }
 
     /// Sets up the VirtusizeView and adds it to `virtusizeViews`
     public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
@@ -418,7 +444,9 @@ public class Virtusize {
         return getAPIResultAsync(request: request, type: [VirtusizeProductType].self)
     }
 
-	// TODO: comment
+	/// The API request for getting the user session data from the Virtusize server
+	///
+	/// - Returns: the user session data in the type of `UserSessionInfo`
 	internal class func getUserSessionInfoAsync() -> APIResult<UserSessionInfo> {
 		guard let request = APIRequest.getSessions() else {
 			return .failure(nil)
@@ -428,9 +456,7 @@ public class Virtusize {
 
 	/// The API request for getting the list of user products from the Virtusize server
 	///
-	/// - Parameters:
-	///   - onSuccess: A callback to pass `[VirtusizeStoreProduct]` when the request is successful
-	///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
+	/// - Returns: the user product data in the type of `VirtusizeInternalProduct`
 	internal class func getUserProductsAsync() -> APIResult<[VirtusizeInternalProduct]> {
 		guard let request = APIRequest.getUserProducts() else {
 			return .failure(nil)
@@ -438,7 +464,9 @@ public class Virtusize {
 		return getAPIResultAsync(request: request, type: [VirtusizeInternalProduct].self)
 	}
 
-	// TODO: add comment
+	/// The API request for getting the user body profile data from the Virtusize server
+	///
+	/// - Returns: the user body profile data in the type of `VirtusizeUserBodyProfile`
 	internal class func getUserBodyProfileAsync() -> APIResult<VirtusizeUserBodyProfile> {
 		guard let request = APIRequest.getUserBodyProfile() else {
 			return .failure(nil)
@@ -446,6 +474,13 @@ public class Virtusize {
 		return getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
 	}
 
+	/// The API request for retrieving the recommended size based on the user body profile
+	///
+	/// - Parameters:
+	///   - productTypes: A list of product types
+	///   - storeProduct: The store product data
+	///   - userBodyProfile: the user body profile data
+	/// - Returns: the user body profile recommended size in the type of `BodyProfileRecommendedSize`
 	internal class func getBodyProfileRecommendedSizeAsync(
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeInternalProduct,

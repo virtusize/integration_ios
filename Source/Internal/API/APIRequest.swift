@@ -60,20 +60,30 @@ internal struct APIRequest {
         return request
     }
 
-	// TODO
+	/// Gets the `URLRequest` for the HTTP request that gets user sessions
+	///
+	/// - Parameters:
+	///   - components: `URLComponents` to obtain the `URL`
+	/// - Returns: A `URLRequest` for this HTTP request
 	private static func apiRequestWithAuthHeader(components: URLComponents) -> URLRequest {
 		var request = apiRequest(components: components, method: .post)
-		request.addValue(UserDefaultsHelper.current.authHeader ?? "", forHTTPHeaderField: "x-vs-auth")
+		request.addValue(UserDefaultsHelper.current.authToken ?? "", forHTTPHeaderField: "x-vs-auth")
 		request.addValue("", forHTTPHeaderField: "Cookie")
 		return request
 	}
 
+	/// Gets the `URLRequest` for the HTTP request that requires authentication
+	///
+	/// - Parameters:
+	///   - components: `URLComponents` to obtain the `URL`
+	///   - method: An `APIMethod` that defaults to the `GET` HTTP method
+	/// - Returns: A `URLRequest` for this HTTP request
     private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = apiRequest(components: components, method: method)
-		guard let authToken = Virtusize.authToken else {
+		guard let accessToken = Virtusize.accessToken else {
 			return request
 		}
-        request.addValue("Token \(authToken)", forHTTPHeaderField: "Authorization")
+        request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")
         return request
     }
 
@@ -188,7 +198,9 @@ internal struct APIRequest {
 		return apiRequest(components: endpoint.components)
 	}
 
-	// TODO: comment
+	/// Gets the `URLRequest` for the `sessions` request
+	///
+	/// - Returns: A `URLRequest` for the `sessions` request
 	internal static func getSessions() -> URLRequest? {
 		let endpoint = APIEndpoints.sessions
 		return apiRequestWithAuthHeader(components: endpoint.components)
@@ -203,13 +215,21 @@ internal struct APIRequest {
         return apiRequestWithAuthorization(components: endpoint.components)
     }
 
-    // TODO: comment
+	/// Gets the `URLRequest` for the `userBodyMeasurements` request
+	///
+	/// - Returns: A `URLRequest` for the `userBodyMeasurements` request
     internal static func getUserBodyProfile() -> URLRequest? {
         let endpoint = APIEndpoints.userBodyMeasurements
         return apiRequestWithAuthorization(components: endpoint.components)
     }
 
-    // TODO: comment
+	/// Gets the `URLRequest` for the `getSize` request
+	///
+	/// - Parameters:
+	///   - productTypes: The list of available `ProductType`s
+	///   - storeProduct: The store product info whose data type is `VirtusizeInternalProduct`
+	///   - userBodyProfile: The user body profile whose data type is  `VirtusizeUserBodyProfile`
+	/// - Returns: A `URLRequest` for the `getSize` request
     internal static func getBodyProfileRecommendedSize(
         productTypes: [VirtusizeProductType],
         storeProduct: VirtusizeInternalProduct,
