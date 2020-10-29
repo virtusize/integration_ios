@@ -76,6 +76,9 @@ public class Virtusize {
 		}
 	}
 
+	/// The session API response as a string
+	internal static var userSessionResponse: String = ""
+
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	private static var virtusizeViews: [VirtusizeView] = []
 
@@ -236,7 +239,8 @@ public class Virtusize {
 
 		do {
 			let result = try JSONDecoder().decode(type, from: data)
-			return .success(result)
+			let jsonString = String(data: data, encoding: String.Encoding.utf8)
+			return .success(result, jsonString)
 		} catch {
 			return .failure(VirtusizeError.jsonDecodingFailed(String(describing: type), error))
 		}
@@ -250,6 +254,9 @@ public class Virtusize {
 		}
 		if let authToken = userSessionInfoResponse.success?.authToken, !authToken.isEmpty {
 			UserDefaultsHelper.current.authToken = authToken
+		}
+		if let sessionResponse = userSessionInfoResponse.string {
+			userSessionResponse = sessionResponse
 		}
 	}
 
