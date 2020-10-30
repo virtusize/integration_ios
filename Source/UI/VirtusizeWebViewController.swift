@@ -152,7 +152,6 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
             reportError(error: .invalidVsParamScript)
             return
         }
-		webView.evaluateJavaScript(updateSessionDataScript(), completionHandler: nil)
         webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
         checkAndUpdateBrowserID()
     }
@@ -214,11 +213,6 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
     public func webViewDidClose(_ webView: WKWebView) {
         webView.removeFromSuperview()
     }
-
-	/// Returns the Javascript script to update the user session
-	private func updateSessionDataScript() -> String {
-		return "javascript:vsEventFromSDK({ name: 'update-session-data', payload: \(Virtusize.userSessionResponse) })"
-	}
 
     /// Checks if the bid in the web cookies  is different from the bid saved locally.
     /// If it is, update and store the new bid.
