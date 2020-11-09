@@ -43,11 +43,11 @@ internal struct VirtusizeGetSizeParams: Codable {
 	var externalProductId: String = ""
 
     private enum CodingKeys: String, CodingKey {
-        case additionalInfo = "additional_info"
-        case bodyData = "body_data"
-        case itemSizes = "item_sizes_orig"
-        case productType = "product_type"
-        case userGender = "user_gender"
+		case additionalInfo = "additional_info"
+		case bodyData = "body_data"
+		case itemSizes = "item_sizes_orig"
+		case productType = "product_type"
+		case userGender = "user_gender"
 		case userHeight = "user_height"
 		case userWeight = "user_weight"
 		case externalProductId = "ext_product_id"
@@ -82,10 +82,10 @@ internal struct VirtusizeGetSizeParams: Codable {
         ]
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
         itemSizes = getItemSizesDict(storeProduct: storeProduct)
-        if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
-            productType = productTypes[index].name
-        }
-        userGender = userBodyProfile?.gender ?? ""
+		if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
+			productType = productTypes[index].name
+		}
+		userGender = userBodyProfile?.gender ?? ""
 		if let height = userBodyProfile?.height {
 			userHeight = String(height)
 		}
