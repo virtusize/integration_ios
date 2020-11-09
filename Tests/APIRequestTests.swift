@@ -187,10 +187,13 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(actualParams?.itemSizes.count, 3)
         XCTAssertEqual(actualParams?.itemSizes["36"]?["bust"], 645)
         XCTAssertEqual(actualParams?.userGender, "female")
+		XCTAssertEqual(actualParams?.userHeight, "1630")
+		XCTAssertEqual(actualParams?.userWeight, "50.00")
+		XCTAssertEqual(actualParams?.externalProductId, TestFixtures.externalProductId)
         XCTAssertEqual(actualParams?.productType, "jacket")
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://services.virtusize.jp/stg/ds-functions/size-rec/get-size"
+            "https://services.virtusize.jp/stg/ds-functions/size-rec/get-size-new"
         )
     }
 

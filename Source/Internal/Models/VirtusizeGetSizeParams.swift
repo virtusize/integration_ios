@@ -35,6 +35,12 @@ internal struct VirtusizeGetSizeParams: Codable {
     var productType: String = ""
 	/// The user's gender
     var userGender: String = ""
+	/// The user's height
+	var userHeight: String = ""
+	/// The user's weight
+	var userWeight: String = ""
+	/// The external product ID provided by the client
+	var externalProductId: String = ""
 
     private enum CodingKeys: String, CodingKey {
         case additionalInfo = "additional_info"
@@ -42,6 +48,9 @@ internal struct VirtusizeGetSizeParams: Codable {
         case itemSizes = "item_sizes_orig"
         case productType = "product_type"
         case userGender = "user_gender"
+		case userHeight = "user_height"
+		case userWeight = "user_weight"
+		case externalProductId = "ext_product_id"
     }
 
 	/// Initializes the VirtusizeGetSizeParams structure
@@ -77,6 +86,11 @@ internal struct VirtusizeGetSizeParams: Codable {
             productType = productTypes[index].name
         }
         userGender = userBodyProfile?.gender ?? ""
+		if let height = userBodyProfile?.height {
+			userHeight = String(height)
+		}
+		userWeight = userBodyProfile?.weight ?? ""
+		externalProductId = storeProduct.externalId
     }
 
 	/// Gets the dictionary of the model info

@@ -39,6 +39,9 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             """
             {
                 "user_gender": "female",
+                "user_height": "1630",
+                "user_weight": "50.00",
+                "ext_product_id": "694",
                 "item_sizes_orig": {
                     "37": {
                         "sleeve": 845,
@@ -222,6 +225,9 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             """
             {
                 "user_gender": "",
+                "user_height": "",
+                "user_weight": "",
+                "ext_product_id": "694",
                 "item_sizes_orig": {},
                 "additional_info": {
                     "sizes": {},
