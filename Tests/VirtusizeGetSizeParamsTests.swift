@@ -38,11 +38,11 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         let expectedGetSizeParamsData = Data(
             """
             {
-                "user_gender": "female",
-                "user_height": "1630",
-                "user_weight": "50.00",
-                "ext_product_id": "694",
-                "item_sizes_orig": {
+                "userGender": "female",
+                "userHeight": 1630,
+                "userWeight": 50.00,
+                "extProductId": "694",
+                "itemSizesOrig": {
                     "37": {
                         "sleeve": 845,
                         "bust": 660,
@@ -59,7 +59,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "height": 740
                     }
                 },
-                "additional_info": {
+                "additionalInfo": {
                     "sizes": {
                         "37": {
                             "sleeve": 845,
@@ -88,7 +88,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                     },
                     "fit": "regular"
                 },
-                "body_data": {
+                "bodyData": {
                     "neck": {
                         "value": 300,
                         "predicted": true
@@ -178,7 +178,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "predicted": true
                     }
                 },
-                "product_type": "jacket"
+                "productType": "jacket"
             }
             """.utf8)
 
@@ -205,7 +205,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             XCTFail("Failed casting actual object (i.e. \(actualJsonObject)) to an NSDictionary")
             return
         }
-
         XCTAssertEqual(expectedDict, actualDict)
     }
 
@@ -224,20 +223,18 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         let expectedGetSizeParamsData = Data(
             """
             {
-                "user_gender": "",
-                "user_height": "",
-                "user_weight": "",
-                "ext_product_id": "694",
-                "item_sizes_orig": {},
-                "additional_info": {
+                "userGender": "",
+                "extProductId": "694",
+                "itemSizesOrig": {},
+                "additionalInfo": {
                     "sizes": {},
                     "gender": "null",
                     "model_info": {},
                     "brand": "",
                     "fit": "regular"
                 },
-                "body_data": {},
-                "product_type": ""
+                "bodyData": {},
+                "productType": ""
             }
             """.utf8)
 
@@ -264,7 +261,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             XCTFail("Failed casting actual object (i.e. \(actualJsonObject)) to an NSDictionary")
             return
         }
-
+		print(actualDict)
         XCTAssertEqual(expectedDict, actualDict)
     }
 }
