@@ -79,7 +79,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                     },
                     "gender": "female",
                     "brand": "Virtusize",
-                    "model_info": {
+                    "modelInfo": {
                         "hip": 85,
                         "size": "38",
                         "bust": 78,
@@ -229,7 +229,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                 "additionalInfo": {
                     "sizes": {},
                     "gender": "null",
-                    "model_info": {},
+                    "modelInfo": {},
                     "brand": "",
                     "fit": "regular"
                 },
@@ -261,7 +261,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             XCTFail("Failed casting actual object (i.e. \(actualJsonObject)) to an NSDictionary")
             return
         }
-		print(actualDict)
         XCTAssertEqual(expectedDict, actualDict)
     }
 }
