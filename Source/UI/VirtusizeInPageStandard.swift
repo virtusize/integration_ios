@@ -49,12 +49,15 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     private let errorText: UILabel = UILabel()
 
     private var messageLineSpacing: CGFloat = 6
-	private var userProjectImageSize: CGFloat = 0
+	private var userProductImageSize: CGFloat = 0
 	private var productImageViewOffset: CGFloat = 0
-	private var minimumInPageWidthForTwoThumbnails: CGFloat = 343
+
+	// Any iPhone screen is smaller than a iPhone 5, whose screen width is 414pt
+	// And the default horizontal margin between the phone screen and InPage is 16pt
+	private let smallInPageWidth: CGFloat = 414 - 16 * 2
+
 	private var productImagesAreAnimating: Bool = false
 
-	private var loadingImageSemaphore = DispatchSemaphore(value: 1)
 	private var storeProductImageIsSet = false
 	private var crossFadeInAnimator: UIViewPropertyAnimator?
 	private var crossFadeOutAnimator: UIViewPropertyAnimator?
@@ -128,7 +131,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	    metrics = [
 			"defaultMargin": defaultMargin,
-			"userProjectImageSize": userProjectImageSize,
+			"userProductImageSize": userProductImageSize,
 			"productImageViewOffset": productImageViewOffset
         ]
 
@@ -176,7 +179,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
         // swiftlint:disable line_length
 		let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-defaultMargin-[userProductImageView(==userProjectImageSize)]-(productImageViewOffset)-[storeProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
+            withVisualFormat: "H:|-defaultMargin-[userProductImageView(==userProductImageSize)]-(productImageViewOffset)-[storeProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: metrics,
             views: views
@@ -344,73 +347,88 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-	public override func setInPageText() {
-		super.setInPageText()
+	public override func updateInPageTextAndView() {
+		super.updateInPageTextAndView()
 
+		// Using DispatchSemaphore to execute synchronous tasks
 		let semaphore = DispatchSemaphore(value: 0)
 
+		let bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct
 		DispatchQueue.global().async {
-			let bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct
-			if bestFitUserProduct != nil {
-				self.userProductImageView.setImage(product: bestFitUserProduct!, localImageUrl: nil) {
-					semaphore.signal()
-				}
-				semaphore.wait()
-				if !self.storeProductImageIsSet {
-					self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
-						self.storeProductImageIsSet = true
-						semaphore.signal()
-					}
-					semaphore.wait()
-				}
+			// If item to item recommendation is available, display two user and store product images side by side
+			if let bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct {
+				self.loadAndSetUserProductImage(semaphore: semaphore, bestFitUserProduct: bestFitUserProduct)
+				self.loadAndSetStoreProductImage(semaphore: semaphore)
 				DispatchQueue.main.async {
-					if self.inPageStandardView.frame.size.width >= self.minimumInPageWidthForTwoThumbnails {
-						self.removeConstraints(self.constraints)
-						self.userProjectImageSize = 40
-						self.productImageViewOffset = -2
-						self.setConstraints()
+					if self.inPageStandardView.frame.size.width >= self.smallInPageWidth {
+						self.adjustProductImageViewPosition(userProductImageSize: 40, productImageViewOffset: -2)
 					}
 				}
+			// Otherwise, only display the store product image and
 			} else {
-				if !self.storeProductImageIsSet {
-					self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
-						semaphore.signal()
-					}
-					semaphore.wait()
-				}
+				self.loadAndSetStoreProductImage(semaphore: semaphore)
 				DispatchQueue.main.async {
-					if self.inPageStandardView.frame.size.width >= self.minimumInPageWidthForTwoThumbnails {
-						self.removeConstraints(self.constraints)
-						self.userProjectImageSize = 0
-						self.productImageViewOffset = 0
-						self.setConstraints()
+					if self.inPageStandardView.frame.size.width >= self.smallInPageWidth {
+						self.adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
 					}
 				}
 			}
+
+			// If the width of the InPage standard view is small than the minimum InPage width
 			DispatchQueue.main.async {
-				if self.inPageStandardView.frame.size.width < self.minimumInPageWidthForTwoThumbnails {
+				if self.inPageStandardView.frame.size.width < self.smallInPageWidth {
+					// if item to item recommendation is available, we make user and store product images fade in/out repeatedly
 					if bestFitUserProduct != nil {
 						if !self.productImagesAreAnimating {
 							self.startCrossFadeProductImageViews()
 						}
+					// Otherwise, stop any fading animations
 					} else {
 						self.stopCrossFadeProductImageViews()
 					}
 				}
+
 				self.setMessageLabelTexts(
 					Virtusize.storeProduct!,
 					Virtusize.i18nLocalization!,
 					Virtusize.sizeComparisonRecommendedSize,
 					Virtusize.bodyProfileRecommendedSize?.sizeName
 				)
+
 				self.setLoadingScreen(loading: false, bestFitUserProduct: bestFitUserProduct)
 			}
 		}
 	}
 
+	private func loadAndSetUserProductImage(semaphore: DispatchSemaphore, bestFitUserProduct: VirtusizeInternalProduct) {
+		self.userProductImageView.setImage(product: bestFitUserProduct, localImageUrl: nil) {
+			semaphore.signal()
+		}
+		semaphore.wait()
+	}
+
+	private func loadAndSetStoreProductImage(semaphore: DispatchSemaphore) {
+		if !self.storeProductImageIsSet {
+			self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
+				self.storeProductImageIsSet = true
+				semaphore.signal()
+			}
+			semaphore.wait()
+		}
+	}
+
+	private func adjustProductImageViewPosition(userProductImageSize: CGFloat, productImageViewOffset: CGFloat) {
+		// Remove all the constraints
+		self.removeConstraints(self.constraints)
+		self.userProductImageSize = userProductImageSize
+		self.productImageViewOffset = productImageViewOffset
+		// Reset constraints
+		self.setConstraints()
+	}
+
 	private func startCrossFadeProductImageViews() {
 		productImagesAreAnimating = true
-		if self.userProductImageView.alpha == 1.0 {
+		if userProductImageView.alpha == 1.0 {
 			fadeInAnimation(self.storeProductImageView, self.userProductImageView)
 			fadeOutAnimation(self.userProductImageView)
 		} else {
@@ -441,12 +459,15 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	}
 
 	private func stopCrossFadeProductImageViews() {
-		crossFadeInAnimator?.stopAnimation(true)
-		crossFadeOutAnimator?.stopAnimation(true)
-		userProductImageView.alpha = 1.0
-		storeProductImageView.alpha = 1.0
-		productImagesAreAnimating = false
+		DispatchQueue.main.async {
+			self.crossFadeInAnimator?.stopAnimation(true)
+			self.crossFadeOutAnimator?.stopAnimation(true)
+			self.userProductImageView.alpha = 1.0
+			self.storeProductImageView.alpha = 1.0
+			self.productImagesAreAnimating = false
+		}
 	}
+
 	private func setMessageLabelTexts(
 		_ storeProduct: VirtusizeInternalProduct,
 		_ i18nLocalization: VirtusizeI18nLocalization,

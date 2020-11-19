@@ -58,8 +58,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-    public override func setInPageText() {
-		super.setInPageText()
+    public override func updateInPageTextAndView() {
+		super.updateInPageTextAndView()
 
         setLoadingScreen(loading: false)
         inPageMiniMessageLabel.attributedText = NSAttributedString(string:

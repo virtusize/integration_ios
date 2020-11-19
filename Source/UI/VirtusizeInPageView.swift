@@ -87,7 +87,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		openVirtusizeWebView(eventHandler: virtusizeEventHandler)
     }
 
-	internal func setInPageText() {
+	internal func updateInPageTextAndView() {
 		guard Virtusize.storeProduct != nil,
 			  Virtusize.i18nLocalization != nil else {
 			showErrorScreen()
