@@ -100,17 +100,18 @@ public class Virtusize {
 					return
 				}
 				_product = product
-				if let productId = _product!.productCheckData?.productDataId {
-					for index in 0...virtusizeViews.count-1 {
-						virtusizeViews[index].isLoading()
-					}
-					DispatchQueue.global().async {
-						storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
-						productTypes = Virtusize.getProductTypesAsync().success
-						i18nLocalization = Virtusize.getI18nTextsAsync().success
-						updateSession()
-						updateInPageRecommendation()
-					}
+				guard let productId = _product!.productCheckData?.productDataId else {
+					return
+				}
+				for index in 0...virtusizeViews.count-1 {
+					virtusizeViews[index].isLoading()
+				}
+				DispatchQueue.global().async {
+					storeProduct = Virtusize.getStoreProductInfoAsync(productId: productId).success
+					productTypes = Virtusize.getProductTypesAsync().success
+					i18nLocalization = Virtusize.getI18nTextsAsync().success
+					updateSession()
+					updateInPageRecommendation()
 				}
 			})
 		}
@@ -268,19 +269,18 @@ public class Virtusize {
 			userProducts = Virtusize.getUserProductsAsync().success
 			userBodyProfile = Virtusize.getUserBodyProfileAsync().success
 		}
-		if userProducts != nil && productTypes != nil && storeProduct != nil && userBodyProfile != nil {
+		if let userProducts = userProducts, let productTypes = productTypes, let storeProduct = storeProduct, let userBodyProfile = userBodyProfile {
 			bodyProfileRecommendedSize = Virtusize.getBodyProfileRecommendedSizeAsync(
-				productTypes: productTypes!,
-				storeProduct: storeProduct!,
-				userBodyProfile: userBodyProfile!
+				productTypes: productTypes,
+				storeProduct: storeProduct,
+				userBodyProfile: userBodyProfile
 			).success
-			let userProducts = selectedUserProductId != nil
-				? userProducts!.filter({ product in return product.id == selectedUserProductId })
-				: userProducts!
+			let userProducts = selectedUserProductId != nil ? userProducts.filter({ product in return product.id == selectedUserProductId })
+				: userProducts
 			sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
 				userProducts: userProducts,
-				storeProduct: storeProduct!,
-				productTypes: productTypes!
+				storeProduct: storeProduct,
+				productTypes: productTypes
 			)
 		}
 		DispatchQueue.main.async {
