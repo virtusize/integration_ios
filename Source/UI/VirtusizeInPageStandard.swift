@@ -355,7 +355,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
             productImageView.hideCircleBorder()
             startLoadingAnimation(
                 label: bottomMessageLabel,
-                text: Localization.shared.localize("inpage_standard_loading_text")
+                text: Localization.shared.localize("inpage_loading_text")
             )
         } else {
             productImageView.showCircleBorder()
