@@ -47,7 +47,7 @@ internal enum APIEndpoints {
             components.path = "/rest-api/v1/product-meta-data-hints"
 
         case .events:
-            components.path = "/a/api/v3/events"
+			break
 
         case .virtusize(let region):
             components.host = "static.api.virtusize.\(region.rawValue)"
@@ -66,7 +66,9 @@ internal enum APIEndpoints {
     var hostname: String {
         if case .productDataCheck = self {
             return Virtusize.environment.productDataCheckUrl()
-        }
+		} else if case .events = self {
+			return Virtusize.environment.eventApiUrl()
+		}
         return Virtusize.environment.rawValue
     }
 

@@ -34,6 +34,20 @@ public enum VirtusizeEnvironment: String {
         return "services.virtusize.com"
     }
 
+	/// Gets the event API URL corresponding to the Virtusize environment
+	internal func eventApiUrl() -> String {
+		switch self {
+		case .staging:
+			return "events.staging.virtusize.jp"
+		case .japan:
+			return "events.virtusize.jp"
+		case .global:
+			return "events.virtusize.com"
+		case .korea:
+			return "events.virtusize.kr"
+		}
+	}
+
     /// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
     internal func virtusizeRegion() -> VirtusizeRegion {
         switch self {
