@@ -16,6 +16,10 @@ Use list notation, and following prefixes:
 ### 2.1.0
 - Feature: InPage integration
 
+### 2.0.2
+- Feature: Update to the new event API URL
+- Docs - Update README on how to set up the user ID
+
 ### 2.0.1
 - Bugfix: Fix the Order API error
 

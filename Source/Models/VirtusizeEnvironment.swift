@@ -34,10 +34,25 @@ public enum VirtusizeEnvironment: String {
         return "services.virtusize.com"
     }
 
+
     /// Gets the URL for the `i18n` request
     internal func i18nUrl() -> String {
         return "i18n.virtusize.com"
     }
+
+	/// Gets the event API URL corresponding to the Virtusize environment
+	internal func eventApiUrl() -> String {
+		switch self {
+		case .staging:
+			return "events.staging.virtusize.jp"
+		case .japan:
+			return "events.virtusize.jp"
+		case .global:
+			return "events.virtusize.com"
+		case .korea:
+			return "events.virtusize.kr"
+		}
+	}
 
     /// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
     internal func virtusizeRegion() -> VirtusizeRegion {

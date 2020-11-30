@@ -67,8 +67,8 @@ class APIEndpointsTests: XCTestCase {
     func testEventsEndpoint_returnExpectedComponents() {
         Virtusize.environment = .korea
         let endpoint = APIEndpoints.events
-        XCTAssertEqual(endpoint.components.host, "api.virtusize.kr")
-        XCTAssertEqual(endpoint.components.path, "/a/api/v3/events")
+        XCTAssertEqual(endpoint.components.host, "events.virtusize.kr")
+        XCTAssertEqual(endpoint.components.path, "")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
