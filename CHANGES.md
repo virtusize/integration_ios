@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.0.2
+- Feature: Update to the new event API URL
+- Docs - Update README on how to set up the user ID
+
 ### 2.0.1
 - Bugfix: Fix the Order API error
 
