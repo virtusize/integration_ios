@@ -181,7 +181,14 @@ The order API enables Virtusize to show your customers the items they have recen
 
 #### 1. Initialization
 
-Make sure to set up the **user ID** in the `application(_:didFinishLaunchingWithOptions:)` method of the App delegate before you start.
+Make sure to set up the **user ID** before sending orders to Virtusize. You can set up the user ID either:
+
+in the `application(_:didFinishLaunchingWithOptions:)` method of the App delegate before the app is launched
+
+or
+
+in your view controller after the app is launched
+
 
 ```Swift
 Virtusize.userID = "123"
