@@ -114,7 +114,7 @@ internal class VirtusizeInternalProduct: Codable {
 		return text.trimI18nText(trimType)
     }
 
-	// TODO: add comment
+	/// Gets the text for an accessory
     private func accessoryText(
         _ i18nLocalization: VirtusizeI18nLocalization,
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
@@ -123,30 +123,32 @@ internal class VirtusizeInternalProduct: Codable {
             i18nLocalization.getHasProductAccessoryText() : i18nLocalization.getDefaultAccessoryText()
     }
 
+	/// Gets the text for an one-size product
     private func oneSizeText(
         _ i18nLocalization: VirtusizeI18nLocalization,
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
         _ bodyProfileRecommendedSizeName: String?
     ) -> String {
 		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize {
-		   return i18nLocalization.getSizeComparisonOneSizeText(sizeComparisonRecommendedSize)
+		   return i18nLocalization.getOneSizeProductComparisonText(sizeComparisonRecommendedSize)
 		}
         if bodyProfileRecommendedSizeName != nil {
-			return i18nLocalization.getBodyProfileOneSizeText()
+			return i18nLocalization.getOneSizeBodyProfileText()
         }
 		return i18nLocalization.getNoDataText()
     }
 
+	/// Gets the text for a multi-size product
     private func multiSizeText(
         _ i18nLocalization: VirtusizeI18nLocalization,
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
         _ bodyProfileRecommendedSizeName: String?
     ) -> String {
-		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestSize?.name {
-			return i18nLocalization.getSizeComparisonMultiSizeText(sizeComparisonRecommendedSizeName)
+		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestStoreProductSize?.name {
+			return i18nLocalization.getMultiSizeProductionComparisonText(sizeComparisonRecommendedSizeName)
 		}
         if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName {
-            return i18nLocalization.getBodyProfileMultiSizeText(bodyProfileRecommendedSizeName)
+            return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
         }
         return i18nLocalization.getNoDataText()
     }

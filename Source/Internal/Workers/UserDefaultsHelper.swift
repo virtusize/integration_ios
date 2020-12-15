@@ -47,8 +47,8 @@ final internal class UserDefaultsHelper {
         self.defaults = defaults
     }
 
-	// TODO: comment
-	internal var authHeader: String? {
+	/// The auth token for the session API
+	internal var authToken: String? {
 		get {
 			return defaults.value(forKey: authKey) as? String
 		}
@@ -57,7 +57,8 @@ final internal class UserDefaultsHelper {
 			defaults.synchronize()
 		}
 	}
-	
+
+	/// The access token for the API requests to get user data
 	internal var accessToken: String? {
 		get {
 			return defaults.value(forKey: tokenKey) as? String
@@ -68,7 +69,7 @@ final internal class UserDefaultsHelper {
 		}
 	}
 
-    /// Gets a browser identifier as String
+    /// The browser identifier as String
     internal var identifier: String {
         get {
             if let token = defaults.value(forKey: bidKey) as? String {
@@ -86,7 +87,7 @@ final internal class UserDefaultsHelper {
         }
     }
 
-    /// Deletes the Browser Identifier from the user defaults
+    /// Deletes the browser identifier from the user defaults
     internal func deleteIdentifier() {
         defaults.removeObject(forKey: bidKey)
         defaults.synchronize()

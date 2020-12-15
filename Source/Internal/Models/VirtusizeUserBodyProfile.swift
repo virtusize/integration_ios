@@ -22,11 +22,16 @@
 //  THE SOFTWARE.
 //
 
-// TODO: comment
+/// This class represents the response of the API request to get the user body profile data
 internal class VirtusizeUserBodyProfile: Codable {
+	/// The user's gender
     let gender: String
+	/// The user's age
     let age: Int?
+	/// The user's height
     let height: Int?
+	/// The user's weight
     let weight: String?
+	/// The user's body measurement data, such as hip, bust, waist and so on.
     let bodyData: [String: Int?]?
 }

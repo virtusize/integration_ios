@@ -58,8 +58,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-    public override func updateInPageTextAndView() {
-		super.updateInPageTextAndView()
+    public override func setInPageRecommendation() {
+		super.setInPageRecommendation()
 
         setLoadingScreen(loading: false)
         inPageMiniMessageLabel.attributedText = NSAttributedString(string:
@@ -198,19 +198,19 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         inPageMiniMessageLabel.textColor = loading ? Colors.gray900Color : .white
         setupTextsStyle(messageLabelIsBold: loading)
         if loading {
-            startLoadingAnimation(
+            startLoadingTextAnimation(
                 label: inPageMiniMessageLabel,
                 text: Localization.shared.localize("inpage_loading_text")
             )
         } else {
-            stopLoadingAnimation()
+            stopLoadingTextAnimation()
         }
         inPageMiniSizeCheckButton.isHidden = loading ? true: false
     }
 
 	internal override func showErrorScreen() {
         backgroundColor = .white
-        stopLoadingAnimation()
+        stopLoadingTextAnimation()
         inPageMiniImageView.image = Assets.errorHanger
         inPageMiniMessageLabel.textColor = Colors.gray700Color
         inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")

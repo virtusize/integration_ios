@@ -36,7 +36,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     internal let defaultMargin: CGFloat = 8
 
-    internal var timer: Timer?
+    internal var loadingTextTimer: Timer?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -87,7 +87,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		openVirtusizeWebView(eventHandler: virtusizeEventHandler)
     }
 
-	internal func updateInPageTextAndView() {
+	/// A parent function to set up InPage recommendation
+	internal func setInPageRecommendation() {
 		guard Virtusize.storeProduct != nil,
 			  Virtusize.i18nLocalization != nil else {
 			showErrorScreen()
@@ -95,12 +96,13 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		}
 	}
 
+	/// A parent function for showing the error screen
 	internal func showErrorScreen() {}
 
-    internal func startLoadingAnimation(label: UILabel, text: String) {
+    internal func startLoadingTextAnimation(label: UILabel, text: String) {
         var tempDots = 0
         label.text = text
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+        loadingTextTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
             if tempDots == 3 {
                 tempDots = 0
                 label.text = text
@@ -111,8 +113,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         }
     }
 
-    internal func stopLoadingAnimation() {
-        timer?.invalidate()
+    internal func stopLoadingTextAnimation() {
+        loadingTextTimer?.invalidate()
     }
 }
 
@@ -124,34 +126,34 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		}
 		if let auth = auth,
 		   !auth.isEmpty {
-			UserDefaultsHelper.current.authHeader = auth
+			UserDefaultsHelper.current.authToken = auth
 		}
 	}
 
 	public func userLoggedIn() {
 		DispatchQueue.global().async {
 			Virtusize.updateSession()
-			Virtusize.setupRecommendation()
+			Virtusize.updateInPageRecommendation()
 		}
 	}
 
 	public func userLoggedOut() {
-		UserDefaultsHelper.current.authHeader = ""
+		UserDefaultsHelper.current.authToken = ""
 		DispatchQueue.global().async {
 			Virtusize.updateSession()
-			Virtusize.setupRecommendation(selectedUserProductId: nil, loggedOutUser: true)
+			Virtusize.updateInPageRecommendation(selectedUserProductId: nil, ignoreUserData: true)
 		}
 	}
 
 	public func userSelectedProduct(userProductId: Int?) {
 		DispatchQueue.global().async {
-			Virtusize.setupRecommendation(selectedUserProductId: userProductId)
+			Virtusize.updateInPageRecommendation(selectedUserProductId: userProductId)
 		}
 	}
 
 	public func userAddedProduct() {
 		DispatchQueue.global().async {
-			Virtusize.setupRecommendation()
+			Virtusize.updateInPageRecommendation()
 		}
 	}
 }

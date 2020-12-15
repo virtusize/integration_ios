@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+/// This structure represents the response for the recommendation API based on the user body profile
 internal struct BodyProfileRecommendedSize: Codable {
+	/// The recommended size name
     let sizeName: String
 }

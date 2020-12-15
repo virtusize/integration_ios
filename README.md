@@ -291,9 +291,11 @@ There are two types of InPage in the Virtusize SDK.
 
   Here are some possible layouts 
 
-  |               1 thumbnail + 2 lines of message               |               1 thumbnail + 1 line of message                |
+  |               1 thumbnail + 2 lines of message               |              2 thumbnails + 2 lines of message               |
   | :----------------------------------------------------------: | :----------------------------------------------------------: |
-  | <img src="https://user-images.githubusercontent.com/7802052/92672132-ff0aff00-f352-11ea-8058-4ca7c149d6f2.png"> | <img src="https://user-images.githubusercontent.com/7802052/92672134-003c2c00-f353-11ea-842b-8ec54ba3585b.png"> |
+  | ![1 thumbnail + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399368-5e879300-1930-11eb-8b77-b49e06813550.png) | ![2 thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399370-5f202980-1930-11eb-9a2d-7b71714aa7b4.png) |
+  |             **1 thumbnail + 1 line of message**              |        **2 animated thumbnails + 2 lines of message**        |
+  | ![1 thumbnail + 1 line of message](https://user-images.githubusercontent.com/7802052/97399373-5f202980-1930-11eb-81fe-9946b656eb4c.png) | ![2 animated thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399355-59c2df00-1930-11eb-8a52-292956b8762d.gif) |
 
 - ##### Recommended Placement
 
