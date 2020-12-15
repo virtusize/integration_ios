@@ -24,46 +24,60 @@
 
 import Foundation
 
-/// This class is used to get the browser identifier specific to this SDK
-final internal class BrowserID {
+/// This class is used to get the browser identifier and the auth header specific to this SDK
+final internal class UserDefaultsHelper {
 
-    /// A static instance of `BrowserID` used inside the SDK
-    internal static let current = BrowserID()
+	let authKey = "VIRTUSIZE_AUTH"
+	let bidKey = "BID"
+
+    /// A static instance of `UserDefaultsHelper` used inside the SDK
+    internal static let current = UserDefaultsHelper()
 
     /// 'UserDefaults' to save the browser identifier locally
     internal var defaults: UserDefaults
 
-    /// Initializes the 'BrowserID' class and sets up the global instance of `UserDefaults`
+    /// Initializes the 'UserDefaultsHelper' class and sets up the global instance of `UserDefaults`
     init() {
         self.defaults = UserDefaults.standard
     }
 
-    /// Initializes the 'BrowserID' class with a passing argument as `UserDefaults`
+    /// Initializes the 'UserDefaultsHelper' class with a passing argument as `UserDefaults`
     init(defaults: UserDefaults) {
         self.defaults = defaults
     }
 
+	// TODO: comment
+	internal var authHeader: String? {
+		get {
+			return defaults.value(forKey: authKey) as? String
+		}
+		set {
+			defaults.setValue(newValue, forKey: authKey)
+			defaults.synchronize()
+		}
+	}
+
     /// Gets a browser identifier as String
     internal var identifier: String {
         get {
-            if let token = defaults.value(forKey: "BID") as? String {
+            if let token = defaults.value(forKey: bidKey) as? String {
                 return token
             } else {
                 let token = generateIdentifier()
-                defaults.setValue(token, forKey: "BID")
+                defaults.setValue(token, forKey: bidKey)
                 defaults.synchronize()
                 return token
             }
         }
         set {
-            defaults.setValue(newValue, forKey: "BID")
+            defaults.setValue(newValue, forKey: bidKey)
             defaults.synchronize()
         }
     }
 
     /// Deletes the Browser Identifier from the user defaults
     internal func deleteIdentifier() {
-        defaults.removeObject(forKey: "BID")
+        defaults.removeObject(forKey: bidKey)
         defaults.synchronize()
     }
 

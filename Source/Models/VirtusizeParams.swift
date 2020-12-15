@@ -61,7 +61,7 @@ public class VirtusizeParams {
             fatalError("product ID is invalid")
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
-        paramsScript += "\(ParamKey.browserID): '\(BrowserID.current.identifier)', "
+        paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
         paramsScript += "\(ParamKey.storeProductID): '\(storeProductId)', "
         if let userId = Virtusize.userID {
             paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
