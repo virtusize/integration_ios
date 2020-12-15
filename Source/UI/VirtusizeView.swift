@@ -38,8 +38,12 @@ public protocol VirtusizeView {
 extension VirtusizeView {
 
     /// Opens the Virtusize web view
-    internal func openVirtusizeWebView() {
-        if let virtusize = VirtusizeWebViewController(handler: messageHandler, processPool: Virtusize.processPool) {
+	internal func openVirtusizeWebView(eventHandler: VirtusizeEventHandler? = nil) {
+		if let virtusize = VirtusizeWebViewController(
+			messageHandler: messageHandler,
+			eventHandler: eventHandler,
+			processPool: Virtusize.processPool
+		) {
             presentingViewController?.present(virtusize, animated: true, completion: nil)
         }
     }

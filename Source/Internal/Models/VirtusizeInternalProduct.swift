@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProduct.swift
+//  VirtusizeInternalProduct.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,8 +22,8 @@
 //  THE SOFTWARE.
 //
 
-/// This structure represents a store product from the Virtusize server
-internal class VirtusizeStoreProduct: Codable {
+/// This structure represents a product from the Virtusize server
+internal class VirtusizeInternalProduct: Codable {
     // swiftlint:disable identifier_name
     /// An integer to represent the internal product ID in the Virtusize server
     let id: Int
@@ -142,7 +142,7 @@ internal class VirtusizeStoreProduct: Codable {
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
         _ bodyProfileRecommendedSizeName: String?
     ) -> String {
-		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestUserProduct?.sizes[0].name {
+		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestSize?.name {
 			return i18nLocalization.getSizeComparisonMultiSizeText(sizeComparisonRecommendedSizeName)
 		}
         if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName {

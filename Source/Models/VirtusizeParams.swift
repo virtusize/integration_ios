@@ -71,7 +71,7 @@ public class VirtusizeParams {
         paramsScript += "\(ParamKey.detailsPanelCards): \(detailsPanelCards.map { category in category.rawValue }), "
         paramsScript += "\(ParamKey.language): '\(language.rawValue)', "
         paramsScript += "\(ParamKey.region): '\(region.rawValue)', "
-        paramsScript += "\(ParamKey.environment): 'production'})"
+		paramsScript += "\(ParamKey.environment): '\(Virtusize.environment == .staging ? "staging" : "production")'})"
         return paramsScript
     }
 

@@ -58,16 +58,13 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-    public override func setInPageText() {
-        guard let storeProduct = Virtusize.storeProduct,
-              let i18nLocalization = Virtusize.i18nLocalization else {
-            self.showErrorScreen()
-            return
-        }
+    public override func updateInPageTextAndView() {
+		super.updateInPageTextAndView()
+
         setLoadingScreen(loading: false)
         inPageMiniMessageLabel.attributedText = NSAttributedString(string:
-            storeProduct.getRecommendationText(
-                i18nLocalization,
+		    Virtusize.storeProduct!.getRecommendationText(
+				Virtusize.i18nLocalization!,
 				Virtusize.sizeComparisonRecommendedSize,
 				Virtusize.bodyProfileRecommendedSize?.sizeName,
                 VirtusizeI18nLocalization.TrimType.ONELINE
@@ -211,7 +208,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         inPageMiniSizeCheckButton.isHidden = loading ? true: false
     }
 
-    private func showErrorScreen() {
+	internal override func showErrorScreen() {
         backgroundColor = .white
         stopLoadingAnimation()
         inPageMiniImageView.image = Assets.errorHanger

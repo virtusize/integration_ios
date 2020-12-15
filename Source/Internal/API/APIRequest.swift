@@ -64,6 +64,7 @@ internal struct APIRequest {
 	private static func apiRequestWithAuthHeader(components: URLComponents) -> URLRequest {
 		var request = apiRequest(components: components, method: .post)
 		request.addValue(UserDefaultsHelper.current.authHeader ?? "", forHTTPHeaderField: "x-vs-auth")
+		request.addValue("", forHTTPHeaderField: "Cookie")
 		return request
 	}
 
@@ -211,7 +212,7 @@ internal struct APIRequest {
     // TODO: comment
     internal static func getBodyProfileRecommendedSize(
         productTypes: [VirtusizeProductType],
-        storeProduct: VirtusizeStoreProduct,
+        storeProduct: VirtusizeInternalProduct,
         userBodyProfile: VirtusizeUserBodyProfile
     ) -> URLRequest? {
         let endpoint = APIEndpoints.getSize

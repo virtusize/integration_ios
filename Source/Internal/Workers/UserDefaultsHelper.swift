@@ -28,6 +28,7 @@ import Foundation
 final internal class UserDefaultsHelper {
 
 	let authKey = "VIRTUSIZE_AUTH"
+	let tokenKey = "VIRTUSIZE_TOKEN"
 	let bidKey = "BID"
 
     /// A static instance of `UserDefaultsHelper` used inside the SDK
@@ -53,6 +54,16 @@ final internal class UserDefaultsHelper {
 		}
 		set {
 			defaults.setValue(newValue, forKey: authKey)
+			defaults.synchronize()
+		}
+	}
+	
+	internal var accessToken: String? {
+		get {
+			return defaults.value(forKey: tokenKey) as? String
+		}
+		set {
+			defaults.setValue(newValue, forKey: tokenKey)
 			defaults.synchronize()
 		}
 	}

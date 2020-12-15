@@ -33,9 +33,19 @@ public protocol VirtusizeMessageHandler: class {
     func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController)
 }
 
+// Todo
+public protocol VirtusizeEventHandler {
+	func userAuthData(bid: String?, auth: String?)
+	func userLoggedIn()
+	func userLoggedOut()
+	func userSelectedProduct(userProductId: Int?)
+	func userAddedProduct()
+}
+
 /// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeWebViewController: UIViewController {
-    public weak var delegate: VirtusizeMessageHandler?
+    public weak var messageHandler: VirtusizeMessageHandler?
+	internal var eventHandler: VirtusizeEventHandler?
 
     private var webView: WKWebView?
     private var popupWebView: WKWebView?
@@ -46,13 +56,15 @@ public final class VirtusizeWebViewController: UIViewController {
     private static let cookieBidKey = "virtusize.bid"
 
     public convenience init?(
-        handler: VirtusizeMessageHandler? = nil,
+        messageHandler: VirtusizeMessageHandler? = nil,
+        eventHandler: VirtusizeEventHandler? = nil,
         processPool: WKProcessPool? = nil
     ) {
         self.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .fullScreen
-        self.delegate = handler
+        self.messageHandler = messageHandler
         self.processPool = processPool
+		self.eventHandler = eventHandler
 
         guard Virtusize.product?.productCheckData != nil else {
             reportError(error: .invalidProduct)
@@ -124,12 +136,12 @@ public final class VirtusizeWebViewController: UIViewController {
 
     // MARK: Error Handling
     public func reportError(error: VirtusizeError) {
-        delegate?.virtusizeController(self, didReceiveError: error)
+        messageHandler?.virtusizeController(self, didReceiveError: error)
     }
 
     // MARK: Closing view
     @objc internal func shouldClose() {
-        delegate?.virtusizeControllerShouldClose(self)
+        messageHandler?.virtusizeControllerShouldClose(self)
     }
 }
 
@@ -239,17 +251,21 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
             let event = try Deserializer.event(data: message.body)
             if event.name == "user-closed-widget" {
                 shouldClose()
-            }
-			if event.name == "user-auth-data" {
-				if let bid = (event.data as? [String: Any])?["bid"] as? String {
-					UserDefaultsHelper.current.identifier = bid
-				}
-				if let auth = (event.data as? [String: Any])?["x-vs-auth"] as? String,
-				   !auth.isEmpty {
-					UserDefaultsHelper.current.authHeader = auth
-				}
+            } else if event.name == "user-auth-data" {
+				eventHandler?.userAuthData(
+					bid: (event.data as? [String: Any])?["x-vs-bid"] as? String,
+					auth: (event.data as? [String: Any])?["x-vs-auth"] as? String
+				)
+			} else if event.name == "user-logged-in" {
+				eventHandler?.userLoggedIn()
+			} else if event.name == "user-logged-out" {
+				eventHandler?.userLoggedOut()
+			} else if event.name == "user-selected-product" || event.name == "user-opened-panel-compare" {
+				eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
+			} else if event.name == "user-added-product" {
+				eventHandler?.userAddedProduct()
 			}
-            delegate?.virtusizeController(self, didReceiveEvent: event)
+            messageHandler?.virtusizeController(self, didReceiveEvent: event)
         } catch {
             if let error = error as? VirtusizeError {
                 reportError(error: error)

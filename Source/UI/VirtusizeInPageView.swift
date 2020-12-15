@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 public class VirtusizeInPageView: UIView, VirtusizeView {
+	internal var virtusizeEventHandler: VirtusizeEventHandler?
 
     /// The property to set the Virtusize view style that this SDK provides
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
@@ -32,7 +33,6 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
-    public func setInPageText() {}
 
     internal let defaultMargin: CGFloat = 8
 
@@ -40,12 +40,14 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+		virtusizeEventHandler = self
         isHidden = true
         setup()
     }
 
     public override init(frame: CGRect) {
         super.init(frame: .zero)
+		virtusizeEventHandler = self
         isHidden = true
         setup()
     }
@@ -82,8 +84,18 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     }
 
     @objc internal func clickInPageViewAction() {
-        openVirtusizeWebView()
+		openVirtusizeWebView(eventHandler: virtusizeEventHandler)
     }
+
+	internal func updateInPageTextAndView() {
+		guard Virtusize.storeProduct != nil,
+			  Virtusize.i18nLocalization != nil else {
+			showErrorScreen()
+			return
+		}
+	}
+
+	internal func showErrorScreen() {}
 
     internal func startLoadingAnimation(label: UILabel, text: String) {
         var tempDots = 0
@@ -102,4 +114,44 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     internal func stopLoadingAnimation() {
         timer?.invalidate()
     }
+}
+
+extension VirtusizeInPageView: VirtusizeEventHandler {
+
+	public func userAuthData(bid: String?, auth: String?) {
+		if let bid = bid {
+			UserDefaultsHelper.current.identifier = bid
+		}
+		if let auth = auth,
+		   !auth.isEmpty {
+			UserDefaultsHelper.current.authHeader = auth
+		}
+	}
+
+	public func userLoggedIn() {
+		DispatchQueue.global().async {
+			Virtusize.updateSession()
+			Virtusize.setupRecommendation()
+		}
+	}
+
+	public func userLoggedOut() {
+		UserDefaultsHelper.current.authHeader = ""
+		DispatchQueue.global().async {
+			Virtusize.updateSession()
+			Virtusize.setupRecommendation(selectedUserProductId: nil, loggedOutUser: true)
+		}
+	}
+
+	public func userSelectedProduct(userProductId: Int?) {
+		DispatchQueue.global().async {
+			Virtusize.setupRecommendation(selectedUserProductId: userProductId)
+		}
+	}
+
+	public func userAddedProduct() {
+		DispatchQueue.global().async {
+			Virtusize.setupRecommendation()
+		}
+	}
 }
