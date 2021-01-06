@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.0.3
+- Feature: Enable the debugging info about product data check
+
 ### 2.0.2
 - Feature: Update to the new event API URL
 - Docs - Update README on how to set up the user ID
