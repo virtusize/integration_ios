@@ -6,6 +6,8 @@
 [![Docs](https://img.shields.io/badge/docs--brightgreen.svg)](https://developers.virtusize.com/native-ios/index.html)
 [![Twitter](https://img.shields.io/badge/twitter-@virtusize-blue.svg?style=flat)](http://twitter.com/virtusize)
 
+[English](README.md)
+
 Virtusize helps retailers to illustrate the size and fit of clothing, shoes and bags online, by letting customers compare the
 measurements of an item they want to buy (on a retailer's product page) with an item that they already own (a reference item).
 This is done by comparing the silhouettes of the retailer's product with the silhouette of the customer's reference Item.
@@ -45,7 +47,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.0.2'
+pod 'Virtusize', '~> 2.0.3'
 end
 ```
 
@@ -282,8 +284,8 @@ The order APIはバーチャサイズがユーザーが購入した商品を`Pur
 
 Virtusizeにリクエストを送信する前に、**user ID**が設定されていることを確認してください。以下、どちらの方法でも **user ID** を設定することが可能です。
 
-	- アプリローンチ前に、アプリ内クラスの`application(_:didFinishLaunchingWithOptions:)`にて設定
-	- アプリローンチ後に、ビューコントローラーにて設定
+- アプリローンチ前に、アプリ内クラスの`application(_:didFinishLaunchingWithOptions:)`にて設定
+- アプリローンチ後に、ビューコントローラーにて設定
 
 
 ```Swift
@@ -386,4 +388,4 @@ Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected re
 
 ## License
 
-Copyright (c) 2018-20 Virtusize CO LTD (https://www.virtusize.jp)
+Copyright (c) 2018-21 Virtusize CO LTD (https://www.virtusize.jp)
