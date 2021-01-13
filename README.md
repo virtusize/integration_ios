@@ -43,7 +43,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.0.2'
+pod 'Virtusize', '~> 2.0.3'
 end
 ```
 

@@ -25,7 +25,7 @@
 import Foundation
 
 /// This structure represents a product in Virtusize API
-public struct VirtusizeProduct {
+public struct VirtusizeProduct: CustomStringConvertible {
     /// A string to represent the ID that will be used to reference this product in Virtusize API
     public let externalId: String
 
@@ -34,6 +34,19 @@ public struct VirtusizeProduct {
 
     /// The product data from the response of the `productDataCheck` request
     internal var context: JSONObject?
+
+	/// Set the description string to the response of the `productDataCheck` request in pretty printed JSON
+	public var description: String {
+		guard let context = context,
+			  let contextData = try? JSONSerialization.data(
+				withJSONObject: context,
+				options: JSONSerialization.WritingOptions.prettyPrinted
+			  )
+		else {
+			return "unknown"
+		}
+		return String(data: contextData, encoding: String.Encoding.utf8)!
+	}
 
     /// Initializes the VirtusizeProduct structure
     internal init(externalId: String, imageURL: URL? = nil, context: JSONObject? = nil) {
