@@ -1,7 +1,7 @@
 //
-//  Endpoints.swift
+//  APIEndpoints.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -93,7 +93,7 @@ internal enum APIEndpoints {
         return components
     }
 
-    var hostname: String {
+	var hostname: String {
 		switch self {
 			case .productDataCheck, .getSize:
 				return Virtusize.environment.servicesUrl()
@@ -104,7 +104,7 @@ internal enum APIEndpoints {
 			default:
 				return Virtusize.environment.rawValue
 		}
-    }
+	}
 
     var apiKey: String {
         guard let apiKey = Virtusize.APIKey else {

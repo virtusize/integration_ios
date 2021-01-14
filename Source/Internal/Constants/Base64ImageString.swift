@@ -1,7 +1,7 @@
 //
-//  Assets.swift
+//  Base64ImageString.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 import UIKit
 
 /// This enum contains images encoded as Base64 strings
-private enum Base64ImageString: String {
+internal enum Base64ImageString: String {
     // swiftlint:disable line_length
     case cancel = "cancel-umbrella"
     case cancel2x = """
@@ -78,47 +78,5 @@ private enum Base64ImageString: String {
         let temp = value.components(separatedBy: ",")
         let dataDecoded: Data = Data(base64Encoded: temp[1], options: .ignoreUnknownCharacters)!
         return UIImage(data: dataDecoded, scale: scale)
-    }
-}
-
-/// This class wraps the image assets used in the Virtusize SDK
-final internal class Assets {
-    private static let bundle = Bundle(for: Assets.self)
-
-    internal static let icon: UIImage? = {
-        return Base64ImageString.icon.image
-    }()
-    internal static let logo: UIImage? = {
-        return Base64ImageString.logo.image
-    }()
-    internal static let cancel: UIImage? = {
-        return Base64ImageString.cancel.image
-    }()
-
-    internal static let rightArrow: UIImage? = {
-        return UIImage(bundleNamed: "right_arrow")
-    }()
-
-    internal static let vsSignature: UIImage? = {
-           return UIImage(bundleNamed: "vs_signature")
-       }()
-
-    internal static let errorHanger: UIImage? = {
-        return UIImage(bundleNamed: "error_hanger")
-    }()
-
-    /// Gets the product placeholder image by the product type and style
-    ///
-    /// - Parameters:
-    ///   - productType: The product type, which is fetched from the store product info
-    ///   - style: The product style, which is fetched from the store product info
-    /// - Returns: The  product type placeholder`UIImage`
-    static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
-		var placeholderImage = UIImage(bundleNamed: "\(productType)")
-        if let style = style,
-            let productTypeWithStyleImage = UIImage(bundleNamed: "\(productType)_\(style)") {
-            placeholderImage = productTypeWithStyleImage
-        }
-        return placeholderImage
     }
 }

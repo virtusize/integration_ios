@@ -1,7 +1,7 @@
 //
 //  VirtusizeButton.swift
 //
-//  Copyright (c) 2020 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -86,8 +86,8 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 
         contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
 
-        setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
-        setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
+		setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
+        setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
 
         addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
     }

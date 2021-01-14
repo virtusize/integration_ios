@@ -16,6 +16,12 @@ Use list notation, and following prefixes:
 ### 2.1.0
 - Feature: InPage integration
 
+### 2.0.4
+- Feature:  Make the SDK assets accessible to iOS apps
+
+### 2.0.3
+- Feature: Enable the debugging info about product data check
+
 ### 2.0.2
 - Feature: Update to the new event API URL
 - Docs - Update README on how to set up the user ID

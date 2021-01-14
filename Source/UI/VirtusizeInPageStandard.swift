@@ -261,12 +261,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 4)
         inPageStandardView.layer.shadowRadius = 14
 
-		vsIconImageView.image = Assets.icon
+		vsIconImageView.image = VirtusizeAssets.icon
 
 		userProductImageView.productImageType = .USER
 		storeProductImageView.productImageType = .STORE
 
-        vsSignatureImageView.image = Assets.vsSignature
+        vsSignatureImageView.image = VirtusizeAssets.vsSignature
 
         privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
         privacyPolicyLink.textColor = Colors.gray900Color
@@ -291,14 +291,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         checkSizeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        let rightArrowImageTemplate = Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        let rightArrowImageTemplate = VirtusizeAssets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         checkSizeButton.setImage(rightArrowImageTemplate, for: .normal)
         checkSizeButton.setImage(rightArrowImageTemplate, for: .highlighted)
 
         checkSizeButton.semanticContentAttribute = .forceRightToLeft
         checkSizeButton.imageView?.tintColor = UIColor.white
 
-        errorImageView.image = Assets.errorHanger
+        errorImageView.image = VirtusizeAssets.errorHanger
         errorImageView.contentMode = .scaleAspectFit
         errorImageView.isHidden = true
 

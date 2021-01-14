@@ -164,7 +164,7 @@ internal class VirtusizeProductImageView: UIView {
     }
 
     private func setProductTypeImage(productType: Int, style: String?) {
-        self.productImageView.image = Assets.getProductPlaceholderImage(
+        self.productImageView.image = VirtusizeAssets.getProductPlaceholderImage(
             productType: productType,
             style: style
         )?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
