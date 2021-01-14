@@ -115,7 +115,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ##### (2) Virtusize.userID*（[Order API](#the-order-api)が使われている場合必須）
 
-String形式にてユーザーがアプリでログインしている場合にUser IDを設定アプリローンチ後にユーザーIDを設定することも可能です。
+String形式にてユーザーがアプリでログインしている場合にUser IDを設定。アプリローンチ後にユーザーIDを設定することも可能です。
 
 ##### (3) Virtusize.environment
 
@@ -263,7 +263,7 @@ extension ViewController: VirtusizeMessageHandler {
 
 #### 6. Product Data Checkに関して
 
-ボタンがと`exernalId`共に初期化された際、弊社のproduct data check APIはその商品がクロールされていてデータベースに入っているかを確認します。
+ボタンが`exernalId`と共に初期化された際、弊社のproduct data check APIはその商品がクロールされていてデータベースに入っているかを確認します。
 
 同APIが呼び出されているかデバッグするためには2つの`Notification.Name`を`NotificationCenter`上で確認（subscribe）してください。
 
