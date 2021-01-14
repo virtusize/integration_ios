@@ -14,6 +14,9 @@ Use list notation, and following prefixes:
 ## NEXT RELEASE for Version 2.x.x
 
 ### 2.0.3
+- Feature:  Make the SDK assets accessible to iOS apps
+
+### 2.0.3
 - Feature: Enable the debugging info about product data check
 
 ### 2.0.2
