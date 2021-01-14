@@ -62,6 +62,6 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
         layer.cornerRadius = 20
 
         contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
-        self.setImage(Assets.icon, for: .normal)
+        self.setImage(VirtusizeAssets.icon, for: .normal)
     }
 }
