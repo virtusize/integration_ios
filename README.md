@@ -6,6 +6,8 @@
 [![Docs](https://img.shields.io/badge/docs--brightgreen.svg)](https://developers.virtusize.com/native-ios/index.html)
 [![Twitter](https://img.shields.io/badge/twitter-@virtusize-blue.svg?style=flat)](http://twitter.com/virtusize)
 
+[日本語](README-JP.md)
+
 Virtusize helps retailers to illustrate the size and fit of clothing, shoes and bags online, by letting customers compare the
 measurements of an item they want to buy (on a retailer's product page) with an item that they already own (a reference item).
 This is done by comparing the silhouettes of the retailer's product with the silhouette of the customer's reference Item.
@@ -276,4 +278,4 @@ Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected re
 
 ## License
 
-Copyright (c) 2018-20 Virtusize CO LTD (https://www.virtusize.jp)
+Copyright (c) 2018-21 Virtusize CO LTD (https://www.virtusize.jp)
