@@ -1,7 +1,7 @@
 //
-//  Assets.swift
+//  Base64ImageString.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 import UIKit
 
 /// This enum contains images encoded as Base64 strings
-private enum Base64ImageString: String {
+internal enum Base64ImageString: String {
     // swiftlint:disable line_length
     case cancel = "cancel-umbrella"
     case cancel2x = """
@@ -78,20 +78,4 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXQAAAF0CAMAAAAEvTJhAAAACXBIWXMAAA
         let dataDecoded: Data = Data(base64Encoded: temp[1], options: .ignoreUnknownCharacters)!
         return UIImage(data: dataDecoded, scale: scale)
     }
-}
-
-/// This class wraps the assets including colors and images used in the Virtusize SDK
-final internal class Assets {
-    private static let bundle = Bundle(for: Assets.self)
-
-    internal static let primaryColor: UIColor = #colorLiteral(red: 0.09, green: 0.78, blue: 0.73, alpha: 1)
-    internal static let icon: UIImage? = {
-        return Base64ImageString.icon.image
-    }()
-    internal static let logo: UIImage? = {
-        return Base64ImageString.logo.image
-    }()
-    internal static let cancel: UIImage? = {
-        return Base64ImageString.cancel.image
-    }()
 }

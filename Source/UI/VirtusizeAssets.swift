@@ -1,5 +1,5 @@
 //
-//  VirtusizeLanguage.swift
+//  VirtusizeButton.swift
 //
 //  Copyright (c) 2018-present Virtusize KK
 //
@@ -22,21 +22,18 @@
 //  THE SOFTWARE.
 //
 
-/// This enum contains all the possible display languages of the Virtusize web app
-public enum VirtusizeLanguage: String, CaseIterable {
-    case ENGLISH = "en"
-    case JAPANESE = "ja"
-    case KOREAN = "ko"
+/// This class wraps the assets including colors and images used in the Virtusize SDK
+final public class VirtusizeAssets {
+	public let bundle = Bundle(for: VirtusizeAssets.self)
 
-    /// The default label for the language selector
-    var label: String {
-        switch self {
-        case .ENGLISH:
-            return "English"
-        case .JAPANESE:
-            return  "日本語"
-        case .KOREAN:
-            return  "한국어"
-        }
-    }
+	public static let primaryColor: UIColor = #colorLiteral(red: 0.09, green: 0.78, blue: 0.73, alpha: 1)
+	public static let icon: UIImage? = {
+		return Base64ImageString.icon.image
+	}()
+	public static let logo: UIImage? = {
+		return Base64ImageString.logo.image
+	}()
+	public static let cancel: UIImage? = {
+		return Base64ImageString.cancel.image
+	}()
 }
