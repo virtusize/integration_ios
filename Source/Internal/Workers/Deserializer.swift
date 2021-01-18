@@ -46,7 +46,7 @@ internal struct Deserializer {
         }
 
         // Send the API event where the user saw the product
-        Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-product"), withContext: root)
+        VirtusizeAPIService.sendEvent(VirtusizeEvent(name: "user-saw-product"), withContext: root)
 
         var productCheckData: VirtusizeProductCheckData?
 
@@ -65,11 +65,11 @@ internal struct Deserializer {
             sendImageToBackend,
             product.imageURL != nil,
             let storeId = productCheckData?.storeId {
-            Virtusize.sendProductImage(of: product, forStore: storeId)
+			VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
         }
 
         // Send the API event where the user saw the widget button
-        Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-widget-button"), withContext: root)
+		VirtusizeAPIService.sendEvent(VirtusizeEvent(name: "user-saw-widget-button"), withContext: root)
         NotificationCenter.default.post(name: Virtusize.productDataCheckDidSucceed, object: Virtusize.self)
 
         // keep values of JSON response
