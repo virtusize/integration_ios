@@ -29,16 +29,19 @@ class Localization {
 
     static let shared: Localization = Localization()
 
-    /// Localizes a text corresponding to a key
-    ///
-    /// - Parameter key: The key for a string in the table identified by tableName.
-    /// - Returns: A localized string based on the device's default language
-    func localize(_ key: String) -> String {
-        guard let path = Bundle(for: Localization.self).path(
-            forResource: Locale.preferredLanguages[0],
-            ofType: "lproj") else {
-            return key
-        }
-        return Bundle(path: path)?.localizedString(forKey: key, value: nil, table: "VirtusizeLocalizable") ?? key
-    }
+	/// Localizes a text corresponding to a key
+	///
+	/// - Parameters:
+	///   - key: The key for a string in the table identified by tableName.
+	///   - language: Pass `VirtusizeLanguage` if you'd like to localize the text in a designated language
+	/// - Returns: A localized string based on the device's default language
+	func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
+		let path = Bundle(for: Localization.self).path(
+			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
+			ofType: "lproj") ?? Bundle(for: Localization.self).path(
+				forResource: VirtusizeLanguage.ENGLISH.rawValue,
+				ofType: "lproj"
+			)!
+		return Bundle(path: path)?.localizedString(forKey: key, value: nil, table: "VirtusizeLocalizable") ?? key
+	}
 }

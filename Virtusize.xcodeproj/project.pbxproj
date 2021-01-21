@@ -92,6 +92,7 @@
 		9CE7786A24B4121E00E4A127 /* Virtusize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Virtusize.h; sourceTree = "<group>"; };
 		9CE7786B24B4121E00E4A127 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		9CEAB7AD24D67EBE00F969E1 /* HTTPURLResponse+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+Extensions.swift"; sourceTree = "<group>"; };
+		9CFF40FA25B972EA00B21D4E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
 		DF6B5C9D219D151F000B3402 /* Base64ImageString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base64ImageString.swift; path = Source/Internal/Constants/Base64ImageString.swift; sourceTree = "<group>"; };
 		DF71642421A2818E002C7202 /* ROADMAP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ROADMAP.md; sourceTree = "<group>"; };
 		DF71642721A28501002C7202 /* VirtusizeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeError.swift; sourceTree = "<group>"; };
@@ -366,6 +367,7 @@
 				en,
 				ja,
 				Base,
+				ko,
 			);
 			mainGroup = 4DED8D12205755C3001CA7DF;
 			productRefGroup = 4DED8D1D205755C3001CA7DF /* Products */;
@@ -484,6 +486,7 @@
 			children = (
 				9CE7784F24B3450F00E4A127 /* ja */,
 				9CE7785524B34BEB00E4A127 /* en */,
+				9CFF40FA25B972EA00B21D4E /* ko */,
 			);
 			name = VirtusizeLocalizable.strings;
 			path = Localizations;
