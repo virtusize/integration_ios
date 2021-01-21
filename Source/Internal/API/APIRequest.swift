@@ -80,7 +80,7 @@ internal struct APIRequest {
 	/// - Returns: A `URLRequest` for this HTTP request
     private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = apiRequest(components: components, method: method)
-		guard let accessToken = Virtusize.accessToken else {
+		guard let accessToken = UserDefaultsHelper.current.accessToken else {
 			return request
 		}
         request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")

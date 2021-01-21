@@ -41,7 +41,7 @@ internal struct APIResponse {
 }
 
 internal enum APIResult<Value> {
-    case success(Value, String? = nil)
+    case success(Value? = nil, String? = nil)
     case failure(VirtusizeError?)
 }
 
@@ -74,4 +74,8 @@ extension APIResult {
             return nil
         }
     }
+
+	var isSuccessful: Bool {
+		return failure == nil
+	}
 }

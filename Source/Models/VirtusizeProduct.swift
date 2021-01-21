@@ -23,15 +23,31 @@
 //
 
 /// This structure represents a product in the Virtusize SDK
-public struct VirtusizeProduct {
+public class VirtusizeProduct: Codable {
+
+	private var name: String = ""
+
     /// A string to represent the ID that will be used to reference this product in Virtusize API
-    public let externalId: String
+	public var externalId: String = ""
 
     /// The URL of the product image that is fully qualified with the domain and the protocol
-    public let imageURL: URL?
+	public var imageURL: URL?
 
     /// The product data from the response of the `productDataCheck` request
     internal var productCheckData: VirtusizeProductCheckData?
+
+	/// The product data as a `JSONObject`
+	internal var jsonObject: JSONObject? {
+		return try? JSONSerialization.jsonObject(
+			with: JSONEncoder().encode(self),
+			options: .allowFragments
+		) as? JSONObject
+	}
+
+	/// The product data as a dictionary
+	internal var dictionary: [String: Any] {
+		return jsonObject ?? [:]
+	}
 
     /// Initializes the VirtusizeProduct structure
     internal init(externalId: String, imageURL: URL? = nil, productCheckData: VirtusizeProductCheckData? = nil) {
@@ -39,10 +55,23 @@ public struct VirtusizeProduct {
         self.imageURL = imageURL
         self.productCheckData = productCheckData
     }
+
+	private enum CodingKeys: String, CodingKey {
+		case name
+		case externalId = "productId"
+		case productCheckData = "data"
+	}
+
+	required public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		name = try values.decode(String.self, forKey: .name)
+		externalId = try values.decode(String.self, forKey: .externalId)
+		productCheckData = try? values.decode(VirtusizeProductCheckData.self, forKey: .productCheckData)
+	}
 }
 
 extension VirtusizeProduct {
-    public init(externalId: String, imageURL: URL? = nil) {
+	public convenience init(externalId: String, imageURL: URL? = nil) {
         self.init(externalId: externalId, imageURL: imageURL, productCheckData: nil)
     }
 }

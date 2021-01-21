@@ -24,6 +24,7 @@
 
 import Foundation
 
+/// This class is to handle API requests to the Virtusize server
 internal class VirtusizeAPIService {
 
 	/// A closure that is called when the operation completes
@@ -39,7 +40,8 @@ internal class VirtusizeAPIService {
 	internal static var session: APISessionProtocol = URLSession(
 		configuration: sessionConfiguration,
 		delegate: nil,
-		delegateQueue: nil)
+		delegateQueue: nil
+	)
 
 	/// Performs an API request.
 	///
@@ -47,9 +49,11 @@ internal class VirtusizeAPIService {
 	///   - request: A URL load request for an API request
 	///   - completionHandler: A callback to pass data back when an API request is successful
 	///   - error: A callback to pass `VirtusizeError` back when an API request is unsuccessful
-	private static func perform(_ request: URLRequest,
-								completion completionHandler: CompletionHandler? = nil,
-								error errorHandler: ErrorHandler? = nil) {
+	private static func perform(
+		_ request: URLRequest,
+		completion completionHandler: CompletionHandler? = nil,
+		error errorHandler: ErrorHandler? = nil
+	) {
 		let task: URLSessionDataTask
 		task = VirtusizeAPIService.session.dataTask(with: request) { (data, response, error) in
 			guard error == nil else {
@@ -60,7 +64,7 @@ internal class VirtusizeAPIService {
 			}
 
 			if let httpResponse = response as? HTTPURLResponse, !httpResponse.isSuccessful() {
-				var errorDebugDescription = "Unknown Error"
+				var errorDebugDescription = VirtusizeError.unknownError.debugDescription
 				if let data = data {
 					errorDebugDescription = String(decoding: data, as: UTF8.self)
 				}
@@ -133,7 +137,7 @@ internal class VirtusizeAPIService {
 		}
 
 		if let httpResponse = apiResponse!.response as? HTTPURLResponse, !httpResponse.isSuccessful() {
-			var errorDebugDescription = "Unknown Error"
+			var errorDebugDescription = VirtusizeError.unknownError.debugDescription
 			if let data = apiResponse?.data {
 				errorDebugDescription = String(decoding: data, as: UTF8.self)
 			}
@@ -147,15 +151,19 @@ internal class VirtusizeAPIService {
 	/// - Parameters:
 	///   - request: A URL load request for an API request
 	///   - type: The API result data in the generic type
-	private static func getAPIResultAsync<T: Decodable>(request: URLRequest, type: T.Type) -> APIResult<T> {
+	private static func getAPIResultAsync<T: Decodable>(request: URLRequest, type: T.Type?) -> APIResult<T> {
 		let apiResponse = performAsync(request)
 		guard apiResponse?.virtusizeError == nil,
 			  let data = apiResponse?.data else {
 			return .failure(apiResponse?.virtusizeError)
 		}
 
+		if type == nil || data.count == 0 {
+			return .success()
+		}
+
 		do {
-			let result = try JSONDecoder().decode(type, from: data)
+			let result = try JSONDecoder().decode(type!, from: data)
 			let jsonString = String(data: data, encoding: String.Encoding.utf8)
 			return .success(result, jsonString)
 		} catch {
@@ -167,15 +175,10 @@ internal class VirtusizeAPIService {
 	///
 	/// - Parameters:
 	///   - product: `VirtusizeProduct` for which check needs to be performed
-	///   - completionHandler: A callback to pass `VirtusizeProduct` back when an API request is successful
-	internal static func productCheck(product: VirtusizeProduct,
-									  completion completionHandler: ((VirtusizeProduct?) -> Void)?,
-									  failure: ((VirtusizeError) -> Void)? = nil) {
-		perform(APIRequest.productCheck(product: product), completion: { data in
-			completionHandler?(Deserializer.product(from: product, withData: data))
-		}, error: { error in
-			failure?(error)
-		})
+	/// - Returns: the product check data in the type of `VirtusizeProduct`
+	internal static func productCheckAsync(product: VirtusizeProduct) -> APIResult<VirtusizeProduct> {
+		let request = APIRequest.productCheck(product: product)
+		return getAPIResultAsync(request: request, type: VirtusizeProduct.self)
 	}
 
 	/// The API request for sending image of VirtusizeProduct to the Virtusize server
@@ -183,6 +186,7 @@ internal class VirtusizeAPIService {
 	/// - Parameters:
 	///   - product: `VirtusizeProduct` whose image needs to be sent to the Virtusize server
 	///   - storeId: An integer that represents the store id from the product data
+	///   - completion: A callback to pass the value of `JSONObject` back when the request is successful
 	internal static func sendProductImage(
 		of product: VirtusizeProduct,
 		forStore storeId: Int,
@@ -205,6 +209,7 @@ internal class VirtusizeAPIService {
 	/// - Parameters:
 	///   - event: An event to be sent to the Virtusize server
 	///   - context: The product data from the response of the `productDataCheck` request
+	///   - completionHandler: A callback to pass `JSONObject` back when an API request is successful
 	internal static func sendEvent(
 		_ event: VirtusizeEvent,
 		withContext context: JSONObject? = nil,
@@ -225,80 +230,30 @@ internal class VirtusizeAPIService {
 	/// The API request for retrieving the specific store info from the API key
 	/// that is unique to the client
 	///
-	/// - Parameters:
-	///   - completion: A callback to pass the region value of `VirtusizeStore` back when the request to
-	///   retrieve the store info is successful
-	///   - errorHandler: A callback to pass `VirtusizeError` back when the request to retrieve the
-	///   store info is unsuccessful
-	internal static func retrieveStoreInfo(
-		completion: @escaping (_ region: String?) -> Void,
-		errorHandler: ((VirtusizeError) -> Void)? = nil
-	) {
+	/// - Returns: the store data in the type of `VirtusizeStore`
+	internal static func retrieveStoreInfoAsync() -> APIResult<VirtusizeStore> {
 		guard let request = APIRequest.retrieveStoreInfo() else {
-			return
+			return .failure(nil)
 		}
-		VirtusizeAPIService.perform(request, completion: { data in
-			guard let data = data else {
-				return
-			}
-			do {
-				let store = try JSONDecoder().decode(VirtusizeStore.self, from: data)
-				completion(store.region ?? "JP")
-			} catch {
-				errorHandler?(VirtusizeError.jsonDecodingFailed("VirtusizeStore", error))
-			}
-		}, error: { error in
-			errorHandler?(error)
-		})
+		return getAPIResultAsync(request: request, type: VirtusizeStore.self)
 	}
 
-	/// The API request for sending an order to the server
-	///
+	/// The API request for sending an order to the Virtusize server
 	/// - Parameters:
-	///   - order: An order to be send to the server
-	///   - onSuccess: A callback to be called when the request to send an order is successful
-	///   - onError: A callback to pass `VirtusizeError` back when the request to send an order is
-	///    unsuccessful
-	internal static func sendOrder(
-		userID: String?,
-		_ order: VirtusizeOrder,
-		onSuccess: (() -> Void)? = nil,
-		onError: ((VirtusizeError) -> Void)? = nil
-	) {
-		guard let externalUserId = userID else {
-			fatalError("Please set Virtusize.userID")
-		}
-		var mutualOrder = order
-		mutualOrder.externalUserId = externalUserId
-
-		VirtusizeAPIService.retrieveStoreInfo(completion: { region in
-			mutualOrder.region = region
-			VirtusizeAPIService.sendOrderWithRegion(mutualOrder, onSuccess: onSuccess, onError: onError)
-		}, errorHandler: { error in
-			onError?(error)
-		})
-	}
-
-	/// Helper function for sending order after making the request to retrieve the store info
-	internal static func sendOrderWithRegion(
-		_ order: VirtusizeOrder,
-		onSuccess: (() -> Void)? = nil,
-		onError: ((VirtusizeError) -> Void)? = nil) {
+	///   - order: An order in `VirtusizeOrder` type
+	/// - Returns: the order info in the type of `String`
+	internal static func sendOrderWithRegionAsync(_ order: VirtusizeOrder) -> APIResult<String> {
 		guard let request = APIRequest.sendOrder(order) else {
-			return
+			return .failure(nil)
 		}
-		perform(request, completion: { _ in
-			onSuccess?()
-		}, error: { error in
-			onError?(error)
-		})
+		return getAPIResultAsync(request: request, type: String.self)
 	}
 
 	/// The API request for getting the store product info from the Virtusize server
 	///
 	/// - Parameters:
 	///   - productId: The internal product ID from the Virtusize server
-	/// - Return:
+	/// - Returns: the store product info in the type of `VirtusizeInternalProduct`
 	internal static func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeInternalProduct> {
 		guard let request = APIRequest.getStoreProductInfo(productId: productId) else {
 			return .failure(nil)
@@ -308,9 +263,7 @@ internal class VirtusizeAPIService {
 
 	/// The API request for getting the list of all the product types from the Virtusize server
 	///
-	/// - Parameters:
-	///   - onSuccess: A callback to pass the list of `VirtusizeProductType` when the request is successful
-	///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
+	/// - Returns: the product type list where its each element is in the type of `VirtusizeProductType`
 	internal static func getProductTypesAsync() -> APIResult<[VirtusizeProductType]> {
 		guard let request = APIRequest.getProductTypes() else {
 			return .failure(nil)
@@ -371,9 +324,7 @@ internal class VirtusizeAPIService {
 
 	/// The API request for getting i18 localization texts
 	///
-	/// - Parameters:
-	///   - onSuccess: A callback to be called when the request to get i18n texts is successful
-	///   - onError: A callback to pass `VirtusizeError` back when the request is unsuccessful
+	/// - Returns: the i18 localization texts in the type of `VirtusizeI18nLocalization`
 	internal static func getI18nTextsAsync() -> APIResult<VirtusizeI18nLocalization> {
 		guard let virtusizeParams = Virtusize.params,
 			let request = APIRequest.getI18n(
@@ -391,5 +342,4 @@ internal class VirtusizeAPIService {
 
 		return .success(Deserializer.i18n(data: data))
 	}
-
 }

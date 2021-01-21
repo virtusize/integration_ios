@@ -27,58 +27,6 @@ import Foundation
 /// A structure that helps to deserialize the models specific to the Virtusize API
 internal struct Deserializer {
 
-    /// Gets `VirtusizeProduct` where the product data from the response of the `productDataCheck` request is added
-    ///
-    /// - Parameters:
-    ///   - product: `VirtusizeProduct`
-    ///   - data: The product data from the response of the `productDataCheck` request.
-    ///   If data is `nil`, the method returns `nil`.
-    /// - Returns: `VirtusizeProduct` with the product data from the response of the `productDataCheck` request
-    static func product(from product: VirtusizeProduct, withData data: Data?) -> VirtusizeProduct? {
-        guard let data = data,
-            let rootObject = try? JSONSerialization.jsonObject(with: data, options: []),
-            let root = rootObject as? JSONObject,
-            let dataObject = root["data"] as? JSONObject else {
-                NotificationCenter.default.post(name: Virtusize.productDataCheckDidFail,
-                                                object: Virtusize.self,
-                                                userInfo: ["message": "serialization failed"])
-                return nil
-        }
-
-        // Send the API event where the user saw the product
-        VirtusizeAPIService.sendEvent(VirtusizeEvent(name: "user-saw-product"), withContext: root)
-
-        var productCheckData: VirtusizeProductCheckData?
-
-        if let data = try? JSONSerialization.data(withJSONObject: dataObject, options: .prettyPrinted) {
-            productCheckData = try? JSONDecoder().decode(VirtusizeProductCheckData.self, from: data)
-        }
-
-        guard let isValid = productCheckData?.validProduct, isValid else {
-            NotificationCenter.default.post(name: Virtusize.productDataCheckDidFail,
-                                            object: Virtusize.self,
-                                            userInfo: ["message": "product is not valid"])
-            return nil
-        }
-
-        if let sendImageToBackend = productCheckData?.fetchMetaData,
-            sendImageToBackend,
-            product.imageURL != nil,
-            let storeId = productCheckData?.storeId {
-			VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
-        }
-
-        // Send the API event where the user saw the widget button
-		VirtusizeAPIService.sendEvent(VirtusizeEvent(name: "user-saw-widget-button"), withContext: root)
-        NotificationCenter.default.post(name: Virtusize.productDataCheckDidSucceed, object: Virtusize.self)
-
-        // keep values of JSON response
-        return VirtusizeProduct(
-            externalId: product.externalId,
-            imageURL: product.imageURL,
-            productCheckData: productCheckData)
-    }
-
     /// Gets `VirtusizeEvent` with the optional data to be sent to the Virtusize server
     ///
     /// - Parameter data: The optional data for the event

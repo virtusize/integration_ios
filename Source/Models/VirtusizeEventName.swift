@@ -1,7 +1,7 @@
 //
-//  VirtusizeEvent.swift
+//  VirtusizeEventName.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,24 +22,8 @@
 //  THE SOFTWARE.
 //
 
-/// A structure represents the event in Virtusize API
-public struct VirtusizeEvent {
-    /// The name of the event
-    public let name: String
-
-    /// The additional data in the event
-    public let data: Any?
-}
-
-extension VirtusizeEvent {
-
-    /// Initializes the VirtusizeEvent structure
-    internal init(name: String) {
-        self.init(name: name, data: nil)
-    }
-
-	/// Initializes the VirtusizeEvent structure
-	internal init(name: VirtusizeEventName) {
-		self.init(name: name.rawValue, data: nil)
-	}
+/// The enum contains the possible events to be sent to the Virtusize server
+internal enum VirtusizeEventName: String {
+	case userSawProduct = "user-saw-product"
+	case userSawWidgetButton = "user-saw-widget-button"
 }
