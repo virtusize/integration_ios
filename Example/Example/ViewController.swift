@@ -48,7 +48,7 @@ class ViewController: UIViewController {
             externalId: "vs_dress",
             imageURL: URL(string: "http://www.example.com/image.jpg"))
 		checkTheFitButton.applyDefaultStyle()
-		
+
 		/// you can use `VirtusizeAssets` to access Virtusize SDK assets, including images and colors
 		// checkTheFitButton.setImage(VirtusizeAssets.icon, for: .normal)
 

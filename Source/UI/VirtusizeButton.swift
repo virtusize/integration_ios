@@ -51,17 +51,19 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
         }
     }
 
-    /// Applies the default style of `VirtusizeButton`
-    public func applyDefaultStyle() {
-        tintColor = .black
+	/// Applies the default style of `VirtusizeButton`
+	public func applyDefaultStyle(_ virtusizeStyle: VirtusizeViewStyle = .BLACK) {
+		setTitle(Localization.shared.localize("Check size"), for: .normal)
 
-        setTitle(Localization.shared.localize("Check size"), for: .normal)
+		if virtusizeStyle == .BLACK {
+			backgroundColor = Colors.gray900Color
+		} else {
+			backgroundColor = Colors.vsTealColor
+		}
+		tintColor = .white
+		layer.cornerRadius = 20
 
-        backgroundColor = UIColor(white: 58.0 / 255.0, alpha: 1.0)
-        tintColor = .white
-        layer.cornerRadius = 20
-
-        contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
-        self.setImage(VirtusizeAssets.icon, for: .normal)
-    }
+		contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
+		self.setImage(VirtusizeAssets.icon, for: .normal)
+	}
 }
