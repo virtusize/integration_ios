@@ -43,7 +43,9 @@ internal class VirtusizeRepository: NSObject {
 			return false
 		}
 
-		Virtusize.internalProduct = product
+		Virtusize.internalProduct?.name = product.name
+		Virtusize.internalProduct?.externalId = product.externalId
+		Virtusize.internalProduct?.productCheckData = product.productCheckData
 
 		// Send the API event where the user saw the product
 		VirtusizeAPIService.sendEvent(

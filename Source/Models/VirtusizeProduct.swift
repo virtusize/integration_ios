@@ -25,7 +25,7 @@
 /// This structure represents a product in the Virtusize SDK
 public class VirtusizeProduct: Codable {
 
-	private var name: String = ""
+	internal var name: String = ""
 
     /// A string to represent the ID that will be used to reference this product in Virtusize API
 	public var externalId: String = ""
@@ -50,7 +50,7 @@ public class VirtusizeProduct: Codable {
 	}
 
     /// Initializes the VirtusizeProduct structure
-    internal init(externalId: String, imageURL: URL? = nil, productCheckData: VirtusizeProductCheckData? = nil) {
+    internal init(externalId: String, imageURL: URL?, productCheckData: VirtusizeProductCheckData?) {
         self.externalId = externalId
         self.imageURL = imageURL
         self.productCheckData = productCheckData

@@ -73,6 +73,9 @@ public class Virtusize {
 			guard let newValue = newValue else {
 				return
 			}
+
+			internalProduct = newValue
+
 			DispatchQueue.global().async {
 				guard VirtusizeRepository.productCheck(product: newValue) else {
 					return
