@@ -139,25 +139,8 @@ override func viewDidLoad() {
     // Set up the product information in order to populate the Virtusize view
     Virtusize.product = VirtusizeProduct(
         externalId: "vs_dress",
-<<<<<<< HEAD
         imageURL: URL(string: "http://www.example.com/image.jpg")
     )
-=======
-        imageURL: URL(string: "http://www.example.com/image.jpg"))
-
-    // You can apply our default button styles
-    // either .BLACK
-    checkTheFitButton.applyDefaultStyle(.BLACK)
-    // or .TEAL
-    checkTheFitButton.applyDefaultStyle(.TEAL)
-}
-
-@IBAction func checkTheFit() {
-    if let virtusize = VirtusizeViewController(
-        handler: self) {
-        present(virtusize, animated: true, completion: nil)
-    }
->>>>>>> 1cb879f0121c0b42655dec66c9c175729634e39d
 }
 ```
 
