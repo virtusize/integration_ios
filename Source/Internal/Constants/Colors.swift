@@ -22,15 +22,15 @@
 //  THE SOFTWARE.
 //
 
-/// This class wraps the colors used in the Virtusize SDK
-final internal class Colors {
-    internal static let gray200Color: UIColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
-    internal static let gray700Color: UIColor = #colorLiteral(red: 0.7176470588, green: 0.7254901961, blue: 0.7254901961, alpha: 1)
-    internal static let gray800Color: UIColor = #colorLiteral(red: 0.4980392157, green: 0.5137254902, blue: 0.5137254902, alpha: 1)
-    internal static let gray900Color: UIColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
-    internal static let gray900PressedColor: UIColor = #colorLiteral(red: 0.1960784314, green: 0.1960784314, blue: 0.1960784314, alpha: 1)
-    internal static let vsTealColor: UIColor = #colorLiteral(red: 0.2431372549, green: 0.8235294118, blue: 0.7294117647, alpha: 1)
-    internal static let vsTealPressedColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1)
-	internal static let vsDarkTealColor: UIColor = #colorLiteral(red: 0.0862745098, green: 0.7764705882, blue: 0.7254901961, alpha: 1)
-    internal static let inPageShadowColor: UIColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+/// The Virtusize themed colors used in the Virtusize SDK
+extension UIColor {
+	static var vsGray200Color: UIColor { #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) }
+	static var vsGray700Color: UIColor { #colorLiteral(red: 0.7176470588, green: 0.7254901961, blue: 0.7254901961, alpha: 1) }
+	static var vsGray800Color: UIColor { #colorLiteral(red: 0.4980392157, green: 0.5137254902, blue: 0.5137254902, alpha: 1) }
+	static var vsGray900Color: UIColor { #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) }
+	static var vsGray900PressedColor: UIColor { #colorLiteral(red: 0.1960784314, green: 0.1960784314, blue: 0.1960784314, alpha: 1) }
+	static var vsTealColor: UIColor { #colorLiteral(red: 0.2431372549, green: 0.8235294118, blue: 0.7294117647, alpha: 1) }
+	static var vsTealPressedColor: UIColor { #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1) }
+	static var vsDarkTealColor: UIColor { #colorLiteral(red: 0.0862745098, green: 0.7764705882, blue: 0.7254901961, alpha: 1) }
+	static var vsInPageShadowColor: UIColor { #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) }
 }

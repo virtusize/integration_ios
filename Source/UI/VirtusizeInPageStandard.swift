@@ -256,7 +256,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     private func setStyle() {
         inPageStandardView.backgroundColor = .white
         inPageStandardView.layer.masksToBounds = false
-        inPageStandardView.layer.shadowColor = Colors.inPageShadowColor.cgColor
+        inPageStandardView.layer.shadowColor = UIColor.vsInPageShadowColor.cgColor
         inPageStandardView.layer.shadowOpacity = 1
         inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 4)
         inPageStandardView.layer.shadowRadius = 14
@@ -269,23 +269,23 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         vsSignatureImageView.image = Assets.vsSignature
 
         privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
-        privacyPolicyLink.textColor = Colors.gray900Color
+        privacyPolicyLink.textColor = .vsGray900Color
         privacyPolicyLink.setContentHuggingPriority(.required, for: .vertical)
 
         messageStackView.axis = .vertical
         messageStackView.distribution = .equalSpacing
 
         topMessageLabel.numberOfLines = 0
-        topMessageLabel.textColor = Colors.gray900Color
+        topMessageLabel.textColor = .vsGray900Color
         bottomMessageLabel.numberOfLines = 0
-        bottomMessageLabel.textColor = Colors.gray900Color
+        bottomMessageLabel.textColor = .vsGray900Color
 
         if inPageStandardButtonBackgroundColor != nil {
             checkSizeButton.backgroundColor = inPageStandardButtonBackgroundColor
         } else if style == .TEAL {
-            checkSizeButton.backgroundColor = Colors.vsTealColor
+            checkSizeButton.backgroundColor = .vsTealColor
         } else {
-            checkSizeButton.backgroundColor = Colors.gray900Color
+            checkSizeButton.backgroundColor = .vsGray900Color
         }
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 7, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
@@ -303,7 +303,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         errorImageView.isHidden = true
 
         errorText.numberOfLines = 0
-        errorText.textColor = Colors.gray700Color
+        errorText.textColor = .vsGray700Color
         errorText.isHidden = true
 
         let displayLanguage = Virtusize.params?.language
