@@ -26,7 +26,6 @@
 final public class VirtusizeAssets {
 	public let bundle = Bundle(for: VirtusizeAssets.self)
 
-	public static let primaryColor: UIColor = #colorLiteral(red: 0.09, green: 0.78, blue: 0.73, alpha: 1)
 	public static let icon: UIImage? = {
 		return Base64ImageString.icon.image
 	}()

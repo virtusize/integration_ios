@@ -56,9 +56,9 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
 		setTitle(Localization.shared.localize("Check size"), for: .normal)
 
 		if virtusizeStyle == .BLACK {
-			backgroundColor = Colors.gray900Color
+			backgroundColor = .vsGray900Color
 		} else {
-			backgroundColor = Colors.vsTealColor
+			backgroundColor = .vsTealColor
 		}
 		tintColor = .white
 		layer.cornerRadius = 20
