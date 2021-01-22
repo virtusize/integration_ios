@@ -22,8 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
 /// The Virtusize themed colors used in the Virtusize SDK
 extension UIColor {
 	static var vsGray900Color: UIColor { #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) }
