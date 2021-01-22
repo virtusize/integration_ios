@@ -342,4 +342,18 @@ internal class VirtusizeAPIService {
 
 		return .success(Deserializer.i18n(data: data))
 	}
+
+	// The API request for loading an image from a URL
+	///
+	/// - Parameters:
+	///   - url: The image of the URL
+	/// - Returns: the loaded image in the type of `UIImage`
+	internal static func loadImageAsync(url: URL?) -> APIResult<UIImage> {
+		guard url != nil, let data = try? Data(contentsOf: url!),
+			  let image = UIImage(data: data)
+		else {
+			return .failure(VirtusizeError.failToLoadImage(url))
+		}
+		return .success(image, nil)
+	}
 }

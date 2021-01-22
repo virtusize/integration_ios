@@ -95,12 +95,13 @@ internal class VirtusizeProductImageView: UIView {
 			layer.borderColor = UIColor.vsGray800Color.cgColor
 		} else {
 			circleBorderLayer.path = UIBezierPath(ovalIn: bounds).cgPath
-			circleBorderLayer.lineWidth = 2.0
+			circleBorderLayer.lineWidth = 1.0
 			circleBorderLayer.strokeColor = UIColor.vsDarkTealColor.cgColor
 			circleBorderLayer.lineDashPattern = [4, 3]
 			circleBorderLayer.frame = bounds
 			circleBorderLayer.fillColor = nil
-			layer.borderColor = UIColor.white.cgColor
+			circleBorderLayer.lineJoin = .round
+			layer.borderColor = UIColor.clear.cgColor
 			layer.addSublayer(circleBorderLayer)
 			layer.zPosition = 1
 		}
@@ -112,62 +113,7 @@ internal class VirtusizeProductImageView: UIView {
 		productImageView.contentMode = .scaleAspectFit
     }
 
-    internal func setImage(product: VirtusizeInternalProduct, localImageUrl: URL?, completion: (() -> Void)? = nil) {
-        if localImageUrl != nil {
-            loadImageUrl(url: localImageUrl!, product: product, success: {
-                completion?()
-            }, failure: {
-                self.setImage(product: product, localImageUrl: nil, completion: completion)
-            })
-            return
-        }
-        if let remoteImageUrl = getCloudinaryImageUrl(product.cloudinaryPublicId) {
-            loadImageUrl(url: remoteImageUrl, product: product, success: {
-                completion?()
-            }, failure: {
-                self.setProductTypeImage(
-                    productType: product.productType,
-                    style: product.storeProductMeta?.additionalInfo?.style
-                )
-                completion?()
-            })
-        } else {
-            completion?()
-            setProductTypeImage(
-                productType: product.productType,
-                style: product.storeProductMeta?.additionalInfo?.style
-            )
-        }
-    }
-
-    private func loadImageUrl(
-        url: URL,
-        product: VirtusizeInternalProduct,
-        success: (() -> Void)? = nil,
-        failure: (() -> Void)? = nil
-    ) {
-        productImageView.load(url: url, success: { image in
-            self.image = image.withPadding(inset: 4)
-            success?()
-        }, failure: {
-            failure?()
-        })
-    }
-
-    private func getCloudinaryImageUrl(_ cloudinaryPublicId: String?) -> URL? {
-        guard let cloudinaryPublicId = cloudinaryPublicId else {
-            return nil
-        }
-        return URL(string:
-            "https://res.cloudinary.com/virtusize/image/upload/q_auto,f_auto/\(cloudinaryPublicId).jpg"
-            )
-    }
-
-    private func setProductTypeImage(productType: Int, style: String?) {
-        self.productImageView.image = Assets.getProductPlaceholderImage(
-            productType: productType,
-            style: style
-        )?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
+	func setProductTypeImage(image: UIImage?) {
 		if productImageType == .STORE {
 			self.productImageView.backgroundColor = .vsGray200Color
 			self.productImageView.tintColor = UIColor.black

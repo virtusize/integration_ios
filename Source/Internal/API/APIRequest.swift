@@ -256,4 +256,15 @@ internal struct APIRequest {
 		let endpoint = APIEndpoints.i18n(langCode: langCode)
 		return apiRequest(components: endpoint.components)
 	}
+
+	/// Gets the `URLRequest` for the request to load an image via a URL
+	///
+	/// - Parameter url: The URL of the image
+	/// - Returns: A `URLRequest` for the request to load an image
+	internal static func loadImage(url: URL) -> URLRequest? {
+		var components = URLComponents()
+		components.scheme = "https"
+		components.host = url.host
+		return HTTPRequest(components: components)
+	}
 }
