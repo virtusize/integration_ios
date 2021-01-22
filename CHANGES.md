@@ -16,6 +16,10 @@ Use list notation, and following prefixes:
 ### 2.1.0
 - Feature: InPage integration
 
+### 2.0.5
+- Feature: Add Korean localization
+- Feature: Add Teal as one of the default styles for VirtusizeButton
+
 ### 2.0.4
 - Feature:  Make the SDK assets accessible to iOS apps
 

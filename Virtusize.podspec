@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name = 'Virtusize'
-  s.version = '2.0.4'
-  s.license = { :type => 'Copyright', :text => 'Copyright 2020 Virtusize' }
+  s.version = '2.0.5'
+  s.license = { :type => 'Copyright', :text => 'Copyright 2021 Virtusize' }
   s.summary = 'Integrate Virtusize on iOS devices'
   s.homepage = 'https://www.virtusize.com/'
   s.documentation_url = 'https://github.com/virtusize/integration_ios'
