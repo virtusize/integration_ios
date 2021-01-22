@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.0.5
+- Feature: Add Korean localization
+- Feature: Add Teal as one of the default styles for VirtusizeButton
+
 ### 2.0.4
 - Feature:  Make the SDK assets accessible to iOS apps
 

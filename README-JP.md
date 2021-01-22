@@ -47,7 +47,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.0.4'
+pod 'Virtusize', '~> 2.0.5'
 end
 ```
 
@@ -202,7 +202,12 @@ override func viewDidLoad() {
     checkTheFitButton.storeProduct = VirtusizeProduct(
         externalId: "vs_dress",
         imageURL: URL(string: "http://www.example.com/image.jpg"))
-    checkTheFitButton.applyDefaultStyle()
+
+    // You can apply our default button styles
+    // either .BLACK
+    checkTheFitButton.applyDefaultStyle(.BLACK)
+    // or .TEAL
+    checkTheFitButton.applyDefaultStyle(.TEAL)
 }
 
 @IBAction func checkTheFit() {
