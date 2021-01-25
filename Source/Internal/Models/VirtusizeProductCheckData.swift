@@ -27,11 +27,11 @@ internal class VirtusizeProductCheckData: Codable {
     let validProduct: Bool
     let fetchMetaData: Bool
     let userData: VirtusizeUserData?
-    let productDataId: Int
-    let productTypeName: String
+    let productDataId: Int?
+    let productTypeName: String?
     let storeName: String
     let storeId: Int
-    let productTypeId: Int
+    let productTypeId: Int?
 
     private enum CodingKeys: String, CodingKey {
         case validProduct, fetchMetaData, userData, productDataId, productTypeName, storeName, storeId, productTypeId
@@ -42,10 +42,10 @@ internal class VirtusizeProductCheckData: Codable {
         validProduct = try values.decode(Bool.self, forKey: .validProduct)
         fetchMetaData = try values.decode(Bool.self, forKey: .fetchMetaData)
         userData = try? values.decode(VirtusizeUserData.self, forKey: .userData)
-        productDataId = try values.decode(Int.self, forKey: .productDataId)
-        productTypeName = try values.decode(String.self, forKey: .productTypeName)
+        productDataId = try? values.decode(Int.self, forKey: .productDataId)
+        productTypeName = try? values.decode(String.self, forKey: .productTypeName)
         storeName = try values.decode(String.self, forKey: .storeName)
         storeId = try values.decode(Int.self, forKey: .storeId)
-        productTypeId = try values.decode(Int.self, forKey: .productTypeId)
+        productTypeId = try? values.decode(Int.self, forKey: .productTypeId)
     }
 }

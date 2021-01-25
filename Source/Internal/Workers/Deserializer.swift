@@ -1,7 +1,7 @@
 //
 //  Deserializer.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,19 +45,24 @@ internal struct Deserializer {
                 return nil
         }
 
+		var virtusizeProduct = VirtusizeProduct(
+			externalId: product.externalId,
+			imageURL: product.imageURL)
+
         // Send the API event where the user saw the product
         Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-product"), withContext: root)
 
-        var productCheckData: VirtusizeProductCheckData?
+		var productCheckData: VirtusizeProductCheckData?
 
         if let data = try? JSONSerialization.data(withJSONObject: dataObject, options: .prettyPrinted) {
             productCheckData = try? JSONDecoder().decode(VirtusizeProductCheckData.self, from: data)
+			virtusizeProduct.productCheckData = productCheckData
         }
 
         guard let isValid = productCheckData?.validProduct, isValid else {
             NotificationCenter.default.post(name: Virtusize.productDataCheckDidFail,
                                             object: Virtusize.self,
-                                            userInfo: ["message": "product is not valid"])
+											userInfo: ["message": virtusizeProduct])
             return nil
         }
 
@@ -70,13 +75,11 @@ internal struct Deserializer {
 
         // Send the API event where the user saw the widget button
         Virtusize.sendEvent(VirtusizeEvent(name: "user-saw-widget-button"), withContext: root)
-        NotificationCenter.default.post(name: Virtusize.productDataCheckDidSucceed, object: Virtusize.self)
+        NotificationCenter.default.post(name: Virtusize.productDataCheckDidSucceed, object: Virtusize.self,
+										userInfo: ["message": virtusizeProduct])
 
-        // keep values of JSON response
-        return VirtusizeProduct(
-            externalId: product.externalId,
-            imageURL: product.imageURL,
-            productCheckData: productCheckData)
+		return virtusizeProduct
+
     }
 
     /// Gets `VirtusizeEvent` with the optional data to be sent to the Virtusize server

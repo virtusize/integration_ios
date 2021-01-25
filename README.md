@@ -6,6 +6,8 @@
 [![Docs](https://img.shields.io/badge/docs--brightgreen.svg)](https://developers.virtusize.com/native-ios/index.html)
 [![Twitter](https://img.shields.io/badge/twitter-@virtusize-blue.svg?style=flat)](http://twitter.com/virtusize)
 
+[日本語](README-JP.md)
+
 Virtusize helps retailers to illustrate the size and fit of clothing, shoes and bags online, by letting customers compare the
 measurements of an item they want to buy (on a retailer's product page) with an item that they already own (a reference item).
 This is done by comparing the silhouettes of the retailer's product with the silhouette of the customer's reference Item.
@@ -478,7 +480,14 @@ The order API enables Virtusize to show your customers the items they have recen
 
 #### 1. Initialization
 
-Make sure to set up the **user ID** in the `application(_:didFinishLaunchingWithOptions:)` method of the App delegate before you start.
+Make sure to set up the **user ID** before sending orders to Virtusize. You can set up the user ID either:
+
+in the `application(_:didFinishLaunchingWithOptions:)` method of the App delegate before the app is launched
+
+or
+
+in your view controller after the app is launched
+
 
 ```Swift
 Virtusize.userID = "123"
@@ -566,4 +575,4 @@ Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected re
 
 ## License
 
-Copyright (c) 2018-20 Virtusize CO LTD (https://www.virtusize.jp)
+Copyright (c) 2018-21 Virtusize CO LTD (https://www.virtusize.jp)

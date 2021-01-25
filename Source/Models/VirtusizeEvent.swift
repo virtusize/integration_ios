@@ -1,7 +1,7 @@
 //
 //  VirtusizeEvent.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
