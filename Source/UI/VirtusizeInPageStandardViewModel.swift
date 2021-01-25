@@ -96,7 +96,7 @@ internal final class VirtusizeInPageStandardViewModel {
 	}
 
 	private func getProductTypeImage(productType: Int, style: String?) -> UIImage? {
-		return Assets.getProductPlaceholderImage(
+		return VirtusizeAssets.getProductPlaceholderImage(
 			productType: productType,
 			style: style
 		)?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)

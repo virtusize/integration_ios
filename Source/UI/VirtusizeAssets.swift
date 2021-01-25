@@ -1,5 +1,5 @@
 //
-//  VirtusizeButton.swift
+//  VirtusizeAssets.swift
 //
 //  Copyright (c) 2018-present Virtusize KK
 //

@@ -85,7 +85,10 @@ internal class VirtusizeRepository: NSObject {
 	}
 
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
-	internal static func fetchInitialData(productId: Int) {
+	internal static func fetchInitialData(productId: Int?) {
+		guard let productId = productId else {
+			return
+		}
 		Virtusize.storeProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
 		Virtusize.productTypes = VirtusizeAPIService.getProductTypesAsync().success
 		Virtusize.i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
