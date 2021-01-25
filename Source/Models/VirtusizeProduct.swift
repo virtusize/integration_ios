@@ -1,7 +1,7 @@
 //
 //  VirtusizeProduct.swift
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,11 @@
 //  THE SOFTWARE.
 //
 
-/// This structure represents a product in the Virtusize SDK
-public struct VirtusizeProduct {
+import Foundation
+
+/// This structure represents a product in Virtusize API
+public struct VirtusizeProduct: CustomStringConvertible {
+
     /// A string to represent the ID that will be used to reference this product in Virtusize API
     public let externalId: String
 
@@ -32,6 +35,16 @@ public struct VirtusizeProduct {
 
     /// The product data from the response of the `productDataCheck` request
     internal var productCheckData: VirtusizeProductCheckData?
+
+	/// Set the description string to the response of the `productDataCheck` request in pretty printed JSON
+	public var description: String {
+		guard let productCheckData = productCheckData,
+			  let productCheckDataJsonData = try? JSONEncoder().encode(productCheckData)
+		else {
+			return "unknown"
+		}
+		return String(data: productCheckDataJsonData, encoding: .utf8)!
+	}
 
     /// Initializes the VirtusizeProduct structure
     internal init(externalId: String, imageURL: URL? = nil, productCheckData: VirtusizeProductCheckData? = nil) {

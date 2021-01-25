@@ -1,7 +1,7 @@
 //
 //  APIEndpointsTests.swift
 //
-//  Copyright (c) 2020 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -67,8 +67,8 @@ class APIEndpointsTests: XCTestCase {
     func testEventsEndpoint_returnExpectedComponents() {
         Virtusize.environment = .korea
         let endpoint = APIEndpoints.events
-        XCTAssertEqual(endpoint.components.host, "api.virtusize.kr")
-        XCTAssertEqual(endpoint.components.path, "/a/api/v3/events")
+        XCTAssertEqual(endpoint.components.host, "events.virtusize.kr")
+        XCTAssertEqual(endpoint.components.path, "")
 
         XCTAssertNil(endpoint.components.queryItems)
     }

@@ -92,11 +92,11 @@ internal class VirtusizeProductImageView: UIView {
 
 		if productImageType == .STORE {
 			layer.borderWidth = 0.5
-			layer.borderColor = Colors.gray800Color.cgColor
+			layer.borderColor = UIColor.vsGray800Color.cgColor
 		} else {
 			circleBorderLayer.path = UIBezierPath(ovalIn: bounds).cgPath
 			circleBorderLayer.lineWidth = 2.0
-			circleBorderLayer.strokeColor = Colors.vsDarkTealColor.cgColor
+			circleBorderLayer.strokeColor = UIColor.vsDarkTealColor.cgColor
 			circleBorderLayer.lineDashPattern = [4, 3]
 			circleBorderLayer.frame = bounds
 			circleBorderLayer.fillColor = nil
@@ -159,21 +159,21 @@ internal class VirtusizeProductImageView: UIView {
             return nil
         }
         return URL(string:
-            "https://res.cloudinary.com/virtusize/image/upload/q_auto,f_auto/\(cloudinaryPublicId).jpg"
+            "https://res.cloudinary.com/virtusize/image/upload/w_36,h_36/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
             )
     }
 
     private func setProductTypeImage(productType: Int, style: String?) {
-        self.productImageView.image = Assets.getProductPlaceholderImage(
+        self.productImageView.image = VirtusizeAssets.getProductPlaceholderImage(
             productType: productType,
             style: style
         )?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
 		if productImageType == .STORE {
-			self.productImageView.backgroundColor = Colors.gray200Color
+			self.productImageView.backgroundColor = .vsGray200Color
 			self.productImageView.tintColor = UIColor.black
 		} else {
 			self.productImageView.backgroundColor = UIColor.white
-			self.productImageView.tintColor = Colors.vsTealColor
+			self.productImageView.tintColor = .vsTealColor
 		}
     }
 }

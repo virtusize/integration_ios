@@ -1,7 +1,7 @@
 //
-//  Endpoints.swift
+//  APIEndpoints.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ internal enum APIEndpoints {
             components.path = "/rest-api/v1/product-meta-data-hints"
 
         case .events:
-            components.path = "/a/api/v3/events"
+			break
 
         case .virtusize(let region):
             components.host = "static.api.virtusize.\(region.rawValue)"
@@ -93,16 +93,18 @@ internal enum APIEndpoints {
         return components
     }
 
-    var hostname: String {
-        switch self {
-        case .productDataCheck, .getSize:
-            return Virtusize.environment.servicesUrl()
-        case .i18n:
-            return Virtusize.environment.i18nUrl()
-        default:
-            return Virtusize.environment.rawValue
-        }
-    }
+	var hostname: String {
+		switch self {
+			case .productDataCheck, .getSize:
+				return Virtusize.environment.servicesUrl()
+			case .i18n:
+				return Virtusize.environment.i18nUrl()
+			case .events:
+				return Virtusize.environment.eventApiUrl()
+			default:
+				return Virtusize.environment.rawValue
+		}
+	}
 
     var apiKey: String {
         guard let apiKey = Virtusize.APIKey else {

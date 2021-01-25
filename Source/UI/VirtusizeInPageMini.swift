@@ -147,7 +147,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
         inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2
 
-        let rightArrowImageTemplate = Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        let rightArrowImageTemplate = VirtusizeAssets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .normal)
         inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .highlighted)
         inPageMiniSizeCheckButton.semanticContentAttribute = .forceRightToLeft
@@ -155,11 +155,11 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
             inPageMiniSizeCheckButton.imageView?.tintColor = inPageMiniBackgroundColor
         } else if style == .TEAL {
-            inPageMiniSizeCheckButton.setTitleColor(Colors.vsTealColor, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = Colors.vsTealColor
+            inPageMiniSizeCheckButton.setTitleColor(.vsTealColor, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = .vsTealColor
         } else {
-            inPageMiniSizeCheckButton.setTitleColor(Colors.gray900Color, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = Colors.gray900Color
+            inPageMiniSizeCheckButton.setTitleColor(.vsGray900Color, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
@@ -168,9 +168,9 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         if inPageMiniBackgroundColor != nil {
             return inPageMiniBackgroundColor!
         } else if style == .TEAL {
-            return Colors.vsTealColor
+            return .vsTealColor
         } else {
-            return Colors.gray900Color
+            return .vsGray900Color
         }
     }
 
@@ -194,8 +194,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
     private func setLoadingScreen(loading: Bool) {
         backgroundColor = loading ? .white : getBackgroundColor()
-        inPageMiniImageView.image = loading ? Assets.icon : nil
-        inPageMiniMessageLabel.textColor = loading ? Colors.gray900Color : .white
+        inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
+        inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
         setupTextsStyle(messageLabelIsBold: loading)
         if loading {
             startLoadingTextAnimation(
@@ -211,8 +211,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	internal override func showErrorScreen() {
         backgroundColor = .white
         stopLoadingTextAnimation()
-        inPageMiniImageView.image = Assets.errorHanger
-        inPageMiniMessageLabel.textColor = Colors.gray700Color
+        inPageMiniImageView.image = VirtusizeAssets.errorHanger
+        inPageMiniMessageLabel.textColor = .vsGray700Color
         inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")
         inPageMiniSizeCheckButton.isHidden = true
         inPageMiniSizeCheckButton.widthAnchor.constraint(equalToConstant: 0).isActive = true

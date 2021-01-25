@@ -1,7 +1,7 @@
 //
 //  VirtusizeButton.swift
 //
-//  Copyright (c) 2020 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@ public class VirtusizeButton: UIButton, VirtusizeView {
     override public var isHighlighted: Bool {
         didSet {
             if style == .BLACK {
-                backgroundColor = isHighlighted ? Colors.gray900PressedColor : Colors.gray900Color
+                backgroundColor = isHighlighted ? .vsGray900PressedColor : .vsGray900Color
             } else if style == .TEAL {
-                backgroundColor = isHighlighted ? Colors.vsTealPressedColor : Colors.vsTealColor
+                backgroundColor = isHighlighted ? .vsTealPressedColor : .vsTealColor
             }
         }
     }
@@ -66,15 +66,15 @@ public class VirtusizeButton: UIButton, VirtusizeView {
     private func setStyle() {
         if style == .NONE {
             setTitle(Localization.shared.localize("check_size"), for: .normal)
-            setTitleColor(Colors.gray900Color, for: .normal)
-            setTitleColor(Colors.gray900PressedColor, for: .highlighted)
+			setTitleColor(.vsGray900Color, for: .normal)
+            setTitleColor(.vsGray900PressedColor, for: .highlighted)
             return
         }
 
         if style == .BLACK {
-            backgroundColor = Colors.gray900Color
+            backgroundColor = .vsGray900Color
         } else if style == .TEAL {
-            backgroundColor = Colors.vsTealColor
+            backgroundColor = .vsTealColor
         }
 
         setTitle(Localization.shared.localize("check_size"), for: .normal)
@@ -86,8 +86,8 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 
         contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
 
-        setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
-        setImage(Assets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
+		setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
+        setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
 
         addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
     }
