@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  APIEvent.swift
 //
 //  Copyright (c) 2018-present Virtusize KK
 //

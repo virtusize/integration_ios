@@ -142,7 +142,7 @@ struct TestFixtures {
     static let retrieveStoreInfoErrorJsonResponse =
     """
         {
-            "detail": "No store found"
+            "detail": "You do not have permission to perform this action."
         }
     """
 
@@ -163,7 +163,7 @@ struct TestFixtures {
     static var virtusizeOrder = VirtusizeOrder(externalOrderId: "4000111032", items: [virtusizeOrderitem])
 
     static var virtusizeProduct = VirtusizeProduct(
-        externalId: externalProductId,
+		externalId: externalProductId,
         imageURL: URL(string: productImageUrl)
     )
 }

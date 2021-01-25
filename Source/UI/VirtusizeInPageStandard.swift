@@ -35,6 +35,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private var views: [String: UIView] = [:]
 	private var metrics: [String: CGFloat] = [:]
+	private var allConstraints: [NSLayoutConstraint] = []
     private let inPageStandardView: UIView = UIView()
 	private let vsIconImageView: UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
     private let userProductImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
@@ -58,10 +59,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private var productImagesAreAnimating: Bool = false
 
+	private(set) var bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct
+
 	/// Once the store product image is set, set the value to true to avoid loading repetitively
 	private var storeProductImageIsSet = false
 	private var crossFadeInAnimator: UIViewPropertyAnimator?
 	private var crossFadeOutAnimator: UIViewPropertyAnimator?
+
+	private var viewModel: VirtusizeInPageStandardViewModel!
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
@@ -82,7 +87,78 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         privacyPolicyLink.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(openPrivacyPolicyLink))
         )
+
+		viewModel = VirtusizeInPageStandardViewModel()
+		bind(to: viewModel)
     }
+
+	deinit {
+		unbind(to: viewModel)
+	}
+
+	private func bind(to viewModel: VirtusizeInPageStandardViewModel) {
+		viewModel.userProductImage.observe(on: self) { [weak self] in
+			if $0 != nil {
+				self?.userProductImageView.image = $0!.image
+				if $0!.source == .local {
+					self?.userProductImageView.setProductTypeImage(image: $0!.image)
+				}
+				self!.finishSettingProductImages()
+			}
+		}
+
+		viewModel.storeProductImage.observe(on: self) { [weak self] in
+			if $0 != nil {
+				self?.storeProductImageView.image = $0!.image
+				if $0!.source == .local {
+					self?.storeProductImageView.setProductTypeImage(image: $0!.image)
+				}
+				self!.finishSettingProductImages()
+			}
+		}
+	}
+
+	private func finishSettingProductImages() {
+		var imageLoadingSuccessful = false
+		if bestFitUserProduct != nil {
+			if viewModel.storeProductImage.value != nil  && viewModel.userProductImage.value != nil {
+				if inPageStandardView.frame.size.width >= smallInPageWidth {
+					adjustProductImageViewPosition(userProductImageSize: 40, productImageViewOffset: -2)
+				} else {
+					if !productImagesAreAnimating {
+						// if item to item recommendation is available, we make user and store product images fade in/out repeatedly
+						startCrossFadeProductImageViews()
+					}
+				}
+				imageLoadingSuccessful = true
+			}
+		} else {
+			if viewModel.storeProductImage.value != nil {
+				if inPageStandardView.frame.size.width >= smallInPageWidth {
+					adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
+				} else {
+					// if item to item recommendation is not available, stop any fading animations
+					stopCrossFadeProductImageViews()
+				}
+				imageLoadingSuccessful = true
+			}
+		}
+		if imageLoadingSuccessful {
+			setMessageLabelTexts(
+				Virtusize.storeProduct!,
+				Virtusize.i18nLocalization!,
+				Virtusize.sizeComparisonRecommendedSize,
+				Virtusize.bodyProfileRecommendedSize?.sizeName
+			)
+
+			setLoadingScreen(loading: false)
+		}
+	}
+
+	private func unbind(to viewModel: VirtusizeInPageStandardViewModel) {
+		viewModel.userProductImage.remove(observer: self)
+		viewModel.storeProductImage.remove(observer: self)
+	}
 
     private func addSubviews() {
         addSubview(inPageStandardView)
@@ -99,21 +175,25 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         inPageStandardView.addSubview(errorText)
     }
 
+	private func setAllTranslatesAutoresizingMaskIntoConstraints(value: Bool) {
+		translatesAutoresizingMaskIntoConstraints = value
+		inPageStandardView.translatesAutoresizingMaskIntoConstraints = value
+		vsIconImageView.translatesAutoresizingMaskIntoConstraints = value
+		vsSignatureImageView.translatesAutoresizingMaskIntoConstraints = value
+		privacyPolicyLink.translatesAutoresizingMaskIntoConstraints = value
+		userProductImageView.translatesAutoresizingMaskIntoConstraints = value
+		storeProductImageView.translatesAutoresizingMaskIntoConstraints = value
+		messageStackView.translatesAutoresizingMaskIntoConstraints = value
+		bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = value
+		bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = value
+		checkSizeButton.translatesAutoresizingMaskIntoConstraints = value
+		errorImageView.translatesAutoresizingMaskIntoConstraints = value
+		errorText.translatesAutoresizingMaskIntoConstraints = value
+	}
+
     // swiftlint:disable function_body_length
     private func setConstraints() {
-		translatesAutoresizingMaskIntoConstraints = false
-        inPageStandardView.translatesAutoresizingMaskIntoConstraints = false
-		vsIconImageView.translatesAutoresizingMaskIntoConstraints = false
-        vsSignatureImageView.translatesAutoresizingMaskIntoConstraints = false
-        privacyPolicyLink.translatesAutoresizingMaskIntoConstraints = false
-		userProductImageView.translatesAutoresizingMaskIntoConstraints = false
-        storeProductImageView.translatesAutoresizingMaskIntoConstraints = false
-        messageStackView.translatesAutoresizingMaskIntoConstraints = false
-        bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-        bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-        checkSizeButton.translatesAutoresizingMaskIntoConstraints = false
-        errorImageView.translatesAutoresizingMaskIntoConstraints = false
-        errorText.translatesAutoresizingMaskIntoConstraints = false
+		setAllTranslatesAutoresizingMaskIntoConstraints(value: false)
 
         views = [
             "inPageStandardView": inPageStandardView,
@@ -136,55 +216,21 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			"productImageViewOffset": productImageViewOffset
         ]
 
-        let inPageStandardViewHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-0-[inPageStandardView]-0-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
+		let inPageStandardViewHorizontalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-0-[inPageStandardView]-0-|",
+			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			metrics: nil,
+			views: views
+		)
+		allConstraints += inPageStandardViewHorizontalConstraints
 
-        let inPageStandardViewVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-0-[inPageStandardView]-10-[virtusizeImageView]-0-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
-
-        let footerHorizontalConstraints = NSLayoutConstraint.constraints(
-                   withVisualFormat: "H:|-0-[virtusizeImageView(>=10)]-(>=0)-[privacyPolicyLink(>=15)]-0-|",
-                   options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-                   metrics: nil,
-                   views: views
-        )
-
-        let errorScreenVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-defaultMargin-[errorImageView(40)]-defaultMargin-[errorText]-defaultMargin-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
-
-        let errorImageViewHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-(>=defaultMargin)-[errorImageView(40)]-(>=defaultMargin)-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
-
-        let errorTextHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-(>=defaultMargin)-[errorText]-(>=defaultMargin)-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
-
-        // swiftlint:disable line_length
-		let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-defaultMargin-[userProductImageView(==userProductImageSize)]-(productImageViewOffset)-[storeProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
+		let inPageStandardViewVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-0-[inPageStandardView]-10-[virtusizeImageView]-0-|",
+			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			metrics: nil,
+			views: views
+		)
+		allConstraints += inPageStandardViewVerticalConstraints
 
 		let vsIconImageViewHorizontalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "H:|-14-[vsIconImageView]-(>=8)-|",
@@ -192,71 +238,99 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			metrics: metrics,
 			views: views
 		)
+		allConstraints += vsIconImageViewHorizontalConstraints
 
-        let leftProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=14)-[userProductImageView(==40)]-(>=14)-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
-            views: views
-        )
+		// swiftlint:disable line_length
+		let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-defaultMargin-[userProductImageView(==userProductImageSize)]-(productImageViewOffset)-[storeProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
+			options: [.alignAllCenterY],
+			metrics: metrics,
+			views: views
+		)
+		allConstraints += inPageStandardViewsHorizontalConstraints
+
+		let footerHorizontalConstraints = NSLayoutConstraint.constraints(
+				   withVisualFormat: "H:|-0-[virtusizeImageView(>=10)]-(>=0)-[privacyPolicyLink(>=15)]-0-|",
+				   options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+				   metrics: nil,
+				   views: views
+		)
+		allConstraints += footerHorizontalConstraints
+
+		let leftProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-(>=14)-[userProductImageView(==40)]-(>=14)-|",
+			options: [.alignAllCenterY],
+			metrics: nil,
+			views: views
+		)
+		allConstraints += leftProductImageViewVerticalConstraints
 
 		let storeProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-(>=14)-[storeProductImageView(==40)]-(>=14)-|",
+			options: [.alignAllCenterY],
+			metrics: nil,
+			views: views
+		)
+		allConstraints += storeProductImageViewVerticalConstraints
+
+		let messageStackViewVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-(>=14@700)-[messageStackView]-(>=14@700)-|",
 			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
 			metrics: nil,
 			views: views
 		)
+		allConstraints += messageStackViewVerticalConstraints
 
-        let messageStackViewVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=14@700)-[messageStackView]-(>=14@700)-|",
+		let checkSizeButtonVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-(>=20)-[checkSizeButton]-(>=20)-|",
+			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			metrics: nil,
+			views: views
+		)
+		allConstraints += checkSizeButtonVerticalConstraints
+
+        let errorScreenVerticalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-defaultMargin-[errorImageView(40)]-defaultMargin-[errorText]-defaultMargin-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
+            metrics: metrics,
             views: views
         )
+		allConstraints += errorScreenVerticalConstraints
 
-        let checkSizeButtonVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=20)-[checkSizeButton]-(>=20)-|",
+        let errorImageViewHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(>=defaultMargin)-[errorImageView(40)]-(>=defaultMargin)-|",
             options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: nil,
+            metrics: metrics,
             views: views
         )
+		allConstraints += errorImageViewHorizontalConstraints
 
-		privacyPolicyLink.centerYAnchor.constraint(
-			equalTo: vsSignatureImageView.centerYAnchor,
-			constant: 0
-		).isActive = true
-		vsSignatureImageView.centerYAnchor.constraint(
-			equalTo: privacyPolicyLink.centerYAnchor,
-			constant: 0
-		).isActive = true
+        let errorTextHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(>=defaultMargin)-[errorText]-(>=defaultMargin)-|",
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+            metrics: metrics,
+            views: views
+        )
+		allConstraints += errorTextHorizontalConstraints
 
-        addConstraints(inPageStandardViewHorizontalConstraints)
-        addConstraints(inPageStandardViewVerticalConstraints)
-		addConstraints(vsIconImageViewHorizontalConstraints)
-		addConstraints(inPageStandardViewsHorizontalConstraints)
-        addConstraints(footerHorizontalConstraints)
-        addConstraints(leftProductImageViewVerticalConstraints)
-		addConstraints(storeProductImageViewVerticalConstraints)
-        addConstraints(messageStackViewVerticalConstraints)
-        addConstraints(checkSizeButtonVerticalConstraints)
-        addConstraints(errorScreenVerticalConstraints)
-        addConstraints(errorImageViewHorizontalConstraints)
-        addConstraints(errorTextHorizontalConstraints)
+		allConstraints.append(privacyPolicyLink.centerYAnchor.constraint(equalTo: vsSignatureImageView.centerYAnchor))
+		allConstraints.append(vsSignatureImageView.centerYAnchor.constraint(equalTo: privacyPolicyLink.centerYAnchor))
+		allConstraints.append(vsIconImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+		allConstraints.append(userProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+		allConstraints.append(storeProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+		allConstraints.append(messageStackView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+		allConstraints.append(checkSizeButton.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
+		allConstraints.append(errorImageView.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
+		allConstraints.append(errorText.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
 
-		addConstraint(vsIconImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
-		addConstraint(userProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
-        addConstraint(storeProductImageView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
-        addConstraint(messageStackView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
-        addConstraint(checkSizeButton.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
-        addConstraint(errorImageView.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
-        addConstraint(errorText.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
+		NSLayoutConstraint.activate(allConstraints)
     }
 
     // swiftlint:disable function_body_length
     private func setStyle() {
         inPageStandardView.backgroundColor = .white
         inPageStandardView.layer.masksToBounds = false
-		inPageStandardView.layer.shadowColor = UIColor.vsInPageShadowColor.cgColor
+        inPageStandardView.layer.shadowColor = UIColor.vsInPageShadowColor.cgColor
         inPageStandardView.layer.shadowOpacity = 1
         inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 4)
         inPageStandardView.layer.shadowRadius = 14
@@ -351,76 +425,20 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	public override func setInPageRecommendation() {
 		super.setInPageRecommendation()
 
-		// Using DispatchSemaphore to execute synchronous tasks
-		let semaphore = DispatchSemaphore(value: 0)
-
-		let bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct
-		DispatchQueue.global().async {
-			// If item to item recommendation is available, display two user and store product images side by side
-			if let bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct {
-				self.loadAndSetUserProductImage(semaphore: semaphore, bestFitUserProduct: bestFitUserProduct)
-				self.loadAndSetStoreProductImage(semaphore: semaphore)
-				DispatchQueue.main.async {
-					if self.inPageStandardView.frame.size.width >= self.smallInPageWidth {
-						self.adjustProductImageViewPosition(userProductImageSize: 40, productImageViewOffset: -2)
-					}
-				}
-			// Otherwise, only display the store product image and
-			} else {
-				self.loadAndSetStoreProductImage(semaphore: semaphore)
-				DispatchQueue.main.async {
-					if self.inPageStandardView.frame.size.width >= self.smallInPageWidth {
-						self.adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
-					}
-				}
-			}
-
-			// If the width of the InPage standard view is small than the minimum InPage width
-			DispatchQueue.main.async {
-				if self.inPageStandardView.frame.size.width < self.smallInPageWidth {
-					// if item to item recommendation is available, we make user and store product images fade in/out repeatedly
-					if bestFitUserProduct != nil {
-						if !self.productImagesAreAnimating {
-							self.startCrossFadeProductImageViews()
-						}
-					// Otherwise, stop any fading animations
-					} else {
-						self.stopCrossFadeProductImageViews()
-					}
-				}
-
-				self.setMessageLabelTexts(
-					Virtusize.storeProduct!,
-					Virtusize.i18nLocalization!,
-					Virtusize.sizeComparisonRecommendedSize,
-					Virtusize.bodyProfileRecommendedSize?.sizeName
-				)
-
-				self.setLoadingScreen(loading: false, bestFitUserProduct: bestFitUserProduct)
-			}
+		// If item to item recommendation is available, display two user and store product images side by side
+		if let bestFitUserProduct = bestFitUserProduct {
+			viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)
 		}
-	}
-
-	private func loadAndSetUserProductImage(semaphore: DispatchSemaphore, bestFitUserProduct: VirtusizeInternalProduct) {
-		self.userProductImageView.setImage(product: bestFitUserProduct, localImageUrl: nil) {
-			semaphore.signal()
-		}
-		semaphore.wait()
-	}
-
-	private func loadAndSetStoreProductImage(semaphore: DispatchSemaphore) {
-		if !self.storeProductImageIsSet {
-			self.storeProductImageView.setImage(product: Virtusize.storeProduct!, localImageUrl: Virtusize.product?.imageURL) {
-				self.storeProductImageIsSet = true
-				semaphore.signal()
-			}
-			semaphore.wait()
-		}
+		viewModel.loadStoreProductImage()
 	}
 
 	private func adjustProductImageViewPosition(userProductImageSize: CGFloat, productImageViewOffset: CGFloat) {
 		// Remove all the constraints
-		self.removeConstraints(self.constraints)
+		if !allConstraints.isEmpty {
+			NSLayoutConstraint.deactivate(allConstraints)
+			allConstraints.removeAll()
+			setAllTranslatesAutoresizingMaskIntoConstraints(value: true)
+		}
 		self.userProductImageSize = userProductImageSize
 		self.productImageViewOffset = productImageViewOffset
 		// Reset constraints
@@ -513,7 +531,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	/// - Parameters:
 	///   - loading: Pass true when it's loading, and pass false when finishing loading
 	///   - userBestFitProduct: Pass the user best fit product to determine whether to display the user product image or not
-	private func setLoadingScreen(loading: Bool, bestFitUserProduct: VirtusizeInternalProduct? = nil) {
+	private func setLoadingScreen(loading: Bool) {
         vsSignatureImageView.isHidden = loading ? true : false
         privacyPolicyLink.isHidden = loading ? true : false
         topMessageLabel.isHidden = loading ? true : false

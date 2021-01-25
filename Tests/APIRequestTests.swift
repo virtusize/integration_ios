@@ -31,7 +31,7 @@ class APIRequestTests: XCTestCase {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
         Virtusize.environment = .staging
-        Virtusize.accessToken = "access_token"
+		UserDefaultsHelper.current.accessToken = "access_token"
     }
 
     override func tearDownWithError() throws {
@@ -86,7 +86,10 @@ class APIRequestTests: XCTestCase {
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.accessToken!)")
+		XCTAssertEqual(
+			apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "",
+			"Token \(UserDefaultsHelper.current.accessToken!)"
+		)
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
@@ -124,7 +127,7 @@ class APIRequestTests: XCTestCase {
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
-        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(Virtusize.accessToken!)")
+		XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(UserDefaultsHelper.current.accessToken!)")
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
@@ -173,11 +176,11 @@ class APIRequestTests: XCTestCase {
             ]
         )
         XCTAssertEqual(
-            (actualParams?.additionalInfo["model_info"]?.value as? [String: Any])?["size"] as? String,
+            (actualParams?.additionalInfo["modelInfo"]?.value as? [String: Any])?["size"] as? String,
             "38"
         )
         XCTAssertEqual(
-            (actualParams?.additionalInfo["model_info"]?.value as? [String: Any])?["hip"] as? Int,
+            (actualParams?.additionalInfo["modelInfo"]?.value as? [String: Any])?["hip"] as? Int,
             85
         )
         XCTAssertEqual(actualParams?.additionalInfo["brand"]?.value as? String, "Virtusize")

@@ -35,6 +35,8 @@ public enum VirtusizeError: Error {
     case navigationError(Error)
     case jsonDecodingFailed(String, Error)
     case apiRequestError(URL?, String?)
+	case failToLoadImage(URL?)
+	case unknownError
 }
 
 extension VirtusizeError: CustomDebugStringConvertible {
@@ -60,6 +62,10 @@ extension VirtusizeError: CustomDebugStringConvertible {
             return "Virtusize: Failed to decode the data response to the struct \(structName). \(error)"
         case .apiRequestError(let url, let errorDebugDescription):
             return "Virtusize: API Request \(url?.absoluteString ?? "") - \(errorDebugDescription ?? "")"
+        case .failToLoadImage(let url):
+				return "Virtusize: Fail to load image URL \(url?.absoluteString ?? "")"
+        case .unknownError:
+			return "Virtusize: Unknown Error"
         }
     }
 }

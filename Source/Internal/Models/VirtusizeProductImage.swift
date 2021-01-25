@@ -1,5 +1,5 @@
 //
-//  VirtusizeEvent.swift
+//  VirtusizeProductImage.swift
 //
 //  Copyright (c) 2018-present Virtusize KK
 //
@@ -22,24 +22,14 @@
 //  THE SOFTWARE.
 //
 
-/// A structure represents the event in Virtusize API
-public struct VirtusizeEvent {
-    /// The name of the event
-    public let name: String
+/// This class represents the product image loaded in an InPage Standard view
+internal struct VirtusizeProductImage {
+	let image: UIImage?
+	let source: ProductImageSource
 
-    /// The additional data in the event
-    public let data: Any?
-}
-
-extension VirtusizeEvent {
-
-    /// Initializes the VirtusizeEvent structure
-    internal init(name: String) {
-        self.init(name: name, data: nil)
-    }
-
-	/// Initializes the VirtusizeEvent structure
-	internal init(name: VirtusizeEventName) {
-		self.init(name: name.rawValue, data: nil)
+	enum ProductImageSource {
+		case cloudinary
+		case client
+		case local
 	}
 }

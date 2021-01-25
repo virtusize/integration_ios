@@ -1,5 +1,5 @@
 //
-//  VirtusizeTests.swift
+//  VirtusizeAPIServiceTests.swift
 //
 //  Copyright (c) 2018-present Virtusize KK
 //
@@ -26,7 +26,7 @@ import XCTest
 @testable import Virtusize
 
 // swiftlint:disable type_body_length
-class VirtusizeTests: XCTestCase {
+class VirtusizeAPIServiceTests: XCTestCase {
 
     override func setUpWithError() throws {
         Virtusize.APIKey = TestFixtures.apiKey
@@ -36,14 +36,18 @@ class VirtusizeTests: XCTestCase {
 
     func testProductDataCheck_hasExpectedCallbackData() {
         let expectation = self.expectation(description: "Virtusize.productCheck reaches the callback")
-        var actualProduct: VirtusizeProduct?
-        Virtusize.session = MockURLSession(data: TestFixtures.productDataCheckJsonResponse.data(using: .utf8),
+		var actualProduct: VirtusizeProduct?
+        VirtusizeAPIService.session = MockURLSession(data: TestFixtures.productDataCheckJsonResponse.data(using: .utf8),
                                            urlResponse: nil,
                                            error: nil)
-        Virtusize.productCheck(product: TestFixtures.virtusizeProduct, completion: { product in
-            actualProduct = product
-            expectation.fulfill()
-        })
+		DispatchQueue.global().async {
+
+			actualProduct = VirtusizeAPIService.productCheckAsync(product: TestFixtures.virtusizeProduct).success
+
+			DispatchQueue.main.async {
+				expectation.fulfill()
+			}
+		}
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -54,7 +58,6 @@ class VirtusizeTests: XCTestCase {
         let productCheckData = actualProduct?.productCheckData
 
         XCTAssertEqual(actualProduct?.externalId, TestFixtures.externalProductId)
-        XCTAssertEqual(actualProduct?.imageURL, URL(string: TestFixtures.productImageUrl))
         XCTAssertEqual(productCheckData?.productDataId, 7110384)
         XCTAssertEqual(productCheckData?.storeName, "virtusize")
         XCTAssertEqual(productCheckData?.storeId, 2)
@@ -68,10 +71,10 @@ class VirtusizeTests: XCTestCase {
     func testSendProductImage_hasExpectedCallbackData() {
         let expectation = self.expectation(description: "Virtusize.sendProductImage reaches the callback")
         var actualObject: JSONObject?
-        Virtusize.session = MockURLSession(data: TestFixtures.productMetaDataHintsJsonResponse.data(using: .utf8),
+		VirtusizeAPIService.session = MockURLSession(data: TestFixtures.productMetaDataHintsJsonResponse.data(using: .utf8),
                                            urlResponse: nil,
                                            error: nil)
-        Virtusize.sendProductImage(of: TestFixtures.virtusizeProduct, forStore: 2) { jsonObject in
+		VirtusizeAPIService.sendProductImage(of: TestFixtures.virtusizeProduct, forStore: 2) { jsonObject in
             actualObject = jsonObject
             expectation.fulfill()
         }
@@ -91,10 +94,13 @@ class VirtusizeTests: XCTestCase {
     func testSendEvent_UserSawProduct_hasExpectedCallbackData() {
         let expectation = self.expectation(description: "Virtusize.sendEvent reaches the callback")
         var actualObject: JSONObject?
-        Virtusize.session = MockURLSession(data: TestFixtures.sendEventUserSawProductJsonResponse.data(using: .utf8),
-                                           urlResponse: nil,
-                                           error: nil)
-        Virtusize.sendEvent(
+		VirtusizeAPIService.session = MockURLSession(
+			data: TestFixtures.sendEventUserSawProductJsonResponse.data(using: .utf8),
+			urlResponse: nil,
+			error: nil
+		)
+
+		VirtusizeAPIService.sendEvent(
             VirtusizeEvent(name: "user-saw-product",
                            data: nil),
             withContext: nil) { jsonObject in
@@ -116,13 +122,18 @@ class VirtusizeTests: XCTestCase {
     func testRetrieveFullStoreInfo_success_hasExpectedRegion() {
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualRegion: String?
-        Virtusize.session = MockURLSession(data: TestFixtures.fullStoreInfoJsonResponse.data(using: .utf8),
+		VirtusizeAPIService.session = MockURLSession(data: TestFixtures.fullStoreInfoJsonResponse.data(using: .utf8),
                                                   urlResponse: nil,
                                                   error: nil)
-        Virtusize.retrieveStoreInfo(completion: { region in
-            actualRegion = region
-            expectation.fulfill()
-        })
+
+		DispatchQueue.global().async {
+
+			actualRegion = VirtusizeAPIService.retrieveStoreInfoAsync().success?.region
+
+			DispatchQueue.main.async {
+				expectation.fulfill()
+			}
+		}
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -136,14 +147,19 @@ class VirtusizeTests: XCTestCase {
     func testRetrieveStoreInfoWithSomeNullValues_success_hasExpectedRegion() {
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualRegion: String?
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.storeInfoWithSomeNullValuesJsonResponse.data(using: .utf8),
             urlResponse: nil,
             error: nil)
-        Virtusize.retrieveStoreInfo(completion: { region in
-            actualRegion = region
-            expectation.fulfill()
-        })
+
+		DispatchQueue.global().async {
+
+			actualRegion = VirtusizeAPIService.retrieveStoreInfoAsync().success?.region
+
+			DispatchQueue.main.async {
+				expectation.fulfill()
+			}
+		}
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -151,7 +167,7 @@ class VirtusizeTests: XCTestCase {
             }
         }
 
-        XCTAssertEqual(actualRegion ?? "", "JP")
+        XCTAssertEqual(actualRegion, nil)
     }
 
     func testRetrieveStoreInfo_withWrongAPIKey_hasExpectedError() {
@@ -159,14 +175,22 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualError: VirtusizeError?
 
-        Virtusize.session = MockURLSession(data: TestFixtures.retrieveStoreInfoErrorJsonResponse.data(using: .utf8),
-                                                  urlResponse: nil,
-                                                  error: nil)
+		let requestURL = "https://staging.virtusize.jp/a/api/v3/stores/api-key/\(Virtusize.APIKey!)?format=json"
+		let response = HTTPURLResponse(url: URL(string: requestURL)!, statusCode: 403, httpVersion: nil, headerFields: nil)
+		VirtusizeAPIService.session = MockURLSession(
+			data: TestFixtures.retrieveStoreInfoErrorJsonResponse.data(using: .utf8),
+			urlResponse: response,
+			error: nil
+		)
 
-        Virtusize.retrieveStoreInfo(completion: { _ in }, errorHandler: { error in
-            actualError = error
-            expectation.fulfill()
-        })
+		DispatchQueue.global().async {
+
+			actualError = VirtusizeAPIService.retrieveStoreInfoAsync().failure
+
+			DispatchQueue.main.async {
+				expectation.fulfill()
+			}
+		}
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -175,24 +199,33 @@ class VirtusizeTests: XCTestCase {
         }
 
         XCTAssertNotNil(actualError)
-        XCTAssertTrue(actualError!.debugDescription.contains(
-            "Virtusize: Failed to decode the data response to the struct VirtusizeStore"))
+		XCTAssertEqual(
+			actualError!.debugDescription,
+			VirtusizeError.apiRequestError(
+				URL(string: requestURL)!,
+				TestFixtures.retrieveStoreInfoErrorJsonResponse).debugDescription
+		)
     }
 
     func testSendOrder_withValidOrder_hasSuccessCallback() {
         let expectation = self.expectation(description: "Virtusize.sendOrder reaches the callback")
         var isSuccessful: Bool = false
 
-        Virtusize.session = MockURLSession(data: nil,
+		VirtusizeAPIService.session = MockURLSession(data: nil,
                                            urlResponse: nil,
                                            error: nil)
 
         TestFixtures.virtusizeOrder.externalUserId = "123"
         TestFixtures.virtusizeOrder.region = "JP"
-        Virtusize.sendOrderWithRegion(TestFixtures.virtusizeOrder, onSuccess: {
-            isSuccessful = true
-            expectation.fulfill()
-        })
+
+		DispatchQueue.global().async {
+
+			isSuccessful = VirtusizeAPIService.sendOrderWithRegionAsync(TestFixtures.virtusizeOrder).isSuccessful
+
+			DispatchQueue.main.async {
+				expectation.fulfill()
+			}
+		}
 
         waitForExpectations(timeout: 5) { error in
             if let error = error {
@@ -207,7 +240,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
         var actualStoreProduct: VirtusizeInternalProduct?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.getStoreProductJsonResponse(gender: nil).data(using: .utf8),
             urlResponse: nil,
             error: nil
@@ -215,7 +248,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualStoreProduct = Virtusize.getStoreProductInfoAsync(productId: TestFixtures.productId).success
+            actualStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: TestFixtures.productId).success
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -254,7 +287,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
         var virtusizeError: VirtusizeError?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
                    data: TestFixtures.notFoundResponse.data(using: .utf8),
                    urlResponse: notFoundURLResponse,
                    error: nil
@@ -262,7 +295,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            virtusizeError = Virtusize.getStoreProductInfoAsync(productId: storeProductId).failure
+            virtusizeError = VirtusizeAPIService.getStoreProductInfoAsync(productId: storeProductId).failure
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -283,7 +316,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
         var actualUserProductList: [VirtusizeInternalProduct]?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.userProductArrayJsonResponse.data(using: .utf8),
             urlResponse: nil,
             error: nil
@@ -291,7 +324,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualUserProductList = Virtusize.getUserProductsAsync().success
+            actualUserProductList = VirtusizeAPIService.getUserProductsAsync().success
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -328,7 +361,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
         var actualUserProductList: [VirtusizeInternalProduct]?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.emptyProductArrayJsonResponse.data(using: .utf8),
             urlResponse: nil,
             error: nil
@@ -336,7 +369,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualUserProductList = Virtusize.getUserProductsAsync().success
+            actualUserProductList = VirtusizeAPIService.getUserProductsAsync().success
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -362,7 +395,7 @@ class VirtusizeTests: XCTestCase {
                                                   httpVersion: nil,
                                                   headerFields: [:])!
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.wardrobeNotFoundErrorJsonResponse.data(using: .utf8),
             urlResponse: notFoundURLResponse,
             error: nil
@@ -370,7 +403,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualError = Virtusize.getUserProductsAsync().failure
+            actualError = VirtusizeAPIService.getUserProductsAsync().failure
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -391,7 +424,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
         var actualProductTypes: [VirtusizeProductType] = []
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.productTypeArrayJsonResponse.data(using: .utf8),
             urlResponse: nil,
             error: nil
@@ -399,7 +432,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualProductTypes = Virtusize.getProductTypesAsync().success ?? []
+            actualProductTypes = VirtusizeAPIService.getProductTypesAsync().success ?? []
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -423,7 +456,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getI18nTexts reaches the callback")
         var actualI18nLocalization: VirtusizeI18nLocalization?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestUtils.shared.loadTestJsonFile(jsonFileName: "i18n_ko"),
             urlResponse: nil,
             error: nil
@@ -431,7 +464,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualI18nLocalization = Virtusize.getI18nTextsAsync().success
+            actualI18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -460,7 +493,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
         var actualUserBodyProfile: VirtusizeUserBodyProfile?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.userBodyProfileFixture,
             urlResponse: nil,
             error: nil
@@ -468,7 +501,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualUserBodyProfile = Virtusize.getUserBodyProfileAsync().success
+            actualUserBodyProfile = VirtusizeAPIService.getUserBodyProfileAsync().success
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -517,7 +550,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
         var actualUserBodyProfile: VirtusizeUserBodyProfile?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.emptyUserBodyProfileFixture,
             urlResponse: nil,
             error: nil
@@ -525,7 +558,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualUserBodyProfile = Virtusize.getUserBodyProfileAsync().success
+            actualUserBodyProfile = VirtusizeAPIService.getUserBodyProfileAsync().success
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -556,7 +589,7 @@ class VirtusizeTests: XCTestCase {
                                                   httpVersion: nil,
                                                   headerFields: [:])!
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.wardrobeNotFoundErrorJsonResponse.data(using: .utf8),
             urlResponse: notFoundURLResponse,
             error: nil
@@ -564,7 +597,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualError = Virtusize.getUserBodyProfileAsync().failure
+            actualError = VirtusizeAPIService.getUserBodyProfileAsync().failure
 
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -585,7 +618,7 @@ class VirtusizeTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.getUserBodyRecommendedSize reaches the callback")
         var actualRecommendedSize: BodyProfileRecommendedSize?
 
-        Virtusize.session = MockURLSession(
+		VirtusizeAPIService.session = MockURLSession(
             data: "{\"sizeName\": \"35\"}".data(using: .utf8),
             urlResponse: nil,
             error: nil
@@ -593,7 +626,7 @@ class VirtusizeTests: XCTestCase {
 
         DispatchQueue.global().async {
 
-            actualRecommendedSize = Virtusize.getBodyProfileRecommendedSizeAsync(
+            actualRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
                 productTypes: TestFixtures.getProductTypes(),
                 storeProduct: TestFixtures.getStoreProduct(gender: "female")!,
                 userBodyProfile: TestFixtures.getUserBodyProfile()!
@@ -615,7 +648,7 @@ class VirtusizeTests: XCTestCase {
     }
 }
 
-extension VirtusizeTests {
+extension VirtusizeAPIServiceTests {
 
     typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
 

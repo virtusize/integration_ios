@@ -80,7 +80,7 @@ internal struct APIRequest {
 	/// - Returns: A `URLRequest` for this HTTP request
     private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
         var request = apiRequest(components: components, method: method)
-		guard let accessToken = Virtusize.accessToken else {
+		guard let accessToken = UserDefaultsHelper.current.accessToken else {
 			return request
 		}
         request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")
@@ -255,5 +255,16 @@ internal struct APIRequest {
 	internal static func getI18n(langCode: String) -> URLRequest? {
 		let endpoint = APIEndpoints.i18n(langCode: langCode)
 		return apiRequest(components: endpoint.components)
+	}
+
+	/// Gets the `URLRequest` for the request to load an image via a URL
+	///
+	/// - Parameter url: The URL of the image
+	/// - Returns: A `URLRequest` for the request to load an image
+	internal static func loadImage(url: URL) -> URLRequest? {
+		var components = URLComponents()
+		components.scheme = "https"
+		components.host = url.host
+		return HTTPRequest(components: components)
 	}
 }

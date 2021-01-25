@@ -1,5 +1,5 @@
 //
-//  VirtusizeEvent.swift
+//  Observable.swift
 //
 //  Copyright (c) 2018-present Virtusize KK
 //
@@ -22,24 +22,36 @@
 //  THE SOFTWARE.
 //
 
-/// A structure represents the event in Virtusize API
-public struct VirtusizeEvent {
-    /// The name of the event
-    public let name: String
+// The class warps a value in `AnyObject` to make it observable
+internal final class Observable<Value> {
 
-    /// The additional data in the event
-    public let data: Any?
-}
+	struct Observer<Value> {
+		weak var observer: AnyObject?
+		let block: (Value) -> Void
+	}
 
-extension VirtusizeEvent {
+	private var observers = [Observer<Value>]()
 
-    /// Initializes the VirtusizeEvent structure
-    internal init(name: String) {
-        self.init(name: name, data: nil)
-    }
+	var value: Value {
+		didSet { notifyObservers() }
+	}
 
-	/// Initializes the VirtusizeEvent structure
-	internal init(name: VirtusizeEventName) {
-		self.init(name: name.rawValue, data: nil)
+	init(_ value: Value) {
+		self.value = value
+	}
+
+	func observe(on observer: AnyObject, observerBlock: @escaping (Value) -> Void) {
+		observers.append(Observer(observer: observer, block: observerBlock))
+		observerBlock(self.value)
+	}
+
+	func remove(observer: AnyObject) {
+		observers = observers.filter { $0.observer !== observer }
+	}
+
+	private func notifyObservers() {
+		for observer in observers {
+			DispatchQueue.main.async { observer.block(self.value) }
+		}
 	}
 }

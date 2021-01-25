@@ -21,6 +21,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
+
 public class VirtusizeInPageView: UIView, VirtusizeView {
 	internal var virtusizeEventHandler: VirtusizeEventHandler?
 
@@ -132,28 +133,28 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 
 	public func userLoggedIn() {
 		DispatchQueue.global().async {
-			Virtusize.updateSession()
-			Virtusize.updateInPageRecommendation()
+			VirtusizeRepository.updateSession()
+			VirtusizeRepository.updateInPageRecommendation()
 		}
 	}
 
 	public func userLoggedOut() {
 		UserDefaultsHelper.current.authToken = ""
 		DispatchQueue.global().async {
-			Virtusize.updateSession()
-			Virtusize.updateInPageRecommendation(selectedUserProductId: nil, ignoreUserData: true)
+			VirtusizeRepository.updateSession()
+			VirtusizeRepository.updateInPageRecommendation(selectedUserProductId: nil, ignoreUserData: true)
 		}
 	}
 
 	public func userSelectedProduct(userProductId: Int?) {
 		DispatchQueue.global().async {
-			Virtusize.updateInPageRecommendation(selectedUserProductId: userProductId)
+			VirtusizeRepository.updateInPageRecommendation(selectedUserProductId: userProductId)
 		}
 	}
 
 	public func userAddedProduct() {
 		DispatchQueue.global().async {
-			Virtusize.updateInPageRecommendation()
+			VirtusizeRepository.updateInPageRecommendation()
 		}
 	}
 }
