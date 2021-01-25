@@ -1,7 +1,7 @@
 //
 //  ViewController.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +61,9 @@ class ViewController: UIViewController {
         Virtusize.setVirtusizeView(self, checkTheFitButton)
         // You can set up the Virtusize button style
         checkTheFitButton.style = .TEAL
+
+		/// you can use `VirtusizeAssets` to access Virtusize SDK assets, including images and colors
+		// checkTheFitButton.setImage(VirtusizeAssets.icon, for: .normal)
 
         // 2. Add the VirtusizeButton programmatically
         let checkTheFitButton2 = VirtusizeButton()

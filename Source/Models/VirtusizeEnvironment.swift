@@ -1,7 +1,7 @@
 //
 //  VirtusizeEnvironment.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,6 +45,20 @@ public enum VirtusizeEnvironment: String {
     internal func i18nUrl() -> String {
         return "i18n.virtusize.com"
     }
+
+	/// Gets the event API URL corresponding to the Virtusize environment
+	internal func eventApiUrl() -> String {
+		switch self {
+		case .staging:
+			return "events.staging.virtusize.jp"
+		case .japan:
+			return "events.virtusize.jp"
+		case .global:
+			return "events.virtusize.com"
+		case .korea:
+			return "events.virtusize.kr"
+		}
+	}
 
     /// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
     internal func virtusizeRegion() -> VirtusizeRegion {

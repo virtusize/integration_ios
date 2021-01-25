@@ -147,7 +147,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
         inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2
 
-        let rightArrowImageTemplate = Assets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        let rightArrowImageTemplate = VirtusizeAssets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .normal)
         inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .highlighted)
         inPageMiniSizeCheckButton.semanticContentAttribute = .forceRightToLeft
@@ -194,7 +194,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
     private func setLoadingScreen(loading: Bool) {
         backgroundColor = loading ? .white : getBackgroundColor()
-        inPageMiniImageView.image = loading ? Assets.icon : nil
+        inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
         inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
         setupTextsStyle(messageLabelIsBold: loading)
         if loading {
@@ -211,7 +211,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	internal override func showErrorScreen() {
         backgroundColor = .white
         stopLoadingTextAnimation()
-        inPageMiniImageView.image = Assets.errorHanger
+        inPageMiniImageView.image = VirtusizeAssets.errorHanger
         inPageMiniMessageLabel.textColor = .vsGray700Color
         inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")
         inPageMiniSizeCheckButton.isHidden = true
