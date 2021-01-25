@@ -90,8 +90,8 @@ internal final class VirtusizeInPageStandardViewModel {
 		guard let cloudinaryPublicId = cloudinaryPublicId else {
 			return nil
 		}
-		return URL(
-			string: "https://res.cloudinary.com/virtusize/image/upload/q_auto,f_auto/\(cloudinaryPublicId).jpg"
+		return URL(string:
+			"https://res.cloudinary.com/virtusize/image/upload/w_36,h_36/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
 		)
 	}
 
