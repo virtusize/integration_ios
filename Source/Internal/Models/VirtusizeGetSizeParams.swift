@@ -30,19 +30,17 @@ internal struct VirtusizeGetSizeParams: Codable {
 	/// The user body data
     var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
 	/// The store product size info
-    var itemSizes: [String: [String: Int?]] = [:]
+    var itemSizesOrig: [String: [String: Int?]] = [:]
 	/// The store product type
     var productType: String = ""
 	/// The user's gender
     var userGender: String = ""
-
-    private enum CodingKeys: String, CodingKey {
-        case additionalInfo = "additional_info"
-        case bodyData = "body_data"
-        case itemSizes = "item_sizes_orig"
-        case productType = "product_type"
-        case userGender = "user_gender"
-    }
+	/// The user's height
+	var userHeight: Int?
+	/// The user's weight
+	var userWeight: Float?
+	/// The external product ID provided by the client
+	var extProductId: String = ""
 
 	/// Initializes the VirtusizeGetSizeParams structure
 	///
@@ -64,7 +62,7 @@ internal struct VirtusizeGetSizeParams: Codable {
             "sizes": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
             ),
-            "model_info": VirtusizeAnyCodable(
+            "modelInfo": VirtusizeAnyCodable(
                 getModelInfoDict(storeProduct: storeProduct)
             ),
             "gender": VirtusizeAnyCodable(
@@ -72,11 +70,16 @@ internal struct VirtusizeGetSizeParams: Codable {
             )
         ]
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
-        itemSizes = getItemSizesDict(storeProduct: storeProduct)
-        if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
-            productType = productTypes[index].name
-        }
-        userGender = userBodyProfile?.gender ?? ""
+        itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
+		if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
+			productType = productTypes[index].name
+		}
+		userGender = userBodyProfile?.gender ?? ""
+		userHeight = userBodyProfile?.height
+		if let weight = userBodyProfile?.weight {
+			userWeight = Float(weight)
+		}
+		extProductId = storeProduct.externalId
     }
 
 	/// Gets the dictionary of the model info

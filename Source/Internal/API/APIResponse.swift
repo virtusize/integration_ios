@@ -41,26 +41,26 @@ internal struct APIResponse {
 }
 
 internal enum APIResult<Value> {
-    case success(Value)
+    case success(Value, String? = nil)
     case failure(VirtusizeError?)
 }
 
 extension APIResult {
 
 	/// The string of the API result 
-    var string: String {
+    var string: String? {
         switch self {
-        case let .success(value):
-            return "\(value)"
+        case let .success(_, jsonString):
+            return jsonString
         case let .failure(error):
-            return error?.debugDescription ?? "Unknown Error"
+            return error?.debugDescription
         }
     }
 
 	/// The API result when the request is successful
     var success: Value? {
-        if case .success(let value) = self {
-            return value
+        if case .success(let value, _) = self {
+			return value
         } else {
             return nil
         }

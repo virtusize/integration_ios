@@ -62,6 +62,7 @@ public class VirtusizeParams {
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
         paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
+		paramsScript += "\(ParamKey.sessionData): \(Virtusize.userSessionResponse), "
         paramsScript += "\(ParamKey.storeProductID): '\(storeProductId)', "
         if let userId = Virtusize.userID {
             paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
@@ -94,6 +95,7 @@ public class VirtusizeParams {
     enum ParamKey {
         static let API = "apiKey"
         static let browserID = "bid"
+		static let sessionData = "sessionData"
         static let region = "region"
         static let environment = "env"
         static let storeProductID = "externalProductId"

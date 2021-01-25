@@ -184,14 +184,17 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(actualParams?.additionalInfo["fit"]?.value as? String, "regular")
         XCTAssertEqual(actualParams?.bodyData.count, 22)
         XCTAssertEqual((actualParams?.bodyData["chest"])?["value"]?.value as? Int, 755)
-        XCTAssertEqual(actualParams?.itemSizes.count, 3)
-        XCTAssertEqual(actualParams?.itemSizes["36"]?["bust"], 645)
-        XCTAssertEqual(actualParams?.userGender, "female")
+        XCTAssertEqual(actualParams?.itemSizesOrig.count, 3)
+        XCTAssertEqual(actualParams?.itemSizesOrig["36"]?["bust"], 645)
+		XCTAssertEqual(actualParams?.userGender, "female")
+		XCTAssertEqual(actualParams?.userHeight, 1630)
+		XCTAssertEqual(actualParams?.userWeight, 50.00)
+		XCTAssertEqual(actualParams?.extProductId, TestFixtures.externalProductId)
         XCTAssertEqual(actualParams?.productType, "jacket")
-        XCTAssertEqual(
-            apiRequest?.url?.absoluteString,
-            "https://services.virtusize.jp/stg/ds-functions/size-rec/get-size"
-        )
+		XCTAssertEqual(
+			apiRequest?.url?.absoluteString,
+			"https://services.virtusize.jp/stg/ds-functions/size-rec/get-size-new"
+		)
     }
 
 }
