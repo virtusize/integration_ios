@@ -30,6 +30,10 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
         super.init(coder: aDecoder)
     }
 
+	public init() {
+		super.init(frame: .zero)
+	}
+
     /// `VirtusizeProduct` that is being set to this button
     public var storeProduct: VirtusizeProduct? {
         set {
