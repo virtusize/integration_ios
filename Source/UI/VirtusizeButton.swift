@@ -43,11 +43,8 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
         super.init(coder: aDecoder)
     }
 
-	public init(uiView: UIView? = nil) {
+	public init() {
 		super.init(frame: .zero)
-		if uiView != nil {
-			addSubview(uiView!)
-		}
 	}
 
     /// `VirtusizeProduct` that is being set to this button
