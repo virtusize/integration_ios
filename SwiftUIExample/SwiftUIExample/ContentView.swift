@@ -27,22 +27,33 @@ import SwiftUI
 import Virtusize
 
 struct ContentView: View {
+	// Set up the @state property to control opening the Virtusize web view
 	@State var showVirtusizeWebView = false
 
     var body: some View {
 		VStack {
 			SwiftUIVirtusizeButton(
 				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
 				},
+				label: { virtusizeButton in
+					// You can customize the button by accessing it here
+//					virtusizeButton.setTitle("Virtusize", for: .normal)
+//					virtusizeButton.backgroundColor = .vsTealColor
+				},
+				// Set up the product's external ID and image URL here
 				storeProduct: VirtusizeProduct(
 					externalId: "vs_dress",
 					imageURL: URL(string: "http://www.example.com/image.jpg")
 				),
+				// You can use our default styles either Black or Teal for the button
+				// If you want to customize the button on your own, please do not set up the default style
 				defaultStyle: .BLACK
 			)
 			.sheet(isPresented: $showVirtusizeWebView) {
 				SwiftUIVirtusizeViewController(
+					// You can use this callback closure to receive Virtusize events
 					didReceiveEvent: { event in
 						print(event)
 						switch event.name {
@@ -54,12 +65,19 @@ struct ContentView: View {
 								return
 						}
 					},
+					// You can use this callback closure to receive Virtusize SDK errors
 					didReceiveError: { error in
 						print(error)
 					}
 				)
 			}
-		}
+			// You can make the Virtusize web view full screen by using fullScreenCover (only available for iOS version 14.0+
+//				.fullScreenCover(isPresented: $showVirtusizeWebView, content: {
+//					SwiftUIVirtusizeViewController()
+//				})
+			// You can set the transition from moving bottom to up when the Virtusize web view is opening
+//				.transition(.move(edge: .top))
+		}.background(Color.black)
     }
 }
 

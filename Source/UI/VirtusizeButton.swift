@@ -26,12 +26,28 @@ import UIKit
 
 /// This class is the custom Virtusize Button that is added in the client's layout file.
 public class VirtusizeButton: UIButton, CAAnimationDelegate {
+
+	override public var isHighlighted: Bool {
+		didSet {
+			if style == .BLACK {
+				backgroundColor = isHighlighted ? .vsGray900PressedColor : .vsGray900Color
+			} else if style == .TEAL {
+				backgroundColor = isHighlighted ? .vsTealPressedColor : .vsTealColor
+			}
+		}
+	}
+
+	public var style: VirtusizeViewStyle?
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-	public init() {
+	public init(uiView: UIView? = nil) {
 		super.init(frame: .zero)
+		if uiView != nil {
+			addSubview(uiView!)
+		}
 	}
 
     /// `VirtusizeProduct` that is being set to this button
@@ -57,6 +73,8 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
 
 	/// Applies the default style of `VirtusizeButton`
 	public func applyDefaultStyle(_ virtusizeStyle: VirtusizeViewStyle = .BLACK) {
+		style = virtusizeStyle
+
 		setTitle(Localization.shared.localize("Check size"), for: .normal)
 
 		if virtusizeStyle == .BLACK {
@@ -64,10 +82,17 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
 		} else {
 			backgroundColor = .vsTealColor
 		}
+
+		setTitleColor(.white, for: .normal)
+		setTitleColor(.white, for: .highlighted)
+
 		tintColor = .white
 		layer.cornerRadius = 20
+		titleLabel?.font = .systemFont(ofSize: 12)
 
 		contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
-		self.setImage(VirtusizeAssets.icon, for: .normal)
+
+		setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
+		setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
 	}
 }
