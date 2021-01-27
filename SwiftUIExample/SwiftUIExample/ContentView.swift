@@ -95,10 +95,12 @@ struct ContentView: View {
 
 			// MARK: The Order API
 			// This button is to show how to send the order using `Virtusize.sendOrder` function
-			Button("Send an order", action: {
+			Button("Send an Order", action: {
 				sendOrderSample()
 			})
-			.padding(10)
+			.font(.system(size: 12))
+			.padding(.horizontal, 12)
+			.padding(.vertical, 10)
 			.background(Color.vsTealColor)
 			.foregroundColor(.white)
 			.cornerRadius(20)
