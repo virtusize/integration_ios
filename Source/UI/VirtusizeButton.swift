@@ -41,10 +41,12 @@ public class VirtusizeButton: UIButton, CAAnimationDelegate {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+		isHidden = true
     }
 
 	public init() {
 		super.init(frame: .zero)
+		isHidden = true
 	}
 
     /// `VirtusizeProduct` that is being set to this button

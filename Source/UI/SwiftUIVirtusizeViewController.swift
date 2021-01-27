@@ -60,9 +60,7 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 		return virtusizeViewController
 	}
 
-	public func updateUIViewController(_ uiViewController: VirtusizeViewController, context: Context) {
-
-	}
+	public func updateUIViewController(_ uiViewController: VirtusizeViewController, context: Context) {}
 
 	private func dismiss() {
 		presentationMode.wrappedValue.dismiss()
