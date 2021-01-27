@@ -25,6 +25,7 @@
 
 import SwiftUI
 import Virtusize
+import WebKit
 
 struct ContentView: View {
 	// Set up the @state property to control opening the Virtusize web view
@@ -37,8 +38,8 @@ struct ContentView: View {
 					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
 				},
+				// Optional: You can customize the button by accessing it here
 				label: { virtusizeButton in
-					// You can customize the button by accessing it here
 //					virtusizeButton.setTitle("Virtusize", for: .normal)
 //					virtusizeButton.backgroundColor = .vsTealColor
 				},
@@ -47,13 +48,15 @@ struct ContentView: View {
 					externalId: "vs_dress",
 					imageURL: URL(string: "http://www.example.com/image.jpg")
 				),
-				// You can use our default styles either Black or Teal for the button
+				// Optional: You can use our default styles either Black or Teal for the button
 				// If you want to customize the button on your own, please do not set up the default style
 				defaultStyle: .BLACK
 			)
 			.sheet(isPresented: $showVirtusizeWebView) {
 				SwiftUIVirtusizeViewController(
-					// You can use this callback closure to receive Virtusize events
+					// Optional: Set up WKProcessPool to allow cookie sharing.
+					processPool: WKProcessPool(),
+					// Optional: You can use this callback closure to receive Virtusize events
 					didReceiveEvent: { event in
 						print(event)
 						switch event.name {
@@ -65,19 +68,31 @@ struct ContentView: View {
 								return
 						}
 					},
-					// You can use this callback closure to receive Virtusize SDK errors
+					// Optional: You can use this callback closure to receive Virtusize SDK errors
 					didReceiveError: { error in
 						print(error)
 					}
 				)
 			}
+
 			// You can make the Virtusize web view full screen by using fullScreenCover (only available for iOS version 14.0+
 //				.fullScreenCover(isPresented: $showVirtusizeWebView, content: {
 //					SwiftUIVirtusizeViewController()
 //				})
 			// You can set the transition from moving bottom to up when the Virtusize web view is opening
 //				.transition(.move(edge: .top))
-		}.background(Color.black)
+
+			// Optional: You can set up NotificationCenter listeners for debugging the initial product data check
+			// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
+			// with the cause of the failure
+			// - `Virtusize.productDataCheckDidSucceed`
+			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidSucceed)) { notification in
+				print(notification)
+			}
+			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
+				print(notification)
+			}
+		}
     }
 }
 
