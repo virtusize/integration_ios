@@ -92,8 +92,56 @@ struct ContentView: View {
 			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
 				print(notification)
 			}
+
+			// MARK: The Order API
+			// This button is to show how to send the order using `Virtusize.sendOrder` function
+			Button("Send an order", action: {
+				sendOrderSample()
+			})
+			.padding(10)
+			.background(Color.vsTealColor)
+			.foregroundColor(.white)
+			.cornerRadius(20)
 		}
     }
+
+	/// Demonstrates how to send an order to the Virtusize server
+	///
+	/// - Note:
+	/// The properties `sizeAlias`, `variantId`, `color`, `gender` and `url`
+	/// for `VirtusizeOrderItem` are optional
+	///
+	/// If `quantity` is not provided, it will be set to 1 automatically
+	///
+	private func sendOrderSample() {
+		var virtusizeOrder = VirtusizeOrder(externalOrderId: "4000111032")
+		let item = VirtusizeOrderItem(
+			productId: "A00001",
+			size: "L",
+			sizeAlias: "Large",
+			variantId: "A00001_SIZEL_RED",
+			imageUrl: "http://images.example.com/products/A00001/red/image1xl.jpg",
+			color: "Red",
+			gender: "W",
+			unitPrice: 5100.00,
+			currency: "JPY",
+			quantity: 1,
+			url: "http://example.com/products/A00001"
+		)
+		virtusizeOrder.items = [item]
+
+		Virtusize.sendOrder(
+			virtusizeOrder,
+			// This success callback is optional and gets called when the app successfully sends the order
+			onSuccess: {
+				print("Successfully sent the order")
+		},
+			// This error callback is optional and gets called when an error occurs
+			// when the app is sending the order
+			onError: { error in
+				print("Failed to send the order, error: \(error.debugDescription)")
+		})
+	}
 }
 
 struct ContentView_Previews: PreviewProvider {

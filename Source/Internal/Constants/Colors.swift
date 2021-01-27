@@ -29,3 +29,13 @@ public extension UIColor {
 	static var vsTealColor: UIColor { #colorLiteral(red: 0.2431372549, green: 0.8235294118, blue: 0.7294117647, alpha: 1) }
 	static var vsTealPressedColor: UIColor { #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1) }
 }
+
+import SwiftUI
+
+@available(iOSApplicationExtension 13.0, *)
+public extension Color {
+	static var vsGray900Color: Color { Color(UIColor.vsGray900Color) }
+	static var vsGray900PressedColor: Color { Color(UIColor.vsGray900PressedColor) }
+	static var vsTealColor: Color { Color(UIColor.vsTealColor) }
+	static var vsTealPressedColor: Color { Color(UIColor.vsTealPressedColor) }
+}
