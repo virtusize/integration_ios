@@ -28,8 +28,11 @@ import Virtusize
 import WebKit
 
 struct ContentView: View {
-	// Set up the @state property to control opening the Virtusize web view
+	// Declare a Bool state to control opening the Virtusize web view
 	@State var showVirtusizeWebView = false
+
+	// Optional: Declare a Bool state to update the view based on the result of product data check
+	@State var productDataCheckCompleted = false
 
     var body: some View {
 		VStack {
@@ -74,6 +77,8 @@ struct ContentView: View {
 					}
 				)
 			}
+			// Optional: Hide the space of the button when the product data check is not completed or not valid
+//			.frame(height: productDataCheckCompleted ? nil : 0)
 
 			// You can make the Virtusize web view full screen by using fullScreenCover (only available for iOS version 14.0+
 //				.fullScreenCover(isPresented: $showVirtusizeWebView, content: {
@@ -88,6 +93,8 @@ struct ContentView: View {
 			// - `Virtusize.productDataCheckDidSucceed`
 			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidSucceed)) { notification in
 				print(notification)
+				
+				productDataCheckCompleted = true
 			}
 			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
 				print(notification)
