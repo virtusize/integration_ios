@@ -34,6 +34,11 @@ struct ContentView: View {
 	// Optional: Declare a Bool state to update the view based on the result of product data check
 	@State var productDataCheckCompleted = false
 
+	init() {
+		// MARK: The Order API
+		sendOrderSample()
+	}
+
     var body: some View {
 		VStack {
 			SwiftUIVirtusizeButton(
@@ -99,18 +104,6 @@ struct ContentView: View {
 			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
 				print(notification)
 			}
-
-			// MARK: The Order API
-			// This button is to show how to send the order using `Virtusize.sendOrder` function
-			Button("Send an Order", action: {
-				sendOrderSample()
-			})
-			.font(.system(size: 12))
-			.padding(.horizontal, 12)
-			.padding(.vertical, 10)
-			.background(Color.vsTealColor)
-			.foregroundColor(.white)
-			.cornerRadius(20)
 		}
     }
 
