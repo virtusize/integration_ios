@@ -93,7 +93,7 @@ struct ContentView: View {
 			// - `Virtusize.productDataCheckDidSucceed`
 			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidSucceed)) { notification in
 				print(notification)
-				
+
 				productDataCheckCompleted = true
 			}
 			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in

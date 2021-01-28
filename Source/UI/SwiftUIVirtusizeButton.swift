@@ -62,7 +62,7 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 		context.coordinator.action = action
 
-		return VirtusizeButton()
+		return virtusizeButton
 	}
 
 	public func updateUIView(_ uiView: VirtusizeButton, context: Context) {
