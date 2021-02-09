@@ -26,4 +26,12 @@
 internal enum VirtusizeEventName: String {
 	case userSawProduct = "user-saw-product"
 	case userSawWidgetButton = "user-saw-widget-button"
+	case userOpenedWidget = "user-opened-widget"
+	case userClosedWidget = "user-closed-widget"
+	case userSelectedProduct = "user-selected-product"
+	case userAddedProduct = "user-added-product"
+	case userCreatedSilhouette = "user-created-silhouette"
+	case userAuthData = "user-auth-data"
+	case userLoggedIn = "user-logged-in"
+	case userLoggedOut = "user-logged-out"
 }

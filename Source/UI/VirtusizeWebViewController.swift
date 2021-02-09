@@ -250,24 +250,27 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
         }
         do {
             let event = try Deserializer.event(data: message.body)
-            if event.name == "user-closed-widget" {
-                shouldClose()
-            } else if event.name == "user-auth-data" {
+			switch VirtusizeEventName.init(rawValue: event.name) {
+			case .userAuthData:
 				eventHandler?.userAuthData(
 					bid: (event.data as? [String: Any])?["x-vs-bid"] as? String,
 					auth: (event.data as? [String: Any])?["x-vs-auth"] as? String
 				)
-			} else if event.name == "user-logged-in" {
-				eventHandler?.userLoggedIn()
-			} else if event.name == "user-logged-out" {
-				eventHandler?.userLoggedOut()
-			} else if event.name == "user-selected-product" || event.name == "user-opened-panel-compare" {
+			case .userSelectedProduct:
 				eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
-			} else if event.name == "user-added-product" {
+			case .userAddedProduct:
 				eventHandler?.userAddedProduct()
+			case .userLoggedIn:
+				eventHandler?.userLoggedIn()
+			case .userLoggedOut:
+				eventHandler?.userLoggedOut()
+			case .userClosedWidget:
+				shouldClose()
+			default:
+				break
 			}
-            messageHandler?.virtusizeController(self, didReceiveEvent: event)
-        } catch {
+			messageHandler?.virtusizeController(self, didReceiveEvent: event)
+		} catch {
             if let error = error as? VirtusizeError {
                 reportError(error: error)
             }

@@ -127,7 +127,10 @@ class APIRequestTests: XCTestCase {
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
-		XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "", "Token \(UserDefaultsHelper.current.accessToken!)")
+		XCTAssertEqual(
+			apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "",
+			"Token \(UserDefaultsHelper.current.accessToken!)"
+		)
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
