@@ -58,7 +58,7 @@ internal enum APIEndpoints {
 
         case .virtusize(let region):
             components.host = "static.api.virtusize.\(region.rawValue)"
-            components.path = "/a/aoyama/testing/auth-sdk-events/sdk-webview.html"
+            components.path = "/a/aoyama/staging/sdk-webview.html"
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -95,14 +95,14 @@ internal enum APIEndpoints {
 
 	var hostname: String {
 		switch self {
-			case .productDataCheck, .getSize:
-				return Virtusize.environment.servicesUrl()
-			case .i18n:
-				return Virtusize.environment.i18nUrl()
-			case .events:
-				return Virtusize.environment.eventApiUrl()
-			default:
-				return Virtusize.environment.rawValue
+		case .productDataCheck, .getSize:
+			return Virtusize.environment.servicesUrl()
+		case .i18n:
+			return Virtusize.environment.i18nUrl()
+		case .events:
+			return Virtusize.environment.eventApiUrl()
+		default:
+			return Virtusize.environment.rawValue
 		}
 	}
 
