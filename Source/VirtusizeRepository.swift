@@ -42,8 +42,8 @@ internal class VirtusizeRepository: NSObject {
 
 	private var userProducts: [VirtusizeInternalProduct]?
 	private var userBodyProfile: VirtusizeUserBodyProfile?
-	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
+	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 
 	/// Checks if the product in `VirtusizeProduct` is valid and post notifications
 	///
@@ -141,17 +141,17 @@ internal class VirtusizeRepository: NSObject {
 			}
 		}
 
-		if let userBodyProfile = userBodyProfile {
-			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
-				productTypes: productTypes!,
-				storeProduct: storeProduct!,
-				userBodyProfile: userBodyProfile
-			).success
-		}
-
 		guard let storeProduct = storeProduct,
 			  let productTypes = productTypes else {
 			return
+		}
+
+		if let userBodyProfile = userBodyProfile {
+			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
+				productTypes: productTypes,
+				storeProduct: storeProduct,
+				userBodyProfile: userBodyProfile
+			).success
 		}
 
 		var userProducts = self.userProducts ?? []
@@ -169,6 +169,7 @@ internal class VirtusizeRepository: NSObject {
 
 		userProducts = nil
 		sizeComparisonRecommendedSize = nil
+		userBodyProfile = nil
 		bodyProfileRecommendedSize = nil
 	}
 
@@ -213,7 +214,7 @@ internal class VirtusizeRepository: NSObject {
 		guard let recommendedSize = recommendedSize else {
 			return
 		}
-		bodyProfileRecommendedSize?.sizeName = recommendedSize
+		bodyProfileRecommendedSize = BodyProfileRecommendedSize(sizeName: recommendedSize)
 	}
 
 	/// The API request for sending an order to the server
