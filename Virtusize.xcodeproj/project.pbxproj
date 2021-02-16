@@ -14,14 +14,14 @@
 		4DED8D26205755C3001CA7DF /* Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DED8D1C205755C3001CA7DF /* Virtusize.framework */; };
 		4DED8D2B205755C3001CA7DF /* VirtusizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D2A205755C3001CA7DF /* VirtusizeTests.swift */; };
 		9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */; };
+		9C0EF75825DBCFEC008C704C /* NotoSansCJKJP-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C0EF74925DBCFA3008C704C /* NotoSansCJKJP-Bold.otf */; };
+		9C0EF75925DBCFEC008C704C /* NotoSansCJKJP-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C0EF74825DBCFA3008C704C /* NotoSansCJKJP-Regular.otf */; };
+		9C0EF75A25DBCFEC008C704C /* NotoSansCJKKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EB924FE8D800012EE51 /* NotoSansCJKKR-Bold.otf */; };
+		9C0EF75B25DBCFEC008C704C /* NotoSansCJKKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EBC24FE8D800012EE51 /* NotoSansCJKKR-Regular.otf */; };
+		9C0EF75C25DBCFEC008C704C /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EBA24FE8D800012EE51 /* ProximaNova-Bold.otf */; };
+		9C0EF75D25DBCFEC008C704C /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EBB24FE8D800012EE51 /* ProximaNova-Regular.otf */; };
 		9C106EB024FCE0C70012EE51 /* VirtusizeInPageStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EAF24FCE0C70012EE51 /* VirtusizeInPageStandard.swift */; };
 		9C106EB424FE41EC0012EE51 /* VirtusizeProductImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EB324FE41EC0012EE51 /* VirtusizeProductImageView.swift */; };
-		9C106EBE24FE8D800012EE51 /* NotoSansCJKJP-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EB824FE8D800012EE51 /* NotoSansCJKJP-Bold.ttf */; };
-		9C106EBF24FE8D800012EE51 /* NotoSansCJKKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EB924FE8D800012EE51 /* NotoSansCJKKR-Bold.otf */; };
-		9C106EC024FE8D800012EE51 /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EBA24FE8D800012EE51 /* ProximaNova-Bold.otf */; };
-		9C106EC124FE8D800012EE51 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EBB24FE8D800012EE51 /* ProximaNova-Regular.otf */; };
-		9C106EC224FE8D800012EE51 /* NotoSansCJKKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EBC24FE8D800012EE51 /* NotoSansCJKKR-Regular.otf */; };
-		9C106EC424FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C106EC324FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf */; };
 		9C106EEE24FF99390012EE51 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EED24FF99390012EE51 /* String+Extensions.swift */; };
 		9C11691F2521DEB1006827B9 /* VirtusizeAnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */; };
 		9C1169342521F270006827B9 /* VirtusizeGetSizeParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1169332521F270006827B9 /* VirtusizeGetSizeParams.swift */; };
@@ -131,14 +131,14 @@
 		4DED8D25205755C3001CA7DF /* VirtusizeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtusizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DED8D2A205755C3001CA7DF /* VirtusizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeTests.swift; sourceTree = "<group>"; };
 		9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImage.swift; sourceTree = "<group>"; };
+		9C0EF74825DBCFA3008C704C /* NotoSansCJKJP-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Regular.otf"; sourceTree = "<group>"; };
+		9C0EF74925DBCFA3008C704C /* NotoSansCJKJP-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Bold.otf"; sourceTree = "<group>"; };
 		9C106EAF24FCE0C70012EE51 /* VirtusizeInPageStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageStandard.swift; sourceTree = "<group>"; };
 		9C106EB324FE41EC0012EE51 /* VirtusizeProductImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImageView.swift; sourceTree = "<group>"; };
-		9C106EB824FE8D800012EE51 /* NotoSansCJKJP-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Bold.ttf"; sourceTree = "<group>"; };
 		9C106EB924FE8D800012EE51 /* NotoSansCJKKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKKR-Bold.otf"; sourceTree = "<group>"; };
 		9C106EBA24FE8D800012EE51 /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		9C106EBB24FE8D800012EE51 /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
 		9C106EBC24FE8D800012EE51 /* NotoSansCJKKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKKR-Regular.otf"; sourceTree = "<group>"; };
-		9C106EC324FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Regular.ttf"; sourceTree = "<group>"; };
 		9C106EED24FF99390012EE51 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAnyCodable.swift; sourceTree = "<group>"; };
 		9C1169332521F270006827B9 /* VirtusizeGetSizeParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeParams.swift; sourceTree = "<group>"; };
@@ -382,8 +382,8 @@
 		9C74F78824F40EBD00A8C686 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				9C106EC324FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf */,
-				9C106EB824FE8D800012EE51 /* NotoSansCJKJP-Bold.ttf */,
+				9C0EF74925DBCFA3008C704C /* NotoSansCJKJP-Bold.otf */,
+				9C0EF74825DBCFA3008C704C /* NotoSansCJKJP-Regular.otf */,
 				9C106EB924FE8D800012EE51 /* NotoSansCJKKR-Bold.otf */,
 				9C106EBC24FE8D800012EE51 /* NotoSansCJKKR-Regular.otf */,
 				9C106EBA24FE8D800012EE51 /* ProximaNova-Bold.otf */,
@@ -625,17 +625,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C106EC124FE8D800012EE51 /* ProximaNova-Regular.otf in Resources */,
+				9C0EF75825DBCFEC008C704C /* NotoSansCJKJP-Bold.otf in Resources */,
+				9C0EF75925DBCFEC008C704C /* NotoSansCJKJP-Regular.otf in Resources */,
+				9C0EF75A25DBCFEC008C704C /* NotoSansCJKKR-Bold.otf in Resources */,
+				9C0EF75B25DBCFEC008C704C /* NotoSansCJKKR-Regular.otf in Resources */,
+				9C0EF75C25DBCFEC008C704C /* ProximaNova-Bold.otf in Resources */,
+				9C0EF75D25DBCFEC008C704C /* ProximaNova-Regular.otf in Resources */,
 				9CE7787924B419B700E4A127 /* ROADMAP.md in Resources */,
-				9C106EBF24FE8D800012EE51 /* NotoSansCJKKR-Bold.otf in Resources */,
-				9C106EC224FE8D800012EE51 /* NotoSansCJKKR-Regular.otf in Resources */,
 				9CE7787A24B419B700E4A127 /* CHANGES.md in Resources */,
 				9CE7787B24B419B700E4A127 /* README.md in Resources */,
-				9C106EBE24FE8D800012EE51 /* NotoSansCJKJP-Bold.ttf in Resources */,
 				9CB2DD5B24F4B918004D4E08 /* VirtuzieAssets.xcassets in Resources */,
-				9C106EC424FE8DFE0012EE51 /* NotoSansCJKJP-Regular.ttf in Resources */,
 				9CE7787824B417B700E4A127 /* VirtusizeLocalizable.strings in Resources */,
-				9C106EC024FE8D800012EE51 /* ProximaNova-Bold.otf in Resources */,
 				9CBDF5DE25AFFA0600E42012 /* README-JP.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

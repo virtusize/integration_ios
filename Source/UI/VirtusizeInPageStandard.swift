@@ -49,7 +49,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     private let errorImageView: UIImageView = UIImageView()
     private let errorText: UILabel = UILabel()
 
-    private var messageLineSpacing: CGFloat = 6
+    private var messageLineSpacing: CGFloat = 0
 	private var userProductImageSize: CGFloat = 0
 	private var productImageViewOffset: CGFloat = 0
 
@@ -395,17 +395,17 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         case .JAPANESE:
             topMessageLabel.font = Font.notoSansCJKJP(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKJP(size: 16, weight: .bold)
-            checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
+			checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKJP(size: 10)
             errorText.font = Font.notoSansCJKJP(size: 10)
-            messageLineSpacing = 6
+            messageLineSpacing = 0
         case .KOREAN:
             topMessageLabel.font = Font.notoSansCJKKR(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKKR(size: 16, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKKR(size: 10)
             errorText.font = Font.notoSansCJKKR(size: 10)
-            messageLineSpacing = 6
+            messageLineSpacing = 0
         default:
             break
         }
@@ -570,7 +570,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         errorImageView.isHidden = false
         errorText.isHidden = false
         errorText.attributedText = NSAttributedString(
-            string: Localization.shared.localize("inpage_error_long_text")
+			string: Localization.shared.localize("inpage_error_long_text")
         ).lineSpacing(self.messageLineSpacing)
         errorText.textAlignment = .center
     }

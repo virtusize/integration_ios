@@ -43,7 +43,7 @@ class Font {
     }
 
     static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-        return font(fontName: .notoSansCJKJP, type: "ttf", weight: weight, size: size)
+        return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
     }
 
     static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
