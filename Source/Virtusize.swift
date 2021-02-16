@@ -68,7 +68,7 @@ public class Virtusize {
 			internalProduct = newValue
 
 			DispatchQueue.global().async {
-				guard VirtusizeRepository.shared.productCheck(product: newValue) else {
+				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
 					return
 				}
 

@@ -116,7 +116,12 @@ internal class VirtusizeAPIService {
 		let semaphore = DispatchSemaphore(value: 0)
 		let task: URLSessionDataTask
 		task = VirtusizeAPIService.session.dataTask(with: request) { (data, response, error) in
-			apiResponse = APIResponse(data: data, response: response, error: error)
+			apiResponse = APIResponse(
+				code: (response as? HTTPURLResponse)?.statusCode ?? nil,
+				data: data,
+				response: response,
+				error: error
+			)
 			semaphore.signal()
 		}
 		task.resume()
@@ -155,7 +160,7 @@ internal class VirtusizeAPIService {
 		let apiResponse = performAsync(request)
 		guard apiResponse?.virtusizeError == nil,
 			  let data = apiResponse?.data else {
-			return .failure(apiResponse?.virtusizeError)
+			return .failure(apiResponse?.code, apiResponse?.virtusizeError)
 		}
 
 		if type == nil || data.count == 0 {
@@ -167,7 +172,7 @@ internal class VirtusizeAPIService {
 			let jsonString = String(data: data, encoding: String.Encoding.utf8)
 			return .success(result, jsonString)
 		} catch {
-			return .failure(VirtusizeError.jsonDecodingFailed(String(describing: type), error))
+			return .failure(apiResponse?.code, VirtusizeError.jsonDecodingFailed(String(describing: type), error))
 		}
 	}
 
@@ -233,7 +238,7 @@ internal class VirtusizeAPIService {
 	/// - Returns: the store data in the type of `VirtusizeStore`
 	internal static func retrieveStoreInfoAsync() -> APIResult<VirtusizeStore> {
 		guard let request = APIRequest.retrieveStoreInfo() else {
-			return .failure(nil)
+			return .failure()
 		}
 		return getAPIResultAsync(request: request, type: VirtusizeStore.self)
 	}
@@ -244,7 +249,7 @@ internal class VirtusizeAPIService {
 	/// - Returns: the order info in the type of `String`
 	internal static func sendOrderWithRegionAsync(_ order: VirtusizeOrder) -> APIResult<String> {
 		guard let request = APIRequest.sendOrder(order) else {
-			return .failure(nil)
+			return .failure()
 		}
 		return getAPIResultAsync(request: request, type: String.self)
 	}
@@ -337,7 +342,7 @@ internal class VirtusizeAPIService {
 
 		guard apiResponse?.virtusizeError == nil,
 			let data = apiResponse?.data else {
-			return .failure(apiResponse?.virtusizeError)
+			return .failure(apiResponse?.code, apiResponse?.virtusizeError)
 		}
 
 		return .success(Deserializer.i18n(data: data))
@@ -352,7 +357,7 @@ internal class VirtusizeAPIService {
 		guard url != nil, let data = try? Data(contentsOf: url!),
 			  let image = UIImage(data: data)
 		else {
-			return .failure(VirtusizeError.failToLoadImage(url))
+			return .failure(nil, VirtusizeError.failToLoadImage(url))
 		}
 		return .success(image, nil)
 	}

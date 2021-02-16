@@ -24,6 +24,8 @@
 
 // The wrapper for the API response
 internal struct APIResponse {
+	/// The API response status code
+	var code: Int?
 	/// The API response data
     var data: Data?
 	/// The API response in `URLResponse`
@@ -33,16 +35,19 @@ internal struct APIResponse {
 	/// The API response error in the format of `VirtusizeError`
     var virtusizeError: VirtusizeError?
 
-    init(data: Data?, response: URLResponse?, error: Error?) {
+	init(code: Int?, data: Data?, response: URLResponse?, error: Error?) {
+		self.code = code
         self.data = data
         self.response = response
         self.error = error
     }
 }
 
+internal typealias Code = Int
+
 internal enum APIResult<Value> {
     case success(Value? = nil, String? = nil)
-    case failure(VirtusizeError?)
+    case failure(Code? = nil, VirtusizeError? = nil)
 }
 
 extension APIResult {
@@ -52,7 +57,7 @@ extension APIResult {
         switch self {
         case let .success(_, jsonString):
             return jsonString
-        case let .failure(error):
+        case let .failure(_, error):
             return error?.debugDescription
         }
     }
@@ -66,9 +71,18 @@ extension APIResult {
         }
     }
 
+	/// The API error status code
+	var errorCode: Int? {
+		if case .failure(let code, _) = self {
+			return code
+		} else {
+			return nil
+		}
+	}
+
 	/// The API result when the request fails
     var failure: VirtusizeError? {
-        if case .failure(let error) = self {
+        if case .failure(_, let error) = self {
             return error
         } else {
             return nil

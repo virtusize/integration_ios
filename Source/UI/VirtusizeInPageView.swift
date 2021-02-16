@@ -92,14 +92,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 	internal func setInPageRecommendation(
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
-	) {
-		guard VirtusizeRepository.shared.storeProduct != nil,
-			  VirtusizeRepository.shared.productTypes != nil,
-			  VirtusizeRepository.shared.i18nLocalization != nil else {
-			showErrorScreen()
-			return
-		}
-	}
+	) {}
 
 	/// A parent function for showing the error screen
 	internal func showErrorScreen() {}

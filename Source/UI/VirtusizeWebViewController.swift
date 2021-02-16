@@ -262,7 +262,7 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 				eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
 			case .userLoggedIn:
 				eventHandler?.userLoggedIn()
-				case .userLoggedOut, .userDeletedData:
+			case .userLoggedOut, .userDeletedData:
 				eventHandler?.clearUserData()
 			case .userClosedWidget:
 				shouldClose()

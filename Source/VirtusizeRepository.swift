@@ -50,7 +50,7 @@ internal class VirtusizeRepository: NSObject {
 	/// - Parameters:
 	///   - product: `VirtusizeProduct`
 	/// - Returns: true if the product is valid
-	internal func productCheck(product: VirtusizeProduct) -> Bool {
+	internal func isProductValid(product: VirtusizeProduct) -> Bool {
 		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
 		guard let product = productResponse.success else {
 			NotificationCenter.default.post(
@@ -107,9 +107,14 @@ internal class VirtusizeRepository: NSObject {
 		guard let productId = productId else {
 			return
 		}
+
 		storeProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
 		productTypes = VirtusizeAPIService.getProductTypesAsync().success
 		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
+
+		if storeProduct == nil || productTypes == nil || i18nLocalization == nil {
+			Virtusize.showInPageError = true
+		}
 	}
 
 	internal func fetchDataForInPageRecommendation(
@@ -117,10 +122,10 @@ internal class VirtusizeRepository: NSObject {
 		selectedUserProductId: Int? = nil
 	) {
 		if shouldUpdateUserProducts {
-			let userProductResponse = VirtusizeAPIService.getUserProductsAsync()
-			if userProductResponse.isSuccessful {
-				userProducts = userProductResponse.success
-			} else {
+			let userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
+			if userProductsResponse.isSuccessful {
+				userProducts = userProductsResponse.success
+			} else if userProductsResponse.errorCode != 404 {
 				Virtusize.showInPageError = true
 				return
 			}
@@ -130,6 +135,9 @@ internal class VirtusizeRepository: NSObject {
 			let userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
 			if userBodyProfileResponse.isSuccessful {
 				userBodyProfile = userBodyProfileResponse.success
+			} else if userBodyProfileResponse.errorCode != 404 {
+				Virtusize.showInPageError = true
+				return
 			}
 		}
 
@@ -141,15 +149,19 @@ internal class VirtusizeRepository: NSObject {
 			).success
 		}
 
-		if let userProducts = userProducts {
-			let userProducts = selectedUserProductId != nil ?
-				userProducts.filter({ product in return product.id == selectedUserProductId }) : userProducts
-			sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
-				userProducts: userProducts,
-				storeProduct: storeProduct!,
-				productTypes: productTypes!
-			)
+		guard let storeProduct = storeProduct,
+			  let productTypes = productTypes else {
+			return
 		}
+
+		var userProducts = self.userProducts ?? []
+		userProducts = selectedUserProductId != nil ?
+			userProducts.filter({ product in return product.id == selectedUserProductId }) : userProducts
+		sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
+			userProducts: userProducts,
+			storeProduct: storeProduct,
+			productTypes: productTypes
+		)
 	}
 
 	internal func clearUserData() {
