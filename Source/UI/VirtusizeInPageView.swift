@@ -89,9 +89,13 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     }
 
 	/// A parent function to set up InPage recommendation
-	internal func setInPageRecommendation() {
-		guard Virtusize.storeProduct != nil,
-			  Virtusize.i18nLocalization != nil else {
+	internal func setInPageRecommendation(
+		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
+		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	) {
+		guard VirtusizeRepository.shared.storeProduct != nil,
+			  VirtusizeRepository.shared.productTypes != nil,
+			  VirtusizeRepository.shared.i18nLocalization != nil else {
 			showErrorScreen()
 			return
 		}
@@ -121,40 +125,62 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
 extension VirtusizeInPageView: VirtusizeEventHandler {
 
+	public func userOpenedWidget() {
+		VirtusizeRepository.shared.fetchDataForInPageRecommendation(shouldUpdateUserProducts: false)
+	}
+
 	public func userAuthData(bid: String?, auth: String?) {
-		if let bid = bid {
-			UserDefaultsHelper.current.identifier = bid
+		VirtusizeRepository.shared.updateUserAuthData(bid: bid, auth: auth)
+	}
+
+	public func userSelectedProduct(userProductId: Int?) {
+		DispatchQueue.global().async {
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+				shouldUpdateUserProducts: false,
+				selectedUserProductId: userProductId
+			)
+			VirtusizeRepository.shared.switchInPageRecommendation(.compareProduct)
 		}
-		if let auth = auth,
-		   !auth.isEmpty {
-			UserDefaultsHelper.current.authToken = auth
+	}
+
+	public func userAddedProduct(userProductId: Int?) {
+		DispatchQueue.global().async {
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+				shouldUpdateUserProducts: true,
+				selectedUserProductId: userProductId
+			)
+			VirtusizeRepository.shared.switchInPageRecommendation(.compareProduct)
+		}
+	}
+
+	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
+		DispatchQueue.global().async {
+			VirtusizeRepository.shared.switchInPageRecommendation(changedType)
+		}
+	}
+
+	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
+		DispatchQueue.global().async {
+			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
+			VirtusizeRepository.shared.switchInPageRecommendation(.body)
 		}
 	}
 
 	public func userLoggedIn() {
 		DispatchQueue.global().async {
-			VirtusizeRepository.updateSession()
-			VirtusizeRepository.updateInPageRecommendation()
+			VirtusizeRepository.shared.updateUserSession()
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
+			VirtusizeRepository.shared.switchInPageRecommendation()
 		}
 	}
 
-	public func userLoggedOut() {
-		UserDefaultsHelper.current.authToken = ""
+	public func clearUserData() {
 		DispatchQueue.global().async {
-			VirtusizeRepository.updateSession()
-			VirtusizeRepository.updateInPageRecommendation(selectedUserProductId: nil, ignoreUserData: true)
+			VirtusizeRepository.shared.clearUserData()
+			VirtusizeRepository.shared.updateUserSession()
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
+			VirtusizeRepository.shared.switchInPageRecommendation()
 		}
 	}
 
-	public func userSelectedProduct(userProductId: Int?) {
-		DispatchQueue.global().async {
-			VirtusizeRepository.updateInPageRecommendation(selectedUserProductId: userProductId)
-		}
-	}
-
-	public func userAddedProduct() {
-		DispatchQueue.global().async {
-			VirtusizeRepository.updateInPageRecommendation()
-		}
-	}
 }

@@ -59,14 +59,17 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private var productImagesAreAnimating: Bool = false
 
-	private(set) var bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct
-
 	/// Once the store product image is set, set the value to true to avoid loading repetitively
 	private var storeProductImageIsSet = false
 	private var crossFadeInAnimator: UIViewPropertyAnimator?
 	private var crossFadeOutAnimator: UIViewPropertyAnimator?
 
 	private var viewModel: VirtusizeInPageStandardViewModel!
+
+	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
+
+	private(set) var bestFitUserProduct: VirtusizeInternalProduct?
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
@@ -145,10 +148,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		}
 		if imageLoadingSuccessful {
 			setMessageLabelTexts(
-				Virtusize.storeProduct!,
-				Virtusize.i18nLocalization!,
-				Virtusize.sizeComparisonRecommendedSize,
-				Virtusize.bodyProfileRecommendedSize?.sizeName
+				VirtusizeRepository.shared.storeProduct!,
+				VirtusizeRepository.shared.i18nLocalization!,
+				sizeComparisonRecommendedSize,
+				bodyProfileRecommendedSize?.sizeName
 			)
 
 			setLoadingScreen(loading: false)
@@ -422,8 +425,16 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-	public override func setInPageRecommendation() {
-		super.setInPageRecommendation()
+	public override func setInPageRecommendation(
+		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
+		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	) {
+		super.setInPageRecommendation(sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+
+		self.sizeComparisonRecommendedSize = sizeComparisonRecommendedSize
+		self.bodyProfileRecommendedSize = bodyProfileRecommendedSize
+
+		bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
 
 		// If item to item recommendation is available, display two user and store product images side by side
 		if let bestFitUserProduct = bestFitUserProduct {

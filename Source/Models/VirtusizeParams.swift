@@ -62,7 +62,7 @@ public class VirtusizeParams {
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
         paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
-		paramsScript += "\(ParamKey.sessionData): \(Virtusize.userSessionResponse), "
+		paramsScript += "\(ParamKey.sessionData): \(VirtusizeRepository.shared.userSessionResponse), "
         paramsScript += "\(ParamKey.storeProductID): '\(storeProductId)', "
         if let userId = Virtusize.userID {
             paramsScript += "\(ParamKey.externalUserID): '\(userId)', "

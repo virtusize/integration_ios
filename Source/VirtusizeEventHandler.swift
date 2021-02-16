@@ -1,7 +1,7 @@
 //
-//  VirtusizeEventName.swift
+//  VirtusizeEventHandler.swift
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,14 @@
 //  THE SOFTWARE.
 //
 
-/// The enum contains the possible events to be sent to the Virtusize server
-internal enum VirtusizeEventName: String {
-	case userSawProduct = "user-saw-product"
-	case userSawWidgetButton = "user-saw-widget-button"
-	case userOpenedWidget = "user-opened-widget"
-	case userClosedWidget = "user-closed-widget"
-	case userAuthData = "user-auth-data"
-	case userSelectedProduct = "user-selected-product"
-	case userAddedProduct = "user-added-product"
-	case userChangedRecommendationType = "user-changed-recommendation-type"
-	case userUpdatedBodyMeasurements = "user-updated-body-measurements"
-	case userLoggedIn = "user-logged-in"
-	case userLoggedOut = "user-logged-out"
-	case userDeletedData = "user-deleted-data"
+/// The virtusize user event callback to receive event data from the web view and make UI changes based on the event data
+public protocol VirtusizeEventHandler {
+	func userOpenedWidget()
+	func userAuthData(bid: String?, auth: String?)
+	func userLoggedIn()
+	func clearUserData()
+	func userSelectedProduct(userProductId: Int?)
+	func userAddedProduct(userProductId: Int?)
+	func userUpdatedBodyMeasurements(recommendedSize: String?)
+	func userChangedRecommendationType(changedType: SizeRecommendationType?)
 }

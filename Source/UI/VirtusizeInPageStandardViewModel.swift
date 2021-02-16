@@ -30,8 +30,10 @@ internal final class VirtusizeInPageStandardViewModel {
 
 	func loadUserProductImage(bestFitUserProduct: VirtusizeInternalProduct) {
 		if currentBestFitUserProduct != nil && currentBestFitUserProduct!.id == bestFitUserProduct.id {
+			self.userProductImage.value = self.userProductImage.value
 			return
 		}
+		currentBestFitUserProduct = bestFitUserProduct
 		DispatchQueue.global().async {
 			self.userProductImage.value = nil
 			let cloudinaryImageURL = self.getCloudinaryImageUrl(bestFitUserProduct.cloudinaryPublicId)
@@ -56,6 +58,7 @@ internal final class VirtusizeInPageStandardViewModel {
 
 	func loadStoreProductImage() {
 		if self.storeProductImage.value != nil {
+			self.storeProductImage.value = self.storeProductImage.value
 			return
 		}
 		DispatchQueue.global().async {
@@ -66,7 +69,7 @@ internal final class VirtusizeInPageStandardViewModel {
 				)
 			} else {
 				if let storeProductImage = VirtusizeAPIService.loadImageAsync(
-					url: URL(string: Virtusize.storeProduct!.cloudinaryPublicId)
+					url: URL(string: VirtusizeRepository.shared.storeProduct!.cloudinaryPublicId)
 				).success {
 					self.storeProductImage.value = VirtusizeProductImage(
 						image: storeProductImage,
@@ -74,8 +77,8 @@ internal final class VirtusizeInPageStandardViewModel {
 					)
 				} else {
 					let productTypeImage = self.getProductTypeImage(
-						productType: Virtusize.storeProduct!.productType,
-						style: Virtusize.storeProduct!.storeProductMeta?.additionalInfo?.style
+						productType: VirtusizeRepository.shared.storeProduct!.productType,
+						style: VirtusizeRepository.shared.storeProduct!.storeProductMeta?.additionalInfo?.style
 					)
 					self.storeProductImage.value = VirtusizeProductImage(
 						image: productTypeImage,

@@ -33,16 +33,6 @@ public protocol VirtusizeMessageHandler: class {
     func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController)
 }
 
-// swiftlint:disable line_length
-/// The virtusize user event callback to receive event data from the web view and make UI changes based on the event data
-public protocol VirtusizeEventHandler {
-	func userAuthData(bid: String?, auth: String?)
-	func userLoggedIn()
-	func userLoggedOut()
-	func userSelectedProduct(userProductId: Int?)
-	func userAddedProduct()
-}
-
 /// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeWebViewController: UIViewController {
     public weak var messageHandler: VirtusizeMessageHandler?
@@ -152,6 +142,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
             reportError(error: .invalidVsParamScript)
             return
         }
+		print(vsParamsFromSDKScript)
         webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
         checkAndUpdateBrowserID()
     }
@@ -251,6 +242,8 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
         do {
             let event = try Deserializer.event(data: message.body)
 			switch VirtusizeEventName.init(rawValue: event.name) {
+			case .userOpenedWidget:
+				eventHandler?.userOpenedWidget()
 			case .userAuthData:
 				eventHandler?.userAuthData(
 					bid: (event.data as? [String: Any])?["x-vs-bid"] as? String,
@@ -259,11 +252,18 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 			case .userSelectedProduct:
 				eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
 			case .userAddedProduct:
-				eventHandler?.userAddedProduct()
+				eventHandler?.userAddedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
+			case .userChangedRecommendationType:
+				let recommendationType = (event.data as? [String: Any])?["recommendationType"] as? String
+				let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
+				eventHandler?.userChangedRecommendationType(changedType: changedType)
+			case .userUpdatedBodyMeasurements:
+				let sizeRecName = (event.data as? [String: Any])?["sizeRecName"] as? String
+				eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
 			case .userLoggedIn:
 				eventHandler?.userLoggedIn()
-			case .userLoggedOut:
-				eventHandler?.userLoggedOut()
+				case .userLoggedOut, .userDeletedData:
+				eventHandler?.clearUserData()
 			case .userClosedWidget:
 				shouldClose()
 			default:

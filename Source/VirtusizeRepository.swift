@@ -27,12 +27,30 @@ import Foundation
 /// This class is used to handle the logic required to access remote and local data sources
 internal class VirtusizeRepository: NSObject {
 
+	static let shared: VirtusizeRepository = {
+		let instance = VirtusizeRepository()
+		return instance
+	}()
+
+	/// The session API response as a string
+	var userSessionResponse: String = ""
+
+	/// The array of `VirtusizeView` that clients use on their mobile application
+	var productTypes: [VirtusizeProductType]?
+	var storeProduct: VirtusizeInternalProduct?
+	var i18nLocalization: VirtusizeI18nLocalization?
+
+	private var userProducts: [VirtusizeInternalProduct]?
+	private var userBodyProfile: VirtusizeUserBodyProfile?
+	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
+
 	/// Checks if the product in `VirtusizeProduct` is valid and post notifications
 	///
 	/// - Parameters:
 	///   - product: `VirtusizeProduct`
 	/// - Returns: true if the product is valid
-	internal static func productCheck(product: VirtusizeProduct) -> Bool {
+	internal func productCheck(product: VirtusizeProduct) -> Bool {
 		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
 		guard let product = productResponse.success else {
 			NotificationCenter.default.post(
@@ -85,18 +103,66 @@ internal class VirtusizeRepository: NSObject {
 	}
 
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
-	internal static func fetchInitialData(productId: Int?) {
+	internal func fetchInitialData(productId: Int?) {
 		guard let productId = productId else {
 			return
 		}
-		Virtusize.storeProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
-		Virtusize.productTypes = VirtusizeAPIService.getProductTypesAsync().success
-		Virtusize.i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
+		storeProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
+		productTypes = VirtusizeAPIService.getProductTypesAsync().success
+		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
+	}
+
+	internal func fetchDataForInPageRecommendation(
+		shouldUpdateUserProducts: Bool = true,
+		selectedUserProductId: Int? = nil
+	) {
+		if shouldUpdateUserProducts {
+			let userProductResponse = VirtusizeAPIService.getUserProductsAsync()
+			if userProductResponse.isSuccessful {
+				userProducts = userProductResponse.success
+			} else {
+				Virtusize.showInPageError = true
+				return
+			}
+		}
+
+		if selectedUserProductId == nil {
+			let userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
+			if userBodyProfileResponse.isSuccessful {
+				userBodyProfile = userBodyProfileResponse.success
+			}
+		}
+
+		if let userBodyProfile = userBodyProfile {
+			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
+				productTypes: productTypes!,
+				storeProduct: storeProduct!,
+				userBodyProfile: userBodyProfile
+			).success
+		}
+
+		if let userProducts = userProducts {
+			let userProducts = selectedUserProductId != nil ?
+				userProducts.filter({ product in return product.id == selectedUserProductId }) : userProducts
+			sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
+				userProducts: userProducts,
+				storeProduct: storeProduct!,
+				productTypes: productTypes!
+			)
+		}
+	}
+
+	internal func clearUserData() {
+		UserDefaultsHelper.current.authToken = ""
+
+		userProducts = nil
+		sizeComparisonRecommendedSize = nil
+		bodyProfileRecommendedSize = nil
 	}
 
 	/// Updates the user session by calling the session API
-	internal static func updateSession() {
-		var updateUserSessionResponse = Virtusize.userSessionResponse
+	internal func updateUserSession() {
+		var updateUserSessionResponse = userSessionResponse
 		let userSessionInfoResponse = VirtusizeAPIService.getUserSessionInfoAsync()
 		if let accessToken = userSessionInfoResponse.success?.accessToken {
 			UserDefaultsHelper.current.accessToken = accessToken
@@ -107,39 +173,35 @@ internal class VirtusizeRepository: NSObject {
 		if let sessionResponse = userSessionInfoResponse.string {
 			updateUserSessionResponse = sessionResponse
 		}
-		Virtusize.userSessionResponse = updateUserSessionResponse
+		userSessionResponse = updateUserSessionResponse
 	}
 
-	// swiftlint:disable line_length
-	/// Updates the recommendation for InPage
-	///
-	/// - Parameters:
-	///   - selectedUserProductId: Pass the selected product Id from the web view to decide a specific user product to compare with the store product
-	///   - ignoreUserData: Pass the boolean vale to determine whether to ignore the API requests that is related to the user data
-	internal static func updateInPageRecommendation(selectedUserProductId: Int? = nil, ignoreUserData: Bool = false) {
-		var userProducts: [VirtusizeInternalProduct]?
-		var userBodyProfile: VirtusizeUserBodyProfile?
-		Virtusize.bodyProfileRecommendedSize = nil
-		Virtusize.sizeComparisonRecommendedSize = nil
-		if !ignoreUserData {
-			userProducts = VirtusizeAPIService.getUserProductsAsync().success
-			userBodyProfile = VirtusizeAPIService.getUserBodyProfileAsync().success
+	internal func updateUserAuthData(bid: String?, auth: String?) {
+		if let bid = bid {
+			UserDefaultsHelper.current.identifier = bid
 		}
-		if let userProducts = userProducts, let productTypes = Virtusize.productTypes, let storeProduct = Virtusize.storeProduct, let userBodyProfile = userBodyProfile {
-			Virtusize.bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
-				productTypes: productTypes,
-				storeProduct: storeProduct,
-				userBodyProfile: userBodyProfile
-			).success
-			let userProducts = selectedUserProductId != nil ? userProducts.filter({ product in return product.id == selectedUserProductId })
-				: userProducts
-			Virtusize.sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
-				userProducts: userProducts,
-				storeProduct: storeProduct,
-				productTypes: productTypes
-			)
+		if let auth = auth,
+		   !auth.isEmpty {
+			UserDefaultsHelper.current.authToken = auth
 		}
-		Virtusize.updateInPageViews = true
+	}
+
+	internal func switchInPageRecommendation(_ selectedRecommendedType: SizeRecommendationType? = nil) {
+		switch selectedRecommendedType {
+		case .compareProduct:
+			Virtusize.updateInPageViews = (sizeComparisonRecommendedSize, nil)
+		case .body:
+			Virtusize.updateInPageViews = (nil, bodyProfileRecommendedSize)
+		default:
+			Virtusize.updateInPageViews = (sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+		}
+	}
+
+	internal func updateUserBodyRecommendedSize(_ recommendedSize: String?) {
+		guard let recommendedSize = recommendedSize else {
+			return
+		}
+		bodyProfileRecommendedSize?.sizeName = recommendedSize
 	}
 
 	/// The API request for sending an order to the server
@@ -149,7 +211,7 @@ internal class VirtusizeRepository: NSObject {
 	///   - onSuccess: A callback to be called when the request to send an order is successful
 	///   - onError: A callback to pass `VirtusizeError` back when the request to send an order is
 	///    unsuccessful
-	internal static func sendOrder(
+	internal func sendOrder(
 		_ order: VirtusizeOrder,
 		onSuccess: (() -> Void)? = nil,
 		onError: ((VirtusizeError) -> Void)? = nil

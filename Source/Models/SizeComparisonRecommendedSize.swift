@@ -23,7 +23,7 @@
 //
 
 // This structure wraps the product comparison recommended size info
-internal struct SizeComparisonRecommendedSize {
+public struct SizeComparisonRecommendedSize {
 	/// The best fit score for product comparison
     var bestFitScore: Double
 	/// The best store product size for the user
