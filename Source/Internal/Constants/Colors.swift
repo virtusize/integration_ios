@@ -23,7 +23,19 @@
 //
 
 /// The Virtusize themed colors used in the Virtusize SDK
-extension UIColor {
+public extension UIColor {
 	static var vsGray900Color: UIColor { #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) }
+	static var vsGray900PressedColor: UIColor { #colorLiteral(red: 0.1960784314, green: 0.1960784314, blue: 0.1960784314, alpha: 1) }
 	static var vsTealColor: UIColor { #colorLiteral(red: 0.2431372549, green: 0.8235294118, blue: 0.7294117647, alpha: 1) }
+	static var vsTealPressedColor: UIColor { #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1) }
+}
+
+import SwiftUI
+
+@available(iOSApplicationExtension 13.0, *)
+public extension Color {
+	static var vsGray900Color: Color { Color(UIColor.vsGray900Color) }
+	static var vsGray900PressedColor: Color { Color(UIColor.vsGray900PressedColor) }
+	static var vsTealColor: Color { Color(UIColor.vsTealColor) }
+	static var vsTealPressedColor: Color { Color(UIColor.vsTealPressedColor) }
 }

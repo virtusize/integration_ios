@@ -15,7 +15,6 @@
 		4DED8D26205755C3001CA7DF /* Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DED8D1C205755C3001CA7DF /* Virtusize.framework */; };
 		4DED8D2B205755C3001CA7DF /* VirtusizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D2A205755C3001CA7DF /* VirtusizeTests.swift */; };
 		4DED8D5920575D65001CA7DF /* VirtusizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D5820575D65001CA7DF /* VirtusizeViewController.swift */; };
-		9C3DE36625BA89D60082C140 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C3DE36525BA89D60082C140 /* Info.plist */; };
 		9C3DE36C25BA8A160082C140 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3DE36B25BA8A160082C140 /* Colors.swift */; };
 		9C4B9D722491EC5D0065808E /* APIEndpointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B9D712491EC5D0065808E /* APIEndpointsTests.swift */; };
 		9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956C8247E730A0014DF51 /* VirtusizeOrder.swift */; };
@@ -25,6 +24,8 @@
 		9C633F28249388EB009C4392 /* TestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F27249388EB009C4392 /* TestFixtures.swift */; };
 		9C633F2A2493C7ED009C4392 /* VirtusizeProductImageMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */; };
 		9C7DA17324973FBD00AD6B42 /* APISessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7DA17224973FBD00AD6B42 /* APISessionProtocol.swift */; };
+		9C892C3D25BE878E00B22E92 /* SwiftUIVirtusizeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C892C3C25BE878E00B22E92 /* SwiftUIVirtusizeButton.swift */; };
+		9C9797CA25BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9797C925BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift */; };
 		9CA6820F24BC709300ADA871 /* VirtusizeParamsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA6820E24BC709300ADA871 /* VirtusizeParamsBuilder.swift */; };
 		9CA6821124C034A300ADA871 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA6821024C034A200ADA871 /* UIApplication+Extensions.swift */; };
 		9CB0390C24921FDA008CCD84 /* APIEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB0390B24921FDA008CCD84 /* APIEventTests.swift */; };
@@ -82,6 +83,8 @@
 		9C633F27249388EB009C4392 /* TestFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFixtures.swift; sourceTree = "<group>"; };
 		9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImageMetaData.swift; sourceTree = "<group>"; };
 		9C7DA17224973FBD00AD6B42 /* APISessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISessionProtocol.swift; sourceTree = "<group>"; };
+		9C892C3C25BE878E00B22E92 /* SwiftUIVirtusizeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIVirtusizeButton.swift; sourceTree = "<group>"; };
+		9C9797C925BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIVirtusizeViewController.swift; sourceTree = "<group>"; };
 		9CA6820E24BC709300ADA871 /* VirtusizeParamsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeParamsBuilder.swift; sourceTree = "<group>"; };
 		9CA6821024C034A200ADA871 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		9CB0390B24921FDA008CCD84 /* APIEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEventTests.swift; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				4DED8D5820575D65001CA7DF /* VirtusizeViewController.swift */,
 				9CBDF5D325AFEE6300E42012 /* VirtusizeAssets.swift */,
 				9CFF40FB25B974D200B21D4E /* VirtusizeViewStyle.swift */,
+				9C892C3C25BE878E00B22E92 /* SwiftUIVirtusizeButton.swift */,
+				9C9797C925BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -394,7 +399,6 @@
 			files = (
 				9CE7787924B419B700E4A127 /* ROADMAP.md in Resources */,
 				9CE7787A24B419B700E4A127 /* CHANGES.md in Resources */,
-				9C3DE36625BA89D60082C140 /* Info.plist in Resources */,
 				9CE7787B24B419B700E4A127 /* README.md in Resources */,
 				9CE7787824B417B700E4A127 /* VirtusizeLocalizable.strings in Resources */,
 				9CBDF5DE25AFFA0600E42012 /* README-JP.md in Resources */,
@@ -451,6 +455,7 @@
 				DF6B5C9E219D151F000B3402 /* Base64ImageString.swift in Sources */,
 				9CFF40FC25B974D200B21D4E /* VirtusizeViewStyle.swift in Sources */,
 				4D6C578E205FB6F400DA910E /* BrowserID.swift in Sources */,
+				9C892C3D25BE878E00B22E92 /* SwiftUIVirtusizeButton.swift in Sources */,
 				9CB98B9D24B2C5B400C51F20 /* VirtusizeLanguage.swift in Sources */,
 				9C5956CD2484F6280014DF51 /* VirtusizeOrderItem.swift in Sources */,
 				9C633F2A2493C7ED009C4392 /* VirtusizeProductImageMetaData.swift in Sources */,
@@ -464,6 +469,7 @@
 				9CBDF5D425AFEE6300E42012 /* VirtusizeAssets.swift in Sources */,
 				DFFAA95C21A39A75000F0F70 /* APIEvent.swift in Sources */,
 				DF71642E21A28DE8002C7202 /* VirtusizeProduct.swift in Sources */,
+				9C9797CA25BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift in Sources */,
 				9CB98B9B24B2C5B400C51F20 /* VirtusizeParams.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
