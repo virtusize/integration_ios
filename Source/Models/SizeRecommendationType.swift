@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+/// This enum contains the size comparison types Virtusize provides
+/// Based on a user's selection of the type in the web view, the SDK displays a corresponding InPage comparison view
 public enum SizeRecommendationType: String {
 	case body, compareProduct
 }

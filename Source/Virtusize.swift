@@ -54,6 +54,7 @@ public class Virtusize {
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	private static var virtusizeViews: [VirtusizeView] = []
 
+	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
 
 	/// The internal property for product
@@ -88,6 +89,7 @@ public class Virtusize {
 			return internalProduct
 		}
 	}
+
 	/// The private property for updating InPage views
 	private static var _updateInPageViews: (SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)?
 	/// The property to be set to update InPage views.
@@ -107,7 +109,9 @@ public class Virtusize {
 		}
 	}
 
+	/// The private property for showing the InPage error screen
 	private static var _showInPageError: Bool = false
+	/// The property to be set to show the InPage error screen
 	internal static var showInPageError: Bool {
 		set {
 			if newValue == true {

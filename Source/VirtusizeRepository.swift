@@ -37,7 +37,9 @@ internal class VirtusizeRepository: NSObject {
 
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	var productTypes: [VirtusizeProductType]?
+	// This variable holds the store product from the Virtusize API
 	var storeProduct: VirtusizeInternalProduct?
+	// This variable holds the i18n localization texts
 	var i18nLocalization: VirtusizeI18nLocalization?
 
 	private var userProducts: [VirtusizeInternalProduct]?
@@ -103,20 +105,35 @@ internal class VirtusizeRepository: NSObject {
 	}
 
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
+	///
+	/// - Parameter productId: the product ID provided by the client
 	internal func fetchInitialData(productId: Int?) {
 		guard let productId = productId else {
 			return
 		}
 
 		storeProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
-		productTypes = VirtusizeAPIService.getProductTypesAsync().success
-		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
+		if storeProduct == nil {
+			Virtusize.showInPageError = true
+			return
+		}
 
-		if storeProduct == nil || productTypes == nil || i18nLocalization == nil {
+		productTypes = VirtusizeAPIService.getProductTypesAsync().success
+		if productTypes == nil {
+			Virtusize.showInPageError = true
+			return
+		}
+
+		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
+		if i18nLocalization == nil {
 			Virtusize.showInPageError = true
 		}
 	}
 
+	/// Fetches data for InPage recommendation
+	///
+	/// - Parameters:
+	///   - selectedUserProductId: the selected product Id from the web view to decide a specific user product to compare with the store product
 	internal func fetchDataForInPageRecommendation(
 		shouldUpdateUserProducts: Bool = true,
 		selectedUserProductId: Int? = nil
@@ -164,6 +181,7 @@ internal class VirtusizeRepository: NSObject {
 		)
 	}
 
+	/// Clear user session and the data related to size recommendations
 	internal func clearUserData() {
 		UserDefaultsHelper.current.authToken = ""
 
@@ -189,6 +207,11 @@ internal class VirtusizeRepository: NSObject {
 		userSessionResponse = updateUserSessionResponse
 	}
 
+	/// Updates the browser ID and the auth token from the data of the event user-auth-data
+	///
+	/// - Parameters:
+	///   - bid: a browser identifier
+	///   - auth: the auth token for the session API
 	internal func updateUserAuthData(bid: String?, auth: String?) {
 		if let bid = bid {
 			UserDefaultsHelper.current.identifier = bid
@@ -199,6 +222,9 @@ internal class VirtusizeRepository: NSObject {
 		}
 	}
 
+	/// Switch the recommendation for InPage based on the recommendation type
+	///
+	/// - Parameter selectedRecommendedType the selected recommendation compare view type
 	internal func switchInPageRecommendation(_ selectedRecommendedType: SizeRecommendationType? = nil) {
 		switch selectedRecommendedType {
 		case .compareProduct:
@@ -210,6 +236,9 @@ internal class VirtusizeRepository: NSObject {
 		}
 	}
 
+	/// Updates the user body recommended size
+	///
+	/// - Parameter recommendedSize the recommended size got from the web view
 	internal func updateUserBodyRecommendedSize(_ recommendedSize: String?) {
 		guard let recommendedSize = recommendedSize else {
 			return
