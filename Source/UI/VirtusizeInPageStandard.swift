@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 /// This class is the custom Virtusize InPage Standard view that can be added in the client's layout file.
 public class VirtusizeInPageStandard: VirtusizeInPageView {
 
@@ -49,7 +49,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     private let errorImageView: UIImageView = UIImageView()
     private let errorText: UILabel = UILabel()
 
-    private var messageLineSpacing: CGFloat = 6
+    private var messageLineSpacing: CGFloat = 0
 	private var userProductImageSize: CGFloat = 0
 	private var productImageViewOffset: CGFloat = 0
 
@@ -59,14 +59,17 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private var productImagesAreAnimating: Bool = false
 
-	private(set) var bestFitUserProduct = Virtusize.sizeComparisonRecommendedSize?.bestUserProduct
-
 	/// Once the store product image is set, set the value to true to avoid loading repetitively
 	private var storeProductImageIsSet = false
 	private var crossFadeInAnimator: UIViewPropertyAnimator?
 	private var crossFadeOutAnimator: UIViewPropertyAnimator?
 
 	private var viewModel: VirtusizeInPageStandardViewModel!
+
+	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
+
+	private(set) var bestFitUserProduct: VirtusizeInternalProduct?
 
     public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
@@ -145,10 +148,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		}
 		if imageLoadingSuccessful {
 			setMessageLabelTexts(
-				Virtusize.storeProduct!,
-				Virtusize.i18nLocalization!,
-				Virtusize.sizeComparisonRecommendedSize,
-				Virtusize.bodyProfileRecommendedSize?.sizeName
+				VirtusizeRepository.shared.storeProduct!,
+				VirtusizeRepository.shared.i18nLocalization!,
+				sizeComparisonRecommendedSize,
+				bodyProfileRecommendedSize?.sizeName
 			)
 
 			setLoadingScreen(loading: false)
@@ -392,17 +395,17 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         case .JAPANESE:
             topMessageLabel.font = Font.notoSansCJKJP(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKJP(size: 16, weight: .bold)
-            checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
+			checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKJP(size: 10)
             errorText.font = Font.notoSansCJKJP(size: 10)
-            messageLineSpacing = 6
+            messageLineSpacing = 0
         case .KOREAN:
             topMessageLabel.font = Font.notoSansCJKKR(size: 12)
             bottomMessageLabel.font = Font.notoSansCJKKR(size: 16, weight: .bold)
             checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: 12)
             privacyPolicyLink.font = Font.notoSansCJKKR(size: 10)
             errorText.font = Font.notoSansCJKKR(size: 10)
-            messageLineSpacing = 6
+            messageLineSpacing = 0
         default:
             break
         }
@@ -422,8 +425,16 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-	public override func setInPageRecommendation() {
-		super.setInPageRecommendation()
+	public override func setInPageRecommendation(
+		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
+		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	) {
+		super.setInPageRecommendation(sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+
+		self.sizeComparisonRecommendedSize = sizeComparisonRecommendedSize
+		self.bodyProfileRecommendedSize = bodyProfileRecommendedSize
+
+		bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
 
 		// If item to item recommendation is available, display two user and store product images side by side
 		if let bestFitUserProduct = bestFitUserProduct {
@@ -559,7 +570,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         errorImageView.isHidden = false
         errorText.isHidden = false
         errorText.attributedText = NSAttributedString(
-            string: Localization.shared.localize("inpage_error_long_text")
+			string: Localization.shared.localize("inpage_error_long_text")
         ).lineSpacing(self.messageLineSpacing)
         errorText.textAlignment = .center
     }

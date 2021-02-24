@@ -61,7 +61,7 @@ internal extension UIImageView {
     ///   - success: The successful callback to pass the loaded image
     ///   - failure: The failure callback
     func load(url: URL, success: ((UIImage) -> Void)? = nil, failure: (() -> Void)? = nil) {
-        DispatchQueue.global().async {
+		DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     success?(image)

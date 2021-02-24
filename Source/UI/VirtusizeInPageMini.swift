@@ -58,18 +58,22 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         setLoadingScreen(loading: true)
     }
 
-    public override func setInPageRecommendation() {
-		super.setInPageRecommendation()
+    public override func setInPageRecommendation(
+		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
+		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	) {
+		super.setInPageRecommendation(sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
 
-        setLoadingScreen(loading: false)
-        inPageMiniMessageLabel.attributedText = NSAttributedString(string:
-		    Virtusize.storeProduct!.getRecommendationText(
-				Virtusize.i18nLocalization!,
-				Virtusize.sizeComparisonRecommendedSize,
-				Virtusize.bodyProfileRecommendedSize?.sizeName,
-                VirtusizeI18nLocalization.TrimType.ONELINE
-            )
-        ).lineSpacing(self.verticalMargin/2)
+		setLoadingScreen(loading: false)
+		inPageMiniMessageLabel.attributedText = NSAttributedString(
+			string:
+				VirtusizeRepository.shared.storeProduct!.getRecommendationText(
+					VirtusizeRepository.shared.i18nLocalization!,
+					sizeComparisonRecommendedSize,
+					bodyProfileRecommendedSize?.sizeName,
+					VirtusizeI18nLocalization.TrimType.ONELINE
+				)
+		).lineSpacing(self.verticalMargin/2)
     }
 
     private func addSubviews() {

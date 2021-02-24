@@ -33,16 +33,6 @@ public protocol VirtusizeMessageHandler: class {
     func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController)
 }
 
-// swiftlint:disable line_length
-/// The virtusize user event callback to receive event data from the web view and make UI changes based on the event data
-public protocol VirtusizeEventHandler {
-	func userAuthData(bid: String?, auth: String?)
-	func userLoggedIn()
-	func userLoggedOut()
-	func userSelectedProduct(userProductId: Int?)
-	func userAddedProduct()
-}
-
 /// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeWebViewController: UIViewController {
     public weak var messageHandler: VirtusizeMessageHandler?
@@ -152,6 +142,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
             reportError(error: .invalidVsParamScript)
             return
         }
+		print(vsParamsFromSDKScript)
         webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
         checkAndUpdateBrowserID()
     }
@@ -190,12 +181,11 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
                 return nil
             }
         }
-
         // swiftlint:disable line_length
         guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
             // By default, The Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a Webview.
             // By setting up the user agent, Google recognizes the web view as a Safari browser
-            configuration.applicationNameForUserAgent = "Version/10.0 Safari/604.1"
+            configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
             popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
             popupWebView!.navigationDelegate = self
             popupWebView!.uiDelegate = self
@@ -250,24 +240,36 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
         }
         do {
             let event = try Deserializer.event(data: message.body)
-            if event.name == "user-closed-widget" {
-                shouldClose()
-            } else if event.name == "user-auth-data" {
+			switch VirtusizeEventName.init(rawValue: event.name) {
+			case .userOpenedWidget:
+				eventHandler?.userOpenedWidget()
+			case .userAuthData:
 				eventHandler?.userAuthData(
 					bid: (event.data as? [String: Any])?["x-vs-bid"] as? String,
 					auth: (event.data as? [String: Any])?["x-vs-auth"] as? String
 				)
-			} else if event.name == "user-logged-in" {
-				eventHandler?.userLoggedIn()
-			} else if event.name == "user-logged-out" {
-				eventHandler?.userLoggedOut()
-			} else if event.name == "user-selected-product" || event.name == "user-opened-panel-compare" {
+			case .userSelectedProduct:
 				eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
-			} else if event.name == "user-added-product" {
-				eventHandler?.userAddedProduct()
+			case .userAddedProduct:
+				eventHandler?.userAddedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
+			case .userChangedRecommendationType:
+				let recommendationType = (event.data as? [String: Any])?["recommendationType"] as? String
+				let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
+				eventHandler?.userChangedRecommendationType(changedType: changedType)
+			case .userUpdatedBodyMeasurements:
+				let sizeRecName = (event.data as? [String: Any])?["sizeRecName"] as? String
+				eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
+			case .userLoggedIn:
+				eventHandler?.userLoggedIn()
+			case .userLoggedOut, .userDeletedData:
+				eventHandler?.clearUserData()
+			case .userClosedWidget:
+				shouldClose()
+			default:
+				break
 			}
-            messageHandler?.virtusizeController(self, didReceiveEvent: event)
-        } catch {
+			messageHandler?.virtusizeController(self, didReceiveEvent: event)
+		} catch {
             if let error = error as? VirtusizeError {
                 reportError(error: error)
             }

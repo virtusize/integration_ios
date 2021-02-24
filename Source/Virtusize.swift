@@ -51,19 +51,11 @@ public class Virtusize {
     public static var productDataCheckDidFail = Notification.Name("VirtusizeProductDataCheckDidFail")
     public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
 
-	/// The session API response as a string
-	internal static var userSessionResponse: String = ""
-
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	private static var virtusizeViews: [VirtusizeView] = []
 
-	/// The array of `VirtusizeView` that clients use on their mobile application
-	internal static var productTypes: [VirtusizeProductType]?
-
-	internal static var storeProduct: VirtusizeInternalProduct?
-	internal static var i18nLocalization: VirtusizeI18nLocalization?
-	internal static var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
-	internal static var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
+	/// The singleton instance of `VirtusizeRepository`
+	private static var virtusizeRepository = VirtusizeRepository.shared
 
 	/// The internal property for product
 	internal static var internalProduct: VirtusizeProduct?
@@ -77,7 +69,7 @@ public class Virtusize {
 			internalProduct = newValue
 
 			DispatchQueue.global().async {
-				guard VirtusizeRepository.productCheck(product: newValue) else {
+				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
 					return
 				}
 
@@ -87,9 +79,10 @@ public class Virtusize {
 					}
 				}
 
-				VirtusizeRepository.fetchInitialData(productId: internalProduct!.productCheckData!.productDataId)
-				VirtusizeRepository.updateSession()
-				VirtusizeRepository.updateInPageRecommendation()
+				virtusizeRepository.fetchInitialData(productId: internalProduct!.productCheckData!.productDataId)
+				virtusizeRepository.updateUserSession()
+				virtusizeRepository.fetchDataForInPageRecommendation()
+				virtusizeRepository.switchInPageRecommendation()
 			}
 		}
 		get {
@@ -98,21 +91,40 @@ public class Virtusize {
 	}
 
 	/// The private property for updating InPage views
-	private static var _updateInPageViews: Bool?
+	private static var _updateInPageViews: (SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)?
 	/// The property to be set to update InPage views.
-	internal static var updateInPageViews: Bool? {
+	internal static var updateInPageViews: (SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)? {
 		set {
-			if newValue == true {
+			if newValue?.0 != nil || newValue?.1 != nil {
 				DispatchQueue.main.async {
 					for index in 0...virtusizeViews.count-1 {
-						(virtusizeViews[index] as? VirtusizeInPageView)?.setInPageRecommendation()
+						(virtusizeViews[index] as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.0, newValue?.1)
 					}
-					self.updateInPageViews = false
+					self.updateInPageViews = (nil, nil)
 				}
 			}
 		}
 		get {
 			return _updateInPageViews
+		}
+	}
+
+	/// The private property for showing the InPage error screen
+	private static var _showInPageError: Bool = false
+	/// The property to be set to show the InPage error screen
+	internal static var showInPageError: Bool {
+		set {
+			if newValue == true {
+				DispatchQueue.main.async {
+					for index in 0...virtusizeViews.count-1 {
+						(virtusizeViews[index] as? VirtusizeInPageView)?.showErrorScreen()
+					}
+					self.showInPageError = false
+				}
+			}
+		}
+		get {
+			return _showInPageError
 		}
 	}
 
@@ -138,7 +150,7 @@ public class Virtusize {
 		onSuccess: (() -> Void)? = nil,
 		onError: ((VirtusizeError) -> Void)? = nil
 	) {
-		VirtusizeRepository.sendOrder(
+		virtusizeRepository.sendOrder(
 			order,
 			onSuccess: onSuccess,
 			onError: onError
