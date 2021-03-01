@@ -109,7 +109,7 @@ public final class VirtusizeWebViewController: UIViewController {
         }
 
         // If the request is invalid, the controller should be dismissed
-        guard let request = APIRequest.virtusizeURL(region: Virtusize.params?.region) else {
+        guard let request = APIRequest.virtusizeWebView() else {
             reportError(error: .invalidRequest)
             return
         }

@@ -46,6 +46,18 @@ public enum VirtusizeEnvironment: String {
         return "i18n.virtusize.com"
     }
 
+	/// Gets the static API URL for the `VirtusizeWebView` request
+	internal func virtusizeStaticApiUrl() -> String {
+		switch self {
+		case .staging, .japan:
+			return "static.api.virtusize.jp"
+		case .global:
+			return "static.api.virtusize.com"
+		case .korea:
+			return "static.api.virtusize.kr"
+		}
+	}
+
 	/// Gets the event API URL corresponding to the Virtusize environment
 	internal func eventApiUrl() -> String {
 		switch self {

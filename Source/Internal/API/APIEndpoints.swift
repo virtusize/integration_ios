@@ -27,7 +27,7 @@ internal enum APIEndpoints {
     case productDataCheck(externalId: String)
     case productMetaDataHints
     case events
-    case virtusize(region: VirtusizeRegion)
+    case virtusizeWebView
     case storeViewApiKey
     case orders
     case storeProducts(productId: Int)
@@ -56,9 +56,9 @@ internal enum APIEndpoints {
         case .events:
 			break
 
-        case .virtusize(let region):
-            components.host = "static.api.virtusize.\(region.rawValue)"
-            components.path = "/a/aoyama/latest/sdk-webview.html"
+        case .virtusizeWebView:
+			let envPath = (Virtusize.environment == .staging) ? "staging" : "latest"
+			components.path = "/a/aoyama/\(envPath)/sdk-webview.html"
 
         case .storeViewApiKey:
             components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -97,6 +97,8 @@ internal enum APIEndpoints {
 		switch self {
 		case .productDataCheck, .getSize:
 			return Virtusize.environment.servicesUrl()
+		case .virtusizeWebView:
+			return Virtusize.environment.virtusizeStaticApiUrl()
 		case .i18n:
 			return Virtusize.environment.i18nUrl()
 		case .events:

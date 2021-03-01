@@ -73,16 +73,27 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNil(endpoint.components.queryItems)
     }
 
-    func testVirtusizeEndpoint_returnExpectedComponents() {
+    func testVirtusizeWebViewEndpoint_japanEnv_returnExpectedComponents() {
         Virtusize.environment = .japan
 
-        let endpoint = APIEndpoints.virtusize(region: .JAPAN)
+        let endpoint = APIEndpoints.virtusizeWebView
 
         XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
         XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-webview.html")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
+
+	func testVirtusizeWebViewEndpoint_stagingEnv_returnExpectedComponents() {
+		Virtusize.environment = .staging
+
+		let endpoint = APIEndpoints.virtusizeWebView
+
+		XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
+		XCTAssertEqual(endpoint.components.path, "/a/aoyama/staging/sdk-webview.html")
+
+		XCTAssertNil(endpoint.components.queryItems)
+	}
 
     func testStoreViewApiKeyEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.storeViewApiKey

@@ -152,12 +152,11 @@ internal struct APIRequest {
         return apiRequest(components: endpoint.components, withPayload: payloadData)
     }
 
-    /// Gets the `URLRequest` for the `Virtusize` request
+    /// Gets the `URLRequest` for the `VirtusizeWebView` request
     ///
-    /// - Parameter context: The product data from the response of the `productDataCheck` request
-    /// - Returns: A `URLRequest` for the `Virtusize` request
-    internal static func virtusizeURL(region: VirtusizeRegion?) -> URLRequest? {
-        let endpoint = APIEndpoints.virtusize(region: region ?? .JAPAN)
+    /// - Returns: A `URLRequest` for the `VirtusizeWebView` request
+    internal static func virtusizeWebView() -> URLRequest? {
+        let endpoint = APIEndpoints.virtusizeWebView
         return HTTPRequest(components: endpoint.components)
     }
 
