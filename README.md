@@ -238,10 +238,10 @@ There are two default styles of the Virtusize Button in our Virtusize SDK.
   
   ```swift
   let virtusizeButton = VirtusizeButton()
-view.addSubview(virtusizeButton)
+  view.addSubview(virtusizeButton)
   ```
   
--  In order to use our default styles, set the property *style* of VirtusizeButton as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
+  -  In order to use our default styles, set the property *style* of VirtusizeButton as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
 
   ```swift
   virtusizeButton.style = .TEAL
