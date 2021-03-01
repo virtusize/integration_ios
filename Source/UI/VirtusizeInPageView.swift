@@ -34,6 +34,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
+	public var isDeallocated: Bool?
 
     internal let defaultMargin: CGFloat = 8
 
@@ -52,6 +53,12 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         isHidden = true
         setup()
     }
+
+	public override func willMove(toWindow: UIWindow?) {
+		if toWindow == nil {
+			isDeallocated = true
+		}
+	}
 
     public func isLoading() {
         isHidden = false

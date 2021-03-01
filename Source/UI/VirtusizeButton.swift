@@ -46,6 +46,7 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
+	public var isDeallocated: Bool?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,6 +58,12 @@ public class VirtusizeButton: UIButton, VirtusizeView {
         isHidden = true
         setStyle()
     }
+
+	public override func willMove(toWindow: UIWindow?) {
+		if toWindow == nil {
+			isDeallocated = true
+		}
+	}
 
     public func isLoading() {
         isHidden = false

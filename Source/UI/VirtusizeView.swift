@@ -29,6 +29,7 @@ public protocol VirtusizeView {
     var style: VirtusizeViewStyle { get }
     var presentingViewController: UIViewController? { get set }
     var messageHandler: VirtusizeMessageHandler? { get set }
+	var isDeallocated: Bool? { get set }
 
 	/// Sets up the loading UI
     func isLoading()
