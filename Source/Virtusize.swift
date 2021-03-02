@@ -132,9 +132,11 @@ public class Virtusize {
 
     /// Sets up the VirtusizeView and adds it to `virtusizeViews`
     public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
+		virtusizeViews = virtusizeViews.filter { $0.isDeallocated != true }
         var mutableView = view
         mutableView.messageHandler = any as? VirtusizeMessageHandler
         mutableView.presentingViewController = any as? UIViewController
+		(mutableView as? UIView)?.didMoveToWindow()
         virtusizeViews.append(mutableView)
     }
 
