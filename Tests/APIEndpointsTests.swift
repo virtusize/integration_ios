@@ -40,11 +40,11 @@ class APIEndpointsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testProductDataCheckEndpoint_returnExpectedComponents() {
+    func testProductDataCheckEndpoint_stagingEnv_returnExpectedComponents() {
         let endpoint = APIEndpoints.productDataCheck(externalId: dummyExternalId)
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
-        XCTAssertEqual(endpoint.components.path, "/integration/v3/product-data-check")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.jp")
+        XCTAssertEqual(endpoint.components.path, "/stg/product/check")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 3)
 
@@ -54,6 +54,23 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertEqual(queryParamters["externalId"], "694")
         XCTAssertNotNil(queryParamters["version"], "1")
     }
+
+	func testProductDataCheckEndpoint_globalEnv_returnExpectedComponents() {
+		Virtusize.environment = .global
+
+		let endpoint = APIEndpoints.productDataCheck(externalId: dummyExternalId)
+
+		XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
+		XCTAssertEqual(endpoint.components.path, "/product/check")
+
+		XCTAssertEqual(endpoint.components.queryItems?.count, 3)
+
+		let queryParamters = getQueryParametersDict(queryItems: endpoint.components.queryItems)
+
+		XCTAssertEqual(queryParamters["apiKey"], "test_APIKey")
+		XCTAssertEqual(queryParamters["externalId"], "694")
+		XCTAssertNotNil(queryParamters["version"], "1")
+	}
 
     func testProductMetaDataHintsEndpoint_returnExpectedComponents() {
         Virtusize.environment = .global

@@ -31,6 +31,18 @@ public enum VirtusizeEnvironment: String {
     japan="api.virtusize.jp",
     korea="api.virtusize.kr"
 
+	/// Gets the services URL for the `productDataCheck` and `getSize` requests
+	internal func servicesUrl() -> String {
+		switch self {
+		case .staging, .japan:
+			return "services.virtusize.jp"
+		case .global:
+			return "services.virtusize.com"
+		case .korea:
+			return "services.virtusize.kr"
+		}
+	}
+
     /// Gets the fit illustrator URL
     internal func fitIllustratorUrl() -> String {
         switch self {
