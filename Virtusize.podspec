@@ -13,5 +13,6 @@ Pod::Spec.new do |s|
   s.swift_version = '5'
 
   s.source_files = ["Source/*.{swift, h}", "Source/**/*.swift"]
-  s.resource_bundle = { 'Virtusize' => ["Source/Resources/**/*.{lproj, otf}", "Source/VirtusizeAssets.xcassets"] }
+	s.resources = "Source/Resources/**/*.otf"
+  s.resource_bundle = { 'Virtusize' => ["Source/Resources/**/*.lproj", "Source/VirtusizeAssets.xcassets"] }
 end
