@@ -142,7 +142,6 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
             reportError(error: .invalidVsParamScript)
             return
         }
-		print(vsParamsFromSDKScript)
         webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
         checkAndUpdateBrowserID()
     }
