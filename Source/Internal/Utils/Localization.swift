@@ -36,12 +36,20 @@ internal class Localization {
 	///   - language: Pass `VirtusizeLanguage` if you'd like to localize the text in a designated language
 	/// - Returns: A localized string based on the device's default language
 	func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
-		let path = Bundle(for: Localization.self).path(
-			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
-			ofType: "lproj") ?? Bundle(for: Localization.self).path(
-				forResource: VirtusizeLanguage.ENGLISH.rawValue,
-				ofType: "lproj"
-			)!
-		return Bundle(path: path)?.localizedString(forKey: key, value: nil, table: "VirtusizeLocalizable") ?? key
+		guard let path = Bundle(for: Localization.self).path(forResource: "Virtusize", ofType: "bundle"),
+			  let virtusizeBundle = Bundle(path: path) else {
+			fatalError("Virtusize.bundle can not be found")
+		}
+
+		let localizableTableName = "VirtusizeLocalizable"
+
+		guard let localizableBundlePath = virtusizeBundle.path(forResource: language?.rawValue ?? Virtusize.params?.language.rawValue, ofType: "lproj"),
+			  let localizableBundle = Bundle(path: localizableBundlePath) else {
+			return virtusizeBundle.localizedString(forKey: key, value: nil, table: localizableTableName)
+		}
+
+		return localizableBundle.localizedString(forKey: key, value: nil, table: localizableTableName)
 	}
 }
+
+
