@@ -154,11 +154,11 @@ The `VirtusizeMessageHandler`  protocol has three required methods:
 
 ```Swift
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeControllerShouldClose(_ controller: VirtusizeViewController) {
+    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
         dismiss(animated: true, completion: nil)
     }
 
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent) {
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
 		    case "user-opened-widget":
@@ -170,7 +170,7 @@ extension ViewController: VirtusizeMessageHandler {
         }
     }
 
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError) {
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
         dismiss(animated: true, completion: nil)
     }
 }
