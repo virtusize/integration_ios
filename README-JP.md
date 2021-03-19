@@ -214,7 +214,7 @@ SDKをセットアップした後、`VirtusizeView`を追加して、顧客が�
 
 
 
-### 1. **バーチャサイズ・ボタン（Virtusize Button）
+### 1. バーチャサイズ・ボタン（Virtusize Button）
 
 #### (1) はじめに
 
