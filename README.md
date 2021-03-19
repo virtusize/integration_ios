@@ -236,18 +236,18 @@ There are two default styles of the Virtusize Button in our Virtusize SDK.
   
   - Or add the VirtusizeButton programmatically:
   
-  ```swift
-  let virtusizeButton = VirtusizeButton()
-  view.addSubview(virtusizeButton)
-  ```
+    ```swift
+    let virtusizeButton = VirtusizeButton()
+    view.addSubview(virtusizeButton)
+    ```
   
-  -  In order to use our default styles, set the property *style* of VirtusizeButton as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
+  - In order to use our default styles, set the property *style* of VirtusizeButton as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
 
-  ```swift
-  virtusizeButton.style = .TEAL
-  ```
+    ```swift
+    virtusizeButton.style = .TEAL
+    ```
 
-  You can also customize the button's style attributes. For example, the titlelabel's text, height, width, etc.
+  - You can also customize the button's style attributes. For example, the titlelabel's text, height, width, etc.
 
 **B. Connect the Virtusize button to the Virtusize API by using the** `Virtusize.setVirtusizeView` **method.**
 
@@ -401,15 +401,15 @@ This is a mini version of InPage which can be placed in your application. The di
 
 - ##### Default Fonts
 
-  - Japanese
+  - **Japanese**
     - Noto Sans CJK JP
     - 12sp (Message)
     - 10sp (Button)
-  - Korean
+  - **Korean**
     - Noto Sans CJK KR
     - 12sp (Message)
     - 10sp (Button)
-  - English
+  - **English**
     - Proxima Nova
     - 14sp (Message)
     - 12sp (Button)

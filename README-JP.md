@@ -112,7 +112,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-環境は、実装をしている環境を選択してください `.staging`,  `.global`, `.japan` ,もしくは`korea`から選択できます。
+環境は、実装をしている環境を選択してください `.staging`,  `.global`, `.japan` ,もしくは`.korea`から選択できます。
 
 **VirtusizeParamsBuilder**を使用して実装構成を変更することにより、`Virtusize.params`をセットアップできます。可能な構成方法を次の表に示します。
 
@@ -153,7 +153,7 @@ override func viewDidLoad() {
 `VirtusizeMessageHandler`プロトコルには3つの必須メソッドがあります。
 
 - `virtusizeController(_:didReceiveError:)`はコントローラがネットワークエラーやデシリアライズエラーを報告する際に呼び出されます。
-- `virtusizeController(_:didReceiveEvent:)`はコントローラとVirtusize APIの間でデータが交換されたときに呼び出されます。`VirtusizeEvent`は必須の名前(`name`)とオプションのデータ(`data`)プロパティを持つ構造体(`struct`)です。
+- `virtusizeController(_:didReceiveEvent:)`はコントローラとVirtusize APIの間でデータが交換されたときに呼び出されます。`VirtusizeEvent`は必須の名前（`name`）とオプションのデータ（`data`）プロパティを持つ構造体（`struct`）です。
 - `virtusizeControllerShouldClose(_)`はコントローラが退出を要求する際に呼び出されます。
 
 ```Swift
@@ -182,7 +182,7 @@ extension ViewController: VirtusizeMessageHandler {
 
 
 
-### 4. **クッキー共有の許可(オプション)**
+### 4. **クッキー共有の許可（オプション）**
 
 `VirtusizeWebViewController` はオプションで `processPool:WKProcessPool` パラメーターを受け取り、クッキーの共有を許可します。
 
@@ -193,7 +193,7 @@ Virtusize.processPool = WKProcessPool()
 
 
 
-### 5. **製品データチェックを聞く（オプション)**
+### 5. **製品データチェックを聞く（オプション）**
 
 ボタンが `externalId` で初期化されると、SDK は製品が解析されてデータベースに追加されたかどうかをチェックするために API を呼び出します。
 
@@ -214,7 +214,7 @@ SDKをセットアップした後、`VirtusizeView`を追加して、顧客が�
 
 
 
-### 1. **バーチャサイズ・ボタン**
+### 1. **バーチャサイズ・ボタン（Virtusize Button）
 
 #### (1) はじめに
 
@@ -246,18 +246,18 @@ SDKのVirtusizeボタンには2つのデフォルトスタイルがあります�
 
   - もしくはプログラムでVirtusizeButtonを追加します
 
-  ```swift
-  let virtusizeButton = VirtusizeButton()
-  view.addSubview(virtusizeButton)
-  ```
+    ```swift
+    let virtusizeButton = VirtusizeButton()
+    view.addSubview(virtusizeButton)
+    ```
 
-  -  バーチャサイズのデフォルトスタイルを使用するために、VirtusizeButtonのプロパティスタイルを`VirtusizeViewStyle.TEAL`または`VirtusizeViewStyle.BLACK`として設定してください。
+  - バーチャサイズのデフォルトスタイルを使用するために、VirtusizeButtonのプロパティスタイルを`VirtusizeViewStyle.TEAL`または`VirtusizeViewStyle.BLACK`として設定してください。
 
-  ```swift
-  virtusizeButton.style = .TEAL
-  ```
+    ```swift
+    virtusizeButton.style = .TEAL
+    ```
 
-  また、ボタンのスタイル属性をカスタマイズすることもできます。たとえば、タイトルラベルのテキスト、高さ、幅などです。
+  - また、ボタンのスタイル属性をカスタマイズすることもできます。たとえば、タイトルラベルのテキスト、高さ、幅などです。
 
 **B. `Virtusize.setVirtusizeView`メソッドを使用して、VirtusizeボタンをVirtusize APIに接続します。**
 
@@ -267,7 +267,7 @@ Virtusize.setVirtusizeView(self, virtusizeButton)
 
 
 
-### 2. **バーチャサイズ・インページ**
+### 2. **バーチャサイズ・インページ（Virtuzie InPage）**
 
 ### (1) はじめに
 
@@ -341,7 +341,7 @@ Virtusize SDKには2種類のInPageがあります。
 
       <img src="https://user-images.githubusercontent.com/7802052/92836755-ba956700-f417-11ea-8fb4-e9d9e2291031.png" style="zoom:70%;" />
 
-      動的な高さをコンテンツに依存させるためには、必ずInPage Standardの制約を設定してから、サイズインスペクタ(*the Size inspector*)→固有サイズ(*Intrinsic Size*)の検索→プレースホルダー(*Placeholder*)の選択を行ってください。
+      動的な高さをコンテンツに依存させるためには、必ずInPage Standardの制約を設定してから、サイズインスペクタ（*the Size inspector*）→固有サイズ（*Intrinsic Size*）の検索→プレースホルダー（*Placeholder*）の選択を行ってください。
 
       
 
@@ -416,15 +416,15 @@ Virtusize SDKには2種類のInPageがあります。
 
 - ##### デフォルトのフォント
 
-  - 日本語
+  - **日本語**
     - Noto Sans CJK JP
     - 12sp (メッセージ文言)
     - 10sp (ボタン内テキスト)
-  - 韓国語
+  - **韓国語**
     - Noto Sans CJK KR
     - 12sp (メッセージ文言)
     - 10sp (ボタン内テキスト)
-  - 英語
+  - **英語**
     - Proxima Nova
     - 14sp (メッセージ文言)
     - 12sp (ボタン内テキスト)
@@ -448,7 +448,7 @@ Virtusize SDKには2種類のInPageがあります。
 
       <img src="https://user-images.githubusercontent.com/7802052/92836772-bf5a1b00-f417-11ea-9ef3-03a9079a7834.png" style="zoom:70%;" />
 
-      動的な高さをコンテンツに依存させるためには、必ずInPage Miniの制約を設定してから、サイズインスペクタ(*the Size inspector*)→固有サイズ(*Intrinsic Size*)の検索→プレースホルダー(*Placeholder*)の選択を行ってください。
+      動的な高さをコンテンツに依存させるためには、必ずInPage Miniの制約を設定してから、サイズインスペクタ（*the Size inspector*）→固有サイズ（*Intrinsic Size*）の検索→プレースホルダー（*Placeholder*）の選択を行ってください。
 
       <img src="https://lh3.googleusercontent.com/wARRXwn4a7tHe4wSzqkqCmlAeVRzQSObBpHPU0G0UAYGjLen0laqc325pmoaxadXFcuzvCnDT9R3jhtq42SKF21KgcRkOQU7OkCdMXm9wGdmzPCDyyk9y9CuOmVJTG8co0_-E4QR" style="zoom:70%;" />
 
