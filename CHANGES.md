@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.1.2
+- Feature: Remove virtusizeControllerShouldClose to make VirtusizeMessageHandler optional
+
 ### 2.1.1
 - Bugfix: Ensure localization resources and font files are in Virtusize.framework
 
