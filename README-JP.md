@@ -47,7 +47,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.1.1'
+pod 'Virtusize', '~> 2.1.2'
 end
 ```
 
@@ -84,7 +84,7 @@ $ carthage update
 
 ## セットアップ
 
-#### 1. はじめに
+### 1. はじめに
 
 Virtusizeのプロパティをアプリのdelegateの`application(_:didFinishLaunchingWithOptions:)`に設定します。
 
@@ -127,7 +127,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 
 
-### 2. **商品詳細をセットする**
+### 2. 商品詳細をセットする
 
 商品詳細ページのビューコントローラでは、製品の詳細を設定する必要があります。
 
@@ -148,20 +148,15 @@ override func viewDidLoad() {
 
 
 
-### 3. VirtusizeMessageHandlerの実装
+### 3. VirtusizeMessageHandlerの実装（オプション）
 
-`VirtusizeMessageHandler`プロトコルには3つの必須メソッドがあります。
+`VirtusizeMessageHandler`プロトコルには2つの必須メソッドがあります。
 
 - `virtusizeController(_:didReceiveError:)`はコントローラがネットワークエラーやデシリアライズエラーを報告する際に呼び出されます。
 - `virtusizeController(_:didReceiveEvent:)`はコントローラとVirtusize APIの間でデータが交換されたときに呼び出されます。`VirtusizeEvent`は必須の名前（`name`）とオプションのデータ（`data`）プロパティを持つ構造体（`struct`）です。
-- `virtusizeControllerShouldClose(_)`はコントローラが退出を要求する際に呼び出されます。
 
 ```Swift
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
@@ -175,14 +170,14 @@ extension ViewController: VirtusizeMessageHandler {
     }
 
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
-        dismiss(animated: true, completion: nil)
+        print(error)
     }
 }
 ```
 
 
 
-### 4. **クッキー共有の許可（オプション）**
+### 4. クッキー共有の許可（オプション）
 
 `VirtusizeWebViewController` はオプションで `processPool:WKProcessPool` パラメーターを受け取り、クッキーの共有を許可します。
 
@@ -193,7 +188,7 @@ Virtusize.processPool = WKProcessPool()
 
 
 
-### 5. **製品データチェックを聞く（オプション）**
+### 5. 製品データチェックを聞く（オプション）
 
 ボタンが `externalId` で初期化されると、SDK は製品が解析されてデータベースに追加されたかどうかをチェックするために API を呼び出します。
 

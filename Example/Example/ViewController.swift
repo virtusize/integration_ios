@@ -159,10 +159,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
@@ -177,6 +173,5 @@ extension ViewController: VirtusizeMessageHandler {
 
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
         print(error)
-        dismiss(animated: true, completion: nil)
     }
 }
