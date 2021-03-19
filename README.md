@@ -398,16 +398,16 @@ This is a mini version of InPage which can be placed in your application. The di
 
   - **Japanese**
     - Noto Sans CJK JP
-    - 12sp (Message)
-    - 10sp (Button)
+    - 12pt (Message)
+    - 10pt (Button)
   - **Korean**
     - Noto Sans CJK KR
-    - 12sp (Message)
-    - 10sp (Button)
+    - 12pt (Message)
+    - 10pt (Button)
   - **English**
     - Proxima Nova
-    - 14sp (Message)
-    - 12sp (Button)
+    - 14pt (Message)
+    - 12pt (Button)
 
 - ##### UI customization
 
