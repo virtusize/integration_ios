@@ -13,7 +13,7 @@ measurements of an item they want to buy (on a retailer's product page) with an 
 This is done by comparing the silhouettes of the retailer's product with the silhouette of the customer's reference Item.
 Virtusize is a widget which opens when clicking on the Virtusize button, which is located next to the size selection on the product page.
 
-Read more about Virtusize at https://www.virtusize.com
+Read more about Virtusize at [https://www.virtusize.jp](https://www.virtusize.jp/)
 
 You need a unique API key and an Admin account, only available to Virtusize customers. [Contact our sales team](mailto:sales@virtusize.com) to become a customer.
 
@@ -56,6 +56,8 @@ end
 ```bash
 $ pod install
 ```
+
+
 ### Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) dependency managerをインストールして使用します。下記のコマンドでインストールが可能です。
@@ -82,7 +84,7 @@ $ carthage update
 
 ## セットアップ
 
-#### 1. Set Up the Virtusize Properties in the AppDelegate
+#### 1. はじめに
 
 Virtusizeのプロパティをアプリのdelegateの`application(_:didFinishLaunchingWithOptions:)`に設定します。
 
@@ -105,179 +107,386 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
         // including "modelInfo", "generalFit", "brandSizing" and "material".
         .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
         .build()
-        return true
+
+    return true
 }
 ```
 
-##### (1) Virtusize.APIKey* 必須
+環境は、実装をしている環境を選択してください `.staging`,  `.global`, `.japan` ,もしくは`korea`から選択できます。
 
-各クライアント様ごとに割り当てられたAPIキーを設定します
+**VirtusizeParamsBuilder**を使用して実装構成を変更することにより、`Virtusize.params`をセットアップできます。可能な構成方法を次の表に示します。
 
-##### (2) Virtusize.userID*（[Order API](#the-order-api)が使われている場合必須）
+**VirtusizeParamsBuilder**
 
-String形式にてユーザーがアプリでログインしている場合にUser IDを設定。アプリローンチ後にユーザーIDを設定することも可能です。
-
-##### (3) Virtusize.environment
-
-リージョンの設定が可能です。デフォルトでは.`GLOBAL`に設定されています。
-
-##### 実装可能例：
-
-`VirtusizeEnvironment.staging`, 
-
-`VirtusizeEnvironment.global`, 
-
-`VirtusizeEnvironment.japan` or 
-
-`VirtusizeEnvironment.korea`.
-
-##### (4) Virtusize.params
-
- Virtusize.paramsは**VirtusizeParamsBuilder**を使って設定可能です。こちらで実装のコンフィギュレーションを変更できます。設定例として下記をご参照ください。
-
-- **setLanguage**
-
-  実装する言語を設定します。デフォルトではvirtusize environmentの言語設定に従います。
-
-  **実装可能例：**
-
-  `VirtusizeLanguage.ENGLISH`, 
-
-  `VirtusizeLanguage.JAPANESE` and 
-
-  `VirtusizeLanguage.KOREAN`.
-
-- **setShowSGI**
-
-  実装がSGIフローを利用してユーザーにワードローブへのSGIを利用した追加機能を使わせるかどうかをブーリアン値で設定します。**SGIを使用するかどうかはご担当者にご相談ください。**デフォルトでは`false`に設定されています。
-
-- **setAllowedLanguages**
-
-  ユーザーが切り替え可能な言語を設定します。デフォルトでは全ての言語に切り替え可能になっています。
-
-- **setDetailsPanelCards**
-
-  ユーザーが切り替え可能な言語を設定します。デフォルトでは全ての言語に切り替え可能になっています。
-
-  **設定可能な項目：** 
-
-  `VirtusizeInfoCategory.MODELINFO`, 
-
-  `VirtusizeInfoCategory.GENERALFIT`, 
-
-  `VirtusizeInfoCategory.BRANDSIZING` and 
-
-  `VirtusizeInfoCategory.MATERIAL`.
+| 項目                 | データ形式                          | 例                                                           | 説明                                                         | 要件                                                         |
+| -------------------- | ----------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| setLanguage          | VirtusizeLanguage                   | setLanguage(.JAPANESE)                                       | 実装する際に使用する初期言語をセットします。選択可能言語は以下：`VirtusizeLanguage.ENGLISH`, `VirtusizeLanguage.JAPANESE` および `VirtusizeLanguage.KOREAN` | 特になし。デフォルトでは、初期言語はVirtusizeの環境に基づいて設定されます。 |
+| setShowSGI           | Boolean                             | setShowSGI(true)                                             | ユーザーが生成したアイテムをワードローブに追加する方法として、SGIを取得の上、SGIフローを使用するかどうかを決定します。 | 特になし。デフォルトではShowSGIはfalseに設定されています。   |
+| setAllowedLanguages  | `VirtusizeLanguage`列挙のリスト     | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | ユーザーが言語選択ボタンより選択できる言語                   | 特になし。デフォルトでは、英語、日本語、韓国語など、表示可能なすべての言語が表示されるようになっています。 |
+| setDetailsPanelCards | `VirtusizeInfoCategory`列挙のリスト | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | 商品詳細タブに表示する情報のカテゴリ。表示可能カテゴリは以下： `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` および `VirtusizeInfoCategory.MATERIAL` | 特になし。デフォルトでは、商品詳細タブに表示可能なすべての情報カテゴリが表示されます。 |
 
 
 
-#### 2. Virtusize Buttonの追加
+### 2. **商品詳細をセットする**
 
-バーチャサイズのボタンはバーチャサイズのサービスを立ち上げるUIエレメントです。サイト上の商品詳細ページでの利用のためにはXcodeのInterface Builder Storyboardにて`VirtusizeButton`を追加し、をIdentity inspector内でCustom Classを`VirtusizeButton`に設定(下図参照)し、ロード時には非表示になっていることを確認してください。
+商品詳細ページのビューコントローラでは、製品の詳細を設定する必要があります。
 
-![](https://user-images.githubusercontent.com/7802052/92836674-a487a680-f417-11ea-81d0-5aa32390167a.png)
-
-
-
-#### 3. Virtusize Buttonの設定
-
-弊社サービスの比較画面をどの画面で出すのかをview controller内で設定する方法は下記です。
-
-​	(1) `VirtusizeButton`を設定する
-
-​	(2) 比較画面内で商品画像を表示するために`productImageURL`を渡すよう設定
-
-​	(3) 御社むけAPIキーの中で商品を特定するために`exernalId`を渡すよう設定
-
-​	(4) ボタンが押下されたときにVirtusize view controllerを表示
-
-​	(5) View controller内の`VirtusizeEventsDelegate`をイベントとエラーレポートのために設定する
+- 比較ビューを生成するために `imageURL` を渡します。
+- Virtusize APIで製品を参照するために使用される`exernalId`を渡します。
 
 ``` Swift
-@IBOutlet weak var virtusizeButton: VirtusizeButton!
-
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    checkTheFitButton.storeProduct = VirtusizeProduct(
+    // Set up the product information in order to populate the Virtusize view
+    Virtusize.product = VirtusizeProduct(
         externalId: "vs_dress",
-        imageURL: URL(string: "http://www.example.com/image.jpg"))
-
-    // You can apply our default button styles
-    // either .BLACK
-    checkTheFitButton.applyDefaultStyle(.BLACK)
-    // or .TEAL
-    checkTheFitButton.applyDefaultStyle(.TEAL)
-}
-
-@IBAction func checkTheFit() {
-    if let virtusize = VirtusizeViewController(
-        handler: self) {
-        present(virtusize, animated: true, completion: nil)
-    }
+        imageURL: URL(string: "http://www.example.com/image.jpg")
+    )
 }
 ```
 
 
 
-#### 4. Cookie情報共有の許可
+### 3. VirtusizeMessageHandlerの実装
 
-`VirtusizeViewController`はオプションとしてCookie情報を共有するための`processPool:WKProcessPool`を許可することができます。
+`VirtusizeMessageHandler`プロトコルには3つの必須メソッドがあります。
+
+- `virtusizeController(_:didReceiveError:)`はコントローラがネットワークエラーやデシリアライズエラーを報告する際に呼び出されます。
+- `virtusizeController(_:didReceiveEvent:)`はコントローラとVirtusize APIの間でデータが交換されたときに呼び出されます。`VirtusizeEvent`は必須の名前(`name`)とオプションのデータ(`data`)プロパティを持つ構造体(`struct`)です。
+- `virtusizeControllerShouldClose(_)`はコントローラが退出を要求する際に呼び出されます。
 
 ```Swift
-if let virtusize = VirtusizeViewController(
-    handler: self,
-    processPool: processPool) {
-    ...
+extension ViewController: VirtusizeMessageHandler {
+    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
+        print(event)
+        switch event.name {
+		    case "user-opened-widget":
+            return
+		    case "user-opened-panel-compare":
+            return
+		    default:
+            return
+        }
+    }
+
+    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
+        dismiss(animated: true, completion: nil)
+    }
 }
 ```
 
-#### 5. VirtusizeMessageHandler
 
-`VirtusizeMessageHandler`のプロトコルは3つの必須項目があります。
 
-- `virtusizeController(_:didReceiveError:)`はコントローラーがネットワークエラーやデシリアライズのエラーをレポートするときに呼び出されます。
-- `virtusizeController(_:didReceiveEvent:)`はデータがコントローラとVirtusize APIの間でやりとりされたときに呼び出されます。`VirtusizeEvent`は必須の`name`とオプションの`data`プロパティと共にある`struct`です。
-- `virtusizeControllerShouldClose(_)`はコントローラが無視されるようリクエストを受けた際に呼び出されます。
+### 4. **クッキー共有の許可(オプション)**
+
+`VirtusizeWebViewController` はオプションで `processPool:WKProcessPool` パラメーターを受け取り、クッキーの共有を許可します。
+
+```Swift
+// Optional: Set up WKProcessPool to allow cookie sharing.
+Virtusize.processPool = WKProcessPool()
+```
+
+
+
+### 5. **製品データチェックを聞く（オプション)**
+
+ボタンが `externalId` で初期化されると、SDK は製品が解析されてデータベースに追加されたかどうかをチェックするために API を呼び出します。
+
+そのAPIコールをデバッグするために、`NotificationCenter`をサブスクライブし、2つの`Notification.Name`エイリアスを観ることができます。
+
+- `Virtusize.productDataCheckDidFai`lは、失敗の原因を持つメッセージを含む`UserInfo`を受け取ります。
+- `Virtusize.productDataCheckDidSucceed`は、呼び出しが成功した場合に送信されます。
+
+チェックに失敗した場合は、ボタンが非表示になります。
+
+サンプルプロジェクトでは、可能な実装を1つ確認することができます。
+
+
+
+## Virtusize Views
+
+SDKをセットアップした後、`VirtusizeView`を追加して、顧客が理想的なサイズを見つけられるようにします。Virtusize SDKはユーザーが使用するために2つの主要なUIコンポーネントを提供します。:
+
+
+
+### 1. **バーチャサイズ・ボタン**
+
+#### (1) はじめに
+
+VirtusizeButtonはこのSDKの中でもっとシンプルなUIのボタンです。ユーザーが正しいサイズを見つけられるように、ウェブビューでアプリケーションを開きます。
+
+
+
+#### (2) デフォルトスタイル
+
+SDKのVirtusizeボタンには2つのデフォルトスタイルがあります。
+
+|                          Teal Theme                          |                         Black Theme                          |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://user-images.githubusercontent.com/7802052/92671785-22817a00-f352-11ea-8ce9-6b4f7fcb43c4.png" /> | <img src="https://user-images.githubusercontent.com/7802052/92671771-172e4e80-f352-11ea-8443-dcb8b05f5a07.png" /> |
+
+もしご希望であれば、ボタンのスタイルもカスタマイズすることができます。
+
+
+
+#### (3) 使用方法
+
+**A. Virtusizeボタンの追加**
+
+- ストアの商品商品ページでVirtusize Buttonを使用するには、以下の方法があります。
+
+  - XcodeのInterface Builder StoryboardでUIButtonを作成し、Identity inspectorでCustom Classを`VirtusizeButton`に設定し、読み込んでいる時にはボタンが非表示になるようにします。
+
+    <img src="https://user-images.githubusercontent.com/7802052/92836674-a487a680-f417-11ea-81d0-5aa32390167a.png" style="zoom:70%;" />
+
+  - もしくはプログラムでVirtusizeButtonを追加します
+
+  ```swift
+  let virtusizeButton = VirtusizeButton()
+  view.addSubview(virtusizeButton)
+  ```
+
+  -  バーチャサイズのデフォルトスタイルを使用するために、VirtusizeButtonのプロパティスタイルを`VirtusizeViewStyle.TEAL`または`VirtusizeViewStyle.BLACK`として設定してください。
+
+  ```swift
+  virtusizeButton.style = .TEAL
+  ```
+
+  また、ボタンのスタイル属性をカスタマイズすることもできます。たとえば、タイトルラベルのテキスト、高さ、幅などです。
+
+**B. `Virtusize.setVirtusizeView`メソッドを使用して、VirtusizeボタンをVirtusize APIに接続します。**
 
 ```swift
-extension ViewController: VirtusizeMessageHandler {
-    func virtusizeControllerShouldClose(_ controller: VirtusizeViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent) {
-        print(event)
-		switch event.name {
-		case "user-opened-widget":
-            return
-		case "user-opened-panel-compare":
-            return
-		default:
-            return
-		}
-	}
-
-    func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError) {
-        dismiss(animated: true, completion: nil)
-    }
-}
+Virtusize.setVirtusizeView(self, virtusizeButton)
 ```
 
 
 
-#### 6. Product Data Checkに関して
+### 2. **バーチャサイズ・インページ**
 
-ボタンが`exernalId`と共に初期化された際、弊社のproduct data check APIはその商品がクロールされていてデータベースに入っているかを確認します。
+### (1) はじめに
 
-同APIが呼び出されているかデバッグするためには2つの`Notification.Name`を`NotificationCenter`上で確認（subscribe）してください。
+Virtusize InPageは、私たちのサービスのスタートボタンのような役割を果たすボタンです。また、このボタンは、お客様が正しいサイズを見つけるためのフィッティングガイドとしても機能します。
 
-- `Virtusize.productDataCheckDidFail`, こちらは`UserInfo`が失敗理由と共に含まれています。
-- `Virtusize.productDataCheckDidSucceed`こちらは呼び出しが成功した際に送られます。
+##### **InPageの種類**
 
-もしData checkが失敗した場合、ボタンは非表示となります。
+Virtusize SDKには2種類のInPageがあります。
 
-プロジェクト例(example project)で実装例をご確認ください。
+|                       InPage Standard                        |                         InPage Mini                          |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![InPageStandard](https://user-images.githubusercontent.com/7802052/92671977-9cb1fe80-f352-11ea-803b-5e3cb3469be4.png) | ![InPageMini](https://user-images.githubusercontent.com/7802052/92671979-9e7bc200-f352-11ea-8594-ed441649855c.png) |
+
+⚠️**注意事項**⚠️
+
+1. InPageはVirtusizeボタンと一緒に導入することはできません。オンラインショップでは、InPageかVirtusizeボタンのどちらかをお選びください。
+2. InPage Miniは、必ずInPage Standardと組み合わせてご利用ください。
+
+
+
+### (2) InPage Standard
+
+#### A. デザインガイドライン
+
+- ##### デフォルトデザイン
+
+  デフォルトデザインは2種類あります。
+
+  |                          Teal Theme                          |                         Black Theme                          |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | ![InPageStandardTeal](https://user-images.githubusercontent.com/7802052/92672035-b9e6cd00-f352-11ea-9e9e-5385a19e96da.png) | ![InPageStandardBlack](https://user-images.githubusercontent.com/7802052/92672031-b81d0980-f352-11ea-8b7a-564dd6c2a7f1.png) |
+
+- ##### **レイアウトのバリエーション**
+
+  設定可能なレイアウト例
+
+  |               1 thumbnail + 2 lines of message               |              2 thumbnails + 2 lines of message               |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | ![1 thumbnail + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399368-5e879300-1930-11eb-8b77-b49e06813550.png) | ![2 thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399370-5f202980-1930-11eb-9a2d-7b71714aa7b4.png) |
+  |             **1 thumbnail + 1 line of message**              |        **2 animated thumbnails + 2 lines of message**        |
+  | ![1 thumbnail + 1 line of message](https://user-images.githubusercontent.com/7802052/97399373-5f202980-1930-11eb-81fe-9946b656eb4c.png) | ![2 animated thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399355-59c2df00-1930-11eb-8a52-292956b8762d.gif) |
+
+- ##### **推奨設定箇所**
+
+  - サイズテーブルの近く
+
+  - サイズ情報掲載箇所
+
+    <img src="https://user-images.githubusercontent.com/7802052/92672185-15b15600-f353-11ea-921d-397f207cf616.png" style="zoom:50%;" />
+
+- ##### **UI カスタマイゼーション**
+
+  - **変更可:**
+    - CTAボタンの背景色（[WebAIM contrast test](https://webaim.org/resources/contrastchecker/)で問題がなければ）
+    - Inpageの横幅（アプリの横幅に合わせて変更可）
+  - **変更不可:**
+    - 形状やスペースなどのインターフェイスコンポーネント
+    - フォント
+    - CTA ボタンの形状
+    - テキスト文言
+    - ボタンシャドウ（削除も不可）
+    - VIRTUSIZE ロゴと プライバシーポリシーのテキストが入ったフッター（削除も不可）
+
+#### B. 使用方法
+
+- **VirtusizeInPageStandardの追加**
+
+  - Virtusize InPage Standardをサイトの商品詳細ページで利用する場合は以下が可能：
+
+    - XcodeのInterface Builderで*UIView*を作成し、Identity inspectorでCustom Classを`VirtusizeInPageStandard`に設定し、読み込んでいる時にはビューが非表示になるようにします。
+
+      <img src="https://user-images.githubusercontent.com/7802052/92836755-ba956700-f417-11ea-8fb4-e9d9e2291031.png" style="zoom:70%;" />
+
+      動的な高さをコンテンツに依存させるためには、必ずInPage Standardの制約を設定してから、サイズインスペクタ(*the Size inspector*)→固有サイズ(*Intrinsic Size*)の検索→プレースホルダー(*Placeholder*)の選択を行ってください。
+
+      
+
+      <img src="https://user-images.githubusercontent.com/7802052/92836828-ce40cd80-f417-11ea-94a7-999cb3e063a4.png" style="zoom:70%;" />
+
+    - もしくは、Virtusize InPage Standardをプログラム的に追加:
+
+      ```swift
+      let inPageStandard = VirtusizeInPageStandard()
+      view.addSubview(inPageStandard)
+      ```
+
+  - バーチャサイズのデフォルトスタイルを使用するために、VirtusizeInPageStandardのプロパティスタイルを`VirtusizeViewStyle.TEAL`または`VirtusizeViewStyle.BLACK`として設定してください。
+
+    CTAボタンの背景色を変更したい場合は、`inPageStandardButtonBackgroundColor`プロパティを使用して色を設定できます。
+
+    ```swift
+    // Set the InPage Standard style to VirtusizeStyle.BLACK
+    inPageStandard.style = .BLACK
+    // Set the background color of the CTA button to UIColor.blue
+    inPageStandard.inPageStandardButtonBackgroundColor = UIColor.blue
+    ```
+
+    ```swift
+    // Set the InPage Standard style to VirtusizeStyle.TEAL
+    inPageStandard.style = .TEAL
+    // Set the background color of the CTA button to a custom color usign ColorLiteral
+    inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+    ```
+
+    VirtusizeInPageStandardをプログラムで追加し、アプリ画面の端とVirtusizeInPageStandardの間に水平方向の余白を設定したい場合は、`setupHorizontalMargin`を使用します。
+
+    InPage Standardに直接幅を設定したい場合は、auto layout constraintsを使用します。
+
+    ```swift
+    // Set the horizontal margins to 16
+    inPageStandard.setupHorizontalMargin(view: view, margin: 16)
+    
+    // Or set the direct width for InPage Standard programtically
+    inPageStandard.translatesAutoresizingMaskIntoConstraints = false
+    inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    inPageStandard.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+
+- `Virtusize.setVirtusizeView`**メソッドを使用して、Virtusize InPage StandardをVirtusize APIに接続します。**
+
+  ```swift
+  Virtusize.setVirtusizeView(self, inPageStandard)
+  ```
+
+
+
+### (3) InPage Mini
+
+こちらは、InPageのミニバージョンで、アプリに配置することができます。目立たないデザインなので、お客様が商品画像やサイズ表を閲覧するようなレイアウトに適しています。
+
+#### A. **デザインガイドライン**
+
+- ##### デフォルト デザイン
+
+  ２種類のでフォルトデザインを用意しています。
+
+  |                          Teal Theme                          |                         Black Theme                          |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | ![InPageMiniTeal](https://user-images.githubusercontent.com/7802052/92672234-2d88da00-f353-11ea-99d9-b9e9b6aa5620.png) | ![InPageMiniBlack](https://user-images.githubusercontent.com/7802052/92672232-2c57ad00-f353-11ea-80f6-55a9c72fb0b5.png) |
+
+- ##### **推奨設置箇所**
+
+  |                 Underneath the product image                 |              Underneath or near the size table               |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | <img src="https://user-images.githubusercontent.com/7802052/92672261-3c6f8c80-f353-11ea-995c-ede56e0aacc3.png" /> | <img src="https://user-images.githubusercontent.com/7802052/92672266-40031380-f353-11ea-8f63-a67c9cf46c68.png" /> |
+
+- ##### デフォルトのフォント
+
+  - 日本語
+    - Noto Sans CJK JP
+    - 12sp (メッセージ文言)
+    - 10sp (ボタン内テキスト)
+  - 韓国語
+    - Noto Sans CJK KR
+    - 12sp (メッセージ文言)
+    - 10sp (ボタン内テキスト)
+  - 英語
+    - Proxima Nova
+    - 14sp (メッセージ文言)
+    - 12sp (ボタン内テキスト)
+
+- ##### UI カスタマイゼーション
+
+  - **変更可:**
+    - CTAボタンの背景色（[WebAIM contrast test](https://webaim.org/resources/contrastchecker/)で問題がなければ）
+  - **変更不可:**
+    - フォント
+    - CTA ボタンの形状
+    - テキスト文言
+
+#### B. 使用方法
+
+- **VirtusizeInPageMiniの追加**
+
+  - Virtusize InPage Miniをサイトの商品詳細ページで利用する場合は以下が可能：
+
+    - XcodeのInterface Builderで*UIView*を作成し、Identity inspectorでCustom Classを`VirtusizeInPageMini`に設定し、読み込んでいる時にはビューが非表示になるようにします。
+
+      <img src="https://user-images.githubusercontent.com/7802052/92836772-bf5a1b00-f417-11ea-9ef3-03a9079a7834.png" style="zoom:70%;" />
+
+      動的な高さをコンテンツに依存させるためには、必ずInPage Miniの制約を設定してから、サイズインスペクタ(*the Size inspector*)→固有サイズ(*Intrinsic Size*)の検索→プレースホルダー(*Placeholder*)の選択を行ってください。
+
+      <img src="https://lh3.googleusercontent.com/wARRXwn4a7tHe4wSzqkqCmlAeVRzQSObBpHPU0G0UAYGjLen0laqc325pmoaxadXFcuzvCnDT9R3jhtq42SKF21KgcRkOQU7OkCdMXm9wGdmzPCDyyk9y9CuOmVJTG8co0_-E4QR" style="zoom:70%;" />
+
+    - もしくは、Virtusize InPage Miniをプログラム的に追加:
+
+      ```swift
+      let inPageMini = VirtusizeInPageMini()
+      view.addSubview(inPageMini)
+      ```
+
+  - バーチャサイズのデフォルトスタイルを使用するために、VirtusizeInPageMiniのプロパティスタイルを`VirtusizeViewStyle.TEAL`または`VirtusizeViewStyle.BLACK`として設定してください。
+
+    バーの背景色を変更したい場合は、`inPageMiniBackgroundColor`プロパティで色を設定します。
+
+    ```swift
+    inPageMini.style = .TEAL
+    inPageMini.inPageMiniBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+    ```
+
+    VirtusizeInPageMiniをプログラムで追加し、アプリ画面の端とVirtusizeInPageMiniの間に水平方向の余白を設定したい場合は、`setupHorizontalMargin`を使用します。
+
+    InPage Miniに直接幅を設定したい場合は、auto layout constraintsを使用します。
+
+    ```swift
+    // Set the horizontal margins to 16
+    inPageMini.setupHorizontalMargin(view: view, margin: 16)
+    
+    // Or set the direct width for InPage Standard programtically
+    inPageMini.translatesAutoresizingMaskIntoConstraints = false
+    inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    inPageMini.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+
+- `Virtusize.setVirtusizeView`**メソッドを使用して、Virtusize InPage MiniをVirtusize APIに接続します。**
+
+  ```swift
+  Virtusize.setVirtusizeView(self, inPageMini)
+  ```
 
 
 
@@ -306,7 +515,7 @@ Virtusize.userID = "123"
 **注意:** * 表記のある場合項目は必須項目です
 
 **VirtusizeOrder**
-| **項目**  | **データ形式**                     | **例**        | **詳細**                   |
+| **項目** | **データ形式**                     | **例**        | **詳細**                   |
 | ---------------- | -------------------------------------- | ------------------- | ----------------------------------- |
 | externalOrderId* | String                                 | "20200601586"       | クライアント様でご使用している注文IDです |
 | items*           | `VirtusizeOrderItem`オブジェクトのリスト | 次項の表参照 | 注文商品の詳細リストです |
