@@ -144,21 +144,16 @@ override func viewDidLoad() {
 }
 ```
 
-### 3. Implement VirtusizeMessageHandler
+### 3. Implement VirtusizeMessageHandler (Optional)
 
-The `VirtusizeMessageHandler`  protocol has three required methods:
+The `VirtusizeMessageHandler`  protocol has two required methods:
 
 - `virtusizeController(_:didReceiveError:)` is called when the controller is reporting a network or deserialisation error.
 - `virtusizeController(_:didReceiveEvent:)` is called when data is exchanged between
   the controller and the Virtusize API. `VirtusizeEvent` is a `struct` with a required `name` and an optional `data` property.
-- `virtusizeControllerShouldClose(_) `is called when the controller is requesting to be dismissed.
 
 ```Swift
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
@@ -172,7 +167,7 @@ extension ViewController: VirtusizeMessageHandler {
     }
 
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
-        dismiss(animated: true, completion: nil)
+        print(error)
     }
 }
 ```

@@ -30,7 +30,6 @@ import WebKit
 public protocol VirtusizeMessageHandler: class {
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError)
     func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent)
-    func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController)
 }
 
 /// This `UIViewController` represents the Virtusize Window
@@ -128,11 +127,12 @@ public final class VirtusizeWebViewController: UIViewController {
     // MARK: Error Handling
     public func reportError(error: VirtusizeError) {
         messageHandler?.virtusizeController(self, didReceiveError: error)
+		dismiss(animated: true, completion: nil)
     }
 
     // MARK: Closing view
     @objc internal func shouldClose() {
-        messageHandler?.virtusizeControllerShouldClose(self)
+		dismiss(animated: true, completion: nil)
     }
 }
 
