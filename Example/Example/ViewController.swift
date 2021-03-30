@@ -88,7 +88,7 @@ class ViewController: UIViewController {
         inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
         // You can set the horizontal margins by using `setupHorizontalMargin`
         inPageMini2.setHorizontalMargin(view: view, margin: 16)
-		// You can set the font sizes for the InPage texts
+		// You can set the font sizes for the InPage Mini texts
 		inPageMini2.messageFontSize = 12
 		inPageMini2.buttonFontSize = 10
         // Set up constraints if needed
@@ -106,7 +106,7 @@ class ViewController: UIViewController {
         inPageStandard.style = .BLACK
 		// You can set the background color of the size check button
         inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
-		// You can set the font sizes for the InPage Mini texts
+		// You can set the font sizes for the InPage texts
 		inPageStandard.buttonFontSize = 12
 		inPageStandard.messageFontSize = 12
         // Set up constraints if needed
