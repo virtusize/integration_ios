@@ -84,7 +84,6 @@ internal struct APIRequest {
 			return request
 		}
         request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")
-		request.addValue("", forHTTPHeaderField: "Cookie")
         return request
     }
 
