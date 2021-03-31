@@ -86,7 +86,7 @@ class ViewController: UIViewController {
         view.addSubview(inPageMini2)
         Virtusize.setVirtusizeView(self, inPageMini2)
         inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
-        // You can set the horizontal margins by using `setupHorizontalMargin`
+        // You can set the horizontal margins by using `setHorizontalMargin`
         inPageMini2.setHorizontalMargin(view: view, margin: 16)
 		// You can set the font sizes for the InPage Mini texts
 		inPageMini2.messageFontSize = 12
@@ -100,7 +100,7 @@ class ViewController: UIViewController {
         let inPageStandard = VirtusizeInPageStandard()
         view.addSubview(inPageStandard)
         Virtusize.setVirtusizeView(self, inPageStandard)
-        // You can set the horizontal margins by using `setupHorizontalMargin`
+        // You can set the horizontal margins by using `setHorizontalMargin`
         inPageStandard.setHorizontalMargin(view: view, margin: 16)
         // You can set the Virtusize InPage Standard style
         inPageStandard.style = .BLACK
