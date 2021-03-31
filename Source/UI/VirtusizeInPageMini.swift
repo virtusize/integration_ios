@@ -32,17 +32,31 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         }
     }
 
+	/// The property to set the font size of the size check button
+	public var buttonFontSize: CGFloat? {
+		didSet {
+			setStyle()
+		}
+	}
+
+	/// The property to set the font size of the message
+	public var messageFontSize: CGFloat? {
+		didSet {
+			setStyle()
+		}
+	}
+
+	/// The function to set the horizontal margin between the edges of the app screen and the InPage Mini view
+	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
+		setHorizontalMargins(view: view, margin: margin)
+	}
+
     private let messageAndButtonMargin: CGFloat = 8
     private let verticalMargin: CGFloat = 5
 
     private let inPageMiniImageView: UIImageView = UIImageView()
     private let inPageMiniMessageLabel: UILabel = UILabel()
     private let inPageMiniSizeCheckButton: UIButton = UIButton()
-
-    /// The function to set the horizontal margin between the edges of the app screen and the InPage Mini view
-    public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
-        setHorizontalMargins(view: view, margin: margin)
-    }
 
     internal override func setup() {
         addSubviews()
@@ -180,19 +194,21 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
     private func setupTextsStyle(messageLabelIsBold: Bool = false) {
         let displayLanguage = Virtusize.params?.language
+		let messageTextSize = messageFontSize ?? 12
+		let buttonTextSize = buttonFontSize ?? 10
         switch displayLanguage {
         case .ENGLISH:
-            inPageMiniMessageLabel.font = Font.proximaNova(size: 14, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: 12)
+            inPageMiniMessageLabel.font = Font.proximaNova(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: buttonTextSize + 2)
         case .JAPANESE:
-            inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: 12, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: 10)
+            inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
         case .KOREAN:
-            inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: 12, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: 10)
+            inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
         default:
-            inPageMiniMessageLabel.font = Font.proximaNova(size: 14, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: 12)
+            inPageMiniMessageLabel.font = Font.proximaNova(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: buttonTextSize + 2)
         }
     }
 
