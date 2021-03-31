@@ -447,14 +447,14 @@ This is a mini version of InPage which can be placed in your application. The di
 
   - In order to use our default styles, set the property *style* of VirtusizeInPageMini as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
 
-    If you'd like to change the background color of the bar, you can use the property `inPageMiniBackgroundColor` to set the color.
+  - If you'd like to change the background color of the bar, you can use the property `inPageMiniBackgroundColor` to set the color.
 
     ```swift
     inPageMini.style = .TEAL
     inPageMini.inPageMiniBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     ```
 
-    When you add the VirtusizeInPageMini programtically and you'd like to set up the horizontal margins between the edges of the app screen and the VirtusizeInPageMini, you can use `setHorizontalMargin` 
+  - When you add the VirtusizeInPageMini programtically and you'd like to set up the horizontal margins between the edges of the app screen and the VirtusizeInPageMini, you can use `setHorizontalMargin` 
 
     If you'd like to set a direct width for InPage Mini, use auto layout constraints.
 
@@ -466,6 +466,13 @@ This is a mini version of InPage which can be placed in your application. The di
     inPageMini.translatesAutoresizingMaskIntoConstraints = false
     inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     inPageMini.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+
+  - If you'd like to change the font sizes of InPage Mini, you can use the properties `messageFontSize` and `buttonFontSize`.
+
+    ```swift
+    inPageMini.messageFontSize = 12
+    inPageMini.buttonFontSize = 10
     ```
 
 - **Connect the Virtusize InPage Mini to the Virtusize API by using the**  `Virtusize.setVirtusizeView` **method.**
