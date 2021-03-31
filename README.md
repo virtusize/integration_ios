@@ -56,6 +56,7 @@ end
 Then, run the following command:
 
 ```bash
+$ pod repo update
 $ pod install
 ```
 ### Carthage
