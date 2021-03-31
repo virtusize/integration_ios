@@ -33,6 +33,7 @@ internal enum APIEndpoints {
     case storeProducts(productId: Int)
 	case productTypes
 	case sessions
+	case user
 	case userProducts
 	case userBodyMeasurements
     case getSize
@@ -76,6 +77,9 @@ internal enum APIEndpoints {
 
         case .sessions:
 			components.path = "/a/api/v3/sessions"
+
+        case .user:
+			components.path = "/a/api/v3/users/me"
 
         case .userProducts:
             components.path = "/a/api/v3/user-products"

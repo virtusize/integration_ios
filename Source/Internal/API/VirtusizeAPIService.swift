@@ -286,6 +286,13 @@ internal class VirtusizeAPIService {
 		return getAPIResultAsync(request: request, type: UserSessionInfo.self)
 	}
 
+	internal static func deleteUserDataAsync() -> APIResult<String> {
+		guard let request = APIRequest.deleteUserData() else {
+			return .failure(nil)
+		}
+		return getAPIResultAsync(request: request, type: nil)
+	}
+
 	/// The API request for getting the list of user products from the Virtusize server
 	///
 	/// - Returns: the user product data in the type of `VirtusizeInternalProduct`

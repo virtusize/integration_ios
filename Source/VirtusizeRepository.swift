@@ -183,8 +183,8 @@ internal class VirtusizeRepository: NSObject {
 
 	/// Clear user session and the data related to size recommendations
 	internal func clearUserData() {
+		_ = VirtusizeAPIService.deleteUserDataAsync()
 		UserDefaultsHelper.current.authToken = ""
-		UserDefaultsHelper.current.deleteIdentifier()
 
 		userProducts = nil
 		sizeComparisonRecommendedSize = nil

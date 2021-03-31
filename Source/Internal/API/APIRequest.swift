@@ -27,7 +27,7 @@ internal typealias JSONArray = [JSONObject]
 
 /// This enum contains supported HTTP request methods
 internal enum APIMethod: String {
-    case get = "GET", post = "POST"
+    case get = "GET", post = "POST", delete = "DELETE"
 }
 
 /// A structure to get `URLRequest`s for Virtusize API requests
@@ -65,8 +65,8 @@ internal struct APIRequest {
 	/// - Parameters:
 	///   - components: `URLComponents` to obtain the `URL`
 	/// - Returns: A `URLRequest` for this HTTP request
-	private static func apiRequestWithAuthHeader(components: URLComponents) -> URLRequest {
-		var request = apiRequest(components: components, method: .post)
+	private static func apiRequestWithAuthHeader(components: URLComponents, method: APIMethod = .post) -> URLRequest {
+		var request = apiRequest(components: components, method: method)
 		request.addValue(UserDefaultsHelper.current.authToken ?? "", forHTTPHeaderField: "x-vs-auth")
 		request.addValue("", forHTTPHeaderField: "Cookie")
 		return request
@@ -84,6 +84,7 @@ internal struct APIRequest {
 			return request
 		}
         request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")
+		request.addValue("", forHTTPHeaderField: "Cookie")
         return request
     }
 
@@ -203,6 +204,11 @@ internal struct APIRequest {
 	internal static func getSessions() -> URLRequest? {
 		let endpoint = APIEndpoints.sessions
 		return apiRequestWithAuthHeader(components: endpoint.components)
+	}
+
+	internal static func deleteUserData() -> URLRequest? {
+		let endpoint = APIEndpoints.user
+		return apiRequestWithAuthHeader(components: endpoint.components, method: .delete)
 	}
 
     /// Gets the `URLRequest` for the `storeProducts` request
