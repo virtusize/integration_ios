@@ -341,14 +341,14 @@ There are two types of InPage in the Virtusize SDK.
   - If you'd like to change the background color of the CTA button, you can use the property `inPageStandardButtonBackgroundColor` to set the color
 
     ```swift
-  // Set the InPage Standard style to VirtusizeStyle.BLACK
+    // Set the InPage Standard style to VirtusizeStyle.BLACK
     inPageStandard.style = .BLACK
     // Set the background color of the CTA button to UIColor.blue
     inPageStandard.inPageStandardButtonBackgroundColor = UIColor.blue
     ```
     
     ```swift
-  // Set the InPage Standard style to VirtusizeStyle.TEAL
+    // Set the InPage Standard style to VirtusizeStyle.TEAL
     inPageStandard.style = .TEAL
     // Set the background color of the CTA button to a custom color using ColorLiteral
     inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
