@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.1.3
+- Feature: Enable font size changes of InPage 
+- Bugfix: Ensure InPage displays the correct message when a user is logged out
+
 ### 2.1.2
 - Feature: Ensure dismissing the Virtusize page by the SDK
 
