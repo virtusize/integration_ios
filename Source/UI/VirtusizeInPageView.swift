@@ -178,7 +178,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		DispatchQueue.global().async {
 			VirtusizeRepository.shared.clearUserData()
 			VirtusizeRepository.shared.updateUserSession()
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation(shouldUpdateUserProducts: false)
 			VirtusizeRepository.shared.switchInPageRecommendation()
 		}
 	}
