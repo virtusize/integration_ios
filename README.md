@@ -338,34 +338,41 @@ There are two types of InPage in the Virtusize SDK.
 
   - In order to use our default styles, set the property *style* of VirtusizeInPageStandard as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
 
-    If you'd like to change the background color of the CTA button, you can use the property `inPageStandardButtonBackgroundColor` to set the color
+  - If you'd like to change the background color of the CTA button, you can use the property `inPageStandardButtonBackgroundColor` to set the color
 
     ```swift
-    // Set the InPage Standard style to VirtusizeStyle.BLACK
+  // Set the InPage Standard style to VirtusizeStyle.BLACK
     inPageStandard.style = .BLACK
     // Set the background color of the CTA button to UIColor.blue
     inPageStandard.inPageStandardButtonBackgroundColor = UIColor.blue
     ```
-
+    
     ```swift
-    // Set the InPage Standard style to VirtusizeStyle.TEAL
+  // Set the InPage Standard style to VirtusizeStyle.TEAL
     inPageStandard.style = .TEAL
-    // Set the background color of the CTA button to a custom color usign ColorLiteral
+    // Set the background color of the CTA button to a custom color using ColorLiteral
     inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     ```
-
-    When you add the VirtusizeInPageStandard programtically and you'd like to set the horizontal margins between the edges of the app screen and the VirtusizeInPageStandard, you can use `setupHorizontalMargin` 
+    
+  - When you add the VirtusizeInPageStandard programmatically and you'd like to set the horizontal margins between the edges of the app screen and the VirtusizeInPageStandard, you can use `setHorizontalMargin` 
 
     If you'd like to set a direct width for InPage Standard, use auto layout constraints.
 
     ```swift
     // Set the horizontal margins to 16
-    inPageStandard.setupHorizontalMargin(view: view, margin: 16)
+    inPageStandard.setHorizontalMargin(view: view, margin: 16)
     
     // Or set the direct width for InPage Standard programtically
     inPageStandard.translatesAutoresizingMaskIntoConstraints = false
     inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     inPageStandard.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+
+  - If you'd like to change the font sizes of InPage Standard, you can use the properties `messageFontSize` and `buttonFontSize`.
+
+    ```swift
+    inPageStandard.buttonFontSize = 12
+    inPageStandard.messageFontSize = 12
     ```
 
 - **Connect the Virtusize InPage Standard to the Virtusize API by using the**  `Virtusize.setVirtusizeView` **method.**
@@ -440,25 +447,32 @@ This is a mini version of InPage which can be placed in your application. The di
 
   - In order to use our default styles, set the property *style* of VirtusizeInPageMini as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
 
-    If you'd like to change the background color of the bar, you can use the property `inPageMiniBackgroundColor` to set the color.
+  - If you'd like to change the background color of the bar, you can use the property `inPageMiniBackgroundColor` to set the color.
 
     ```swift
     inPageMini.style = .TEAL
     inPageMini.inPageMiniBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     ```
 
-    When you add the VirtusizeInPageMini programtically and you'd like to set up the horizontal margins between the edges of the app screen and the VirtusizeInPageMini, you can use `setupHorizontalMargin` 
+  - When you add the VirtusizeInPageMini programtically and you'd like to set up the horizontal margins between the edges of the app screen and the VirtusizeInPageMini, you can use `setHorizontalMargin` 
 
     If you'd like to set a direct width for InPage Mini, use auto layout constraints.
 
     ```swift
     // Set the horizontal margins to 16
-    inPageMini.setupHorizontalMargin(view: view, margin: 16)
+    inPageMini.setHorizontalMargin(view: view, margin: 16)
     
     // Or set the direct width for InPage Standard programtically
     inPageMini.translatesAutoresizingMaskIntoConstraints = false
     inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     inPageMini.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+
+  - If you'd like to change the font sizes of InPage Mini, you can use the properties `messageFontSize` and `buttonFontSize`.
+
+    ```swift
+    inPageMini.messageFontSize = 12
+    inPageMini.buttonFontSize = 10
     ```
 
 - **Connect the Virtusize InPage Mini to the Virtusize API by using the**  `Virtusize.setVirtusizeView` **method.**

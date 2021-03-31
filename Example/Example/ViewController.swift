@@ -78,7 +78,7 @@ class ViewController: UIViewController {
         // MARK: VirtusizeInPageMini
         // 1. Set up inPageMini that is added in Interface Builder
         Virtusize.setVirtusizeView(self, inPageMini)
-        // You can set up the Virtusize InPage Mini style
+        // You can set the Virtusize InPage Mini style
         inPageMini.style = .BLACK
 
         // 2. If you add the InPageMini view programmatically
@@ -86,8 +86,11 @@ class ViewController: UIViewController {
         view.addSubview(inPageMini2)
         Virtusize.setVirtusizeView(self, inPageMini2)
         inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
-        // You can set up the horizontal margins by using `setupHorizontalMargin`
-        inPageMini2.setupHorizontalMargin(view: view, margin: 16)
+        // You can set the horizontal margins by using `setHorizontalMargin`
+        inPageMini2.setHorizontalMargin(view: view, margin: 16)
+		// You can set the font sizes for the InPage Mini texts
+		inPageMini2.messageFontSize = 12
+		inPageMini2.buttonFontSize = 10
         // Set up constraints if needed
         inPageMini2.translatesAutoresizingMaskIntoConstraints = false
         inPageMini2.topAnchor.constraint(equalTo: inPageMini.bottomAnchor, constant: 16).isActive = true
@@ -97,11 +100,15 @@ class ViewController: UIViewController {
         let inPageStandard = VirtusizeInPageStandard()
         view.addSubview(inPageStandard)
         Virtusize.setVirtusizeView(self, inPageStandard)
-        // You can set up the horizontal margins by using `setupHorizontalMargin`
-        inPageStandard.setupHorizontalMargin(view: view, margin: 16)
-        // You can set up the Virtusize InPage Standard style
+        // You can set the horizontal margins by using `setHorizontalMargin`
+        inPageStandard.setHorizontalMargin(view: view, margin: 16)
+        // You can set the Virtusize InPage Standard style
         inPageStandard.style = .BLACK
+		// You can set the background color of the size check button
         inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+		// You can set the font sizes for the InPage texts
+		inPageStandard.buttonFontSize = 12
+		inPageStandard.messageFontSize = 12
         // Set up constraints if needed
         inPageStandard.translatesAutoresizingMaskIntoConstraints = false
         inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

@@ -33,6 +33,20 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         }
     }
 
+	/// The property to set the font size of the size check button
+	public var buttonFontSize: CGFloat? {
+		didSet {
+			setStyle()
+		}
+	}
+
+	/// The property to set the font size of the message
+	public var messageFontSize: CGFloat? {
+		didSet {
+			setStyle()
+		}
+	}
+
 	private var views: [String: UIView] = [:]
 	private var metrics: [String: CGFloat] = [:]
 	private var allConstraints: [NSLayoutConstraint] = []
@@ -71,7 +85,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private(set) var bestFitUserProduct: VirtusizeInternalProduct?
 
-    public func setupHorizontalMargin(view: UIView, margin: CGFloat) {
+    public func setHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
     }
 
@@ -364,7 +378,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         } else {
             checkSizeButton.backgroundColor = .vsGray900Color
         }
-        checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 7, left: 8, bottom: 6, right: 6)
+        checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         checkSizeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 
@@ -384,27 +398,29 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         errorText.isHidden = true
 
         let displayLanguage = Virtusize.params?.language
+		let messageTextSize = messageFontSize ?? 12
+		let buttonTextSize = buttonFontSize ?? 12
         switch displayLanguage {
         case .ENGLISH:
-            topMessageLabel.font = Font.proximaNova(size: 14)
-            bottomMessageLabel.font = Font.proximaNova(size: 18, weight: .bold)
-            checkSizeButton.titleLabel?.font = Font.proximaNova(size: 14)
-            privacyPolicyLink.font = Font.proximaNova(size: 12)
-            errorText.font = Font.proximaNova(size: 12)
+            topMessageLabel.font = Font.proximaNova(size: messageTextSize + 2)
+            bottomMessageLabel.font = Font.proximaNova(size: messageTextSize + 6, weight: .bold)
+            checkSizeButton.titleLabel?.font = Font.proximaNova(size: buttonTextSize + 2)
+            privacyPolicyLink.font = Font.proximaNova(size: messageTextSize)
+            errorText.font = Font.proximaNova(size: messageTextSize)
             messageLineSpacing = 2
         case .JAPANESE:
-            topMessageLabel.font = Font.notoSansCJKJP(size: 12)
-            bottomMessageLabel.font = Font.notoSansCJKJP(size: 16, weight: .bold)
-			checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: 12)
-            privacyPolicyLink.font = Font.notoSansCJKJP(size: 10)
-            errorText.font = Font.notoSansCJKJP(size: 10)
+			topMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize)
+            bottomMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize + 4, weight: .bold)
+			checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
+            privacyPolicyLink.font = Font.notoSansCJKJP(size: messageTextSize - 2)
+            errorText.font = Font.notoSansCJKJP(size: messageTextSize - 2)
             messageLineSpacing = 0
         case .KOREAN:
-            topMessageLabel.font = Font.notoSansCJKKR(size: 12)
-            bottomMessageLabel.font = Font.notoSansCJKKR(size: 16, weight: .bold)
-            checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: 12)
-            privacyPolicyLink.font = Font.notoSansCJKKR(size: 10)
-            errorText.font = Font.notoSansCJKKR(size: 10)
+            topMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize)
+            bottomMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize + 4, weight: .bold)
+            checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
+            privacyPolicyLink.font = Font.notoSansCJKKR(size: messageTextSize - 2)
+            errorText.font = Font.notoSansCJKKR(size: messageTextSize - 2)
             messageLineSpacing = 0
         default:
             break

@@ -367,13 +367,13 @@ Virtusize SDKには2種類のInPageがあります。
     inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     ```
 
-    VirtusizeInPageStandardをプログラムで追加し、アプリ画面の端とVirtusizeInPageStandardの間に水平方向の余白を設定したい場合は、`setupHorizontalMargin`を使用します。
+    VirtusizeInPageStandardをプログラムで追加し、アプリ画面の端とVirtusizeInPageStandardの間に水平方向の余白を設定したい場合は、`setHorizontalMargin`を使用します。
 
     InPage Standardに直接幅を設定したい場合は、auto layout constraintsを使用します。
 
     ```swift
     // Set the horizontal margins to 16
-    inPageStandard.setupHorizontalMargin(view: view, margin: 16)
+    inPageStandard.setHorizontalMargin(view: view, margin: 16)
     
     // Or set the direct width for InPage Standard programtically
     inPageStandard.translatesAutoresizingMaskIntoConstraints = false
@@ -463,13 +463,13 @@ Virtusize SDKには2種類のInPageがあります。
     inPageMini.inPageMiniBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     ```
 
-    VirtusizeInPageMiniをプログラムで追加し、アプリ画面の端とVirtusizeInPageMiniの間に水平方向の余白を設定したい場合は、`setupHorizontalMargin`を使用します。
+    VirtusizeInPageMiniをプログラムで追加し、アプリ画面の端とVirtusizeInPageMiniの間に水平方向の余白を設定したい場合は、`setHorizontalMargin`を使用します。
 
     InPage Miniに直接幅を設定したい場合は、auto layout constraintsを使用します。
 
     ```swift
     // Set the horizontal margins to 16
-    inPageMini.setupHorizontalMargin(view: view, margin: 16)
+    inPageMini.setHorizontalMargin(view: view, margin: 16)
     
     // Or set the direct width for InPage Standard programtically
     inPageMini.translatesAutoresizingMaskIntoConstraints = false
