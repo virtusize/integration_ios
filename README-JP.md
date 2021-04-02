@@ -367,7 +367,7 @@ Virtusize SDKには2種類のInPageがあります。
     inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     ```
 
-    VirtusizeInPageStandardをプログラムで追加し、アプリ画面の端とVirtusizeInPageStandardの間に水平方向の余白を設定したい場合は、`setHorizontalMargin`を使用します。
+  - VirtusizeInPageStandardをプログラムで追加し、アプリ画面の端とVirtusizeInPageStandardの間に水平方向の余白を設定したい場合は、`setHorizontalMargin`を使用します。
 
     InPage Standardに直接幅を設定したい場合は、auto layout constraintsを使用します。
 
@@ -379,6 +379,12 @@ Virtusize SDKには2種類のInPageがあります。
     inPageStandard.translatesAutoresizingMaskIntoConstraints = false
     inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     inPageStandard.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+  - InPage Standardのフォントサイズを変更したい場合は、`messageFontSize`と`buttonFontSize`のプロパティを利用できます。
+
+    ```swift
+    inPageStandard.buttonFontSize = 12
+    inPageStandard.messageFontSize = 12
     ```
 
 - `Virtusize.setVirtusizeView`**メソッドを使用して、Virtusize InPage StandardをVirtusize APIに接続します。**
@@ -463,7 +469,7 @@ Virtusize SDKには2種類のInPageがあります。
     inPageMini.inPageMiniBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     ```
 
-    VirtusizeInPageMiniをプログラムで追加し、アプリ画面の端とVirtusizeInPageMiniの間に水平方向の余白を設定したい場合は、`setHorizontalMargin`を使用します。
+  - VirtusizeInPageMiniをプログラムで追加し、アプリ画面の端とVirtusizeInPageMiniの間に水平方向の余白を設定したい場合は、`setHorizontalMargin`を使用します。
 
     InPage Miniに直接幅を設定したい場合は、auto layout constraintsを使用します。
 
@@ -475,6 +481,13 @@ Virtusize SDKには2種類のInPageがあります。
     inPageMini.translatesAutoresizingMaskIntoConstraints = false
     inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     inPageMini.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+
+  - InPage Miniのフォントサイズを変更したい場合は、`messageFontSize`と`buttonFontSize`のプロパティを利用できます。
+
+    ```swift
+    inPageMini.messageFontSize = 12
+    inPageMini.buttonFontSize = 10
     ```
 
 - `Virtusize.setVirtusizeView`**メソッドを使用して、Virtusize InPage MiniをVirtusize APIに接続します。**
