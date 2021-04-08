@@ -35,6 +35,12 @@ struct ContentView: View {
 	@State var productDataCheckCompleted = false
 
 	init() {
+		// Set up the product information in order to populate the Virtusize view
+		Virtusize.product = VirtusizeProduct(
+			externalId: "vs_dress",
+			imageURL: URL(string: "http://www.example.com/image.jpg")
+		)
+
 		// MARK: The Order API
 		sendOrderSample()
 	}
@@ -51,11 +57,6 @@ struct ContentView: View {
 //					virtusizeButton.setTitle("Virtusize", for: .normal)
 //					virtusizeButton.backgroundColor = .vsTealColor
 				},
-				// Set up the product's external ID and image URL here
-				storeProduct: VirtusizeProduct(
-					externalId: "vs_dress",
-					imageURL: URL(string: "http://www.example.com/image.jpg")
-				),
 				// Optional: You can use our default styles either Black or Teal for the button
 				// If you want to customize the button on your own, please do not set up the default style
 				defaultStyle: .BLACK
@@ -118,7 +119,7 @@ struct ContentView: View {
 	private func sendOrderSample() {
 		var virtusizeOrder = VirtusizeOrder(externalOrderId: "4000111032")
 		let item = VirtusizeOrderItem(
-			productId: "A00001",
+			externalProductId: "A00001",
 			size: "L",
 			sizeAlias: "Large",
 			variantId: "A00001_SIZEL_RED",

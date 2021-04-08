@@ -29,20 +29,17 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 	private var action: (() -> Void)?
 	private var label: ((UIButton) -> Void)?
-	private var storeProduct: VirtusizeProduct
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 	private var virtusizeMessageHandler: VirtusizeMessageHandler?
 
 	public init(
 		action: (() -> Void)? = nil,
 		label: ((UIButton) -> Void)? = nil,
-		storeProduct: VirtusizeProduct,
 		defaultStyle: VirtusizeViewStyle? = nil,
 		virtusizeMessageHandler: VirtusizeMessageHandler? = nil
 	) {
 		self.action = action
 		self.label = label
-		self.storeProduct = storeProduct
 		self.virtusizeDefaultStyle = defaultStyle
 		self.virtusizeMessageHandler = virtusizeMessageHandler
 	}
@@ -62,12 +59,14 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 		context.coordinator.action = action
 
+		Virtusize.setVirtusizeView(self, virtusizeButton)
+
 		return virtusizeButton
 	}
 
 	public func updateUIView(_ uiView: VirtusizeButton, context: Context) {
 		if let virtusizeDefaultStyle = virtusizeDefaultStyle {
-			uiView.applyDefaultStyle(virtusizeDefaultStyle)
+			uiView.style = virtusizeDefaultStyle
 		}
 
 		if label != nil {
@@ -76,8 +75,6 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 		uiView.setContentHuggingPriority(.required, for: .horizontal)
 		uiView.setContentHuggingPriority(.required, for: .vertical)
-
-		uiView.storeProduct = storeProduct
 	}
 }
 

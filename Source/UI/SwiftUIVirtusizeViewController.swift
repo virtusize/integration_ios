@@ -27,7 +27,7 @@ import WebKit
 
 @available(iOSApplicationExtension 13.0, *)
 public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
-	public typealias UIViewControllerType = VirtusizeViewController
+	public typealias UIViewControllerType = VirtusizeWebViewController
 
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
@@ -49,9 +49,9 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 		Coordinator(self, didReceiveEvent: event, didReceiveError: error)
 	}
 
-	public func makeUIViewController(context: Context) -> VirtusizeViewController {
-		guard let virtusizeViewController = VirtusizeViewController(
-			handler: context.coordinator,
+	public func makeUIViewController(context: Context) -> VirtusizeWebViewController {
+		guard let virtusizeViewController = VirtusizeWebViewController(
+			messageHandler: context.coordinator,
 			processPool: processPool
 		) else {
 			fatalError("Cannot load VirtusizeViewController")
@@ -60,7 +60,7 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 		return virtusizeViewController
 	}
 
-	public func updateUIViewController(_ uiViewController: VirtusizeViewController, context: Context) {}
+	public func updateUIViewController(_ uiViewController: VirtusizeWebViewController, context: Context) {}
 
 	private func dismiss() {
 		presentationMode.wrappedValue.dismiss()
@@ -87,15 +87,15 @@ extension SwiftUIVirtusizeViewController {
 			self.errorListener = error
 		}
 
-		public func virtusizeController(_ controller: VirtusizeViewController, didReceiveError error: VirtusizeError) {
+		public func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
 			self.errorListener?(error)
 		}
 
-		public func virtusizeController(_ controller: VirtusizeViewController, didReceiveEvent event: VirtusizeEvent) {
+		public func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
 			self.eventListener?(event)
 		}
 
-		public func virtusizeControllerShouldClose(_ controller: VirtusizeViewController) {
+		public func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
 			parent.dismiss()
 		}
 	}
