@@ -23,7 +23,7 @@
 //
 
 /// The Virtusize themed colors used in the Virtusize SDK
-extension UIColor {
+public extension UIColor {
 	static var vsGray200Color: UIColor { #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) }
 	static var vsGray700Color: UIColor { #colorLiteral(red: 0.7176470588, green: 0.7254901961, blue: 0.7254901961, alpha: 1) }
 	static var vsGray800Color: UIColor { #colorLiteral(red: 0.4980392157, green: 0.5137254902, blue: 0.5137254902, alpha: 1) }
@@ -33,4 +33,19 @@ extension UIColor {
 	static var vsTealPressedColor: UIColor { #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1) }
 	static var vsDarkTealColor: UIColor { #colorLiteral(red: 0.0862745098, green: 0.7764705882, blue: 0.7254901961, alpha: 1) }
 	static var vsInPageShadowColor: UIColor { #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) }
+}
+
+import SwiftUI
+
+@available(iOSApplicationExtension 13.0, *)
+public extension Color {
+	static var vsGray200Color: Color { Color(UIColor.vsGray200Color) }
+	static var vsGray700Color: Color { Color(UIColor.vsGray700Color) }
+	static var vsGray800Color: Color { Color(UIColor.vsGray800Color) }
+	static var vsGray900Color: Color { Color(UIColor.vsGray900Color) }
+	static var vsGray900PressedColor: Color { Color(UIColor.vsGray900PressedColor) }
+	static var vsTealColor: Color { Color(UIColor.vsTealColor) }
+	static var vsTealPressedColor: Color { Color(UIColor.vsTealPressedColor) }
+	static var vsDarkTealColor: Color { Color(UIColor.vsDarkTealColor) }
+	static var vsInPageShadowColor: Color { Color(UIColor.vsInPageShadowColor) }
 }
