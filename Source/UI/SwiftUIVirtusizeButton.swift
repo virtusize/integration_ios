@@ -30,7 +30,6 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 	private var action: (() -> Void)?
 	private var label: ((UIButton) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
-	private var virtusizeMessageHandler: VirtusizeMessageHandler?
 
 	public init(
 		action: (() -> Void)? = nil,
@@ -41,7 +40,6 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 		self.action = action
 		self.label = label
 		self.virtusizeDefaultStyle = defaultStyle
-		self.virtusizeMessageHandler = virtusizeMessageHandler
 	}
 
 	public func makeCoordinator() -> Coordinator {
@@ -53,7 +51,7 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 		virtusizeButton.addTarget(
 			context.coordinator,
-			action: #selector(Coordinator.callAction),
+			action: #selector(Coordinator.clickAction),
 			for: .touchUpInside
 		)
 
@@ -83,7 +81,7 @@ extension SwiftUIVirtusizeButton {
 	public class Coordinator {
 		var action: (() -> Void)?
 
-		@objc func callAction() {
+		@objc func clickAction() {
 			action?()
 		}
 	}

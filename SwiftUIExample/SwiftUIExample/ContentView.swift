@@ -47,6 +47,8 @@ struct ContentView: View {
 
     var body: some View {
 		VStack {
+			Spacer()
+			
 			SwiftUIVirtusizeButton(
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
@@ -54,57 +56,72 @@ struct ContentView: View {
 				},
 				// Optional: You can customize the button by accessing it here
 				label: { virtusizeButton in
-//					virtusizeButton.setTitle("Virtusize", for: .normal)
-//					virtusizeButton.backgroundColor = .vsTealColor
+//						virtusizeButton.setTitle("Virtusize", for: .normal)
+//						virtusizeButton.backgroundColor = .vsTealColor
 				},
 				// Optional: You can use our default styles either Black or Teal for the button
 				// If you want to customize the button on your own, please do not set up the default style
 				defaultStyle: .BLACK
 			)
-			.sheet(isPresented: $showVirtusizeWebView) {
-				SwiftUIVirtusizeViewController(
-					// Optional: Set up WKProcessPool to allow cookie sharing.
-					processPool: WKProcessPool(),
-					// Optional: You can use this callback closure to receive Virtusize events
-					didReceiveEvent: { event in
-						print(event)
-						switch event.name {
-							case "user-opened-widget":
-								return
-							case "user-opened-panel-compare":
-								return
-							default:
-								return
-						}
-					},
-					// Optional: You can use this callback closure to receive Virtusize SDK errors
-					didReceiveError: { error in
-						print(error)
-					}
-				)
-			}
-			// Optional: Hide the space of the button when the product data check is not completed or not valid
+
+			SwiftUIVirtusizeInPageMini(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// Optional: You can customize the button by accessing it here
+				label: { virtusizeInPageMini in
+					virtusizeInPageMini.messageFontSize = 12
+					virtusizeInPageMini.buttonFontSize = 10
+					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
+				},
+				// Optional: You can use our default styles either Black or Teal for the InPage Mini view. The default is set to .BLACK.
+				defaultStyle: .TEAL
+			)
+			.padding(.vertical, 16)
+			.padding(.horizontal, 16)
+			
+			Spacer()
+		}
+		// Optional: Hide the space of the view when the product data check is not completed or not valid
 //			.frame(height: productDataCheckCompleted ? nil : 0)
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				// Optional: Set up WKProcessPool to allow cookie sharing.
+				processPool: WKProcessPool(),
+				// Optional: You can use this callback closure to receive Virtusize events
+				didReceiveEvent: { event in
+					print(event)
+					switch event.name {
+					case "user-opened-widget":
+						return
+					case "user-opened-panel-compare":
+						return
+					default:
+						return
+					}
+				},
+				// Optional: You can use this callback closure to receive Virtusize SDK errors
+				didReceiveError: { error in
+					print(error)
+				}
+			)
+		}
+		// You can make the Virtusize web view full screen by using fullScreenCover (only available for iOS version 14.0+
+//			.fullScreenCover(isPresented: $showVirtusizeWebView, content: {
+//				SwiftUIVirtusizeViewController()
+//			})
+		// Optional: You can set up NotificationCenter listeners for debugging the initial product data check
+		// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
+		// with the cause of the failure
+		// - `Virtusize.productDataCheckDidSucceed`
+		.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidSucceed)) { notification in
+			print(notification)
 
-			// You can make the Virtusize web view full screen by using fullScreenCover (only available for iOS version 14.0+
-//				.fullScreenCover(isPresented: $showVirtusizeWebView, content: {
-//					SwiftUIVirtusizeViewController()
-//				})
-			// You can set the transition from moving bottom to up when the Virtusize web view is opening
-//				.transition(.move(edge: .top))
-
-			// Optional: You can set up NotificationCenter listeners for debugging the initial product data check
-			// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
-			// with the cause of the failure
-			// - `Virtusize.productDataCheckDidSucceed`
-			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidSucceed)) { notification in
-				print(notification)
-
-				productDataCheckCompleted = true
-			}
-			.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
-				print(notification)
-			}
+			productDataCheckCompleted = true
+		}
+		.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
+			print(notification)
 		}
     }
 

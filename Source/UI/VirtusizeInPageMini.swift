@@ -55,8 +55,17 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
     private let verticalMargin: CGFloat = 5
 
     private let inPageMiniImageView: UIImageView = UIImageView()
-    private let inPageMiniMessageLabel: UILabel = UILabel()
-    private let inPageMiniSizeCheckButton: UIButton = UIButton()
+	internal let inPageMiniMessageLabel: UILabel = UILabel()
+    internal let inPageMiniSizeCheckButton: UIButton = UIButton()
+	
+	private var loading: Bool = false
+
+	/// The size that need for appearing subviews.
+	public override var intrinsicContentSize: CGSize {
+		var size = bounds.size
+		size.height = inPageMiniMessageLabel.intrinsicContentSize.height + 2 * verticalMargin
+		return size
+	}
 
     internal override func setup() {
         addSubviews()
@@ -69,6 +78,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
     public override func isLoading() {
         super.isLoading()
+		loading = true
         setLoadingScreen(loading: true)
     }
 
@@ -78,6 +88,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	) {
 		super.setInPageRecommendation(sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
 
+		loading = false
 		setLoadingScreen(loading: false)
 		inPageMiniMessageLabel.attributedText = NSAttributedString(
 			string:
@@ -150,7 +161,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
     }
 
     private func setStyle() {
-        backgroundColor = getBackgroundColor()
+		backgroundColor = getBackgroundColor()
 
         inPageMiniImageView.contentMode = .scaleAspectFit
 
@@ -180,6 +191,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+		setLoadingScreen(loading: loading, setTextAnimation: false)
     }
 
     private func getBackgroundColor() -> UIColor {
@@ -212,20 +225,25 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         }
     }
 
-    private func setLoadingScreen(loading: Bool) {
+	private func setLoadingScreen(loading: Bool, setTextAnimation: Bool = true) {
         backgroundColor = loading ? .white : getBackgroundColor()
         inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
         inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
         setupTextsStyle(messageLabelIsBold: loading)
-        if loading {
-            startLoadingTextAnimation(
-                label: inPageMiniMessageLabel,
-                text: Localization.shared.localize("inpage_loading_text")
-            )
-        } else {
-            stopLoadingTextAnimation()
-        }
+		if setTextAnimation {
+			if loading {
+				startLoadingTextAnimation(
+					label: inPageMiniMessageLabel,
+					text: Localization.shared.localize("inpage_loading_text")
+				)
+			} else {
+				stopLoadingTextAnimation()
+			}
+		}
         inPageMiniSizeCheckButton.isHidden = loading ? true: false
+		DispatchQueue.main.async {
+			self.messageLabelListener?(self.inPageMiniMessageLabel)
+		}
     }
 
 	internal override func showErrorScreen() {

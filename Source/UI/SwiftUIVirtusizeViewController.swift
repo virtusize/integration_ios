@@ -46,12 +46,13 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	}
 
 	public func makeCoordinator() -> Coordinator {
-		Coordinator(self, didReceiveEvent: event, didReceiveError: error)
+		Coordinator(didReceiveEvent: event, didReceiveError: error)
 	}
 
 	public func makeUIViewController(context: Context) -> VirtusizeWebViewController {
 		guard let virtusizeViewController = VirtusizeWebViewController(
 			messageHandler: context.coordinator,
+			eventHandler: Virtusize.virtusizeEventHandler,
 			processPool: processPool
 		) else {
 			fatalError("Cannot load VirtusizeViewController")
@@ -73,16 +74,13 @@ extension SwiftUIVirtusizeViewController {
 
 	public class Coordinator: VirtusizeMessageHandler {
 
-		private var parent: SwiftUIVirtusizeViewController
 		private var eventListener: ((VirtusizeEvent) -> Void)?
 		private var errorListener: ((VirtusizeError) -> Void)?
 
 		init(
-			_ parent: SwiftUIVirtusizeViewController,
 			didReceiveEvent event: ((VirtusizeEvent) -> Void)?,
 			didReceiveError error: ((VirtusizeError) -> Void)?
 		) {
-			self.parent = parent
 			self.eventListener = event
 			self.errorListener = error
 		}
@@ -93,10 +91,6 @@ extension SwiftUIVirtusizeViewController {
 
 		public func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
 			self.eventListener?(event)
-		}
-
-		public func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
-			parent.dismiss()
 		}
 	}
 }

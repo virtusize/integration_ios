@@ -23,8 +23,6 @@
 //
 
 public class VirtusizeInPageView: UIView, VirtusizeView {
-	internal var virtusizeEventHandler: VirtusizeEventHandler?
-
     /// The property to set the Virtusize view style that this SDK provides
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
         didSet {
@@ -35,6 +33,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     public var presentingViewController: UIViewController?
     public var messageHandler: VirtusizeMessageHandler?
 	public var isDeallocated: Bool?
+	internal var messageLabelListener: ((UILabel) -> Void)?
 
     internal let defaultMargin: CGFloat = 8
 
@@ -42,14 +41,14 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-		virtusizeEventHandler = self
+		Virtusize.virtusizeEventHandler = self
         isHidden = true
         setup()
     }
 
     public override init(frame: CGRect) {
         super.init(frame: .zero)
-		virtusizeEventHandler = self
+		Virtusize.virtusizeEventHandler = self
         isHidden = true
         setup()
     }
@@ -91,8 +90,12 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
         )
     }
 
+	internal func setMessageLabelListener(listener: ((UILabel) -> Void)?) {
+		messageLabelListener = listener
+	}
+
     @objc internal func clickInPageViewAction() {
-		openVirtusizeWebView(eventHandler: virtusizeEventHandler)
+		openVirtusizeWebView(eventHandler: Virtusize.virtusizeEventHandler)
     }
 
 	/// A parent function to set up InPage recommendation
