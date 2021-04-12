@@ -48,7 +48,6 @@ struct ContentView: View {
     var body: some View {
 		VStack {
 			Spacer()
-			
 			SwiftUIVirtusizeButton(
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
@@ -63,6 +62,24 @@ struct ContentView: View {
 				// If you want to customize the button on your own, please do not set up the default style
 				defaultStyle: .BLACK
 			)
+			.padding(.bottom, 16)
+
+			SwiftUIVirtusizeInPageStandard(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// Optional: You can customize the button by accessing it here
+				label: { virtusizeInPageStandard in
+					virtusizeInPageStandard.buttonFontSize = 12
+					virtusizeInPageStandard.messageFontSize = 12
+					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsBlackColor
+					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
+				},
+				// Optional: You can use our default styles either Black or Teal for the InPage Standard view. The default is set to .BLACK.
+				defaultStyle: .BLACK
+			)
+			.padding(.bottom, 16)
 
 			SwiftUIVirtusizeInPageMini(
 				action: {
@@ -74,13 +91,12 @@ struct ContentView: View {
 					virtusizeInPageMini.messageFontSize = 12
 					virtusizeInPageMini.buttonFontSize = 10
 					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
+					virtusizeInPageMini.setHorizontalMargin(margin: 16)
 				},
 				// Optional: You can use our default styles either Black or Teal for the InPage Mini view. The default is set to .BLACK.
 				defaultStyle: .TEAL
 			)
-			.padding(.vertical, 16)
-			.padding(.horizontal, 16)
-			
+
 			Spacer()
 		}
 		// Optional: Hide the space of the view when the product data check is not completed or not valid

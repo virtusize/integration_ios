@@ -29,7 +29,7 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 	override public var isHighlighted: Bool {
 		didSet {
 			if style == .BLACK {
-				backgroundColor = isHighlighted ? .vsGray900PressedColor : .vsGray900Color
+				backgroundColor = isHighlighted ? .vsBlackPressedColor : .vsBlackColor
 			} else if style == .TEAL {
 				backgroundColor = isHighlighted ? .vsTealPressedColor : .vsTealColor
 			}
@@ -75,13 +75,13 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 	private func setStyle() {
 		if style == .NONE {
 			setTitle(Localization.shared.localize("check_size"), for: .normal)
-			setTitleColor(.vsGray900Color, for: .normal)
-			setTitleColor(.vsGray900PressedColor, for: .highlighted)
+			setTitleColor(.vsBlackColor, for: .normal)
+			setTitleColor(.vsBlackPressedColor, for: .highlighted)
 			return
 		}
 
 		if style == .BLACK {
-			backgroundColor = .vsGray900Color
+			backgroundColor = .vsBlackColor
 		} else if style == .TEAL {
 			backgroundColor = .vsTealColor
 		}

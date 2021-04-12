@@ -50,14 +50,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	private var views: [String: UIView] = [:]
 	private var metrics: [String: CGFloat] = [:]
 	private var allConstraints: [NSLayoutConstraint] = []
-    private let inPageStandardView: UIView = UIView()
+	internal let inPageStandardView: UIView = UIView()
 	private let vsIconImageView: UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
     private let userProductImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
 	private let storeProductImageView: VirtusizeProductImageView = VirtusizeProductImageView(size: 40)
-    private let messageStackView: UIStackView = UIStackView()
-    private let topMessageLabel: UILabel = UILabel()
-    private let bottomMessageLabel: UILabel = UILabel()
-    private let checkSizeButton: UIButton = UIButton()
+	private let messageStackView: UIStackView = UIStackView()
+	private let topMessageLabel: UILabel = UILabel()
+	private let bottomMessageLabel: UILabel = UILabel()
+    internal let checkSizeButton: UIButton = UIButton()
     private let vsSignatureImageView: UIImageView = UIImageView()
     private let privacyPolicyLink: UILabel = UILabel()
     private let errorImageView: UIImageView = UIImageView()
@@ -84,10 +84,6 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
 
 	private(set) var bestFitUserProduct: VirtusizeInternalProduct?
-
-    public func setHorizontalMargin(view: UIView, margin: CGFloat) {
-        setHorizontalMargins(view: view, margin: margin)
-    }
 
     internal override func setup() {
         addSubviews()
@@ -169,6 +165,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			)
 
 			setLoadingScreen(loading: false)
+		}
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
 		}
 	}
 
@@ -360,23 +359,23 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         vsSignatureImageView.image = VirtusizeAssets.vsSignature
 
         privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
-        privacyPolicyLink.textColor = .vsGray900Color
+        privacyPolicyLink.textColor = .vsBlackColor
         privacyPolicyLink.setContentHuggingPriority(.required, for: .vertical)
 
         messageStackView.axis = .vertical
         messageStackView.distribution = .equalSpacing
 
         topMessageLabel.numberOfLines = 0
-        topMessageLabel.textColor = .vsGray900Color
+        topMessageLabel.textColor = .vsBlackColor
         bottomMessageLabel.numberOfLines = 0
-        bottomMessageLabel.textColor = .vsGray900Color
+        bottomMessageLabel.textColor = .vsBlackColor
 
         if inPageStandardButtonBackgroundColor != nil {
             checkSizeButton.backgroundColor = inPageStandardButtonBackgroundColor
         } else if style == .TEAL {
             checkSizeButton.backgroundColor = .vsTealColor
         } else {
-            checkSizeButton.backgroundColor = .vsGray900Color
+            checkSizeButton.backgroundColor = .vsBlackColor
         }
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
@@ -551,6 +550,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
                 string: recommendationText
             ).lineSpacing(self.messageLineSpacing)
         }
+		messageStackView.frame.size.width = 100
+		bottomMessageLabel.frame.size.width = 100
     }
 
 	/// Sets up the styles for the loading screen and the screen after finishing loading
@@ -573,6 +574,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         } else {
             stopLoadingTextAnimation()
         }
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
+		}
     }
 
 	internal override func showErrorScreen() {

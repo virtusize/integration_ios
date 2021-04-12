@@ -46,18 +46,13 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		}
 	}
 
-	/// The function to set the horizontal margin between the edges of the app screen and the InPage Mini view
-	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
-		setHorizontalMargins(view: view, margin: margin)
-	}
-
     private let messageAndButtonMargin: CGFloat = 8
     private let verticalMargin: CGFloat = 5
 
     private let inPageMiniImageView: UIImageView = UIImageView()
 	internal let inPageMiniMessageLabel: UILabel = UILabel()
     internal let inPageMiniSizeCheckButton: UIButton = UIButton()
-	
+
 	private var loading: Bool = false
 
 	/// The size that need for appearing subviews.
@@ -187,8 +182,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             inPageMiniSizeCheckButton.setTitleColor(.vsTealColor, for: .normal)
             inPageMiniSizeCheckButton.imageView?.tintColor = .vsTealColor
         } else {
-            inPageMiniSizeCheckButton.setTitleColor(.vsGray900Color, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
+            inPageMiniSizeCheckButton.setTitleColor(.vsBlackColor, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = .vsBlackColor
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 
@@ -201,7 +196,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         } else if style == .TEAL {
             return .vsTealColor
         } else {
-            return .vsGray900Color
+            return .vsBlackColor
         }
     }
 
@@ -228,7 +223,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	private func setLoadingScreen(loading: Bool, setTextAnimation: Bool = true) {
         backgroundColor = loading ? .white : getBackgroundColor()
         inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
-        inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
+        inPageMiniMessageLabel.textColor = loading ? .vsBlackColor : .white
         setupTextsStyle(messageLabelIsBold: loading)
 		if setTextAnimation {
 			if loading {
@@ -241,8 +236,10 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			}
 		}
         inPageMiniSizeCheckButton.isHidden = loading ? true: false
-		DispatchQueue.main.async {
-			self.messageLabelListener?(self.inPageMiniMessageLabel)
+		if setTextAnimation {
+			DispatchQueue.main.async {
+				self.contentViewListener?(self)
+			}
 		}
     }
 

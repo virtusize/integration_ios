@@ -1,5 +1,5 @@
 //
-//  SwiftUIVirtusizeInPageMini.swift
+//  SwiftUIVirtusizeInPageStandard.swift
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -23,20 +23,19 @@
 //
 
 import SwiftUI
-import UIKit
 
 @available(iOSApplicationExtension 13.0, *)
-public struct SwiftUIVirtusizeInPageMini: View {
+public struct SwiftUIVirtusizeInPageStandard: View {
 
 	private var action: (() -> Void)?
-	private var label: ((VirtusizeInPageMini) -> Void)?
+	private var label: ((VirtusizeInPageStandard) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
-	@State private var desiredSize: CGSize = CGSize()
+	@State private var desiredSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 92)
 
 	public init(
 		action: (() -> Void)? = nil,
-		label: ((VirtusizeInPageMini) -> Void)? = nil,
+		label: ((VirtusizeInPageStandard) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self.action = action
@@ -45,29 +44,29 @@ public struct SwiftUIVirtusizeInPageMini: View {
 	}
 
 	public var body: some View {
-		VirtusizeInPageMiniWrapper(
+		VirtusizeInPageStandardWrapper(
 			desiredSize: $desiredSize,
 			action: action,
 			label: label,
 			defaultStyle: virtusizeDefaultStyle
 		)
-		.frame(width: desiredSize.width, height: max(desiredSize.height, 35), alignment: .center)
+		.frame(width: desiredSize.width, height: max(desiredSize.height, 92), alignment: .center)
 	}
 }
 
 @available(iOSApplicationExtension 13.0, *)
-private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
-
-	private var action: (() -> Void)?
-	private var label: ((VirtusizeInPageMini) -> Void)?
-	private var virtusizeDefaultStyle: VirtusizeViewStyle?
+private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 
 	@Binding var desiredSize: CGSize
+
+	private var action: (() -> Void)?
+	private var label: ((VirtusizeInPageStandard) -> Void)?
+	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	public init(
 		desiredSize: Binding<CGSize>,
 		action: (() -> Void)? = nil,
-		label: ((VirtusizeInPageMini) -> Void)? = nil,
+		label: ((VirtusizeInPageStandard) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self._desiredSize = desiredSize
@@ -80,17 +79,17 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 		Coordinator()
 	}
 
-	public func makeUIView(context: Context) -> VirtusizeInPageMini {
-		let virtusizeInPageMini = VirtusizeInPageMini()
+	public func makeUIView(context: Context) -> VirtusizeInPageStandard {
+		let virtusizeInPageStandard = VirtusizeInPageStandard()
 
 		context.coordinator.action = action
 
-		Virtusize.setVirtusizeView(self, virtusizeInPageMini)
+		Virtusize.setVirtusizeView(self, virtusizeInPageStandard)
 
-		return virtusizeInPageMini
+		return virtusizeInPageStandard
 	}
 
-	public func updateUIView(_ uiView: VirtusizeInPageMini, context: Context) {
+	public func updateUIView(_ uiView: VirtusizeInPageStandard, context: Context) {
 		if let virtusizeDefaultStyle = virtusizeDefaultStyle {
 			uiView.style = virtusizeDefaultStyle
 		}
@@ -98,13 +97,13 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 		for recognizer in uiView.gestureRecognizers ?? [] {
 			uiView.removeGestureRecognizer(recognizer)
 		}
-		uiView.addGestureRecognizer(
+		uiView.inPageStandardView.addGestureRecognizer(
 			UITapGestureRecognizer(
 				target: context.coordinator,
 				action: #selector(Coordinator.clickAction)
 			)
 		)
-		uiView.inPageMiniSizeCheckButton.addTarget(
+		uiView.checkSizeButton.addTarget(
 			context.coordinator,
 			action: #selector(Coordinator.clickAction),
 			for: .touchUpInside
@@ -115,18 +114,16 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 		}
 
 		uiView.setContentViewListener(listener: { view in
-			if let label = (view as? VirtusizeInPageMini)?.inPageMiniMessageLabel {
-				desiredSize = CGSize(
-					width: UIScreen.main.bounds.size.width - uiView.userSetMargin * 2,
-					height: label.text?.height(withConstrainedWidth: label.frame.width, font: label.font) ?? 35
-				)
-			}
+			desiredSize = CGSize(
+				width: UIScreen.main.bounds.size.width,
+				height: view.frame.height
+			)
 		})
 	}
 }
 
 @available(iOSApplicationExtension 13.0, *)
-extension VirtusizeInPageMiniWrapper {
+extension VirtusizeInPageStandardWrapper {
 	public class Coordinator {
 
 		var action: (() -> Void)?
