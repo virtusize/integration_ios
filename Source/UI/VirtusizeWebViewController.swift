@@ -45,6 +45,7 @@ public final class VirtusizeWebViewController: UIViewController {
 
     private static let cookieBidKey = "virtusize.bid"
 
+	internal var isViewWillAppeared = false
 	internal var isVirtusizeClosed = false
 
     public convenience init?(
@@ -111,6 +112,10 @@ public final class VirtusizeWebViewController: UIViewController {
 
 		loadWebView()
     }
+
+	public override func viewWillAppear(_ animated: Bool) {
+		isViewWillAppeared = true
+	}
 
 	internal func loadWebView() {
 		// If the request is invalid, the controller should be dismissed
