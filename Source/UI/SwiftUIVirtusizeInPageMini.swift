@@ -119,7 +119,7 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 			if let label = (view as? VirtusizeInPageMini)?.inPageMiniMessageLabel {
 				desiredSize = CGSize(
 					width: UIScreen.main.bounds.size.width - uiView.userSetMargin * 2,
-					height: label.text?.height(withConstrainedWidth: label.frame.width, font: label.font) ?? 35
+					height: label.text?.height(width: label.frame.width, font: label.font) ?? 35
 				)
 			}
 		})

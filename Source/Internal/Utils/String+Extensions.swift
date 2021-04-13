@@ -54,25 +54,20 @@ internal extension String {
             .replacingOccurrences(of: "%{boldEnd}", with: "")
     }
 
-	func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+	/// Calculate the expected text height based on the width and the font of the string
+	///
+	/// - Parameters:
+	///   - withConstrainedWidth: the text width
+	///   - font: the text font
+	/// - Returns: the ceiling of the expected text height
+	func height(width: CGFloat, font: UIFont) -> CGFloat {
 		let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-		let boundingBox = self.boundingRect(
+		let boundingRect = self.boundingRect(
 			with: constraintRect,
 			options: .usesLineFragmentOrigin,
 			attributes: [.font: font],
 			context: nil
 		)
-		return floor(boundingBox.height)
-	}
-
-	func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
-		let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-		let boundingBox = self.boundingRect(
-			with: constraintRect,
-			options: .usesLineFragmentOrigin,
-			attributes: [.font: font],
-			context: nil
-		)
-		return floor(boundingBox.width)
+		return ceil(boundingRect.height)
 	}
 }
