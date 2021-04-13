@@ -55,7 +55,7 @@ struct ContentView: View {
 					showVirtusizeWebView = true
 				},
 				// (Optional) You can customize the button by accessing it here
-				label: { virtusizeButton in
+				uiView: { virtusizeButton in
 						virtusizeButton.setTitle("サイズチェック", for: .normal)
 						virtusizeButton.backgroundColor = .vsBlackColor
 				},
@@ -72,17 +72,18 @@ struct ContentView: View {
 					showVirtusizeWebView = true
 				},
 				// (Optional): You can customize the button by accessing it here
-				label: { virtusizeInPageStandard in
+				uiView: { virtusizeInPageStandard in
 					virtusizeInPageStandard.buttonFontSize = 12
 					virtusizeInPageStandard.messageFontSize = 12
 					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsBlackColor
 					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
 				},
-				// (Optional): You can use our default styles either Black or Teal for the InPage Standard view. The default is set to .BLACK.
+				// (Optional): You can use our default styles either Black or Teal for the InPage Standard view.
+				// The default is set to .BLACK.
 				defaultStyle: .BLACK
 			)
 			.padding(.bottom, 16)
-			
+
 			// MARK: SwiftUIVirtusizeInPageMini
 			SwiftUIVirtusizeInPageMini(
 				action: {
@@ -90,13 +91,14 @@ struct ContentView: View {
 					showVirtusizeWebView = true
 				},
 				// (Optional): You can customize the button by accessing it here
-				label: { virtusizeInPageMini in
+				uiView: { virtusizeInPageMini in
 					virtusizeInPageMini.messageFontSize = 12
 					virtusizeInPageMini.buttonFontSize = 10
 					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
 					virtusizeInPageMini.setHorizontalMargin(margin: 16)
 				},
-				// (Optional): You can use our default styles either Black or Teal for the InPage Mini view. The default is set to .BLACK.
+				// (Optional): You can use our default styles either Black or Teal for the InPage Mini view.
+				// The default is set to .BLACK.
 				defaultStyle: .TEAL
 			)
 

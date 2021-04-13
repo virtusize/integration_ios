@@ -28,18 +28,18 @@ import SwiftUI
 public struct SwiftUIVirtusizeInPageStandard: View {
 
 	private var action: (() -> Void)?
-	private var label: ((VirtusizeInPageStandard) -> Void)?
+	private var uiView: ((VirtusizeInPageStandard) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	@State private var desiredSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 92)
 
 	public init(
 		action: (() -> Void)? = nil,
-		label: ((VirtusizeInPageStandard) -> Void)? = nil,
+		uiView: ((VirtusizeInPageStandard) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self.action = action
-		self.label = label
+		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
 	}
 
@@ -47,7 +47,7 @@ public struct SwiftUIVirtusizeInPageStandard: View {
 		VirtusizeInPageStandardWrapper(
 			desiredSize: $desiredSize,
 			action: action,
-			label: label,
+			uiView: uiView,
 			defaultStyle: virtusizeDefaultStyle
 		)
 		.frame(width: desiredSize.width, height: max(desiredSize.height, 92), alignment: .center)
@@ -60,18 +60,18 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 	@Binding var desiredSize: CGSize
 
 	private var action: (() -> Void)?
-	private var label: ((VirtusizeInPageStandard) -> Void)?
+	private var uiView: ((VirtusizeInPageStandard) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	public init(
 		desiredSize: Binding<CGSize>,
 		action: (() -> Void)? = nil,
-		label: ((VirtusizeInPageStandard) -> Void)? = nil,
+		uiView: ((VirtusizeInPageStandard) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self._desiredSize = desiredSize
 		self.action = action
-		self.label = label
+		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
 	}
 
@@ -94,6 +94,7 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 			uiView.style = virtusizeDefaultStyle
 		}
 
+		// Remove UIKit specific gesture recognizers
 		for recognizer in uiView.gestureRecognizers ?? [] {
 			uiView.removeGestureRecognizer(recognizer)
 		}
@@ -109,8 +110,8 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 			for: .touchUpInside
 		)
 
-		if self.label != nil {
-			self.label!(uiView)
+		if self.uiView != nil {
+			self.uiView!(uiView)
 		}
 
 		uiView.setContentViewListener(listener: { view in

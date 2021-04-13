@@ -28,17 +28,17 @@ import SwiftUI
 public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 	private var action: (() -> Void)?
-	private var label: ((UIButton) -> Void)?
+	private var uiView: ((UIButton) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	public init(
 		action: (() -> Void)? = nil,
-		label: ((UIButton) -> Void)? = nil,
+		uiView: ((UIButton) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil,
 		virtusizeMessageHandler: VirtusizeMessageHandler? = nil
 	) {
 		self.action = action
-		self.label = label
+		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
 	}
 
@@ -67,8 +67,8 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 			uiView.style = virtusizeDefaultStyle
 		}
 
-		if label != nil {
-			label!(uiView)
+		if self.uiView != nil {
+			self.uiView!(uiView)
 		}
 
 		uiView.setContentHuggingPriority(.required, for: .horizontal)

@@ -46,6 +46,12 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		}
 	}
 
+	public override var intrinsicContentSize: CGSize {
+		var size = bounds.size
+		size.height = inPageMiniMessageLabel.intrinsicContentSize.height + 2 * verticalMargin
+		return size
+	}
+
     private let messageAndButtonMargin: CGFloat = 8
     private let verticalMargin: CGFloat = 5
 
@@ -54,13 +60,6 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
     internal let inPageMiniSizeCheckButton: UIButton = UIButton()
 
 	private var loading: Bool = false
-
-	/// The size that need for appearing subviews.
-	public override var intrinsicContentSize: CGSize {
-		var size = bounds.size
-		size.height = inPageMiniMessageLabel.intrinsicContentSize.height + 2 * verticalMargin
-		return size
-	}
 
     internal override func setup() {
         addSubviews()

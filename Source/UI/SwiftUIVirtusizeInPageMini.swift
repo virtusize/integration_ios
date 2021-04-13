@@ -29,18 +29,18 @@ import UIKit
 public struct SwiftUIVirtusizeInPageMini: View {
 
 	private var action: (() -> Void)?
-	private var label: ((VirtusizeInPageMini) -> Void)?
+	private var uiView: ((VirtusizeInPageMini) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	@State private var desiredSize: CGSize = CGSize()
 
 	public init(
 		action: (() -> Void)? = nil,
-		label: ((VirtusizeInPageMini) -> Void)? = nil,
+		uiView: ((VirtusizeInPageMini) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self.action = action
-		self.label = label
+		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
 	}
 
@@ -48,7 +48,7 @@ public struct SwiftUIVirtusizeInPageMini: View {
 		VirtusizeInPageMiniWrapper(
 			desiredSize: $desiredSize,
 			action: action,
-			label: label,
+			uiKitView: uiView,
 			defaultStyle: virtusizeDefaultStyle
 		)
 		.frame(width: desiredSize.width, height: max(desiredSize.height, 35), alignment: .center)
@@ -59,7 +59,7 @@ public struct SwiftUIVirtusizeInPageMini: View {
 private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 
 	private var action: (() -> Void)?
-	private var label: ((VirtusizeInPageMini) -> Void)?
+	private var uiKitView: ((VirtusizeInPageMini) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	@Binding var desiredSize: CGSize
@@ -67,12 +67,12 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 	public init(
 		desiredSize: Binding<CGSize>,
 		action: (() -> Void)? = nil,
-		label: ((VirtusizeInPageMini) -> Void)? = nil,
+		uiKitView: ((VirtusizeInPageMini) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self._desiredSize = desiredSize
 		self.action = action
-		self.label = label
+		self.uiKitView = uiKitView
 		self.virtusizeDefaultStyle = defaultStyle
 	}
 
@@ -95,6 +95,7 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 			uiView.style = virtusizeDefaultStyle
 		}
 
+		// Remove UIKit specific gesture recognizers
 		for recognizer in uiView.gestureRecognizers ?? [] {
 			uiView.removeGestureRecognizer(recognizer)
 		}
@@ -110,8 +111,8 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 			for: .touchUpInside
 		)
 
-		if self.label != nil {
-			self.label!(uiView)
+		if uiKitView != nil {
+			uiKitView!(uiView)
 		}
 
 		uiView.setContentViewListener(listener: { view in
