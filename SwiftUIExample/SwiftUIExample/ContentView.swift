@@ -28,7 +28,7 @@ import Virtusize
 import WebKit
 
 struct ContentView: View {
-	// Declare a Bool state to control opening the Virtusize web view
+	// Declare a Bool state to control when to open the Virtusize web view
 	@State var showVirtusizeWebView = false
 
 	// Optional: Declare a Bool state to update the view based on the result of product data check
@@ -48,64 +48,68 @@ struct ContentView: View {
     var body: some View {
 		VStack {
 			Spacer()
+			// MARK: SwiftUIVirtusizeButton
 			SwiftUIVirtusizeButton(
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
 				},
-				// Optional: You can customize the button by accessing it here
+				// (Optional) You can customize the button by accessing it here
 				label: { virtusizeButton in
-//						virtusizeButton.setTitle("Virtusize", for: .normal)
-//						virtusizeButton.backgroundColor = .vsTealColor
+						virtusizeButton.setTitle("サイズチェック", for: .normal)
+						virtusizeButton.backgroundColor = .vsBlackColor
 				},
-				// Optional: You can use our default styles either Black or Teal for the button
+				// (Optional) You can use our default styles either Black or Teal for the button
 				// If you want to customize the button on your own, please do not set up the default style
 				defaultStyle: .BLACK
 			)
 			.padding(.bottom, 16)
 
+			// MARK: SwiftUIVirtusizeInPageStandard
 			SwiftUIVirtusizeInPageStandard(
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
 				},
-				// Optional: You can customize the button by accessing it here
+				// (Optional): You can customize the button by accessing it here
 				label: { virtusizeInPageStandard in
 					virtusizeInPageStandard.buttonFontSize = 12
 					virtusizeInPageStandard.messageFontSize = 12
 					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsBlackColor
 					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
 				},
-				// Optional: You can use our default styles either Black or Teal for the InPage Standard view. The default is set to .BLACK.
+				// (Optional): You can use our default styles either Black or Teal for the InPage Standard view. The default is set to .BLACK.
 				defaultStyle: .BLACK
 			)
 			.padding(.bottom, 16)
-
+			
+			// MARK: SwiftUIVirtusizeInPageMini
 			SwiftUIVirtusizeInPageMini(
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
 				},
-				// Optional: You can customize the button by accessing it here
+				// (Optional): You can customize the button by accessing it here
 				label: { virtusizeInPageMini in
 					virtusizeInPageMini.messageFontSize = 12
 					virtusizeInPageMini.buttonFontSize = 10
 					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
 					virtusizeInPageMini.setHorizontalMargin(margin: 16)
 				},
-				// Optional: You can use our default styles either Black or Teal for the InPage Mini view. The default is set to .BLACK.
+				// (Optional): You can use our default styles either Black or Teal for the InPage Mini view. The default is set to .BLACK.
 				defaultStyle: .TEAL
 			)
 
 			Spacer()
 		}
-		// Optional: Hide the space of the view when the product data check is not completed or not valid
-//			.frame(height: productDataCheckCompleted ? nil : 0)
+		// (Optional): Hide the space of the view when the product data check is not completed or not valid
+		.frame(height: productDataCheckCompleted ? nil : 0)
+		// MARK: SwiftUIVirtusizeViewController
 		.sheet(isPresented: $showVirtusizeWebView) {
 			SwiftUIVirtusizeViewController(
-				// Optional: Set up WKProcessPool to allow cookie sharing.
+				// (Optional): Set up WKProcessPool to allow cookie sharing.
 				processPool: WKProcessPool(),
-				// Optional: You can use this callback closure to receive Virtusize events
+				// (Optional): You can use this callback closure to receive Virtusize events
 				didReceiveEvent: { event in
 					print(event)
 					switch event.name {
@@ -117,17 +121,17 @@ struct ContentView: View {
 						return
 					}
 				},
-				// Optional: You can use this callback closure to receive Virtusize SDK errors
+				// (Optional): You can use this callback closure to receive Virtusize SDK errors
 				didReceiveError: { error in
 					print(error)
 				}
 			)
 		}
-		// You can make the Virtusize web view full screen by using fullScreenCover (only available for iOS version 14.0+
+		// You can make the Virtusize web view full screen by using fullScreenCover (only available for iOS version 14.0+)
 //			.fullScreenCover(isPresented: $showVirtusizeWebView, content: {
 //				SwiftUIVirtusizeViewController()
 //			})
-		// Optional: You can set up NotificationCenter listeners for debugging the initial product data check
+		// (Optional): You can set up NotificationCenter listeners for debugging the initial product data check
 		// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
 		// with the cause of the failure
 		// - `Virtusize.productDataCheckDidSucceed`
