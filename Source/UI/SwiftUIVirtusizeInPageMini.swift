@@ -22,10 +22,11 @@
 //  THE SOFTWARE.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 import UIKit
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 public struct SwiftUIVirtusizeInPageMini: View {
 
 	private var action: (() -> Void)?
@@ -55,7 +56,7 @@ public struct SwiftUIVirtusizeInPageMini: View {
 	}
 }
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 
 	private var action: (() -> Void)?
@@ -126,7 +127,7 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 	}
 }
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 extension VirtusizeInPageMiniWrapper {
 	public class Coordinator {
 
@@ -137,3 +138,4 @@ extension VirtusizeInPageMiniWrapper {
 		}
 	}
 }
+#endif

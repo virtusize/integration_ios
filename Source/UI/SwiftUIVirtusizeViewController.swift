@@ -22,10 +22,11 @@
 //  THE SOFTWARE.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 import WebKit
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	public typealias UIViewControllerType = VirtusizeWebViewController
 
@@ -69,7 +70,7 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 
 }
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 extension SwiftUIVirtusizeViewController {
 
 	public class Coordinator: VirtusizeMessageHandler {
@@ -94,3 +95,4 @@ extension SwiftUIVirtusizeViewController {
 		}
 	}
 }
+#endif

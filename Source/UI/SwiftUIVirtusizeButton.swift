@@ -22,9 +22,10 @@
 //  THE SOFTWARE.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 	private var action: (() -> Void)?
@@ -76,7 +77,7 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 	}
 }
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 extension SwiftUIVirtusizeButton {
 	public class Coordinator {
 		var action: (() -> Void)?
@@ -86,3 +87,4 @@ extension SwiftUIVirtusizeButton {
 		}
 	}
 }
+#endif
