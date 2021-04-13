@@ -26,9 +26,9 @@ import WebKit
 
 /// A protocol for the Virtusize specific views such as `VirtusizeButton` and `VirtusizeInPageView`
 public protocol VirtusizeView {
-    var style: VirtusizeViewStyle { get }
     var presentingViewController: UIViewController? { get set }
     var messageHandler: VirtusizeMessageHandler? { get set }
+	var style: VirtusizeViewStyle { get }
 	var isDeallocated: Bool? { get set }
 
 	/// Sets up the loading UI

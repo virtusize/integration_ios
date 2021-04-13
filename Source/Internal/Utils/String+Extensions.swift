@@ -68,6 +68,6 @@ internal extension String {
 			attributes: [.font: font],
 			context: nil
 		)
-		return ceil(boundingRect.height)
+		return floor(boundingRect.height)
 	}
 }

@@ -31,8 +31,6 @@ import WebKit
 public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	public typealias UIViewControllerType = VirtusizeWebViewController
 
-	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
 	private var processPool: WKProcessPool?
 	private var event: ((VirtusizeEvent) -> Void)?
 	private var error: ((VirtusizeError) -> Void)?
@@ -63,12 +61,9 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 		return virtusizeViewController
 	}
 
-	public func updateUIViewController(_ uiViewController: VirtusizeWebViewController, context: Context) {}
-
-	private func dismiss() {
-		presentationMode.wrappedValue.dismiss()
+	public func updateUIViewController(_ uiViewController: VirtusizeWebViewController, context: Context) {
+		uiViewController.loadWebView()
 	}
-
 }
 
 @available(iOS 13.0, *)
