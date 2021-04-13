@@ -112,6 +112,10 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 
 		if self.uiView != nil {
 			self.uiView!(uiView)
+
+			if uiView.userSetMargin == 0 {
+				uiView.setHorizontalMargin(margin: 0)
+			}
 		}
 
 		uiView.setContentViewListener(listener: { view in
