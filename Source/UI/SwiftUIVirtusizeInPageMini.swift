@@ -26,6 +26,7 @@
 import SwiftUI
 import UIKit
 
+#if (arch(arm64) || arch(x86_64))
 @available(iOS 13.0, *)
 public struct SwiftUIVirtusizeInPageMini: View {
 
@@ -138,4 +139,5 @@ extension VirtusizeInPageMiniWrapper {
 		}
 	}
 }
+#endif
 #endif

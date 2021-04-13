@@ -25,6 +25,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
+#if (arch(arm64) || arch(x86_64))
 @available(iOS 13.0, *)
 public struct SwiftUIVirtusizeInPageStandard: View {
 
@@ -139,4 +140,5 @@ extension VirtusizeInPageStandardWrapper {
 		}
 	}
 }
+#endif
 #endif

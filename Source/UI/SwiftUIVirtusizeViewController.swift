@@ -26,6 +26,7 @@
 import SwiftUI
 import WebKit
 
+#if (arch(arm64) || arch(x86_64))
 @available(iOS 13.0, *)
 public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	public typealias UIViewControllerType = VirtusizeWebViewController
@@ -95,4 +96,5 @@ extension SwiftUIVirtusizeViewController {
 		}
 	}
 }
+#endif
 #endif

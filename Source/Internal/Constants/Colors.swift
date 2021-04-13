@@ -25,6 +25,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
+#if (arch(arm64) || arch(x86_64))
 @available(iOS 13.0, *)
 public extension Color {
 	static var vsGray200Color: Color { Color(UIColor.vsGray200Color) }
@@ -37,6 +38,8 @@ public extension Color {
 	static var vsDarkTealColor: Color { Color(UIColor.vsDarkTealColor) }
 	static var vsInPageShadowColor: Color { Color(UIColor.vsInPageShadowColor) }
 }
+#endif
+
 #endif
 
 /// The Virtusize themed colors used in the Virtusize SDK
