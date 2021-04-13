@@ -45,6 +45,8 @@ public final class VirtusizeWebViewController: UIViewController {
 
     private static let cookieBidKey = "virtusize.bid"
 
+	internal var isVirtusizeClosed = false
+
     public convenience init?(
         messageHandler: VirtusizeMessageHandler? = nil,
         eventHandler: VirtusizeEventHandler? = nil,
@@ -131,11 +133,13 @@ public final class VirtusizeWebViewController: UIViewController {
     // MARK: Error Handling
     public func reportError(error: VirtusizeError) {
         messageHandler?.virtusizeController(self, didReceiveError: error)
+		isVirtusizeClosed = true
 		dismiss(animated: true, completion: nil)
     }
 
     // MARK: Closing view
     @objc internal func shouldClose() {
+		isVirtusizeClosed = true
 		dismiss(animated: true, completion: nil)
     }
 }
