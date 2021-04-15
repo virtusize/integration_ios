@@ -61,6 +61,7 @@ internal final class VirtusizeInPageStandardViewModel {
 		guard currentStoreProduct?.externalId != Virtusize.internalProduct?.externalId ||
 			  self.storeProductImage.value == nil
 		else {
+			self.storeProductImage.value = self.storeProductImage.value
 			return
 		}
 		currentStoreProduct = Virtusize.internalProduct

@@ -96,51 +96,6 @@ public class Virtusize {
 		}
 	}
 
-	private static var productDataCheckWorkItem: DispatchWorkItem?
-
-//	/// The internal property for product
-//	internal static var internalProduct: VirtusizeProduct?
-//	/// The Virtusize product to get the value from the`productDataCheck` request
-//	public static var product: VirtusizeProduct? {
-//		set {
-//			guard let newValue = newValue else {
-//				return
-//			}
-//
-//			productDataCheckWorkItem?.cancel()
-//
-//			internalProduct = newValue
-//
-//			let currentWorkItem = DispatchWorkItem {
-//				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
-//					return
-//				}
-//
-//				DispatchQueue.main.async {
-//					for index in 0...virtusizeViews.count-1 {
-//						(virtusizeViews[index] as? VirtusizeInPageView)?.setStyle()
-//						virtusizeViews[index].isLoading()
-//					}
-//				}
-//
-//				DispatchQueue.global().sync {
-//					virtusizeRepository.fetchInitialData(productId: internalProduct!.productCheckData!.productDataId)
-//					virtusizeRepository.updateUserSession()
-//					virtusizeRepository.fetchDataForInPageRecommendation()
-//					virtusizeRepository.switchInPageRecommendation()
-//				}
-//				// call a web service with the keywords - searchBar.text
-//			}
-//
-//			// Save the new work item and execute it after 250 ms
-//			productDataCheckWorkItem = currentWorkItem
-//			DispatchQueue.global().sync(execute: currentWorkItem)
-//		}
-//		get {
-//			return internalProduct
-//		}
-//	}
-	
 	/// The private property for updating InPage views
 	private static var _updateInPageViews: (SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)?
 	/// The property to be set to update InPage views.
