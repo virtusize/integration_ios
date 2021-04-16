@@ -129,7 +129,7 @@ internal class VirtusizeInternalProduct: Codable {
         _ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
         _ bodyProfileRecommendedSizeName: String?
     ) -> String {
-		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize {
+		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize, sizeComparisonRecommendedSize.isValid() {
 		   return i18nLocalization.getOneSizeProductComparisonText(sizeComparisonRecommendedSize)
 		}
         if bodyProfileRecommendedSizeName != nil {
