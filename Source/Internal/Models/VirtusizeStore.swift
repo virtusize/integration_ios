@@ -28,7 +28,7 @@ import Foundation
 internal struct VirtusizeStore: Codable {
     // swiftlint:disable identifier_name
     private let id: Int
-    private let surveyLink: String
+    private let surveyLink: String?
     private let name: String
     private let shortName: String
     private let lengthUnitId: Int
