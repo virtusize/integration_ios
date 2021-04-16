@@ -28,14 +28,7 @@ internal extension UIImage {
     ///
     /// - Parameter name: The image name.
     convenience init?(bundleNamed name: String) {
-		var bundle = Bundle(for: Virtusize.self)
-
-		if let path = bundle.path(forResource: "Virtusize", ofType: "bundle"),
-		   let virtusizeBundle = Bundle(path: path) {
-			bundle = virtusizeBundle
-		}
-
-        self.init(named: name, in: bundle, compatibleWith: nil)
+		self.init(named: name, in: BundleLoader.virtusizeBundle, compatibleWith: nil)
     }
 
     /// Adds the padding to a `UIImage`
