@@ -28,6 +28,13 @@ internal extension UIImage {
     ///
     /// - Parameter name: The image name.
     convenience init?(bundleNamed name: String) {
+		var bundle = Bundle(for: Virtusize.self)
+		
+		if let path = bundle.path(forResource: "Virtusize", ofType: "bundle"),
+		   let virtusizeBundle = Bundle(path: path) {
+			bundle = virtusizeBundle
+		}
+
         self.init(named: name, in: Bundle(for: Virtusize.self), compatibleWith: nil)
     }
 
