@@ -28,7 +28,7 @@ internal extension UIImage {
     ///
     /// - Parameter name: The image name.
     convenience init?(bundleNamed name: String) {
-		self.init(named: name, in: BundleLoader.virtusizeBundle, compatibleWith: nil)
+		self.init(named: name, in: BundleLoader.virtusizeResourceBundle, compatibleWith: nil)
     }
 
     /// Adds the padding to a `UIImage`

@@ -24,32 +24,52 @@
 
 import Foundation
 
+/// The class is to access different types of bundles for the SDK
 internal class BundleLoader: NSObject {
-
-	static var virtusizeBundle: Bundle = {
+	/// The bundle is used for resources like images
+	static var virtusizeResourceBundle: Bundle = {
 		var bundle: Bundle?
+		// Swift Package Manager bundle
 		#if SWIFT_PACKAGE
 		bundle = Bundle.module
 		#endif
 
 		if bundle == nil {
+			// Virtusize.bundle
 			bundle = Bundle(path: "Virtusize.bundle")
 		}
 
 		if bundle == nil {
+			// Virtusize.framework/Virtusize.bundle
 			if let path = Bundle(for: BundleLoader.self).path(forResource: "Virtusize", ofType: "bundle") {
 				bundle = Bundle(path: path)
 			}
 		}
 
 		if bundle == nil {
+			// Virtusize.framework
 			bundle = Bundle(for: BundleLoader.self)
 		}
 
 		if let bundle = bundle {
 			return bundle
 		} else {
+			// Fallback to Bundle.main to ensure there is always a bundle.
 			return Bundle.main
 		}
 	}()
+
+	/// Gets the bundle that is used for localization
+	/// - Parameter language: `VirtusizeLanguage`
+	static func virtusizeLocalizationBundle(language: VirtusizeLanguage? = nil) -> Bundle {
+		var bundle = virtusizeResourceBundle
+		if let localizableBundlePath = bundle.path(
+			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
+			ofType: "lproj"
+		),
+			  let localizableBundle = Bundle(path: localizableBundlePath) {
+			bundle = localizableBundle
+		}
+		return bundle
+	}
 }
