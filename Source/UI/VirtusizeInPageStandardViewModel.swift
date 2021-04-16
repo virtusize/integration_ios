@@ -72,9 +72,8 @@ internal final class VirtusizeInPageStandardViewModel {
 					source: .client
 				)
 			} else {
-				if let storeProductImage = VirtusizeAPIService.loadImageAsync(
-					url: URL(string: VirtusizeRepository.shared.storeProduct!.cloudinaryPublicId)
-				).success {
+				let cloudinaryImageURL = self.getCloudinaryImageUrl(VirtusizeRepository.shared.storeProduct!.cloudinaryPublicId)
+				if let storeProductImage = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL).success {
 					self.storeProductImage.value = VirtusizeProductImage(
 						image: storeProductImage,
 						source: .cloudinary
