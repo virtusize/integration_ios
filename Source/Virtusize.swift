@@ -70,11 +70,17 @@ public class Virtusize {
 
 			DispatchQueue.global().async {
 				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
+					DispatchQueue.main.async {
+						for index in 0...virtusizeViews.count-1 {
+							(virtusizeViews[index] as? UIView)?.isHidden = true
+						}
+					}
 					return
 				}
 
 				DispatchQueue.main.async {
 					for index in 0...virtusizeViews.count-1 {
+						(virtusizeViews[index] as? VirtusizeInPageView)?.setup()
 						virtusizeViews[index].isLoading()
 					}
 				}
