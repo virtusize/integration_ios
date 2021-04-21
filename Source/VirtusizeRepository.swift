@@ -133,7 +133,8 @@ internal class VirtusizeRepository: NSObject {
 	/// Fetches data for InPage recommendation
 	///
 	/// - Parameters:
-	///   - selectedUserProductId: the selected product Id from the web view to decide a specific user product to compare with the store product
+	///   - selectedUserProductId: the selected product Id from the web view
+	///   to decide a specific user product to compare with the store product
 	internal func fetchDataForInPageRecommendation(
 		shouldUpdateUserProducts: Bool = true,
 		selectedUserProductId: Int? = nil
