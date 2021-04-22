@@ -27,6 +27,7 @@
 		9C1F83B7251481040061B777 /* StoreProductFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDE3424DD317F0021073A /* StoreProductFixtures.swift */; };
 		9C1F83B8251481080061B777 /* UserProductFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90F97C2512FF6C008FEFD6 /* UserProductFixtures.swift */; };
 		9C1F83B92514810B0061B777 /* UserBodyProfileFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F83AE25147FCF0061B777 /* UserBodyProfileFixtures.swift */; };
+		9C2266382629922200915230 /* BundleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2266372629922200915230 /* BundleLoader.swift */; };
 		9C32A14B250279D00062C11D /* VirtusizeInPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */; };
 		9C33F699252449E1008DBF41 /* BodyProfileRecommendedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C33F698252449E1008DBF41 /* BodyProfileRecommendedSize.swift */; };
 		9C33F69D2524697F008DBF41 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C33F69C2524697F008DBF41 /* APIResponse.swift */; };
@@ -142,6 +143,7 @@
 		9C1F83A925147E8F0061B777 /* VirtusizeUserBodyProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfileTests.swift; sourceTree = "<group>"; };
 		9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfile.swift; sourceTree = "<group>"; };
 		9C1F83AE25147FCF0061B777 /* UserBodyProfileFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBodyProfileFixtures.swift; sourceTree = "<group>"; };
+		9C2266372629922200915230 /* BundleLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleLoader.swift; sourceTree = "<group>"; };
 		9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageView.swift; sourceTree = "<group>"; };
 		9C33F698252449E1008DBF41 /* BodyProfileRecommendedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyProfileRecommendedSize.swift; sourceTree = "<group>"; };
 		9C33F69C2524697F008DBF41 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 				9CB2DD5C24F4BD24004D4E08 /* Image+Extensions.swift */,
 				9C106EED24FF99390012EE51 /* String+Extensions.swift */,
 				9CFF411225B98FA900B21D4E /* Observable.swift */,
+				9C2266372629922200915230 /* BundleLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				9C33F699252449E1008DBF41 /* BodyProfileRecommendedSize.swift in Sources */,
 				9CEC8D8C252AB963001CBDFB /* ProductComparisonFitInfo.swift in Sources */,
 				9CE7785824B3794500E4A127 /* Localization.swift in Sources */,
+				9C2266382629922200915230 /* BundleLoader.swift in Sources */,
 				9C33F69D2524697F008DBF41 /* APIResponse.swift in Sources */,
 				9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */,
 				9C3DE37725BA9CC70082C140 /* VirtusizeWebViewController.swift in Sources */,
@@ -969,7 +973,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -993,7 +997,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
