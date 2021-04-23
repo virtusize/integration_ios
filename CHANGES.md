@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.1.5
+- Bugfix: Adjust the shadow of InPage
+
 ### 2.1.4
 - Bugfix: Ensure InPage displays the correct message
 - Bugfix: Ensure the image assets from the resource bundle to be displayed on InPage
