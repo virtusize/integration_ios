@@ -349,8 +349,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         inPageStandardView.layer.masksToBounds = false
         inPageStandardView.layer.shadowColor = UIColor.vsInPageShadowColor.cgColor
         inPageStandardView.layer.shadowOpacity = 1
-        inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 4)
-        inPageStandardView.layer.shadowRadius = 14
+        inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        inPageStandardView.layer.shadowRadius = 10
 
 		vsIconImageView.image = VirtusizeAssets.icon
 
