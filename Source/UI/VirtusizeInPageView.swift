@@ -23,8 +23,6 @@
 //
 
 public class VirtusizeInPageView: UIView, VirtusizeView {
-	internal var virtusizeEventHandler: VirtusizeEventHandler?
-
     /// The property to set the Virtusize view style that this SDK provides
     public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
         didSet {
@@ -36,23 +34,42 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     public var messageHandler: VirtusizeMessageHandler?
 	public var isDeallocated: Bool?
 
+	internal var contentViewListener: ((VirtusizeInPageView) -> Void)?
+
     internal let defaultMargin: CGFloat = 8
 
     internal var loadingTextTimer: Timer?
 
+	internal var userSetMargin: CGFloat = 0
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-		virtusizeEventHandler = self
+		Virtusize.virtusizeEventHandler = self
         isHidden = true
         setup()
     }
 
     public override init(frame: CGRect) {
         super.init(frame: .zero)
-		virtusizeEventHandler = self
+		Virtusize.virtusizeEventHandler = self
         isHidden = true
         setup()
     }
+
+	internal func setContentViewListener(listener: ((VirtusizeInPageView) -> Void)?) {
+		contentViewListener = listener
+	}
+
+	/// The function to set the horizontal margin between the edges of the app screen and the InPage view
+	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
+		userSetMargin = margin
+		setHorizontalMargins(view: view, margin: margin)
+	}
+
+	public func setHorizontalMargin(margin: CGFloat) {
+		userSetMargin = margin
+		setHorizontalMargins(margin: margin)
+	}
 
 	public override func willMove(toWindow: UIWindow?) {
 		if toWindow == nil {
@@ -66,33 +83,35 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     internal func setup() {}
 
-    internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: self,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: view,
-                attribute: .leading,
-                multiplier: 1,
-                constant: margin
-            )
-        )
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: view,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: margin
-            )
-        )
+    internal func setHorizontalMargins(view: UIView? = nil, margin: CGFloat) {
+		if let parentView = (view ?? self.superview) {
+			parentView.addConstraint(
+				NSLayoutConstraint(
+					item: self,
+					attribute: .leading,
+					relatedBy: .equal,
+					toItem: parentView,
+					attribute: .leading,
+					multiplier: 1,
+					constant: margin
+				)
+			)
+			parentView.addConstraint(
+				NSLayoutConstraint(
+					item: parentView,
+					attribute: .trailing,
+					relatedBy: .equal,
+					toItem: self,
+					attribute: .trailing,
+					multiplier: 1,
+					constant: margin
+				)
+			)
+		}
     }
 
     @objc internal func clickInPageViewAction() {
-		openVirtusizeWebView(eventHandler: virtusizeEventHandler)
+		openVirtusizeWebView(eventHandler: Virtusize.virtusizeEventHandler)
     }
 
 	/// A parent function to set up InPage recommendation

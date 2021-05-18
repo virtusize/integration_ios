@@ -45,6 +45,9 @@ public final class VirtusizeWebViewController: UIViewController {
 
     private static let cookieBidKey = "virtusize.bid"
 
+	internal var isViewWillAppeared = false
+	internal var isVirtusizeClosed = false
+
     public convenience init?(
         messageHandler: VirtusizeMessageHandler? = nil,
         eventHandler: VirtusizeEventHandler? = nil,
@@ -107,13 +110,21 @@ public final class VirtusizeWebViewController: UIViewController {
             NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
         }
 
-        // If the request is invalid, the controller should be dismissed
-        guard let request = APIRequest.virtusizeWebView() else {
-            reportError(error: .invalidRequest)
-            return
-        }
-        webView.load(request)
+		loadWebView()
     }
+
+	public override func viewWillAppear(_ animated: Bool) {
+		isViewWillAppeared = true
+	}
+
+	internal func loadWebView() {
+		// If the request is invalid, the controller should be dismissed
+		guard let request = APIRequest.virtusizeWebView() else {
+			reportError(error: .invalidRequest)
+			return
+		}
+		self.webView?.load(request)
+	}
 
     // MARK: Rotation Lock
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -127,11 +138,13 @@ public final class VirtusizeWebViewController: UIViewController {
     // MARK: Error Handling
     public func reportError(error: VirtusizeError) {
         messageHandler?.virtusizeController(self, didReceiveError: error)
+		isVirtusizeClosed = true
 		dismiss(animated: true, completion: nil)
     }
 
     // MARK: Closing view
     @objc internal func shouldClose() {
+		isVirtusizeClosed = true
 		dismiss(animated: true, completion: nil)
     }
 }

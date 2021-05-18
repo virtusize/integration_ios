@@ -22,26 +22,26 @@
 //  THE SOFTWARE.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 
-@available(iOSApplicationExtension 13.0, *)
+#if (arch(arm64) || arch(x86_64))
+@available(iOS 13.0, *)
 public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 	private var action: (() -> Void)?
-	private var label: ((UIButton) -> Void)?
+	private var uiView: ((UIButton) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
-	private var virtusizeMessageHandler: VirtusizeMessageHandler?
 
 	public init(
 		action: (() -> Void)? = nil,
-		label: ((UIButton) -> Void)? = nil,
+		uiView: ((UIButton) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil,
 		virtusizeMessageHandler: VirtusizeMessageHandler? = nil
 	) {
 		self.action = action
-		self.label = label
+		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
-		self.virtusizeMessageHandler = virtusizeMessageHandler
 	}
 
 	public func makeCoordinator() -> Coordinator {
@@ -53,7 +53,7 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 		virtusizeButton.addTarget(
 			context.coordinator,
-			action: #selector(Coordinator.callAction),
+			action: #selector(Coordinator.clickAction),
 			for: .touchUpInside
 		)
 
@@ -69,8 +69,8 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 			uiView.style = virtusizeDefaultStyle
 		}
 
-		if label != nil {
-			label!(uiView)
+		if self.uiView != nil {
+			self.uiView!(uiView)
 		}
 
 		uiView.setContentHuggingPriority(.required, for: .horizontal)
@@ -78,13 +78,15 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 	}
 }
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 extension SwiftUIVirtusizeButton {
 	public class Coordinator {
 		var action: (() -> Void)?
 
-		@objc func callAction() {
+		@objc func clickAction() {
 			action?()
 		}
 	}
 }
+#endif
+#endif

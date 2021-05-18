@@ -22,14 +22,14 @@
 //  THE SOFTWARE.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 import WebKit
 
-@available(iOSApplicationExtension 13.0, *)
+#if (arch(arm64) || arch(x86_64))
+@available(iOS 13.0, *)
 public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	public typealias UIViewControllerType = VirtusizeWebViewController
-
-	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
 	private var processPool: WKProcessPool?
 	private var event: ((VirtusizeEvent) -> Void)?
@@ -46,12 +46,13 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	}
 
 	public func makeCoordinator() -> Coordinator {
-		Coordinator(self, didReceiveEvent: event, didReceiveError: error)
+		Coordinator(didReceiveEvent: event, didReceiveError: error)
 	}
 
 	public func makeUIViewController(context: Context) -> VirtusizeWebViewController {
 		guard let virtusizeViewController = VirtusizeWebViewController(
 			messageHandler: context.coordinator,
+			eventHandler: Virtusize.virtusizeEventHandler,
 			processPool: processPool
 		) else {
 			fatalError("Cannot load VirtusizeViewController")
@@ -60,29 +61,29 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 		return virtusizeViewController
 	}
 
-	public func updateUIViewController(_ uiViewController: VirtusizeWebViewController, context: Context) {}
-
-	private func dismiss() {
-		presentationMode.wrappedValue.dismiss()
+	public func updateUIViewController(_ uiViewController: VirtusizeWebViewController, context: Context) {
+		if uiViewController.isViewWillAppeared {
+			uiViewController.isViewWillAppeared = false
+			if uiViewController.isVirtusizeClosed {
+				uiViewController.isVirtusizeClosed = false
+				uiViewController.loadWebView()
+			}
+		}
 	}
-
 }
 
-@available(iOSApplicationExtension 13.0, *)
+@available(iOS 13.0, *)
 extension SwiftUIVirtusizeViewController {
 
 	public class Coordinator: VirtusizeMessageHandler {
 
-		private var parent: SwiftUIVirtusizeViewController
 		private var eventListener: ((VirtusizeEvent) -> Void)?
 		private var errorListener: ((VirtusizeError) -> Void)?
 
 		init(
-			_ parent: SwiftUIVirtusizeViewController,
 			didReceiveEvent event: ((VirtusizeEvent) -> Void)?,
 			didReceiveError error: ((VirtusizeError) -> Void)?
 		) {
-			self.parent = parent
 			self.eventListener = event
 			self.errorListener = error
 		}
@@ -94,9 +95,7 @@ extension SwiftUIVirtusizeViewController {
 		public func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
 			self.eventListener?(event)
 		}
-
-		public func virtusizeControllerShouldClose(_ controller: VirtusizeWebViewController) {
-			parent.dismiss()
-		}
 	}
 }
+#endif
+#endif

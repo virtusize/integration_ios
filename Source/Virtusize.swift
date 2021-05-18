@@ -51,6 +51,8 @@ public class Virtusize {
     public static var productDataCheckDidFail = Notification.Name("VirtusizeProductDataCheckDidFail")
     public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
 
+	internal static var virtusizeEventHandler: VirtusizeEventHandler?
+
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	private static var virtusizeViews: [VirtusizeView] = []
 

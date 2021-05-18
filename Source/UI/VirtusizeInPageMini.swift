@@ -46,17 +46,20 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		}
 	}
 
-	/// The function to set the horizontal margin between the edges of the app screen and the InPage Mini view
-	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
-		setHorizontalMargins(view: view, margin: margin)
+	public override var intrinsicContentSize: CGSize {
+		var size = bounds.size
+		size.height = inPageMiniMessageLabel.intrinsicContentSize.height + 2 * verticalMargin
+		return size
 	}
 
     private let messageAndButtonMargin: CGFloat = 8
     private let verticalMargin: CGFloat = 5
 
     private let inPageMiniImageView: UIImageView = UIImageView()
-    private let inPageMiniMessageLabel: UILabel = UILabel()
-    private let inPageMiniSizeCheckButton: UIButton = UIButton()
+	internal let inPageMiniMessageLabel: UILabel = UILabel()
+    internal let inPageMiniSizeCheckButton: UIButton = UIButton()
+
+	private var loading: Bool = false
 
     internal override func setup() {
         addSubviews()
@@ -69,6 +72,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
     public override func isLoading() {
         super.isLoading()
+		loading = true
         setLoadingScreen(loading: true)
     }
 
@@ -78,6 +82,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	) {
 		super.setInPageRecommendation(sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
 
+		loading = false
 		setLoadingScreen(loading: false)
 		inPageMiniMessageLabel.attributedText = NSAttributedString(
 			string:
@@ -150,7 +155,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
     }
 
     private func setStyle() {
-        backgroundColor = getBackgroundColor()
+		backgroundColor = getBackgroundColor()
 
         inPageMiniImageView.contentMode = .scaleAspectFit
 
@@ -176,10 +181,12 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             inPageMiniSizeCheckButton.setTitleColor(.vsTealColor, for: .normal)
             inPageMiniSizeCheckButton.imageView?.tintColor = .vsTealColor
         } else {
-            inPageMiniSizeCheckButton.setTitleColor(.vsGray900Color, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
+            inPageMiniSizeCheckButton.setTitleColor(.vsBlackColor, for: .normal)
+            inPageMiniSizeCheckButton.imageView?.tintColor = .vsBlackColor
         }
         inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+		setLoadingScreen(loading: loading, setTextAnimation: false)
     }
 
     private func getBackgroundColor() -> UIColor {
@@ -188,7 +195,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         } else if style == .TEAL {
             return .vsTealColor
         } else {
-            return .vsGray900Color
+            return .vsBlackColor
         }
     }
 
@@ -212,20 +219,27 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         }
     }
 
-    private func setLoadingScreen(loading: Bool) {
+	private func setLoadingScreen(loading: Bool, setTextAnimation: Bool = true) {
         backgroundColor = loading ? .white : getBackgroundColor()
         inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
-        inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
+        inPageMiniMessageLabel.textColor = loading ? .vsBlackColor : .white
         setupTextsStyle(messageLabelIsBold: loading)
-        if loading {
-            startLoadingTextAnimation(
-                label: inPageMiniMessageLabel,
-                text: Localization.shared.localize("inpage_loading_text")
-            )
-        } else {
-            stopLoadingTextAnimation()
-        }
+		if setTextAnimation {
+			if loading {
+				startLoadingTextAnimation(
+					label: inPageMiniMessageLabel,
+					text: Localization.shared.localize("inpage_loading_text")
+				)
+			} else {
+				stopLoadingTextAnimation()
+			}
+		}
         inPageMiniSizeCheckButton.isHidden = loading ? true: false
+		if setTextAnimation {
+			DispatchQueue.main.async {
+				self.contentViewListener?(self)
+			}
+		}
     }
 
 	internal override func showErrorScreen() {
