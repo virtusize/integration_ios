@@ -589,7 +589,7 @@ struct ProductView: View {
 }
 ```
 
-- **SwiftUIVirtusizeInPageMini**: is equivalent to [InPage Mini](#2-inpage-standard)
+- **SwiftUIVirtusizeInPageMini**: is equivalent to [InPage Mini](#3-inpage-mini)
 
 ```Swift
 struct ProductView: View {

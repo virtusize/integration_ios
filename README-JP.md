@@ -501,7 +501,7 @@ Virtusize SDKには2種類のInPageがあります。
 
 #### 1. Set up the SDK in the App delegate's  `application(_:didFinishLaunchingWithOptions:)` method.
 
-Check the [Set Up](#1-initialization) section for the example code
+Check the [Set Up](#1-はじめに) section for the example code
 
 
 
@@ -526,7 +526,7 @@ struct ProductView: View {
 
 #### 3. There are three Virtusize SwiftUI components that you can use:
 
-- **SwiftUIVirtusizeButton:** is equivalent to [Virtusize Button](#1-virtusize-button)
+- **SwiftUIVirtusizeButton:** is equivalent to [Virtusize Button](#1-バーチャサイズボタンvirtusize-button)
 
 ```Swift
 struct ProductView: View {
@@ -563,7 +563,7 @@ struct ProductView: View {
 }	
 ```
 
-- **SwiftUIVirtusizeInPageStandard**: is equivalent to [InPage Standard](#2-inpage-standard)
+- **SwiftUIVirtusizeInPageStandard**: is equivalent to [InPage Standard](#2-バーチャサイズインページvirtuzie-inpage)
 
 ```Swift
 struct ProductView: View {
@@ -602,7 +602,7 @@ struct ProductView: View {
 }
 ```
 
-- **SwiftUIVirtusizeInPageMini**: is equivalent to [InPage Mini](#2-inpage-standard)
+- **SwiftUIVirtusizeInPageMini**: is equivalent to [InPage Mini](#3-inpage-mini)
 
 ```Swift
 struct ProductView: View {
