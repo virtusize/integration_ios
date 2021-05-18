@@ -175,10 +175,10 @@ extension ViewController: VirtusizeMessageHandler {
 
 ### 4. Allow Cookie Sharing (Optional)
 
-The `VirtusizeWebViewController` accepts an optional `processPool:WKProcessPool` paramater to allow cookie sharing.
+The `VirtusizeWebViewController` accepts an optional `processPool:WKProcessPool` parameter to allow cookie sharing.
 
 ```Swift
-// Optional: Set up WKProcessPool to allow cookie sharing.
+// (Optional): Set up WKProcessPool to allow cookie sharing.
 Virtusize.processPool = WKProcessPool()
 ```
 
@@ -189,7 +189,7 @@ When the button is initialized with an  `exernalId` , the SDK calls our API to c
 In order to debug that API call, you can subscribe to the `NotificationCenter` and observe two `Notification.Name` aliases:
 
 - `Virtusize.productDataCheckDidFail`, which receives the `UserInfo` containing a message with the cause of the failure.
-- `Virtusize.productDataCheckDidSucceed` that will be sent if the call is succesfull.
+- `Virtusize.productDataCheckDidSucceed` that will be sent if the call is successful.
 
 If the check fails, the button will be hidden.
 
@@ -463,7 +463,7 @@ This is a mini version of InPage which can be placed in your application. The di
     // Set the horizontal margins to 16
     inPageMini.setHorizontalMargin(view: view, margin: 16)
     
-    // Or set the direct width for InPage Standard programtically
+    // Or set the direct width for InPage Standard programmatically
     inPageMini.translatesAutoresizingMaskIntoConstraints = false
     inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     inPageMini.widthAnchor.constraint(equalToConstant: 350).isActive = true
@@ -481,6 +481,268 @@ This is a mini version of InPage which can be placed in your application. The di
   ```swift
   Virtusize.setVirtusizeView(self, inPageMini)
   ```
+
+
+
+## SwiftUI App Integration
+
+#### 1. Set up the SDK in the App delegate's  `application(_:didFinishLaunchingWithOptions:)` method.
+
+Check the [Set Up](#1-initialization) section for the example code
+
+
+
+#### 2. Set up the product details in your product SwiftUI view
+
+```Swift
+struct ProductView: View {
+	
+	init() {
+		// Set up the product information in order to populate the Virtusize view
+		Virtusize.product = VirtusizeProduct(
+			externalId: "vs_dress",
+			imageURL: URL(string: "http://www.example.com/image.jpg")
+		)
+	}
+	
+	...
+}
+```
+
+
+
+#### 3. There are three Virtusize SwiftUI components that you can use:
+
+- **SwiftUIVirtusizeButton:** is equivalent to [Virtusize Button](#1-virtusize-button)
+
+```Swift
+struct ProductView: View {
+	// Declare a Bool state to control when to open the Virtusize web view
+	@State var showVirtusizeWebView = false
+	
+	init() {
+		...
+	}
+
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeButton(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// (Optional) You can customize the button by accessing it here
+				uiView: { virtusizeButton in
+						virtusizeButton.setTitle("Check size", for: .normal)
+						virtusizeButton.backgroundColor = .vsBlackColor
+				},
+				// (Optional) You can use our default styles: either Black or Teal for the button.
+				// If you want to customize the button on your own, please omit defaultStyle
+				defaultStyle: .BLACK
+			)
+		}
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				...
+			)
+		}
+	}
+}	
+```
+
+- **SwiftUIVirtusizeInPageStandard**: is equivalent to [InPage Standard](#2-inpage-standard)
+
+```Swift
+struct ProductView: View {
+	// Declare a Boolean state to control when to open the Virtusize web view
+	@State var showVirtusizeWebView = false
+	
+	init() {
+		...
+	}
+
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeInPageStandard(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// (Optional): You can customize the button by accessing it here
+				uiView: { virtusizeInPageStandard in
+					virtusizeInPageStandard.buttonFontSize = 12
+					virtusizeInPageStandard.messageFontSize = 12
+					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsBlackColor
+					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
+				},
+				// (Optional): You can use our default styles either Black or Teal for the InPage Standard view.
+				// The default is set to .BLACK.
+				defaultStyle: .BLACK
+			)
+		}
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				...
+			)
+		}
+	}
+}
+```
+
+- **SwiftUIVirtusizeInPageMini**: is equivalent to [InPage Mini](#2-inpage-standard)
+
+```Swift
+struct ProductView: View {
+	// Declare a Boolean state to control when to open the Virtusize web view
+	@State var showVirtusizeWebView = false
+	
+	init() {
+		...
+	}
+	
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeInPageMini(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// (Optional): You can customize the button by accessing it here
+				uiView: { virtusizeInPageMini in
+					virtusizeInPageMini.messageFontSize = 12
+					virtusizeInPageMini.buttonFontSize = 10
+					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
+					virtusizeInPageMini.setHorizontalMargin(margin: 16)
+				},
+				// (Optional): You can use our default styles either Black or Teal for the InPage Mini view.
+				// The default is set to .BLACK.
+				defaultStyle: .TEAL
+			)
+		}
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				...
+			)
+		}
+	}
+}
+```
+
+
+
+#### 4. Implement **SwiftUIVirtusizeViewController** to open the Virtusize web view when any of the above components are clicked. 
+
+```Swift
+struct ProductView: View {
+	// Declare a Boolean state to control when to open the Virtusize web view
+	@State var showVirtusizeWebView = false
+
+	init() {
+		...
+	}
+
+	var body: some View {
+		VStack {
+			Spacer()
+
+			SwiftUIVirtusizeButton(
+				...
+			)
+			.padding(.bottom, 16)
+
+			SwiftUIVirtusizeInPageStandard(
+				...
+			)
+			.padding(.bottom, 16)
+
+			SwiftUIVirtusizeInPageMini(
+				...
+			)
+
+			Spacer()
+		}
+		// MARK: SwiftUIVirtusizeViewController
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				// (Optional): Set up WKProcessPool to allow cookie sharing
+				processPool: WKProcessPool(),
+				// (Optional): You can use this callback closure to receive Virtusize events
+				didReceiveEvent: { event in
+					print(event)
+					switch event.name {
+					case "user-opened-widget":
+						return
+					case "user-opened-panel-compare":
+						return
+					default:
+						return
+					}
+				},
+				// (Optional): You can use this callback closure to receive Virtusize SDK errors
+				didReceiveError: { error in
+					print(error)
+				}
+			)
+		}
+	}
+}
+```
+
+
+
+#### 5. Listen to Product Data Check (Optional) 
+
+You can set up NotificationCenter listeners with the *onReceive* modifier to debug the product data check
+
+```Swift
+struct ProductView: View {
+	var body: some View {
+		VStack {
+			Spacer()
+
+			SwiftUIVirtusizeButton(
+				...
+			)
+			.padding(.bottom, 16)
+
+			SwiftUIVirtusizeInPageStandard(
+				...
+			)
+			.padding(.bottom, 16)
+
+			SwiftUIVirtusizeInPageMini(
+				...
+			)
+
+			Spacer()
+		}
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				...
+			)
+		}
+    // (Optional): You can set up NotificationCenter listeners to debug the product data check
+		// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message with the cause of the failure
+		// - `Virtusize.productDataCheckDidSucceed`
+		.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidSucceed)) { notification in
+			print(notification)
+		}
+		.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
+			print(notification)
+		}
+  }
+}
+```
+
+
+
+#### 6. For integrating the other optional features listed below, you can check out the [SwiftUIExample](/SwiftUIExample) for a detailed implementation.
+
+- Allow cookie sharing
+
+- Hide the space of the Virtusize SwiftUI components 
+
+- Make the Virtusize web view full screen
 
 
 
@@ -568,6 +830,8 @@ Virtusize.sendOrder(
         print("Failed to send the order, error: \(error.debugDescription)")
 })
 ```
+
+
 
 ## Build
 
