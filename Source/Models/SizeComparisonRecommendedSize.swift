@@ -39,4 +39,8 @@ public struct SizeComparisonRecommendedSize {
         bestUserProduct = nil
         isStoreProductSmaller = false
     }
+
+	internal func isValid() -> Bool {
+		return bestFitScore != 0.0 || bestStoreProductSize != nil || bestUserProduct != nil
+	}
 }

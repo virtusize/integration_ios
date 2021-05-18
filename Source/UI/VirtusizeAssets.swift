@@ -41,8 +41,8 @@ final public class VirtusizeAssets {
 	}()
 
 	public static let vsSignature: UIImage? = {
-		   return UIImage(bundleNamed: "vs_signature")
-	   }()
+		return Base64ImageString.vsSignature.image
+	}()
 
 	public static let errorHanger: UIImage? = {
 		return UIImage(bundleNamed: "error_hanger")

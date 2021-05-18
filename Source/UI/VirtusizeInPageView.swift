@@ -126,19 +126,22 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     internal func startLoadingTextAnimation(label: UILabel, text: String) {
         var tempDots = 0
         label.text = text
-        loadingTextTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            if tempDots == 3 {
-                tempDots = 0
-                label.text = text
-            } else {
-                tempDots += 1
-                label.text = "\(text)" + String(repeating: "·", count: tempDots)
-            }
-        }
+		if loadingTextTimer == nil {
+			loadingTextTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+				if tempDots == 3 {
+					tempDots = 0
+					label.text = text
+				} else {
+					tempDots += 1
+					label.text = "\(text)" + String(repeating: "·", count: tempDots)
+				}
+			}
+		}
     }
 
     internal func stopLoadingTextAnimation() {
-        loadingTextTimer?.invalidate()
+		self.loadingTextTimer?.invalidate()
+		self.loadingTextTimer = nil
     }
 }
 
