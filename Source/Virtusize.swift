@@ -57,6 +57,8 @@ public class Virtusize {
 	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
 
+	internal static var dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
+
 	/// The internal property for product
 	internal static var internalProduct: VirtusizeProduct?
 	/// The Virtusize product to get the value from the`productDataCheck` request
@@ -68,7 +70,7 @@ public class Virtusize {
 
 			internalProduct = newValue
 
-			DispatchQueue.global().async {
+			dispatchQueue.async {
 				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
 					DispatchQueue.main.async {
 						for index in 0...virtusizeViews.count-1 {

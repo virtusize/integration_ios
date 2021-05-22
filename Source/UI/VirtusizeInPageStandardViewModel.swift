@@ -28,6 +28,7 @@ internal final class VirtusizeInPageStandardViewModel {
 
 	private var currentBestFitUserProduct: VirtusizeInternalProduct?
 	private var currentStoreProduct: VirtusizeProduct?
+	private var dispatchQueue = DispatchQueue(label: "com.virtusize.inpage-image-queue")
 
 	func loadUserProductImage(bestFitUserProduct: VirtusizeInternalProduct) {
 		if currentBestFitUserProduct != nil && currentBestFitUserProduct!.id == bestFitUserProduct.id {
@@ -35,7 +36,7 @@ internal final class VirtusizeInPageStandardViewModel {
 			return
 		}
 		currentBestFitUserProduct = bestFitUserProduct
-		DispatchQueue.global().async {
+		dispatchQueue.async {
 			self.userProductImage.value = nil
 			let cloudinaryImageURL = self.getCloudinaryImageUrl(bestFitUserProduct.cloudinaryPublicId)
 			let loadImageResponse = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL)
@@ -65,7 +66,7 @@ internal final class VirtusizeInPageStandardViewModel {
 			return
 		}
 		currentStoreProduct = Virtusize.internalProduct
-		DispatchQueue.global().async {
+		dispatchQueue.async {
 			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: Virtusize.product?.imageURL).success {
 				self.storeProductImage.value = VirtusizeProductImage(
 					image: clientProductImage,
