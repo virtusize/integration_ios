@@ -73,8 +73,6 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private var productImagesAreAnimating: Bool = false
 
-	/// Once the store product image is set, set the value to true to avoid loading repetitively
-	private var storeProductImageIsSet = false
 	private var crossFadeInAnimator: UIViewPropertyAnimator?
 	private var crossFadeOutAnimator: UIViewPropertyAnimator?
 
@@ -120,7 +118,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 				if $0!.source == .local {
 					self?.userProductImageView.setProductTypeImage(image: $0!.image)
 				}
-				self!.finishSettingProductImages()
+				self!.setProductImages()
 			}
 		}
 
@@ -130,13 +128,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 				if $0!.source == .local {
 					self?.storeProductImageView.setProductTypeImage(image: $0!.image)
 				}
-				self!.finishSettingProductImages()
+				self!.setProductImages()
 			}
 		}
 	}
 
-	private func finishSettingProductImages() {
-		var imageLoadingSuccessful = false
+	private func setProductImages() {
 		if bestFitUserProduct != nil {
 			if viewModel.storeProductImage.value != nil  && viewModel.userProductImage.value != nil {
 				if inPageStandardView.frame.size.width >= smallInPageWidth {
@@ -145,31 +142,32 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 					if !productImagesAreAnimating {
 						// if item to item recommendation is available, we make user and store product images fade in/out repeatedly
 						startCrossFadeProductImageViews()
+						adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
 					}
 				}
-				imageLoadingSuccessful = true
+				finishLoading()
 			}
 		} else {
 			if viewModel.storeProductImage.value != nil {
-				if inPageStandardView.frame.size.width >= smallInPageWidth {
-					adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
-				} else {
+				if inPageStandardView.frame.size.width < smallInPageWidth {
 					// if item to item recommendation is not available, stop any fading animations
 					stopCrossFadeProductImageViews()
 				}
-				imageLoadingSuccessful = true
+				adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
+				finishLoading()
 			}
 		}
-		if imageLoadingSuccessful {
-			setMessageLabelTexts(
-				VirtusizeRepository.shared.storeProduct!,
-				VirtusizeRepository.shared.i18nLocalization!,
-				sizeComparisonRecommendedSize,
-				bodyProfileRecommendedSize?.sizeName
-			)
+	}
 
-			setLoadingScreen(loading: false)
-		}
+	private func finishLoading() {
+		setMessageLabelTexts(
+			VirtusizeRepository.shared.storeProduct!,
+			VirtusizeRepository.shared.i18nLocalization!,
+			sizeComparisonRecommendedSize,
+			bodyProfileRecommendedSize?.sizeName
+		)
+
+		setLoadingScreen(loading: false)
 	}
 
 	private func unbind(to viewModel: VirtusizeInPageStandardViewModel) {
@@ -201,7 +199,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		userProductImageView.translatesAutoresizingMaskIntoConstraints = value
 		storeProductImageView.translatesAutoresizingMaskIntoConstraints = value
 		messageStackView.translatesAutoresizingMaskIntoConstraints = value
-		bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = value
+		topMessageLabel.translatesAutoresizingMaskIntoConstraints = value
 		bottomMessageLabel.translatesAutoresizingMaskIntoConstraints = value
 		checkSizeButton.translatesAutoresizingMaskIntoConstraints = value
 		errorImageView.translatesAutoresizingMaskIntoConstraints = value
@@ -235,7 +233,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let inPageStandardViewHorizontalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "H:|-0-[inPageStandardView]-0-|",
-			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			options: [],
 			metrics: nil,
 			views: views
 		)
@@ -243,7 +241,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let inPageStandardViewVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-0-[inPageStandardView]-10-[virtusizeImageView]-0-|",
-			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			options: [],
 			metrics: nil,
 			views: views
 		)
@@ -251,7 +249,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let vsIconImageViewHorizontalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "H:|-14-[vsIconImageView]-(>=8)-|",
-			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			options: [],
 			metrics: metrics,
 			views: views
 		)
@@ -268,7 +266,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let footerHorizontalConstraints = NSLayoutConstraint.constraints(
 				   withVisualFormat: "H:|-0-[virtusizeImageView(>=10)]-(>=0)-[privacyPolicyLink(>=15)]-0-|",
-				   options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+				   options: [],
 				   metrics: nil,
 				   views: views
 		)
@@ -276,7 +274,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let leftProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-(>=14)-[userProductImageView(==40)]-(>=14)-|",
-			options: [.alignAllCenterY],
+			options: [],
 			metrics: nil,
 			views: views
 		)
@@ -284,7 +282,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let storeProductImageViewVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-(>=14)-[storeProductImageView(==40)]-(>=14)-|",
-			options: [.alignAllCenterY],
+			options: [],
 			metrics: nil,
 			views: views
 		)
@@ -292,7 +290,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let messageStackViewVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-(>=14@700)-[messageStackView]-(>=14@700)-|",
-			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			options: [],
 			metrics: nil,
 			views: views
 		)
@@ -300,7 +298,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 		let checkSizeButtonVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-(>=20)-[checkSizeButton]-(>=20)-|",
-			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			options: [],
 			metrics: nil,
 			views: views
 		)
@@ -308,7 +306,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
         let errorScreenVerticalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "V:|-defaultMargin-[errorImageView(40)]-defaultMargin-[errorText]-defaultMargin-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+            options: [.alignAllCenterX],
             metrics: metrics,
             views: views
         )
@@ -316,7 +314,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
         let errorImageViewHorizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-(>=defaultMargin)-[errorImageView(40)]-(>=defaultMargin)-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+            options: [],
             metrics: metrics,
             views: views
         )
@@ -324,7 +322,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
         let errorTextHorizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-(>=defaultMargin)-[errorText]-(>=defaultMargin)-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			options: [.alignAllCenterY],
             metrics: metrics,
             views: views
         )
@@ -338,7 +336,6 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		allConstraints.append(messageStackView.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
 		allConstraints.append(checkSizeButton.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
 		allConstraints.append(errorImageView.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
-		allConstraints.append(errorText.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
 
 		NSLayoutConstraint.activate(allConstraints)
     }
@@ -514,13 +511,13 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	/// Stops the cross fade animation
 	private func stopCrossFadeProductImageViews() {
-		DispatchQueue.main.async {
+//		DispatchQueue.main.async {
 			self.crossFadeInAnimator?.stopAnimation(true)
 			self.crossFadeOutAnimator?.stopAnimation(true)
 			self.userProductImageView.alpha = 1.0
 			self.storeProductImageView.alpha = 1.0
 			self.productImagesAreAnimating = false
-		}
+//		}
 	}
 
 	private func setMessageLabelTexts(
