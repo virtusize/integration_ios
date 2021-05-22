@@ -85,10 +85,11 @@ public class Virtusize {
 					}
 				}
 
-				virtusizeRepository.fetchInitialData(productId: internalProduct!.productCheckData!.productDataId)
-				virtusizeRepository.updateUserSession()
-				virtusizeRepository.fetchDataForInPageRecommendation()
-				virtusizeRepository.switchInPageRecommendation()
+				if virtusizeRepository.fetchInitialData(productId: internalProduct!.productCheckData!.productDataId) {
+					virtusizeRepository.updateUserSession()
+					virtusizeRepository.fetchDataForInPageRecommendation()
+					virtusizeRepository.switchInPageRecommendation()
+				}
 			}
 		}
 		get {

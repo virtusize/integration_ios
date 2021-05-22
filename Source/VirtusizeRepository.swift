@@ -107,27 +107,30 @@ internal class VirtusizeRepository: NSObject {
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
 	///
 	/// - Parameter productId: the product ID provided by the client
-	internal func fetchInitialData(productId: Int?) {
+	/// - Returns: true if the initial data are fetched
+	internal func fetchInitialData(productId: Int?) -> Bool {
 		guard let productId = productId else {
-			return
+			return false
 		}
 
 		storeProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
 		if storeProduct == nil {
 			Virtusize.showInPageError = true
-			return
+			return false
 		}
 
 		productTypes = VirtusizeAPIService.getProductTypesAsync().success
 		if productTypes == nil {
 			Virtusize.showInPageError = true
-			return
+			return false
 		}
 
 		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
 		if i18nLocalization == nil {
 			Virtusize.showInPageError = true
+			return false
 		}
+		return true
 	}
 
 	/// Fetches data for InPage recommendation
@@ -159,15 +162,10 @@ internal class VirtusizeRepository: NSObject {
 			}
 		}
 
-		guard let storeProduct = storeProduct,
-			  let productTypes = productTypes else {
-			return
-		}
-
 		if let userBodyProfile = userBodyProfile {
 			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
-				productTypes: productTypes,
-				storeProduct: storeProduct,
+				productTypes: productTypes!,
+				storeProduct: storeProduct!,
 				userBodyProfile: userBodyProfile
 			).success
 		}
@@ -177,8 +175,8 @@ internal class VirtusizeRepository: NSObject {
 			userProducts.filter({ product in return product.id == selectedUserProductId }) : userProducts
 		sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
 			userProducts: userProducts,
-			storeProduct: storeProduct,
-			productTypes: productTypes
+			storeProduct: storeProduct!,
+			productTypes: productTypes!
 		)
 	}
 
