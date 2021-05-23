@@ -27,7 +27,7 @@ internal final class VirtusizeInPageStandardViewModel {
 	let storeProductImage: Observable<VirtusizeProductImage?> = Observable(nil)
 
 	private var currentBestFitUserProduct: VirtusizeInternalProduct?
-	private var currentStoreProduct: VirtusizeProduct?
+	private var currentPdcProduct: VirtusizeProduct?
 	private var dispatchQueue = DispatchQueue(label: "com.virtusize.inpage-image-queue")
 
 	func loadUserProductImage(bestFitUserProduct: VirtusizeInternalProduct) {
@@ -59,13 +59,13 @@ internal final class VirtusizeInPageStandardViewModel {
 	}
 
 	func loadStoreProductImage() {
-		guard currentStoreProduct?.externalId != Virtusize.internalProduct?.externalId ||
+		guard currentPdcProduct?.externalId != Virtusize.pdcProduct?.externalId ||
 			  self.storeProductImage.value == nil
 		else {
 			self.storeProductImage.value = self.storeProductImage.value
 			return
 		}
-		currentStoreProduct = Virtusize.internalProduct
+		currentPdcProduct = Virtusize.pdcProduct
 		dispatchQueue.async {
 			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: Virtusize.product?.imageURL).success {
 				self.storeProductImage.value = VirtusizeProductImage(
@@ -73,7 +73,7 @@ internal final class VirtusizeInPageStandardViewModel {
 					source: .client
 				)
 			} else {
-				let cloudinaryImageURL = self.getCloudinaryImageUrl(VirtusizeRepository.shared.storeProduct!.cloudinaryPublicId)
+				let cloudinaryImageURL = self.getCloudinaryImageUrl(Virtusize.currentProduct!.cloudinaryPublicId)
 				if let storeProductImage = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL).success {
 					self.storeProductImage.value = VirtusizeProductImage(
 						image: storeProductImage,
@@ -81,8 +81,8 @@ internal final class VirtusizeInPageStandardViewModel {
 					)
 				} else {
 					let productTypeImage = self.getProductTypeImage(
-						productType: VirtusizeRepository.shared.storeProduct!.productType,
-						style: VirtusizeRepository.shared.storeProduct!.storeProductMeta?.additionalInfo?.style
+						productType: Virtusize.currentProduct!.productType,
+						style: Virtusize.currentProduct!.storeProductMeta?.additionalInfo?.style
 					)
 					self.storeProductImage.value = VirtusizeProductImage(
 						image: productTypeImage,

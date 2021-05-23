@@ -34,6 +34,7 @@ public protocol VirtusizeMessageHandler: class {
 
 /// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeWebViewController: UIViewController {
+	private var product: VirtusizeProduct?
     public weak var messageHandler: VirtusizeMessageHandler?
 	internal var eventHandler: VirtusizeEventHandler?
 

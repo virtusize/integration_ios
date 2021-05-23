@@ -161,7 +161,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private func finishLoading() {
 		setMessageLabelTexts(
-			VirtusizeRepository.shared.storeProduct!,
+			Virtusize.currentProduct!,
 			VirtusizeRepository.shared.i18nLocalization!,
 			sizeComparisonRecommendedSize,
 			bodyProfileRecommendedSize?.sizeName

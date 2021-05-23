@@ -52,15 +52,24 @@ public class Virtusize {
     public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
 
 	/// The array of `VirtusizeView` that clients use on their mobile application
-	private static var virtusizeViews: [VirtusizeView] = []
+	internal static var virtusizeViews: [VirtusizeView] = []
+
+	/// The array of `VirtusizeView` that is active on the screen of the mobile application
+	internal static var activeVirtusizeViews: [VirtusizeView] = []
 
 	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
 
 	internal static var dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
+	
+	// TODO
+	internal static var stackProducts: [VirtusizeInternalProduct] = []
+
+	// This variable holds the data of the current store product from the Virtusize API
+	internal static var currentProduct: VirtusizeInternalProduct?
 
 	/// The internal property for product
-	internal static var internalProduct: VirtusizeProduct?
+	internal static var pdcProduct: VirtusizeProduct?
 	/// The Virtusize product to get the value from the`productDataCheck` request
 	public static var product: VirtusizeProduct? {
 		set {
@@ -68,26 +77,26 @@ public class Virtusize {
 				return
 			}
 
-			internalProduct = newValue
+			pdcProduct = newValue
 
 			dispatchQueue.async {
 				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
 					DispatchQueue.main.async {
-						for index in 0...virtusizeViews.count-1 {
-							(virtusizeViews[index] as? UIView)?.isHidden = true
+						for virtusizeView in activeVirtusizeViews {
+							(virtusizeView as? UIView)?.isHidden = true
 						}
 					}
 					return
 				}
 
 				DispatchQueue.main.async {
-					for index in 0...virtusizeViews.count-1 {
-						(virtusizeViews[index] as? VirtusizeInPageView)?.setup()
-						virtusizeViews[index].isLoading()
+					for virtusizeView in activeVirtusizeViews {
+						(virtusizeView as? VirtusizeInPageView)?.setup()
+						virtusizeView.isLoading()
 					}
 				}
 
-				if virtusizeRepository.fetchInitialData(productId: internalProduct!.productCheckData!.productDataId) {
+				if virtusizeRepository.fetchInitialData(productId: pdcProduct!.productCheckData!.productDataId) {
 					virtusizeRepository.updateUserSession()
 					virtusizeRepository.fetchDataForInPageRecommendation()
 					virtusizeRepository.switchInPageRecommendation()
@@ -95,7 +104,7 @@ public class Virtusize {
 			}
 		}
 		get {
-			return internalProduct
+			return pdcProduct
 		}
 	}
 
@@ -106,8 +115,8 @@ public class Virtusize {
 		set {
 			if newValue?.0 != nil || newValue?.1 != nil {
 				DispatchQueue.main.async {
-					for index in 0...virtusizeViews.count-1 {
-						(virtusizeViews[index] as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.0, newValue?.1)
+					for virtusizeView in activeVirtusizeViews {
+						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.0, newValue?.1)
 					}
 					self.updateInPageViews = (nil, nil)
 				}
@@ -125,8 +134,8 @@ public class Virtusize {
 		set {
 			if newValue == true {
 				DispatchQueue.main.async {
-					for index in 0...virtusizeViews.count-1 {
-						(virtusizeViews[index] as? VirtusizeInPageView)?.showErrorScreen()
+					for virtusizeView in activeVirtusizeViews {
+						(virtusizeView as? VirtusizeInPageView)?.showErrorScreen()
 					}
 					self.showInPageError = false
 				}
@@ -141,12 +150,15 @@ public class Virtusize {
 
     /// Sets up the VirtusizeView and adds it to `virtusizeViews`
     public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
+		VirtusizeRepository.shared.cleanVirtusizeViewToProductDict(virtusizeViews: virtusizeViews)
 		virtusizeViews = virtusizeViews.filter { $0.isDeallocated != true }
+
         var mutableView = view
         mutableView.messageHandler = any as? VirtusizeMessageHandler
         mutableView.presentingViewController = any as? UIViewController
 		(mutableView as? UIView)?.didMoveToWindow()
         virtusizeViews.append(mutableView)
+		activeVirtusizeViews = virtusizeViews.filter { $0.presentingViewController == any as? UIViewController }
     }
 
     /// The API request for sending an order to the server

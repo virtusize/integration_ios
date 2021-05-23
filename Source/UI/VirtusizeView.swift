@@ -29,6 +29,7 @@ public protocol VirtusizeView {
     var style: VirtusizeViewStyle { get }
     var presentingViewController: UIViewController? { get set }
     var messageHandler: VirtusizeMessageHandler? { get set }
+	var memoryAddress: String { get }
 	var isDeallocated: Bool? { get set }
 
 	/// Sets up the loading UI
@@ -48,4 +49,20 @@ extension VirtusizeView {
             presentingViewController?.present(virtusize, animated: true, completion: nil)
         }
     }
+
+	internal func getTopViewController(base: UIViewController?) -> UIViewController? {
+		if let nav = base as? UINavigationController {
+			return getTopViewController(base: nav.visibleViewController)
+		} else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+			return getTopViewController(base: selected)
+
+		} else if let presented = base?.presentedViewController {
+			return getTopViewController(base: presented)
+		}
+		return base
+	}
+
+	internal func isVirtusizeWebViewControllerOnTopOfScreen() -> Bool {
+		return getTopViewController(base: self.presentingViewController) is VirtusizeWebViewController == true
+	}
 }
