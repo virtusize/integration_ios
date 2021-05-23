@@ -37,8 +37,6 @@ internal class VirtusizeRepository: NSObject {
 
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	var productTypes: [VirtusizeProductType]?
-	// This dictionary holds the information of which the memory address of a view points to which store product object
-	var virtusizeViewToProductDict: [String: VirtusizeInternalProduct] = [:]
 	// This variable holds the i18n localization texts
 	var i18nLocalization: VirtusizeI18nLocalization?
 
@@ -114,9 +112,9 @@ internal class VirtusizeRepository: NSObject {
 		}
 
 		Virtusize.currentProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
-		
+
 		for view in Virtusize.activeVirtusizeViews {
-			virtusizeViewToProductDict[view.memoryAddress] = Virtusize.currentProduct
+			Virtusize.virtusizeViewToProductDict[view.memoryAddress] = Virtusize.currentProduct
 		}
 
 		if Virtusize.currentProduct == nil {
@@ -142,14 +140,14 @@ internal class VirtusizeRepository: NSObject {
 		guard let viewId = viewId else {
 			return
 		}
-		if let storeProduct = virtusizeViewToProductDict[viewId] {
+		if let storeProduct = Virtusize.virtusizeViewToProductDict[viewId] {
 			Virtusize.currentProduct = storeProduct
 		}
 	}
 
 	internal func cleanVirtusizeViewToProductDict(virtusizeViews: [VirtusizeView]) {
 		let deallocatedMemoryAddresses = virtusizeViews.filter { $0.isDeallocated == true }.map { $0.memoryAddress }
-		virtusizeViewToProductDict = virtusizeViewToProductDict.filter { !deallocatedMemoryAddresses.contains($0.key) }
+		Virtusize.virtusizeViewToProductDict = Virtusize.virtusizeViewToProductDict.filter { !deallocatedMemoryAddresses.contains($0.key) }
 	}
 
 	/// Fetches data for InPage recommendation
@@ -244,14 +242,14 @@ internal class VirtusizeRepository: NSObject {
 	/// Switch the recommendation for InPage based on the recommendation type
 	///
 	/// - Parameter selectedRecommendedType the selected recommendation compare view type
-	internal func switchInPageRecommendation(_ selectedRecommendedType: SizeRecommendationType? = nil) {
+	internal func switchInPageRecommendation(product: VirtusizeInternalProduct?, _ selectedRecommendedType: SizeRecommendationType? = nil) {
 		switch selectedRecommendedType {
 		case .compareProduct:
-			Virtusize.updateInPageViews = (sizeComparisonRecommendedSize, nil)
+			Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, nil)
 		case .body:
-			Virtusize.updateInPageViews = (nil, bodyProfileRecommendedSize)
+			Virtusize.updateInPageViews = (product, nil, bodyProfileRecommendedSize)
 		default:
-			Virtusize.updateInPageViews = (sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+			Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
 		}
 	}
 

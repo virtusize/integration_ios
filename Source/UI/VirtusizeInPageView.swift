@@ -140,6 +140,10 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		self.loadingTextTimer?.invalidate()
 		self.loadingTextTimer = nil
     }
+
+	private func getAssociatedProduct() -> VirtusizeInternalProduct? {
+		return Virtusize.virtusizeViewToProductDict[memoryAddress]
+	}
 }
 
 extension VirtusizeInPageView: VirtusizeEventHandler {
@@ -158,7 +162,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 				shouldUpdateUserProducts: false,
 				selectedUserProductId: userProductId
 			)
-			VirtusizeRepository.shared.switchInPageRecommendation(.compareProduct)
+			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), .compareProduct)
 		}
 	}
 
@@ -168,20 +172,20 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 				shouldUpdateUserProducts: true,
 				selectedUserProductId: userProductId
 			)
-			VirtusizeRepository.shared.switchInPageRecommendation(.compareProduct)
+			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), .compareProduct)
 		}
 	}
 
 	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
 		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.switchInPageRecommendation(changedType)
+			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), changedType)
 		}
 	}
 
 	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
-			VirtusizeRepository.shared.switchInPageRecommendation(.body)
+			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), .body)
 		}
 	}
 
@@ -189,7 +193,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.updateUserSession()
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
-			VirtusizeRepository.shared.switchInPageRecommendation()
+			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct())
 		}
 	}
 
@@ -198,7 +202,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 			VirtusizeRepository.shared.clearUserData()
 			VirtusizeRepository.shared.updateUserSession()
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(shouldUpdateUserProducts: false)
-			VirtusizeRepository.shared.switchInPageRecommendation()
+			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct())
 		}
 	}
 }

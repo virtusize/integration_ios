@@ -442,8 +442,6 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	) {
-		super.setInPageRecommendation(sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
-
 		self.sizeComparisonRecommendedSize = sizeComparisonRecommendedSize
 		self.bodyProfileRecommendedSize = bodyProfileRecommendedSize
 
