@@ -50,7 +50,32 @@ extension VirtusizeView {
         }
     }
 
-	internal func getTopViewController(base: UIViewController?) -> UIViewController? {
+	/// Handle the situation where the view controller will be added or removed from a container view controller.
+	internal func handleWillMoveWindow(_ toWindow: UIWindow?, shouldBeDeallocated: (Bool) -> Void) {
+		// will dismiss a view controller, which is not a VirtusizeWebViewController
+		if toWindow == nil {
+			if !virtusizeWebViewControllerWillBeOnTopOfScreen() {
+				shouldBeDeallocated(true)
+				Virtusize.activeVirtusizeViews = Virtusize.virtusizeViews
+					.filter {
+						$0.isDeallocated != true
+					}
+			}
+		// will move to an existing view controller
+		} else {
+			shouldBeDeallocated(false)
+		}
+
+		VirtusizeRepository.shared.updateCurrentProductBy(
+			vsViewMemoryAddress: Virtusize.activeVirtusizeViews.last?.memoryAddress
+		)
+	}
+
+	private func virtusizeWebViewControllerWillBeOnTopOfScreen() -> Bool {
+		return getTopViewController(base: self.presentingViewController) is VirtusizeWebViewController
+	}
+
+	private func getTopViewController(base: UIViewController?) -> UIViewController? {
 		if let nav = base as? UINavigationController {
 			return getTopViewController(base: nav.visibleViewController)
 		} else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
@@ -60,9 +85,5 @@ extension VirtusizeView {
 			return getTopViewController(base: presented)
 		}
 		return base
-	}
-
-	internal func isVirtusizeWebViewControllerOnTopOfScreen() -> Bool {
-		return getTopViewController(base: self.presentingViewController) is VirtusizeWebViewController == true
 	}
 }

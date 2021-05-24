@@ -64,22 +64,9 @@ public class VirtusizeButton: UIButton, VirtusizeView {
     }
 
 	public override func willMove(toWindow: UIWindow?) {
-		// will dismiss a view controller, which is not a VirtusizeWebViewController
-		if toWindow == nil {
-			if !isVirtusizeWebViewControllerOnTopOfScreen() {
-				isDeallocated = true
-				Virtusize.activeVirtusizeViews = Virtusize.virtusizeViews
-					.filter {
-						$0.isDeallocated != true
-					}
-			}
-		// will present an existing view controller
-		} else {
-			isDeallocated = false
+		handleWillMoveWindow(toWindow) { isDeallocated in
+			self.isDeallocated = isDeallocated
 		}
-		VirtusizeRepository.shared.updateCurrentProductBy(
-			vsViewMemoryAddress: Virtusize.activeVirtusizeViews.first?.memoryAddress
-		)
 	}
 
     public func isLoading() {

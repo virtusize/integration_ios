@@ -58,22 +58,9 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     }
 
 	public override func willMove(toWindow: UIWindow?) {
-		// will dismiss a view controller, which is not a VirtusizeWebViewController
-		if toWindow == nil {
-			if !isVirtusizeWebViewControllerOnTopOfScreen() {
-				isDeallocated = true
-				Virtusize.activeVirtusizeViews = Virtusize.virtusizeViews
-					.filter {
-						$0.isDeallocated != true
-					}
-			}
-		// will present an existing view controller
-		} else {
-			isDeallocated = false
+		handleWillMoveWindow(toWindow) { isDeallocated in
+			self.isDeallocated = isDeallocated
 		}
-		VirtusizeRepository.shared.updateCurrentProductBy(
-			vsViewMemoryAddress: Virtusize.activeVirtusizeViews.first?.memoryAddress
-		)
 	}
 
     public func isLoading() {
@@ -157,7 +144,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 	}
 
 	public func userSelectedProduct(userProductId: Int?) {
-		DispatchQueue.global().async {
+		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
 				shouldUpdateUserProducts: false,
 				selectedUserProductId: userProductId
@@ -167,7 +154,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 	}
 
 	public func userAddedProduct(userProductId: Int?) {
-		DispatchQueue.global().async {
+		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
 				shouldUpdateUserProducts: true,
 				selectedUserProductId: userProductId
@@ -177,20 +164,20 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 	}
 
 	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
-		DispatchQueue.global().async {
+		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), changedType)
 		}
 	}
 
 	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
-		DispatchQueue.global().async {
+		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
 			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), .body)
 		}
 	}
 
 	public func userLoggedIn() {
-		DispatchQueue.global().async {
+		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.updateUserSession()
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
 			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct())
@@ -198,7 +185,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 	}
 
 	public func clearUserData() {
-		DispatchQueue.global().async {
+		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.clearUserData()
 			VirtusizeRepository.shared.updateUserSession()
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(shouldUpdateUserProducts: false)

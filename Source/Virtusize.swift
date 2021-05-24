@@ -74,7 +74,7 @@ public class Virtusize {
 			productWithPDCData = newValue
 
 			dispatchQueue.async {
-				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
+				guard virtusizeRepository.isProductValid(product: newValue) else {
 					DispatchQueue.main.async {
 						for virtusizeView in activeVirtusizeViews {
 							(virtusizeView as? UIView)?.isHidden = true
@@ -150,7 +150,7 @@ public class Virtusize {
 
     /// Sets up the VirtusizeView and adds it to `virtusizeViews`
     public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
-		VirtusizeRepository.shared.cleanVirtusizeViewToProductDict(virtusizeViews: virtusizeViews)
+		virtusizeRepository.cleanAvailableVSViewToProductDict()
 		virtusizeViews = virtusizeViews.filter { $0.isDeallocated != true }
 
         var mutableView = view

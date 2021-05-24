@@ -34,11 +34,9 @@ internal class VirtusizeRepository: NSObject {
 
 	/// The session API response as a string
 	var userSessionResponse: String = ""
-
-	// This dictionary holds the information of which the memory address of a view points to which store product object
+	/// This dictionary holds the information of available vs views about which the memory address of a vs view points to which store product
 	var availableVSViewToProductDict = [String: VirtusizeInternalProduct]()
-
-	// This variable holds the data of the current store product from the Virtusize API
+	/// This variable holds the data of the current store product from the Virtusize API
 	var currentProduct: VirtusizeInternalProduct?
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	var productTypes: [VirtusizeProductType]?
@@ -149,7 +147,7 @@ internal class VirtusizeRepository: NSObject {
 			currentProduct = storeProduct
 		}
 	}
-	
+
 	internal func getAvailableVirtusizeViewsBy(externalId: String?) -> [VirtusizeView] {
 		let availableViewMemoryAddress = availableVSViewToProductDict
 			.filter { $0.value.externalId == externalId }
@@ -158,8 +156,8 @@ internal class VirtusizeRepository: NSObject {
 			.filter { availableViewMemoryAddress.contains($0.memoryAddress) }
 	}
 
-	internal func cleanVirtusizeViewToProductDict(virtusizeViews: [VirtusizeView]) {
-		let deallocatedMemoryAddresses = virtusizeViews.filter { $0.isDeallocated == true }.map { $0.memoryAddress }
+	internal func cleanAvailableVSViewToProductDict() {
+		let deallocatedMemoryAddresses = Virtusize.virtusizeViews.filter { $0.isDeallocated == true }.map { $0.memoryAddress }
 		availableVSViewToProductDict = availableVSViewToProductDict
 			.filter { !deallocatedMemoryAddresses.contains($0.key) }
 	}
