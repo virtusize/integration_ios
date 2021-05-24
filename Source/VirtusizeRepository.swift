@@ -147,7 +147,8 @@ internal class VirtusizeRepository: NSObject {
 
 	internal func cleanVirtusizeViewToProductDict(virtusizeViews: [VirtusizeView]) {
 		let deallocatedMemoryAddresses = virtusizeViews.filter { $0.isDeallocated == true }.map { $0.memoryAddress }
-		Virtusize.virtusizeViewToProductDict = Virtusize.virtusizeViewToProductDict.filter { !deallocatedMemoryAddresses.contains($0.key) }
+		Virtusize.virtusizeViewToProductDict = Virtusize.virtusizeViewToProductDict
+			.filter { !deallocatedMemoryAddresses.contains($0.key) }
 	}
 
 	/// Fetches data for InPage recommendation
@@ -242,7 +243,10 @@ internal class VirtusizeRepository: NSObject {
 	/// Switch the recommendation for InPage based on the recommendation type
 	///
 	/// - Parameter selectedRecommendedType the selected recommendation compare view type
-	internal func switchInPageRecommendation(product: VirtusizeInternalProduct?, _ selectedRecommendedType: SizeRecommendationType? = nil) {
+	internal func switchInPageRecommendation(
+		product: VirtusizeInternalProduct?,
+		_ selectedRecommendedType: SizeRecommendationType? = nil
+	) {
 		switch selectedRecommendedType {
 		case .compareProduct:
 			Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, nil)

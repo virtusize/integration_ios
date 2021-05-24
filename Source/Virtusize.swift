@@ -108,15 +108,25 @@ public class Virtusize {
 		}
 	}
 
+	typealias ProductRecommendationData = (
+		VirtusizeInternalProduct?,
+		SizeComparisonRecommendedSize?,
+		BodyProfileRecommendedSize?
+	)
+
 	/// The private property for updating InPage views
-	private static var _updateInPageViews: (VirtusizeInternalProduct?, SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)?
+	private static var _updateInPageViews: ProductRecommendationData?
 	/// The property to be set to update InPage views.
-	internal static var updateInPageViews: (VirtusizeInternalProduct?, SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)? {
+	internal static var updateInPageViews: ProductRecommendationData? {
 		set {
 			if newValue?.1 != nil || newValue?.2 != nil {
 				DispatchQueue.main.async {
-					let filteredViewMemoryAddress = virtusizeViewToProductDict.filter { $0.value.externalId == newValue?.0?.externalId }.map { $0.key }
-					for virtusizeView in virtusizeViews.filter { filteredViewMemoryAddress.contains($0.memoryAddress) } {
+					let filteredViewMemoryAddress = virtusizeViewToProductDict
+						.filter { $0.value.externalId == newValue?.0?.externalId }
+						.map { $0.key }
+					let filteredVirtusizeViews = virtusizeViews
+						.filter { filteredViewMemoryAddress.contains($0.memoryAddress) }
+					for virtusizeView in filteredVirtusizeViews {
 						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.1, newValue?.2
 						)
 					}
