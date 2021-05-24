@@ -563,7 +563,7 @@ struct ProductView: View {
 }	
 ```
 
-- **SwiftUIVirtusizeInPageStandard**: is equivalent to [InPage Standard](#2-バーチャサイズインページvirtuzie-inpage)
+- **SwiftUIVirtusizeInPageStandard**: is equivalent to [InPage Standard](#2-バーチャサイズインページvirtusize-inpage)
 
 ```Swift
 struct ProductView: View {
