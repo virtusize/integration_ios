@@ -28,7 +28,7 @@ internal final class VirtusizeInPageStandardViewModel {
 
 	private var currentBestFitUserProduct: VirtusizeInternalProduct?
 	private var currentProductWithPDCData: VirtusizeProduct?
-	private var dispatchQueue = DispatchQueue(label: "com.virtusize.inpage-image-queue")
+	private let dispatchQueue = DispatchQueue(label: "com.virtusize.inpage-image-queue")
 
 	func loadUserProductImage(bestFitUserProduct: VirtusizeInternalProduct) {
 		if currentBestFitUserProduct != nil && currentBestFitUserProduct!.id == bestFitUserProduct.id {
