@@ -60,16 +60,10 @@ public class Virtusize {
 	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
 
-	// This dictionary holds the information of which the memory address of a view points to which store product object
-	internal static var virtusizeViewToProductDict: [String: VirtusizeInternalProduct] = [:]
-
-	// This variable holds the data of the current store product from the Virtusize API
-	internal static var currentProduct: VirtusizeInternalProduct?
-
-	internal static var dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
+	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
 
 	/// The internal property for product
-	internal static var pdcProduct: VirtusizeProduct?
+	internal static var productWithPDCData: VirtusizeProduct?
 	/// The Virtusize product to get the value from the`productDataCheck` request
 	public static var product: VirtusizeProduct? {
 		set {
@@ -77,7 +71,7 @@ public class Virtusize {
 				return
 			}
 
-			pdcProduct = newValue
+			productWithPDCData = newValue
 
 			dispatchQueue.async {
 				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
@@ -96,15 +90,15 @@ public class Virtusize {
 					}
 				}
 
-				if virtusizeRepository.fetchInitialData(productId: pdcProduct!.productCheckData!.productDataId) {
+				if virtusizeRepository.fetchInitialData(productId: productWithPDCData!.productCheckData!.productDataId) {
 					virtusizeRepository.updateUserSession()
 					virtusizeRepository.fetchDataForInPageRecommendation()
-					virtusizeRepository.switchInPageRecommendation(product: Virtusize.currentProduct)
+					virtusizeRepository.switchInPageRecommendation()
 				}
 			}
 		}
 		get {
-			return pdcProduct
+			return productWithPDCData
 		}
 	}
 
@@ -121,14 +115,8 @@ public class Virtusize {
 		set {
 			if newValue?.1 != nil || newValue?.2 != nil {
 				DispatchQueue.main.async {
-					let filteredViewMemoryAddress = virtusizeViewToProductDict
-						.filter { $0.value.externalId == newValue?.0?.externalId }
-						.map { $0.key }
-					let filteredVirtusizeViews = virtusizeViews
-						.filter { filteredViewMemoryAddress.contains($0.memoryAddress) }
-					for virtusizeView in filteredVirtusizeViews {
-						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.1, newValue?.2
-						)
+					for virtusizeView in virtusizeRepository.getAvailableVirtusizeViewsBy(externalId: newValue?.0?.externalId) {
+						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.1, newValue?.2)
 					}
 					self.updateInPageViews = (newValue?.0, nil, nil)
 				}

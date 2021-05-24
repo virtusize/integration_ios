@@ -57,7 +57,7 @@ public class VirtusizeParams {
         guard let apiKey = Virtusize.APIKey else {
             fatalError("Please set Virtusize.APIKey")
         }
-		guard let storeProductId = Virtusize.currentProduct?.externalId else {
+		guard let storeProductId = VirtusizeRepository.shared.currentProduct?.externalId else {
             fatalError("The store product ID is invalid")
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "

@@ -35,6 +35,11 @@ internal class VirtusizeRepository: NSObject {
 	/// The session API response as a string
 	var userSessionResponse: String = ""
 
+	// This dictionary holds the information of which the memory address of a view points to which store product object
+	var availableVSViewToProductDict = [String: VirtusizeInternalProduct]()
+
+	// This variable holds the data of the current store product from the Virtusize API
+	var currentProduct: VirtusizeInternalProduct?
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	var productTypes: [VirtusizeProductType]?
 	// This variable holds the i18n localization texts
@@ -61,42 +66,42 @@ internal class VirtusizeRepository: NSObject {
 			return false
 		}
 
-		Virtusize.pdcProduct?.name = product.name
-		Virtusize.pdcProduct?.externalId = product.externalId
-		Virtusize.pdcProduct?.productCheckData = product.productCheckData
+		Virtusize.productWithPDCData?.name = product.name
+		Virtusize.productWithPDCData?.externalId = product.externalId
+		Virtusize.productWithPDCData?.productCheckData = product.productCheckData
 
 		// Send the API event where the user saw the product
 		VirtusizeAPIService.sendEvent(
 			VirtusizeEvent(name: .userSawProduct),
-			withContext: Virtusize.pdcProduct!.jsonObject
+			withContext: Virtusize.productWithPDCData!.jsonObject
 		)
 
-		guard Virtusize.pdcProduct!.productCheckData?.productDataId != nil else {
+		guard Virtusize.productWithPDCData!.productCheckData?.productDataId != nil else {
 			NotificationCenter.default.post(
 				name: Virtusize.productDataCheckDidFail,
 				object: Virtusize.self,
-				userInfo: ["message": Virtusize.pdcProduct!.dictionary]
+				userInfo: ["message": Virtusize.productWithPDCData!.dictionary]
 			)
 			return false
 		}
 
-		if let sendImageToBackend = Virtusize.pdcProduct!.productCheckData?.fetchMetaData,
+		if let sendImageToBackend = Virtusize.productWithPDCData!.productCheckData?.fetchMetaData,
 		   sendImageToBackend,
 		   product.imageURL != nil,
-		   let storeId = Virtusize.pdcProduct!.productCheckData?.storeId {
+		   let storeId = Virtusize.productWithPDCData!.productCheckData?.storeId {
 			VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
 		}
 
 		// Send the API event where the user saw the widget button
 		VirtusizeAPIService.sendEvent(
 			VirtusizeEvent(name: .userSawWidgetButton),
-			withContext: Virtusize.pdcProduct!.jsonObject
+			withContext: Virtusize.productWithPDCData!.jsonObject
 		)
 
 		NotificationCenter.default.post(
 			name: Virtusize.productDataCheckDidSucceed,
 			object: Virtusize.self,
-			userInfo: ["message": Virtusize.pdcProduct!.dictionary]
+			userInfo: ["message": Virtusize.productWithPDCData!.dictionary]
 		)
 
 		return true
@@ -111,13 +116,13 @@ internal class VirtusizeRepository: NSObject {
 			return false
 		}
 
-		Virtusize.currentProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
+		currentProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
 
 		for view in Virtusize.activeVirtusizeViews {
-			Virtusize.virtusizeViewToProductDict[view.memoryAddress] = Virtusize.currentProduct
+			availableVSViewToProductDict[view.memoryAddress] = currentProduct
 		}
 
-		if Virtusize.currentProduct == nil {
+		if currentProduct == nil {
 			Virtusize.showInPageError = true
 			return false
 		}
@@ -136,18 +141,26 @@ internal class VirtusizeRepository: NSObject {
 		return true
 	}
 
-	internal func updateCurrentProductBy(viewId: String?) {
-		guard let viewId = viewId else {
+	internal func updateCurrentProductBy(vsViewMemoryAddress: String?) {
+		guard let vsViewMemoryAddress = vsViewMemoryAddress else {
 			return
 		}
-		if let storeProduct = Virtusize.virtusizeViewToProductDict[viewId] {
-			Virtusize.currentProduct = storeProduct
+		if let storeProduct = availableVSViewToProductDict[vsViewMemoryAddress] {
+			currentProduct = storeProduct
 		}
+	}
+	
+	internal func getAvailableVirtusizeViewsBy(externalId: String?) -> [VirtusizeView] {
+		let availableViewMemoryAddress = availableVSViewToProductDict
+			.filter { $0.value.externalId == externalId }
+			.map { $0.key }
+		return Virtusize.virtusizeViews
+			.filter { availableViewMemoryAddress.contains($0.memoryAddress) }
 	}
 
 	internal func cleanVirtusizeViewToProductDict(virtusizeViews: [VirtusizeView]) {
 		let deallocatedMemoryAddresses = virtusizeViews.filter { $0.isDeallocated == true }.map { $0.memoryAddress }
-		Virtusize.virtusizeViewToProductDict = Virtusize.virtusizeViewToProductDict
+		availableVSViewToProductDict = availableVSViewToProductDict
 			.filter { !deallocatedMemoryAddresses.contains($0.key) }
 	}
 
@@ -183,7 +196,7 @@ internal class VirtusizeRepository: NSObject {
 		if let userBodyProfile = userBodyProfile {
 			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
 				productTypes: productTypes!,
-				storeProduct: Virtusize.currentProduct!,
+				storeProduct: currentProduct!,
 				userBodyProfile: userBodyProfile
 			).success
 		}
@@ -193,7 +206,7 @@ internal class VirtusizeRepository: NSObject {
 			userProducts.filter({ product in return product.id == selectedUserProductId }) : userProducts
 		sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
 			userProducts: userProducts,
-			storeProduct: Virtusize.currentProduct!,
+			storeProduct: currentProduct!,
 			productTypes: productTypes!
 		)
 	}
@@ -244,7 +257,7 @@ internal class VirtusizeRepository: NSObject {
 	///
 	/// - Parameter selectedRecommendedType the selected recommendation compare view type
 	internal func switchInPageRecommendation(
-		product: VirtusizeInternalProduct?,
+		product: VirtusizeInternalProduct? = VirtusizeRepository.shared.currentProduct,
 		_ selectedRecommendedType: SizeRecommendationType? = nil
 	) {
 		switch selectedRecommendedType {

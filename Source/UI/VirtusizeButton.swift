@@ -78,7 +78,7 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 			isDeallocated = false
 		}
 		VirtusizeRepository.shared.updateCurrentProductBy(
-			viewId: Virtusize.activeVirtusizeViews.first?.memoryAddress
+			vsViewMemoryAddress: Virtusize.activeVirtusizeViews.first?.memoryAddress
 		)
 	}
 
