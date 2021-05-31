@@ -98,7 +98,8 @@
 		9CEC8D99252B1986001CBDFB /* SizeComparisonRecommendedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */; };
 		9CF573C926649B2400A27620 /* Base64ImageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF573C726649B2400A27620 /* Base64ImageString.swift */; };
 		9CF574162664ADD200A27620 /* BrowserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF574152664ADD200A27620 /* BrowserID.swift */; };
-		9CF574472664B1A300A27620 /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF574462664B1A300A27620 /* VirtusizeUIKit.framework */; };
+		9CF574522664B89D00A27620 /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF5744E2664B89400A27620 /* VirtusizeUIKit.framework */; };
+		9CF574532664B89D00A27620 /* VirtusizeUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF5744E2664B89400A27620 /* VirtusizeUIKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9CF9666A24F41191001D3458 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9666924F41191001D3458 /* Font.swift */; };
 		9CFF40A125B5BAD500B21D4E /* VirtusizeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF40A025B5BAD500B21D4E /* VirtusizeAPIService.swift */; };
 		9CFF40C925B5C9D500B21D4E /* VirtusizeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF40C825B5C9D500B21D4E /* VirtusizeRepository.swift */; };
@@ -124,6 +125,20 @@
 			remoteInfo = Virtusize;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9CF574542664B89D00A27620 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9CF574532664B89D00A27620 /* VirtusizeUIKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4D6C578D205FB6F400DA910E /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
@@ -221,6 +236,8 @@
 		9CF574152664ADD200A27620 /* BrowserID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserID.swift; sourceTree = "<group>"; };
 		9CF574432664B01C00A27620 /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF574462664B1A300A27620 /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CF5744C2664B87D00A27620 /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CF5744E2664B89400A27620 /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF9666924F41191001D3458 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		9CFF40A025B5BAD500B21D4E /* VirtusizeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAPIService.swift; sourceTree = "<group>"; };
 		9CFF40C825B5C9D500B21D4E /* VirtusizeRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeRepository.swift; sourceTree = "<group>"; };
@@ -245,7 +262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CF574472664B1A300A27620 /* VirtusizeUIKit.framework in Frameworks */,
+				9CF574522664B89D00A27620 /* VirtusizeUIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +505,8 @@
 		9CF573D22664A02900A27620 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CF5744E2664B89400A27620 /* VirtusizeUIKit.framework */,
+				9CF5744C2664B87D00A27620 /* VirtusizeUIKit.framework */,
 				9CF574462664B1A300A27620 /* VirtusizeUIKit.framework */,
 				9CF574432664B01C00A27620 /* VirtusizeUIKit.framework */,
 			);
@@ -591,6 +610,7 @@
 				4DED8D19205755C3001CA7DF /* Headers */,
 				4DED8D1A205755C3001CA7DF /* Resources */,
 				DF6B5C91219BD262000B3402 /* ShellScript */,
+				9CF574542664B89D00A27620 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -632,7 +652,7 @@
 					4DED8D1B205755C3001CA7DF = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					4DED8D24205755C3001CA7DF = {
 						CreatedOnToolsVersion = 9.2;
@@ -978,6 +998,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 0;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -991,6 +1012,8 @@
 				MARKETING_VERSION = 2.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1002,6 +1025,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 0;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1015,6 +1039,8 @@
 				MARKETING_VERSION = 2.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
