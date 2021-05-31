@@ -16,15 +16,18 @@ Pod::Spec.new do |s|
 
   s.subspec 'VirtusizeCore' do |ss|
     ss.source_files = ["Virtusize/*.{swift, h}", "Virtusize/**/*.swift"]
-	ss.resources = "Virtusize/Resources/**/*.otf"
 	ss.resource_bundle = {
-	  'Virtusize' => ["Virtusize/Resources/**/*.lproj", "Virtusize/VirtusizeAssets.xcassets"]
+	  'Virtusize' => "Virtusize/Resources/**/*.lproj"
 	}
     ss.dependency 'Virtusize/VirtusizeUIKit'
   end
   
   s.subspec 'VirtusizeUIKit' do |ss|
     ss.source_files  = ["VirtusizeUIKit/VirtusizeUIKit/*.{swift, h}"]
+	ss.resources = "VirtusizeUIKit/VirtusizeUIKit/Resources/**/*.otf"
+	ss.resource_bundle = {
+	  'VirtusizeUIKit' => "VirtusizeUIKit/VirtusizeUIKit/VirtusizeAssets.xcassets"
+	}
   end
   
 end

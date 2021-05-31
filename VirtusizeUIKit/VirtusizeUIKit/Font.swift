@@ -23,10 +23,10 @@
 //
 
 /// This class to used to get UIFonts from font files
-class Font {
+public class Font {
 
     /// This enum contains all available font weights used in this SDK
-    internal enum FontWeight: String {
+	public enum FontWeight: String {
         case regular = "-Regular"
         case bold = "-Bold"
     }
@@ -38,15 +38,15 @@ class Font {
         case notoSansCJKKR = "NotoSansCJKKR"
     }
 
-    static func proximaNova(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+    public static func proximaNova(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
         return font(fontName: .proximaNova, type: "otf", weight: weight, size: size)
     }
 
-    static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+	public static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
         return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
     }
 
-    static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+	public static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
         return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
     }
 

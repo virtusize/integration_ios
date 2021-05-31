@@ -25,6 +25,10 @@
 import Foundation
 import WebKit
 
+#if canImport(VirtusizeUIKit)
+import VirtusizeUIKit
+#endif
+
 /// The main class used by Virtusize clients to perform all available operations related to fit check
 public class Virtusize {
     // MARK: - Properties

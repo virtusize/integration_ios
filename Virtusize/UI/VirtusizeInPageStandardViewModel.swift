@@ -22,6 +22,10 @@
 //  THE SOFTWARE.
 //
 
+#if canImport(VirtusizeUIKit)
+import VirtusizeUIKit
+#endif
+
 internal final class VirtusizeInPageStandardViewModel {
 	let userProductImage: Observable<VirtusizeProductImage?> = Observable(nil)
 	let storeProductImage: Observable<VirtusizeProductImage?> = Observable(nil)

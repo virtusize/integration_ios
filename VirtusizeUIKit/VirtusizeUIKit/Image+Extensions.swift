@@ -22,19 +22,19 @@
 //  THE SOFTWARE.
 //
 
-internal extension UIImage {
+extension UIImage {
 
     /// Creates a `UIImage` object in the Virtusize framework bundle.
     ///
     /// - Parameter name: The image name.
     convenience init?(bundleNamed name: String) {
-		self.init(named: name, in: BundleLoader.virtusizeResourceBundle, compatibleWith: nil)
+		self.init(named: name, in: BundleLoader.getVirtusizeResourceBundle(resourceName: "VirtusizeUIKit"), compatibleWith: nil)
     }
 
     /// Adds the padding to a `UIImage`
     ///
     /// - Parameter inset: the padding in CGFloat
-    func withPadding(inset: CGFloat) -> UIImage? {
+	public func withPadding(inset: CGFloat) -> UIImage? {
         return withInsets(insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
     }
 

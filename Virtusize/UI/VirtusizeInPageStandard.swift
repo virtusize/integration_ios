@@ -22,6 +22,10 @@
 //  THE SOFTWARE.
 //
 
+#if canImport(VirtusizeUIKit)
+import VirtusizeUIKit
+#endif
+
 // swiftlint:disable type_body_length file_length
 /// This class is the custom Virtusize InPage Standard view that can be added in the client's layout file.
 public class VirtusizeInPageStandard: VirtusizeInPageView {
