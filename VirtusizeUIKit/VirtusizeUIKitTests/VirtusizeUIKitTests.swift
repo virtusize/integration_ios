@@ -3,7 +3,6 @@
 //  VirtusizeUIKitTests
 //
 //  Created by Kuei-Jung Hu on 2021/05/31.
-//  Copyright © 2021 Virtusize AB. All rights reserved.
 //
 
 import XCTest
