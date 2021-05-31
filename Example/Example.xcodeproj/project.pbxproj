@@ -38,6 +38,20 @@
 			remoteGlobalIDString = 4DED8D1B205755C3001CA7DF;
 			remoteInfo = Virtusize;
 		};
+		9CDA4E9B266498720053BD7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DD0B418205770D5004ABA07 /* Virtusize.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9CDA4E81266497680053BD7A;
+			remoteInfo = VirtusizeUIKit;
+		};
+		9CDA4E9D266498720053BD7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DD0B418205770D5004ABA07 /* Virtusize.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9CDA4E89266497680053BD7A;
+			remoteInfo = VirtusizeUIKitTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -82,6 +96,8 @@
 			children = (
 				4DD0B41E205770D6004ABA07 /* Virtusize.framework */,
 				4DD0B420205770D6004ABA07 /* VirtusizeTests.xctest */,
+				9CDA4E9C266498720053BD7A /* VirtusizeUIKit.framework */,
+				9CDA4E9E266498720053BD7A /* VirtusizeUIKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -209,6 +225,20 @@
 			fileType = wrapper.cfbundle;
 			path = VirtusizeTests.xctest;
 			remoteRef = 4DD0B41F205770D6004ABA07 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9CDA4E9C266498720053BD7A /* VirtusizeUIKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VirtusizeUIKit.framework;
+			remoteRef = 9CDA4E9B266498720053BD7A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9CDA4E9E266498720053BD7A /* VirtusizeUIKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = VirtusizeUIKitTests.xctest;
+			remoteRef = 9CDA4E9D266498720053BD7A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -405,12 +435,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32CS757VQK;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -421,12 +454,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32CS757VQK;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
