@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9CF5742B2664AE2000A27620 /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF574212664AE2000A27620 /* VirtusizeUIKit.framework */; };
 		9CF574302664AE2000A27620 /* VirtusizeUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF5742F2664AE2000A27620 /* VirtusizeUIKitTests.swift */; };
 		9CF574322664AE2000A27620 /* VirtusizeUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CF574242664AE2000A27620 /* VirtusizeUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CF5743D2664AF0500A27620 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF5743C2664AF0500A27620 /* Colors.swift */; };
+		9CF574592664BE8300A27620 /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF574212664AE2000A27620 /* VirtusizeUIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,13 +45,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CF5742B2664AE2000A27620 /* VirtusizeUIKit.framework in Frameworks */,
+				9CF574592664BE8300A27620 /* VirtusizeUIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C454CC12664E1D0003BF5BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9CF574242664AE2000A27620 /* VirtusizeUIKit.h */,
+				9CF574252664AE2000A27620 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		9CF574172664AE2000A27620 = {
 			isa = PBXGroup;
 			children = (
@@ -73,9 +82,8 @@
 		9CF574232664AE2000A27620 /* VirtusizeUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				9C454CC12664E1D0003BF5BE /* Supporting Files */,
 				9CF5743C2664AF0500A27620 /* Colors.swift */,
-				9CF574242664AE2000A27620 /* VirtusizeUIKit.h */,
-				9CF574252664AE2000A27620 /* Info.plist */,
 			);
 			path = VirtusizeUIKit;
 			sourceTree = "<group>";

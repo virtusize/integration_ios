@@ -11,13 +11,20 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '10.3'
   s.swift_version = '5'
-
-  s.source_files = ["Virtusize/*.{swift, h}", "Virtusize/**/*.swift"]
-	s.resources = "Virtusize/Resources/**/*.otf"
-  s.resource_bundle = { 'Virtusize' => ["Virtusize/Resources/**/*.lproj", "Virtusize/VirtusizeAssets.xcassets"] }
   
-   s.subspec 'VirtusizeUIKit' do |ss|
-    ss.source_files  = "VirtusizeUIKit/VirtusizeUIKit/*.{swift, h}"
+  s.default_subspecs    = 'VirtusizeCore'
+
+  s.subspec 'VirtusizeCore' do |ss|
+    ss.source_files = ["Virtusize/*.{swift, h}", "Virtusize/**/*.swift"]
+	ss.resources = "Virtusize/Resources/**/*.otf"
+	ss.resource_bundle = {
+	  'Virtusize' => ["Virtusize/Resources/**/*.lproj", "Virtusize/VirtusizeAssets.xcassets"]
+	}
+    ss.dependency 'Virtusize/VirtusizeUIKit'
+  end
+  
+  s.subspec 'VirtusizeUIKit' do |ss|
+    ss.source_files  = ["VirtusizeUIKit/VirtusizeUIKit/*.{swift, h}"]
   end
   
 end

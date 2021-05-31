@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import VirtusizeUIKit
 
 /// This class is the custom Virtusize button that is added in the client's layout file.
 public class VirtusizeButton: UIButton, VirtusizeView {
