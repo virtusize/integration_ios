@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:VirtusizeUIKit/VirtusizeUIKit.xcodeproj">
+      location = "group:Virtusize.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Virtusize.xcodeproj">
+      location = "group:VirtusizeUIKit/VirtusizeUIKit.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Example/Example.xcodeproj">
