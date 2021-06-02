@@ -76,12 +76,10 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	) {
-		super.setInPageRecommendation(sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
-
 		setLoadingScreen(loading: false)
 		inPageMiniMessageLabel.attributedText = NSAttributedString(
 			string:
-				VirtusizeRepository.shared.storeProduct!.getRecommendationText(
+				VirtusizeRepository.shared.currentProduct!.getRecommendationText(
 					VirtusizeRepository.shared.i18nLocalization!,
 					sizeComparisonRecommendedSize,
 					bodyProfileRecommendedSize?.sizeName,

@@ -27,7 +27,8 @@ internal final class VirtusizeInPageStandardViewModel {
 	let storeProductImage: Observable<VirtusizeProductImage?> = Observable(nil)
 
 	private var currentBestFitUserProduct: VirtusizeInternalProduct?
-	private var currentStoreProduct: VirtusizeProduct?
+	private var currentProductWithPDCData: VirtusizeProduct?
+	private let dispatchQueue = DispatchQueue(label: "com.virtusize.inpage-image-queue")
 
 	func loadUserProductImage(bestFitUserProduct: VirtusizeInternalProduct) {
 		if currentBestFitUserProduct != nil && currentBestFitUserProduct!.id == bestFitUserProduct.id {
@@ -35,7 +36,7 @@ internal final class VirtusizeInPageStandardViewModel {
 			return
 		}
 		currentBestFitUserProduct = bestFitUserProduct
-		DispatchQueue.global().async {
+		dispatchQueue.async {
 			self.userProductImage.value = nil
 			let cloudinaryImageURL = self.getCloudinaryImageUrl(bestFitUserProduct.cloudinaryPublicId)
 			let loadImageResponse = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL)
@@ -58,21 +59,21 @@ internal final class VirtusizeInPageStandardViewModel {
 	}
 
 	func loadStoreProductImage() {
-		guard currentStoreProduct?.externalId != Virtusize.internalProduct?.externalId ||
+		guard currentProductWithPDCData?.externalId != Virtusize.productWithPDCData?.externalId ||
 			  self.storeProductImage.value == nil
 		else {
 			self.storeProductImage.value = self.storeProductImage.value
 			return
 		}
-		currentStoreProduct = Virtusize.internalProduct
-		DispatchQueue.global().async {
+		currentProductWithPDCData = Virtusize.productWithPDCData
+		dispatchQueue.async {
 			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: Virtusize.product?.imageURL).success {
 				self.storeProductImage.value = VirtusizeProductImage(
 					image: clientProductImage,
 					source: .client
 				)
 			} else {
-				let cloudinaryImageURL = self.getCloudinaryImageUrl(VirtusizeRepository.shared.storeProduct!.cloudinaryPublicId)
+				let cloudinaryImageURL = self.getCloudinaryImageUrl(VirtusizeRepository.shared.currentProduct!.cloudinaryPublicId)
 				if let storeProductImage = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL).success {
 					self.storeProductImage.value = VirtusizeProductImage(
 						image: storeProductImage,
@@ -80,8 +81,8 @@ internal final class VirtusizeInPageStandardViewModel {
 					)
 				} else {
 					let productTypeImage = self.getProductTypeImage(
-						productType: VirtusizeRepository.shared.storeProduct!.productType,
-						style: VirtusizeRepository.shared.storeProduct!.storeProductMeta?.additionalInfo?.style
+						productType: VirtusizeRepository.shared.currentProduct!.productType,
+						style: VirtusizeRepository.shared.currentProduct!.storeProductMeta?.additionalInfo?.style
 					)
 					self.storeProductImage.value = VirtusizeProductImage(
 						image: productTypeImage,

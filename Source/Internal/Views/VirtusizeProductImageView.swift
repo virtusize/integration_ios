@@ -110,7 +110,7 @@ internal class VirtusizeProductImageView: UIView {
         productImageView.frame = CGRect(x: 2, y: 2, width: imageSize - 4, height: imageSize - 4)
         productImageView.layer.cornerRadius = (imageSize - 4) / 2
         productImageView.layer.masksToBounds = true
-		productImageView.contentMode = .scaleAspectFit
+		productImageView.contentMode = .scaleAspectFill
     }
 
 	func setProductTypeImage(image: UIImage?) {
@@ -121,5 +121,6 @@ internal class VirtusizeProductImageView: UIView {
 			self.productImageView.backgroundColor = UIColor.white
 			self.productImageView.tintColor = .vsTealColor
 		}
+		productImageView.contentMode = .scaleAspectFit
     }
 }
