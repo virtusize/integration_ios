@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.1.6
+- Bugfix: Fix a crash related to com.apple.root.default-qos
+- Bugfix: Fix InPage loading the wrong product issue when there are multiple product pages opened in the navigation stack of a mobile app
+
 ### 2.1.5
 - Bugfix: Adjust the shadow of InPage
 
