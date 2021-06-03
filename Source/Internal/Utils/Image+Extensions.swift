@@ -51,26 +51,3 @@ internal extension UIImage {
         return imageWithInsets
     }
 }
-
-internal extension UIImageView {
-
-    /// Loads the image from a URL
-    ///
-    /// - Parameters:
-    ///   - url: The image URL
-    ///   - success: The successful callback to pass the loaded image
-    ///   - failure: The failure callback
-    func load(url: URL, success: ((UIImage) -> Void)? = nil, failure: (() -> Void)? = nil) {
-		DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    success?(image)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    failure?()
-                }
-            }
-        }
-    }
-}

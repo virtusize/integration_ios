@@ -43,8 +43,12 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 		}
 	}
 
-	public var presentingViewController: UIViewController?
-	public var messageHandler: VirtusizeMessageHandler?
+	public var memoryAddress: String {
+		String(format: "%p", self)
+	}
+
+    public var presentingViewController: UIViewController?
+    public var messageHandler: VirtusizeMessageHandler?
 	public var isDeallocated: Bool?
 
 	required init?(coder aDecoder: NSCoder) {
@@ -62,8 +66,8 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 	}
 
 	public override func willMove(toWindow: UIWindow?) {
-		if toWindow == nil {
-			isDeallocated = true
+		handleWillMoveWindow(toWindow) { isDeallocated in
+			self.isDeallocated = isDeallocated
 		}
 	}
 

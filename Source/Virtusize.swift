@@ -54,13 +54,18 @@ public class Virtusize {
 	internal static var virtusizeEventHandler: VirtusizeEventHandler?
 
 	/// The array of `VirtusizeView` that clients use on their mobile application
-	private static var virtusizeViews: [VirtusizeView] = []
+	internal static var virtusizeViews: [VirtusizeView] = []
+
+	/// The array of `VirtusizeView` that is active on the screen of the mobile application
+	internal static var activeVirtusizeViews: [VirtusizeView] = []
 
 	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
 
+	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
+
 	/// The internal property for product
-	internal static var internalProduct: VirtusizeProduct?
+	internal static var productWithPDCData: VirtusizeProduct?
 	/// The Virtusize product to get the value from the`productDataCheck` request
 	public static var product: VirtusizeProduct? {
 		set {
@@ -68,47 +73,54 @@ public class Virtusize {
 				return
 			}
 
-			internalProduct = newValue
+			productWithPDCData = newValue
 
-			DispatchQueue.global().async {
-				guard VirtusizeRepository.shared.isProductValid(product: newValue) else {
+			dispatchQueue.async {
+				guard virtusizeRepository.isProductValid(product: newValue) else {
 					DispatchQueue.main.async {
-						for index in 0...virtusizeViews.count-1 {
-							(virtusizeViews[index] as? UIView)?.isHidden = true
+						for virtusizeView in activeVirtusizeViews {
+							(virtusizeView as? UIView)?.isHidden = true
 						}
 					}
 					return
 				}
 
 				DispatchQueue.main.async {
-					for index in 0...virtusizeViews.count-1 {
-						(virtusizeViews[index] as? VirtusizeInPageView)?.setup()
-						virtusizeViews[index].isLoading()
+					for virtusizeView in activeVirtusizeViews {
+						(virtusizeView as? VirtusizeInPageView)?.setup()
+						virtusizeView.isLoading()
 					}
 				}
 
-				virtusizeRepository.fetchInitialData(productId: internalProduct!.productCheckData!.productDataId)
-				virtusizeRepository.updateUserSession()
-				virtusizeRepository.fetchDataForInPageRecommendation()
-				virtusizeRepository.switchInPageRecommendation()
+				if virtusizeRepository.fetchInitialData(productId: productWithPDCData!.productCheckData!.productDataId) {
+					virtusizeRepository.updateUserSession()
+					virtusizeRepository.fetchDataForInPageRecommendation()
+					virtusizeRepository.switchInPageRecommendation()
+				}
 			}
 		}
 		get {
-			return internalProduct
+			return productWithPDCData
 		}
 	}
 
+	typealias ProductRecommendationData = (
+		VirtusizeInternalProduct?,
+		SizeComparisonRecommendedSize?,
+		BodyProfileRecommendedSize?
+	)
+
 	/// The private property for updating InPage views
-	private static var _updateInPageViews: (SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)?
+	private static var _updateInPageViews: ProductRecommendationData?
 	/// The property to be set to update InPage views.
-	internal static var updateInPageViews: (SizeComparisonRecommendedSize?, BodyProfileRecommendedSize?)? {
+	internal static var updateInPageViews: ProductRecommendationData? {
 		set {
-			if newValue?.0 != nil || newValue?.1 != nil {
+			if newValue?.1 != nil || newValue?.2 != nil {
 				DispatchQueue.main.async {
-					for index in 0...virtusizeViews.count-1 {
-						(virtusizeViews[index] as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.0, newValue?.1)
+					for virtusizeView in virtusizeRepository.getAvailableVirtusizeViewsBy(externalId: newValue?.0?.externalId) {
+						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.1, newValue?.2)
 					}
-					self.updateInPageViews = (nil, nil)
+					self.updateInPageViews = (newValue?.0, nil, nil)
 				}
 			}
 		}
@@ -124,8 +136,8 @@ public class Virtusize {
 		set {
 			if newValue == true {
 				DispatchQueue.main.async {
-					for index in 0...virtusizeViews.count-1 {
-						(virtusizeViews[index] as? VirtusizeInPageView)?.showErrorScreen()
+					for virtusizeView in virtusizeViews {
+						(virtusizeView as? VirtusizeInPageView)?.showErrorScreen()
 					}
 					self.showInPageError = false
 				}
@@ -140,12 +152,15 @@ public class Virtusize {
 
     /// Sets up the VirtusizeView and adds it to `virtusizeViews`
     public class func setVirtusizeView(_ any: Any, _ view: VirtusizeView) {
+		virtusizeRepository.cleanAvailableVSViewToProductDict()
 		virtusizeViews = virtusizeViews.filter { $0.isDeallocated != true }
+
         var mutableView = view
         mutableView.messageHandler = any as? VirtusizeMessageHandler
         mutableView.presentingViewController = any as? UIViewController
 		(mutableView as? UIView)?.didMoveToWindow()
         virtusizeViews.append(mutableView)
+		activeVirtusizeViews = virtusizeViews.filter { $0.presentingViewController == any as? UIViewController }
     }
 
     /// The API request for sending an order to the server
