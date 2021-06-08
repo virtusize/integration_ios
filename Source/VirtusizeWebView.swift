@@ -57,14 +57,24 @@ open class VirtusizeWebView: WKWebView {
 }
 
 extension VirtusizeWebView: WKUIDelegate {
-
 	open func webView(
 		_ webView: WKWebView,
 		createWebViewWith configuration: WKWebViewConfiguration,
 		for navigationAction: WKNavigationAction,
 		windowFeatures: WKWindowFeatures
 	) -> WKWebView? {
-		guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
+		guard let url = navigationAction.request.url else {
+			return nil
+		}
+
+		if isExternalLinkFromVirtusize(url: url.absoluteString) {
+			if let sharedApplication = UIApplication.safeShared {
+				sharedApplication.safeOpenURL(url)
+				return nil
+			}
+		}
+
+		if let targetFrame = navigationAction.targetFrame, !targetFrame.isMainFrame && isLinkFromSNSAuth(url: url.absoluteString) {
 			// By default, the Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a web view.
 			// By setting up the user agent, Google recognizes the web view as a Safari browser
 			configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
@@ -85,5 +95,15 @@ extension VirtusizeWebView: WKUIDelegate {
 	open func webViewDidClose(_ webView: WKWebView) {
 		webView.removeFromSuperview()
 		wkUIDelegate?.webViewDidClose?(webView)
+	}
+	
+	/// Checks if a URL is an external link from Virtusize to be open on the Safari browser
+	private func isExternalLinkFromVirtusize(url: String?) -> Bool {
+		return url != nil && (url!.contains("surveymonkey") || (url!.contains("virtusize") && url!.contains("privacy")))
+	}
+
+	/// Checks if a URL is a link from SNS authentication
+	private func isLinkFromSNSAuth(url: String?) -> Bool {
+		return url != nil && (url!.contains("facebook") || url!.contains("google")) && url!.contains("oauth")
 	}
 }
