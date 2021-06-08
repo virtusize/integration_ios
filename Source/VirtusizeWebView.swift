@@ -177,12 +177,12 @@ extension VirtusizeWebView: WKUIDelegate {
 		contextMenuForElement elementInfo: WKContextMenuElementInfo,
 		willCommitWithAnimator animator: UIContextMenuInteractionCommitAnimating
 	) {
-		uiDelegate?.webView?(webView, contextMenuForElement: elementInfo, willCommitWithAnimator: animator)
+		wkUIDelegate?.webView?(webView, contextMenuForElement: elementInfo, willCommitWithAnimator: animator)
 	}
 
 	@available(iOS 13.0, *)
 	open func webView(_ webView: WKWebView, contextMenuDidEndForElement elementInfo: WKContextMenuElementInfo) {
-		uiDelegate?.webView?(webView, contextMenuDidEndForElement: elementInfo)
+		wkUIDelegate?.webView?(webView, contextMenuDidEndForElement: elementInfo)
 	}
 
 	/// Checks if a URL is an external link from Virtusize to be open on the Safari browser
