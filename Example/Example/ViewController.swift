@@ -114,9 +114,24 @@ class ViewController: UIViewController {
         inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         inPageStandard.topAnchor.constraint(equalTo: inPageMini2.bottomAnchor, constant: 16).isActive = true
 
+		let webViewButton = UIButton()
+		webViewButton.backgroundColor = UIColor.black
+		webViewButton.setTitle("SNS Test", for: .normal)
+		webViewButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+		view.addSubview(webViewButton)
+		webViewButton.translatesAutoresizingMaskIntoConstraints = false
+		webViewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		webViewButton.topAnchor.constraint(equalTo: inPageStandard.bottomAnchor, constant: 16).isActive = true
+
+		webViewButton.addTarget(self, action: #selector(openWebView), for: .touchUpInside)
+
         // MARK: The Order API
         sendOrderSample()
     }
+
+	@objc func openWebView() {
+		present(WebViewController(), animated: true)
+	}
 
     /// Demonstrates how to send an order to the Virtusize server
     ///
