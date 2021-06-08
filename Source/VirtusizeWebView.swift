@@ -74,7 +74,7 @@ extension VirtusizeWebView: WKUIDelegate {
 			}
 		}
 
-		if let targetFrame = navigationAction.targetFrame, !targetFrame.isMainFrame && isLinkFromSNSAuth(url: url.absoluteString) {
+		if navigationAction.targetFrame == nil && isLinkFromSNSAuth(url: url.absoluteString) {
 			// By default, the Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a web view.
 			// By setting up the user agent, Google recognizes the web view as a Safari browser
 			configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
