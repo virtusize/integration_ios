@@ -96,7 +96,95 @@ extension VirtusizeWebView: WKUIDelegate {
 		webView.removeFromSuperview()
 		wkUIDelegate?.webViewDidClose?(webView)
 	}
-	
+
+	open func webView(
+		_ webView: WKWebView,
+		runJavaScriptAlertPanelWithMessage message: String,
+		initiatedByFrame frame: WKFrameInfo,
+		completionHandler: @escaping () -> Void
+	) {
+		wkUIDelegate?.webView?(
+			webView,
+			runJavaScriptAlertPanelWithMessage: message,
+			initiatedByFrame: frame,
+			completionHandler: completionHandler
+		)
+	}
+
+	open func webView(
+		_ webView: WKWebView,
+		runJavaScriptConfirmPanelWithMessage message: String,
+		initiatedByFrame frame: WKFrameInfo,
+		completionHandler: @escaping (Bool) -> Void
+	) {
+		wkUIDelegate?.webView?(
+			webView,
+			runJavaScriptConfirmPanelWithMessage: message,
+			initiatedByFrame: frame,
+			completionHandler: completionHandler
+		)
+	}
+
+	open func webView(
+		_ webView: WKWebView,
+		runJavaScriptTextInputPanelWithPrompt prompt: String,
+		defaultText: String?,
+		initiatedByFrame frame: WKFrameInfo,
+		completionHandler: @escaping (String?) -> Void
+	) {
+		wkUIDelegate?.webView?(
+			webView,
+			runJavaScriptTextInputPanelWithPrompt: prompt,
+			defaultText: defaultText,
+			initiatedByFrame: frame,
+			completionHandler: completionHandler
+		)
+	}
+
+	open func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
+		wkUIDelegate?.webView?(webView, shouldPreviewElement: elementInfo) ?? false
+	}
+
+	open func webView(
+		_ webView: WKWebView,
+		previewingViewControllerForElement elementInfo: WKPreviewElementInfo,
+		defaultActions previewActions: [WKPreviewActionItem]
+	) -> UIViewController? {
+		wkUIDelegate?.webView?(webView, previewingViewControllerForElement: elementInfo, defaultActions: previewActions)
+	}
+
+	open func webView(_ webView: WKWebView, commitPreviewingViewController previewingViewController: UIViewController) {
+		wkUIDelegate?.webView?(webView, commitPreviewingViewController: previewingViewController)
+	}
+
+	@available(iOS 13.0, *)
+	open func webView(
+		_ webView: WKWebView,
+		contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
+		completionHandler: @escaping (UIContextMenuConfiguration?) -> Void
+	) {
+		wkUIDelegate?.webView?(webView, contextMenuConfigurationForElement: elementInfo, completionHandler: completionHandler)
+	}
+
+	@available(iOS 13.0, *)
+	open func webView(_ webView: WKWebView, contextMenuWillPresentForElement elementInfo: WKContextMenuElementInfo) {
+		wkUIDelegate?.webView?(webView, contextMenuWillPresentForElement: elementInfo)
+	}
+
+	@available(iOS 13.0, *)
+	open func webView(
+		_ webView: WKWebView,
+		contextMenuForElement elementInfo: WKContextMenuElementInfo,
+		willCommitWithAnimator animator: UIContextMenuInteractionCommitAnimating
+	) {
+		uiDelegate?.webView?(webView, contextMenuForElement: elementInfo, willCommitWithAnimator: animator)
+	}
+
+	@available(iOS 13.0, *)
+	open func webView(_ webView: WKWebView, contextMenuDidEndForElement elementInfo: WKContextMenuElementInfo) {
+		uiDelegate?.webView?(webView, contextMenuDidEndForElement: elementInfo)
+	}
+
 	/// Checks if a URL is an external link from Virtusize to be open on the Safari browser
 	private func isExternalLinkFromVirtusize(url: String?) -> Bool {
 		return url != nil && (url!.contains("surveymonkey") || (url!.contains("virtusize") && url!.contains("privacy")))
