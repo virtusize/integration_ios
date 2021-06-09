@@ -37,7 +37,9 @@ class WebViewController: UIViewController {
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let webView = VirtusizeWebView(frame: .zero)
+		let webView = VirtusizeWebView(frame: .zero) { configuration in
+			// set the configuration here
+		}
 		webView.uiDelegate = self
 		view.addSubview(webView)
 		self.webView = webView

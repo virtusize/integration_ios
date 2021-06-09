@@ -43,9 +43,10 @@ open class VirtusizeWebView: WKWebView {
 
 	private weak var wkUIDelegate: WKUIDelegate?
 
-	public init(frame: CGRect) {
+	public init(frame: CGRect, configurationClosure: ((WKWebViewConfiguration) -> Void)? = nil) {
 		let configuration = WKWebViewConfiguration()
-		configuration.processPool = Virtusize.processPool ?? VSProcessPool.pool
+		configuration.processPool = VSProcessPool.pool
+		configurationClosure?(configuration)
 		super.init(frame: frame, configuration: configuration)
 		uiDelegate = self
 	}
