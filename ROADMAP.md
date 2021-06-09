@@ -1,8 +1,14 @@
 # ROADMAP
 
-## 2.1.1
+## 2.2
 
 ### Release date: 
+
+- [x] Fix SNS Login on the web version of Virtusize integration through the SDK
+
+## 2.1.1
+
+### Release date: 21/03/04
 
 - [x] InPage integration
 
