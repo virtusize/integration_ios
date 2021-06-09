@@ -43,10 +43,9 @@ open class VirtusizeWebView: WKWebView {
 
 	private weak var wkUIDelegate: WKUIDelegate?
 
-	// wkProcessPool can be passed for cookies sharing across different web views
-	public init(frame: CGRect, wkProcessPool: WKProcessPool? = nil) {
+	public init(frame: CGRect) {
 		let configuration = WKWebViewConfiguration()
-		configuration.processPool = wkProcessPool ?? VSProcessPool.pool
+		configuration.processPool = Virtusize.processPool ?? VSProcessPool.pool
 		super.init(frame: frame, configuration: configuration)
 		uiDelegate = self
 	}
