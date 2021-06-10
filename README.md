@@ -78,7 +78,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.2'
+pod 'Virtusize', '~> 2.2.1'
 end
 ```
 
@@ -600,11 +600,11 @@ Virtusize.sendOrder(
 
 
 
-## Fix SNS Login in Virtusize for native Webview apps
+## Fix SNS Login in Virtusize for Native Webview Apps
 
-The built-in WKWebView blocks any popup windows by default. To allow users sign up or log in with the web version of Virtusize integration in your webview, please use this method: 
+The built-in WKWebView blocks any popup windows by default. To fix SNS login on the web version of Virtusize integration in your web view, please use this method: 
 
-1. If you build your UI purely with UIKit, replace your `WKWebView` with **`VirtusizeWebView`** in your Swift file
+1. If you build your UI purely with UIKit, replace your `WKWebView` with **`VirtusizeWebView`** in your Swift file. If you use the WKWebViewConfiguration object to configure your web view, please access it from the closure like the example below.
 
    - Swift
 
@@ -613,7 +613,18 @@ The built-in WKWebView blocks any popup windows by default. To allow users sign 
    + var webView: VirtusizeWebView
    ```
 
-2. If you build your UI with Xcode's Interface Builder, make sure that you set the Custom Class of your webview to **`VirtusizeWebView`** in the Identity inspector to fix SNS login in Virtusize.
+   ```swift
+   webView = VirtusizeWebView(frame: .zero) { configuration in
+	   // access the WKWebViewConfiguration object here to customize it
+	   
+	   // If you want to allow cookie sharing between multiple VirtusizeWebViews,
+	   // assign the same WKProcessPool object to configuration.processPool
+	   configuration.processPool = WKProcessPool()
+   }
+   ```
+   
+
+2. If you build your UI with Xcode's Interface Builder, make sure that you set the Custom Class of your web view to **`VirtusizeWebView`** in the Identity inspector to fix SNS login in Virtusize.
 
    - Swift
 
@@ -625,13 +636,6 @@ The built-in WKWebView blocks any popup windows by default. To allow users sign 
    - Interface Builder
    
      ![](https://user-images.githubusercontent.com/7802052/121308895-87e3b500-c93c-11eb-8745-f4bf22bccdba.png)
-
-If you want to allow cookie sharing arcoss different instances of VirtusizeWebView, please assign your WKProcessPool to Virtusize.processPool
-
-```swift
-Virtusize.processPool = WKProcessPool()
-```
-
 
 
 ## Build
