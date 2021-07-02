@@ -52,8 +52,11 @@ internal class VirtusizeRepository: NSObject {
 	///
 	/// - Parameters:
 	///   - product: `VirtusizeProduct`
-	/// - Returns: true if the product is valid
-	internal func isProductValid(product: VirtusizeProduct) -> Bool {
+	///   - onProductDataCheck: a closure to pass a valid`VirtusizeProduct` with the PDC data back
+	internal func checkProductValidity(
+		product: VirtusizeProduct,
+		onProductDataCheck: ((VirtusizeProduct?) -> Void)? = nil
+	) {
 		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
 		guard let product = productResponse.success else {
 			NotificationCenter.default.post(
@@ -61,57 +64,61 @@ internal class VirtusizeRepository: NSObject {
 				object: Virtusize.self,
 				userInfo: ["message": productResponse.string ?? VirtusizeError.unknownError.debugDescription]
 			)
-			return false
+			onProductDataCheck?(nil)
+			return
 		}
 
-		Virtusize.productWithPDCData?.name = product.name
-		Virtusize.productWithPDCData?.externalId = product.externalId
-		Virtusize.productWithPDCData?.productCheckData = product.productCheckData
+		let mutableProduct = product
+		mutableProduct.name = product.name
+		mutableProduct.externalId = product.externalId
+		mutableProduct.productCheckData = product.productCheckData
 
 		// Send the API event where the user saw the product
 		VirtusizeAPIService.sendEvent(
 			VirtusizeEvent(name: .userSawProduct),
-			withContext: Virtusize.productWithPDCData!.jsonObject
+			withContext: mutableProduct.jsonObject
 		)
 
-		guard Virtusize.productWithPDCData!.productCheckData?.productDataId != nil else {
+		guard mutableProduct.productCheckData?.productDataId != nil else {
 			NotificationCenter.default.post(
 				name: Virtusize.productDataCheckDidFail,
 				object: Virtusize.self,
-				userInfo: ["message": Virtusize.productWithPDCData!.dictionary]
+				userInfo: ["message": mutableProduct.dictionary]
 			)
-			return false
+			onProductDataCheck?(nil)
+			return
 		}
 
-		if let sendImageToBackend = Virtusize.productWithPDCData!.productCheckData?.fetchMetaData,
+		if let sendImageToBackend = mutableProduct.productCheckData?.fetchMetaData,
 		   sendImageToBackend,
 		   product.imageURL != nil,
-		   let storeId = Virtusize.productWithPDCData!.productCheckData?.storeId {
+		   let storeId = mutableProduct.productCheckData?.storeId {
 			VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
 		}
 
 		// Send the API event where the user saw the widget button
 		VirtusizeAPIService.sendEvent(
 			VirtusizeEvent(name: .userSawWidgetButton),
-			withContext: Virtusize.productWithPDCData!.jsonObject
+			withContext: mutableProduct.jsonObject
 		)
 
 		NotificationCenter.default.post(
 			name: Virtusize.productDataCheckDidSucceed,
 			object: Virtusize.self,
-			userInfo: ["message": Virtusize.productWithPDCData!.dictionary]
+			userInfo: ["message": mutableProduct.dictionary]
 		)
 
-		return true
+		onProductDataCheck?(mutableProduct)
 	}
 
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
 	///
-	/// - Parameter productId: the product ID provided by the client
-	/// - Returns: true if the initial data are fetched
-	internal func fetchInitialData(productId: Int?) -> Bool {
+	/// - Parameters:
+	///   - productId: the product ID provided by the client
+	///   - onSuccess: the closure is called if the data from the server is successfully fetched
+	internal func fetchInitialData(productId: Int?, onSuccess: () -> Void) {
 		guard let productId = productId else {
-			return false
+			return
 		}
 
 		currentProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
@@ -122,21 +129,21 @@ internal class VirtusizeRepository: NSObject {
 
 		if currentProduct == nil {
 			Virtusize.showInPageError = true
-			return false
+			return
 		}
 
 		productTypes = VirtusizeAPIService.getProductTypesAsync().success
 		if productTypes == nil {
 			Virtusize.showInPageError = true
-			return false
+			return
 		}
 
 		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
 		if i18nLocalization == nil {
 			Virtusize.showInPageError = true
-			return false
+			return
 		}
-		return true
+		onSuccess()
 	}
 
 	internal func updateCurrentProductBy(vsViewMemoryAddress: String?) {
