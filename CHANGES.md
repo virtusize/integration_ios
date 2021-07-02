@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.2.2
+- Bugfix: Fix a crash related to forcing unwrap an optional value
+
 ### 2.2.1
 - Feature: Fix SNS Login on the web version of Virtusize integration through the SDK
 
