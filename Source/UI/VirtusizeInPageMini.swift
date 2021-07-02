@@ -73,6 +73,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
     }
 
     public override func setInPageRecommendation(
+		_ externalProductId: String?,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	) {
