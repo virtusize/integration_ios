@@ -454,7 +454,6 @@
 		9CEC8D88252AB8EE001CBDFB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9CFF40EF25B940D100B21D4E /* VirtusizeEventName.swift */,
 				9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */,
 				9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */,
 				9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */,
@@ -463,7 +462,6 @@
 				9CEAB7C324D95A8100F969E1 /* VirtusizeProductSize.swift */,
 				9C6DDE2A24DCF2270021073A /* VirtusizeProductCheckData.swift */,
 				9C6DDE2D24DCF2A70021073A /* VirtusizeUserData.swift */,
-				9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */,
 				9C1169332521F270006827B9 /* VirtusizeGetSizeParams.swift */,
 				9CEAB7AF24D930F000F969E1 /* VirtusizeBrandSizing.swift */,
 				9CEC8D8B252AB963001CBDFB /* ProductComparisonFitInfo.swift */,
@@ -483,6 +481,7 @@
 				9CB98B9624B2C5B400C51F20 /* VirtusizeRegion.swift */,
 				DF71642721A28501002C7202 /* VirtusizeError.swift */,
 				DF71642921A28858002C7202 /* VirtusizeEvent.swift */,
+				9CFF40EF25B940D100B21D4E /* VirtusizeEventName.swift */,
 				DF71642B21A28939002C7202 /* VirtusizeEnvironment.swift */,
 				9CEAB7C824D9676200F969E1 /* VirtusizeStoreProduct.swift */,
 				DF71642D21A28DE8002C7202 /* VirtusizeProduct.swift */,
@@ -490,6 +489,7 @@
 				9C5956CC2484F6280014DF51 /* VirtusizeOrderItem.swift */,
 				9C6DDE1C24DAE50E0021073A /* VirtusizeProductType.swift */,
 				9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */,
+				9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */,
 				9C33F698252449E1008DBF41 /* BodyProfileRecommendedSize.swift */,
 				9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */,
 				9C787FCC25DB7A3D00346F2A /* SizeRecommendationType.swift */,

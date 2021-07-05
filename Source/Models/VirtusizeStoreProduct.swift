@@ -26,7 +26,7 @@
 public class VirtusizeStoreProduct: Codable {
 	// swiftlint:disable identifier_name
 	/// An integer to represent the internal product ID in the Virtusize server
-	let id: Int
+	public let id: Int
 	/// The list of the `VirtusizeProductSize` that this product has
 	let sizes: [VirtusizeProductSize]
 	/// A string to represent the external product ID from the client's store

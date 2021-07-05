@@ -114,4 +114,72 @@ public class VirtusizeFlutterRepository: NSObject {
 		}
 		return userSessionInfoResponse.isSuccessful ? userSessionInfoResponse.string : nil
 	}
+
+	public func getUserProducts() -> [VirtusizeStoreProduct]? {
+		let response = VirtusizeAPIService.getUserProductsAsync()
+		return response.isSuccessful ? response.success : nil
+	}
+
+	public func getUserBodyProfile() -> VirtusizeUserBodyProfile? {
+		let response = VirtusizeAPIService.getUserBodyProfileAsync()
+		return response.isSuccessful ? response.success : nil
+	}
+
+	public func getBodyProfileRecommendedSize(
+		productTypes: [VirtusizeProductType],
+		storeProduct: VirtusizeStoreProduct,
+		userBodyProfile: VirtusizeUserBodyProfile
+	) -> BodyProfileRecommendedSize? {
+		let response = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
+			productTypes: productTypes,
+			storeProduct: storeProduct,
+			userBodyProfile: userBodyProfile
+		)
+		return response.isSuccessful ? response.success : nil
+	}
+
+	public func getRecommendationText(
+		selectedRecType: SizeRecommendationType? = nil,
+		userProducts: [VirtusizeStoreProduct]? = nil,
+		storeProduct: VirtusizeStoreProduct,
+		productTypes: [VirtusizeProductType],
+		bodyProfileRecommendedSize: BodyProfileRecommendedSize?,
+		i18nLocalization: VirtusizeI18nLocalization
+	) -> String {
+		var userProductRecommendedSize: SizeComparisonRecommendedSize?
+		var userBodyRecommendedSize: String?
+
+		if selectedRecType != SizeRecommendationType.body {
+			userProductRecommendedSize = FindBestFitHelper.findBestFitProductSize(
+				userProducts: userProducts ?? [],
+				storeProduct: storeProduct,
+				productTypes: productTypes
+			)
+		}
+
+		if selectedRecType != SizeRecommendationType.compareProduct {
+			userBodyRecommendedSize = bodyProfileRecommendedSize?.sizeName
+		}
+
+		return storeProduct.getRecommendationText(
+			i18nLocalization,
+			userProductRecommendedSize,
+			userBodyRecommendedSize
+		)
+	}
+
+	public func updateUserAuthData(bid: String?, auth: String?) {
+		if let bid = bid {
+			UserDefaultsHelper.current.identifier = bid
+		}
+		if let auth = auth, !auth.isEmpty {
+			UserDefaultsHelper.current.authToken = auth
+		}
+	}
+	public func deleteUser() {
+		let response = VirtusizeAPIService.deleteUserDataAsync()
+		if response.isSuccessful {
+			UserDefaultsHelper.current.authToken = ""
+		}
+	}
 }

@@ -510,13 +510,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	/// Stops the cross fade animation
 	private func stopCrossFadeProductImageViews() {
-//		DispatchQueue.main.async {
-			self.crossFadeInAnimator?.stopAnimation(true)
-			self.crossFadeOutAnimator?.stopAnimation(true)
-			self.userProductImageView.alpha = 1.0
-			self.storeProductImageView.alpha = 1.0
-			self.productImagesAreAnimating = false
-//		}
+		self.crossFadeInAnimator?.stopAnimation(true)
+		self.crossFadeOutAnimator?.stopAnimation(true)
+		self.userProductImageView.alpha = 1.0
+		self.storeProductImageView.alpha = 1.0
+		self.productImagesAreAnimating = false
 	}
 
 	private func setMessageLabelTexts(

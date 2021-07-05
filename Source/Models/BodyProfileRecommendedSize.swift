@@ -26,4 +26,8 @@
 public struct BodyProfileRecommendedSize: Codable {
 	/// The recommended size name
     let sizeName: String
+
+	public init(sizeName: String) {
+		self.sizeName = sizeName
+	}
 }
