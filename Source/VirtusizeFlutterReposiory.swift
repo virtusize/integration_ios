@@ -90,11 +90,17 @@ public class VirtusizeFlutterRepository: NSObject {
 	}
 
 	public func getStoreProduct(productId: Int) -> VirtusizeStoreProduct? {
-		let storeProductResponse = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
-		if storeProductResponse.isSuccessful {
-			return storeProductResponse.success
-		} else {
-			return nil
-		}
+		let response = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
+		return response.isSuccessful ? response.success : nil
+	}
+
+	public func getProductTypes() -> [VirtusizeProductType]? {
+		let response = VirtusizeAPIService.getProductTypesAsync()
+		return response.isSuccessful ? response.success : nil
+	}
+
+	public func getI18nLocalization() -> VirtusizeI18nLocalization? {
+		let response = VirtusizeAPIService.getI18nTextsAsync()
+		return response.isSuccessful ? response.success : nil
 	}
 }
