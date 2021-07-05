@@ -45,7 +45,7 @@ public class VirtusizeProduct: Codable {
 	}
 
 	/// The product data as a dictionary
-	internal var dictionary: [String: Any] {
+	public var dictionary: [String: Any] {
 		return jsonObject ?? [:]
 	}
 

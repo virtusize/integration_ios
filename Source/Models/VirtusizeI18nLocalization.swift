@@ -23,7 +23,7 @@
 //
 
 /// The class that wraps the localization texts from the i18n endpoint
-internal class VirtusizeI18nLocalization {
+public class VirtusizeI18nLocalization {
     var defaultAccessoryText: String?
     var hasProductAccessoryTopText: String?
     var hasProductAccessoryBottomText: String?

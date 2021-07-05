@@ -67,8 +67,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
     }
 
-    public override func isLoading() {
-        super.isLoading()
+    public override func isLoading(product: VirtusizeProduct) {
+        super.isLoading(product: product)
         setLoadingScreen(loading: true)
     }
 

@@ -29,7 +29,7 @@ public struct SizeComparisonRecommendedSize {
 	/// The best store product size for the user
 	var bestStoreProductSize: VirtusizeProductSize?
 	/// The best fit user product out of all the comparable user products
-    var bestUserProduct: VirtusizeInternalProduct?
+    var bestUserProduct: VirtusizeStoreProduct?
 	/// The boolean value for whether the best fit user product is smaller than the store product
     var isStoreProductSmaller: Bool?
 

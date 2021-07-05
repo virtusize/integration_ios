@@ -50,7 +50,7 @@ class VirtusizeStoreProductTests: XCTestCase {
     }
 
     func testDecoding_validStoreProductData_shouldReturnExpectedStructure() {
-        let storeProduct = try? JSONDecoder().decode(VirtusizeInternalProduct.self, from: storeProductFixture)
+        let storeProduct = try? JSONDecoder().decode(VirtusizeStoreProduct.self, from: storeProductFixture)
 
         XCTAssertEqual(storeProduct?.id, TestFixtures.productId)
         XCTAssertEqual(storeProduct?.sizes.count, 3)
@@ -70,7 +70,7 @@ class VirtusizeStoreProductTests: XCTestCase {
 
     func testDecoding_emptyJsonData_shouldReturnNil() {
         let storeProduct = try? JSONDecoder().decode(
-			VirtusizeInternalProduct.self,
+			VirtusizeStoreProduct.self,
             from: Data(TestFixtures.emptyResponse.utf8)
         )
 

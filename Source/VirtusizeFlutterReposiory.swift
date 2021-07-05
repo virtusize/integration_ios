@@ -28,11 +28,71 @@ public class VirtusizeFlutterRepository: NSObject {
 		return instance
 	}()
 	
-	public func getProductDataCheck(product: VirtusizeProduct) -> String? {
+	public func getProductDataCheck(product: VirtusizeProduct) -> (VirtusizeProduct?, String?) {
 		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
-		Virtusize.product = productResponse.success
-		if productResponse.isSuccessful {
-			return productResponse.string
+		var isValidProduct: Bool = false
+		sendEventsAndProductImage(productResponse: productResponse) { isValid in
+			isValidProduct = isValid
+		}
+		return (isValidProduct ? productResponse.success : nil, isValidProduct ? productResponse.string : nil)
+	}
+
+	private func sendEventsAndProductImage(
+		productResponse: APIResult<VirtusizeProduct>,
+		onValidProduct: (Bool) -> Void
+	) {
+		guard let product = productResponse.success else {
+			NotificationCenter.default.post(
+				name: Virtusize.productDataCheckDidFail,
+				object: Virtusize.self,
+				userInfo: ["message": productResponse.string ?? VirtusizeError.unknownError.debugDescription]
+			)
+			onValidProduct(false)
+			return
+		}
+
+		// Send the API event where the user saw the product
+		VirtusizeAPIService.sendEvent(
+			VirtusizeEvent(name: .userSawProduct),
+			withContext: product.jsonObject
+		)
+
+		guard product.productCheckData?.productDataId != nil else {
+			NotificationCenter.default.post(
+				name: Virtusize.productDataCheckDidFail,
+				object: Virtusize.self,
+				userInfo: ["message": product.dictionary]
+			)
+			onValidProduct(false)
+			return
+		}
+
+		if let sendImageToBackend = product.productCheckData?.fetchMetaData,
+		   sendImageToBackend,
+		   product.imageURL != nil,
+		   let storeId = product.productCheckData?.storeId {
+			VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
+		}
+
+		// Send the API event where the user saw the widget button
+		VirtusizeAPIService.sendEvent(
+			VirtusizeEvent(name: .userSawWidgetButton),
+			withContext: product.jsonObject
+		)
+
+		NotificationCenter.default.post(
+			name: Virtusize.productDataCheckDidSucceed,
+			object: Virtusize.self,
+			userInfo: ["message": product.dictionary]
+		)
+
+		onValidProduct(true)
+	}
+
+	public func getStoreProduct(productId: Int) -> VirtusizeStoreProduct? {
+		let storeProductResponse = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
+		if storeProductResponse.isSuccessful {
+			return storeProductResponse.success
 		} else {
 			return nil
 		}

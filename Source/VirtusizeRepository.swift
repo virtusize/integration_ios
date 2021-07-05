@@ -35,15 +35,15 @@ internal class VirtusizeRepository: NSObject {
 	/// The session API response as a string
 	var userSessionResponse: String = ""
 	/// This dictionary holds the information of available vs views about which the memory address of a vs view points to which store product
-	var availableVSViewToProductDict = [String: VirtusizeInternalProduct]()
+	var availableVSViewToProductDict = [String: VirtusizeStoreProduct]()
 	/// This variable holds the data of the current store product from the Virtusize API
-	var currentProduct: VirtusizeInternalProduct?
+	var currentProduct: VirtusizeStoreProduct?
 	/// The array of `VirtusizeView` that clients use on their mobile application
 	var productTypes: [VirtusizeProductType]?
 	// This variable holds the i18n localization texts
 	var i18nLocalization: VirtusizeI18nLocalization?
 
-	private var userProducts: [VirtusizeInternalProduct]?
+	private var userProducts: [VirtusizeStoreProduct]?
 	private var userBodyProfile: VirtusizeUserBodyProfile?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
 	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
@@ -262,7 +262,7 @@ internal class VirtusizeRepository: NSObject {
 	///
 	/// - Parameter selectedRecommendedType the selected recommendation compare view type
 	internal func switchInPageRecommendation(
-		product: VirtusizeInternalProduct? = VirtusizeRepository.shared.currentProduct,
+		product: VirtusizeStoreProduct? = VirtusizeRepository.shared.currentProduct,
 		_ selectedRecommendedType: SizeRecommendationType? = nil
 	) {
 		switch selectedRecommendedType {
