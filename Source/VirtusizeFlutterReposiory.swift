@@ -103,4 +103,15 @@ public class VirtusizeFlutterRepository: NSObject {
 		let response = VirtusizeAPIService.getI18nTextsAsync()
 		return response.isSuccessful ? response.success : nil
 	}
+
+	public func getUserSessionResponse() -> String? {
+		let userSessionInfoResponse = VirtusizeAPIService.getUserSessionInfoAsync()
+		if let accessToken = userSessionInfoResponse.success?.accessToken {
+			UserDefaultsHelper.current.accessToken = accessToken
+		}
+		if let authToken = userSessionInfoResponse.success?.authToken, !authToken.isEmpty {
+			UserDefaultsHelper.current.authToken = authToken
+		}
+		return userSessionInfoResponse.isSuccessful ? userSessionInfoResponse.string : nil
+	}
 }
