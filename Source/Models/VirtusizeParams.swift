@@ -52,7 +52,10 @@ public class VirtusizeParams {
     /// Gets the script in JavaScript to be called to pass params to the Virtusize web app
     ///
     /// - Returns: A string value of the script in JavaScript
-	func getVsParamsFromSDKScript(storeProductId: String?) -> String {
+	func getVsParamsFromSDKScript(
+		storeProductId: String?,
+		userSessionResponse: String = ""
+	) -> String {
         var paramsScript = "vsParamsFromSDK("
         guard let apiKey = Virtusize.APIKey else {
             fatalError("Please set Virtusize.APIKey")
@@ -62,7 +65,7 @@ public class VirtusizeParams {
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
         paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
-		paramsScript += "\(ParamKey.sessionData): \(VirtusizeRepository.shared.userSessionResponse), "
+		paramsScript += "\(ParamKey.sessionData): \(userSessionResponse), "
         paramsScript += "\(ParamKey.storeProductID): '\(storeProductId)', "
         if let userId = Virtusize.userID {
             paramsScript += "\(ParamKey.externalUserID): '\(userId)', "

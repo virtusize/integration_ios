@@ -35,7 +35,8 @@ public protocol VirtusizeMessageHandler: AnyObject {
 /// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeWebViewController: UIViewController {
 	private var product: VirtusizeProduct?
-	
+	private var userSessionResponse: String = ""
+
 	public weak var messageHandler: VirtusizeMessageHandler?
 	internal var eventHandler: VirtusizeEventHandler?
 
@@ -49,6 +50,7 @@ public final class VirtusizeWebViewController: UIViewController {
 
 	public convenience init?(
 		product: VirtusizeProduct?,
+		userSessionResponse: String? = nil,
 		messageHandler: VirtusizeMessageHandler? = nil,
 		eventHandler: VirtusizeEventHandler? = nil,
 		processPool: WKProcessPool? = nil
@@ -56,6 +58,8 @@ public final class VirtusizeWebViewController: UIViewController {
 		self.init(nibName: nil, bundle: nil)
 		self.modalPresentationStyle = .fullScreen
 		self.product = product
+		self.userSessionResponse =
+			(userSessionResponse != nil) ? userSessionResponse! : VirtusizeRepository.shared.userSessionResponse
 		self.messageHandler = messageHandler
 		self.processPool = processPool
 		self.eventHandler = eventHandler
@@ -143,7 +147,8 @@ public final class VirtusizeWebViewController: UIViewController {
 extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 	public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript(
-				storeProductId: product?.externalId
+				storeProductId: product?.externalId,
+			userSessionResponse: userSessionResponse
 		) else {
 			reportError(error: .invalidVsParamScript)
 			return
