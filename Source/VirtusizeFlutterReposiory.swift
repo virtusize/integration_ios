@@ -117,12 +117,12 @@ public class VirtusizeFlutterRepository: NSObject {
 
 	public func getUserProducts() -> [VirtusizeStoreProduct]? {
 		let response = VirtusizeAPIService.getUserProductsAsync()
-		return response.isSuccessful ? response.success : nil
+		return response.isSuccessful || response.errorCode == 404 ? response.success ?? [] : nil
 	}
 
-	public func getUserBodyProfile() -> VirtusizeUserBodyProfile? {
+	public func getUserBodyProfile() -> (VirtusizeUserBodyProfile?, Int?) {
 		let response = VirtusizeAPIService.getUserBodyProfileAsync()
-		return response.isSuccessful ? response.success : nil
+		return (response.success, response.errorCode)
 	}
 
 	public func getBodyProfileRecommendedSize(
