@@ -27,7 +27,7 @@ public enum VirtusizeLanguage: String, CaseIterable {
     case ENGLISH = "en"
     case JAPANESE = "ja"
     case KOREAN = "ko"
-	
+
 	public var shortDescription: String {
 		switch self {
 		case .ENGLISH:

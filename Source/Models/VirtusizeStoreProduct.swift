@@ -160,4 +160,25 @@ public class VirtusizeStoreProduct: Codable {
 	private func isAccessory() -> Bool {
 		return productType == 18 || productType == 19 || productType == 25 || productType == 26
 	}
+
+	internal func getCloudinaryImageUrl() -> URL? {
+		guard let imageUrlString = cloudinaryImageUrlString else {
+			return nil
+		}
+		return URL(string: imageUrlString)
+	}
+
+	public var cloudinaryImageUrlString: String? {
+		guard !cloudinaryPublicId.isEmpty else {
+			return nil
+		}
+		return "https://res.cloudinary.com/virtusize/image/upload/w_36,h_36/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
+	}
+
+	internal func getProductTypeImage() -> UIImage? {
+		return VirtusizeAssets.getProductPlaceholderImage(
+			productType: productType,
+			style: storeProductMeta?.additionalInfo?.style
+		)?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
+	}
 }

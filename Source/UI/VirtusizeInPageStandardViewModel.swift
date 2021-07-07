@@ -38,7 +38,7 @@ internal final class VirtusizeInPageStandardViewModel {
 		currentBestFitUserProduct = bestFitUserProduct
 		dispatchQueue.async {
 			self.userProductImageObservable.value = nil
-			let cloudinaryImageURL = self.getCloudinaryImageUrl(bestFitUserProduct.cloudinaryPublicId)
+			let cloudinaryImageURL = bestFitUserProduct.getCloudinaryImageUrl()
 			let loadImageResponse = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL)
 			if let userProductImage = loadImageResponse.success {
 				self.userProductImageObservable.value = VirtusizeProductImage(
@@ -46,10 +46,7 @@ internal final class VirtusizeInPageStandardViewModel {
 					source: .cloudinary
 				)
 			} else {
-				let productTypeImage = self.getProductTypeImage(
-					productType: bestFitUserProduct.productType,
-					style: bestFitUserProduct.storeProductMeta?.additionalInfo?.style
-				)
+				let productTypeImage = bestFitUserProduct.getProductTypeImage()
 				self.userProductImageObservable.value = VirtusizeProductImage(
 					image: productTypeImage,
 					source: .local
@@ -73,17 +70,14 @@ internal final class VirtusizeInPageStandardViewModel {
 					source: .client
 				)
 			} else {
-				let cloudinaryImageURL = self.getCloudinaryImageUrl(VirtusizeRepository.shared.currentProduct!.cloudinaryPublicId)
+				let cloudinaryImageURL = VirtusizeRepository.shared.currentProduct!.getCloudinaryImageUrl()
 				if let storeProductImage = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL).success {
 					self.storeProductImageObservable.value = VirtusizeProductImage(
 						image: storeProductImage,
 						source: .cloudinary
 					)
 				} else {
-					let productTypeImage = self.getProductTypeImage(
-						productType: VirtusizeRepository.shared.currentProduct!.productType,
-						style: VirtusizeRepository.shared.currentProduct!.storeProductMeta?.additionalInfo?.style
-					)
+					let productTypeImage = VirtusizeRepository.shared.currentProduct!.getProductTypeImage()
 					self.storeProductImageObservable.value = VirtusizeProductImage(
 						image: productTypeImage,
 						source: .local
@@ -91,21 +85,5 @@ internal final class VirtusizeInPageStandardViewModel {
 				}
 			}
 		}
-	}
-
-	private func getCloudinaryImageUrl(_ cloudinaryPublicId: String?) -> URL? {
-		guard let cloudinaryPublicId = cloudinaryPublicId else {
-			return nil
-		}
-		return URL(string:
-			"https://res.cloudinary.com/virtusize/image/upload/w_36,h_36/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
-		)
-	}
-
-	private func getProductTypeImage(productType: Int, style: String?) -> UIImage? {
-		return VirtusizeAssets.getProductPlaceholderImage(
-			productType: productType,
-			style: style
-		)?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
 	}
 }
