@@ -27,7 +27,7 @@ public class VirtusizeFlutterRepository: NSObject {
 		let instance = VirtusizeFlutterRepository()
 		return instance
 	}()
-	
+
 	public func getProductDataCheck(product: VirtusizeProduct) -> (VirtusizeProduct?, String?) {
 		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
 		var isValidProduct: Bool = false
@@ -164,7 +164,8 @@ public class VirtusizeFlutterRepository: NSObject {
 		return storeProduct.getRecommendationText(
 			i18nLocalization,
 			userProductRecommendedSize,
-			userBodyRecommendedSize
+			userBodyRecommendedSize,
+			VirtusizeI18nLocalization.TrimType.MULTIPLELINES
 		)
 	}
 
@@ -176,10 +177,15 @@ public class VirtusizeFlutterRepository: NSObject {
 			UserDefaultsHelper.current.authToken = auth
 		}
 	}
+
 	public func deleteUser() {
 		let response = VirtusizeAPIService.deleteUserDataAsync()
 		if response.isSuccessful {
 			UserDefaultsHelper.current.authToken = ""
 		}
+	}
+
+	public func getPrivacyPolicyLink() -> String {
+		return Localization.shared.localize("privacy_policy_link")
 	}
 }
