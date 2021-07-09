@@ -78,7 +78,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.2.2'
+pod 'Virtusize', '~> 2.2.3'
 end
 ```
 
@@ -600,9 +600,9 @@ Virtusize.sendOrder(
 
 
 
-## Fix SNS Login in Virtusize for Native Webview Apps
+## Enable SNS Login in Virtusize for Native Webview Apps
 
-The built-in WKWebView blocks any popup windows by default. To fix SNS login on the web version of Virtusize integration in your web view, please use this method: 
+The built-in WKWebView blocks any popup windows by default. To fix and enable SNS login on the web version of Virtusize integration in your web view, please use this method: 
 
 1. If you build your UI purely with UIKit, replace your `WKWebView` with **`VirtusizeWebView`** in your Swift file. If you use the WKWebViewConfiguration object to configure your web view, please access it from the closure like the example below.
 
