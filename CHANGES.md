@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.2.3
+- Feature: Enable SNS buttons in the Virtusize webview
+
 ### 2.2.2
 - Bugfix: Fix a crash related to forcing unwrap an optional value
 
