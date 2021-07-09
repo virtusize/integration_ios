@@ -172,7 +172,11 @@ extension VirtusizeWebView: WKUIDelegate {
 		previewingViewControllerForElement elementInfo: WKPreviewElementInfo,
 		defaultActions previewActions: [WKPreviewActionItem]
 	) -> UIViewController? {
-		return wkUIDelegate?.webView?(webView, previewingViewControllerForElement: elementInfo, defaultActions: previewActions)
+		return wkUIDelegate?.webView?(
+			webView,
+			previewingViewControllerForElement: elementInfo,
+			defaultActions: previewActions
+		)
 	}
 
 	public func webView(_ webView: WKWebView, commitPreviewingViewController previewingViewController: UIViewController) {
@@ -185,7 +189,11 @@ extension VirtusizeWebView: WKUIDelegate {
 		contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
 		completionHandler: @escaping (UIContextMenuConfiguration?) -> Void
 	) {
-		if wkUIDelegate?.webView?(webView, contextMenuConfigurationForElement: elementInfo, completionHandler: completionHandler) == nil {
+		if wkUIDelegate?.webView?(
+			webView,
+			contextMenuConfigurationForElement: elementInfo,
+			completionHandler: completionHandler
+		) == nil {
 			completionHandler(nil)
 		}
 	}
@@ -227,7 +235,19 @@ extension VirtusizeWebView: WKNavigationDelegate {
 		decidePolicyFor navigationAction: WKNavigationAction,
 		decisionHandler: @escaping (WKNavigationActionPolicy) -> Swift.Void
 	) {
-		if wkNavigationDelegate?.webView?(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler) == nil {
+		if let url = webView.url, isExternalLinkFromVirtusize(url: url.absoluteString) {
+			if let sharedApplication = UIApplication.safeShared {
+				decisionHandler(.cancel)
+				sharedApplication.safeOpenURL(url)
+				return
+			}
+		}
+
+		if wkNavigationDelegate?.webView?(
+			webView,
+			decidePolicyFor: navigationAction,
+			decisionHandler: decisionHandler
+		) == nil {
 			decisionHandler(.allow)
 		}
 	}
@@ -257,7 +277,11 @@ extension VirtusizeWebView: WKNavigationDelegate {
 		decisionHandler: @escaping (WKNavigationResponsePolicy
 		) ->
 							Swift.Void) {
-		if wkNavigationDelegate?.webView?(webView, decidePolicyFor: navigationResponse, decisionHandler: decisionHandler) == nil {
+		if wkNavigationDelegate?.webView?(
+			webView,
+			decidePolicyFor: navigationResponse,
+			decisionHandler: decisionHandler
+		) == nil {
 			decisionHandler(.allow)
 		}
 	}

@@ -99,4 +99,9 @@ extension WebViewController: WKNavigationDelegate {
 	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		print("WebViewController: didFinish")
 	}
+
+	func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+		print("WebViewController: decidePolicyFor")
+		decisionHandler(.allow)
+	}
 }
