@@ -32,7 +32,7 @@ public class VirtusizeStoreProduct: Codable {
 	/// A string to represent the external product ID from the client's store
 	let externalId: String
 	/// The ID of the product type of this product
-	let productType: Int
+	public let productType: Int
 	/// The product name
 	let name: String
 	/// The Cloudinary public ID for getting the store product image URL corresponding to this store product
@@ -180,5 +180,9 @@ public class VirtusizeStoreProduct: Codable {
 			productType: productType,
 			style: storeProductMeta?.additionalInfo?.style
 		)?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
+	}
+
+	public var productStyle: String? {
+		return storeProductMeta?.additionalInfo?.style
 	}
 }
