@@ -145,7 +145,7 @@ public final class VirtusizeWebViewController: UIViewController {
 }
 
 extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
-	public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript(
 				storeProductId: product?.externalId,
 			userSessionResponse: userSessionResponse
@@ -154,6 +154,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return
 		}
 		webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
+		webView.evaluateJavaScript("window.virtusizeSNSEnabled = true;", completionHandler: nil)
 		checkAndUpdateBrowserID()
 	}
 
