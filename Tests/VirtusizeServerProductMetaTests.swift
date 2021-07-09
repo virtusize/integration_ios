@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProductMetaTests.swift
+//  VirtusizeServerProductMetaTests.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -25,10 +25,10 @@
 import XCTest
 @testable import Virtusize
 
-class VirtusizeStoreProductMetaTests: XCTestCase {
+class VirtusizeServerProductMetaTests: XCTestCase {
 
     func testDecoding_validStoreProductMetaData_shouldReturnExpectedStructure() {
-        let storeProductMeta = try? JSONDecoder().decode(VirtusizeStoreProductMeta.self, from: storeProductMetaFixture)
+        let storeProductMeta = try? JSONDecoder().decode(VirtusizeServerProductMeta.self, from: storeProductMetaFixture)
 
         XCTAssertEqual(storeProductMeta?.id, 123)
         XCTAssertEqual(storeProductMeta?.additionalInfo?.fit, "loose")
@@ -40,7 +40,7 @@ class VirtusizeStoreProductMetaTests: XCTestCase {
 
     func testDecoding_emptyJsonData_shouldReturnNil() {
         let storeProductMeta = try? JSONDecoder().decode(
-            VirtusizeStoreProductMeta.self,
+            VirtusizeServerProductMeta.self,
             from: Data(TestFixtures.emptyResponse.utf8)
         )
 

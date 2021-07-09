@@ -49,7 +49,7 @@ internal struct VirtusizeGetSizeParams: Codable {
 	///   - storeProduct: The store product info in the type of `VirtusizeInternalProduct`
 	///   - userBodyProfile: The user body profile
     init(productTypes: [VirtusizeProductType],
-         storeProduct: VirtusizeStoreProduct,
+         storeProduct: VirtusizeServerProduct,
          userBodyProfile: VirtusizeUserBodyProfile?
     ) {
         additionalInfo = [
@@ -83,7 +83,7 @@ internal struct VirtusizeGetSizeParams: Codable {
     }
 
 	/// Gets the dictionary of the model info
-    private func getModelInfoDict(storeProduct: VirtusizeStoreProduct) -> [String: Any] {
+    private func getModelInfoDict(storeProduct: VirtusizeServerProduct) -> [String: Any] {
         var modelInfoDict: [String: Any] = [:]
         if let modelInfo = storeProduct.storeProductMeta?.additionalInfo?.modelInfo {
             for (name, measurement) in modelInfo {
@@ -122,7 +122,7 @@ internal struct VirtusizeGetSizeParams: Codable {
     }
 
 	/// Gets the dictionary of the store product size info
-    private func getItemSizesDict(storeProduct: VirtusizeStoreProduct) -> [String: [String: Int?]] {
+    private func getItemSizesDict(storeProduct: VirtusizeServerProduct) -> [String: [String: Int?]] {
         var itemSizesDict: [String: [String: Int?]] = [:]
         for productSize in storeProduct.sizes {
             itemSizesDict[productSize.name ?? ""] = productSize.measurements

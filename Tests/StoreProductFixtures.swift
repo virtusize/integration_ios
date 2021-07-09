@@ -24,9 +24,9 @@
 
 extension TestFixtures {
 
-	static func getOneSizeProduct() -> VirtusizeStoreProduct? {
+	static func getOneSizeProduct() -> VirtusizeServerProduct? {
 		return try? JSONDecoder().decode(
-			VirtusizeStoreProduct.self,
+			VirtusizeServerProduct.self,
 			from: Data(
 				TestFixtures.getStoreProductJsonResponse(
 					productType: 8,
@@ -65,9 +65,9 @@ extension TestFixtures {
             "height": 165
         """,
         gender: String?
-    ) -> VirtusizeStoreProduct? {
+    ) -> VirtusizeServerProduct? {
         return try? JSONDecoder().decode(
-            VirtusizeStoreProduct.self,
+            VirtusizeServerProduct.self,
             from: Data(
                 TestFixtures.getStoreProductJsonResponse(
                     productType: productType,

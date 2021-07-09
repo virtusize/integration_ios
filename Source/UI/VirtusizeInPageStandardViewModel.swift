@@ -26,11 +26,11 @@ internal final class VirtusizeInPageStandardViewModel {
 	let userProductImageObservable: Observable<VirtusizeProductImage?> = Observable(nil)
 	let storeProductImageObservable: Observable<VirtusizeProductImage?> = Observable(nil)
 
-	private var currentBestFitUserProduct: VirtusizeStoreProduct?
+	private var currentBestFitUserProduct: VirtusizeServerProduct?
 	private var currentStoreProductId: String?
 	private let dispatchQueue = DispatchQueue(label: "com.virtusize.inpage-image-queue")
 
-	func loadUserProductImage(bestFitUserProduct: VirtusizeStoreProduct) {
+	func loadUserProductImage(bestFitUserProduct: VirtusizeServerProduct) {
 		if currentBestFitUserProduct != nil && currentBestFitUserProduct!.id == bestFitUserProduct.id {
 			self.userProductImageObservable.value = self.userProductImageObservable.value
 			return

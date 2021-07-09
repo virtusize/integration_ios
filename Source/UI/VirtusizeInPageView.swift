@@ -135,7 +135,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		self.loadingTextTimer = nil
     }
 
-	private func getAssociatedProduct() -> VirtusizeStoreProduct? {
+	private func getAssociatedProduct() -> VirtusizeServerProduct? {
 		return VirtusizeRepository.shared.availableVSViewToProductDict[memoryAddress]
 	}
 }

@@ -103,7 +103,7 @@ public class Virtusize {
 	}
 
 	typealias ProductRecommendationData = (
-		VirtusizeStoreProduct?,
+		VirtusizeServerProduct?,
 		SizeComparisonRecommendedSize?,
 		BodyProfileRecommendedSize?
 	)

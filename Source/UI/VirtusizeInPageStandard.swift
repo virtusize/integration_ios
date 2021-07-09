@@ -81,7 +81,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
 
-	private(set) var bestFitUserProduct: VirtusizeStoreProduct?
+	private(set) var bestFitUserProduct: VirtusizeServerProduct?
 
     public func setHorizontalMargin(view: UIView, margin: CGFloat) {
         setHorizontalMargins(view: view, margin: margin)
@@ -518,7 +518,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	}
 
 	private func setMessageLabelTexts(
-		_ storeProduct: VirtusizeStoreProduct,
+		_ storeProduct: VirtusizeServerProduct,
 		_ i18nLocalization: VirtusizeI18nLocalization,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSizeName: String?

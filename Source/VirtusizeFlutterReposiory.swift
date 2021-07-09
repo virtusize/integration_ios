@@ -89,7 +89,7 @@ public class VirtusizeFlutterRepository: NSObject {
 		onValidProduct(true)
 	}
 
-	public func getStoreProduct(productId: Int) -> VirtusizeStoreProduct? {
+	public func getStoreProduct(productId: Int) -> VirtusizeServerProduct? {
 		let response = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
 		return response.isSuccessful ? response.success : nil
 	}
@@ -115,7 +115,7 @@ public class VirtusizeFlutterRepository: NSObject {
 		return userSessionInfoResponse.isSuccessful ? userSessionInfoResponse.string : nil
 	}
 
-	public func getUserProducts() -> [VirtusizeStoreProduct]? {
+	public func getUserProducts() -> [VirtusizeServerProduct]? {
 		let response = VirtusizeAPIService.getUserProductsAsync()
 		return response.isSuccessful || response.errorCode == 404 ? response.success ?? [] : nil
 	}
@@ -127,7 +127,7 @@ public class VirtusizeFlutterRepository: NSObject {
 
 	public func getBodyProfileRecommendedSize(
 		productTypes: [VirtusizeProductType],
-		storeProduct: VirtusizeStoreProduct,
+		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
 	) -> BodyProfileRecommendedSize? {
 		let response = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
@@ -140,8 +140,8 @@ public class VirtusizeFlutterRepository: NSObject {
 
 	public func getRecommendationText(
 		selectedRecType: SizeRecommendationType? = nil,
-		userProducts: [VirtusizeStoreProduct]? = nil,
-		storeProduct: VirtusizeStoreProduct,
+		userProducts: [VirtusizeServerProduct]? = nil,
+		storeProduct: VirtusizeServerProduct,
 		productTypes: [VirtusizeProductType],
 		bodyProfileRecommendedSize: BodyProfileRecommendedSize?,
 		i18nLocalization: VirtusizeI18nLocalization

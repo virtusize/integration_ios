@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProduct.swift
+//  VirtusizeServerProduct.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -23,7 +23,7 @@
 //
 
 /// This structure represents a product from the Virtusize server
-public class VirtusizeStoreProduct: Codable {
+public class VirtusizeServerProduct: Codable {
 	// swiftlint:disable identifier_name
 	/// An integer to represent the internal product ID in the Virtusize server
 	public let id: Int
@@ -41,8 +41,8 @@ public class VirtusizeStoreProduct: Codable {
 	let store: Int
 	/// The boolean value to show if this product is marked as a favorite
 	let isFavorite: Bool?
-	/// The additional data of type `VirtusizeStoreProductMeta`  represents the product
-	let storeProductMeta: VirtusizeStoreProductMeta?
+	/// The additional data of type `VirtusizeServerProductMeta`  represents the product
+	let storeProductMeta: VirtusizeServerProductMeta?
 
 	private enum CodingKeys: String, CodingKey {
 		// swiftlint:disable identifier_name
@@ -58,7 +58,7 @@ public class VirtusizeStoreProduct: Codable {
 		cloudinaryPublicId: String,
 		store: Int,
 		isFavorite: Bool?,
-		storeProductMeta: VirtusizeStoreProductMeta?
+		storeProductMeta: VirtusizeServerProductMeta?
 	) {
 		self.id = id
 		self.sizes = sizes
@@ -93,7 +93,7 @@ public class VirtusizeStoreProduct: Codable {
 			self.store = 0
 		}
 		isFavorite = try? values.decode(Bool.self, forKey: .isFavorite)
-		storeProductMeta = try? values.decode(VirtusizeStoreProductMeta.self, forKey: .storeProductMeta)
+		storeProductMeta = try? values.decode(VirtusizeServerProductMeta.self, forKey: .storeProductMeta)
 	}
 
 	/// Gets the InPage recommendation text based on the user and store product info

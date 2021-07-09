@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProductAdditionalInfo.swift
+//  VirtusizeServerProductMeta.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,39 +22,28 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the additional info of a store product
-internal class VirtusizeStoreProductAdditionalInfo: Codable {
-    /// The brand of the store product
+/// This class represents the meta data of a product
+internal class VirtusizeServerProductMeta: Codable {
+    // swiftlint:disable identifier_name
+    /// The ID of the store product meta
+    let id: Int
+    /// The additional info of the store product
+    let additionalInfo: VirtusizeServerProductAdditionalInfo?
+    /// The brand name of the store product
     let brand: String
     /// The gender for the store product
     let gender: String?
-    /// The list of the product sizes
-    let sizes: [String: [String: Int?]]
-    /// The model info
-    let modelInfo: [String: VirtusizeAnyCodable]?
-    /// The general fit key
-    let fit: String?
-    /// The store product style
-    let style: String?
-    /// The brand sizing info
-    let brandSizing: VirtusizeBrandSizing?
 
     private enum CodingKeys: String, CodingKey {
-        case brand, gender, sizes, modelInfo, fit, style, brandSizing
+        // swiftlint:disable identifier_name
+        case id, additionalInfo, brand, gender
     }
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        additionalInfo = try? values.decode(VirtusizeServerProductAdditionalInfo.self, forKey: .additionalInfo)
         brand = try values.decode(String.self, forKey: .brand)
         gender = try? values.decode(String.self, forKey: .gender)
-        if let productSizes = try? values.decode([String: [String: Int?]].self, forKey: .sizes) {
-            sizes = productSizes
-        } else {
-            sizes = [:]
-        }
-        modelInfo = try? values.decode([String: VirtusizeAnyCodable].self, forKey: .modelInfo)
-        fit = try? values.decode(String.self, forKey: .fit)
-        style = try? values.decode(String.self, forKey: .style)
-        brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
     }
 }

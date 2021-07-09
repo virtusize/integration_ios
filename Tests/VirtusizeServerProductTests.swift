@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProductTests.swift
+//  VirtusizeServerProductTests.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -25,7 +25,7 @@
 import XCTest
 @testable import Virtusize
 
-class VirtusizeStoreProductTests: XCTestCase {
+class VirtusizeServerProductTests: XCTestCase {
 
     private let storeProductFixture = Data(TestFixtures.getStoreProductJsonResponse(gender: nil).utf8)
 
@@ -49,8 +49,8 @@ class VirtusizeStoreProductTests: XCTestCase {
         i18nLocalization.noDataText = Localization.shared.localize("inpage_no_data_text")
     }
 
-    func testDecoding_validStoreProductData_shouldReturnExpectedStructure() {
-        let storeProduct = try? JSONDecoder().decode(VirtusizeStoreProduct.self, from: storeProductFixture)
+    func testDecoding_validServerProductData_shouldReturnExpectedStructure() {
+        let storeProduct = try? JSONDecoder().decode(VirtusizeServerProduct.self, from: storeProductFixture)
 
         XCTAssertEqual(storeProduct?.id, TestFixtures.productId)
         XCTAssertEqual(storeProduct?.sizes.count, 3)
@@ -70,7 +70,7 @@ class VirtusizeStoreProductTests: XCTestCase {
 
     func testDecoding_emptyJsonData_shouldReturnNil() {
         let storeProduct = try? JSONDecoder().decode(
-			VirtusizeStoreProduct.self,
+			VirtusizeServerProduct.self,
             from: Data(TestFixtures.emptyResponse.utf8)
         )
 
