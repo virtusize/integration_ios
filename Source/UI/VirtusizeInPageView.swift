@@ -119,6 +119,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
 	/// A parent function to set up InPage recommendation
 	internal func setInPageRecommendation(
+		_ externalProductId: String?,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	) {}

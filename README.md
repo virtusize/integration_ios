@@ -21,6 +21,35 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [CocoaPods](#cocoapods)
+  - [Carthage](#carthage)
+- [Setup](#setup)
+  - [Initialization](#1-initialization)
+  - [Set Up Product Details](#2-set-up-product-details)
+  - [Implement VirtusizeMessageHandler (Optional)](#3-implement-virtusizemessagehandler-optional)
+  - [Allow Cookie Sharing (Optional)](#4-allow-cookie-sharing-optional)
+  - [Listen to Product Data Check (Optional)](#5-listen-to-product-data-check-optional)
+- [Virtusize Views](#virtusize-views)
+  - [Virtusize Button](#1-virtusize-button)
+  - [Virtusize InPage](#2-virtusize-inpage)
+    - [InPage Standard](#2-inpage-standard)
+    - [InPage Mini](#3-inpage-mini)
+- [The Order API](#the-order-api)
+  - [Initialization](#1-initialization)
+  - [Create a *VirtusizeOrder* structure for order data](#2-create-a-virtusizeorder-structure-for-order-data)
+  - [Send an Order](#3-send-an-order) 
+- [Enable SNS Login in Virtusize for native Webview apps](#enable-sns-login-in-virtusize-for-native-webview-apps)
+- [Build](#build)
+- [Run all tests](#run-all-tests)
+- [Roadmap](#roadmap)
+- [License](#license)
+
+
+
 ## Requirements
 
 - iOS 10.3+
@@ -49,7 +78,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.1.6'
+pod 'Virtusize', '~> 2.2.3'
 end
 ```
 
@@ -833,19 +862,62 @@ Virtusize.sendOrder(
 
 
 
+## Enable SNS Login in Virtusize for Native Webview Apps
+
+The built-in WKWebView blocks any popup windows by default. To fix and enable SNS login on the web version of Virtusize integration in your web view, please use this method: 
+
+1. If you build your UI purely with UIKit, replace your `WKWebView` with **`VirtusizeWebView`** in your Swift file. If you use the WKWebViewConfiguration object to configure your web view, please access it from the closure like the example below.
+
+   - Swift
+
+   ```diff
+   - var webView: WKWebView
+   + var webView: VirtusizeWebView
+   ```
+
+   ```swift
+   webView = VirtusizeWebView(frame: .zero) { configuration in
+	   // access the WKWebViewConfiguration object here to customize it
+	   
+	   // If you want to allow cookie sharing between multiple VirtusizeWebViews,
+	   // assign the same WKProcessPool object to configuration.processPool
+	   configuration.processPool = WKProcessPool()
+   }
+   ```
+   
+2. If you build your UI with Xcode's Interface Builder, make sure that you set the Custom Class of your web view to **`VirtusizeWebView`** in the Identity inspector to fix SNS login in Virtusize.
+
+   - Swift
+
+   ```diff
+   - @IBOutlet weak var webview: WKWebView!
+   + @IBOutlet weak var webview: VirtusizeWebView!
+   ```
+
+   - Interface Builder
+   
+     ![](https://user-images.githubusercontent.com/7802052/121308895-87e3b500-c93c-11eb-8745-f4bf22bccdba.png)
+
+
 ## Build
 
 You need to install [SwiftLint](https://github.com/realm/SwiftLint).
 
     make build
 
+
+
 ## Run all tests
 
     make test
 
+
+
 ## Roadmap
 
 Please check the [Roadmap](ROADMAP.md) to find upcoming features and expected release dates.
+
+
 
 ## License
 

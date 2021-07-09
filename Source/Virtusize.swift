@@ -64,43 +64,43 @@ public class Virtusize {
 
 	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
 
-	/// The internal property for product
-	internal static var productWithPDCData: VirtusizeProduct?
+	/// The private property for product
+	private static var privateProduct: VirtusizeProduct?
 	/// The Virtusize product to get the value from the`productDataCheck` request
 	public static var product: VirtusizeProduct? {
 		set {
-			guard let newValue = newValue else {
+			guard let product = newValue else {
 				return
 			}
 
-			productWithPDCData = newValue
-
 			dispatchQueue.async {
-				guard virtusizeRepository.isProductValid(product: newValue) else {
-					DispatchQueue.main.async {
-						for virtusizeView in activeVirtusizeViews {
-							(virtusizeView as? UIView)?.isHidden = true
+				virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
+					if let productWithPDCData = productWithPDCData {
+						privateProduct = productWithPDCData
+						DispatchQueue.main.async {
+							for virtusizeView in activeVirtusizeViews {
+								(virtusizeView as? VirtusizeInPageView)?.setup()
+								virtusizeView.isLoading()
+							}
+						}
+
+						virtusizeRepository.fetchInitialData(productId: productWithPDCData.productCheckData?.productDataId) {
+							virtusizeRepository.updateUserSession()
+							virtusizeRepository.fetchDataForInPageRecommendation()
+							virtusizeRepository.switchInPageRecommendation()
+						}
+					} else {
+						DispatchQueue.main.async {
+							for virtusizeView in activeVirtusizeViews {
+								(virtusizeView as? UIView)?.isHidden = true
+							}
 						}
 					}
-					return
-				}
-
-				DispatchQueue.main.async {
-					for virtusizeView in activeVirtusizeViews {
-						(virtusizeView as? VirtusizeInPageView)?.setup()
-						virtusizeView.isLoading()
-					}
-				}
-
-				if virtusizeRepository.fetchInitialData(productId: productWithPDCData!.productCheckData!.productDataId) {
-					virtusizeRepository.updateUserSession()
-					virtusizeRepository.fetchDataForInPageRecommendation()
-					virtusizeRepository.switchInPageRecommendation()
 				}
 			}
 		}
 		get {
-			return productWithPDCData
+			return privateProduct
 		}
 	}
 
@@ -118,7 +118,9 @@ public class Virtusize {
 			if newValue?.1 != nil || newValue?.2 != nil {
 				DispatchQueue.main.async {
 					for virtusizeView in virtusizeRepository.getAvailableVirtusizeViewsBy(externalId: newValue?.0?.externalId) {
-						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(newValue?.1, newValue?.2)
+						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(
+							newValue?.0?.externalId, newValue?.1, newValue?.2
+						)
 					}
 					self.updateInPageViews = (newValue?.0, nil, nil)
 				}

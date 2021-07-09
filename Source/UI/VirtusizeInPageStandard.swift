@@ -108,7 +108,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	}
 
 	private func bind(to viewModel: VirtusizeInPageStandardViewModel) {
-		viewModel.userProductImage.observe(on: self) { [weak self] in
+		viewModel.userProductImageObservable.observe(on: self) { [weak self] in
 			if $0 != nil {
 				self?.userProductImageView.image = $0!.image
 				if $0!.source == .local {
@@ -118,7 +118,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			}
 		}
 
-		viewModel.storeProductImage.observe(on: self) { [weak self] in
+		viewModel.storeProductImageObservable.observe(on: self) { [weak self] in
 			if $0 != nil {
 				self?.storeProductImageView.image = $0!.image
 				if $0!.source == .local {
@@ -131,7 +131,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private func setProductImages() {
 		if bestFitUserProduct != nil {
-			if viewModel.storeProductImage.value != nil  && viewModel.userProductImage.value != nil {
+			if viewModel.storeProductImageObservable.value != nil  && viewModel.userProductImageObservable.value != nil {
 				if inPageStandardView.frame.size.width >= smallInPageWidth {
 					adjustProductImageViewPosition(userProductImageSize: 40, productImageViewOffset: -2)
 				} else {
@@ -144,7 +144,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 				finishLoading()
 			}
 		} else {
-			if viewModel.storeProductImage.value != nil {
+			if viewModel.storeProductImageObservable.value != nil {
 				if inPageStandardView.frame.size.width < smallInPageWidth {
 					// if item to item recommendation is not available, stop any fading animations
 					stopCrossFadeProductImageViews()
@@ -170,8 +170,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	}
 
 	private func unbind(to viewModel: VirtusizeInPageStandardViewModel) {
-		viewModel.userProductImage.remove(observer: self)
-		viewModel.storeProductImage.remove(observer: self)
+		viewModel.userProductImageObservable.remove(observer: self)
+		viewModel.storeProductImageObservable.remove(observer: self)
 	}
 
     private func addSubviews() {
@@ -438,6 +438,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
     }
 
 	public override func setInPageRecommendation(
+		_ externalProductId: String?,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	) {
@@ -450,7 +451,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		if let bestFitUserProduct = bestFitUserProduct {
 			viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)
 		}
-		viewModel.loadStoreProductImage()
+		viewModel.loadStoreProductImage(storeProductId: externalProductId)
 	}
 
 	private func adjustProductImageViewPosition(userProductImageSize: CGFloat, productImageViewOffset: CGFloat) {
