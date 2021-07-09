@@ -41,6 +41,7 @@ class WebViewController: UIViewController {
 			// set the configuration here
 		}
 		webView.uiDelegate = self
+		webView.navigationDelegate = self
 		view.addSubview(webView)
 		self.webView = webView
 
@@ -91,5 +92,16 @@ extension WebViewController: WKUIDelegate {
 
 	func webViewDidClose(_ webView: WKWebView) {
 		print("WebViewController: webViewDidClose")
+	}
+}
+
+extension WebViewController: WKNavigationDelegate {
+	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+		print("WebViewController: didFinish")
+	}
+
+	func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+		print("WebViewController: decidePolicyFor")
+		decisionHandler(.allow)
 	}
 }
