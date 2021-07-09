@@ -42,7 +42,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
   - [Initialization](#1-initialization)
   - [Create a *VirtusizeOrder* structure for order data](#2-create-a-virtusizeorder-structure-for-order-data)
   - [Send an Order](#3-send-an-order) 
-- [Fix SNS Login in Virtusize for native Webview apps](#fix-sns-login-in-virtusize-for-native-webview-apps)
+- [Enable SNS Login in Virtusize for native Webview apps](#enable-sns-login-in-virtusize-for-native-webview-apps)
 - [Build](#build)
 - [Run all tests](#run-all-tests)
 - [Roadmap](#roadmap)
@@ -623,7 +623,6 @@ The built-in WKWebView blocks any popup windows by default. To fix and enable SN
    }
    ```
    
-
 2. If you build your UI with Xcode's Interface Builder, make sure that you set the Custom Class of your web view to **`VirtusizeWebView`** in the Identity inspector to fix SNS login in Virtusize.
 
    - Swift
