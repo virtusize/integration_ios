@@ -138,16 +138,13 @@ public class VirtusizeFlutterRepository: NSObject {
 		return response.isSuccessful ? response.success : nil
 	}
 
-	public func getRecommendationText(
+	public func getUserProductRecommendedSize(
 		selectedRecType: SizeRecommendationType? = nil,
 		userProducts: [VirtusizeServerProduct]? = nil,
 		storeProduct: VirtusizeServerProduct,
-		productTypes: [VirtusizeProductType],
-		bodyProfileRecommendedSize: BodyProfileRecommendedSize?,
-		i18nLocalization: VirtusizeI18nLocalization
-	) -> String {
+		productTypes: [VirtusizeProductType]
+	) -> SizeComparisonRecommendedSize? {
 		var userProductRecommendedSize: SizeComparisonRecommendedSize?
-		var userBodyRecommendedSize: String?
 
 		if selectedRecType != SizeRecommendationType.body {
 			userProductRecommendedSize = FindBestFitHelper.findBestFitProductSize(
@@ -156,6 +153,18 @@ public class VirtusizeFlutterRepository: NSObject {
 				productTypes: productTypes
 			)
 		}
+
+		return userProductRecommendedSize
+	}
+
+	public func getRecommendationText(
+		selectedRecType: SizeRecommendationType? = nil,
+		storeProduct: VirtusizeServerProduct,
+		userProductRecommendedSize: SizeComparisonRecommendedSize?,
+		bodyProfileRecommendedSize: BodyProfileRecommendedSize?,
+		i18nLocalization: VirtusizeI18nLocalization
+	) -> String {
+		var userBodyRecommendedSize: String?
 
 		if selectedRecType != SizeRecommendationType.compareProduct {
 			userBodyRecommendedSize = bodyProfileRecommendedSize?.sizeName
