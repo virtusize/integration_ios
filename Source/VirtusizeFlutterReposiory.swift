@@ -197,4 +197,38 @@ public class VirtusizeFlutterRepository: NSObject {
 	public func getPrivacyPolicyLink() -> String {
 		return Localization.shared.localize("privacy_policy_link")
 	}
+
+	public func sendOrder(
+		_ orderDict: [String: Any?],
+		onSuccess: (() -> Void)? = nil,
+		onError: ((VirtusizeError) -> Void)? = nil
+	) {
+		guard let externalUserId = Virtusize.userID else {
+			fatalError("Please set Virtusize.userID")
+		}
+
+		guard let order = VirtusizeOrder.convertToObjectBy(dictionary: orderDict) else {
+			onError?(VirtusizeError.encodingError)
+			return
+		}
+
+		var mutualOrder = order
+		mutualOrder.apiKey = Virtusize.APIKey
+		mutualOrder.externalUserId = externalUserId
+
+		let retrieveStoreInfoResponse = VirtusizeAPIService.retrieveStoreInfoAsync()
+		if let storeInfo = retrieveStoreInfoResponse.success {
+			mutualOrder.region = storeInfo.region ?? "JP"
+		} else {
+			onError?(retrieveStoreInfoResponse.failure ?? .unknownError)
+		}
+
+		let sendOrderWithRegionResponse = VirtusizeAPIService.sendOrderWithRegionAsync(mutualOrder)
+
+		if sendOrderWithRegionResponse.isSuccessful {
+			onSuccess?()
+		} else {
+			onError?(sendOrderWithRegionResponse.failure ?? .unknownError)
+		}
+	}
 }
