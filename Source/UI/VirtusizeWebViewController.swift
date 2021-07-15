@@ -26,10 +26,10 @@ import UIKit
 import WebKit
 
 /// The methods of this protocol notify you with Virtusize specific messages such as errors as
-/// `VirtusizeError` and events as `VirtusizeEvent` and tell you when to dismiss the view controller
+/// `VirtusizeError` and events as `VirtusizeEvent`
 public protocol VirtusizeMessageHandler: AnyObject {
-	func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError)
-	func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent)
+	func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError)
+	func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent)
 }
 
 /// This `UIViewController` represents the Virtusize Window

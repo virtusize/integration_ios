@@ -28,25 +28,27 @@ public class VirtusizeFlutterRepository: NSObject {
 		return instance
 	}()
 
-	public func getProductDataCheck(product: VirtusizeProduct) -> (VirtusizeProduct?, String?) {
+	public func getProductDataCheck(
+		messageHandler: VirtusizeMessageHandler?,
+		product: VirtusizeProduct
+	) -> (VirtusizeProduct?, String?) {
 		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
 		var isValidProduct: Bool = false
-		sendEventsAndProductImage(productResponse: productResponse) { isValid in
+		sendEventsAndProductImage(
+			messageHandler: messageHandler,
+			productResponse: productResponse
+		) { isValid in
 			isValidProduct = isValid
 		}
 		return (isValidProduct ? productResponse.success : nil, isValidProduct ? productResponse.string : nil)
 	}
 
 	private func sendEventsAndProductImage(
+		messageHandler: VirtusizeMessageHandler?,
 		productResponse: APIResult<VirtusizeProduct>,
 		onValidProduct: (Bool) -> Void
 	) {
 		guard let product = productResponse.success else {
-			NotificationCenter.default.post(
-				name: Virtusize.productDataCheckDidFail,
-				object: Virtusize.self,
-				userInfo: ["message": productResponse.string ?? VirtusizeError.unknownError.debugDescription]
-			)
 			onValidProduct(false)
 			return
 		}
@@ -55,14 +57,17 @@ public class VirtusizeFlutterRepository: NSObject {
 		VirtusizeAPIService.sendEvent(
 			VirtusizeEvent(name: .userSawProduct),
 			withContext: product.jsonObject
-		)
+		) { eventJSONObject in
+			messageHandler?.virtusizeController(
+				nil,
+				didReceiveEvent: VirtusizeEvent(
+					name: VirtusizeEventName.userSawProduct.rawValue,
+					data: eventJSONObject
+				)
+			)
+		}
 
 		guard product.productCheckData?.productDataId != nil else {
-			NotificationCenter.default.post(
-				name: Virtusize.productDataCheckDidFail,
-				object: Virtusize.self,
-				userInfo: ["message": product.dictionary]
-			)
 			onValidProduct(false)
 			return
 		}
@@ -78,14 +83,16 @@ public class VirtusizeFlutterRepository: NSObject {
 		VirtusizeAPIService.sendEvent(
 			VirtusizeEvent(name: .userSawWidgetButton),
 			withContext: product.jsonObject
-		)
-
-		NotificationCenter.default.post(
-			name: Virtusize.productDataCheckDidSucceed,
-			object: Virtusize.self,
-			userInfo: ["message": product.dictionary]
-		)
-
+		) { eventJSONObject in
+			messageHandler?.virtusizeController(
+				nil,
+				didReceiveEvent:
+					VirtusizeEvent(
+						name: VirtusizeEventName.userSawWidgetButton.rawValue,
+						data: eventJSONObject
+					)
+			)
+		}
 		onValidProduct(true)
 	}
 
