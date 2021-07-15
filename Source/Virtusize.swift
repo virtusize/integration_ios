@@ -41,6 +41,8 @@ public class Virtusize {
 	/// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
 	public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
 
+	public static let displayLanguage = params?.language
+
     /// Allow process pool to be set to share cookies
     public static var processPool: WKProcessPool?
 
