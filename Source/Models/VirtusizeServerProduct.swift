@@ -30,7 +30,7 @@ public class VirtusizeServerProduct: Codable {
 	/// The list of the `VirtusizeProductSize` that this product has
 	let sizes: [VirtusizeProductSize]
 	/// A string to represent the external product ID from the client's store
-	let externalId: String
+	public let externalId: String
 	/// The ID of the product type of this product
 	public let productType: Int
 	/// The product name
