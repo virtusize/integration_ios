@@ -186,3 +186,14 @@ public class VirtusizeServerProduct: Codable {
 		return storeProductMeta?.additionalInfo?.style
 	}
 }
+
+extension VirtusizeServerProduct: Hashable {
+	public static func == (lhs: VirtusizeServerProduct, rhs: VirtusizeServerProduct) -> Bool {
+		return lhs.id == rhs.id && lhs.externalId == rhs.externalId
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
+		hasher.combine(externalId)
+	}
+}

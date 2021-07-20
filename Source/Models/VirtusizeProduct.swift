@@ -44,6 +44,10 @@ public class VirtusizeProduct: Codable {
 		) as? JSONObject
 	}
 
+	public var id: Int? {
+		return productCheckData?.productDataId
+	}
+
 	/// The product data as a dictionary
 	public var dictionary: [String: Any] {
 		return jsonObject ?? [:]
@@ -75,3 +79,14 @@ extension VirtusizeProduct {
         self.init(externalId: externalId, imageURL: imageURL, productCheckData: nil)
     }
 }
+
+extension VirtusizeProduct: Hashable {
+	public static func == (lhs: VirtusizeProduct, rhs: VirtusizeProduct) -> Bool {
+		return lhs.externalId == rhs.externalId
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(externalId)
+	}
+}
+
