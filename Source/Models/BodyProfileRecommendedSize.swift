@@ -27,7 +27,10 @@ public struct BodyProfileRecommendedSize: Codable {
 	/// The recommended size name
     let sizeName: String
 
-	public init(sizeName: String) {
+	public var product: VirtusizeServerProduct?
+
+	public init(sizeName: String, product: VirtusizeServerProduct? = nil) {
 		self.sizeName = sizeName
+		self.product = product
 	}
 }
