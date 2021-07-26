@@ -147,7 +147,7 @@ public final class VirtusizeWebViewController: UIViewController {
 extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript(
-				storeProductId: product?.externalId,
+			storeProductId: product?.externalId,
 			userSessionResponse: userSessionResponse
 		) else {
 			reportError(error: .invalidVsParamScript)

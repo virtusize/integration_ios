@@ -28,7 +28,8 @@ public enum VirtusizeLanguage: String, CaseIterable {
     case JAPANESE = "ja"
     case KOREAN = "ko"
 
-	public var shortDescription: String {
+	/// A two character lang string (For the Flutter SDK)
+	public var langStr: String {
 		switch self {
 		case .ENGLISH:
 			return "EN"

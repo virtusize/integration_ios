@@ -43,6 +43,19 @@ public class VirtusizeServerProduct: Codable {
 	let isFavorite: Bool?
 	/// The additional data of type `VirtusizeServerProductMeta`  represents the product
 	let storeProductMeta: VirtusizeServerProductMeta?
+	
+	/// The Cloudinary image URL string based on the cloudinary public ID
+	public var cloudinaryImageUrlString: String? {
+		guard !cloudinaryPublicId.isEmpty else {
+			return nil
+		}
+		return "https://res.cloudinary.com/virtusize/image/upload/w_36,h_36/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
+	}
+
+	/// The product style of this product
+	public var productStyle: String? {
+		return storeProductMeta?.additionalInfo?.style
+	}
 
 	private enum CodingKeys: String, CodingKey {
 		// swiftlint:disable identifier_name
@@ -161,29 +174,20 @@ public class VirtusizeServerProduct: Codable {
 		return productType == 18 || productType == 19 || productType == 25 || productType == 26
 	}
 
+	/// Gets the Cloudinary image URL
 	internal func getCloudinaryImageUrl() -> URL? {
 		guard let imageUrlString = cloudinaryImageUrlString else {
 			return nil
 		}
 		return URL(string: imageUrlString)
 	}
-
-	public var cloudinaryImageUrlString: String? {
-		guard !cloudinaryPublicId.isEmpty else {
-			return nil
-		}
-		return "https://res.cloudinary.com/virtusize/image/upload/w_36,h_36/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
-	}
-
+	
+	/// Gets the local product type image
 	internal func getProductTypeImage() -> UIImage? {
 		return VirtusizeAssets.getProductPlaceholderImage(
 			productType: productType,
 			style: storeProductMeta?.additionalInfo?.style
 		)?.withPadding(inset: 8)?.withRenderingMode(.alwaysTemplate)
-	}
-
-	public var productStyle: String? {
-		return storeProductMeta?.additionalInfo?.style
 	}
 }
 

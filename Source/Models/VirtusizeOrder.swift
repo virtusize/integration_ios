@@ -49,6 +49,7 @@ public struct VirtusizeOrder: Codable {
         self.items = items
     }
 
+	/// Converts a dictionary to a VirtusizeOrder object
 	internal static func convertToObjectBy(dictionary: [String: Any?]) -> VirtusizeOrder? {
 		do {
 			let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [])

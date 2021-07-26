@@ -29,6 +29,7 @@ public enum VirtusizeRegion: String {
 	case JAPAN = "jp"
 	case KOREA = "kr"
 
+	/// Gets the VirtusizeLanguage value based on the region
 	internal func defaultLanguage() -> VirtusizeLanguage {
 		switch self {
 			case .COM:

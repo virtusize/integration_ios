@@ -288,11 +288,11 @@
 		4DED8D1E205755C3001CA7DF /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				9C01389026AE916A007F5392 /* Flutter */,
 				9C35F99C25F02CAD0004E9CD /* VirtusizeAssets.xcassets */,
 				9C35F96625F02AC30004E9CD /* Resources */,
 				4D6C5792205FB9BA00DA910E /* Virtusize.swift */,
 				9C787FC825DB793400346F2A /* VirtusizeEventHandler.swift */,
-				9CC2A3952685960400FF0864 /* VirtusizeFlutterReposiory.swift */,
 				9CFF40C825B5C9D500B21D4E /* VirtusizeRepository.swift */,
 				9C454D0A2669F516003BF5BE /* VirtusizeWebView.swift */,
 				DFFAA96321A39BFC000F0F70 /* UI */,
@@ -318,6 +318,14 @@
 				9CE7786A24B4121E00E4A127 /* Virtusize.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9C01389026AE916A007F5392 /* Flutter */ = {
+			isa = PBXGroup;
+			children = (
+				9CC2A3952685960400FF0864 /* VirtusizeFlutterReposiory.swift */,
+			);
+			path = Flutter;
 			sourceTree = "<group>";
 		};
 		9C106EB524FE424E0012EE51 /* Views */ = {
