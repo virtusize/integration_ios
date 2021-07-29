@@ -43,7 +43,7 @@ public class VirtusizeServerProduct: Codable {
 	let isFavorite: Bool?
 	/// The additional data of type `VirtusizeServerProductMeta`  represents the product
 	let storeProductMeta: VirtusizeServerProductMeta?
-	
+
 	/// The Cloudinary image URL string based on the cloudinary public ID
 	public var cloudinaryImageUrlString: String? {
 		guard !cloudinaryPublicId.isEmpty else {
@@ -181,7 +181,7 @@ public class VirtusizeServerProduct: Codable {
 		}
 		return URL(string: imageUrlString)
 	}
-	
+
 	/// Gets the local product type image
 	internal func getProductTypeImage() -> UIImage? {
 		return VirtusizeAssets.getProductPlaceholderImage(
