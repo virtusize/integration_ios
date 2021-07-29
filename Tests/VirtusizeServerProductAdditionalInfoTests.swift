@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProductAdditionalInfoTests.swift
+//  VirtusizeServerProductAdditionalInfoTests.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -25,11 +25,11 @@
 import XCTest
 @testable import Virtusize
 
-class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
+class VirtusizeServerProductAdditionalInfoTests: XCTestCase {
 
-    func testDecoding_validStoreProductAdditionalInfo_shouldReturnExpectedStructure() {
+    func testDecoding_validServerProductAdditionalInfo_shouldReturnExpectedStructure() {
         let storeProductAdditionalInfo = try? JSONDecoder().decode(
-            VirtusizeStoreProductAdditionalInfo.self,
+            VirtusizeServerProductAdditionalInfo.self,
             from: productAdditionalInfoFixture
         )
 
@@ -46,9 +46,9 @@ class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
         XCTAssertEqual(storeProductAdditionalInfo?.brandSizing?.itemBrand, true)
     }
 
-    func testDecoding_validStoreProductAdditionalInfoWithEmptySizesAndModelInfo_shouldReturnExpectedStructure() {
+    func testDecoding_validServerProductAdditionalInfoWithEmptySizesAndModelInfo_shouldReturnExpectedStructure() {
         let storeProductAdditionalInfo = try? JSONDecoder().decode(
-            VirtusizeStoreProductAdditionalInfo.self,
+            VirtusizeServerProductAdditionalInfo.self,
             from: productEmptyAdditionalInfoFixture
         )
 
@@ -63,7 +63,7 @@ class VirtusizeStoreProductAdditionalInfoTests: XCTestCase {
 
     func testDecoding_emptyJsonData_shouldReturnNil() {
         let storeProductAdditionalInfo = try? JSONDecoder().decode(
-            VirtusizeStoreProductAdditionalInfo.self,
+            VirtusizeServerProductAdditionalInfo.self,
             from: Data(TestFixtures.emptyResponse.utf8)
         )
 

@@ -1,5 +1,5 @@
 //
-//  VirtusizeProductType.swift
+//  VirtusizeServerProductMeta.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,15 +22,28 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the product type info
-internal class VirtusizeProductType: Codable {
+/// This class represents the meta data of a product
+internal class VirtusizeServerProductMeta: Codable {
     // swiftlint:disable identifier_name
-    /// The ID of a product type
+    /// The ID of the store product meta
     let id: Int
-    /// The name of a product type
-    let name: String
-    /// The weights of this product type for the calculation of the fitting score
-    let weights: [String: Double]
-    /// The product type list that this product type is compatible with
-    let compatibleWith: [Int]
+    /// The additional info of the store product
+    let additionalInfo: VirtusizeServerProductAdditionalInfo?
+    /// The brand name of the store product
+    let brand: String
+    /// The gender for the store product
+    let gender: String?
+
+    private enum CodingKeys: String, CodingKey {
+        // swiftlint:disable identifier_name
+        case id, additionalInfo, brand, gender
+    }
+
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        additionalInfo = try? values.decode(VirtusizeServerProductAdditionalInfo.self, forKey: .additionalInfo)
+        brand = try values.decode(String.self, forKey: .brand)
+        gender = try? values.decode(String.self, forKey: .gender)
+    }
 }

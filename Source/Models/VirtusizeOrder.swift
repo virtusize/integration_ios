@@ -25,7 +25,7 @@
 /// This structure wraps the parameters for the API request of sending the order
 public struct VirtusizeOrder: Codable {
     /// The API key that is unique and provided for Virtusize clients
-    private let apiKey: String?
+	internal var apiKey: String?
     /// The order ID provided by the client
     private let externalOrderId: String
     /// The unique user ID from the client system.
@@ -48,6 +48,16 @@ public struct VirtusizeOrder: Codable {
         self.region = region
         self.items = items
     }
+
+	/// Converts a dictionary to a VirtusizeOrder object
+	internal static func convertToObjectBy(dictionary: [String: Any?]) -> VirtusizeOrder? {
+		do {
+			let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+			return try JSONDecoder().decode(VirtusizeOrder.self, from: jsonData)
+		} catch {
+			return nil
+		}
+	}
 }
 
 extension VirtusizeOrder {

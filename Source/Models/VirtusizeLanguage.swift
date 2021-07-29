@@ -28,6 +28,18 @@ public enum VirtusizeLanguage: String, CaseIterable {
     case JAPANESE = "ja"
     case KOREAN = "ko"
 
+	/// A two character lang string (For the Flutter SDK)
+	public var langStr: String {
+		switch self {
+		case .ENGLISH:
+			return "EN"
+		case .JAPANESE:
+			return  "JP"
+		case .KOREAN:
+			return  "KR"
+		}
+	}
+
     /// The default label for the language selector
     var label: String {
         switch self {

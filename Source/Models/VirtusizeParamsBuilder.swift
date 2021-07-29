@@ -25,7 +25,7 @@
 /// The builder patten to help initialize the `VirtusizeParams` object
 public class VirtusizeParamsBuilder {
     private var region: VirtusizeRegion = VirtusizeRegion.JAPAN
-    private var language: VirtusizeLanguage = VirtusizeLanguage.JAPANESE
+    private var language: VirtusizeLanguage?
     private var allowedLanguages: [VirtusizeLanguage] = VirtusizeLanguage.allCases
     private var virtusizeProduct: VirtusizeProduct?
     private var showSGI: Bool = false
@@ -58,7 +58,7 @@ public class VirtusizeParamsBuilder {
         region = Virtusize.environment.virtusizeRegion()
         return VirtusizeParams(
             region: region,
-            language: language,
+			language: language ?? region.defaultLanguage(),
             allowedLanguages: allowedLanguages,
             showSGI: showSGI,
             detailsPanelCards: detailsPanelCards
