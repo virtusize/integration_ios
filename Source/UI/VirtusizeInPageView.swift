@@ -23,8 +23,6 @@
 //
 
 public class VirtusizeInPageView: UIView, VirtusizeView {
-	private var product: VirtusizeProduct?
-
 	internal var virtusizeEventHandler: VirtusizeEventHandler?
 
     /// The property to set the Virtusize view style that this SDK provides
@@ -65,9 +63,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		}
 	}
 
-	public func isLoading(product: VirtusizeProduct) {
+	public func isLoading() {
         isHidden = false
-		self.product = product
 	}
 
     internal func setup() {}
@@ -99,7 +96,6 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 
     @objc internal func clickInPageViewAction() {
 		openVirtusizeWebView(
-			product: product,
 			eventHandler: virtusizeEventHandler
 		)
     }

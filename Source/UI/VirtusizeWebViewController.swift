@@ -49,7 +49,7 @@ public final class VirtusizeWebViewController: UIViewController {
 	private static let cookieBidKey = "virtusize.bid"
 
 	public convenience init?(
-		product: VirtusizeProduct?,
+		product: VirtusizeProduct? = Virtusize.product,
 		userSessionResponse: String? = nil,
 		messageHandler: VirtusizeMessageHandler? = nil,
 		eventHandler: VirtusizeEventHandler? = nil,

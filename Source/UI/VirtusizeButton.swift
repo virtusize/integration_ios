@@ -26,8 +26,6 @@ import UIKit
 
 /// This class is the custom Virtusize button that is added in the client's layout file.
 public class VirtusizeButton: UIButton, VirtusizeView {
-	private var product: VirtusizeProduct?
-
     override public var isHighlighted: Bool {
         didSet {
             if style == .BLACK {
@@ -70,9 +68,8 @@ public class VirtusizeButton: UIButton, VirtusizeView {
 		}
 	}
 
-    public func isLoading(product: VirtusizeProduct) {
+    public func isLoading() {
         isHidden = false
-		self.product = product
     }
 
     /// Set up the style of `VirtusizeButton`
@@ -106,6 +103,6 @@ public class VirtusizeButton: UIButton, VirtusizeView {
     }
 
     @objc private func clickButtonAction() {
-        openVirtusizeWebView(product: product)
+        openVirtusizeWebView()
     }
 }

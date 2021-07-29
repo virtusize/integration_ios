@@ -81,7 +81,7 @@ public class Virtusize {
 						DispatchQueue.main.async {
 							for virtusizeView in activeVirtusizeViews {
 								(virtusizeView as? VirtusizeInPageView)?.setup()
-								virtusizeView.isLoading(product: productWithPDCData)
+								virtusizeView.isLoading()
 							}
 						}
 

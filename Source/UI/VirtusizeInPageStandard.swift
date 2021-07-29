@@ -433,8 +433,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         }
     }
 
-    public override func isLoading(product: VirtusizeProduct) {
-        super.isLoading(product: product)
+    public override func isLoading() {
+        super.isLoading()
         setLoadingScreen(loading: true)
     }
 
