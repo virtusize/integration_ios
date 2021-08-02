@@ -1,7 +1,7 @@
 //
-//  VirtusizeEventName.swift
+//  VirtusizeUserBodyProfile.swift
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2020 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,16 @@
 //  THE SOFTWARE.
 //
 
-/// The enum contains the possible events to be sent to the Virtusize server
-internal enum VirtusizeEventName: String {
-	case userSawProduct = "user-saw-product"
-	case userSawWidgetButton = "user-saw-widget-button"
-	case userOpenedWidget = "user-opened-widget"
-	case userClosedWidget = "user-closed-widget"
-	case userAuthData = "user-auth-data"
-	case userSelectedProduct = "user-selected-product"
-	case userAddedProduct = "user-added-product"
-	case userChangedRecommendationType = "user-changed-recommendation-type"
-	case userUpdatedBodyMeasurements = "user-updated-body-measurements"
-	case userLoggedIn = "user-logged-in"
-	case userLoggedOut = "user-logged-out"
-	case userDeletedData = "user-deleted-data"
+/// This class represents the response of the API request to get the user body profile data
+public class VirtusizeUserBodyProfile: Codable {
+	/// The user's gender
+    let gender: String
+	/// The user's age
+    let age: Int?
+	/// The user's height
+    let height: Int?
+	/// The user's weight
+    let weight: String?
+	/// The user's body measurement data, such as hip, bust, waist and so on.
+    let bodyData: [String: Int?]?
 }

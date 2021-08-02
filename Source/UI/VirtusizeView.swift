@@ -33,14 +33,15 @@ public protocol VirtusizeView {
 	var isDeallocated: Bool? { get set }
 
 	/// Sets up the loading UI
-    func isLoading()
+	func isLoading()
 }
 
 /// Extension functions for `VirtusizeView`
 extension VirtusizeView {
 
     /// Opens the Virtusize web view
-	internal func openVirtusizeWebView(eventHandler: VirtusizeEventHandler? = nil) {
+	internal func openVirtusizeWebView(
+		eventHandler: VirtusizeEventHandler? = nil) {
 		if let virtusize = VirtusizeWebViewController(
 			messageHandler: messageHandler,
 			eventHandler: eventHandler,

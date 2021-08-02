@@ -63,7 +63,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		}
 	}
 
-    public func isLoading() {
+	public func isLoading() {
         isHidden = false
 	}
 
@@ -95,7 +95,9 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
     }
 
     @objc internal func clickInPageViewAction() {
-		openVirtusizeWebView(eventHandler: virtusizeEventHandler)
+		openVirtusizeWebView(
+			eventHandler: virtusizeEventHandler
+		)
     }
 
 	/// A parent function to set up InPage recommendation
@@ -129,7 +131,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 		self.loadingTextTimer = nil
     }
 
-	private func getAssociatedProduct() -> VirtusizeInternalProduct? {
+	private func getAssociatedProduct() -> VirtusizeServerProduct? {
 		return VirtusizeRepository.shared.availableVSViewToProductDict[memoryAddress]
 	}
 }

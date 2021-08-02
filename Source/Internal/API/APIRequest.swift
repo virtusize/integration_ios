@@ -231,12 +231,12 @@ internal struct APIRequest {
 	///
 	/// - Parameters:
 	///   - productTypes: The list of available `ProductType`s
-	///   - storeProduct: The store product info whose data type is `VirtusizeInternalProduct`
+	///   - storeProduct: The store product info whose data type is `VirtusizeServerProduct`
 	///   - userBodyProfile: The user body profile whose data type is  `VirtusizeUserBodyProfile`
 	/// - Returns: A `URLRequest` for the `getSize` request
     internal static func getBodyProfileRecommendedSize(
         productTypes: [VirtusizeProductType],
-        storeProduct: VirtusizeInternalProduct,
+        storeProduct: VirtusizeServerProduct,
         userBodyProfile: VirtusizeUserBodyProfile
     ) -> URLRequest? {
         let endpoint = APIEndpoints.getSize

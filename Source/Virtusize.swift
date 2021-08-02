@@ -41,6 +41,9 @@ public class Virtusize {
 	/// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
 	public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
 
+	/// The display language of the Virtusize integration
+	public static let displayLanguage = params?.language
+
     /// Allow process pool to be set to share cookies
     public static var processPool: WKProcessPool?
 
@@ -103,7 +106,7 @@ public class Virtusize {
 	}
 
 	typealias ProductRecommendationData = (
-		VirtusizeInternalProduct?,
+		VirtusizeServerProduct?,
 		SizeComparisonRecommendedSize?,
 		BodyProfileRecommendedSize?
 	)

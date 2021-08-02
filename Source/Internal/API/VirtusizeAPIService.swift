@@ -258,12 +258,12 @@ internal class VirtusizeAPIService {
 	///
 	/// - Parameters:
 	///   - productId: The internal product ID from the Virtusize server
-	/// - Returns: the store product info in the type of `VirtusizeInternalProduct`
-	internal static func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeInternalProduct> {
+	/// - Returns: the store product info in the type of `VirtusizeServerProduct`
+	internal static func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeServerProduct> {
 		guard let request = APIRequest.getStoreProductInfo(productId: productId) else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: VirtusizeInternalProduct.self)
+		return getAPIResultAsync(request: request, type: VirtusizeServerProduct.self)
 	}
 
 	/// The API request for getting the list of all the product types from the Virtusize server
@@ -295,12 +295,12 @@ internal class VirtusizeAPIService {
 
 	/// The API request for getting the list of user products from the Virtusize server
 	///
-	/// - Returns: the user product data in the type of `VirtusizeInternalProduct`
-	internal static func getUserProductsAsync() -> APIResult<[VirtusizeInternalProduct]> {
+	/// - Returns: the user product data in the type of `VirtusizeServerProduct`
+	internal static func getUserProductsAsync() -> APIResult<[VirtusizeServerProduct]> {
 		guard let request = APIRequest.getUserProducts() else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: [VirtusizeInternalProduct].self)
+		return getAPIResultAsync(request: request, type: [VirtusizeServerProduct].self)
 	}
 
 	/// The API request for getting the user body profile data from the Virtusize server
@@ -322,7 +322,7 @@ internal class VirtusizeAPIService {
 	/// - Returns: the user body profile recommended size in the type of `BodyProfileRecommendedSize`
 	internal static func getBodyProfileRecommendedSizeAsync(
 		productTypes: [VirtusizeProductType],
-		storeProduct: VirtusizeInternalProduct,
+		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
 	) -> APIResult<BodyProfileRecommendedSize> {
 		guard let request = APIRequest.getBodyProfileRecommendedSize(

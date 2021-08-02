@@ -1,5 +1,5 @@
 //
-//  VirtusizeStoreProductAdditionalInfo.swift
+//  VirtusizeServerProductAdditionalInfo.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -23,7 +23,7 @@
 //
 
 /// This class represents the additional info of a store product
-internal class VirtusizeStoreProductAdditionalInfo: Codable {
+internal class VirtusizeServerProductAdditionalInfo: Codable {
     /// The brand of the store product
     let brand: String
     /// The gender for the store product

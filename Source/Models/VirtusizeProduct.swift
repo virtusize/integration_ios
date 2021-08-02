@@ -25,6 +25,7 @@
 /// This structure represents a product in the Virtusize SDK
 public class VirtusizeProduct: Codable {
 
+	/// The product name
 	internal var name: String = ""
 
     /// A string to represent the ID that will be used to reference this product in Virtusize API
@@ -44,8 +45,14 @@ public class VirtusizeProduct: Codable {
 		) as? JSONObject
 	}
 
+	// swiftlint:disable identifier_name
+	/// An integer to represent the internal product ID in the Virtusize server
+	public var id: Int? {
+		return productCheckData?.productDataId
+	}
+
 	/// The product data as a dictionary
-	internal var dictionary: [String: Any] {
+	public var dictionary: [String: Any] {
 		return jsonObject ?? [:]
 	}
 
@@ -74,4 +81,14 @@ extension VirtusizeProduct {
 	public convenience init(externalId: String, imageURL: URL? = nil) {
         self.init(externalId: externalId, imageURL: imageURL, productCheckData: nil)
     }
+}
+
+extension VirtusizeProduct: Hashable {
+	public static func == (lhs: VirtusizeProduct, rhs: VirtusizeProduct) -> Bool {
+		return lhs.externalId == rhs.externalId
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(externalId)
+	}
 }

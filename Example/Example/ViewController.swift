@@ -181,7 +181,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
         case "user-opened-widget":
@@ -193,7 +193,7 @@ extension ViewController: VirtusizeMessageHandler {
         }
     }
 
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
         print(error)
     }
 }

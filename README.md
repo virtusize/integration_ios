@@ -78,7 +78,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.2.3'
+pod 'Virtusize', '~> 2.2.4'
 end
 ```
 
@@ -184,7 +184,7 @@ The `VirtusizeMessageHandler`  protocol has two required methods:
 
 ```Swift
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
 		    case "user-opened-widget":
@@ -196,7 +196,7 @@ extension ViewController: VirtusizeMessageHandler {
         }
     }
 
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
         print(error)
     }
 }

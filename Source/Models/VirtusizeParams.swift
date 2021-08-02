@@ -50,20 +50,26 @@ public class VirtusizeParams {
     }
 
     /// Gets the script in JavaScript to be called to pass params to the Virtusize web app
-    ///
+	///
+	/// - Parameters:
+	///   - externalProductId:The external product ID provided by the client.
+	///   - userSessionResponse: The user session API response
     /// - Returns: A string value of the script in JavaScript
-	func getVsParamsFromSDKScript() -> String {
+	func getVsParamsFromSDKScript(
+		externalProductId: String?,
+		userSessionResponse: String = ""
+	) -> String {
         var paramsScript = "vsParamsFromSDK("
         guard let apiKey = Virtusize.APIKey else {
             fatalError("Please set Virtusize.APIKey")
         }
-		guard let storeProductId = VirtusizeRepository.shared.currentProduct?.externalId else {
-            fatalError("The store product ID is invalid")
+		guard let externalProductId = externalProductId else {
+            fatalError("The external product ID is invalid")
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
         paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
-		paramsScript += "\(ParamKey.sessionData): \(VirtusizeRepository.shared.userSessionResponse), "
-        paramsScript += "\(ParamKey.storeProductID): '\(storeProductId)', "
+		paramsScript += "\(ParamKey.sessionData): \(userSessionResponse), "
+        paramsScript += "\(ParamKey.externalProductID): '\(externalProductId)', "
         if let userId = Virtusize.userID {
             paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
         }
@@ -98,7 +104,7 @@ public class VirtusizeParams {
 		static let sessionData = "sessionData"
         static let region = "region"
         static let environment = "env"
-        static let storeProductID = "externalProductId"
+        static let externalProductID = "externalProductId"
         static let externalUserID = "externalUserId"
         static let language = "language"
         static let showSGI = "showSGI"

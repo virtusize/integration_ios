@@ -23,7 +23,7 @@
 //
 
 /// This enum contains all available Virtusize environments
-public enum VirtusizeEnvironment: String {
+public enum VirtusizeEnvironment: String, CaseIterable {
     case staging="staging.virtusize.jp"
     case global="api.virtusize.com"
     case japan="api.virtusize.jp"

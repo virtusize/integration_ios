@@ -29,7 +29,7 @@ public struct SizeComparisonRecommendedSize {
 	/// The best store product size for the user
 	var bestStoreProductSize: VirtusizeProductSize?
 	/// The best fit user product out of all the comparable user products
-    var bestUserProduct: VirtusizeInternalProduct?
+    public var bestUserProduct: VirtusizeServerProduct?
 	/// The boolean value for whether the best fit user product is smaller than the store product
     var isStoreProductSmaller: Bool?
 
@@ -37,10 +37,10 @@ public struct SizeComparisonRecommendedSize {
         bestFitScore = 0.0
 		bestStoreProductSize = nil
         bestUserProduct = nil
-        isStoreProductSmaller = false
+        isStoreProductSmaller = nil
     }
 
 	internal func isValid() -> Bool {
-		return bestFitScore != 0.0 || bestStoreProductSize != nil || bestUserProduct != nil
+		return bestFitScore != 0.0 || bestStoreProductSize != nil || bestUserProduct != nil || isStoreProductSmaller != nil
 	}
 }
