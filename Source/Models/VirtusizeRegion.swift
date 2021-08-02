@@ -38,8 +38,6 @@ public enum VirtusizeRegion: String {
 				return VirtusizeLanguage.JAPANESE
 			case .KOREA:
 				return VirtusizeLanguage.KOREAN
-			default:
-				return VirtusizeLanguage.JAPANESE
 		}
 	}
 }
