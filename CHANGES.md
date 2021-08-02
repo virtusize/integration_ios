@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.2.4
+- Feature: The Flutter SDK support
+- Bugfix: Fix the isValid function in SizeComparisonRecommendedSize.swift
+
 ### 2.2.3
 - Feature: Enable SNS buttons in the Virtusize webview
 
