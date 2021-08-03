@@ -166,6 +166,18 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		}
 	}
 
+	public func userDeletedProduct() {
+		// Execute 0.5 second later because the deletion happens after the event is fired
+		Virtusize.dispatchQueue.asyncAfter(deadline: .now() + 0.5) {
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+				shouldUpdateUserProducts: true
+			)
+			VirtusizeRepository.shared.switchInPageRecommendation(
+				product: self.getAssociatedProduct()
+			)
+		}
+	}
+
 	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), changedType)

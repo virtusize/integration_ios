@@ -263,6 +263,8 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 					eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
 				case .userAddedProduct:
 					eventHandler?.userAddedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
+				case .userDeletedProduct:
+					eventHandler?.userDeletedProduct()
 				case .userChangedRecommendationType:
 					let recommendationType = (event.data as? [String: Any])?["recommendationType"] as? String
 					let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
