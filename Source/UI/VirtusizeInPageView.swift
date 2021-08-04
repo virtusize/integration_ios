@@ -143,7 +143,9 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 			shouldUpdateUserProducts: false,
 			shouldUpdateBodyProfile: false
 		)
-		VirtusizeRepository.shared.updateInPageRecommendation()
+		VirtusizeRepository.shared.updateInPageRecommendation(
+			product: self.getAssociatedProduct()
+		)
 	}
 
 	public func userAuthData(bid: String?, auth: String?) {
