@@ -31,7 +31,7 @@ public protocol VirtusizeEventHandler {
 	func clearUserData()
 	func userSelectedProduct(userProductId: Int?)
 	func userAddedProduct(userProductId: Int?)
-	func userDeletedProduct()
+	func userDeletedProduct(userProductId: Int?)
 	func userUpdatedBodyMeasurements(recommendedSize: String?)
 	func userChangedRecommendationType(changedType: SizeRecommendationType?)
 }

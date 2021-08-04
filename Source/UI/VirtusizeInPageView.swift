@@ -139,7 +139,10 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 extension VirtusizeInPageView: VirtusizeEventHandler {
 
 	public func userOpenedWidget() {
-		VirtusizeRepository.shared.fetchDataForInPageRecommendation(shouldUpdateUserProducts: false)
+		VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+			shouldUpdateUserProducts: false,
+			shouldUpdateBodyProfile: false
+		)
 	}
 
 	public func userAuthData(bid: String?, auth: String?) {
@@ -149,30 +152,39 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 	public func userSelectedProduct(userProductId: Int?) {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+				selectedUserProductId: userProductId,
 				shouldUpdateUserProducts: false,
-				selectedUserProductId: userProductId
+				shouldUpdateBodyProfile: false
 			)
-			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), .compareProduct)
+			VirtusizeRepository.shared.updateInPageRecommendation(
+				product: self.getAssociatedProduct(),
+				type: .compareProduct
+			)
 		}
 	}
 
 	public func userAddedProduct(userProductId: Int?) {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+				selectedUserProductId: userProductId,
 				shouldUpdateUserProducts: true,
-				selectedUserProductId: userProductId
+				shouldUpdateBodyProfile: false
 			)
-			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), .compareProduct)
+			VirtusizeRepository.shared.updateInPageRecommendation(
+				product: self.getAssociatedProduct(),
+				type: .compareProduct
+			)
 		}
 	}
 
-	public func userDeletedProduct() {
-		// Execute 0.5 second later because the deletion happens after the event is fired
-		Virtusize.dispatchQueue.asyncAfter(deadline: .now() + 0.5) {
+	public func userDeletedProduct(userProductId: Int?) {
+		Virtusize.dispatchQueue.async {
+			VirtusizeRepository.shared.deleteUserProduct(userProductId)
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-				shouldUpdateUserProducts: true
+				shouldUpdateUserProducts: false,
+				shouldUpdateBodyProfile: false
 			)
-			VirtusizeRepository.shared.switchInPageRecommendation(
+			VirtusizeRepository.shared.updateInPageRecommendation(
 				product: self.getAssociatedProduct()
 			)
 		}
@@ -180,14 +192,20 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 
 	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
 		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), changedType)
+			VirtusizeRepository.shared.updateInPageRecommendation(
+				product: self.getAssociatedProduct(),
+				type: changedType
+			)
 		}
 	}
 
 	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
-			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct(), .body)
+			VirtusizeRepository.shared.updateInPageRecommendation(
+				product: self.getAssociatedProduct(),
+				type: .body
+			)
 		}
 	}
 
@@ -195,7 +213,7 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.updateUserSession()
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
-			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct())
+			VirtusizeRepository.shared.updateInPageRecommendation(product: self.getAssociatedProduct())
 		}
 	}
 
@@ -203,8 +221,11 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.clearUserData()
 			VirtusizeRepository.shared.updateUserSession()
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation(shouldUpdateUserProducts: false)
-			VirtusizeRepository.shared.switchInPageRecommendation(product: self.getAssociatedProduct())
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+				shouldUpdateUserProducts: false,
+				shouldUpdateBodyProfile: false
+			)
+			VirtusizeRepository.shared.updateInPageRecommendation(product: self.getAssociatedProduct())
 		}
 	}
 }

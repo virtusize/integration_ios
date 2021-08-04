@@ -251,26 +251,27 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 		}
 		do {
 			let event = try Deserializer.event(data: message.body)
+			let eventData = event.data as? [String: Any]
 			switch VirtusizeEventName.init(rawValue: event.name) {
 				case .userOpenedWidget:
 					eventHandler?.userOpenedWidget()
 				case .userAuthData:
 					eventHandler?.userAuthData(
-						bid: (event.data as? [String: Any])?["x-vs-bid"] as? String,
-						auth: (event.data as? [String: Any])?["x-vs-auth"] as? String
+						bid: eventData?["x-vs-bid"] as? String,
+						auth: eventData?["x-vs-auth"] as? String
 					)
 				case .userSelectedProduct:
 					eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
 				case .userAddedProduct:
-					eventHandler?.userAddedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
+					eventHandler?.userAddedProduct(userProductId: eventData?["userProductId"] as? Int)
 				case .userDeletedProduct:
-					eventHandler?.userDeletedProduct()
+					eventHandler?.userDeletedProduct(userProductId: eventData?["userProductId"] as? Int)
 				case .userChangedRecommendationType:
-					let recommendationType = (event.data as? [String: Any])?["recommendationType"] as? String
+					let recommendationType = eventData?["recommendationType"] as? String
 					let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
 					eventHandler?.userChangedRecommendationType(changedType: changedType)
 				case .userUpdatedBodyMeasurements:
-					let sizeRecName = (event.data as? [String: Any])?["sizeRecName"] as? String
+					let sizeRecName = eventData?["sizeRecName"] as? String
 					eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
 				case .userLoggedIn:
 					eventHandler?.userLoggedIn()
