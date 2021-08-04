@@ -88,7 +88,7 @@ public class Virtusize {
 						virtusizeRepository.fetchInitialData(productId: productWithPDCData.productCheckData?.productDataId) {
 							virtusizeRepository.updateUserSession()
 							virtusizeRepository.fetchDataForInPageRecommendation()
-							virtusizeRepository.switchInPageRecommendation()
+							virtusizeRepository.updateInPageRecommendation()
 						}
 					} else {
 						DispatchQueue.main.async {

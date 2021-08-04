@@ -175,8 +175,9 @@ internal class VirtusizeRepository: NSObject {
 	///   - selectedUserProductId: the selected product Id from the web view
 	///   to decide a specific user product to compare with the store product
 	internal func fetchDataForInPageRecommendation(
+		selectedUserProductId: Int? = nil,
 		shouldUpdateUserProducts: Bool = true,
-		selectedUserProductId: Int? = nil
+		shouldUpdateBodyProfile: Bool = true
 	) {
 		if shouldUpdateUserProducts {
 			let userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
@@ -188,7 +189,7 @@ internal class VirtusizeRepository: NSObject {
 			}
 		}
 
-		if selectedUserProductId == nil {
+		if shouldUpdateBodyProfile {
 			let userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
 			if userBodyProfileResponse.isSuccessful {
 				userBodyProfile = userBodyProfileResponse.success
@@ -258,14 +259,16 @@ internal class VirtusizeRepository: NSObject {
 		}
 	}
 
-	/// Switch the recommendation for InPage based on the recommendation type
+	/// Updates the recommendation for InPage based on the recommendation type
 	///
-	/// - Parameter selectedRecommendedType the selected recommendation compare view type
-	internal func switchInPageRecommendation(
+	/// - Parameters:
+	///   - product: the designated store product to update
+	///   - type: the selected recommendation compare view type
+	internal func updateInPageRecommendation(
 		product: VirtusizeServerProduct? = VirtusizeRepository.shared.currentProduct,
-		_ selectedRecommendedType: SizeRecommendationType? = nil
+		type: SizeRecommendationType? = nil
 	) {
-		switch selectedRecommendedType {
+		switch type {
 		case .compareProduct:
 			Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, nil)
 		case .body:
@@ -283,6 +286,16 @@ internal class VirtusizeRepository: NSObject {
 			return
 		}
 		bodyProfileRecommendedSize = BodyProfileRecommendedSize(sizeName: recommendedSize)
+	}
+
+	/// Removes the deleted user product by the product ID from the user product list
+	///
+	/// - Parameter userProductID the user product ID
+	internal func deleteUserProduct(_ userProductID: Int?) {
+		guard let userProductID = userProductID else {
+			return
+		}
+		userProducts = userProducts?.filter { userProduct in userProduct.id != userProductID }
 	}
 
 	/// The API request for sending an order to the server

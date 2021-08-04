@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.2.5
+- Bugfix: Handle the `user-deleted-product` event from the Virtusize webview
+
 ### 2.2.4
 - Feature: The Flutter SDK support
 - Bugfix: Fix the isValid function in SizeComparisonRecommendedSize.swift
