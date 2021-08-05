@@ -166,10 +166,9 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 		}
 	}
 
-	public func userAddedProduct(userProductId: Int?) {
+	public func userAddedProduct() {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-				selectedUserProductId: userProductId,
 				shouldUpdateUserProducts: true,
 				shouldUpdateBodyProfile: false
 			)
