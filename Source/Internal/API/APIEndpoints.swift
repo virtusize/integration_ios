@@ -88,8 +88,8 @@ internal enum APIEndpoints {
            components.path = "/a/api/v3/user-body-measurements"
 
         case .getSize:
-            components.path = (Virtusize.environment == .staging) ?
-				"/stg/ds-functions/size-rec/get-size-new" : "/ds-functions/size-rec/get-size-new"
+			let envPath = (Virtusize.environment == .staging) ? "/stg" : ""
+            components.path =  "\(envPath)/ds-functions/size-rec/get-size"
 
         case .i18n(let langCode):
 			components.path = "/bundle-payloads/aoyama/\(langCode)"
