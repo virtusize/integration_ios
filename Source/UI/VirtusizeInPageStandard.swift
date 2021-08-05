@@ -399,11 +399,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		let buttonTextSize = buttonFontSize ?? 12
         switch displayLanguage {
         case .ENGLISH:
-            topMessageLabel.font = Font.proximaNova(size: messageTextSize + 2)
-            bottomMessageLabel.font = Font.proximaNova(size: messageTextSize + 6, weight: .bold)
-            checkSizeButton.titleLabel?.font = Font.proximaNova(size: buttonTextSize + 2)
-            privacyPolicyLink.font = Font.proximaNova(size: messageTextSize)
-            errorText.font = Font.proximaNova(size: messageTextSize)
+            topMessageLabel.font = Font.system(size: messageTextSize + 2)
+            bottomMessageLabel.font = Font.system(size: messageTextSize + 6, weight: .bold)
+            checkSizeButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+            privacyPolicyLink.font = Font.system(size: messageTextSize)
+            errorText.font = Font.system(size: messageTextSize)
             messageLineSpacing = 2
         case .JAPANESE:
 			topMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize)

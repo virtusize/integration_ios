@@ -41,8 +41,6 @@
 		9C35F9DB25F0350B0004E9CD /* NotoSansCJKJP-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F98C25F02BFD0004E9CD /* NotoSansCJKJP-Regular.otf */; };
 		9C35F9DC25F0350B0004E9CD /* NotoSansCJKKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F99125F02BFD0004E9CD /* NotoSansCJKKR-Bold.otf */; };
 		9C35F9DD25F0350B0004E9CD /* NotoSansCJKKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F98E25F02BFD0004E9CD /* NotoSansCJKKR-Regular.otf */; };
-		9C35F9DE25F0350B0004E9CD /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F98F25F02BFD0004E9CD /* ProximaNova-Bold.otf */; };
-		9C35F9DF25F0350B0004E9CD /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F99025F02BFD0004E9CD /* ProximaNova-Regular.otf */; };
 		9C3DE36C25BA8A160082C140 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3DE36B25BA8A160082C140 /* Colors.swift */; };
 		9C3DE37725BA9CC70082C140 /* VirtusizeWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3DE37625BA9CC70082C140 /* VirtusizeWebViewController.swift */; };
 		9C4378D7253444F600E8729A /* UserSessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4378D6253444F600E8729A /* UserSessionInfo.swift */; };
@@ -150,8 +148,6 @@
 		9C35F98C25F02BFD0004E9CD /* NotoSansCJKJP-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Regular.otf"; sourceTree = "<group>"; };
 		9C35F98D25F02BFD0004E9CD /* NotoSansCJKJP-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Bold.otf"; sourceTree = "<group>"; };
 		9C35F98E25F02BFD0004E9CD /* NotoSansCJKKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKKR-Regular.otf"; sourceTree = "<group>"; };
-		9C35F98F25F02BFD0004E9CD /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
-		9C35F99025F02BFD0004E9CD /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
 		9C35F99125F02BFD0004E9CD /* NotoSansCJKKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKKR-Bold.otf"; sourceTree = "<group>"; };
 		9C35F99C25F02CAD0004E9CD /* VirtusizeAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VirtusizeAssets.xcassets; sourceTree = "<group>"; };
 		9C3DE36B25BA8A160082C140 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = Source/Internal/Constants/Colors.swift; sourceTree = "<group>"; };
@@ -352,8 +348,6 @@
 				9C35F98C25F02BFD0004E9CD /* NotoSansCJKJP-Regular.otf */,
 				9C35F99125F02BFD0004E9CD /* NotoSansCJKKR-Bold.otf */,
 				9C35F98E25F02BFD0004E9CD /* NotoSansCJKKR-Regular.otf */,
-				9C35F98F25F02BFD0004E9CD /* ProximaNova-Bold.otf */,
-				9C35F99025F02BFD0004E9CD /* ProximaNova-Regular.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -663,8 +657,6 @@
 				9C35F9DB25F0350B0004E9CD /* NotoSansCJKJP-Regular.otf in Resources */,
 				9C35F9DC25F0350B0004E9CD /* NotoSansCJKKR-Bold.otf in Resources */,
 				9C35F9DD25F0350B0004E9CD /* NotoSansCJKKR-Regular.otf in Resources */,
-				9C35F9DE25F0350B0004E9CD /* ProximaNova-Bold.otf in Resources */,
-				9C35F9DF25F0350B0004E9CD /* ProximaNova-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

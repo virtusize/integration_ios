@@ -197,8 +197,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		let buttonTextSize = buttonFontSize ?? 10
         switch displayLanguage {
         case .ENGLISH:
-            inPageMiniMessageLabel.font = Font.proximaNova(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: buttonTextSize + 2)
+            inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
         case .JAPANESE:
             inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
             inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
@@ -206,8 +206,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
             inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
         default:
-            inPageMiniMessageLabel.font = Font.proximaNova(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.proximaNova(size: buttonTextSize + 2)
+            inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+            inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
         }
     }
 

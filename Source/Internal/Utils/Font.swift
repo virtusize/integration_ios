@@ -29,17 +29,24 @@ class Font {
     internal enum FontWeight: String {
         case regular = "-Regular"
         case bold = "-Bold"
+
+		var uiFontWeight: UIFont.Weight {
+			if self == .regular {
+				return .regular
+			} else {
+				return .bold
+			}
+		}
     }
 
     /// This enum contains all available font names used in this SDK
     private enum FontName: String {
-        case proximaNova = "ProximaNova"
         case notoSansCJKJP = "NotoSansCJKJP"
         case notoSansCJKKR = "NotoSansCJKKR"
     }
 
-    static func proximaNova(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-        return font(fontName: .proximaNova, type: "otf", weight: weight, size: size)
+    static func system(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
     }
 
     static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
@@ -62,7 +69,7 @@ class Font {
             font = UIFont(name: fontFileName, size: size)
         }
 
-        return font ?? UIFont.systemFont(ofSize: size)
+		return font ?? UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
     }
 
     /// Registers a specified graphics font
