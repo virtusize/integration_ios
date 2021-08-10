@@ -49,7 +49,7 @@ public final class VirtusizeWebViewController: UIViewController {
 	private static let cookieBidKey = "virtusize.bid"
 
 	public convenience init?(
-		product: VirtusizeProduct? = Virtusize.product,
+		product: VirtusizeProduct? = nil,
 		userSessionResponse: String? = nil,
 		messageHandler: VirtusizeMessageHandler? = nil,
 		eventHandler: VirtusizeEventHandler? = nil,
@@ -243,6 +243,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 
 extension VirtusizeWebViewController: WKScriptMessageHandler {
 	// MARK: - Widget Callbacks
+	// swiftlint:disable cyclomatic_complexity
 	public func userContentController(
 		_ userContentController: WKUserContentController,
 		didReceive message: WKScriptMessage) {
@@ -252,6 +253,7 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 		do {
 			let event = try Deserializer.event(data: message.body)
 			let eventData = event.data as? [String: Any]
+			// swiftlint:disable switch_case_alignment
 			switch VirtusizeEventName.init(rawValue: event.name) {
 				case .userOpenedWidget:
 					eventHandler?.userOpenedWidget()

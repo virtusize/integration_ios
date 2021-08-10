@@ -23,11 +23,13 @@
 //
 
 /// This class is the custom Virtusize button that is added in the client's layout file.
-public class VirtusizeButton: UIButton, NewVirtusizeView {
+public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtocol {
 	public var presentingViewController: UIViewController?
 	public var messageHandler: VirtusizeMessageHandler?
 	public var product: VirtusizeProduct?
 	public var serverProduct: VirtusizeServerProduct?
+
+	internal var virtusizeEventHandler: VirtusizeEventHandler?
 
 	override public var isHighlighted: Bool {
 		didSet {
@@ -48,32 +50,19 @@ public class VirtusizeButton: UIButton, NewVirtusizeView {
 
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
+		virtusizeEventHandler = self
 		isHidden = true
-		addNotificationObserver()
 	}
 
 	public init() {
 		super.init(frame: .zero)
+		virtusizeEventHandler = self
 		isHidden = true
 		setStyle()
-		addNotificationObserver()
 	}
-
-	private func addNotificationObserver() {
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(validProductDataCheck(_:)),
-			name: .productDataCheck,
-			object: nil
-		)
-	}
-
-	@objc func validProductDataCheck(_ notification: Notification) {
-		let productWithPDC = notification.object as? VirtusizeProduct
-		if product?.externalId == productWithPDC?.externalId {
-			product = productWithPDC
-			isHidden = false
-		}
+	
+	deinit {
+		print("VirtusizeButton is dying!")
 	}
 
 	/// Set up the style of `VirtusizeButton`
@@ -106,17 +95,64 @@ public class VirtusizeButton: UIButton, NewVirtusizeView {
 		addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
 	}
 
-	public func bindVirtusize(_ any: Any, product: VirtusizeProduct) {
-		messageHandler = any as? VirtusizeMessageHandler
-		presentingViewController = any as? UIViewController
-		self.product = product
+	public func onProductDataCheck(product: VirtusizeProduct) {
+		guard self.product?.externalId == product.externalId else {
+			return
+		}
+		isHidden = false
+	}
+
+	public func onStoreProduct(product: VirtusizeServerProduct) {
+		guard self.product?.externalId == product.externalId else {
+			return
+		}
+		self.serverProduct = product
 	}
 
 	@objc private func clickButtonAction() {
+		VirtusizeRepository.shared.lastProductOnVirtusizeWebView = self.serverProduct
 		openVirtusizeWebView(
-			product: product,
-			// Add eventHandler
-			eventHandler: nil
+			product: self.product,
+			eventHandler: self
 		)
+	}
+}
+
+extension VirtusizeButton: VirtusizeEventHandler {
+
+	public func userOpenedWidget() {
+		handleUserOpenedWidget()
+	}
+
+	public func userAuthData(bid: String?, auth: String?) {
+		handleUserAuthData(bid: bid, auth: auth)
+	}
+
+	public func userSelectedProduct(userProductId: Int?) {
+		handleUserSelectedProduct(userProductId: userProductId)
+	}
+
+	public func userAddedProduct() {
+		handleUserAddedProduct()
+	}
+
+	public func userDeletedProduct(userProductId: Int?) {
+		handleUserDeletedProduct(userProductId: userProductId)
+	}
+
+	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
+		handleUserChangedRecommendationType(changedType: changedType)
+	}
+
+	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
+		handleUserUpdatedBodyMeasurements(recommendedSize: recommendedSize)
+	}
+
+	public func userLoggedIn() {
+		handleUserLoggedIn()
+	}
+
+	public func clearUserData() {
+		handleClearUserData()
 	}
 }

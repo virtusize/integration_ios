@@ -161,7 +161,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private func finishLoading() {
 		setMessageLabelTexts(
-			VirtusizeRepository.shared.currentProduct!,
+			self.serverProduct!,
 			VirtusizeRepository.shared.i18nLocalization!,
 			sizeComparisonRecommendedSize,
 			bodyProfileRecommendedSize?.sizeName
@@ -433,16 +433,22 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         }
     }
 
-    public override func isLoading() {
-        super.isLoading()
+    public override func onProductDataCheck(product: VirtusizeProduct) {
+		guard self.product?.externalId == product.externalId else {
+			return
+		}
+		super.onProductDataCheck(product: product)
         setLoadingScreen(loading: true)
     }
 
 	public override func setInPageRecommendation(
-		_ externalProductId: String?,
+		_ serverProduct: VirtusizeServerProduct,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	) {
+		guard self.serverProduct?.externalId == serverProduct.externalId else {
+			return
+		}
 		self.sizeComparisonRecommendedSize = sizeComparisonRecommendedSize
 		self.bodyProfileRecommendedSize = bodyProfileRecommendedSize
 
@@ -452,7 +458,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		if let bestFitUserProduct = bestFitUserProduct {
 			viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)
 		}
-		viewModel.loadStoreProductImage(storeProductId: externalProductId)
+		viewModel.loadStoreProductImage(storeProduct: serverProduct)
 	}
 
 	private func adjustProductImageViewPosition(userProductImageSize: CGFloat, productImageViewOffset: CGFloat) {

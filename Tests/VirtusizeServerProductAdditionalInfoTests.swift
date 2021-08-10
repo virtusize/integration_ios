@@ -25,6 +25,7 @@
 import XCTest
 @testable import Virtusize
 
+// swiftlint:disable type_name
 class VirtusizeServerProductAdditionalInfoTests: XCTestCase {
 
     func testDecoding_validServerProductAdditionalInfo_shouldReturnExpectedStructure() {

@@ -57,13 +57,12 @@ class ProductViewController: UIViewController {
 		checkTheFitButton.translatesAutoresizingMaskIntoConstraints = false
 		checkTheFitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
 		checkTheFitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
-
-		checkTheFitButton.bindVirtusize(self, product: product)
+		Virtusize.setVirtusizeView(self, checkTheFitButton, product: product)
 		checkTheFitButton.style = .TEAL
 
 		let inPageStandard = VirtusizeInPageStandard()
 		view.addSubview(inPageStandard)
-		Virtusize.setVirtusizeView(self, inPageStandard)
+		Virtusize.setVirtusizeView(self, inPageStandard, product: product)
 		// You can set the horizontal margins by using `setHorizontalMargin`
 		inPageStandard.setHorizontalMargin(view: view, margin: 16)
 		// You can set the Virtusize InPage Standard style
@@ -80,7 +79,7 @@ class ProductViewController: UIViewController {
 
 		let inPageMini = VirtusizeInPageMini()
 		view.addSubview(inPageMini)
-		Virtusize.setVirtusizeView(self, inPageMini)
+		Virtusize.setVirtusizeView(self, inPageMini, product: product)
 		inPageMini.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
 		// You can set the horizontal margins by using `setHorizontalMargin`
 		inPageMini.setHorizontalMargin(view: view, margin: 16)

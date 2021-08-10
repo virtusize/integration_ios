@@ -61,7 +61,7 @@ class ViewController: UIViewController {
 
         // MARK: VirtusizeButton
         // 1. Set up checkTheFitButton that is added in Interface Builder
-		checkTheFitButton.bindVirtusize(self, product: product)
+		Virtusize.setVirtusizeView(self, checkTheFitButton, product: product)
         // You can set up the Virtusize button style
         checkTheFitButton.style = .TEAL
 
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
         // 2. Add the VirtusizeButton programmatically
         let checkTheFitButton2 = VirtusizeButton()
         view.addSubview(checkTheFitButton2)
-		checkTheFitButton2.bindVirtusize(self, product: product)
+		Virtusize.setVirtusizeView(self, checkTheFitButton2, product: product)
         checkTheFitButton2.style = .BLACK
         // Set up constraints if needed
         checkTheFitButton2.translatesAutoresizingMaskIntoConstraints = false
@@ -80,14 +80,14 @@ class ViewController: UIViewController {
 
         // MARK: VirtusizeInPageMini
         // 1. Set up inPageMini that is added in Interface Builder
-        Virtusize.setVirtusizeView(self, inPageMini)
+        Virtusize.setVirtusizeView(self, inPageMini, product: product)
         // You can set the Virtusize InPage Mini style
         inPageMini.style = .BLACK
 
         // 2. If you add the InPageMini view programmatically
         let inPageMini2 = VirtusizeInPageMini()
         view.addSubview(inPageMini2)
-        Virtusize.setVirtusizeView(self, inPageMini2)
+        Virtusize.setVirtusizeView(self, inPageMini2, product: product)
         inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
         // You can set the horizontal margins by using `setHorizontalMargin`
         inPageMini2.setHorizontalMargin(view: view, margin: 16)
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
         // If you add the InPageMini view programmatically
         let inPageStandard = VirtusizeInPageStandard()
         view.addSubview(inPageStandard)
-        Virtusize.setVirtusizeView(self, inPageStandard)
+        Virtusize.setVirtusizeView(self, inPageStandard, product: product)
         // You can set the horizontal margins by using `setHorizontalMargin`
         inPageStandard.setHorizontalMargin(view: view, margin: 16)
         // You can set the Virtusize InPage Standard style

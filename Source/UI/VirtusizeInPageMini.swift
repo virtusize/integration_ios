@@ -67,20 +67,26 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
         inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
     }
 
-    public override func isLoading() {
-        super.isLoading()
+    public override func onProductDataCheck(product: VirtusizeProduct) {
+		guard self.product?.externalId == product.externalId else {
+			return
+		}
+		super.onProductDataCheck(product: product)
         setLoadingScreen(loading: true)
     }
 
     public override func setInPageRecommendation(
-		_ externalProductId: String?,
+		_ serverProduct: VirtusizeServerProduct,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	) {
+		guard self.serverProduct?.externalId == serverProduct.externalId else {
+			return
+		}
 		setLoadingScreen(loading: false)
 		inPageMiniMessageLabel.attributedText = NSAttributedString(
 			string:
-				VirtusizeRepository.shared.currentProduct!.getRecommendationText(
+				serverProduct.getRecommendationText(
 					VirtusizeRepository.shared.i18nLocalization!,
 					sizeComparisonRecommendedSize,
 					bodyProfileRecommendedSize?.sizeName,
