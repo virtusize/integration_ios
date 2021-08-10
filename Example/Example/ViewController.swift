@@ -54,16 +54,21 @@ class ViewController: UIViewController {
 			object: Virtusize.self
 		)
 
-        // Set up the product information in order to populate the Virtusize view
+		/// Set up the product information
 		let product1 = VirtusizeProduct(
             externalId: "vs_dress",
             imageURL: URL(string: "http://www.example.com/image.jpg")
         )
+		/// Loads the product in order to populate the Virtusize views associated with `product1`
+		Virtusize.load(product: product1)
 
+		/// Set up the product information
 		let product2 = VirtusizeProduct(
 			externalId: "vs_pants",
 			imageURL: URL(string: "http://www.example.com/image.jpg")
 		)
+		/// Loads the product in order to populate the Virtusize views associated with `product2`
+		Virtusize.load(product: product2)
 
         // Optional: Set up WKProcessPool to allow cookie sharing.
         Virtusize.processPool = WKProcessPool()
@@ -145,10 +150,6 @@ class ViewController: UIViewController {
 		nextProductButton.backgroundColor = UIColor.black
 		nextProductButton.setTitle("Go to next product page", for: .normal)
 		nextProductButton.addTarget(self, action: #selector(goToNextProduct), for: .touchUpInside)
-
-		// Loads the product data
-		Virtusize.load(product: product1)
-		Virtusize.load(product: product2)
 
         // MARK: The Order API
         sendOrderSample()

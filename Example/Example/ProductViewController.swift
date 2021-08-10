@@ -51,6 +51,7 @@ class ProductViewController: UIViewController {
 			externalId: randomExternalID,
 			imageURL: URL(string: "http://www.example.com/image.jpg")
 		)
+		Virtusize.load(product: product)
 
 		let checkTheFitButton = VirtusizeButton()
 		view.addSubview(checkTheFitButton)
@@ -90,9 +91,6 @@ class ProductViewController: UIViewController {
 		inPageMini.translatesAutoresizingMaskIntoConstraints = false
 		inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		inPageMini.topAnchor.constraint(equalTo: inPageStandard.bottomAnchor, constant: 16).isActive = true
-
-		//
-		Virtusize.load(product: product)
 
 		let nextProductButton = UIButton()
 		view.addSubview(nextProductButton)
