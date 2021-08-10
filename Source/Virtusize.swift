@@ -26,16 +26,16 @@ import WebKit
 
 /// The main class used by Virtusize clients to perform all available operations related to fit check
 public class Virtusize {
-    // MARK: - Properties
+	// MARK: - Properties
 
-    /// The API key that is unique and provided for Virtusize clients
-    public static var APIKey: String?
+	/// The API key that is unique and provided for Virtusize clients
+	public static var APIKey: String?
 
-    /// The user id that is the unique user id from the client system
-    public static var userID: String?
+	/// The user id that is the unique user id from the client system
+	public static var userID: String?
 
-    /// The Virtusize environment that defaults to the `global` domain
-    public static var environment = VirtusizeEnvironment.global
+	/// The Virtusize environment that defaults to the `global` domain
+	public static var environment = VirtusizeEnvironment.global
 
 	/// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
 	public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()
@@ -43,15 +43,15 @@ public class Virtusize {
 	/// The display language of the Virtusize integration
 	public static let displayLanguage = params?.language
 
-    /// Allow process pool to be set to share cookies
-    public static var processPool: WKProcessPool?
+	/// Allow process pool to be set to share cookies
+	public static var processPool: WKProcessPool?
 
-    /// NotificationCenter observers for debugging the initial product data check
-    /// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
-    /// with the cause of the failure
-    /// - `Virtusize.productDataCheckDidSucceed`
-    public static var productDataCheckDidFail = Notification.Name("VirtusizeProductDataCheckDidFail")
-    public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
+	/// NotificationCenter observers for debugging the initial product data check
+	/// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
+	/// with the cause of the failure
+	/// - `Virtusize.productDataCheckDidSucceed`
+	public static var productDataCheckDidFail = Notification.Name("VirtusizeProductDataCheckDidFail")
+	public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
 
 	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
@@ -94,8 +94,9 @@ public class Virtusize {
 		}
 	}
 
-    // MARK: - Methods
+	// MARK: - Methods
 
+	/// A function for clients to populate the Virtusize views by loading a product
 	public class func load(product: VirtusizeProduct) {
 		dispatchQueue.async {
 			virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
@@ -116,26 +117,26 @@ public class Virtusize {
 		}
 	}
 
-    /// Sets up the VirtusizeView and adds it to `virtusizeViews`
+	/// Sets up the VirtusizeView and adds it to `virtusizeViews`
 	public class func setVirtusizeView(
 		_ any: Any,
 		_ view: VirtusizeView,
 		product: VirtusizeProduct
 	) {
-        var mutableView = view
-        mutableView.messageHandler = any as? VirtusizeMessageHandler
-        mutableView.presentingViewController = any as? UIViewController
+		var mutableView = view
+		mutableView.messageHandler = any as? VirtusizeMessageHandler
+		mutableView.presentingViewController = any as? UIViewController
 		mutableView.product = product
-    }
+	}
 
-    /// The API request for sending an order to the server
-    ///
-    /// - Parameters:
-    ///   - order: An order to be send to the server
-    ///   - onSuccess: A callback to be called when the request to send an order is successful
-    ///   - onError: A callback to pass `VirtusizeError` back when the request to send an order is
-    ///    unsuccessful
-    public class func sendOrder(
+	/// The API request for sending an order to the server
+	///
+	/// - Parameters:
+	///   - order: An order to be send to the server
+	///   - onSuccess: A callback to be called when the request to send an order is successful
+	///   - onError: A callback to pass `VirtusizeError` back when the request to send an order is
+	///    unsuccessful
+	public class func sendOrder(
 		_ order: VirtusizeOrder,
 		onSuccess: (() -> Void)? = nil,
 		onError: ((VirtusizeError) -> Void)? = nil
@@ -145,5 +146,5 @@ public class Virtusize {
 			onSuccess: onSuccess,
 			onError: onError
 		)
-    }
+	}
 }

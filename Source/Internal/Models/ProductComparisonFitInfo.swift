@@ -25,7 +25,7 @@
 /// This structure wraps the fit info for product comparison between a user product and a store product
 internal struct ProductComparisonFitInfo {
 	/// The fit score of this user product to compare with the store product
-    let fitScore: Double
+	let fitScore: Double
 	/// The value is true if this user product is smaller than the store product
-    let isSmaller: Bool?
+	let isSmaller: Bool?
 }

@@ -25,7 +25,7 @@
 /// This structure represents the response for the recommendation API based on the user body profile
 public struct BodyProfileRecommendedSize: Codable {
 	/// The recommended size name
-    let sizeName: String
+	let sizeName: String
 
 	/// The store product that is associated with this recommendation
 	public var product: VirtusizeServerProduct?

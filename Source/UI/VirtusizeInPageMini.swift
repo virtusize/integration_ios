@@ -25,12 +25,12 @@
 /// This class is the custom Virtusize InPage Mini view that can be added in the client's layout file.
 public class VirtusizeInPageMini: VirtusizeInPageView {
 
-    /// The property to set the background color of the InPage Mini view
-    public var inPageMiniBackgroundColor: UIColor? {
-        didSet {
-            setStyle()
-        }
-    }
+	/// The property to set the background color of the InPage Mini view
+	public var inPageMiniBackgroundColor: UIColor? {
+		didSet {
+			setStyle()
+		}
+	}
 
 	/// The property to set the font size of the size check button
 	public var buttonFontSize: CGFloat? {
@@ -51,21 +51,21 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		setHorizontalMargins(view: view, margin: margin)
 	}
 
-    private let messageAndButtonMargin: CGFloat = 8
-    private let verticalMargin: CGFloat = 5
+	private let messageAndButtonMargin: CGFloat = 8
+	private let verticalMargin: CGFloat = 5
 
-    private let inPageMiniImageView: UIImageView = UIImageView()
-    private let inPageMiniMessageLabel: UILabel = UILabel()
-    private let inPageMiniSizeCheckButton: UIButton = UIButton()
+	private let inPageMiniImageView: UIImageView = UIImageView()
+	private let inPageMiniMessageLabel: UILabel = UILabel()
+	private let inPageMiniSizeCheckButton: UIButton = UIButton()
 
-    internal override func setup() {
-        addSubviews()
-        setConstraints()
-        setStyle()
+	internal override func setup() {
+		addSubviews()
+		setConstraints()
+		setStyle()
 
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickInPageViewAction)))
-        inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
-    }
+		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickInPageViewAction)))
+		inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
+	}
 
 	internal override func onProductDataCheck(_ notification: Notification) {
 		let productWithPDC = notification.object as? VirtusizeProduct
@@ -91,7 +91,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 					VirtusizeI18nLocalization.TrimType.ONELINE
 				)
 		).lineSpacing(self.verticalMargin/2)
-    }
+	}
 
 	internal override func showErrorScreen(_ notification: Notification) {
 		backgroundColor = .white
@@ -105,141 +105,142 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		isUserInteractionEnabled = false
 	}
 
-    private func addSubviews() {
-        addSubview(inPageMiniImageView)
-        addSubview(inPageMiniMessageLabel)
-        addSubview(inPageMiniSizeCheckButton)
-    }
+	private func addSubviews() {
+		addSubview(inPageMiniImageView)
+		addSubview(inPageMiniMessageLabel)
+		addSubview(inPageMiniSizeCheckButton)
+	}
 
-    private func setConstraints() {
-        inPageMiniImageView.translatesAutoresizingMaskIntoConstraints = false
-        inPageMiniMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-        inPageMiniSizeCheckButton.translatesAutoresizingMaskIntoConstraints = false
+	private func setConstraints() {
+		inPageMiniImageView.translatesAutoresizingMaskIntoConstraints = false
+		inPageMiniMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+		inPageMiniSizeCheckButton.translatesAutoresizingMaskIntoConstraints = false
 
-        let views = [
-            "inPageMiniImageView": inPageMiniImageView,
-            "messageLabel": inPageMiniMessageLabel,
-            "sizeCheckButton": inPageMiniSizeCheckButton
-        ]
-        let metrics = [
-            "horizontalMargin": defaultMargin,
-            "verticalMargin": verticalMargin,
-            "messageAndButtonMargin": messageAndButtonMargin
-        ]
+		let views = [
+			"inPageMiniImageView": inPageMiniImageView,
+			"messageLabel": inPageMiniMessageLabel,
+			"sizeCheckButton": inPageMiniSizeCheckButton
+		]
+		let metrics = [
+			"horizontalMargin": defaultMargin,
+			"verticalMargin": verticalMargin,
+			"messageAndButtonMargin": messageAndButtonMargin
+		]
 
-        // swiftlint:disable line_length
-        let horizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-horizontalMargin-[inPageMiniImageView]-0-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-horizontalMargin-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
+		// swiftlint:disable line_length
+		let horizontalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "H:|-horizontalMargin-[inPageMiniImageView]-0-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-horizontalMargin-|",
+			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			metrics: metrics,
+			views: views
+		)
 
-        let inPageMiniImageViewVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=verticalMargin)-[inPageMiniImageView(18)]-(>=verticalMargin)-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
+		let inPageMiniImageViewVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-(>=verticalMargin)-[inPageMiniImageView(18)]-(>=verticalMargin)-|",
+			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			metrics: metrics,
+			views: views
+		)
 
-        let messageLabelVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-verticalMargin-[messageLabel]-verticalMargin-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
+		let messageLabelVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-verticalMargin-[messageLabel]-verticalMargin-|",
+			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			metrics: metrics,
+			views: views
+		)
 
-        let sizeCheckButtonVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=verticalMargin)-[sizeCheckButton]-(>=verticalMargin)-|",
-            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-            metrics: metrics,
-            views: views
-        )
+		let sizeCheckButtonVerticalConstraints = NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-(>=verticalMargin)-[sizeCheckButton]-(>=verticalMargin)-|",
+			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+			metrics: metrics,
+			views: views
+		)
 
-        addConstraints(horizontalConstraints)
-        addConstraints(inPageMiniImageViewVerticalConstraints)
-        addConstraints(messageLabelVerticalConstraints)
-        addConstraints(sizeCheckButtonVerticalConstraints)
-        addConstraint(inPageMiniImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor))
-        addConstraint(inPageMiniSizeCheckButton.centerYAnchor.constraint(equalTo: self.centerYAnchor))
-    }
+		addConstraints(horizontalConstraints)
+		addConstraints(inPageMiniImageViewVerticalConstraints)
+		addConstraints(messageLabelVerticalConstraints)
+		addConstraints(sizeCheckButtonVerticalConstraints)
+		addConstraint(inPageMiniImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor))
+		addConstraint(inPageMiniSizeCheckButton.centerYAnchor.constraint(equalTo: self.centerYAnchor))
+	}
 
-    private func setStyle() {
-        backgroundColor = getBackgroundColor()
+	private func setStyle() {
+		backgroundColor = getBackgroundColor()
 
-        inPageMiniImageView.contentMode = .scaleAspectFit
+		inPageMiniImageView.contentMode = .scaleAspectFit
 
-        inPageMiniMessageLabel.numberOfLines = 0
-        inPageMiniMessageLabel.textColor = UIColor.white
-        inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
-        inPageMiniSizeCheckButton.backgroundColor = UIColor.white
-        inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
-        inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
+		inPageMiniMessageLabel.numberOfLines = 0
+		inPageMiniMessageLabel.textColor = UIColor.white
+		inPageMiniMessageLabel.setContentHuggingPriority(.required, for: .horizontal)
+		inPageMiniSizeCheckButton.backgroundColor = UIColor.white
+		inPageMiniSizeCheckButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 6)
+		inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
 
-        setupTextsStyle()
+		setupTextsStyle()
 
-        inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2
+		inPageMiniSizeCheckButton.layer.cornerRadius = inPageMiniSizeCheckButton.intrinsicContentSize.height / 2
 
-        let rightArrowImageTemplate = VirtusizeAssets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
-        inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .normal)
-        inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .highlighted)
-        inPageMiniSizeCheckButton.semanticContentAttribute = .forceRightToLeft
-        if inPageMiniBackgroundColor != nil {
-            inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = inPageMiniBackgroundColor
-        } else if style == .TEAL {
-            inPageMiniSizeCheckButton.setTitleColor(.vsTealColor, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = .vsTealColor
-        } else {
-            inPageMiniSizeCheckButton.setTitleColor(.vsGray900Color, for: .normal)
-            inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
-        }
-        inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-    }
+		let rightArrowImageTemplate = VirtusizeAssets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+		inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .normal)
+		inPageMiniSizeCheckButton.setImage(rightArrowImageTemplate, for: .highlighted)
+		inPageMiniSizeCheckButton.semanticContentAttribute = .forceRightToLeft
+		if inPageMiniBackgroundColor != nil {
+			inPageMiniSizeCheckButton.setTitleColor(inPageMiniBackgroundColor, for: .normal)
+			inPageMiniSizeCheckButton.imageView?.tintColor = inPageMiniBackgroundColor
+		} else if style == .TEAL {
+			inPageMiniSizeCheckButton.setTitleColor(.vsTealColor, for: .normal)
+			inPageMiniSizeCheckButton.imageView?.tintColor = .vsTealColor
+		} else {
+			inPageMiniSizeCheckButton.setTitleColor(.vsGray900Color, for: .normal)
+			inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
+		}
+		inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+	}
 
-    private func getBackgroundColor() -> UIColor {
-        if inPageMiniBackgroundColor != nil {
-            return inPageMiniBackgroundColor!
-        } else if style == .TEAL {
-            return .vsTealColor
-        } else {
-            return .vsGray900Color
-        }
-    }
+	private func getBackgroundColor() -> UIColor {
+		if inPageMiniBackgroundColor != nil {
+			return inPageMiniBackgroundColor!
+		} else if style == .TEAL {
+			return .vsTealColor
+		} else {
+			return .vsGray900Color
+		}
+	}
 
-    private func setupTextsStyle(messageLabelIsBold: Bool = false) {
-        let displayLanguage = Virtusize.params?.language
+	private func setupTextsStyle(messageLabelIsBold: Bool = false) {
+		let displayLanguage = Virtusize.params?.language
 		let messageTextSize = messageFontSize ?? 12
 		let buttonTextSize = buttonFontSize ?? 10
-        switch displayLanguage {
-        case .ENGLISH:
-            inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
-        case .JAPANESE:
-            inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
-        case .KOREAN:
-            inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
-        default:
-            inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-            inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
-        }
-    }
+		switch displayLanguage {
+			// swiftlint:disable switch_case_alignment
+			case .ENGLISH:
+				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+			case .JAPANESE:
+				inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
+			case .KOREAN:
+				inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
+			default:
+				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+		}
+	}
 
-    private func setLoadingScreen(loading: Bool) {
-        backgroundColor = loading ? .white : getBackgroundColor()
-        inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
-        inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
-        setupTextsStyle(messageLabelIsBold: loading)
-        if loading {
-            startLoadingTextAnimation(
-                label: inPageMiniMessageLabel,
-                text: Localization.shared.localize("inpage_loading_text")
-            )
-        } else {
-            stopLoadingTextAnimation()
-        }
-        inPageMiniSizeCheckButton.isHidden = loading ? true: false
-    }
+	private func setLoadingScreen(loading: Bool) {
+		backgroundColor = loading ? .white : getBackgroundColor()
+		inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
+		inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
+		setupTextsStyle(messageLabelIsBold: loading)
+		if loading {
+			startLoadingTextAnimation(
+				label: inPageMiniMessageLabel,
+				text: Localization.shared.localize("inpage_loading_text")
+			)
+		} else {
+			stopLoadingTextAnimation()
+		}
+		inPageMiniSizeCheckButton.isHidden = loading ? true: false
+	}
 }

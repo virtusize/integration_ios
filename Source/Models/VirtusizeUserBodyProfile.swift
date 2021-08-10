@@ -25,13 +25,13 @@
 /// This class represents the response of the API request to get the user body profile data
 public class VirtusizeUserBodyProfile: Codable {
 	/// The user's gender
-    let gender: String
+	let gender: String
 	/// The user's age
-    let age: Int?
+	let age: Int?
 	/// The user's height
-    let height: Int?
+	let height: Int?
 	/// The user's weight
-    let weight: String?
+	let weight: String?
 	/// The user's body measurement data, such as hip, bust, waist and so on.
-    let bodyData: [String: Int?]?
+	let bodyData: [String: Int?]?
 }

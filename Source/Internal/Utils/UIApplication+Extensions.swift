@@ -25,23 +25,23 @@
 #if !os(watchOS)
 internal extension UIApplication {
 
-    /// A safe accessor for `UIApplication.shared`
-    ///
-    /// - Note: `UIApplication.shared` is not supported under app extension. It needs to be accessed in a safe way.
-    static var safeShared: UIApplication? {
-        let sharedSelector = NSSelectorFromString("sharedApplication")
-        guard UIApplication.responds(to: sharedSelector) else {
-            return nil
-        }
-        return UIApplication.perform(sharedSelector)?.takeUnretainedValue() as? UIApplication
-    }
+	/// A safe accessor for `UIApplication.shared`
+	///
+	/// - Note: `UIApplication.shared` is not supported under app extension. It needs to be accessed in a safe way.
+	static var safeShared: UIApplication? {
+		let sharedSelector = NSSelectorFromString("sharedApplication")
+		guard UIApplication.responds(to: sharedSelector) else {
+			return nil
+		}
+		return UIApplication.perform(sharedSelector)?.takeUnretainedValue() as? UIApplication
+	}
 
-    /// A safe accessor to call the function that opens a URL
-    func safeOpenURL(_ url: URL) {
-        guard self.canOpenURL(url) else { return }
-        guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
-            return
-        }
-    }
+	/// A safe accessor to call the function that opens a URL
+	func safeOpenURL(_ url: URL) {
+		guard self.canOpenURL(url) else { return }
+		guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
+			return
+		}
+	}
 }
 #endif

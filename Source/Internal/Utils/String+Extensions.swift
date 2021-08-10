@@ -23,34 +23,32 @@
 //
 
 internal extension NSAttributedString {
-
-    /// Adds the line spacing to an attributed string
-    ///
-    /// - Parameter spacing: The line spacing in CGFloat
-    func lineSpacing(_ spacing: CGFloat) -> NSAttributedString {
-        let attributedString = NSMutableAttributedString(attributedString: self)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineBreakMode = .byTruncatingTail
-        paragraphStyle.lineSpacing = spacing
-        attributedString.addAttribute(
-            .paragraphStyle,
-            value: paragraphStyle,
-            range: NSRange(location: 0, length: string.count)
-        )
-        return NSAttributedString(attributedString: attributedString)
-    }
+	/// Adds the line spacing to an attributed string
+	///
+	/// - Parameter spacing: The line spacing in CGFloat
+	func lineSpacing(_ spacing: CGFloat) -> NSAttributedString {
+		let attributedString = NSMutableAttributedString(attributedString: self)
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineBreakMode = .byTruncatingTail
+		paragraphStyle.lineSpacing = spacing
+		attributedString.addAttribute(
+			.paragraphStyle,
+			value: paragraphStyle,
+			range: NSRange(location: 0, length: string.count)
+		)
+		return NSAttributedString(attributedString: attributedString)
+	}
 }
 
 internal extension String {
-
-    /// Trims the text from i18n localization
-    ///
-    /// - Parameter trimType: `VirtusizeI18nLocalization.TrimType`
-    func trimI18nText(
-        _ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
-    ) -> String {
-        return self.replacingOccurrences(of: "<br>", with: "")
+	/// Trims the text from i18n localization
+	///
+	/// - Parameter trimType: `VirtusizeI18nLocalization.TrimType`
+	func trimI18nText(
+		_ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
+	) -> String {
+		return self.replacingOccurrences(of: "<br>", with: "")
 			.replacingOccurrences(of: "%{boldStart}", with: trimType.rawValue)
-            .replacingOccurrences(of: "%{boldEnd}", with: "")
-    }
+			.replacingOccurrences(of: "%{boldEnd}", with: "")
+	}
 }

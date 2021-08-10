@@ -25,10 +25,10 @@
 /// This class to used to get UIFonts from font files
 class Font {
 
-    /// This enum contains all available font weights used in this SDK
-    internal enum FontWeight: String {
-        case regular = "-Regular"
-        case bold = "-Bold"
+	/// This enum contains all available font weights used in this SDK
+	internal enum FontWeight: String {
+		case regular = "-Regular"
+		case bold = "-Bold"
 
 		var uiFontWeight: UIFont.Weight {
 			if self == .regular {
@@ -37,57 +37,57 @@ class Font {
 				return .bold
 			}
 		}
-    }
+	}
 
-    /// This enum contains all available font names used in this SDK
-    private enum FontName: String {
-        case notoSansCJKJP = "NotoSansCJKJP"
-        case notoSansCJKKR = "NotoSansCJKKR"
-    }
+	/// This enum contains all available font names used in this SDK
+	private enum FontName: String {
+		case notoSansCJKJP = "NotoSansCJKJP"
+		case notoSansCJKKR = "NotoSansCJKKR"
+	}
 
-    static func system(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+	static func system(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
 		return UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
-    }
+	}
 
-    static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-        return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
-    }
+	static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
+	}
 
-    static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-        return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
-    }
+	static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
+	}
 
-    private static func font(fontName: FontName, type: String, weight: FontWeight, size: CGFloat) -> UIFont {
-        let fontFileName = fontName.rawValue + weight.rawValue
-        var font = UIFont(name: fontFileName, size: size)
+	private static func font(fontName: FontName, type: String, weight: FontWeight, size: CGFloat) -> UIFont {
+		let fontFileName = fontName.rawValue + weight.rawValue
+		var font = UIFont(name: fontFileName, size: size)
 
-        if let existedFont = font {
-            return existedFont
-        }
+		if let existedFont = font {
+			return existedFont
+		}
 
-        if register(fontFileName: fontFileName, type: type) {
-            font = UIFont(name: fontFileName, size: size)
-        }
+		if register(fontFileName: fontFileName, type: type) {
+			font = UIFont(name: fontFileName, size: size)
+		}
 
 		return font ?? UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
-    }
+	}
 
-    /// Registers a specified graphics font
-    /// - Parameters:
-    ///   - fontFileName: The font file name
-    ///   - type: The font file type, such as otf or ttf
-    private static func register(fontFileName: String, type: String) -> Bool {
-        guard
-            let path = Bundle(for: self).path(forResource: fontFileName, ofType: type),
-            let data = NSData(contentsOfFile: path),
-            let dataProvider = CGDataProvider(data: data),
-            let fontReference = CGFont(dataProvider)
-            else {
-                return false
-        }
+	/// Registers a specified graphics font
+	/// - Parameters:
+	///   - fontFileName: The font file name
+	///   - type: The font file type, such as otf or ttf
+	private static func register(fontFileName: String, type: String) -> Bool {
+		guard
+			let path = Bundle(for: self).path(forResource: fontFileName, ofType: type),
+			let data = NSData(contentsOfFile: path),
+			let dataProvider = CGDataProvider(data: data),
+			let fontReference = CGFont(dataProvider)
+		else {
+			return false
+		}
 
-        var errorRef: Unmanaged<CFError>?
+		var errorRef: Unmanaged<CFError>?
 
-        return !(CTFontManagerRegisterGraphicsFont(fontReference, &errorRef) == false)
-    }
+		return !(CTFontManagerRegisterGraphicsFont(fontReference, &errorRef) == false)
+	}
 }

@@ -23,37 +23,37 @@
 //
 
 public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProtocol {
-    /// The property to set the Virtusize view style that this SDK provides
-    public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
-        didSet {
-            setup()
-        }
-    }
+	/// The property to set the Virtusize view style that this SDK provides
+	public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
+		didSet {
+			setup()
+		}
+	}
 
-    public var presentingViewController: UIViewController?
-    public var messageHandler: VirtusizeMessageHandler?
+	public var presentingViewController: UIViewController?
+	public var messageHandler: VirtusizeMessageHandler?
 	public var product: VirtusizeProduct?
 	public var serverProduct: VirtusizeServerProduct?
 
 	internal var virtusizeEventHandler: VirtusizeEventHandler?
-    internal let defaultMargin: CGFloat = 8
-    internal var loadingTextTimer: Timer?
+	internal let defaultMargin: CGFloat = 8
+	internal var loadingTextTimer: Timer?
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
 		virtusizeEventHandler = self
-        isHidden = true
-        setup()
+		isHidden = true
+		setup()
 		addNotificationObserver()
-    }
+	}
 
-    public override init(frame: CGRect) {
-        super.init(frame: .zero)
+	public override init(frame: CGRect) {
+		super.init(frame: .zero)
 		virtusizeEventHandler = self
-        isHidden = true
-        setup()
+		isHidden = true
+		setup()
 		addNotificationObserver()
-    }
+	}
 
 	private func addNotificationObserver() {
 		NotificationCenter.default.addObserver(
@@ -99,7 +99,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 
 	@objc internal func onStoreProduct(_ notification: Notification) {
 		guard let product = notification.object as? VirtusizeServerProduct,
-			self.product?.externalId == product.externalId else {
+			  self.product?.externalId == product.externalId else {
 			return
 		}
 		self.serverProduct = product
@@ -111,47 +111,47 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	/// A parent function for showing the error screen
 	@objc internal func showErrorScreen(_ notification: Notification) {}
 
-    internal func setup() {
+	internal func setup() {
 		virtusizeEventHandler = self
 		isHidden = true
 	}
 
-    internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: self,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: view,
-                attribute: .leading,
-                multiplier: 1,
-                constant: margin
-            )
-        )
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: view,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: margin
-            )
-        )
-    }
+	internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
+		view.addConstraint(
+			NSLayoutConstraint(
+				item: self,
+				attribute: .leading,
+				relatedBy: .equal,
+				toItem: view,
+				attribute: .leading,
+				multiplier: 1,
+				constant: margin
+			)
+		)
+		view.addConstraint(
+			NSLayoutConstraint(
+				item: view,
+				attribute: .trailing,
+				relatedBy: .equal,
+				toItem: self,
+				attribute: .trailing,
+				multiplier: 1,
+				constant: margin
+			)
+		)
+	}
 
-    @objc internal func clickInPageViewAction() {
+	@objc internal func clickInPageViewAction() {
 		VirtusizeRepository.shared.lastProductOnVirtusizeWebView = self.serverProduct
 		openVirtusizeWebView(
 			product: self.product,
 			eventHandler: virtusizeEventHandler
 		)
-    }
+	}
 
-    internal func startLoadingTextAnimation(label: UILabel, text: String) {
-        var tempDots = 0
-        label.text = text
+	internal func startLoadingTextAnimation(label: UILabel, text: String) {
+		var tempDots = 0
+		label.text = text
 		if loadingTextTimer == nil {
 			loadingTextTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
 				if tempDots == 3 {
@@ -163,12 +163,12 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 				}
 			}
 		}
-    }
+	}
 
-    internal func stopLoadingTextAnimation() {
+	internal func stopLoadingTextAnimation() {
 		self.loadingTextTimer?.invalidate()
 		self.loadingTextTimer = nil
-    }
+	}
 }
 
 extension VirtusizeInPageView: VirtusizeEventHandler {

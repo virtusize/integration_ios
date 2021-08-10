@@ -322,9 +322,9 @@ extension VirtusizeWebView: WKNavigationDelegate {
 		completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Swift.Void
 	) {
 		guard wkNavigationDelegate?.webView?(
-				webView,
-				didReceive: challenge,
-				completionHandler: completionHandler
+			webView,
+			didReceive: challenge,
+			completionHandler: completionHandler
 		) != nil else {
 			completionHandler(.rejectProtectionSpace, nil)
 			return

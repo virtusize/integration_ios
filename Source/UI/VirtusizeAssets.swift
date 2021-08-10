@@ -57,7 +57,7 @@ final public class VirtusizeAssets {
 	internal static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
 		var placeholderImage = UIImage(bundleNamed: "\(productType)")
 		if let style = style,
-			let productTypeWithStyleImage = UIImage(bundleNamed: "\(productType)_\(style)") {
+		   let productTypeWithStyleImage = UIImage(bundleNamed: "\(productType)_\(style)") {
 			placeholderImage = productTypeWithStyleImage
 		}
 		return placeholderImage

@@ -29,12 +29,12 @@ class ProductViewController: UIViewController {
 	let externalIDList = [
 		"vs_dress",
 		"vs_top",
-		 "vs_shirt",
-		 "vs_coat",
-		 "vs_jacket",
-		 "vs_sweater",
-		 "vs_skirt",
-		 "vs_pants"
+		"vs_shirt",
+		"vs_coat",
+		"vs_jacket",
+		"vs_sweater",
+		"vs_skirt",
+		"vs_pants"
 	]
 	public convenience init() {
 		self.init(nibName: nil, bundle: nil)

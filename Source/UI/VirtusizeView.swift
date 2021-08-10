@@ -36,7 +36,7 @@ public protocol VirtusizeView {
 /// Extension functions for `VirtusizeView`
 extension VirtusizeView {
 
-    /// Opens the Virtusize web view
+	/// Opens the Virtusize web view
 	internal func openVirtusizeWebView(
 		product: VirtusizeProduct? = nil,
 		eventHandler: VirtusizeEventHandler? = nil
@@ -47,7 +47,7 @@ extension VirtusizeView {
 			eventHandler: eventHandler,
 			processPool: Virtusize.processPool
 		) {
-            presentingViewController?.present(virtusize, animated: true, completion: nil)
-        }
-    }
+			presentingViewController?.present(virtusize, animated: true, completion: nil)
+		}
+	}
 }

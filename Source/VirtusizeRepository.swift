@@ -257,13 +257,14 @@ internal class VirtusizeRepository: NSObject {
 		guard let product = product ?? lastProductOnVirtusizeWebView else {
 			return
 		}
+		// swiftlint:disable switch_case_alignment
 		switch type {
-		case .compareProduct:
-			Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, nil)
-		case .body:
-			Virtusize.updateInPageViews = (product, nil, bodyProfileRecommendedSize)
-		default:
-			Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+			case .compareProduct:
+				Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, nil)
+			case .body:
+				Virtusize.updateInPageViews = (product, nil, bodyProfileRecommendedSize)
+			default:
+				Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
 		}
 	}
 

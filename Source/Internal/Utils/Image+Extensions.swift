@@ -24,30 +24,30 @@
 
 internal extension UIImage {
 
-    /// Creates a `UIImage` object in the Virtusize framework bundle.
-    ///
-    /// - Parameter name: The image name.
-    convenience init?(bundleNamed name: String) {
+	/// Creates a `UIImage` object in the Virtusize framework bundle.
+	///
+	/// - Parameter name: The image name.
+	convenience init?(bundleNamed name: String) {
 		self.init(named: name, in: BundleLoader.virtusizeResourceBundle, compatibleWith: nil)
-    }
+	}
 
-    /// Adds the padding to a `UIImage`
-    ///
-    /// - Parameter inset: the padding in CGFloat
-    func withPadding(inset: CGFloat) -> UIImage? {
-        return withInsets(insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
-    }
+	/// Adds the padding to a `UIImage`
+	///
+	/// - Parameter inset: the padding in CGFloat
+	func withPadding(inset: CGFloat) -> UIImage? {
+		return withInsets(insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
+	}
 
-    private func withInsets(insets: UIEdgeInsets) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(
-            CGSize(width: self.size.width + insets.left + insets.right,
-                   height: self.size.height + insets.top + insets.bottom), false, self.scale)
-        let origin = CGPoint(x: insets.left, y: insets.top)
-        self.draw(at: origin)
-        guard let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
-        }
-        UIGraphicsEndImageContext()
-        return imageWithInsets
-    }
+	private func withInsets(insets: UIEdgeInsets) -> UIImage? {
+		UIGraphicsBeginImageContextWithOptions(
+			CGSize(width: self.size.width + insets.left + insets.right,
+				   height: self.size.height + insets.top + insets.bottom), false, self.scale)
+		let origin = CGPoint(x: insets.left, y: insets.top)
+		self.draw(at: origin)
+		guard let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext() else {
+			return nil
+		}
+		UIGraphicsEndImageContext()
+		return imageWithInsets
+	}
 }

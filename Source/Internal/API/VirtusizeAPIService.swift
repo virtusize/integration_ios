@@ -135,8 +135,8 @@ internal class VirtusizeAPIService {
 
 		guard apiResponse!.error == nil else {
 			apiResponse!.virtusizeError = VirtusizeError.apiRequestError(
-			request.url,
-			apiResponse!.error!.localizedDescription
+				request.url,
+				apiResponse!.error!.localizedDescription
 			)
 			return apiResponse
 		}
@@ -339,16 +339,16 @@ internal class VirtusizeAPIService {
 	/// - Returns: the i18 localization texts in the type of `VirtusizeI18nLocalization`
 	internal static func getI18nTextsAsync() -> APIResult<VirtusizeI18nLocalization> {
 		guard let virtusizeParams = Virtusize.params,
-			let request = APIRequest.getI18n(
+			  let request = APIRequest.getI18n(
 				langCode: virtusizeParams.language.rawValue
-			) else {
+			  ) else {
 			return .failure(nil)
 		}
 
 		let apiResponse = VirtusizeAPIService.performAsync(request)
 
 		guard apiResponse?.virtusizeError == nil,
-			let data = apiResponse?.data else {
+			  let data = apiResponse?.data else {
 			return .failure(apiResponse?.code, apiResponse?.virtusizeError)
 		}
 
