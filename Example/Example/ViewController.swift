@@ -51,7 +51,7 @@ class ViewController: UIViewController {
                                                object: Virtusize.self)
 
         // Set up the product information in order to populate the Virtusize view
-		Virtusize.product = VirtusizeProduct(
+		let product = VirtusizeProduct(
             externalId: "vs_dress",
             imageURL: URL(string: "http://www.example.com/image.jpg")
         )
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
 
         // MARK: VirtusizeButton
         // 1. Set up checkTheFitButton that is added in Interface Builder
-        Virtusize.setNewVirtusizeView(self, checkTheFitButton)
+		checkTheFitButton.bindVirtusize(self, product: product)
         // You can set up the Virtusize button style
         checkTheFitButton.style = .TEAL
 
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
         // 2. Add the VirtusizeButton programmatically
         let checkTheFitButton2 = VirtusizeButton()
         view.addSubview(checkTheFitButton2)
-        Virtusize.setNewVirtusizeView(self, checkTheFitButton2)
+		checkTheFitButton2.bindVirtusize(self, product: product)
         checkTheFitButton2.style = .BLACK
         // Set up constraints if needed
         checkTheFitButton2.translatesAutoresizingMaskIntoConstraints = false
@@ -136,6 +136,8 @@ class ViewController: UIViewController {
 		nextProductButton.backgroundColor = UIColor.black
 		nextProductButton.setTitle("Go to next product page", for: .normal)
 		nextProductButton.addTarget(self, action: #selector(goToNextProduct), for: .touchUpInside)
+
+		Virtusize.loadVirtusize(product: product)
 
         // MARK: The Order API
         sendOrderSample()

@@ -67,14 +67,14 @@ public class Virtusize {
 	/// The private property for product
 	private static var privateProduct: VirtusizeProduct?
 	/// The Virtusize product to get the value from the`productDataCheck` request
-	public static var product: VirtusizeProduct? {
+	internal static var product: VirtusizeProduct? {
 		set {
 			guard let product = newValue else {
 				return
 			}
 
 			privateProduct = product
-			
+
 			dispatchQueue.async {
 				virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
 					if let productWithPDCData = productWithPDCData {
@@ -168,14 +168,8 @@ public class Virtusize {
 		activeVirtusizeViews = virtusizeViews.filter { $0.presentingViewController == any as? UIViewController }
     }
 
-	public class func setNewVirtusizeView(
-		_ any: Any,
-		_ view: NewVirtusizeView
-	) {
-		var mutableView = view
-		mutableView.messageHandler = any as? VirtusizeMessageHandler
-		mutableView.presentingViewController = any as? UIViewController
-		mutableView.product = product
+	public class func loadVirtusize(product: VirtusizeProduct) {
+		Virtusize.product = product
 	}
 
     /// The API request for sending an order to the server

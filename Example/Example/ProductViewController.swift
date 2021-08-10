@@ -47,7 +47,7 @@ class ProductViewController: UIViewController {
 		let randomExternalID = externalIDList.randomElement()!
 		self.navigationItem.title = "Virtusize Product \(randomExternalID)"
 
-		Virtusize.product = VirtusizeProduct(
+		let product = VirtusizeProduct(
 			externalId: randomExternalID,
 			imageURL: URL(string: "http://www.example.com/image.jpg")
 		)
@@ -58,7 +58,7 @@ class ProductViewController: UIViewController {
 		checkTheFitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
 		checkTheFitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
 
-		Virtusize.setNewVirtusizeView(self, checkTheFitButton)
+		checkTheFitButton.bindVirtusize(self, product: product)
 		checkTheFitButton.style = .TEAL
 
 		let inPageStandard = VirtusizeInPageStandard()
@@ -91,6 +91,8 @@ class ProductViewController: UIViewController {
 		inPageMini.translatesAutoresizingMaskIntoConstraints = false
 		inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		inPageMini.topAnchor.constraint(equalTo: inPageStandard.bottomAnchor, constant: 16).isActive = true
+
+		Virtusize.loadVirtusize(product: product)
 
 		let nextProductButton = UIButton()
 		view.addSubview(nextProductButton)

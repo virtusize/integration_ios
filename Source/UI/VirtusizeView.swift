@@ -89,9 +89,33 @@ extension VirtusizeView {
 	}
 }
 
+/// A protocol for the Virtusize specific views such as `VirtusizeButton` and `VirtusizeInPageView`
 public protocol NewVirtusizeView {
 	var style: VirtusizeViewStyle { get }
 	var presentingViewController: UIViewController? { get set }
 	var messageHandler: VirtusizeMessageHandler? { get set }
 	var product: VirtusizeProduct? { get set }
+	var serverProduct: VirtusizeServerProduct? { get set }
+
+	func bindVirtusize(
+		_ any: Any,
+		product: VirtusizeProduct
+	)
+}
+
+/// Extension functions for `VirtusizeView`
+extension NewVirtusizeView {
+	/// Opens the Virtusize web view
+	internal func openVirtusizeWebView(
+		product: VirtusizeProduct? = nil,
+		eventHandler: VirtusizeEventHandler? = nil
+	) {
+		if let viewController = VirtusizeWebViewController(
+			product: product,
+			messageHandler: messageHandler,
+			eventHandler: eventHandler,
+			processPool: Virtusize.processPool) {
+			presentingViewController?.present(viewController, animated: true)
+		}
+	}
 }

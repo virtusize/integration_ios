@@ -25,10 +25,9 @@
 /// This class is the custom Virtusize button that is added in the client's layout file.
 public class VirtusizeButton: UIButton, NewVirtusizeView {
 	public var presentingViewController: UIViewController?
-
 	public var messageHandler: VirtusizeMessageHandler?
-
 	public var product: VirtusizeProduct?
+	public var serverProduct: VirtusizeServerProduct?
 
 	override public var isHighlighted: Bool {
 		didSet {
@@ -107,12 +106,17 @@ public class VirtusizeButton: UIButton, NewVirtusizeView {
 		addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
 	}
 
+	public func bindVirtusize(_ any: Any, product: VirtusizeProduct) {
+		messageHandler = any as? VirtusizeMessageHandler
+		presentingViewController = any as? UIViewController
+		self.product = product
+	}
+
 	@objc private func clickButtonAction() {
-		if let viewController = VirtusizeWebViewController(
+		openVirtusizeWebView(
 			product: product,
-			messageHandler: messageHandler,
-			processPool: Virtusize.processPool) {
-			presentingViewController?.present(viewController, animated: true)
-		}
+			// Add eventHandler
+			eventHandler: nil
+		)
 	}
 }
