@@ -1,7 +1,7 @@
 //
-//  VirtusizeView.swift
+//  VirtusizeNotification.swift
 //
-//  Copyright (c) 2020 Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +22,9 @@
 //  THE SOFTWARE.
 //
 
-import WebKit
-
-/// A protocol for the Virtusize specific views such as `VirtusizeButton` and `VirtusizeInPageView`
-public protocol VirtusizeView {
-	var style: VirtusizeViewStyle { get }
-	var presentingViewController: UIViewController? { get set }
-	var messageHandler: VirtusizeMessageHandler? { get set }
-	var product: VirtusizeProduct? { get set }
-	var serverProduct: VirtusizeServerProduct? { get set }
-}
-
-/// Extension functions for `VirtusizeView`
-extension VirtusizeView {
-
-    /// Opens the Virtusize web view
-	internal func openVirtusizeWebView(
-		product: VirtusizeProduct? = nil,
-		eventHandler: VirtusizeEventHandler? = nil
-	) {
-		if let virtusize = VirtusizeWebViewController(
-			product: product,
-			messageHandler: messageHandler,
-			eventHandler: eventHandler,
-			processPool: Virtusize.processPool
-		) {
-            presentingViewController?.present(virtusize, animated: true, completion: nil)
-        }
-    }
+extension Notification.Name {
+	static let productDataCheck = Notification.Name("productDataCheck")
+	static let storeProduct = Notification.Name("storeProduct")
+	static let recommendationData = Notification.Name("recommendationData")
+	static let inPageError = Notification.Name("inPageError")
 }

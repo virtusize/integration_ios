@@ -53,67 +53,15 @@ public class Virtusize {
     public static var productDataCheckDidFail = Notification.Name("VirtusizeProductDataCheckDidFail")
     public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
 
-	/// The array of `VirtusizeView` that clients use on their mobile application
-	internal static var virtusizeViews: [VirtusizeView] = []
-
 	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
 
 	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
 
-	/// The private property for product
-	private static var privateProduct: VirtusizeProduct?
-	/// The Virtusize product to get the value from the`productDataCheck` request
-	internal static var product: VirtusizeProduct? {
-		set {
-			guard let product = newValue else {
-				return
-			}
-
-			privateProduct = product
-
-			dispatchQueue.async {
-				virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
-					if let productWithPDCData = productWithPDCData {
-						privateProduct = productWithPDCData
-						DispatchQueue.main.async {
-							for virtusizeView in virtusizeViews {
-								(virtusizeView as? VirtusizeInPageView)?.setup()
-								virtusizeView.onProductDataCheck(product: productWithPDCData)
-							}
-						}
-
-						virtusizeRepository.fetchInitialData(
-							productId: productWithPDCData.productCheckData?.productDataId
-						) { storeProduct in
-							DispatchQueue.main.async {
-								for virtusizeView in virtusizeViews {
-									virtusizeView.onStoreProduct(product: storeProduct)
-								}
-							}
-							virtusizeRepository.updateUserSession()
-							virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: storeProduct)
-							virtusizeRepository.updateInPageRecommendation(product: storeProduct)
-						}
-					} else {
-						DispatchQueue.main.async {
-							for virtusizeView in virtusizeViews {
-								(virtusizeView as? UIView)?.isHidden = true
-							}
-						}
-					}
-				}
-			}
-		}
-		get {
-			return privateProduct
-		}
-	}
-
-	typealias ProductRecommendationData = (
-		VirtusizeServerProduct,
-		SizeComparisonRecommendedSize?,
-		BodyProfileRecommendedSize?
+	internal typealias ProductRecommendationData = (
+		serverProduct: VirtusizeServerProduct,
+		sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
+		bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	)
 
 	/// The private property for updating InPage views
@@ -121,15 +69,9 @@ public class Virtusize {
 	/// The property to be set to update InPage views.
 	internal static var updateInPageViews: ProductRecommendationData? {
 		set {
-			if newValue?.1 != nil || newValue?.2 != nil {
-				DispatchQueue.main.async {
-					for virtusizeView in virtusizeViews {
-						(virtusizeView as? VirtusizeInPageView)?.setInPageRecommendation(
-							newValue!.0, newValue?.1, newValue?.2
-						)
-					}
-					self.updateInPageViews = (newValue!.0, nil, nil)
-				}
+			_updateInPageViews = newValue
+			DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .recommendationData, object: _updateInPageViews)
 			}
 		}
 		get {
@@ -142,13 +84,9 @@ public class Virtusize {
 	/// The property to be set to show the InPage error screen
 	internal static var showInPageError: Bool {
 		set {
-			if newValue == true {
-				DispatchQueue.main.async {
-					for virtusizeView in virtusizeViews {
-						(virtusizeView as? VirtusizeInPageView)?.showErrorScreen()
-					}
-					self.showInPageError = false
-				}
+			_showInPageError = newValue
+			DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .inPageError, object: nil)
 			}
 		}
 		get {
@@ -157,6 +95,26 @@ public class Virtusize {
 	}
 
     // MARK: - Methods
+
+	public class func load(product: VirtusizeProduct) {
+		dispatchQueue.async {
+			virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
+				DispatchQueue.main.async {
+					NotificationCenter.default.post(name: .productDataCheck, object: productWithPDCData)
+				}
+				if let productWithPDCData = productWithPDCData {
+					virtusizeRepository.fetchInitialData(
+						productId: productWithPDCData.productCheckData?.productDataId
+					) { storeProduct in
+						NotificationCenter.default.post(name: .storeProduct, object: storeProduct)
+						virtusizeRepository.updateUserSession()
+						virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: storeProduct)
+						virtusizeRepository.updateInPageRecommendation(product: storeProduct)
+					}
+				}
+			}
+		}
+	}
 
     /// Sets up the VirtusizeView and adds it to `virtusizeViews`
 	public class func setVirtusizeView(
@@ -168,12 +126,7 @@ public class Virtusize {
         mutableView.messageHandler = any as? VirtusizeMessageHandler
         mutableView.presentingViewController = any as? UIViewController
 		mutableView.product = product
-		virtusizeViews.append(mutableView)
     }
-
-	public class func loadVirtusize(product: VirtusizeProduct) {
-		Virtusize.product = product
-	}
 
     /// The API request for sending an order to the server
     ///

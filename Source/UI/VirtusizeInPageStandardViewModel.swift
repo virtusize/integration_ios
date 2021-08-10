@@ -55,7 +55,10 @@ internal final class VirtusizeInPageStandardViewModel {
 		}
 	}
 
-	func loadStoreProductImage(storeProduct: VirtusizeServerProduct) {
+	func loadStoreProductImage(
+		clientProductImageURL: URL?,
+		storeProduct: VirtusizeServerProduct
+	) {
 		guard currentExternalProductId != storeProduct.externalId || self.storeProductImageObservable.value == nil
 		else {
 			self.storeProductImageObservable.value = self.storeProductImageObservable.value
@@ -64,7 +67,7 @@ internal final class VirtusizeInPageStandardViewModel {
 		currentExternalProductId = storeProduct.externalId
 
 		dispatchQueue.async {
-			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: Virtusize.product?.imageURL).success {
+			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: clientProductImageURL).success {
 				self.storeProductImageObservable.value = VirtusizeProductImage(
 					image: clientProductImage,
 					source: .client

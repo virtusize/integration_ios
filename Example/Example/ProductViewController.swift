@@ -91,7 +91,8 @@ class ProductViewController: UIViewController {
 		inPageMini.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		inPageMini.topAnchor.constraint(equalTo: inPageStandard.bottomAnchor, constant: 16).isActive = true
 
-		Virtusize.loadVirtusize(product: product)
+		//
+		Virtusize.load(product: product)
 
 		let nextProductButton = UIButton()
 		view.addSubview(nextProductButton)

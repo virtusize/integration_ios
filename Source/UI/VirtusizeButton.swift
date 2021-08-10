@@ -52,6 +52,7 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 		super.init(coder: aDecoder)
 		virtusizeEventHandler = self
 		isHidden = true
+		addNotificationObserver()
 	}
 
 	public init() {
@@ -59,10 +60,43 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 		virtusizeEventHandler = self
 		isHidden = true
 		setStyle()
+		addNotificationObserver()
 	}
-	
-	deinit {
-		print("VirtusizeButton is dying!")
+
+	private func addNotificationObserver() {
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(onProductDataCheck(_:)),
+			name: .productDataCheck,
+			object: nil
+		)
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(onStoreProduct(_:)),
+			name: .storeProduct,
+			object: nil
+		)
+	}
+
+	@objc func onProductDataCheck(_ notification: Notification) {
+		guard let product = notification.object as? VirtusizeProduct else {
+			isHidden = true
+			return
+		}
+		guard self.product?.externalId == product.externalId else {
+			return
+		}
+		self.product = product
+		isHidden = false
+	}
+
+	@objc func onStoreProduct(_ notification: Notification) {
+		guard let product = notification.object as? VirtusizeServerProduct,
+			self.product?.externalId == product.externalId else {
+			return
+		}
+		self.serverProduct = product
 	}
 
 	/// Set up the style of `VirtusizeButton`
@@ -93,20 +127,6 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 		setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
 
 		addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
-	}
-
-	public func onProductDataCheck(product: VirtusizeProduct) {
-		guard self.product?.externalId == product.externalId else {
-			return
-		}
-		isHidden = false
-	}
-
-	public func onStoreProduct(product: VirtusizeServerProduct) {
-		guard self.product?.externalId == product.externalId else {
-			return
-		}
-		self.serverProduct = product
 	}
 
 	@objc private func clickButtonAction() {

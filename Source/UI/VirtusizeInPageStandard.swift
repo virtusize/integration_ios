@@ -83,9 +83,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 
 	private(set) var bestFitUserProduct: VirtusizeServerProduct?
 
-    public func setHorizontalMargin(view: UIView, margin: CGFloat) {
-        setHorizontalMargins(view: view, margin: margin)
-    }
+	/// The function to set the horizontal margin between the edges of the app screen and the InPage Standard view
+	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
+		setHorizontalMargins(view: view, margin: margin)
+	}
+
+	deinit {
+		unbind(to: viewModel)
+	}
 
     internal override func setup() {
         addSubviews()
@@ -107,8 +112,33 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		bind(to: viewModel)
     }
 
-	deinit {
-		unbind(to: viewModel)
+	internal override func onProductDataCheck(_ notification: Notification) {
+		let productWithPDC = notification.object as? VirtusizeProduct
+		guard self.product?.externalId == productWithPDC?.externalId else {
+			return
+		}
+		super.onProductDataCheck(notification)
+		setLoadingScreen(loading: true)
+	}
+
+	internal override func setInPageRecommendation(_ notification: Notification) {
+		guard let productRecommendationData = notification.object as? Virtusize.ProductRecommendationData,
+			  self.product?.externalId == productRecommendationData.serverProduct.externalId else {
+			return
+		}
+		self.sizeComparisonRecommendedSize = productRecommendationData.sizeComparisonRecommendedSize
+		self.bodyProfileRecommendedSize = productRecommendationData.bodyProfileRecommendedSize
+
+		bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
+
+		// If item to item recommendation is available, display two user and store product images side by side
+		if let bestFitUserProduct = bestFitUserProduct {
+			viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)
+		}
+		viewModel.loadStoreProductImage(
+			clientProductImageURL: product?.imageURL,
+			storeProduct: productRecommendationData.serverProduct
+		)
 	}
 
 	private func bind(to viewModel: VirtusizeInPageStandardViewModel) {
@@ -131,6 +161,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 				self!.setProductImages()
 			}
 		}
+	}
+
+	private func unbind(to viewModel: VirtusizeInPageStandardViewModel) {
+		viewModel.userProductImageObservable.remove(observer: self)
+		viewModel.storeProductImageObservable.remove(observer: self)
 	}
 
 	private func setProductImages() {
@@ -168,11 +203,6 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		)
 
 		setLoadingScreen(loading: false)
-	}
-
-	private func unbind(to viewModel: VirtusizeInPageStandardViewModel) {
-		viewModel.userProductImageObservable.remove(observer: self)
-		viewModel.storeProductImageObservable.remove(observer: self)
 	}
 
     private func addSubviews() {
@@ -433,34 +463,6 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         }
     }
 
-    public override func onProductDataCheck(product: VirtusizeProduct) {
-		guard self.product?.externalId == product.externalId else {
-			return
-		}
-		super.onProductDataCheck(product: product)
-        setLoadingScreen(loading: true)
-    }
-
-	public override func setInPageRecommendation(
-		_ serverProduct: VirtusizeServerProduct,
-		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
-		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
-	) {
-		guard self.serverProduct?.externalId == serverProduct.externalId else {
-			return
-		}
-		self.sizeComparisonRecommendedSize = sizeComparisonRecommendedSize
-		self.bodyProfileRecommendedSize = bodyProfileRecommendedSize
-
-		bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
-
-		// If item to item recommendation is available, display two user and store product images side by side
-		if let bestFitUserProduct = bestFitUserProduct {
-			viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)
-		}
-		viewModel.loadStoreProductImage(storeProduct: serverProduct)
-	}
-
 	private func adjustProductImageViewPosition(userProductImageSize: CGFloat, productImageViewOffset: CGFloat) {
 		// Remove all the constraints
 		if !allConstraints.isEmpty {
@@ -575,7 +577,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         }
     }
 
-	internal override func showErrorScreen() {
+	internal override func showErrorScreen(_ notification: Notification) {
         inPageStandardView.layer.shadowOpacity = 0
         inPageStandardView.isUserInteractionEnabled = false
 		vsIconImageView.isHidden = true

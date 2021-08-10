@@ -44,6 +44,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 		virtusizeEventHandler = self
         isHidden = true
         setup()
+		addNotificationObserver()
     }
 
     public override init(frame: CGRect) {
@@ -51,21 +52,69 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 		virtusizeEventHandler = self
         isHidden = true
         setup()
+		addNotificationObserver()
     }
 
-	public func onProductDataCheck(product: VirtusizeProduct) {
+	private func addNotificationObserver() {
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(onProductDataCheck(_:)),
+			name: .productDataCheck,
+			object: nil
+		)
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(onStoreProduct(_:)),
+			name: .storeProduct,
+			object: nil
+		)
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(setInPageRecommendation(_:)),
+			name: .recommendationData,
+			object: nil
+		)
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(showErrorScreen(_:)),
+			name: .inPageError,
+			object: nil
+		)
+	}
+
+	@objc internal func onProductDataCheck(_ notification: Notification) {
+		guard let product = notification.object as? VirtusizeProduct else {
+			isHidden = true
+			return
+		}
+		guard self.product?.externalId == product.externalId else {
+			return
+		}
 		self.product = product
 		isHidden = false
 	}
 
-	public func onStoreProduct(product: VirtusizeServerProduct) {
-		guard self.product?.externalId == product.externalId else {
+	@objc internal func onStoreProduct(_ notification: Notification) {
+		guard let product = notification.object as? VirtusizeServerProduct,
+			self.product?.externalId == product.externalId else {
 			return
 		}
 		self.serverProduct = product
 	}
 
-    internal func setup() {}
+	/// A parent function to set up InPage recommendation
+	@objc internal func setInPageRecommendation(_ notification: Notification) {}
+
+	/// A parent function for showing the error screen
+	@objc internal func showErrorScreen(_ notification: Notification) {}
+
+    internal func setup() {
+		virtusizeEventHandler = self
+		isHidden = true
+	}
 
     internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
         view.addConstraint(
@@ -99,16 +148,6 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 			eventHandler: virtusizeEventHandler
 		)
     }
-
-	/// A parent function to set up InPage recommendation
-	internal func setInPageRecommendation(
-		_ serverProduct: VirtusizeServerProduct,
-		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
-		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
-	) {}
-
-	/// A parent function for showing the error screen
-	internal func showErrorScreen() {}
 
     internal func startLoadingTextAnimation(label: UILabel, text: String) {
         var tempDots = 0
