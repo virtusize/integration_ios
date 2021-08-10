@@ -34,6 +34,9 @@ class ViewController: UIViewController {
     // swiftlint:disable function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
+
+		self.navigationItem.title = "Virtusize Example App"
+
         // NotificationCenter listener for debugging the initial product data check
         // - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
         // with the cause of the failure
@@ -48,7 +51,7 @@ class ViewController: UIViewController {
                                                object: Virtusize.self)
 
         // Set up the product information in order to populate the Virtusize view
-        Virtusize.product = VirtusizeProduct(
+		Virtusize.product = VirtusizeProduct(
             externalId: "vs_dress",
             imageURL: URL(string: "http://www.example.com/image.jpg")
         )
@@ -58,7 +61,7 @@ class ViewController: UIViewController {
 
         // MARK: VirtusizeButton
         // 1. Set up checkTheFitButton that is added in Interface Builder
-        Virtusize.setVirtusizeView(self, checkTheFitButton)
+        Virtusize.setNewVirtusizeView(self, checkTheFitButton)
         // You can set up the Virtusize button style
         checkTheFitButton.style = .TEAL
 
@@ -68,7 +71,7 @@ class ViewController: UIViewController {
         // 2. Add the VirtusizeButton programmatically
         let checkTheFitButton2 = VirtusizeButton()
         view.addSubview(checkTheFitButton2)
-        Virtusize.setVirtusizeView(self, checkTheFitButton2)
+        Virtusize.setNewVirtusizeView(self, checkTheFitButton2)
         checkTheFitButton2.style = .BLACK
         // Set up constraints if needed
         checkTheFitButton2.translatesAutoresizingMaskIntoConstraints = false
@@ -125,12 +128,28 @@ class ViewController: UIViewController {
 
 		webViewButton.addTarget(self, action: #selector(openWebView), for: .touchUpInside)
 
+		let nextProductButton = UIButton()
+		view.addSubview(nextProductButton)
+		nextProductButton.translatesAutoresizingMaskIntoConstraints = false
+		nextProductButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		nextProductButton.topAnchor.constraint(equalTo: webViewButton.bottomAnchor, constant: 16).isActive = true
+		nextProductButton.backgroundColor = UIColor.black
+		nextProductButton.setTitle("Go to next product page", for: .normal)
+		nextProductButton.addTarget(self, action: #selector(goToNextProduct), for: .touchUpInside)
+
         // MARK: The Order API
         sendOrderSample()
     }
 
 	@objc func openWebView() {
 		present(WebViewController(), animated: true)
+	}
+
+	@objc func goToNextProduct() {
+		let nextView = self.storyboard?.instantiateViewController(
+			withIdentifier: "ProductViewController"
+		) as? ProductViewController
+		self.navigationController?.pushViewController(nextView!, animated: true)
 	}
 
     /// Demonstrates how to send an order to the Virtusize server

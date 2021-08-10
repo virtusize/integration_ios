@@ -88,3 +88,10 @@ extension VirtusizeView {
 		return base
 	}
 }
+
+public protocol NewVirtusizeView {
+	var style: VirtusizeViewStyle { get }
+	var presentingViewController: UIViewController? { get set }
+	var messageHandler: VirtusizeMessageHandler? { get set }
+	var product: VirtusizeProduct? { get set }
+}

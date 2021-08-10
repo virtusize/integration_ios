@@ -22,7 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
 import WebKit
 
 /// The main class used by Virtusize clients to perform all available operations related to fit check
@@ -74,6 +73,8 @@ public class Virtusize {
 				return
 			}
 
+			privateProduct = product
+			
 			dispatchQueue.async {
 				virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
 					if let productWithPDCData = productWithPDCData {
@@ -83,6 +84,7 @@ public class Virtusize {
 								(virtusizeView as? VirtusizeInPageView)?.setup()
 								virtusizeView.isLoading()
 							}
+							NotificationCenter.default.post(name: .productDataCheck, object: productWithPDCData)
 						}
 
 						virtusizeRepository.fetchInitialData(productId: productWithPDCData.productCheckData?.productDataId) {
@@ -165,6 +167,16 @@ public class Virtusize {
         virtusizeViews.append(mutableView)
 		activeVirtusizeViews = virtusizeViews.filter { $0.presentingViewController == any as? UIViewController }
     }
+
+	public class func setNewVirtusizeView(
+		_ any: Any,
+		_ view: NewVirtusizeView
+	) {
+		var mutableView = view
+		mutableView.messageHandler = any as? VirtusizeMessageHandler
+		mutableView.presentingViewController = any as? UIViewController
+		mutableView.product = product
+	}
 
     /// The API request for sending an order to the server
     ///
