@@ -29,7 +29,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
   - [Carthage](#carthage)
 - [Setup](#setup)
   - [Initialization](#1-initialization)
-  - [Load Prodcut with Virtusize](#2-load-product-with-Virtusize)
+  - [Load Product with Virtusize](#2-load-product-with-Virtusize)
   - [Implement VirtusizeMessageHandler (Optional)](#3-implement-virtusizemessagehandler-optional)
   - [Allow Cookie Sharing (Optional)](#4-allow-cookie-sharing-optional)
   - [Listen to Product Data Check (Optional)](#5-listen-to-product-data-check-optional)
@@ -170,7 +170,7 @@ In the view controller for your product page, you will need to use `Virtusize.lo
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Declare a [VirtusizeProduct] variable, which will be passed to the `Virtusize` views in order to bind the product info
+    // Declare a `VirtusizeProduct` variable, which will be passed to the `Virtusize` views in order to bind the product info
     let product = VirtusizeProduct(
         // Set the product's external ID
         externalId: "vs_dress",
@@ -178,7 +178,7 @@ override func viewDidLoad() {
         imageURL: URL(string: "http://www.example.com/image.jpg")
     )
 
-    // Loads the product in order to populate the `Virtusize` views
+    // Load the product in order to populate the `Virtusize` views
     Virtusize.load(product: product)
 }
 ```
@@ -293,7 +293,7 @@ There are two default styles of the Virtusize Button in our Virtusize SDK.
 
   - You can also customize the button's style attributes. For example, the titlelabel's text, height, width, etc.
 
-**B. Connect the Virtusize button to the Virtusize API and the same** `VirtusizeProduct` **object that you have passed to** `Virtusize.load` **by using the `Virtusize.setVirtusizeView` method.**
+**B. Connect the Virtusize button, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API by using the `Virtusize.setVirtusizeView` method.**
 
 ```swift
 Virtusize.setVirtusizeView(self, virtusizeButton, product: product)
@@ -385,7 +385,7 @@ There are two types of InPage in the Virtusize SDK.
     inPageStandard.messageFontSize = 12
     ```
 
-- **Connect the Virtusize InPage Standard and the same** `VirtusizeProduct` **object that you have passed to ** `Virtusize.load` **to the Virtusize API by using the  `Virtusize.setVirtusizeView` method.**
+- **Connect the Virtusize InPage Standard, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API by using the  `Virtusize.setVirtusizeView` method.**
 
   ```swift
   Virtusize.setVirtusizeView(self, inPageStandard, product: product)
@@ -492,7 +492,7 @@ This is a mini version of InPage which can be placed in your application. The di
     inPageMini.buttonFontSize = 10
     ```
 
-- **Connect the Virtusize InPage Mini to the Virtusize API and the same** `VirtusizeProduct` **object that you have passed to** `Virtusize.load`  **by using the  `Virtusize.setVirtusizeView` method.**
+- **Connect the Virtusize InPage Mini, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API  by using the  `Virtusize.setVirtusizeView` method.**
 
   ```swift
   Virtusize.setVirtusizeView(self, inPageMini, product: product)
