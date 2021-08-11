@@ -64,33 +64,33 @@ public class Virtusize {
 		bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	)
 
-	/// The private property for updating InPage views
-	private static var _updateInPageViews: ProductRecommendationData?
-	/// The property to be set to update InPage views.
-	internal static var updateInPageViews: ProductRecommendationData? {
+	/// The private property for updating the recommendation data for InPage views
+	private static var _productRecData: ProductRecommendationData?
+	/// The property to be set to updating the recommendation data for InPage views.
+	internal static var productRecData: ProductRecommendationData? {
 		set {
-			_updateInPageViews = newValue
+			_productRecData = newValue
 			DispatchQueue.main.async {
-				NotificationCenter.default.post(name: .recommendationData, object: _updateInPageViews)
+				NotificationCenter.default.post(name: .recommendationData, object: newValue)
 			}
 		}
 		get {
-			return _updateInPageViews
+			return _productRecData
 		}
 	}
 
-	/// The private property for showing the InPage error screen
-	private static var _showInPageError: Bool = false
-	/// The property to be set to show the InPage error screen
-	internal static var showInPageError: Bool {
+	/// The private property for showing the InPage error screen with the associated external product ID
+	private static var _errorExternalProductId: String?
+	/// The property to be set to show the InPage error screen with the associated external product ID
+	internal static var errorExternalProductId: String? {
 		set {
-			_showInPageError = newValue
+			_errorExternalProductId = newValue
 			DispatchQueue.main.async {
-				NotificationCenter.default.post(name: .inPageError, object: nil)
+				NotificationCenter.default.post(name: .inPageError, object: _errorExternalProductId)
 			}
 		}
 		get {
-			return _showInPageError
+			return _errorExternalProductId
 		}
 	}
 
@@ -105,6 +105,7 @@ public class Virtusize {
 				}
 				if let productWithPDCData = productWithPDCData {
 					virtusizeRepository.fetchInitialData(
+						externalProductId: product.externalId,
 						productId: productWithPDCData.productCheckData?.productDataId
 					) { storeProduct in
 						NotificationCenter.default.post(name: .storeProduct, object: storeProduct)

@@ -112,22 +112,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		bind(to: viewModel)
 	}
 
-	internal override func onProductDataCheck(_ notification: Notification) {
-		let productWithPDC = notification.object as? VirtusizeProduct
-		guard self.product?.externalId == productWithPDC?.externalId else {
-			return
-		}
-		super.onProductDataCheck(notification)
-		setLoadingScreen(loading: true)
-	}
-
 	internal override func setInPageRecommendation(_ notification: Notification) {
-		guard let productRecommendationData = notification.object as? Virtusize.ProductRecommendationData,
-			  self.product?.externalId == productRecommendationData.serverProduct.externalId else {
+		guard let productRecData = notification.object as? Virtusize.ProductRecommendationData,
+			  productRecData.serverProduct.externalId == product?.externalId else {
 			return
 		}
-		self.sizeComparisonRecommendedSize = productRecommendationData.sizeComparisonRecommendedSize
-		self.bodyProfileRecommendedSize = productRecommendationData.bodyProfileRecommendedSize
+
+		self.sizeComparisonRecommendedSize = productRecData.sizeComparisonRecommendedSize
+		self.bodyProfileRecommendedSize = productRecData.bodyProfileRecommendedSize
 
 		bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
 
@@ -137,26 +129,26 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		}
 		viewModel.loadStoreProductImage(
 			clientProductImageURL: product?.imageURL,
-			storeProduct: productRecommendationData.serverProduct
+			storeProduct: productRecData.serverProduct
 		)
 	}
 
 	private func bind(to viewModel: VirtusizeInPageStandardViewModel) {
-		viewModel.userProductImageObservable.observe(on: self) { [weak self] in
-			if $0 != nil {
-				self?.userProductImageView.image = $0!.image
-				if $0!.source == .local {
-					self?.userProductImageView.setProductTypeImage(image: $0!.image)
+		viewModel.userProductImageObservable.observe(on: self) { [weak self] userProductImage in
+			if userProductImage != nil {
+				self?.userProductImageView.image = userProductImage!.image
+				if userProductImage!.source == .local {
+					self?.userProductImageView.setProductTypeImage(image: userProductImage!.image)
 				}
 				self!.setProductImages()
 			}
 		}
 
-		viewModel.storeProductImageObservable.observe(on: self) { [weak self] in
-			if $0 != nil {
-				self?.storeProductImageView.image = $0!.image
-				if $0!.source == .local {
-					self?.storeProductImageView.setProductTypeImage(image: $0!.image)
+		viewModel.storeProductImageObservable.observe(on: self) { [weak self] userProductImage in
+			if userProductImage != nil {
+				self?.storeProductImageView.image = userProductImage!.image
+				if userProductImage!.source == .local {
+					self?.storeProductImageView.setProductTypeImage(image: userProductImage!.image)
 				}
 				self!.setProductImages()
 			}
@@ -556,12 +548,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		}
 	}
 
-	/// Sets up the styles for the loading screen and the screen after finishing loading
-	///
-	/// - Parameters:
-	///   - loading: Pass true when it's loading, and pass false when finishing loading
-	///   - userBestFitProduct: Pass the user best fit product to determine whether to display the user product image or not
-	private func setLoadingScreen(loading: Bool) {
+	internal override func setLoadingScreen(loading: Bool) {
 		vsSignatureImageView.isHidden = loading ? true : false
 		privacyPolicyLink.isHidden = loading ? true : false
 		topMessageLabel.isHidden = loading ? true : false
@@ -579,6 +566,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	}
 
 	internal override func showErrorScreen(_ notification: Notification) {
+		guard let externalProductId = notification.object as? String,
+			  externalProductId == product?.externalId else {
+			return
+		}
 		inPageStandardView.layer.shadowOpacity = 0
 		inPageStandardView.isUserInteractionEnabled = false
 		vsIconImageView.isHidden = true

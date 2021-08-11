@@ -39,8 +39,10 @@ extension VirtusizeView {
 	/// Opens the Virtusize web view
 	internal func openVirtusizeWebView(
 		product: VirtusizeProduct? = nil,
+		serverProduct: VirtusizeServerProduct? = nil,
 		eventHandler: VirtusizeEventHandler? = nil
 	) {
+		VirtusizeRepository.shared.lastProductOnVirtusizeWebView = self.serverProduct
 		if let virtusize = VirtusizeWebViewController(
 			product: product,
 			messageHandler: messageHandler,

@@ -86,23 +86,21 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	}
 
 	@objc internal func onProductDataCheck(_ notification: Notification) {
-		guard let product = notification.object as? VirtusizeProduct else {
-			isHidden = true
+		guard let productWithPDCData = notification.object as? VirtusizeProduct,
+			  productWithPDCData.externalId == self.product?.externalId else {
 			return
 		}
-		guard self.product?.externalId == product.externalId else {
-			return
-		}
-		self.product = product
+		self.product = productWithPDCData
 		isHidden = false
+		setLoadingScreen(loading: true)
 	}
 
 	@objc internal func onStoreProduct(_ notification: Notification) {
-		guard let product = notification.object as? VirtusizeServerProduct,
-			  self.product?.externalId == product.externalId else {
+		guard let serverProduct = notification.object as? VirtusizeServerProduct,
+			  serverProduct.externalId == self.product?.externalId else {
 			return
 		}
-		self.serverProduct = product
+		self.serverProduct = serverProduct
 	}
 
 	/// A parent function to set up InPage recommendation
@@ -111,10 +109,13 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	/// A parent function for showing the error screen
 	@objc internal func showErrorScreen(_ notification: Notification) {}
 
-	internal func setup() {
-		virtusizeEventHandler = self
-		isHidden = true
-	}
+	/// Sets up the styles for the loading screen and the screen after finishing loading
+	///
+	/// - Parameters:
+	///   - loading: Pass true when it's loading, and pass false when finishing loading
+	internal func setLoadingScreen(loading: Bool) {}
+
+	internal func setup() {}
 
 	internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
 		view.addConstraint(
@@ -142,9 +143,9 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	}
 
 	@objc internal func clickInPageViewAction() {
-		VirtusizeRepository.shared.lastProductOnVirtusizeWebView = self.serverProduct
 		openVirtusizeWebView(
-			product: self.product,
+			product: product,
+			serverProduct: serverProduct,
 			eventHandler: virtusizeEventHandler
 		)
 	}

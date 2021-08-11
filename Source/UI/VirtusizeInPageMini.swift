@@ -67,20 +67,12 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
 	}
 
-	internal override func onProductDataCheck(_ notification: Notification) {
-		let productWithPDC = notification.object as? VirtusizeProduct
-		guard self.product?.externalId == productWithPDC?.externalId else {
-			return
-		}
-		super.onProductDataCheck(notification)
-		setLoadingScreen(loading: true)
-	}
-
 	internal override func setInPageRecommendation(_ notification: Notification) {
 		guard let productRecData = notification.object as? Virtusize.ProductRecommendationData,
-			  self.product?.externalId == productRecData.serverProduct.externalId else {
+			  productRecData.serverProduct.externalId == product?.externalId else {
 			return
 		}
+
 		setLoadingScreen(loading: false)
 		inPageMiniMessageLabel.attributedText = NSAttributedString(
 			string:
@@ -94,6 +86,10 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	internal override func showErrorScreen(_ notification: Notification) {
+		guard let externalProductId = notification.object as? String,
+			  externalProductId == product?.externalId else {
+			return
+		}
 		backgroundColor = .white
 		stopLoadingTextAnimation()
 		inPageMiniImageView.image = VirtusizeAssets.errorHanger
@@ -228,7 +224,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		}
 	}
 
-	private func setLoadingScreen(loading: Bool) {
+	internal override func setLoadingScreen(loading: Bool) {
 		backgroundColor = loading ? .white : getBackgroundColor()
 		inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
 		inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white

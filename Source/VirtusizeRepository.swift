@@ -115,9 +115,14 @@ internal class VirtusizeRepository: NSObject {
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
 	///
 	/// - Parameters:
-	///   - productId: the product ID provided by the client
+	///   - externalProductId: the external product ID provided by the client
+	///   - productId: the product ID from the Virtusize server
 	///   - onSuccess: the closure is called if the data from the server is successfully fetched
-	internal func fetchInitialData(productId: Int?, onSuccess: (VirtusizeServerProduct) -> Void) {
+	internal func fetchInitialData(
+		externalProductId: String,
+		productId: Int?,
+		onSuccess: (VirtusizeServerProduct
+		) -> Void) {
 		guard let productId = productId else {
 			return
 		}
@@ -125,7 +130,7 @@ internal class VirtusizeRepository: NSObject {
 		let serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
 
 		if serverStoreProduct == nil {
-			Virtusize.showInPageError = true
+			Virtusize.errorExternalProductId = externalProductId
 			return
 		}
 
@@ -133,13 +138,13 @@ internal class VirtusizeRepository: NSObject {
 
 		productTypes = VirtusizeAPIService.getProductTypesAsync().success
 		if productTypes == nil {
-			Virtusize.showInPageError = true
+			Virtusize.errorExternalProductId = externalProductId
 			return
 		}
 
 		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
 		if i18nLocalization == nil {
-			Virtusize.showInPageError = true
+			Virtusize.errorExternalProductId = externalProductId
 			return
 		}
 
@@ -170,7 +175,7 @@ internal class VirtusizeRepository: NSObject {
 			if userProductsResponse.isSuccessful {
 				userProducts = userProductsResponse.success
 			} else if userProductsResponse.errorCode != 404 {
-				Virtusize.showInPageError = true
+				Virtusize.errorExternalProductId = storeProduct!.externalId
 				return
 			}
 		}
@@ -180,7 +185,7 @@ internal class VirtusizeRepository: NSObject {
 			if userBodyProfileResponse.isSuccessful {
 				userBodyProfile = userBodyProfileResponse.success
 			} else if userBodyProfileResponse.errorCode != 404 {
-				Virtusize.showInPageError = true
+				Virtusize.errorExternalProductId = storeProduct!.externalId
 				return
 			}
 		}
@@ -260,11 +265,11 @@ internal class VirtusizeRepository: NSObject {
 		// swiftlint:disable switch_case_alignment
 		switch type {
 			case .compareProduct:
-				Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, nil)
+				Virtusize.productRecData = (product, sizeComparisonRecommendedSize, nil)
 			case .body:
-				Virtusize.updateInPageViews = (product, nil, bodyProfileRecommendedSize)
+				Virtusize.productRecData = (product, nil, bodyProfileRecommendedSize)
 			default:
-				Virtusize.updateInPageViews = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+				Virtusize.productRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
 		}
 	}
 

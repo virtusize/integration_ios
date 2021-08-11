@@ -80,23 +80,20 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 	}
 
 	@objc func onProductDataCheck(_ notification: Notification) {
-		guard let product = notification.object as? VirtusizeProduct else {
-			isHidden = true
+		guard let productWithPDCData = notification.object as? VirtusizeProduct,
+			  productWithPDCData.externalId == self.product?.externalId else {
 			return
 		}
-		guard self.product?.externalId == product.externalId else {
-			return
-		}
-		self.product = product
+		self.product = productWithPDCData
 		isHidden = false
 	}
 
 	@objc func onStoreProduct(_ notification: Notification) {
-		guard let product = notification.object as? VirtusizeServerProduct,
-			self.product?.externalId == product.externalId else {
+		guard let serverProduct = notification.object as? VirtusizeServerProduct,
+			  serverProduct.externalId == self.product?.externalId else {
 			return
 		}
-		self.serverProduct = product
+		self.serverProduct = serverProduct
 	}
 
 	/// Set up the style of `VirtusizeButton`
@@ -130,10 +127,10 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 	}
 
 	@objc private func clickButtonAction() {
-		VirtusizeRepository.shared.lastProductOnVirtusizeWebView = self.serverProduct
 		openVirtusizeWebView(
-			product: self.product,
-			eventHandler: self
+			product: product,
+			serverProduct: serverProduct,
+			eventHandler: virtusizeEventHandler
 		)
 	}
 }
