@@ -117,6 +117,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			  productRecData.serverProduct.externalId == product?.externalId else {
 			return
 		}
+		serverProduct = productRecData.serverProduct
 
 		self.sizeComparisonRecommendedSize = productRecData.sizeComparisonRecommendedSize
 		self.bodyProfileRecommendedSize = productRecData.bodyProfileRecommendedSize
@@ -187,13 +188,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	}
 
 	private func finishLoading() {
-		setMessageLabelTexts(
-			self.serverProduct!,
-			VirtusizeRepository.shared.i18nLocalization!,
-			sizeComparisonRecommendedSize,
-			bodyProfileRecommendedSize?.sizeName
-		)
-
+		setRecommendationTexts()
 		setLoadingScreen(loading: false)
 	}
 
@@ -518,17 +513,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		self.productImagesAreAnimating = false
 	}
 
-	private func setMessageLabelTexts(
-		_ storeProduct: VirtusizeServerProduct,
-		_ i18nLocalization: VirtusizeI18nLocalization,
-		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
-		_ bodyProfileRecommendedSizeName: String?
-	) {
+	private func setRecommendationTexts() {
 		let trimType = VirtusizeI18nLocalization.TrimType.MULTIPLELINES
-		let recommendationText = storeProduct.getRecommendationText(
-			i18nLocalization,
+		let recommendationText = serverProduct!.getRecommendationText(
+			VirtusizeRepository.shared.i18nLocalization!,
 			sizeComparisonRecommendedSize,
-			bodyProfileRecommendedSizeName,
+			bodyProfileRecommendedSize?.sizeName,
 			trimType
 		)
 		let recommendationTextArray = recommendationText.components(separatedBy: trimType.rawValue)

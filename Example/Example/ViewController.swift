@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.navigationItem.title = "Virtusize Example App"
+		setNavigationBarStyle()
 
 		// NotificationCenter listener for debugging the initial product data check
 		// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
@@ -131,39 +131,8 @@ class ViewController: UIViewController {
 		inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		inPageStandard.topAnchor.constraint(equalTo: inPageMini2.bottomAnchor, constant: 16).isActive = true
 
-		let webViewButton = UIButton()
-		webViewButton.backgroundColor = UIColor.black
-		webViewButton.setTitle("SNS Test", for: .normal)
-		webViewButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-		view.addSubview(webViewButton)
-		webViewButton.translatesAutoresizingMaskIntoConstraints = false
-		webViewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-		webViewButton.topAnchor.constraint(equalTo: inPageStandard.bottomAnchor, constant: 16).isActive = true
-
-		webViewButton.addTarget(self, action: #selector(openWebView), for: .touchUpInside)
-
-		let nextProductButton = UIButton()
-		view.addSubview(nextProductButton)
-		nextProductButton.translatesAutoresizingMaskIntoConstraints = false
-		nextProductButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-		nextProductButton.topAnchor.constraint(equalTo: webViewButton.bottomAnchor, constant: 16).isActive = true
-		nextProductButton.backgroundColor = UIColor.black
-		nextProductButton.setTitle("Go to next product page", for: .normal)
-		nextProductButton.addTarget(self, action: #selector(goToNextProduct), for: .touchUpInside)
-
 		// MARK: The Order API
 		sendOrderSample()
-	}
-
-	@objc func openWebView() {
-		present(WebViewController(), animated: true)
-	}
-
-	@objc func goToNextProduct() {
-		let nextView = self.storyboard?.instantiateViewController(
-			withIdentifier: "ProductViewController"
-		) as? ProductViewController
-		self.navigationController?.pushViewController(nextView!, animated: true)
 	}
 
 	/// Demonstrates how to send an order to the Virtusize server
@@ -210,6 +179,15 @@ class ViewController: UIViewController {
 	}
 	@objc func productDataCheckDidSucceed(_ notification: Notification) {
 		print(notification)
+	}
+
+	private func setNavigationBarStyle() {
+		navigationItem.title = "Virtusize Example App"
+		navigationController?.navigationBar.tintColor = UIColor.white
+		let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+		navigationController?.navigationBar.titleTextAttributes = textAttributes
+		navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+		navigationController?.navigationBar.barTintColor = UIColor.vsTealColor
 	}
 }
 

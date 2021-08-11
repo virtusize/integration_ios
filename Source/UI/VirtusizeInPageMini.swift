@@ -72,6 +72,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			  productRecData.serverProduct.externalId == product?.externalId else {
 			return
 		}
+		serverProduct = productRecData.serverProduct
 
 		setLoadingScreen(loading: false)
 		inPageMiniMessageLabel.attributedText = NSAttributedString(
