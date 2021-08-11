@@ -112,26 +112,42 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		bind(to: viewModel)
 	}
 
-	internal override func setInPageRecommendation(_ notification: Notification) {
-		guard let productRecData = notification.object as? Virtusize.ProductRecommendationData,
-			  productRecData.serverProduct.externalId == product?.externalId else {
-			return
+	internal override func didReceiveSizeRecommendationData(_ notification: Notification) {
+		shouldUpdateInPageRecommendation(notification) { sizeRecData in
+			serverProduct = sizeRecData.serverProduct
+
+			self.sizeComparisonRecommendedSize = sizeRecData.sizeComparisonRecommendedSize
+			self.bodyProfileRecommendedSize = sizeRecData.bodyProfileRecommendedSize
+
+			bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
+
+			// If item to item recommendation is available, display two user and store product images side by side
+			if let bestFitUserProduct = bestFitUserProduct {
+				viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)
+			}
+			viewModel.loadStoreProductImage(
+				clientProductImageURL: clientProduct?.imageURL,
+				storeProduct: sizeRecData.serverProduct
+			)
 		}
-		serverProduct = productRecData.serverProduct
+	}
 
-		self.sizeComparisonRecommendedSize = productRecData.sizeComparisonRecommendedSize
-		self.bodyProfileRecommendedSize = productRecData.bodyProfileRecommendedSize
-
-		bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
-
-		// If item to item recommendation is available, display two user and store product images side by side
-		if let bestFitUserProduct = bestFitUserProduct {
-			viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)
-		}
-		viewModel.loadStoreProductImage(
-			clientProductImageURL: product?.imageURL,
-			storeProduct: productRecData.serverProduct
-		)
+	internal override func didReceiveInPageError(_ notification: Notification) {
+		shouldShowInPageErrorScreen(notification) {
+			inPageStandardView.layer.shadowOpacity = 0
+			inPageStandardView.isUserInteractionEnabled = false
+			vsIconImageView.isHidden = true
+			userProductImageView.isHidden = true
+			storeProductImageView.isHidden = true
+			bottomMessageLabel.isHidden = true
+			checkSizeButton.isHidden = true
+			errorImageView.isHidden = false
+			errorText.isHidden = false
+			errorText.attributedText = NSAttributedString(
+				string: Localization.shared.localize("inpage_error_long_text")
+			).lineSpacing(self.messageLineSpacing)
+			errorText.textAlignment = .center
+		}	
 	}
 
 	private func bind(to viewModel: VirtusizeInPageStandardViewModel) {
@@ -553,25 +569,5 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		} else {
 			stopLoadingTextAnimation()
 		}
-	}
-
-	internal override func showErrorScreen(_ notification: Notification) {
-		guard let externalProductId = notification.object as? String,
-			  externalProductId == product?.externalId else {
-			return
-		}
-		inPageStandardView.layer.shadowOpacity = 0
-		inPageStandardView.isUserInteractionEnabled = false
-		vsIconImageView.isHidden = true
-		userProductImageView.isHidden = true
-		storeProductImageView.isHidden = true
-		bottomMessageLabel.isHidden = true
-		checkSizeButton.isHidden = true
-		errorImageView.isHidden = false
-		errorText.isHidden = false
-		errorText.attributedText = NSAttributedString(
-			string: Localization.shared.localize("inpage_error_long_text")
-		).lineSpacing(self.messageLineSpacing)
-		errorText.textAlignment = .center
 	}
 }

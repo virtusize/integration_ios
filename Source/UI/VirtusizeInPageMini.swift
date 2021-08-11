@@ -67,39 +67,35 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		inPageMiniSizeCheckButton.addTarget(self, action: #selector(clickInPageViewAction), for: .touchUpInside)
 	}
 
-	internal override func setInPageRecommendation(_ notification: Notification) {
-		guard let productRecData = notification.object as? Virtusize.ProductRecommendationData,
-			  productRecData.serverProduct.externalId == product?.externalId else {
-			return
-		}
-		serverProduct = productRecData.serverProduct
+	internal override func didReceiveSizeRecommendationData(_ notification: Notification) {
+		shouldUpdateInPageRecommendation(notification) { sizeRecData in
+			serverProduct = sizeRecData.serverProduct
 
-		setLoadingScreen(loading: false)
-		inPageMiniMessageLabel.attributedText = NSAttributedString(
-			string:
-				productRecData.serverProduct.getRecommendationText(
-					VirtusizeRepository.shared.i18nLocalization!,
-					productRecData.sizeComparisonRecommendedSize,
-					productRecData.bodyProfileRecommendedSize?.sizeName,
-					VirtusizeI18nLocalization.TrimType.ONELINE
-				)
-		).lineSpacing(self.verticalMargin/2)
+			setLoadingScreen(loading: false)
+			inPageMiniMessageLabel.attributedText = NSAttributedString(
+				string:
+					sizeRecData.serverProduct.getRecommendationText(
+						VirtusizeRepository.shared.i18nLocalization!,
+						sizeRecData.sizeComparisonRecommendedSize,
+						sizeRecData.bodyProfileRecommendedSize?.sizeName,
+						VirtusizeI18nLocalization.TrimType.ONELINE
+					)
+			).lineSpacing(self.verticalMargin/2)
+		}
 	}
 
-	internal override func showErrorScreen(_ notification: Notification) {
-		guard let externalProductId = notification.object as? String,
-			  externalProductId == product?.externalId else {
-			return
+	internal override func didReceiveInPageError(_ notification: Notification) {
+		shouldShowInPageErrorScreen(notification) {
+			backgroundColor = .white
+			stopLoadingTextAnimation()
+			inPageMiniImageView.image = VirtusizeAssets.errorHanger
+			inPageMiniMessageLabel.textColor = .vsGray700Color
+			inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")
+			inPageMiniSizeCheckButton.isHidden = true
+			inPageMiniSizeCheckButton.widthAnchor.constraint(equalToConstant: 0).isActive = true
+			setupTextsStyle(messageLabelIsBold: false)
+			isUserInteractionEnabled = false
 		}
-		backgroundColor = .white
-		stopLoadingTextAnimation()
-		inPageMiniImageView.image = VirtusizeAssets.errorHanger
-		inPageMiniMessageLabel.textColor = .vsGray700Color
-		inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")
-		inPageMiniSizeCheckButton.isHidden = true
-		inPageMiniSizeCheckButton.widthAnchor.constraint(equalToConstant: 0).isActive = true
-		setupTextsStyle(messageLabelIsBold: false)
-		isUserInteractionEnabled = false
 	}
 
 	private func addSubviews() {

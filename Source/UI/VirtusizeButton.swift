@@ -26,7 +26,7 @@
 public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtocol {
 	public var presentingViewController: UIViewController?
 	public var messageHandler: VirtusizeMessageHandler?
-	public var product: VirtusizeProduct?
+	public var clientProduct: VirtusizeProduct?
 	public var serverProduct: VirtusizeServerProduct?
 
 	internal var virtusizeEventHandler: VirtusizeEventHandler?
@@ -63,37 +63,34 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 		addNotificationObserver()
 	}
 
+	/// Add observers to listen to notification data from the sender (Virtusize.self)
 	private func addNotificationObserver() {
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(onProductDataCheck(_:)),
+			selector: #selector(didReceiveProductDataCheck(_:)),
 			name: .productDataCheck,
-			object: nil
+			object: Virtusize.self
 		)
 
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(onStoreProduct(_:)),
+			selector: #selector(didReceiveStoreProduct(_:)),
 			name: .storeProduct,
-			object: nil
+			object: Virtusize.self
 		)
 	}
 
-	@objc func onProductDataCheck(_ notification: Notification) {
-		guard let productWithPDCData = notification.object as? VirtusizeProduct,
-			  productWithPDCData.externalId == self.product?.externalId else {
-			return
+	@objc func didReceiveProductDataCheck(_ notification: Notification) {
+		shouldUpdateProductDataCheckData(notification) { productWithPDCData in
+			self.clientProduct = productWithPDCData
+			isHidden = false
 		}
-		self.product = productWithPDCData
-		isHidden = false
 	}
 
-	@objc func onStoreProduct(_ notification: Notification) {
-		guard let serverProduct = notification.object as? VirtusizeServerProduct,
-			  serverProduct.externalId == self.product?.externalId else {
-			return
+	@objc func didReceiveStoreProduct(_ notification: Notification) {
+		shouldUpdateStoreProduct(notification) { storeProduct in
+			self.serverProduct = storeProduct
 		}
-		self.serverProduct = serverProduct
 	}
 
 	/// Set up the style of `VirtusizeButton`
@@ -128,7 +125,7 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 
 	@objc private func clickButtonAction() {
 		openVirtusizeWebView(
-			product: product,
+			product: clientProduct,
 			serverProduct: serverProduct,
 			eventHandler: virtusizeEventHandler
 		)

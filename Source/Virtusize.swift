@@ -58,39 +58,49 @@ public class Virtusize {
 
 	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
 
-	internal typealias ProductRecommendationData = (
+	internal typealias SizeRecommendationData = (
 		serverProduct: VirtusizeServerProduct,
 		sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	)
 
-	/// The private property for updating the recommendation data for InPage views
-	private static var _productRecData: ProductRecommendationData?
-	/// The property to be set to updating the recommendation data for InPage views.
-	internal static var productRecData: ProductRecommendationData? {
+	/// The private property for updating the size recommendation data for InPage views
+	private static var _sizeRecData: SizeRecommendationData?
+	/// The property to be set to updating the size recommendation data for InPage views.
+	internal static var sizeRecData: SizeRecommendationData? {
 		set {
-			_productRecData = newValue
+			_sizeRecData = newValue
 			DispatchQueue.main.async {
-				NotificationCenter.default.post(name: .recommendationData, object: newValue)
+				NotificationCenter.default.post(
+					name: .sizeRecommendationData,
+					object: Virtusize.self,
+					userInfo: [NotificationKey.sizeRecommendationData: _sizeRecData]
+				)
 			}
 		}
 		get {
-			return _productRecData
+			return _sizeRecData
 		}
 	}
 
-	/// The private property for showing the InPage error screen with the associated external product ID
-	private static var _errorExternalProductId: String?
+	internal typealias InPageError = (hasError: Bool, externalProductId: String)
+
 	/// The property to be set to show the InPage error screen with the associated external product ID
-	internal static var errorExternalProductId: String? {
+	private static var _inPageError: InPageError?
+	/// The property to be set to show the InPage error screen with the associated external product ID
+	internal static var inPageError: InPageError? {
 		set {
-			_errorExternalProductId = newValue
+			_inPageError = newValue
 			DispatchQueue.main.async {
-				NotificationCenter.default.post(name: .inPageError, object: _errorExternalProductId)
+				NotificationCenter.default.post(
+					name: .inPageError,
+					object: Virtusize.self,
+					userInfo: [NotificationKey.inPageError: _inPageError]
+				)
 			}
 		}
 		get {
-			return _errorExternalProductId
+			return _inPageError
 		}
 	}
 
@@ -100,18 +110,26 @@ public class Virtusize {
 	public class func load(product: VirtusizeProduct) {
 		dispatchQueue.async {
 			virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
-				DispatchQueue.main.async {
-					NotificationCenter.default.post(name: .productDataCheck, object: productWithPDCData)
-				}
 				if let productWithPDCData = productWithPDCData {
+					DispatchQueue.main.async {
+						NotificationCenter.default.post(
+							name: .productDataCheck,
+							object: Virtusize.self,
+							userInfo: [NotificationKey.productDataCheck: productWithPDCData]
+						)
+					}
 					virtusizeRepository.fetchInitialData(
 						externalProductId: product.externalId,
 						productId: productWithPDCData.productCheckData?.productDataId
-					) { storeProduct in
-						NotificationCenter.default.post(name: .storeProduct, object: storeProduct)
+					) { serverProduct in
+						NotificationCenter.default.post(
+							name: .storeProduct,
+							object: Virtusize.self,
+							userInfo: [NotificationKey.storeProduct: serverProduct]
+						)
 						virtusizeRepository.updateUserSession()
-						virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: storeProduct)
-						virtusizeRepository.updateInPageRecommendation(product: storeProduct)
+						virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
+						virtusizeRepository.updateInPageRecommendation(product: serverProduct)
 					}
 				}
 			}
@@ -127,7 +145,7 @@ public class Virtusize {
 		var mutableView = view
 		mutableView.messageHandler = any as? VirtusizeMessageHandler
 		mutableView.presentingViewController = any as? UIViewController
-		mutableView.product = product
+		mutableView.clientProduct = product
 	}
 
 	/// The API request for sending an order to the server

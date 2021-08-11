@@ -23,8 +23,15 @@
 //
 
 extension Notification.Name {
-	static let productDataCheck = Notification.Name("productDataCheck")
-	static let storeProduct = Notification.Name("storeProduct")
-	static let recommendationData = Notification.Name("recommendationData")
-	static let inPageError = Notification.Name("inPageError")
+	static let productDataCheck = Notification.Name(NotificationKey.productDataCheck)
+	static let storeProduct = Notification.Name(NotificationKey.storeProduct)
+	static let sizeRecommendationData = Notification.Name(NotificationKey.sizeRecommendationData)
+	static let inPageError = Notification.Name(NotificationKey.inPageError)
+}
+
+struct NotificationKey {
+	static let productDataCheck = "productDataCheck"
+	static let storeProduct = "storeProduct"
+	static let sizeRecommendationData = "sizeRecommendationData"
+	static let inPageError = "inPageError"
 }

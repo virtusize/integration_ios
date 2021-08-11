@@ -184,7 +184,9 @@ class ViewController: UIViewController {
 	private func setNavigationBarStyle() {
 		navigationItem.title = "Virtusize Example App"
 		navigationController?.navigationBar.tintColor = UIColor.white
-		let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+		let textAttributes = [
+			NSAttributedString.Key.foregroundColor: UIColor.white
+		]
 		navigationController?.navigationBar.titleTextAttributes = textAttributes
 		navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
 		navigationController?.navigationBar.barTintColor = UIColor.vsTealColor

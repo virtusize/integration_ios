@@ -29,7 +29,7 @@ public protocol VirtusizeView {
 	var style: VirtusizeViewStyle { get }
 	var presentingViewController: UIViewController? { get set }
 	var messageHandler: VirtusizeMessageHandler? { get set }
-	var product: VirtusizeProduct? { get set }
+	var clientProduct: VirtusizeProduct? { get set }
 	var serverProduct: VirtusizeServerProduct? { get set }
 }
 
@@ -51,5 +51,29 @@ extension VirtusizeView {
 		) {
 			presentingViewController?.present(virtusize, animated: true, completion: nil)
 		}
+	}
+
+	internal func shouldUpdateProductDataCheckData(
+		_ notification: Notification,
+		onProductDataCheckData: (VirtusizeProduct) -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			let productWithPDCData = notificationData[NotificationKey.productDataCheck] as? VirtusizeProduct,
+			productWithPDCData.externalId == self.clientProduct?.externalId else {
+			return
+		}
+		onProductDataCheckData(productWithPDCData)
+	}
+
+	internal func shouldUpdateStoreProduct(
+		_ notification: Notification,
+		onStoreProduct: (VirtusizeServerProduct) -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			let storeProduct = notificationData[NotificationKey.storeProduct] as? VirtusizeServerProduct,
+			storeProduct.externalId == self.clientProduct?.externalId else {
+			return
+		}
+		onStoreProduct(storeProduct)
 	}
 }

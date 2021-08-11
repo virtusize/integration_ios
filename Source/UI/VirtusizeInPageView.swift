@@ -32,7 +32,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 
 	public var presentingViewController: UIViewController?
 	public var messageHandler: VirtusizeMessageHandler?
-	public var product: VirtusizeProduct?
+	public var clientProduct: VirtusizeProduct?
 	public var serverProduct: VirtusizeServerProduct?
 
 	internal var virtusizeEventHandler: VirtusizeEventHandler?
@@ -55,59 +55,80 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 		addNotificationObserver()
 	}
 
+	/// Add observers to listen to notification data from the sender (Virtusize.self)
 	private func addNotificationObserver() {
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(onProductDataCheck(_:)),
+			selector: #selector(didReceiveProductDataCheck(_:)),
 			name: .productDataCheck,
-			object: nil
+			object: Virtusize.self
 		)
 
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(onStoreProduct(_:)),
+			selector: #selector(didReceiveStoreProduct(_:)),
 			name: .storeProduct,
-			object: nil
+			object: Virtusize.self
 		)
 
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(setInPageRecommendation(_:)),
-			name: .recommendationData,
-			object: nil
+			selector: #selector(didReceiveSizeRecommendationData(_:)),
+			name: .sizeRecommendationData,
+			object: Virtusize.self
 		)
 
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(showErrorScreen(_:)),
+			selector: #selector(didReceiveInPageError(_:)),
 			name: .inPageError,
-			object: nil
+			object: Virtusize.self
 		)
 	}
 
-	@objc internal func onProductDataCheck(_ notification: Notification) {
-		guard let productWithPDCData = notification.object as? VirtusizeProduct,
-			  productWithPDCData.externalId == self.product?.externalId else {
-			return
+	@objc internal func didReceiveProductDataCheck(_ notification: Notification) {
+		shouldUpdateProductDataCheckData(notification) { productWithPDCData in
+			self.clientProduct = productWithPDCData
+			isHidden = false
+			setLoadingScreen(loading: true)
 		}
-		self.product = productWithPDCData
-		isHidden = false
-		setLoadingScreen(loading: true)
 	}
 
-	@objc internal func onStoreProduct(_ notification: Notification) {
-		guard let serverProduct = notification.object as? VirtusizeServerProduct,
-			  serverProduct.externalId == self.product?.externalId else {
-			return
+	@objc internal func didReceiveStoreProduct(_ notification: Notification) {
+		shouldUpdateStoreProduct(notification) { storeProduct in
+			self.serverProduct = storeProduct
 		}
-		self.serverProduct = serverProduct
 	}
 
 	/// A parent function to set up InPage recommendation
-	@objc internal func setInPageRecommendation(_ notification: Notification) {}
+	@objc internal func didReceiveSizeRecommendationData(_ notification: Notification) {}
+
+	internal func shouldUpdateInPageRecommendation(
+		_ notification: Notification,
+		shouldUpdate: (Virtusize.SizeRecommendationData) -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			  let sizeRecData = notificationData[NotificationKey.sizeRecommendationData] as? Virtusize.SizeRecommendationData,
+			  sizeRecData.serverProduct.externalId == self.clientProduct?.externalId else {
+			return
+		}
+		shouldUpdate(sizeRecData)
+	}
+
+	internal func shouldShowInPageErrorScreen(
+		_ notification: Notification,
+		shouldShow: () -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			  let inPageError = notificationData[NotificationKey.inPageError] as? Virtusize.InPageError,
+			  inPageError.externalProductId == self.clientProduct?.externalId else {
+			return
+		}
+		shouldShow()
+	}
 
 	/// A parent function for showing the error screen
-	@objc internal func showErrorScreen(_ notification: Notification) {}
+	@objc internal func didReceiveInPageError(_ notification: Notification) {}
 
 	/// Sets up the styles for the loading screen and the screen after finishing loading
 	///
@@ -144,7 +165,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 
 	@objc internal func clickInPageViewAction() {
 		openVirtusizeWebView(
-			product: product,
+			product: clientProduct,
 			serverProduct: serverProduct,
 			eventHandler: virtusizeEventHandler
 		)

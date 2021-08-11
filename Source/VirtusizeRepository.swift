@@ -130,7 +130,7 @@ internal class VirtusizeRepository: NSObject {
 		let serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
 
 		if serverStoreProduct == nil {
-			Virtusize.errorExternalProductId = externalProductId
+			Virtusize.inPageError = (true, externalProductId)
 			return
 		}
 
@@ -138,13 +138,13 @@ internal class VirtusizeRepository: NSObject {
 
 		productTypes = VirtusizeAPIService.getProductTypesAsync().success
 		if productTypes == nil {
-			Virtusize.errorExternalProductId = externalProductId
+			Virtusize.inPageError = (true, externalProductId)
 			return
 		}
 
 		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
 		if i18nLocalization == nil {
-			Virtusize.errorExternalProductId = externalProductId
+			Virtusize.inPageError = (true, externalProductId)
 			return
 		}
 
@@ -175,7 +175,7 @@ internal class VirtusizeRepository: NSObject {
 			if userProductsResponse.isSuccessful {
 				userProducts = userProductsResponse.success
 			} else if userProductsResponse.errorCode != 404 {
-				Virtusize.errorExternalProductId = storeProduct!.externalId
+				Virtusize.inPageError = (true, storeProduct!.externalId)
 				return
 			}
 		}
@@ -185,7 +185,7 @@ internal class VirtusizeRepository: NSObject {
 			if userBodyProfileResponse.isSuccessful {
 				userBodyProfile = userBodyProfileResponse.success
 			} else if userBodyProfileResponse.errorCode != 404 {
-				Virtusize.errorExternalProductId = storeProduct!.externalId
+				Virtusize.inPageError = (true, storeProduct!.externalId)
 				return
 			}
 		}
@@ -265,11 +265,11 @@ internal class VirtusizeRepository: NSObject {
 		// swiftlint:disable switch_case_alignment
 		switch type {
 			case .compareProduct:
-				Virtusize.productRecData = (product, sizeComparisonRecommendedSize, nil)
+				Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
 			case .body:
-				Virtusize.productRecData = (product, nil, bodyProfileRecommendedSize)
+				Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize)
 			default:
-				Virtusize.productRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+				Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
 		}
 	}
 
