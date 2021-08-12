@@ -29,7 +29,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
   - [Carthage](#carthage)
 - [Setup](#setup)
   - [Initialization](#1-initialization)
-  - [Load Product with Virtusize](#2-load-product-with-Virtusize)
+  - [Load Product with Virtusize SDK](#2-load-product-with-virtusize-sdk)
   - [Implement VirtusizeMessageHandler (Optional)](#3-implement-virtusizemessagehandler-optional)
   - [Allow Cookie Sharing (Optional)](#4-allow-cookie-sharing-optional)
   - [Listen to Product Data Check (Optional)](#5-listen-to-product-data-check-optional)
