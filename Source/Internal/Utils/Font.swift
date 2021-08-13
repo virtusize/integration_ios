@@ -59,35 +59,47 @@ class Font {
 
 	private static func font(fontName: FontName, type: String, weight: FontWeight, size: CGFloat) -> UIFont {
 		let fontFileName = fontName.rawValue + weight.rawValue
-		var font = UIFont(name: fontFileName, size: size)
 
-		if let existedFont = font {
+		// Return the existed font matching the font name if the font was already registered (was not null) before
+		if let existedFont = UIFont(name: fontFileName, size: size) {
 			return existedFont
 		}
 
-		if register(fontFileName: fontFileName, type: type) {
-			font = UIFont(name: fontFileName, size: size)
+		// Return the font if registering a font is successful
+		if let registeredFont = register(
+			fontFileName: fontFileName,
+			type: type,
+			size: size
+		) {
+			return registeredFont
 		}
 
-		return font ?? UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
+		// Fall back to the system font
+		return system(size: size, weight: weight)
 	}
 
 	/// Registers a specified graphics font
 	/// - Parameters:
 	///   - fontFileName: The font file name
-	///   - type: The font file type, such as otf or ttf
-	private static func register(fontFileName: String, type: String) -> Bool {
+	///   - type: The font file type, such as `otf` or `ttf`
+	///   - size: The font size
+	/// - Returns: The registered font. If it fails to register a font, return nil
+	private static func register(fontFileName: String, type: String, size: CGFloat) -> UIFont? {
 		guard
 			let path = Bundle(for: self).path(forResource: fontFileName, ofType: type),
 			let data = NSData(contentsOfFile: path),
 			let dataProvider = CGDataProvider(data: data),
 			let fontReference = CGFont(dataProvider)
 		else {
-			return false
+			return nil
 		}
 
 		var errorRef: Unmanaged<CFError>?
 
-		return !(CTFontManagerRegisterGraphicsFont(fontReference, &errorRef) == false)
+		if CTFontManagerRegisterGraphicsFont(fontReference, &errorRef) == true {
+			return UIFont(name: fontFileName, size: size)
+		} else {
+			return nil
+		}
 	}
 }
