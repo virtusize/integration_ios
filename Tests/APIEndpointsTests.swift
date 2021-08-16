@@ -170,7 +170,7 @@ class APIEndpointsTests: XCTestCase {
         let endpoint = APIEndpoints.getSize
 
         XCTAssertEqual(endpoint.components.host, "services.virtusize.jp")
-        XCTAssertEqual(endpoint.components.path, "/stg/ds-functions/size-rec/get-size-new")
+        XCTAssertEqual(endpoint.components.path, "/stg/ds-functions/size-rec/get-size")
 
         XCTAssertNil(endpoint.components.queryItems)
     }

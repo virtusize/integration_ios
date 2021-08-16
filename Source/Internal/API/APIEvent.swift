@@ -29,67 +29,67 @@ typealias Payload = JSONObject
 /// A structure to build the additional payload for the event to be sent to the server
 /// and convert it from `JSONObject` to `Data`
 internal struct APIEvent {
-    /// The additional payload for the event as `Payload` (`JSONObject`)
-    private var payload: Payload
+	/// The additional payload for the event as `Payload` (`JSONObject`)
+	private var payload: Payload
 
-    /// The name of the event
-    let name: String
+	/// The name of the event
+	let name: String
 
-    /// Initializes the APIEvent structure
-    init(withName name: String, apiKey: String) {
-        self.name = name
-        let screenSize = UIScreen.main.bounds.size
+	/// Initializes the APIEvent structure
+	init(withName name: String, apiKey: String) {
+		self.name = name
+		let screenSize = UIScreen.main.bounds.size
 
-        self.payload = [
-            "name": name,
-            "apiKey": apiKey,
-            "type": "user",
-            "source": "integration-ios",
-            "userCohort": "direct",
-            "widgetType": "mobile",
-            "browserOrientation": UIDevice.current.orientation.isLandscape ? "landscape" : "portrait",
-            "browserResolution": "\(Int(screenSize.height))x\(Int(screenSize.width))",
-            "integrationVersion": String(VirtusizeVersionNumber),
-            "snippetVersion": String(VirtusizeVersionNumber)
-        ]
-    }
+		self.payload = [
+			"name": name,
+			"apiKey": apiKey,
+			"type": "user",
+			"source": "integration-ios",
+			"userCohort": "direct",
+			"widgetType": "mobile",
+			"browserOrientation": UIDevice.current.orientation.isLandscape ? "landscape" : "portrait",
+			"browserResolution": "\(Int(screenSize.height))x\(Int(screenSize.width))",
+			"integrationVersion": String(VirtusizeVersionNumber),
+			"snippetVersion": String(VirtusizeVersionNumber)
+		]
+	}
 
-    /// Adds the response from Virtusize API for the `productDataCheck` request to payload
-    ///
-    /// - Parameter json: The product data from the response of the `productDataCheck` request
-    mutating func align(withContext productDataCheck: JSONObject?) {
-        guard let root = productDataCheck,
-            let data = root["data"] as? JSONObject else {
-                return
-        }
-        if let storeId = data["storeId"] {
-            payload["storeId"] = storeId
-        }
-        if let storeName = data["storeName"] {
-            payload["storeName"] = storeName
-        }
-        if let storeProductType = data["productTypeName"] {
-            payload["storeProductType"] = storeProductType
-        }
-        if let storeProductId = root["productId"] {
-            payload["storeProductExternalId"] = storeProductId
-        }
-    }
+	/// Adds the response from Virtusize API for the `productDataCheck` request to payload
+	///
+	/// - Parameter json: The product data from the response of the `productDataCheck` request
+	mutating func align(withContext productDataCheck: JSONObject?) {
+		guard let root = productDataCheck,
+			  let data = root["data"] as? JSONObject else {
+			return
+		}
+		if let storeId = data["storeId"] {
+			payload["storeId"] = storeId
+		}
+		if let storeName = data["storeName"] {
+			payload["storeName"] = storeName
+		}
+		if let storeProductType = data["productTypeName"] {
+			payload["storeProductType"] = storeProductType
+		}
+		if let storeProductId = root["productId"] {
+			payload["storeProductExternalId"] = storeProductId
+		}
+	}
 
-    /// Adds the additional data in the event to the payload
-    ///
-    /// - Parameter payload: The additional data in the event
-    mutating func align(withPayload eventPayload: Payload?) {
-        guard let payload = eventPayload else {
-            return
-        }
-        for (key, value) in payload where self.payload[key] == nil {
-            self.payload[key] = value
-        }
-    }
+	/// Adds the additional data in the event to the payload
+	///
+	/// - Parameter payload: The additional data in the event
+	mutating func align(withPayload eventPayload: Payload?) {
+		guard let payload = eventPayload else {
+			return
+		}
+		for (key, value) in payload where self.payload[key] == nil {
+			self.payload[key] = value
+		}
+	}
 
-    /// The additional payload for the event as `Data`
-    var jsonPayload: Data? {
-        return try? JSONSerialization.data(withJSONObject: payload, options: [])
-    }
+	/// The additional payload for the event as `Data`
+	var jsonPayload: Data? {
+		return try? JSONSerialization.data(withJSONObject: payload, options: [])
+	}
 }

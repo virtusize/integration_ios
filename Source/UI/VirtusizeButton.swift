@@ -22,87 +22,151 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-
 /// This class is the custom Virtusize button that is added in the client's layout file.
-public class VirtusizeButton: UIButton, VirtusizeView {
-    override public var isHighlighted: Bool {
-        didSet {
-            if style == .BLACK {
+public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtocol {
+	public var presentingViewController: UIViewController?
+	public var messageHandler: VirtusizeMessageHandler?
+	public var clientProduct: VirtusizeProduct?
+	public var serverProduct: VirtusizeServerProduct?
+
+	internal var virtusizeEventHandler: VirtusizeEventHandler?
+
+	override public var isHighlighted: Bool {
+		didSet {
+			if style == .BLACK {
 				backgroundColor = isHighlighted ? .vsGray900PressedColor : .vsGray900Color
-            } else if style == .TEAL {
-                backgroundColor = isHighlighted ? .vsTealPressedColor : .vsTealColor
-            }
-        }
-    }
-
-    /// The property to set the Virtusize view style that this SDK provides
-    public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
-        didSet {
-            setStyle()
-        }
-    }
-
-	public var memoryAddress: String {
-		String(format: "%p", self)
-	}
-
-    public var presentingViewController: UIViewController?
-    public var messageHandler: VirtusizeMessageHandler?
-	public var isDeallocated: Bool?
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        isHidden = true
-    }
-
-    public init() {
-        super.init(frame: .zero)
-        isHidden = true
-        setStyle()
-    }
-
-	public override func willMove(toWindow: UIWindow?) {
-		handleWillMoveWindow(toWindow) { isDeallocated in
-			self.isDeallocated = isDeallocated
+			} else if style == .TEAL {
+				backgroundColor = isHighlighted ? .vsTealPressedColor : .vsTealColor
+			}
 		}
 	}
 
-    public func isLoading() {
-        isHidden = false
-    }
+	/// The property to set the Virtusize view style that this SDK provides
+	public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
+		didSet {
+			setStyle()
+		}
+	}
 
-    /// Set up the style of `VirtusizeButton`
-    private func setStyle() {
-        if style == .NONE {
-            setTitle(Localization.shared.localize("check_size"), for: .normal)
-            setTitleColor(.vsGray900Color, for: .normal)
-            setTitleColor(.vsGray900PressedColor, for: .highlighted)
-            return
-        }
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		virtusizeEventHandler = self
+		isHidden = true
+		addNotificationObserver()
+	}
 
-        if style == .BLACK {
-            backgroundColor = .vsGray900Color
-        } else if style == .TEAL {
-            backgroundColor = .vsTealColor
-        }
+	public init() {
+		super.init(frame: .zero)
+		virtusizeEventHandler = self
+		isHidden = true
+		setStyle()
+		addNotificationObserver()
+	}
 
-        setTitle(Localization.shared.localize("check_size"), for: .normal)
-        setTitleColor(.white, for: .normal)
-        setTitleColor(.white, for: .highlighted)
-        tintColor = .white
-        layer.cornerRadius = 20
-        titleLabel?.font = .systemFont(ofSize: 12)
+	/// Add observers to listen to notification data from the sender (Virtusize.self)
+	private func addNotificationObserver() {
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didReceiveProductDataCheck(_:)),
+			name: .productDataCheck,
+			object: Virtusize.self
+		)
 
-        contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didReceiveStoreProduct(_:)),
+			name: .storeProduct,
+			object: Virtusize.self
+		)
+	}
+
+	@objc func didReceiveProductDataCheck(_ notification: Notification) {
+		shouldUpdateProductDataCheckData(notification) { productWithPDCData in
+			self.clientProduct = productWithPDCData
+			isHidden = false
+		}
+	}
+
+	@objc func didReceiveStoreProduct(_ notification: Notification) {
+		shouldUpdateStoreProduct(notification) { storeProduct in
+			self.serverProduct = storeProduct
+		}
+	}
+
+	/// Set up the style of `VirtusizeButton`
+	private func setStyle() {
+		if style == .NONE {
+			setTitle(Localization.shared.localize("check_size"), for: .normal)
+			setTitleColor(.vsGray900Color, for: .normal)
+			setTitleColor(.vsGray900PressedColor, for: .highlighted)
+			return
+		}
+
+		if style == .BLACK {
+			backgroundColor = .vsGray900Color
+		} else if style == .TEAL {
+			backgroundColor = .vsTealColor
+		}
+
+		setTitle(Localization.shared.localize("check_size"), for: .normal)
+		setTitleColor(.white, for: .normal)
+		setTitleColor(.white, for: .highlighted)
+		tintColor = .white
+		layer.cornerRadius = 20
+		titleLabel?.font = .systemFont(ofSize: 12)
+
+		contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
 
 		setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
-        setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
+		setImage(VirtusizeAssets.icon?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .highlighted)
 
-        addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
-    }
+		addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
+	}
 
-    @objc private func clickButtonAction() {
-        openVirtusizeWebView()
-    }
+	@objc private func clickButtonAction() {
+		openVirtusizeWebView(
+			product: clientProduct,
+			serverProduct: serverProduct,
+			eventHandler: virtusizeEventHandler
+		)
+	}
+}
+
+extension VirtusizeButton: VirtusizeEventHandler {
+
+	public func userOpenedWidget() {
+		handleUserOpenedWidget()
+	}
+
+	public func userAuthData(bid: String?, auth: String?) {
+		handleUserAuthData(bid: bid, auth: auth)
+	}
+
+	public func userSelectedProduct(userProductId: Int?) {
+		handleUserSelectedProduct(userProductId: userProductId)
+	}
+
+	public func userAddedProduct() {
+		handleUserAddedProduct()
+	}
+
+	public func userDeletedProduct(userProductId: Int?) {
+		handleUserDeletedProduct(userProductId: userProductId)
+	}
+
+	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
+		handleUserChangedRecommendationType(changedType: changedType)
+	}
+
+	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
+		handleUserUpdatedBodyMeasurements(recommendedSize: recommendedSize)
+	}
+
+	public func userLoggedIn() {
+		handleUserLoggedIn()
+	}
+
+	public func clearUserData() {
+		handleClearUserData()
+	}
 }

@@ -199,7 +199,7 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(actualParams?.productType, "jacket")
 		XCTAssertEqual(
 			apiRequest?.url?.absoluteString,
-			"https://services.virtusize.jp/stg/ds-functions/size-rec/get-size-new"
+			"https://services.virtusize.jp/stg/ds-functions/size-rec/get-size"
 		)
     }
 

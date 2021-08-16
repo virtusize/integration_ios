@@ -24,26 +24,26 @@
 
 /// This class represents the meta data of a product
 internal class VirtusizeServerProductMeta: Codable {
-    // swiftlint:disable identifier_name
-    /// The ID of the store product meta
-    let id: Int
-    /// The additional info of the store product
-    let additionalInfo: VirtusizeServerProductAdditionalInfo?
-    /// The brand name of the store product
-    let brand: String
-    /// The gender for the store product
-    let gender: String?
+	// swiftlint:disable identifier_name
+	/// The ID of the store product meta
+	let id: Int
+	/// The additional info of the store product
+	let additionalInfo: VirtusizeServerProductAdditionalInfo?
+	/// The brand name of the store product
+	let brand: String
+	/// The gender for the store product
+	let gender: String?
 
-    private enum CodingKeys: String, CodingKey {
-        // swiftlint:disable identifier_name
-        case id, additionalInfo, brand, gender
-    }
+	private enum CodingKeys: String, CodingKey {
+		// swiftlint:disable identifier_name
+		case id, additionalInfo, brand, gender
+	}
 
-    required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(Int.self, forKey: .id)
-        additionalInfo = try? values.decode(VirtusizeServerProductAdditionalInfo.self, forKey: .additionalInfo)
-        brand = try values.decode(String.self, forKey: .brand)
-        gender = try? values.decode(String.self, forKey: .gender)
-    }
+	required init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		id = try values.decode(Int.self, forKey: .id)
+		additionalInfo = try? values.decode(VirtusizeServerProductAdditionalInfo.self, forKey: .additionalInfo)
+		brand = try values.decode(String.self, forKey: .brand)
+		gender = try? values.decode(String.self, forKey: .gender)
+	}
 }

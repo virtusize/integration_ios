@@ -67,7 +67,7 @@ internal class BundleLoader: NSObject {
 			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
 			ofType: "lproj"
 		),
-			  let localizableBundle = Bundle(path: localizableBundlePath) {
+		let localizableBundle = Bundle(path: localizableBundlePath) {
 			bundle = localizableBundle
 		}
 		return bundle

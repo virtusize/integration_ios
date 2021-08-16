@@ -24,14 +24,14 @@
 
 /// This class represents the response for the user data field in the data field of ProductCheck
 internal class VirtusizeUserData: Codable {
-    let shouldSeePhTooltip: Bool?
+	let shouldSeePhTooltip: Bool?
 
-    private enum CodingKeys: String, CodingKey {
-        case shouldSeePhTooltip = "should_see_ph_tooltip"
-    }
+	private enum CodingKeys: String, CodingKey {
+		case shouldSeePhTooltip = "should_see_ph_tooltip"
+	}
 
-    required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        shouldSeePhTooltip = try? values.decode(Bool.self, forKey: .shouldSeePhTooltip)
-    }
+	required init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		shouldSeePhTooltip = try? values.decode(Bool.self, forKey: .shouldSeePhTooltip)
+	}
 }

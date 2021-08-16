@@ -31,6 +31,7 @@ public enum VirtusizeRegion: String {
 
 	/// Gets the VirtusizeLanguage value based on the region
 	internal func defaultLanguage() -> VirtusizeLanguage {
+		// swiftlint:disable switch_case_alignment
 		switch self {
 			case .COM:
 				return VirtusizeLanguage.ENGLISH

@@ -24,44 +24,44 @@
 
 /// The builder patten to help initialize the `VirtusizeParams` object
 public class VirtusizeParamsBuilder {
-    private var region: VirtusizeRegion = VirtusizeRegion.JAPAN
-    private var language: VirtusizeLanguage?
-    private var allowedLanguages: [VirtusizeLanguage] = VirtusizeLanguage.allCases
-    private var virtusizeProduct: VirtusizeProduct?
-    private var showSGI: Bool = false
-    private var detailsPanelCards: [VirtusizeInfoCategory] = VirtusizeInfoCategory.allCases
+	private var region: VirtusizeRegion = VirtusizeRegion.JAPAN
+	private var language: VirtusizeLanguage?
+	private var allowedLanguages: [VirtusizeLanguage] = VirtusizeLanguage.allCases
+	private var virtusizeProduct: VirtusizeProduct?
+	private var showSGI: Bool = false
+	private var detailsPanelCards: [VirtusizeInfoCategory] = VirtusizeInfoCategory.allCases
 
-    public init() {}
+	public init() {}
 
-    public func setLanguage(_ value: VirtusizeLanguage) -> VirtusizeParamsBuilder {
-        language = value
-        return self
-    }
+	public func setLanguage(_ value: VirtusizeLanguage) -> VirtusizeParamsBuilder {
+		language = value
+		return self
+	}
 
-    public func setAllowedLanguages(_ value: [VirtusizeLanguage]) -> VirtusizeParamsBuilder {
-        allowedLanguages = value
-        return self
-    }
+	public func setAllowedLanguages(_ value: [VirtusizeLanguage]) -> VirtusizeParamsBuilder {
+		allowedLanguages = value
+		return self
+	}
 
-    public func setShowSGI(_ value: Bool) -> VirtusizeParamsBuilder {
-        showSGI = value
-        return self
-    }
+	public func setShowSGI(_ value: Bool) -> VirtusizeParamsBuilder {
+		showSGI = value
+		return self
+	}
 
-    public func setDetailsPanelCards(_ value: [VirtusizeInfoCategory]) -> VirtusizeParamsBuilder {
-        detailsPanelCards = value
-        return self
-    }
+	public func setDetailsPanelCards(_ value: [VirtusizeInfoCategory]) -> VirtusizeParamsBuilder {
+		detailsPanelCards = value
+		return self
+	}
 
-    public func build() -> VirtusizeParams {
-        /// Assigns the region value to a default one corresponding the Virtusize environment
-        region = Virtusize.environment.virtusizeRegion()
-        return VirtusizeParams(
-            region: region,
+	public func build() -> VirtusizeParams {
+		/// Assigns the region value to a default one corresponding the Virtusize environment
+		region = Virtusize.environment.virtusizeRegion()
+		return VirtusizeParams(
+			region: region,
 			language: language ?? region.defaultLanguage(),
-            allowedLanguages: allowedLanguages,
-            showSGI: showSGI,
-            detailsPanelCards: detailsPanelCards
-        )
-    }
+			allowedLanguages: allowedLanguages,
+			showSGI: showSGI,
+			detailsPanelCards: detailsPanelCards
+		)
+	}
 }

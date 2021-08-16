@@ -22,97 +22,158 @@
 //  THE SOFTWARE.
 //
 
-public class VirtusizeInPageView: UIView, VirtusizeView {
-	internal var virtusizeEventHandler: VirtusizeEventHandler?
-
-    /// The property to set the Virtusize view style that this SDK provides
-    public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
-        didSet {
-            setup()
-        }
-    }
-
-	public var memoryAddress: String {
-		String(format: "%p", self)
-	}
-    public var presentingViewController: UIViewController?
-    public var messageHandler: VirtusizeMessageHandler?
-	public var isDeallocated: Bool?
-
-    internal let defaultMargin: CGFloat = 8
-
-    internal var loadingTextTimer: Timer?
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-		virtusizeEventHandler = self
-        isHidden = true
-        setup()
-    }
-
-    public override init(frame: CGRect) {
-        super.init(frame: .zero)
-		virtusizeEventHandler = self
-        isHidden = true
-        setup()
-    }
-
-	public override func willMove(toWindow: UIWindow?) {
-		handleWillMoveWindow(toWindow) { isDeallocated in
-			self.isDeallocated = isDeallocated
+public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProtocol {
+	/// The property to set the Virtusize view style that this SDK provides
+	public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {
+		didSet {
+			setup()
 		}
 	}
 
-	public func isLoading() {
-        isHidden = false
+	public var presentingViewController: UIViewController?
+	public var messageHandler: VirtusizeMessageHandler?
+	public var clientProduct: VirtusizeProduct?
+	public var serverProduct: VirtusizeServerProduct?
+
+	internal var virtusizeEventHandler: VirtusizeEventHandler?
+	internal let defaultMargin: CGFloat = 8
+	internal var loadingTextTimer: Timer?
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		virtusizeEventHandler = self
+		isHidden = true
+		setup()
+		addNotificationObserver()
 	}
 
-    internal func setup() {}
+	public override init(frame: CGRect) {
+		super.init(frame: .zero)
+		virtusizeEventHandler = self
+		isHidden = true
+		setup()
+		addNotificationObserver()
+	}
 
-    internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: self,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: view,
-                attribute: .leading,
-                multiplier: 1,
-                constant: margin
-            )
-        )
-        view.addConstraint(
-            NSLayoutConstraint(
-                item: view,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: margin
-            )
-        )
-    }
-
-    @objc internal func clickInPageViewAction() {
-		openVirtusizeWebView(
-			eventHandler: virtusizeEventHandler
+	/// Add observers to listen to notification data from the sender (Virtusize.self)
+	private func addNotificationObserver() {
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didReceiveProductDataCheck(_:)),
+			name: .productDataCheck,
+			object: Virtusize.self
 		)
-    }
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didReceiveStoreProduct(_:)),
+			name: .storeProduct,
+			object: Virtusize.self
+		)
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didReceiveSizeRecommendationData(_:)),
+			name: .sizeRecommendationData,
+			object: Virtusize.self
+		)
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didReceiveInPageError(_:)),
+			name: .inPageError,
+			object: Virtusize.self
+		)
+	}
+
+	@objc internal func didReceiveProductDataCheck(_ notification: Notification) {
+		shouldUpdateProductDataCheckData(notification) { productWithPDCData in
+			self.clientProduct = productWithPDCData
+			isHidden = false
+			setLoadingScreen(loading: true)
+		}
+	}
+
+	@objc internal func didReceiveStoreProduct(_ notification: Notification) {
+		shouldUpdateStoreProduct(notification) { storeProduct in
+			self.serverProduct = storeProduct
+		}
+	}
 
 	/// A parent function to set up InPage recommendation
-	internal func setInPageRecommendation(
-		_ externalProductId: String?,
-		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
-		_ bodyProfileRecommendedSize: BodyProfileRecommendedSize?
-	) {}
+	@objc internal func didReceiveSizeRecommendationData(_ notification: Notification) {}
+
+	internal func shouldUpdateInPageRecommendation(
+		_ notification: Notification,
+		shouldUpdate: (Virtusize.SizeRecommendationData) -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			  let sizeRecData = notificationData[NotificationKey.sizeRecommendationData] as? Virtusize.SizeRecommendationData,
+			  sizeRecData.serverProduct.externalId == self.clientProduct?.externalId else {
+			return
+		}
+		shouldUpdate(sizeRecData)
+	}
+
+	internal func shouldShowInPageErrorScreen(
+		_ notification: Notification,
+		shouldShow: () -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			  let inPageError = notificationData[NotificationKey.inPageError] as? Virtusize.InPageError,
+			  inPageError.externalProductId == self.clientProduct?.externalId else {
+			return
+		}
+		shouldShow()
+	}
 
 	/// A parent function for showing the error screen
-	internal func showErrorScreen() {}
+	@objc internal func didReceiveInPageError(_ notification: Notification) {}
 
-    internal func startLoadingTextAnimation(label: UILabel, text: String) {
-        var tempDots = 0
-        label.text = text
+	/// Sets up the styles for the loading screen and the screen after finishing loading
+	///
+	/// - Parameters:
+	///   - loading: Pass true when it's loading, and pass false when finishing loading
+	internal func setLoadingScreen(loading: Bool) {}
+
+	internal func setup() {}
+
+	internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
+		view.addConstraint(
+			NSLayoutConstraint(
+				item: self,
+				attribute: .leading,
+				relatedBy: .equal,
+				toItem: view,
+				attribute: .leading,
+				multiplier: 1,
+				constant: margin
+			)
+		)
+		view.addConstraint(
+			NSLayoutConstraint(
+				item: view,
+				attribute: .trailing,
+				relatedBy: .equal,
+				toItem: self,
+				attribute: .trailing,
+				multiplier: 1,
+				constant: margin
+			)
+		)
+	}
+
+	@objc internal func clickInPageViewAction() {
+		openVirtusizeWebView(
+			product: clientProduct,
+			serverProduct: serverProduct,
+			eventHandler: virtusizeEventHandler
+		)
+	}
+
+	internal func startLoadingTextAnimation(label: UILabel, text: String) {
+		var tempDots = 0
+		label.text = text
 		if loadingTextTimer == nil {
 			loadingTextTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
 				if tempDots == 3 {
@@ -124,111 +185,49 @@ public class VirtusizeInPageView: UIView, VirtusizeView {
 				}
 			}
 		}
-    }
+	}
 
-    internal func stopLoadingTextAnimation() {
+	internal func stopLoadingTextAnimation() {
 		self.loadingTextTimer?.invalidate()
 		self.loadingTextTimer = nil
-    }
-
-	private func getAssociatedProduct() -> VirtusizeServerProduct? {
-		return VirtusizeRepository.shared.availableVSViewToProductDict[memoryAddress]
 	}
 }
 
 extension VirtusizeInPageView: VirtusizeEventHandler {
 
 	public func userOpenedWidget() {
-		VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-			shouldUpdateUserProducts: false,
-			shouldUpdateBodyProfile: false
-		)
-		VirtusizeRepository.shared.updateInPageRecommendation(
-			product: self.getAssociatedProduct()
-		)
+		handleUserOpenedWidget()
 	}
 
 	public func userAuthData(bid: String?, auth: String?) {
-		VirtusizeRepository.shared.updateUserAuthData(bid: bid, auth: auth)
+		handleUserAuthData(bid: bid, auth: auth)
 	}
 
 	public func userSelectedProduct(userProductId: Int?) {
-		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-				selectedUserProductId: userProductId,
-				shouldUpdateUserProducts: false,
-				shouldUpdateBodyProfile: false
-			)
-			VirtusizeRepository.shared.updateInPageRecommendation(
-				product: self.getAssociatedProduct(),
-				type: .compareProduct
-			)
-		}
+		handleUserSelectedProduct(userProductId: userProductId)
 	}
 
-	public func userAddedProduct(userProductId: Int?) {
-		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-				selectedUserProductId: userProductId,
-				shouldUpdateUserProducts: true,
-				shouldUpdateBodyProfile: false
-			)
-			VirtusizeRepository.shared.updateInPageRecommendation(
-				product: self.getAssociatedProduct(),
-				type: .compareProduct
-			)
-		}
+	public func userAddedProduct() {
+		handleUserAddedProduct()
 	}
 
 	public func userDeletedProduct(userProductId: Int?) {
-		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.deleteUserProduct(userProductId)
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-				shouldUpdateUserProducts: false,
-				shouldUpdateBodyProfile: false
-			)
-			VirtusizeRepository.shared.updateInPageRecommendation(
-				product: self.getAssociatedProduct()
-			)
-		}
+		handleUserDeletedProduct(userProductId: userProductId)
 	}
 
 	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
-		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.updateInPageRecommendation(
-				product: self.getAssociatedProduct(),
-				type: changedType
-			)
-		}
+		handleUserChangedRecommendationType(changedType: changedType)
 	}
 
 	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
-		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
-			VirtusizeRepository.shared.updateInPageRecommendation(
-				product: self.getAssociatedProduct(),
-				type: .body
-			)
-		}
+		handleUserUpdatedBodyMeasurements(recommendedSize: recommendedSize)
 	}
 
 	public func userLoggedIn() {
-		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.updateUserSession()
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
-			VirtusizeRepository.shared.updateInPageRecommendation(product: self.getAssociatedProduct())
-		}
+		handleUserLoggedIn()
 	}
 
 	public func clearUserData() {
-		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.clearUserData()
-			VirtusizeRepository.shared.updateUserSession()
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-				shouldUpdateUserProducts: false,
-				shouldUpdateBodyProfile: false
-			)
-			VirtusizeRepository.shared.updateInPageRecommendation(product: self.getAssociatedProduct())
-		}
+		handleClearUserData()
 	}
 }

@@ -91,6 +91,7 @@ extension VirtusizeWebView: WKUIDelegate {
 		}
 
 		if navigationAction.targetFrame == nil && isLinkFromSNSAuth(url: url.absoluteString) {
+			// swiftlint:disable line_length
 			// By default, the Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a web view.
 			// By setting up the user agent, Google recognizes the web view as a Safari browser
 			configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
@@ -321,9 +322,9 @@ extension VirtusizeWebView: WKNavigationDelegate {
 		completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Swift.Void
 	) {
 		guard wkNavigationDelegate?.webView?(
-				webView,
-				didReceive: challenge,
-				completionHandler: completionHandler
+			webView,
+			didReceive: challenge,
+			completionHandler: completionHandler
 		) != nil else {
 			completionHandler(.rejectProtectionSpace, nil)
 			return

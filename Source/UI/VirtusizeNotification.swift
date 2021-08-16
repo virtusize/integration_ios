@@ -1,7 +1,7 @@
 //
-//  BodyProfileRecommendedSize.swift
+//  VirtusizeNotification.swift
 //
-//  Copyright (c) 2020 Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,16 @@
 //  THE SOFTWARE.
 //
 
-/// This structure represents the response for the recommendation API based on the user body profile
-public struct BodyProfileRecommendedSize: Codable {
-	/// The recommended size name
-	let sizeName: String
+extension Notification.Name {
+	static let productDataCheck = Notification.Name(NotificationKey.productDataCheck)
+	static let storeProduct = Notification.Name(NotificationKey.storeProduct)
+	static let sizeRecommendationData = Notification.Name(NotificationKey.sizeRecommendationData)
+	static let inPageError = Notification.Name(NotificationKey.inPageError)
+}
 
-	/// The store product that is associated with this recommendation
-	public var product: VirtusizeServerProduct?
-
-	public init(sizeName: String, product: VirtusizeServerProduct? = nil) {
-		self.sizeName = sizeName
-		self.product = product
-	}
+struct NotificationKey {
+	static let productDataCheck = "productDataCheck"
+	static let storeProduct = "storeProduct"
+	static let sizeRecommendationData = "sizeRecommendationData"
+	static let inPageError = "inPageError"
 }

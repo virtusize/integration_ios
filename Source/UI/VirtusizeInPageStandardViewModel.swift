@@ -27,7 +27,7 @@ internal final class VirtusizeInPageStandardViewModel {
 	let storeProductImageObservable: Observable<VirtusizeProductImage?> = Observable(nil)
 
 	private var currentBestFitUserProduct: VirtusizeServerProduct?
-	private var currentStoreProductId: String?
+	private var currentExternalProductId: String?
 	private let dispatchQueue = DispatchQueue(label: "com.virtusize.inpage-image-queue")
 
 	func loadUserProductImage(bestFitUserProduct: VirtusizeServerProduct) {
@@ -55,29 +55,32 @@ internal final class VirtusizeInPageStandardViewModel {
 		}
 	}
 
-	func loadStoreProductImage(storeProductId: String?) {
-		guard currentStoreProductId != storeProductId || self.storeProductImageObservable.value == nil
+	func loadStoreProductImage(
+		clientProductImageURL: URL?,
+		storeProduct: VirtusizeServerProduct
+	) {
+		guard currentExternalProductId != storeProduct.externalId || self.storeProductImageObservable.value == nil
 		else {
 			self.storeProductImageObservable.value = self.storeProductImageObservable.value
 			return
 		}
-		currentStoreProductId = storeProductId
+		currentExternalProductId = storeProduct.externalId
 
 		dispatchQueue.async {
-			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: Virtusize.product?.imageURL).success {
+			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: clientProductImageURL).success {
 				self.storeProductImageObservable.value = VirtusizeProductImage(
 					image: clientProductImage,
 					source: .client
 				)
 			} else {
-				let cloudinaryImageURL = VirtusizeRepository.shared.currentProduct!.getCloudinaryImageUrl()
+				let cloudinaryImageURL = storeProduct.getCloudinaryImageUrl()
 				if let storeProductImage = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL).success {
 					self.storeProductImageObservable.value = VirtusizeProductImage(
 						image: storeProductImage,
 						source: .cloudinary
 					)
 				} else {
-					let productTypeImage = VirtusizeRepository.shared.currentProduct!.getProductTypeImage()
+					let productTypeImage = storeProduct.getProductTypeImage()
 					self.storeProductImageObservable.value = VirtusizeProductImage(
 						image: productTypeImage,
 						source: .local
