@@ -70,12 +70,14 @@ public class Virtusize {
 	internal static var sizeRecData: SizeRecommendationData? {
 		set {
 			_sizeRecData = newValue
-			DispatchQueue.main.async {
-				NotificationCenter.default.post(
-					name: .sizeRecommendationData,
-					object: Virtusize.self,
-					userInfo: [NotificationKey.sizeRecommendationData: _sizeRecData]
-				)
+			if let sizeRecData = _sizeRecData {
+				DispatchQueue.main.async {
+					NotificationCenter.default.post(
+						name: .sizeRecommendationData,
+						object: Virtusize.self,
+						userInfo: [NotificationKey.sizeRecommendationData: sizeRecData as SizeRecommendationData]
+					)
+				}
 			}
 		}
 		get {
@@ -91,12 +93,15 @@ public class Virtusize {
 	internal static var inPageError: InPageError? {
 		set {
 			_inPageError = newValue
-			DispatchQueue.main.async {
-				NotificationCenter.default.post(
-					name: .inPageError,
-					object: Virtusize.self,
-					userInfo: [NotificationKey.inPageError: _inPageError]
-				)
+			if let inPageError = _inPageError {
+				DispatchQueue.main.async {
+					NotificationCenter.default.post(
+						name: .inPageError,
+						object: Virtusize.self,
+						userInfo: [
+							NotificationKey.inPageError: inPageError as InPageError]
+					)
+				}
 			}
 		}
 		get {
