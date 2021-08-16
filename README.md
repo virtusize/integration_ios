@@ -157,7 +157,7 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 
 
 
-### 2. Load Product with Virtusize
+### 2. Load Product with Virtusize SDK
 
 In the view controller for your product page, you will need to use `Virtusize.load` to populate the Virtusize views:
 
