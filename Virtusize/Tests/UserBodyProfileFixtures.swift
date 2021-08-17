@@ -23,7 +23,6 @@
 //
 
 import Foundation
-@testable import Virtusize
 
 extension TestFixtures {
 

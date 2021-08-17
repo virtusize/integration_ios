@@ -4,16 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "Virtusize",
+	name: "Virtusize",
 	defaultLocalization: "en",
 	platforms: [.iOS(.v10)],
-    products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "Virtusize",
-            targets: ["Virtusize"]),
-    ],
-    dependencies: [],
+	products: [
+		.library(
+			name: "Virtusize",
+			targets: ["Virtusize"])
+	],
+	dependencies: [],
 	targets: [
 		.target(
 			name: "Virtusize",
@@ -30,8 +29,8 @@ let package = Package(
 			resources: [
 				.process("i18n_en.json"),
 				.process("i18n_jp.json"),
-				.process("i18n_ko.json"),
+				.process("i18n_ko.json")
 			]
 		)
-    ]
+	]
 )

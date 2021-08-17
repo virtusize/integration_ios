@@ -23,7 +23,6 @@
 //
 
 import Foundation
-@testable import Virtusize
 
 struct TestFixtures {
     static let apiKey = "testApiKey"
