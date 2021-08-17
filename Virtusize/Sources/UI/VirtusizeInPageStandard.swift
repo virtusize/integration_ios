@@ -147,7 +147,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 				string: Localization.shared.localize("inpage_error_long_text")
 			).lineSpacing(self.messageLineSpacing)
 			errorText.textAlignment = .center
-		}	
+		}
 	}
 
 	private func bind(to viewModel: VirtusizeInPageStandardViewModel) {

@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.3'
   s.swift_version = '5'
 
-  s.source_files = ["Source/*.{swift, h}", "Source/**/*.swift"]
-	s.resources = "Source/Resources/**/*.otf"
-  s.resource_bundle = { 'Virtusize' => ["Source/Resources/**/*.lproj", "Source/VirtusizeAssets.xcassets"] }
+  s.source_files = ["Virtusize/Sources/*.{swift, h}", "Virtusize/Sources/**/*.swift"]
+	s.resources = "Virtusize/Sources/Resources/**/*.otf"
+  s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/VirtusizeAssets.xcassets"] }
 end
