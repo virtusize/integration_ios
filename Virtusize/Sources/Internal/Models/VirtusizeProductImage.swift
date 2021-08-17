@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// This class represents the product image loaded in an InPage Standard view
 internal struct VirtusizeProductImage {
 	let image: UIImage?

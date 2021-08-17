@@ -22,6 +22,9 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+import Foundation
+
 /// This structure represents a product from the Virtusize server
 public class VirtusizeServerProduct: Codable {
 	// swiftlint:disable identifier_name

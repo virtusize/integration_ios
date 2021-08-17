@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 public class VirtusizeFlutterRepository: NSObject {
 	public static let shared: VirtusizeFlutterRepository = {
 		let instance = VirtusizeFlutterRepository()

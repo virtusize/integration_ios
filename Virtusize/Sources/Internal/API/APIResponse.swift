@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 // The wrapper for the API response
 internal struct APIResponse {
 	/// The API response status code

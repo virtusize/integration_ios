@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// This class wraps the assets including colors and images used in the Virtusize SDK
 final public class VirtusizeAssets {
 	public static let bundle = Bundle(for: VirtusizeAssets.self)

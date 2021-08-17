@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 /// This structure wraps the parameters for the API request of sending the order
 public struct VirtusizeOrder: Codable {
 	/// The API key that is unique and provided for Virtusize clients

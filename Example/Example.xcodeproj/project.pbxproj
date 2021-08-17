@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4DD0B42E20577289004ABA07 /* Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD0B41E205770D6004ABA07 /* Virtusize.framework */; };
-		4DD0B42F20577289004ABA07 /* Virtusize.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD0B41E205770D6004ABA07 /* Virtusize.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4DED8D4520575A9C001CA7DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D4420575A9C001CA7DF /* AppDelegate.swift */; };
 		4DED8D4720575A9C001CA7DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED8D4620575A9C001CA7DF /* ViewController.swift */; };
 		4DED8D4A20575A9C001CA7DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4820575A9C001CA7DF /* Main.storyboard */; };
 		4DED8D4C20575A9C001CA7DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4B20575A9C001CA7DF /* Assets.xcassets */; };
 		4DED8D4F20575A9C001CA7DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4D20575A9C001CA7DF /* LaunchScreen.storyboard */; };
+		9C1BDEAD26CC0EB50020BDA5 /* Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD0B41E205770D6004ABA07 /* Virtusize.framework */; };
+		9C1BDEAE26CC0EB50020BDA5 /* Virtusize.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD0B41E205770D6004ABA07 /* Virtusize.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C454D0426686DD7003BF5BE /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C454D0326686DD7003BF5BE /* WebViewController.swift */; };
 		9C4B389E26BBA18800B73FE5 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */; };
 /* End PBXBuildFile section */
@@ -33,23 +33,16 @@
 			remoteGlobalIDString = 4DED8D25205755C3001CA7DF;
 			remoteInfo = VirtusizeTests;
 		};
-		4DD0B43020577289004ABA07 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4DD0B418205770D5004ABA07 /* Virtusize.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4DED8D1B205755C3001CA7DF;
-			remoteInfo = Virtusize;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4DD0B43220577289004ABA07 /* Embed Frameworks */ = {
+		9C1BDEAF26CC0EB50020BDA5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4DD0B42F20577289004ABA07 /* Virtusize.framework in Embed Frameworks */,
+				9C1BDEAE26CC0EB50020BDA5 /* Virtusize.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DD0B42E20577289004ABA07 /* Virtusize.framework in Frameworks */,
+				9C1BDEAD26CC0EB50020BDA5 /* Virtusize.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,13 +141,12 @@
 				4DED8D3D20575A9C001CA7DF /* Sources */,
 				4DED8D3E20575A9C001CA7DF /* Frameworks */,
 				4DED8D3F20575A9C001CA7DF /* Resources */,
-				4DD0B43220577289004ABA07 /* Embed Frameworks */,
 				DF6B5C92219BD281000B3402 /* ShellScript */,
+				9C1BDEAF26CC0EB50020BDA5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4DD0B43120577289004ABA07 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -265,14 +257,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4DD0B43120577289004ABA07 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Virtusize;
-			targetProxy = 4DD0B43020577289004ABA07 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4DED8D4820575A9C001CA7DF /* Main.storyboard */ = {
@@ -411,7 +395,6 @@
 		4DED8D5420575A9C001CA7DF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
@@ -427,7 +410,6 @@
 		4DED8D5520575A9C001CA7DF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;

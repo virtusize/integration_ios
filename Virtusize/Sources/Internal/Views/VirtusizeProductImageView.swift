@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// The custom view for setting up the store product image view from a URL
 /// or replacing it with a product type placeholder image when the image URL is not available
 internal class VirtusizeProductImageView: UIView {

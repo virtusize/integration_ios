@@ -22,6 +22,9 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+import Foundation
+
 internal extension NSAttributedString {
 	/// Adds the line spacing to an attributed string
 	///

@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 internal final class VirtusizeInPageStandardViewModel {
 	let userProductImageObservable: Observable<VirtusizeProductImage?> = Observable(nil)
 	let storeProductImageObservable: Observable<VirtusizeProductImage?> = Observable(nil)

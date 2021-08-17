@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
 import Foundation
 
 typealias Payload = JSONObject
@@ -49,8 +50,8 @@ internal struct APIEvent {
 			"widgetType": "mobile",
 			"browserOrientation": UIDevice.current.orientation.isLandscape ? "landscape" : "portrait",
 			"browserResolution": "\(Int(screenSize.height))x\(Int(screenSize.width))",
-			"integrationVersion": String(VirtusizeVersionNumber),
-			"snippetVersion": String(VirtusizeVersionNumber)
+			"integrationVersion": String(VirtusizeConfiguration.SDKVersion),
+			"snippetVersion": String(VirtusizeConfiguration.SDKVersion)
 		]
 	}
 

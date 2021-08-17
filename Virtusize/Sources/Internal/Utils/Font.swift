@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// This class to used to get UIFonts from font files
 class Font {
 

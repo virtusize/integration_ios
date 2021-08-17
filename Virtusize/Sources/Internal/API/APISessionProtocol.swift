@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 /// `URLSession` is extended to conform to `APISessionProtocol`
 extension URLSession: APISessionProtocol {
 }

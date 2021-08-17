@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProtocol {
 	/// The property to set the Virtusize view style that this SDK provides
 	public var style: VirtusizeViewStyle = VirtusizeViewStyle.NONE {

@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 extension Notification.Name {
 	static let productDataCheck = Notification.Name(NotificationKey.productDataCheck)
 	static let storeProduct = Notification.Name(NotificationKey.storeProduct)

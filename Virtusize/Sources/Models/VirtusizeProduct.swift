@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 /// This structure represents a product in the Virtusize SDK
 public class VirtusizeProduct: Codable {
 

@@ -238,7 +238,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
 
     func testGetStoreProductInfo_withValidProductId_hasExpectedStoreProduct() {
         let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
-        var actualStoreProduct: VirtusizeInternalProduct?
+        var actualStoreProduct: VirtusizeServerProduct?
 
 		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.getStoreProductJsonResponse(gender: nil).data(using: .utf8),
@@ -314,7 +314,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
 
     func testGetUserProducts_hasExpectedUserProductList() {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
-        var actualUserProductList: [VirtusizeInternalProduct]?
+        var actualUserProductList: [VirtusizeServerProduct]?
 
 		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.userProductArrayJsonResponse.data(using: .utf8),
@@ -359,7 +359,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
 
     func testGetUserProducts_userHasAnEmptyWardrobe_hasExpectedEmptyUserProductList() {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
-        var actualUserProductList: [VirtusizeInternalProduct]?
+        var actualUserProductList: [VirtusizeServerProduct]?
 
 		VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.emptyProductArrayJsonResponse.data(using: .utf8),

@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]
 

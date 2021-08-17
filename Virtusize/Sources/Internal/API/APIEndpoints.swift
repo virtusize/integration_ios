@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 /// This enum represents all available Virtusize endpoints
 internal enum APIEndpoints {
 	case productDataCheck(externalId: String)

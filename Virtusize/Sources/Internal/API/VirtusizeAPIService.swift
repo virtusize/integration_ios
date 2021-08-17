@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
 import Foundation
 
 /// This class is to handle API requests to the Virtusize server

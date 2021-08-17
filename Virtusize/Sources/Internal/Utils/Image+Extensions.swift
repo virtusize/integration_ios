@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 internal extension UIImage {
 
 	/// Creates a `UIImage` object in the Virtusize framework bundle.

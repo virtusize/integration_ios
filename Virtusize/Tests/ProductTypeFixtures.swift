@@ -22,6 +22,9 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+@testable import Virtusize
+
 extension TestFixtures {
     static let productTypeOneJsonResponse =
     """

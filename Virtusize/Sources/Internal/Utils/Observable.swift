@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 // The class warps a value in `AnyObject` to make it observable
 internal final class Observable<Value> {
 

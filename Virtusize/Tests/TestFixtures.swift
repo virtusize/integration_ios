@@ -22,6 +22,9 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+@testable import Virtusize
+
 struct TestFixtures {
     static let apiKey = "testApiKey"
     static let browserID = "browserID"
