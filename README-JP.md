@@ -60,6 +60,8 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## はじめに
 
+If you'd like to continue using the older Version 1.x.x, refer to the branch [v1](https://github.com/virtusize/integration_ios/tree/v1).
+
 ### CocoaPods
 
 [CocoaPods](https://cocoapods.org/) dependency managerをインストールして使用します。下記のコマンドでインストールが可能です。
@@ -85,6 +87,17 @@ end
 ```bash
 $ pod install
 ```
+
+
+
+### Swift Package Manager
+
+Starting with the  `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
+
+1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
+2. Select a minimum version of `2.3.1`
+3. Click **Next**
+
 
 
 ### Carthage
