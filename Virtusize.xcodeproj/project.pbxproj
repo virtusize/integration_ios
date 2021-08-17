@@ -299,6 +299,7 @@
 		4DED8D1E205755C3001CA7DF /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				9CF77A5226CB8F040019889E /* SwiftUI */,
 				9C01389026AE916A007F5392 /* Flutter */,
 				9C35F99C25F02CAD0004E9CD /* VirtusizeAssets.xcassets */,
 				9C35F96625F02AC30004E9CD /* Resources */,
@@ -488,6 +489,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		9CF77A5226CB8F040019889E /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				9C892C3C25BE878E00B22E92 /* SwiftUIVirtusizeButton.swift */,
+				9C9797C925BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift */,
+				9C4DD66A261EFC1900BBAD09 /* SwiftUIVirtusizeInPageMini.swift */,
+				9C4DD66E2623E21900BBAD09 /* SwiftUIVirtusizeInPageStandard.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		DF71642621A284E9002C7202 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,10 +571,6 @@
 				9C58751D24EF7D5000352474 /* VirtusizeView.swift */,
 				9C84B3FC26C2566B00DDF434 /* VirtusizeViewEventProtocol.swift */,
 				9CFF40FB25B974D200B21D4E /* VirtusizeViewStyle.swift */,
-				9C892C3C25BE878E00B22E92 /* SwiftUIVirtusizeButton.swift */,
-				9C9797C925BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift */,
-				9C4DD66A261EFC1900BBAD09 /* SwiftUIVirtusizeInPageMini.swift */,
-				9C4DD66E2623E21900BBAD09 /* SwiftUIVirtusizeInPageStandard.swift */,
 				9C3DE37625BA9CC70082C140 /* VirtusizeWebViewController.swift */,
 				9C84B40026C276CA00DDF434 /* VirtusizeNotification.swift */,
 			);
