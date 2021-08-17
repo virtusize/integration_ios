@@ -24,38 +24,50 @@
 
 /// This structure wraps the parameters for the API request of sending the order
 public struct VirtusizeOrder: Codable {
-    /// The API key that is unique and provided for Virtusize clients
-    private let apiKey: String?
-    /// The order ID provided by the client
-    private let externalOrderId: String
-    /// The unique user ID from the client system.
-    /// `Virtusize.userId` should be set for sending the order
-    internal var externalUserId: String?
-    /// A country code is set for each region i.e. ISO-3166.
-    /// This is set by the response of the request that retrieves the specific store info
-    internal var region: String?
-    /// An array of the order items.
-    public var items: [VirtusizeOrderItem]
+	/// The API key that is unique and provided for Virtusize clients
+	internal var apiKey: String?
+	/// The order ID provided by the client
+	private let externalOrderId: String
+	/// The unique user ID from the client system.
+	/// `Virtusize.userId` should be set for sending the order
+	internal var externalUserId: String?
+	/// A country code is set for each region i.e. ISO-3166.
+	/// This is set by the response of the request that retrieves the specific store info
+	internal var region: String?
+	/// An array of the order items.
+	public var items: [VirtusizeOrderItem]
 
-    /// Initializes the VirtusizeOrder structure
-    private init(externalOrderId: String,
-                 externalUserId: String? = nil,
-                 region: String? = nil,
-                 items: [VirtusizeOrderItem] = []) {
-        self.apiKey = Virtusize.APIKey
-        self.externalOrderId = externalOrderId
-        self.externalUserId = externalUserId
-        self.region = region
-        self.items = items
-    }
+	/// Initializes the VirtusizeOrder structure
+	private init(
+		externalOrderId: String,
+		externalUserId: String? = nil,
+		region: String? = nil,
+		items: [VirtusizeOrderItem] = []
+	) {
+		self.apiKey = Virtusize.APIKey
+		self.externalOrderId = externalOrderId
+		self.externalUserId = externalUserId
+		self.region = region
+		self.items = items
+	}
+
+	/// Converts a dictionary to a VirtusizeOrder object
+	internal static func convertToObjectBy(dictionary: [String: Any?]) -> VirtusizeOrder? {
+		do {
+			let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+			return try JSONDecoder().decode(VirtusizeOrder.self, from: jsonData)
+		} catch {
+			return nil
+		}
+	}
 }
 
 extension VirtusizeOrder {
-    public init(externalOrderId: String) {
-        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: [])
-    }
+	public init(externalOrderId: String) {
+		self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: [])
+	}
 
-    public init(externalOrderId: String, items: [VirtusizeOrderItem]) {
-        self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: items)
-    }
+	public init(externalOrderId: String, items: [VirtusizeOrderItem]) {
+		self.init(externalOrderId: externalOrderId, externalUserId: nil, region: nil, items: items)
+	}
 }

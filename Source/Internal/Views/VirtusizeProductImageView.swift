@@ -44,23 +44,23 @@ internal class VirtusizeProductImageView: UIView {
 		case USER, STORE
 	}
 
-    private var imageSize: CGFloat = 40
+	private var imageSize: CGFloat = 40
 
-    private var productImageView: UIImageView = UIImageView()
+	private var productImageView: UIImageView = UIImageView()
 
 	private let circleBorderLayer = CAShapeLayer()
 
-    var image: UIImage? {
-        set {
-            if productImageView.image != newValue {
-                productImageView.image = newValue
-                setStyle()
-            }
-        }
-        get {
-            return productImageView.image
-        }
-    }
+	var image: UIImage? {
+		set {
+			if productImageView.image != newValue {
+				productImageView.image = newValue
+				setStyle()
+			}
+		}
+		get {
+			return productImageView.image
+		}
+	}
 
 	var productImageType: ProductImageType = ProductImageType.STORE {
 		didSet {
@@ -68,25 +68,25 @@ internal class VirtusizeProductImageView: UIView {
 		}
 	}
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		setup()
+	}
 
-    init(size: CGFloat) {
-        super.init(frame: .zero)
-        imageSize = size
-        setup()
-    }
+	init(size: CGFloat) {
+		super.init(frame: .zero)
+		imageSize = size
+		setup()
+	}
 
-    private func setup() {
+	private func setup() {
 		backgroundColor = UIColor.white
-        addSubview(productImageView)
+		addSubview(productImageView)
 
-        setStyle()
-    }
+		setStyle()
+	}
 
-    private func setStyle() {
+	private func setStyle() {
 		frame = CGRect(x: 0, y: 0, width: imageSize, height: imageSize)
 		layer.cornerRadius = imageSize / 2
 
@@ -106,21 +106,29 @@ internal class VirtusizeProductImageView: UIView {
 			layer.zPosition = 1
 		}
 
-        productImageView.center = center
-        productImageView.frame = CGRect(x: 2, y: 2, width: imageSize - 4, height: imageSize - 4)
-        productImageView.layer.cornerRadius = (imageSize - 4) / 2
-        productImageView.layer.masksToBounds = true
-		productImageView.contentMode = .scaleAspectFill
-    }
+		productImageView.center = center
+		productImageView.frame = CGRect(x: 2, y: 2, width: imageSize - 4, height: imageSize - 4)
+		productImageView.layer.cornerRadius = (imageSize - 4) / 2
+		productImageView.layer.masksToBounds = true
+	}
 
-	func setProductTypeImage(image: UIImage?) {
-		if productImageType == .STORE {
-			self.productImageView.backgroundColor = .vsGray200Color
-			self.productImageView.tintColor = UIColor.black
+	func setProductImage(
+		source: VirtusizeProductImage.ProductImageSource,
+		image: UIImage?
+	) {
+		if source == .local {
+			if productImageType == .STORE {
+				self.productImageView.backgroundColor = .vsGray200Color
+				self.productImageView.tintColor = UIColor.black
+			} else {
+				self.productImageView.backgroundColor = UIColor.white
+				self.productImageView.tintColor = .vsTealColor
+			}
+			productImageView.image = image
+			productImageView.contentMode = .scaleAspectFit
 		} else {
-			self.productImageView.backgroundColor = UIColor.white
-			self.productImageView.tintColor = .vsTealColor
+			productImageView.image = image
+			productImageView.contentMode = .scaleAspectFill
 		}
-		productImageView.contentMode = .scaleAspectFit
-    }
+	}
 }

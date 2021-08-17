@@ -27,62 +27,62 @@ import Foundation
 /// A structure that helps to deserialize the models specific to the Virtusize API
 internal struct Deserializer {
 
-    /// Gets `VirtusizeEvent` with the optional data to be sent to the Virtusize server
-    ///
-    /// - Parameter data: The optional data for the event
-    /// - Throws: `VirtusizeError`
-    /// - Returns: `VirtusizeEvent`
-    static func event(data: Any?) throws -> VirtusizeEvent {
-        let event: [String: Any]
+	/// Gets `VirtusizeEvent` with the optional data to be sent to the Virtusize server
+	///
+	/// - Parameter data: The optional data for the event
+	/// - Throws: `VirtusizeError`
+	/// - Returns: `VirtusizeEvent`
+	static func event(data: Any?) throws -> VirtusizeEvent {
+		let event: [String: Any]
 
-        if let eventData = data as? [String: Any] {
-            event = eventData
-        } else if let data = data as? Data,
-            let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
-            let eventData = deserialized as? [String: Any] {
-            event = eventData
-        } else if let string = data as? String {
-            guard let data = string.data(using: .utf8) else {
-                throw VirtusizeError.encodingError
-            }
-            if let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
-                let eventData = deserialized as? [String: Any] {
-                event = eventData
-            } else {
-                throw VirtusizeError.deserializationError
-            }
-        } else {
-            throw VirtusizeError.deserializationError
-        }
+		if let eventData = data as? [String: Any] {
+			event = eventData
+		} else if let data = data as? Data,
+				  let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
+				  let eventData = deserialized as? [String: Any] {
+			event = eventData
+		} else if let string = data as? String {
+			guard let data = string.data(using: .utf8) else {
+				throw VirtusizeError.encodingError
+			}
+			if let deserialized = try? JSONSerialization.jsonObject(with: data, options: []),
+			   let eventData = deserialized as? [String: Any] {
+				event = eventData
+			} else {
+				throw VirtusizeError.deserializationError
+			}
+		} else {
+			throw VirtusizeError.deserializationError
+		}
 
-        guard let eventName: String = event["eventName"] as? String else {
-            throw VirtusizeError.invalidPayload
-        }
+		guard let eventName: String = event["eventName"] as? String else {
+			throw VirtusizeError.invalidPayload
+		}
 
-        return VirtusizeEvent(name: eventName, data: event)
-    }
+		return VirtusizeEvent(name: eventName, data: event)
+	}
 
-    /// Gets `VirtusizeI18nLocalization` from the data response from the i18n request
-    ///
-    /// - Parameter data: The data for the localization texts
-    /// - Returns: `VirtusizeI18nLocalization`
-    static func i18n(data: Data?) -> VirtusizeI18nLocalization {
-        let i18nLocalization = VirtusizeI18nLocalization()
-        guard let data = data,
-            let rootObject = try? JSONSerialization.jsonObject(with: data, options: []),
-            let root = rootObject as? JSONObject,
-            let keysJSONObject = root["keys"] as? JSONObject,
-            let appsJSONObject = keysJSONObject["apps"] as? JSONObject,
-            let aoyamaJSONObject = appsJSONObject["aoyama"] as? JSONObject else {
-                return i18nLocalization
-        }
+	/// Gets `VirtusizeI18nLocalization` from the data response from the i18n request
+	///
+	/// - Parameter data: The data for the localization texts
+	/// - Returns: `VirtusizeI18nLocalization`
+	static func i18n(data: Data?) -> VirtusizeI18nLocalization {
+		let i18nLocalization = VirtusizeI18nLocalization()
+		guard let data = data,
+			  let rootObject = try? JSONSerialization.jsonObject(with: data, options: []),
+			  let root = rootObject as? JSONObject,
+			  let keysJSONObject = root["keys"] as? JSONObject,
+			  let appsJSONObject = keysJSONObject["apps"] as? JSONObject,
+			  let aoyamaJSONObject = appsJSONObject["aoyama"] as? JSONObject else {
+			return i18nLocalization
+		}
 
-        let inpageJSONObject = aoyamaJSONObject["inpage"] as? JSONObject
+		let inpageJSONObject = aoyamaJSONObject["inpage"] as? JSONObject
 		let oneSizeJSONObject = inpageJSONObject?["oneSize"] as? JSONObject
 		let multiSizeJSONObject = inpageJSONObject?["multiSize"] as? JSONObject
 		let accessoryJSONObject = inpageJSONObject?["accessory"] as? JSONObject
 
-        i18nLocalization.defaultAccessoryText = inpageJSONObject?["defaultAccessoryText"] as? String
+		i18nLocalization.defaultAccessoryText = inpageJSONObject?["defaultAccessoryText"] as? String
 		i18nLocalization.hasProductAccessoryTopText = accessoryJSONObject?["hasProductLead"] as? String
 		i18nLocalization.hasProductAccessoryBottomText = accessoryJSONObject?["hasProduct"] as? String
 		i18nLocalization.oneSizeCloseTopText = oneSizeJSONObject?["closeLead"] as? String
@@ -94,8 +94,8 @@ internal struct Deserializer {
 		i18nLocalization.bodyProfileOneSizeText = oneSizeJSONObject?["bodyProfile"] as? String
 		i18nLocalization.sizeComparisonMultiSizeText = multiSizeJSONObject?["sizeComparison"] as? String
 		i18nLocalization.bodyProfileMultiSizeText = multiSizeJSONObject?["bodyProfile"] as? String
-        i18nLocalization.noDataText = inpageJSONObject?["noDataText"] as? String
+		i18nLocalization.noDataText = inpageJSONObject?["noDataText"] as? String
 
-        return i18nLocalization
-    }
+		return i18nLocalization
+	}
 }

@@ -29,7 +29,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
   - [Carthage](#carthage)
 - [セットアップ](#setup)
   - [はじめに](#1-はじめに)
-  - [商品詳細をセットする](#2-商品詳細をセットする)
+  - [Load Product with Virtusize SDK](#2-load-product-with-virtusize-sdk)
   - [VirtusizeMessageHandlerの実装（オプション）](#3-virtusizemessagehandlerの実装オプション)
   - [クッキー共有の許可（オプション）](#4-クッキー共有の許可オプション)
   - [製品データチェックを聞く（オプション）](#5-製品データチェックを聞くオプション)
@@ -76,7 +76,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.2.3'
+pod 'Virtusize', '~> 2.3.0'
 end
 ```
 
@@ -156,22 +156,29 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 
 
-### 2. 商品詳細をセットする
+### 2. Load Product with Virtusize SDK
 
-商品詳細ページのビューコントローラでは、製品の詳細を設定する必要があります。
+In the view controller for your product page, you will need to use `Virtusize.load` to populate the Virtusize views:
 
-- 比較ビューを生成するために `imageURL` を渡します。
-- Virtusize APIで製品を参照するために使用される`exernalId`を渡します。
+- Create a `VirtusizeProduct` object with:
+	- An `exernalId` that will be used to reference the product in the Virtusize server
+	- An `imageURL`  for the product image
+- Pass the `VirtusizeProduct` object to the `Virtusize.load` method
 
 ``` Swift
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Set up the product information in order to populate the Virtusize view
-    Virtusize.product = VirtusizeProduct(
-        externalId: "vs_dress",
-        imageURL: URL(string: "http://www.example.com/image.jpg")
-    )
+	// Declare a `VirtusizeProduct variable, which will be passed to the `Virtusize` views in order to bind the product info
+	let product = VirtusizeProduct(
+		// Set the product's external ID
+		externalId: "vs_dress",
+		// Set the product image URL
+		imageURL: URL(string: "http://www.example.com/image.jpg")
+	)
+
+	/// Load the product in order to populate the `Virtusize` views
+	Virtusize.load(product: product)
 }
 ```
 
@@ -186,7 +193,7 @@ override func viewDidLoad() {
 
 ```Swift
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
 		    case "user-opened-widget":
@@ -198,7 +205,7 @@ extension ViewController: VirtusizeMessageHandler {
         }
     }
 
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
         print(error)
     }
 }
@@ -283,17 +290,17 @@ SDKのVirtusizeボタンには2つのデフォルトスタイルがあります�
 
   - また、ボタンのスタイル属性をカスタマイズすることもできます。たとえば、タイトルラベルのテキスト、高さ、幅などです。
 
-**B. `Virtusize.setVirtusizeView`メソッドを使用して、VirtusizeボタンをVirtusize APIに接続します。**
+**B. Connect the Virtusize button, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API  by using the  `Virtusize.setVirtusizeView` method.**
 
 ```swift
-Virtusize.setVirtusizeView(self, virtusizeButton)
+Virtusize.setVirtusizeView(self, virtusizeButton, product: product)
 ```
 
 
 
 ### 2. **バーチャサイズ・インページ（Virtuzie InPage）**
 
-### (1) はじめに
+#### (1) はじめに
 
 Virtusize InPageは、私たちのサービスのスタートボタンのような役割を果たすボタンです。また、このボタンは、お客様が正しいサイズを見つけるためのフィッティングガイドとしても機能します。
 
@@ -312,50 +319,9 @@ Virtusize SDKには2種類のInPageがあります。
 
 
 
-### (2) InPage Standard
+#### (2) InPage Standard
 
-#### A. デザインガイドライン
-
-- ##### デフォルトデザイン
-
-  デフォルトデザインは2種類あります。
-
-  |                          Teal Theme                          |                         Black Theme                          |
-  | :----------------------------------------------------------: | :----------------------------------------------------------: |
-  | ![InPageStandardTeal](https://user-images.githubusercontent.com/7802052/92672035-b9e6cd00-f352-11ea-9e9e-5385a19e96da.png) | ![InPageStandardBlack](https://user-images.githubusercontent.com/7802052/92672031-b81d0980-f352-11ea-8b7a-564dd6c2a7f1.png) |
-
-- ##### **レイアウトのバリエーション**
-
-  設定可能なレイアウト例
-
-  |               1 thumbnail + 2 lines of message               |              2 thumbnails + 2 lines of message               |
-  | :----------------------------------------------------------: | :----------------------------------------------------------: |
-  | ![1 thumbnail + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399368-5e879300-1930-11eb-8b77-b49e06813550.png) | ![2 thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399370-5f202980-1930-11eb-9a2d-7b71714aa7b4.png) |
-  |             **1 thumbnail + 1 line of message**              |        **2 animated thumbnails + 2 lines of message**        |
-  | ![1 thumbnail + 1 line of message](https://user-images.githubusercontent.com/7802052/97399373-5f202980-1930-11eb-81fe-9946b656eb4c.png) | ![2 animated thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399355-59c2df00-1930-11eb-8a52-292956b8762d.gif) |
-
-- ##### **推奨設定箇所**
-
-  - サイズテーブルの近く
-
-  - サイズ情報掲載箇所
-
-    <img src="https://user-images.githubusercontent.com/7802052/92672185-15b15600-f353-11ea-921d-397f207cf616.png" style="zoom:50%;" />
-
-- ##### **UI カスタマイゼーション**
-
-  - **変更可:**
-    - CTAボタンの背景色（[WebAIM contrast test](https://webaim.org/resources/contrastchecker/)で問題がなければ）
-    - Inpageの横幅（アプリの横幅に合わせて変更可）
-  - **変更不可:**
-    - 形状やスペースなどのインターフェイスコンポーネント
-    - フォント
-    - CTA ボタンの形状
-    - テキスト文言
-    - ボタンシャドウ（削除も不可）
-    - VIRTUSIZE ロゴと プライバシーポリシーのテキストが入ったフッター（削除も不可）
-
-#### B. 使用方法
+##### A. 使用方法
 
 - **VirtusizeInPageStandardの追加**
 
@@ -409,6 +375,7 @@ Virtusize SDKには2種類のInPageがあります。
     inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     inPageStandard.widthAnchor.constraint(equalToConstant: 350).isActive = true
     ```
+
   - InPage Standardのフォントサイズを変更したい場合は、`messageFontSize`と`buttonFontSize`のプロパティを利用できます。
 
     ```swift
@@ -416,59 +383,62 @@ Virtusize SDKには2種類のInPageがあります。
     inPageStandard.messageFontSize = 12
     ```
 
-- `Virtusize.setVirtusizeView`**メソッドを使用して、Virtusize InPage StandardをVirtusize APIに接続します。**
+- **Connect the Virtusize InPage Standard, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API  by using the  `Virtusize.setVirtusizeView` method.**
 
-  ```swift
-  Virtusize.setVirtusizeView(self, inPageStandard)
-  ```
+```swift
+Virtusize.setVirtusizeView(self, inPageStandard, product: product)
+```
 
 
 
-### (3) InPage Mini
+##### B. デザインガイドライン
 
-こちらは、InPageのミニバージョンで、アプリに配置することができます。目立たないデザインなので、お客様が商品画像やサイズ表を閲覧するようなレイアウトに適しています。
+- ##### デフォルトデザイン
 
-#### A. **デザインガイドライン**
-
-- ##### デフォルト デザイン
-
-  ２種類のでフォルトデザインを用意しています。
+  デフォルトデザインは2種類あります。
 
   |                          Teal Theme                          |                         Black Theme                          |
   | :----------------------------------------------------------: | :----------------------------------------------------------: |
-  | ![InPageMiniTeal](https://user-images.githubusercontent.com/7802052/92672234-2d88da00-f353-11ea-99d9-b9e9b6aa5620.png) | ![InPageMiniBlack](https://user-images.githubusercontent.com/7802052/92672232-2c57ad00-f353-11ea-80f6-55a9c72fb0b5.png) |
+  | ![InPageStandardTeal](https://user-images.githubusercontent.com/7802052/92672035-b9e6cd00-f352-11ea-9e9e-5385a19e96da.png) | ![InPageStandardBlack](https://user-images.githubusercontent.com/7802052/92672031-b81d0980-f352-11ea-8b7a-564dd6c2a7f1.png) |
 
-- ##### **推奨設置箇所**
+- ##### **レイアウトのバリエーション**
 
-  |                 Underneath the product image                 |              Underneath or near the size table               |
+  設定可能なレイアウト例
+
+  |               1 thumbnail + 2 lines of message               |              2 thumbnails + 2 lines of message               |
   | :----------------------------------------------------------: | :----------------------------------------------------------: |
-  | <img src="https://user-images.githubusercontent.com/7802052/92672261-3c6f8c80-f353-11ea-995c-ede56e0aacc3.png" /> | <img src="https://user-images.githubusercontent.com/7802052/92672266-40031380-f353-11ea-8f63-a67c9cf46c68.png" /> |
+  | ![1 thumbnail + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399368-5e879300-1930-11eb-8b77-b49e06813550.png) | ![2 thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399370-5f202980-1930-11eb-9a2d-7b71714aa7b4.png) |
+  |             **1 thumbnail + 1 line of message**              |        **2 animated thumbnails + 2 lines of message**        |
+  | ![1 thumbnail + 1 line of message](https://user-images.githubusercontent.com/7802052/97399373-5f202980-1930-11eb-81fe-9946b656eb4c.png) | ![2 animated thumbnails + 2 lines of message](https://user-images.githubusercontent.com/7802052/97399355-59c2df00-1930-11eb-8a52-292956b8762d.gif) |
 
-- ##### デフォルトのフォント
+- ##### **推奨設定箇所**
 
-  - **日本語**
-    - Noto Sans CJK JP
-    - 12sp (メッセージ文言)
-    - 10sp (ボタン内テキスト)
-  - **韓国語**
-    - Noto Sans CJK KR
-    - 12sp (メッセージ文言)
-    - 10sp (ボタン内テキスト)
-  - **英語**
-    - Proxima Nova
-    - 14sp (メッセージ文言)
-    - 12sp (ボタン内テキスト)
+  - サイズテーブルの近く
 
-- ##### UI カスタマイゼーション
+  - サイズ情報掲載箇所
+
+    <img src="https://user-images.githubusercontent.com/7802052/92672185-15b15600-f353-11ea-921d-397f207cf616.png" style="zoom:50%;" />
+
+- ##### **UI カスタマイゼーション**
 
   - **変更可:**
     - CTAボタンの背景色（[WebAIM contrast test](https://webaim.org/resources/contrastchecker/)で問題がなければ）
+    - Inpageの横幅（アプリの横幅に合わせて変更可）
   - **変更不可:**
+    - 形状やスペースなどのインターフェイスコンポーネント
     - フォント
     - CTA ボタンの形状
     - テキスト文言
+    - ボタンシャドウ（削除も不可）
+    - VIRTUSIZE ロゴと プライバシーポリシーのテキストが入ったフッター（削除も不可）
 
-#### B. 使用方法
+
+
+#### (3) InPage Mini
+
+こちらは、InPageのミニバージョンで、アプリに配置することができます。目立たないデザインなので、お客様が商品画像やサイズ表を閲覧するようなレイアウトに適しています。
+
+##### A. 使用方法
 
 - **VirtusizeInPageMiniの追加**
 
@@ -519,10 +489,10 @@ Virtusize SDKには2種類のInPageがあります。
     inPageMini.buttonFontSize = 10
     ```
 
-- `Virtusize.setVirtusizeView`**メソッドを使用して、Virtusize InPage MiniをVirtusize APIに接続します。**
+- **Connect the Virtusize InPage Mini, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API  by using the  `Virtusize.setVirtusizeView` method.**
 
   ```swift
-  Virtusize.setVirtusizeView(self, inPageMini)
+  Virtusize.setVirtusizeView(self, inPageMini, product: product)
   ```
 
 
@@ -786,6 +756,48 @@ struct ProductView: View {
 
 - Make the Virtusize web view full screen
 
+
+
+
+##### B. **デザインガイドライン**
+
+- ##### デフォルト デザイン
+
+  ２種類のでフォルトデザインを用意しています。
+
+  |                          Teal Theme                          |                         Black Theme                          |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | ![InPageMiniTeal](https://user-images.githubusercontent.com/7802052/92672234-2d88da00-f353-11ea-99d9-b9e9b6aa5620.png) | ![InPageMiniBlack](https://user-images.githubusercontent.com/7802052/92672232-2c57ad00-f353-11ea-80f6-55a9c72fb0b5.png) |
+
+- ##### **推奨設置箇所**
+
+  |                 Underneath the product image                 |              Underneath or near the size table               |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | <img src="https://user-images.githubusercontent.com/7802052/92672261-3c6f8c80-f353-11ea-995c-ede56e0aacc3.png" /> | <img src="https://user-images.githubusercontent.com/7802052/92672266-40031380-f353-11ea-8f63-a67c9cf46c68.png" /> |
+
+- ##### デフォルトのフォント
+
+  - **日本語**
+    - Noto Sans CJK JP
+    - 12pt (メッセージ文言)
+    - 10pt (ボタン内テキスト)
+  - **韓国語**
+    - Noto Sans CJK KR
+    - 12pt (メッセージ文言)
+    - 10pt (ボタン内テキスト)
+  - **英語**
+    - San Francisco (System Default)
+    - 14pt (メッセージ文言)
+    - 12pt (ボタン内テキスト)
+
+- ##### UI カスタマイゼーション
+
+  - **変更可:**
+    - CTAボタンの背景色（[WebAIM contrast test](https://webaim.org/resources/contrastchecker/)で問題がなければ）
+  - **変更不可:**
+    - フォント
+    - CTA ボタンの形状
+    - テキスト文言
 
 
 

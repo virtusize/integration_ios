@@ -24,14 +24,14 @@
 
 /// This class represents the brand sizing info
 internal struct VirtusizeBrandSizing: Codable {
-    /// The comparing key. eg. "true", "large", or "small"
-    let compare: String
-    /// If the value is true, it is to compare with the brand items. Otherwise, with the items of most brands
-    let itemBrand: Bool
+	/// The comparing key. eg. "true", "large", or "small"
+	let compare: String
+	/// If the value is true, it is to compare with the brand items. Otherwise, with the items of most brands
+	let itemBrand: Bool
 
-    /// Initializes the VirtusizeBrandSizing structure
-    internal init(compare: String, itemBrand: Bool) {
-        self.compare = compare
-        self.itemBrand = itemBrand
-    }
+	/// Initializes the VirtusizeBrandSizing structure
+	internal init(compare: String, itemBrand: Bool) {
+		self.compare = compare
+		self.itemBrand = itemBrand
+	}
 }

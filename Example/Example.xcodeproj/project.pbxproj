@@ -15,6 +15,7 @@
 		4DED8D4C20575A9C001CA7DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4B20575A9C001CA7DF /* Assets.xcassets */; };
 		4DED8D4F20575A9C001CA7DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4D20575A9C001CA7DF /* LaunchScreen.storyboard */; };
 		9C454D0426686DD7003BF5BE /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C454D0326686DD7003BF5BE /* WebViewController.swift */; };
+		9C4B389E26BBA18800B73FE5 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		4DED8D4E20575A9C001CA7DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DED8D5020575A9C001CA7DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C454D0326686DD7003BF5BE /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,9 +114,10 @@
 				4DED8D4D20575A9C001CA7DF /* LaunchScreen.storyboard */,
 				4DED8D4420575A9C001CA7DF /* AppDelegate.swift */,
 				4DED8D4620575A9C001CA7DF /* ViewController.swift */,
+				9C454D0326686DD7003BF5BE /* WebViewController.swift */,
+				9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */,
 				4DED8D4820575A9C001CA7DF /* Main.storyboard */,
 				4DED8D5720575BCD001CA7DF /* Supporting Files */,
-				9C454D0326686DD7003BF5BE /* WebViewController.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			files = (
 				4DED8D4720575A9C001CA7DF /* ViewController.swift in Sources */,
 				9C454D0426686DD7003BF5BE /* WebViewController.swift in Sources */,
+				9C4B389E26BBA18800B73FE5 /* ProductViewController.swift in Sources */,
 				4DED8D4520575A9C001CA7DF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,7 +413,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 32CS757VQK;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -425,7 +429,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 32CS757VQK;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

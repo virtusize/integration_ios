@@ -26,64 +26,57 @@ import WebKit
 
 /// A protocol for the Virtusize specific views such as `VirtusizeButton` and `VirtusizeInPageView`
 public protocol VirtusizeView {
-    var presentingViewController: UIViewController? { get set }
-    var messageHandler: VirtusizeMessageHandler? { get set }
 	var style: VirtusizeViewStyle { get }
-	var memoryAddress: String { get }
-	var isDeallocated: Bool? { get set }
+	var presentingViewController: UIViewController? { get set }
+	var virtusizeEventHandler: VirtusizeEventHandler? { get set }
+	var messageHandler: VirtusizeMessageHandler? { get set }
+	var clientProduct: VirtusizeProduct? { get set }
+	var serverProduct: VirtusizeServerProduct? { get set }
 
-	/// Sets up the loading UI
-    func isLoading()
+	func setVirtusizeEventHandler()
 }
 
 /// Extension functions for `VirtusizeView`
 extension VirtusizeView {
 
-    /// Opens the Virtusize web view
-	internal func openVirtusizeWebView(eventHandler: VirtusizeEventHandler? = nil) {
+	/// Opens the Virtusize web view
+	internal func openVirtusizeWebView(
+		product: VirtusizeProduct? = nil,
+		serverProduct: VirtusizeServerProduct? = nil,
+		eventHandler: VirtusizeEventHandler? = nil
+	) {
+		VirtusizeRepository.shared.lastProductOnVirtusizeWebView = self.serverProduct
 		if let virtusize = VirtusizeWebViewController(
+			product: product,
 			messageHandler: messageHandler,
 			eventHandler: eventHandler,
 			processPool: Virtusize.processPool
 		) {
-            presentingViewController?.present(virtusize, animated: true, completion: nil)
-        }
-    }
-
-	/// Handle the situation where the view controller will be added or removed from a container view controller.
-	internal func handleWillMoveWindow(_ toWindow: UIWindow?, shouldBeDeallocated: (Bool) -> Void) {
-		// will dismiss a view controller, which is not a VirtusizeWebViewController
-		if toWindow == nil {
-			if !virtusizeWebViewControllerWillBeOnTopOfScreen() {
-				shouldBeDeallocated(true)
-				Virtusize.activeVirtusizeViews = Virtusize.virtusizeViews
-					.filter {
-						$0.isDeallocated != true
-					}
-			}
-		// will move to an existing view controller
-		} else {
-			shouldBeDeallocated(false)
+			presentingViewController?.present(virtusize, animated: true, completion: nil)
 		}
-
-		VirtusizeRepository.shared.updateCurrentProductBy(
-			vsViewMemoryAddress: Virtusize.activeVirtusizeViews.last?.memoryAddress
-		)
 	}
 
-	private func virtusizeWebViewControllerWillBeOnTopOfScreen() -> Bool {
-		return getTopViewController(base: self.presentingViewController) is VirtusizeWebViewController
+	internal func shouldUpdateProductDataCheckData(
+		_ notification: Notification,
+		onProductDataCheckData: (VirtusizeProduct) -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			let productWithPDCData = notificationData[NotificationKey.productDataCheck] as? VirtusizeProduct,
+			productWithPDCData.externalId == self.clientProduct?.externalId else {
+			return
+		}
+		onProductDataCheckData(productWithPDCData)
 	}
 
-	private func getTopViewController(base: UIViewController?) -> UIViewController? {
-		if let nav = base as? UINavigationController {
-			return getTopViewController(base: nav.visibleViewController)
-		} else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
-			return getTopViewController(base: selected)
-
-		} else if let presented = base?.presentedViewController {
-			return getTopViewController(base: presented)
+	internal func shouldUpdateStoreProduct(
+		_ notification: Notification,
+		onStoreProduct: (VirtusizeServerProduct) -> Void
+	) {
+		guard let notificationData = notification.userInfo as? [String: Any],
+			let storeProduct = notificationData[NotificationKey.storeProduct] as? VirtusizeServerProduct,
+			storeProduct.externalId == self.clientProduct?.externalId else {
+			return
 		}
-		return base
+		onStoreProduct(storeProduct)
 	}
 }

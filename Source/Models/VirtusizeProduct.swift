@@ -25,16 +25,17 @@
 /// This structure represents a product in the Virtusize SDK
 public class VirtusizeProduct: Codable {
 
+	/// The product name
 	internal var name: String = ""
 
-    /// A string to represent the ID that will be used to reference this product in Virtusize API
+	/// A string to represent the ID that will be used to reference this product in Virtusize API
 	public var externalId: String = ""
 
-    /// The URL of the product image that is fully qualified with the domain and the protocol
+	/// The URL of the product image that is fully qualified with the domain and the protocol
 	public var imageURL: URL?
 
-    /// The product data from the response of the `productDataCheck` request
-    internal var productCheckData: VirtusizeProductCheckData?
+	/// The product data from the response of the `productDataCheck` request
+	internal var productCheckData: VirtusizeProductCheckData?
 
 	/// The product data as a `JSONObject`
 	internal var jsonObject: JSONObject? {
@@ -44,17 +45,23 @@ public class VirtusizeProduct: Codable {
 		) as? JSONObject
 	}
 
+	// swiftlint:disable identifier_name
+	/// An integer to represent the internal product ID in the Virtusize server
+	public var id: Int? {
+		return productCheckData?.productDataId
+	}
+
 	/// The product data as a dictionary
-	internal var dictionary: [String: Any] {
+	public var dictionary: [String: Any] {
 		return jsonObject ?? [:]
 	}
 
-    /// Initializes the VirtusizeProduct structure
-    internal init(externalId: String, imageURL: URL?, productCheckData: VirtusizeProductCheckData?) {
-        self.externalId = externalId
-        self.imageURL = imageURL
-        self.productCheckData = productCheckData
-    }
+	/// Initializes the VirtusizeProduct structure
+	internal init(externalId: String, imageURL: URL?, productCheckData: VirtusizeProductCheckData?) {
+		self.externalId = externalId
+		self.imageURL = imageURL
+		self.productCheckData = productCheckData
+	}
 
 	private enum CodingKeys: String, CodingKey {
 		case name
@@ -72,6 +79,16 @@ public class VirtusizeProduct: Codable {
 
 extension VirtusizeProduct {
 	public convenience init(externalId: String, imageURL: URL? = nil) {
-        self.init(externalId: externalId, imageURL: imageURL, productCheckData: nil)
-    }
+		self.init(externalId: externalId, imageURL: imageURL, productCheckData: nil)
+	}
+}
+
+extension VirtusizeProduct: Hashable {
+	public static func == (lhs: VirtusizeProduct, rhs: VirtusizeProduct) -> Bool {
+		return lhs.externalId == rhs.externalId
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(externalId)
+	}
 }

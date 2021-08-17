@@ -1,5 +1,5 @@
 //
-//  VirtusizeUserBodyProfile.swift
+//  VirtusizeProductType.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,16 +22,15 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the response of the API request to get the user body profile data
-internal class VirtusizeUserBodyProfile: Codable {
-	/// The user's gender
-    let gender: String
-	/// The user's age
-    let age: Int?
-	/// The user's height
-    let height: Int?
-	/// The user's weight
-    let weight: String?
-	/// The user's body measurement data, such as hip, bust, waist and so on.
-    let bodyData: [String: Int?]?
+/// This class represents the product type info
+public class VirtusizeProductType: Codable {
+	// swiftlint:disable identifier_name
+	/// The ID of a product type
+	let id: Int
+	/// The name of a product type
+	let name: String
+	/// The weights of this product type for the calculation of the fitting score
+	let weights: [String: Double]
+	/// The product type list that this product type is compatible with
+	let compatibleWith: [Int]
 }

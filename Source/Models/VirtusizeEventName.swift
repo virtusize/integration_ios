@@ -23,7 +23,7 @@
 //
 
 /// The enum contains the possible events to be sent to the Virtusize server
-internal enum VirtusizeEventName: String {
+public enum VirtusizeEventName: String {
 	case userSawProduct = "user-saw-product"
 	case userSawWidgetButton = "user-saw-widget-button"
 	case userOpenedWidget = "user-opened-widget"
@@ -31,6 +31,7 @@ internal enum VirtusizeEventName: String {
 	case userAuthData = "user-auth-data"
 	case userSelectedProduct = "user-selected-product"
 	case userAddedProduct = "user-added-product"
+	case userDeletedProduct = "user-deleted-product"
 	case userChangedRecommendationType = "user-changed-recommendation-type"
 	case userUpdatedBodyMeasurements = "user-updated-body-measurements"
 	case userLoggedIn = "user-logged-in"

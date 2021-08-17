@@ -25,62 +25,81 @@
 /// This class to used to get UIFonts from font files
 class Font {
 
-    /// This enum contains all available font weights used in this SDK
-    internal enum FontWeight: String {
-        case regular = "-Regular"
-        case bold = "-Bold"
-    }
+	/// This enum contains all available font weights used in this SDK
+	internal enum FontWeight: String {
+		case regular = "-Regular"
+		case bold = "-Bold"
 
-    /// This enum contains all available font names used in this SDK
-    private enum FontName: String {
-        case proximaNova = "ProximaNova"
-        case notoSansCJKJP = "NotoSansCJKJP"
-        case notoSansCJKKR = "NotoSansCJKKR"
-    }
+		var uiFontWeight: UIFont.Weight {
+			if self == .regular {
+				return .regular
+			} else {
+				return .bold
+			}
+		}
+	}
 
-    static func proximaNova(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-        return font(fontName: .proximaNova, type: "otf", weight: weight, size: size)
-    }
+	/// This enum contains all available font names used in this SDK
+	private enum FontName: String {
+		case notoSansCJKJP = "NotoSansCJKJP"
+		case notoSansCJKKR = "NotoSansCJKKR"
+	}
 
-    static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-        return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
-    }
+	static func system(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
+	}
 
-    static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-        return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
-    }
+	static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
+	}
 
-    private static func font(fontName: FontName, type: String, weight: FontWeight, size: CGFloat) -> UIFont {
-        let fontFileName = fontName.rawValue + weight.rawValue
-        var font = UIFont(name: fontFileName, size: size)
+	static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
+	}
 
-        if let existedFont = font {
-            return existedFont
-        }
+	private static func font(fontName: FontName, type: String, weight: FontWeight, size: CGFloat) -> UIFont {
+		let fontFileName = fontName.rawValue + weight.rawValue
 
-        if register(fontFileName: fontFileName, type: type) {
-            font = UIFont(name: fontFileName, size: size)
-        }
+		// Return the existed font matching the font name if the font was already registered (was not null) before
+		if let existedFont = UIFont(name: fontFileName, size: size) {
+			return existedFont
+		}
 
-        return font ?? UIFont.systemFont(ofSize: size)
-    }
+		// Return the font if registering a font is successful
+		if let registeredFont = register(
+			fontFileName: fontFileName,
+			type: type,
+			size: size
+		) {
+			return registeredFont
+		}
 
-    /// Registers a specified graphics font
-    /// - Parameters:
-    ///   - fontFileName: The font file name
-    ///   - type: The font file type, such as otf or ttf
-    private static func register(fontFileName: String, type: String) -> Bool {
-        guard
-            let path = Bundle(for: self).path(forResource: fontFileName, ofType: type),
-            let data = NSData(contentsOfFile: path),
-            let dataProvider = CGDataProvider(data: data),
-            let fontReference = CGFont(dataProvider)
-            else {
-                return false
-        }
+		// Fall back to the system font
+		return system(size: size, weight: weight)
+	}
 
-        var errorRef: Unmanaged<CFError>?
+	/// Registers a specified graphics font
+	/// - Parameters:
+	///   - fontFileName: The font file name
+	///   - type: The font file type, such as `otf` or `ttf`
+	///   - size: The font size
+	/// - Returns: The registered font. If it fails to register a font, return nil
+	private static func register(fontFileName: String, type: String, size: CGFloat) -> UIFont? {
+		guard
+			let path = Bundle(for: self).path(forResource: fontFileName, ofType: type),
+			let data = NSData(contentsOfFile: path),
+			let dataProvider = CGDataProvider(data: data),
+			let fontReference = CGFont(dataProvider)
+		else {
+			return nil
+		}
 
-        return !(CTFontManagerRegisterGraphicsFont(fontReference, &errorRef) == false)
-    }
+		var errorRef: Unmanaged<CFError>?
+
+		if CTFontManagerRegisterGraphicsFont(fontReference, &errorRef) == true {
+			return UIFont(name: fontFileName, size: size)
+		} else {
+			return nil
+		}
+	}
 }

@@ -24,19 +24,33 @@
 
 /// This enum contains all the possible display languages of the Virtusize web app
 public enum VirtusizeLanguage: String, CaseIterable {
-    case ENGLISH = "en"
-    case JAPANESE = "ja"
-    case KOREAN = "ko"
+	case ENGLISH = "en"
+	case JAPANESE = "ja"
+	case KOREAN = "ko"
 
-    /// The default label for the language selector
-    var label: String {
-        switch self {
-        case .ENGLISH:
-            return "English"
-        case .JAPANESE:
-            return  "日本語"
-        case .KOREAN:
-            return  "한국어"
-        }
-    }
+	/// A two character lang string (For the Flutter SDK)
+	public var langStr: String {
+		// swiftlint:disable switch_case_alignment
+		switch self {
+			case .ENGLISH:
+				return "EN"
+			case .JAPANESE:
+				return  "JP"
+			case .KOREAN:
+				return  "KR"
+		}
+	}
+
+	/// The default label for the language selector
+	var label: String {
+		// swiftlint:disable switch_case_alignment
+		switch self {
+			case .ENGLISH:
+				return "English"
+			case .JAPANESE:
+				return  "日本語"
+			case .KOREAN:
+				return  "한국어"
+		}
+	}
 }

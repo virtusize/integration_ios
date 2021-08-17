@@ -29,7 +29,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
   - [Carthage](#carthage)
 - [Setup](#setup)
   - [Initialization](#1-initialization)
-  - [Set Up Product Details](#2-set-up-product-details)
+  - [Load Product with Virtusize SDK](#2-load-product-with-virtusize-sdk)
   - [Implement VirtusizeMessageHandler (Optional)](#3-implement-virtusizemessagehandler-optional)
   - [Allow Cookie Sharing (Optional)](#4-allow-cookie-sharing-optional)
   - [Listen to Product Data Check (Optional)](#5-listen-to-product-data-check-optional)
@@ -78,7 +78,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.2.3'
+pod 'Virtusize', '~> 2.3.0'
 end
 ```
 
@@ -155,24 +155,35 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setAllowedLanguages  | A list of `VirtusizeLanguage`     | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | The languages that the user can switch to using the Language Selector | No. By default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
 
-### 2. Set Up Product Details
 
-In the view controller for your product page, you will need to set up the product details:
 
-- pass an `imageURL` in order to populate the comparison view
-- pass an `exernalId` that will be used to reference the product in the Virtusize API
+### 2. Load Product with Virtusize SDK
+
+In the view controller for your product page, you will need to use `Virtusize.load` to populate the Virtusize views:
+
+- Create a `VirtusizeProduct` object with:
+	- An `exernalId` that will be used to reference the product in the Virtusize server
+	- An `imageURL`  for the product image
+- Pass the `VirtusizeProduct` object to the `Virtusize.load` method
 
 ``` Swift
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Set up the product information in order to populate the Virtusize view
-    Virtusize.product = VirtusizeProduct(
+    // Declare a `VirtusizeProduct` variable, which will be passed to the `Virtusize` views in order to bind the product info
+    let product = VirtusizeProduct(
+        // Set the product's external ID
         externalId: "vs_dress",
+        // Set the product image URL
         imageURL: URL(string: "http://www.example.com/image.jpg")
     )
+
+    // Load the product in order to populate the `Virtusize` views
+    Virtusize.load(product: product)
 }
 ```
+
+
 
 ### 3. Implement VirtusizeMessageHandler (Optional)
 
@@ -184,7 +195,7 @@ The `VirtusizeMessageHandler`  protocol has two required methods:
 
 ```Swift
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
         print(event)
         switch event.name {
 		    case "user-opened-widget":
@@ -196,11 +207,13 @@ extension ViewController: VirtusizeMessageHandler {
         }
     }
 
-    func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
+    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
         print(error)
     }
 }
 ```
+
+
 
 ### 4. Allow Cookie Sharing (Optional)
 
@@ -210,6 +223,8 @@ The `VirtusizeWebViewController` accepts an optional `processPool:WKProcessPool`
 // (Optional): Set up WKProcessPool to allow cookie sharing.
 Virtusize.processPool = WKProcessPool()
 ```
+
+
 
 ### 5. Listen to Product Data Check (Optional)
 
@@ -240,6 +255,8 @@ Virtusize SDK provides two main UI components for clients to use:
 
 VirtusizeButton is the simplest UI Button for our SDK. It opens our application in the web view to support customers finding the right size.
 
+
+
 #### (2) Default Styles
 
 There are two default styles of the Virtusize Button in our Virtusize SDK.
@@ -249,6 +266,8 @@ There are two default styles of the Virtusize Button in our Virtusize SDK.
 | <img src="https://user-images.githubusercontent.com/7802052/92671785-22817a00-f352-11ea-8ce9-6b4f7fcb43c4.png" /> | <img src="https://user-images.githubusercontent.com/7802052/92671771-172e4e80-f352-11ea-8443-dcb8b05f5a07.png" /> |
 
  If you like, you can also customize the button style.
+
+
 
 #### (3) Usage
 
@@ -274,17 +293,17 @@ There are two default styles of the Virtusize Button in our Virtusize SDK.
 
   - You can also customize the button's style attributes. For example, the titlelabel's text, height, width, etc.
 
-**B. Connect the Virtusize button to the Virtusize API by using the** `Virtusize.setVirtusizeView` **method.**
+**B. Connect the Virtusize button, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API by using the `Virtusize.setVirtusizeView` method.**
 
 ```swift
-Virtusize.setVirtusizeView(self, virtusizeButton)
+Virtusize.setVirtusizeView(self, virtusizeButton, product: product)
 ```
 
 
 
 ### 2. Virtusize InPage
 
-### (1) Introduction
+#### (1) Introduction
 
 Virtusize InPage is a button that behaves like a start button for our service. The button also behaves as a fitting guide that supports customers to find the right size.
 
@@ -302,9 +321,79 @@ There are two types of InPage in the Virtusize SDK.
 
 2. InPage Mini must always be used in combination with InPage Standard.
 
-### (2) InPage Standard
 
-#### A. Design Guidelines
+
+#### (2) InPage Standard
+
+##### A. Usage
+
+- **Add a VirtusizeInPageStandard**
+
+  - To use the Virtusize InPage Standard on the product page of your store, you can either:
+
+    - Create a *UIView* in the Xcode’s Interface Builder, then set the Custom Class to `VirtusizeInPageStandard` in the Identity inspector and ensure the view is hidden when loading.
+
+      <img src="https://user-images.githubusercontent.com/7802052/92836755-ba956700-f417-11ea-8fb4-e9d9e2291031.png" style="zoom:70%;" />
+
+      Be sure to set up constraints for InPage Standard and then go to the Size inspector -> find *Intrinsic Size* -> Select *Placeholder* in order to have the dynamic height dependent on its content.
+
+      <img src="https://user-images.githubusercontent.com/7802052/92836828-ce40cd80-f417-11ea-94a7-999cb3e063a4.png" style="zoom:70%;" />
+
+    - Or add the Virtusize InPage Standard programmatically:
+
+      ```swift
+      let inPageStandard = VirtusizeInPageStandard()
+      view.addSubview(inPageStandard)
+      ```
+
+  - In order to use our default styles, set the property *style* of VirtusizeInPageStandard as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
+
+  - If you'd like to change the background color of the CTA button, you can use the property `inPageStandardButtonBackgroundColor` to set the color
+
+    ```swift
+    // Set the InPage Standard style to VirtusizeStyle.BLACK
+    inPageStandard.style = .BLACK
+    // Set the background color of the CTA button to UIColor.blue
+    inPageStandard.inPageStandardButtonBackgroundColor = UIColor.blue
+    ```
+
+    ```swift
+    // Set the InPage Standard style to VirtusizeStyle.TEAL
+    inPageStandard.style = .TEAL
+    // Set the background color of the CTA button to a custom color using ColorLiteral
+    inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+    ```
+
+  - When you add the VirtusizeInPageStandard programmatically and you'd like to set the horizontal margins between the edges of the app screen and the VirtusizeInPageStandard, you can use `setHorizontalMargin` 
+
+    If you'd like to set a direct width for InPage Standard, use auto layout constraints.
+
+    ```swift
+    // Set the horizontal margins to 16
+    inPageStandard.setHorizontalMargin(view: view, margin: 16)
+    
+    // Or set the direct width for InPage Standard programtically
+    inPageStandard.translatesAutoresizingMaskIntoConstraints = false
+    inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    inPageStandard.widthAnchor.constraint(equalToConstant: 350).isActive = true
+    ```
+
+  - If you'd like to change the font sizes of InPage Standard, you can use the properties `messageFontSize` and `buttonFontSize`.
+
+    ```swift
+    inPageStandard.buttonFontSize = 12
+    inPageStandard.messageFontSize = 12
+    ```
+
+- **Connect the Virtusize InPage Standard, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API by using the  `Virtusize.setVirtusizeView` method.**
+
+  ```swift
+  Virtusize.setVirtusizeView(self, inPageStandard, product: product)
+  ```
+
+
+
+##### B. Design Guidelines
 
 - ##### Default Designs
 
@@ -346,120 +435,18 @@ There are two types of InPage in the Virtusize SDK.
     - change or hide the box shadow.
     - hide the footer that contains VIRTUSIZE logo and Privacy Policy text link.
 
-#### B. Usage
 
-- **Add a VirtusizeInPageStandard**
 
-  - To use the Virtusize InPage Standard on the product page of your store, you can either:
-    - Create a *UIView* in the Xcode’s Interface Builder, then set the Custom Class to `VirtusizeInPageStandard` in the Identity inspector and ensure the view is hidden when loading.
-
-      <img src="https://user-images.githubusercontent.com/7802052/92836755-ba956700-f417-11ea-8fb4-e9d9e2291031.png" style="zoom:70%;" />
-    
-      Be sure to set up constraints for InPage Standard and then go to the Size inspector -> find *Intrinsic Size* -> Select *Placeholder* in order to have the dynamic height dependent on its content.
-    
-      <img src="https://user-images.githubusercontent.com/7802052/92836828-ce40cd80-f417-11ea-94a7-999cb3e063a4.png" style="zoom:70%;" />
-    
-    - Or add the Virtusize InPage Standard programmatically:
-
-      ```swift
-      let inPageStandard = VirtusizeInPageStandard()
-      view.addSubview(inPageStandard)
-      ```
-
-  - In order to use our default styles, set the property *style* of VirtusizeInPageStandard as `VirtusizeViewStyle.TEAL` or `VirtusizeViewStyle.BLACK`
-
-  - If you'd like to change the background color of the CTA button, you can use the property `inPageStandardButtonBackgroundColor` to set the color
-
-    ```swift
-    // Set the InPage Standard style to VirtusizeStyle.BLACK
-    inPageStandard.style = .BLACK
-    // Set the background color of the CTA button to UIColor.blue
-    inPageStandard.inPageStandardButtonBackgroundColor = UIColor.blue
-    ```
-    
-    ```swift
-    // Set the InPage Standard style to VirtusizeStyle.TEAL
-    inPageStandard.style = .TEAL
-    // Set the background color of the CTA button to a custom color using ColorLiteral
-    inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
-    ```
-    
-  - When you add the VirtusizeInPageStandard programmatically and you'd like to set the horizontal margins between the edges of the app screen and the VirtusizeInPageStandard, you can use `setHorizontalMargin` 
-
-    If you'd like to set a direct width for InPage Standard, use auto layout constraints.
-
-    ```swift
-    // Set the horizontal margins to 16
-    inPageStandard.setHorizontalMargin(view: view, margin: 16)
-    
-    // Or set the direct width for InPage Standard programtically
-    inPageStandard.translatesAutoresizingMaskIntoConstraints = false
-    inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    inPageStandard.widthAnchor.constraint(equalToConstant: 350).isActive = true
-    ```
-
-  - If you'd like to change the font sizes of InPage Standard, you can use the properties `messageFontSize` and `buttonFontSize`.
-
-    ```swift
-    inPageStandard.buttonFontSize = 12
-    inPageStandard.messageFontSize = 12
-    ```
-
-- **Connect the Virtusize InPage Standard to the Virtusize API by using the**  `Virtusize.setVirtusizeView` **method.**
-
-  ```swift
-  Virtusize.setVirtusizeView(self, inPageStandard)
-  ```
-
-### (3) InPage Mini
+#### (3) InPage Mini
 
 This is a mini version of InPage which can be placed in your application. The discreet design is suitable for layouts where customers are browsing product images and size tables.
 
-#### A. Design Guidelines
-
-- ##### Default designs
-
-  There are two default design variations.
-
-  |                          Teal Theme                          |                         Black Theme                          |
-  | :----------------------------------------------------------: | :----------------------------------------------------------: |
-  | ![InPageMiniTeal](https://user-images.githubusercontent.com/7802052/92672234-2d88da00-f353-11ea-99d9-b9e9b6aa5620.png) | ![InPageMiniBlack](https://user-images.githubusercontent.com/7802052/92672232-2c57ad00-f353-11ea-80f6-55a9c72fb0b5.png) |
-
-- ##### Recommended Placements
-
-  |                 Underneath the product image                 |              Underneath or near the size table               |
-  | :----------------------------------------------------------: | :----------------------------------------------------------: |
-  | <img src="https://user-images.githubusercontent.com/7802052/92672261-3c6f8c80-f353-11ea-995c-ede56e0aacc3.png" /> | <img src="https://user-images.githubusercontent.com/7802052/92672266-40031380-f353-11ea-8f63-a67c9cf46c68.png" /> |
-
-- ##### Default Fonts
-
-  - **Japanese**
-    - Noto Sans CJK JP
-    - 12pt (Message)
-    - 10pt (Button)
-  - **Korean**
-    - Noto Sans CJK KR
-    - 12pt (Message)
-    - 10pt (Button)
-  - **English**
-    - Proxima Nova
-    - 14pt (Message)
-    - 12pt (Button)
-
-- ##### UI customization
-
-  - **You can:**
-    - change the background color of the bar as long as it passes **[WebAIM contrast test](https://webaim.org/resources/contrastchecker/)**.
-  - **You cannot:**
-    - change the font.
-    - change the CTA button shape.
-    - change messages.
-
-#### B. Usage
+##### A. Usage
 
 - **Add a VirtusizeInPageMini**
 
   - To use the Virtusize InPage Mini on the product page of your store, you can either:
+
     - Create a *UIView* in the Xcode’s Interface Builder, set the Custom Class to `VirtusizeInPageMini` in the Identity inspector and ensure the view is hidden when loading.
 
       <img src="https://user-images.githubusercontent.com/7802052/92836772-bf5a1b00-f417-11ea-9ef3-03a9079a7834.png" style="zoom:70%;" />
@@ -505,11 +492,53 @@ This is a mini version of InPage which can be placed in your application. The di
     inPageMini.buttonFontSize = 10
     ```
 
-- **Connect the Virtusize InPage Mini to the Virtusize API by using the**  `Virtusize.setVirtusizeView` **method.**
+- **Connect the Virtusize InPage Mini, along with the** `VirtusizeProduct` **object (which you have passed to ** `Virtusize.load`)  **into the Virtusize API  by using the  `Virtusize.setVirtusizeView` method.**
 
   ```swift
-  Virtusize.setVirtusizeView(self, inPageMini)
+  Virtusize.setVirtusizeView(self, inPageMini, product: product)
   ```
+
+
+
+##### B. Design Guidelines
+
+- ##### Default designs
+
+  There are two default design variations.
+
+  |                          Teal Theme                          |                         Black Theme                          |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | ![InPageMiniTeal](https://user-images.githubusercontent.com/7802052/92672234-2d88da00-f353-11ea-99d9-b9e9b6aa5620.png) | ![InPageMiniBlack](https://user-images.githubusercontent.com/7802052/92672232-2c57ad00-f353-11ea-80f6-55a9c72fb0b5.png) |
+
+- ##### Recommended Placements
+
+  |                 Underneath the product image                 |              Underneath or near the size table               |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | <img src="https://user-images.githubusercontent.com/7802052/92672261-3c6f8c80-f353-11ea-995c-ede56e0aacc3.png" /> | <img src="https://user-images.githubusercontent.com/7802052/92672266-40031380-f353-11ea-8f63-a67c9cf46c68.png" /> |
+
+- ##### Default Fonts
+
+  - **Japanese**
+    - Noto Sans CJK JP
+    - 12pt (Message)
+    - 10pt (Button)
+  - **Korean**
+    - Noto Sans CJK KR
+    - 12pt (Message)
+    - 10pt (Button)
+  - **English**
+    - San Francisco (System Default)
+    - 14pt (Message)
+    - 12pt (Button)
+
+- ##### UI customization
+
+  - **You can:**
+    - change the background color of the bar as long as it passes **[WebAIM contrast test](https://webaim.org/resources/contrastchecker/)**.
+  - **You cannot:**
+    - change the font.
+    - change the CTA button shape.
+    - change messages.
 
 
 
@@ -794,6 +823,8 @@ in your view controller after the app is launched
 Virtusize.userID = "123"
 ```
 
+
+
 #### 2. Create a *VirtusizeOrder* structure for order data
 
 The ***VirtusizeOrder*** structure gets passed to the `Virtusize.sendOrder` method, and has the following properties:
@@ -840,6 +871,8 @@ let item = VirtusizeOrderItem(
 )
 virtusizeOrder.items = [item]
 ```
+
+
 
 #### 3. Send an Order
 

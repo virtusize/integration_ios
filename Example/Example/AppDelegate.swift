@@ -28,28 +28,28 @@ import Virtusize
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+	var window: UIWindow?
 
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Virtusize.APIKey is required
-        Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
-        // For using the Order API, Virtusize.userID is required
-        Virtusize.userID = "123"
-        // By default, the Virtusize environment will be set to .global
-        Virtusize.environment = .staging
-        Virtusize.params = VirtusizeParamsBuilder()
-            // By default, the initial language will be set based on the Virtusize environment
-            .setLanguage(.JAPANESE)
-            // By default, ShowSGI is false
-            .setShowSGI(true)
-            // By default, Virtusize allows all the possible languages including English, Japanese and Korean
-            .setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE])
-            // By default, Virtusize displays all the possible info categories in the Product Details tab,
-            // including "modelInfo", "generalFit", "brandSizing" and "material".
-            .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
-            .build()
-        return true
-    }
+	func application(
+		_ application: UIApplication,
+		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		// Virtusize.APIKey is required
+		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
+		// For using the Order API, Virtusize.userID is required
+		Virtusize.userID = "123"
+		// By default, the Virtusize environment will be set to .global
+		Virtusize.environment = .staging
+		Virtusize.params = VirtusizeParamsBuilder()
+			// By default, the initial language will be set based on the Virtusize environment
+			.setLanguage(.JAPANESE)
+			// By default, ShowSGI is false
+			.setShowSGI(true)
+			// By default, Virtusize allows all the possible languages including English, Japanese and Korean
+			.setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE])
+			// By default, Virtusize displays all the possible info categories in the Product Details tab,
+			// including "modelInfo", "generalFit", "brandSizing" and "material".
+			.setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
+			.build()
+		return true
+	}
 }

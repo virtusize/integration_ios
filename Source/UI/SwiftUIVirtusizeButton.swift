@@ -29,16 +29,19 @@ import SwiftUI
 @available(iOS 13.0, *)
 public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
+	private var product: VirtusizeProduct
 	private var action: (() -> Void)?
 	private var uiView: ((UIButton) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	public init(
+		product: VirtusizeProduct,
 		action: (() -> Void)? = nil,
 		uiView: ((UIButton) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil,
 		virtusizeMessageHandler: VirtusizeMessageHandler? = nil
 	) {
+		self.product = product
 		self.action = action
 		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
@@ -59,7 +62,7 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 		context.coordinator.action = action
 
-		Virtusize.setVirtusizeView(self, virtusizeButton)
+		Virtusize.setSwiftUIVirtusizeView(self, virtusizeButton, product: product)
 
 		return virtusizeButton
 	}

@@ -29,15 +29,15 @@ extension URLSession: APISessionProtocol {
 /// A protocol type for sessions, implemented by `URLSession`
 protocol APISessionProtocol {
 
-    /// Uses requests of type `URLRequest` to produce responses of type `Data` and errors of type `Error`for dataTask
-    ///
-    /// - Parameters:
-    ///   - with: A `URLRequest`
-    ///   - completionHandler: The completion callback to pass responses of type `Data` and errors of type `Error`
-    ///   
-    /// - Returns: `URLSessionDataTask`
-    func dataTask(
-        with request: URLRequest,
-        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
-        -> URLSessionDataTask
+	/// Uses requests of type `URLRequest` to produce responses of type `Data` and errors of type `Error`for dataTask
+	///
+	/// - Parameters:
+	///   - with: A `URLRequest`
+	///   - completionHandler: The completion callback to pass responses of type `Data` and errors of type `Error`
+	///
+	/// - Returns: `URLSessionDataTask`
+	func dataTask(
+		with request: URLRequest,
+		completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
+	-> URLSessionDataTask
 }

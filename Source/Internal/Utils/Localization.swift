@@ -27,7 +27,7 @@ import Foundation
 /// This class is used to localize texts in the SDK
 internal class Localization {
 
-    static let shared: Localization = Localization()
+	static let shared: Localization = Localization()
 
 	/// Localizes a text corresponding to a key
 	///

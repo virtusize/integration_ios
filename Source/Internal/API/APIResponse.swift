@@ -27,49 +27,49 @@ internal struct APIResponse {
 	/// The API response status code
 	var code: Int?
 	/// The API response data
-    var data: Data?
+	var data: Data?
 	/// The API response in `URLResponse`
-    var response: URLResponse?
+	var response: URLResponse?
 	/// The API response error
-    var error: Error?
+	var error: Error?
 	/// The API response error in the format of `VirtusizeError`
-    var virtusizeError: VirtusizeError?
+	var virtusizeError: VirtusizeError?
 
 	init(code: Int?, data: Data?, response: URLResponse?, error: Error?) {
 		self.code = code
-        self.data = data
-        self.response = response
-        self.error = error
-    }
+		self.data = data
+		self.response = response
+		self.error = error
+	}
 }
 
 internal typealias Code = Int
 
 internal enum APIResult<Value> {
-    case success(Value? = nil, String? = nil)
-    case failure(Code? = nil, VirtusizeError? = nil)
+	case success(Value? = nil, String? = nil)
+	case failure(Code? = nil, VirtusizeError? = nil)
 }
 
 extension APIResult {
-
 	/// The string of the API result 
-    var string: String? {
-        switch self {
-        case let .success(_, jsonString):
-            return jsonString
-        case let .failure(_, error):
-            return error?.debugDescription
-        }
-    }
+	var string: String? {
+		// swiftlint:disable switch_case_alignment
+		switch self {
+			case let .success(_, jsonString):
+				return jsonString
+			case let .failure(_, error):
+				return error?.debugDescription
+		}
+	}
 
 	/// The API result when the request is successful
-    var success: Value? {
-        if case .success(let value, _) = self {
+	var success: Value? {
+		if case .success(let value, _) = self {
 			return value
-        } else {
-            return nil
-        }
-    }
+		} else {
+			return nil
+		}
+	}
 
 	/// The API error status code
 	var errorCode: Int? {
@@ -81,13 +81,13 @@ extension APIResult {
 	}
 
 	/// The API result when the request fails
-    var failure: VirtusizeError? {
-        if case .failure(_, let error) = self {
-            return error
-        } else {
-            return nil
-        }
-    }
+	var failure: VirtusizeError? {
+		if case .failure(_, let error) = self {
+			return error
+		} else {
+			return nil
+		}
+	}
 
 	var isSuccessful: Bool {
 		return failure == nil

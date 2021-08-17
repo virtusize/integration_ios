@@ -13,6 +13,21 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.3.0
+
+- Feature: Add the MIT license
+- Refactor: Change the get-size endpoint from `get-size-new` to `get-size`
+- Refactor: Remove the `Proxima Nova` font and use the system font
+- Refactor: Improve the integration flow 
+- Bugfix: Prevent from updating the selected user product ID when the event `user-added-product` is fired
+
+### 2.2.5
+- Bugfix: Handle the `user-deleted-product` event from the Virtusize webview
+
+### 2.2.4
+- Feature: The Flutter SDK support
+- Bugfix: Fix the isValid function in SizeComparisonRecommendedSize.swift
+
 ### 2.2.3
 - Feature: Enable SNS buttons in the Virtusize webview
 

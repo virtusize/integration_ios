@@ -31,15 +31,18 @@ import WebKit
 public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	public typealias UIViewControllerType = VirtusizeWebViewController
 
+	private var clientProduct: VirtusizeProduct
 	private var processPool: WKProcessPool?
 	private var event: ((VirtusizeEvent) -> Void)?
 	private var error: ((VirtusizeError) -> Void)?
 
 	public init(
+		product: VirtusizeProduct,
 		processPool: WKProcessPool? = nil,
 		didReceiveEvent event: ((VirtusizeEvent) -> Void)? = nil,
 		didReceiveError error: ((VirtusizeError) -> Void)? = nil
 		) {
+		self.clientProduct = product
 		self.processPool = processPool
 		self.event = event
 		self.error = error
@@ -50,7 +53,17 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	}
 
 	public func makeUIViewController(context: Context) -> VirtusizeWebViewController {
-		guard let virtusizeViewController = VirtusizeWebViewController(
+		Virtusize.virtusizeRepository.lastProductOnVirtusizeWebView = Virtusize.virtusizeRepository.serverProductSet
+			.filter({ product in
+				product.externalId == clientProduct.externalId
+			})
+			.first
+		guard let clientProduct = Virtusize.virtusizeRepository.productDataCheckSet
+				.filter({ product in
+					product.externalId == clientProduct.externalId
+				}).first,
+		let  virtusizeViewController = VirtusizeWebViewController(
+			product: clientProduct,
 			messageHandler: context.coordinator,
 			eventHandler: Virtusize.virtusizeEventHandler,
 			processPool: processPool
@@ -88,11 +101,11 @@ extension SwiftUIVirtusizeViewController {
 			self.errorListener = error
 		}
 
-		public func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveError error: VirtusizeError) {
+		public func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
 			self.errorListener?(error)
 		}
 
-		public func virtusizeController(_ controller: VirtusizeWebViewController, didReceiveEvent event: VirtusizeEvent) {
+		public func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
 			self.eventListener?(event)
 		}
 	}

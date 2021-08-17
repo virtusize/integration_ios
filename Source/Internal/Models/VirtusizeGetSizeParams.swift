@@ -26,15 +26,15 @@
 /// The structure that wraps the parameters for the API request to get the recommended size based on a user's body profile
 internal struct VirtusizeGetSizeParams: Codable {
 	/// The store product additional info
-    var additionalInfo: [String: VirtusizeAnyCodable] = [:]
+	var additionalInfo: [String: VirtusizeAnyCodable] = [:]
 	/// The user body data
-    var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
+	var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
 	/// The store product size info
-    var itemSizesOrig: [String: [String: Int?]] = [:]
+	var itemSizesOrig: [String: [String: Int?]] = [:]
 	/// The store product type
-    var productType: String = ""
+	var productType: String = ""
 	/// The user's gender
-    var userGender: String = ""
+	var userGender: String = ""
 	/// The user's height
 	var userHeight: Int?
 	/// The user's weight
@@ -48,29 +48,30 @@ internal struct VirtusizeGetSizeParams: Codable {
 	///   - productTypes: The list of available `VirtusizeProductType`
 	///   - storeProduct: The store product info in the type of `VirtusizeInternalProduct`
 	///   - userBodyProfile: The user body profile
-    init(productTypes: [VirtusizeProductType],
-         storeProduct: VirtusizeInternalProduct,
-         userBodyProfile: VirtusizeUserBodyProfile?
-    ) {
-        additionalInfo = [
-            "brand": VirtusizeAnyCodable(
-                storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
-            ),
-            "fit": VirtusizeAnyCodable(
-                storeProduct.storeProductMeta?.additionalInfo?.fit ?? "regular"
-            ),
-            "sizes": VirtusizeAnyCodable(
-                storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
-            ),
-            "modelInfo": VirtusizeAnyCodable(
-                getModelInfoDict(storeProduct: storeProduct)
-            ),
-            "gender": VirtusizeAnyCodable(
-                storeProduct.storeProductMeta?.additionalInfo?.gender ?? storeProduct.storeProductMeta?.gender ?? nil
-            )
-        ]
-        bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
-        itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
+	init(
+		productTypes: [VirtusizeProductType],
+		storeProduct: VirtusizeServerProduct,
+		userBodyProfile: VirtusizeUserBodyProfile?
+	) {
+		additionalInfo = [
+			"brand": VirtusizeAnyCodable(
+				storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
+			),
+			"fit": VirtusizeAnyCodable(
+				storeProduct.storeProductMeta?.additionalInfo?.fit ?? "regular"
+			),
+			"sizes": VirtusizeAnyCodable(
+				storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
+			),
+			"modelInfo": VirtusizeAnyCodable(
+				getModelInfoDict(storeProduct: storeProduct)
+			),
+			"gender": VirtusizeAnyCodable(
+				storeProduct.storeProductMeta?.additionalInfo?.gender ?? storeProduct.storeProductMeta?.gender ?? nil
+			)
+		]
+		bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
+		itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
 		if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
 			productType = productTypes[index].name
 		}
@@ -80,53 +81,53 @@ internal struct VirtusizeGetSizeParams: Codable {
 			userWeight = Float(weight)
 		}
 		extProductId = storeProduct.externalId
-    }
+	}
 
 	/// Gets the dictionary of the model info
-    private func getModelInfoDict(storeProduct: VirtusizeInternalProduct) -> [String: Any] {
-        var modelInfoDict: [String: Any] = [:]
-        if let modelInfo = storeProduct.storeProductMeta?.additionalInfo?.modelInfo {
-            for (name, measurement) in modelInfo {
-                if let measurement = measurement.value as? Int {
-                    modelInfoDict[name] = measurement as Int
-                } else if let measurement = measurement.value as? String {
-                    modelInfoDict[name] = measurement as String
-                }
-            }
-        }
-        return modelInfoDict
-    }
+	private func getModelInfoDict(storeProduct: VirtusizeServerProduct) -> [String: Any] {
+		var modelInfoDict: [String: Any] = [:]
+		if let modelInfo = storeProduct.storeProductMeta?.additionalInfo?.modelInfo {
+			for (name, measurement) in modelInfo {
+				if let measurement = measurement.value as? Int {
+					modelInfoDict[name] = measurement as Int
+				} else if let measurement = measurement.value as? String {
+					modelInfoDict[name] = measurement as String
+				}
+			}
+		}
+		return modelInfoDict
+	}
 
 	/// Gets the dictionary of the user body data
-    private func getBodyDataDict(
-        userBodyProfile: VirtusizeUserBodyProfile?
-    ) -> [String: [String: VirtusizeAnyCodable]] {
-        var bodyDataDict: [String: [String: VirtusizeAnyCodable]] = [:]
-        if let bodyData = userBodyProfile?.bodyData {
-            for (name, measurement) in bodyData {
-                if let measurement = measurement {
-                    bodyDataDict[name] = [
-                        "value": VirtusizeAnyCodable(measurement),
-                        "predicted": VirtusizeAnyCodable(true)
-                    ]
-                    if name == "bust" {
-                        bodyDataDict["chest"] = [
-                            "value": VirtusizeAnyCodable(measurement),
-                            "predicted": VirtusizeAnyCodable(true)
-                        ]
-                    }
-                }
-            }
-        }
-        return bodyDataDict
-    }
+	private func getBodyDataDict(
+		userBodyProfile: VirtusizeUserBodyProfile?
+	) -> [String: [String: VirtusizeAnyCodable]] {
+		var bodyDataDict: [String: [String: VirtusizeAnyCodable]] = [:]
+		if let bodyData = userBodyProfile?.bodyData {
+			for (name, measurement) in bodyData {
+				if let measurement = measurement {
+					bodyDataDict[name] = [
+						"value": VirtusizeAnyCodable(measurement),
+						"predicted": VirtusizeAnyCodable(true)
+					]
+					if name == "bust" {
+						bodyDataDict["chest"] = [
+							"value": VirtusizeAnyCodable(measurement),
+							"predicted": VirtusizeAnyCodable(true)
+						]
+					}
+				}
+			}
+		}
+		return bodyDataDict
+	}
 
 	/// Gets the dictionary of the store product size info
-    private func getItemSizesDict(storeProduct: VirtusizeInternalProduct) -> [String: [String: Int?]] {
-        var itemSizesDict: [String: [String: Int?]] = [:]
-        for productSize in storeProduct.sizes {
-            itemSizesDict[productSize.name ?? ""] = productSize.measurements
-        }
-        return itemSizesDict
-    }
+	private func getItemSizesDict(storeProduct: VirtusizeServerProduct) -> [String: [String: Int?]] {
+		var itemSizesDict: [String: [String: Int?]] = [:]
+		for productSize in storeProduct.sizes {
+			itemSizesDict[productSize.name ?? ""] = productSize.measurements
+		}
+		return itemSizesDict
+	}
 }

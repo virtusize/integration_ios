@@ -1,5 +1,5 @@
 //
-//  VirtusizeUserData.swift
+//  VirtusizeServerProductAdditionalInfo.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,16 +22,39 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the response for the user data field in the data field of ProductCheck
-internal class VirtusizeUserData: Codable {
-	let shouldSeePhTooltip: Bool?
+/// This class represents the additional info of a store product
+internal class VirtusizeServerProductAdditionalInfo: Codable {
+	/// The brand of the store product
+	let brand: String
+	/// The gender for the store product
+	let gender: String?
+	/// The list of the product sizes
+	let sizes: [String: [String: Int?]]
+	/// The model info
+	let modelInfo: [String: VirtusizeAnyCodable]?
+	/// The general fit key
+	let fit: String?
+	/// The store product style
+	let style: String?
+	/// The brand sizing info
+	let brandSizing: VirtusizeBrandSizing?
 
 	private enum CodingKeys: String, CodingKey {
-		case shouldSeePhTooltip = "should_see_ph_tooltip"
+		case brand, gender, sizes, modelInfo, fit, style, brandSizing
 	}
 
 	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		shouldSeePhTooltip = try? values.decode(Bool.self, forKey: .shouldSeePhTooltip)
+		brand = try values.decode(String.self, forKey: .brand)
+		gender = try? values.decode(String.self, forKey: .gender)
+		if let productSizes = try? values.decode([String: [String: Int?]].self, forKey: .sizes) {
+			sizes = productSizes
+		} else {
+			sizes = [:]
+		}
+		modelInfo = try? values.decode([String: VirtusizeAnyCodable].self, forKey: .modelInfo)
+		fit = try? values.decode(String.self, forKey: .fit)
+		style = try? values.decode(String.self, forKey: .style)
+		brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
 	}
 }

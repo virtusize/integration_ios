@@ -34,12 +34,16 @@ struct ContentView: View {
 	// Optional: Declare a Boolean state to update the view based on the result of product data check
 	@State var productDataCheckCompleted = false
 
+	private var product: VirtusizeProduct
+
 	init() {
 		// Set up the product information in order to populate the Virtusize view
-		Virtusize.product = VirtusizeProduct(
+		product = VirtusizeProduct(
 			externalId: "vs_dress",
 			imageURL: URL(string: "http://www.example.com/image.jpg")
 		)
+
+		Virtusize.load(product: product)
 
 		// MARK: The Order API
 		sendOrderSample()
@@ -50,6 +54,7 @@ struct ContentView: View {
 			Spacer()
 			// MARK: SwiftUIVirtusizeButton
 			SwiftUIVirtusizeButton(
+				product: product,
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
@@ -67,6 +72,7 @@ struct ContentView: View {
 
 			// MARK: SwiftUIVirtusizeInPageStandard
 			SwiftUIVirtusizeInPageStandard(
+				product: product,
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
@@ -86,6 +92,7 @@ struct ContentView: View {
 
 			// MARK: SwiftUIVirtusizeInPageMini
 			SwiftUIVirtusizeInPageMini(
+				product: product,
 				action: {
 					// Set showVirtusizeWebView to true when the button is clicked
 					showVirtusizeWebView = true
@@ -109,6 +116,7 @@ struct ContentView: View {
 		// MARK: SwiftUIVirtusizeViewController
 		.sheet(isPresented: $showVirtusizeWebView) {
 			SwiftUIVirtusizeViewController(
+				product: product,
 				// (Optional): Set up WKProcessPool to allow cookie sharing
 				processPool: WKProcessPool(),
 				// (Optional): You can use this callback closure to receive Virtusize events

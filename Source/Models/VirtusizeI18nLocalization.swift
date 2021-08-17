@@ -23,42 +23,42 @@
 //
 
 /// The class that wraps the localization texts from the i18n endpoint
-internal class VirtusizeI18nLocalization {
-    var defaultAccessoryText: String?
-    var hasProductAccessoryTopText: String?
-    var hasProductAccessoryBottomText: String?
-    var oneSizeCloseTopText: String?
-    var oneSizeSmallerTopText: String?
-    var oneSizeLargerTopText: String?
-    var oneSizeCloseBottomText: String?
-    var oneSizeSmallerBottomText: String?
-    var oneSizeLargerBottomText: String?
-    var bodyProfileOneSizeText: String?
-    var sizeComparisonMultiSizeText: String?
-    var bodyProfileMultiSizeText: String?
-    var noDataText: String?
+public class VirtusizeI18nLocalization {
+	var defaultAccessoryText: String?
+	var hasProductAccessoryTopText: String?
+	var hasProductAccessoryBottomText: String?
+	var oneSizeCloseTopText: String?
+	var oneSizeSmallerTopText: String?
+	var oneSizeLargerTopText: String?
+	var oneSizeCloseBottomText: String?
+	var oneSizeSmallerBottomText: String?
+	var oneSizeLargerBottomText: String?
+	var bodyProfileOneSizeText: String?
+	var sizeComparisonMultiSizeText: String?
+	var bodyProfileMultiSizeText: String?
+	var noDataText: String?
 
-    /// Initializes the VirtusizeI18nLocalization structure
-    init() {
-        self.defaultAccessoryText = nil
-        self.hasProductAccessoryTopText = nil
-        self.hasProductAccessoryBottomText = nil
-        self.oneSizeCloseTopText = nil
-        self.oneSizeSmallerTopText = nil
-        self.oneSizeLargerTopText = nil
-        self.oneSizeCloseBottomText = nil
-        self.oneSizeSmallerBottomText = nil
-        self.oneSizeLargerBottomText = nil
-        self.bodyProfileOneSizeText = nil
-        self.sizeComparisonMultiSizeText = nil
-        self.bodyProfileMultiSizeText = nil
-        self.noDataText = nil
-    }
+	/// Initializes the VirtusizeI18nLocalization structure
+	init() {
+		self.defaultAccessoryText = nil
+		self.hasProductAccessoryTopText = nil
+		self.hasProductAccessoryBottomText = nil
+		self.oneSizeCloseTopText = nil
+		self.oneSizeSmallerTopText = nil
+		self.oneSizeLargerTopText = nil
+		self.oneSizeCloseBottomText = nil
+		self.oneSizeSmallerBottomText = nil
+		self.oneSizeLargerBottomText = nil
+		self.bodyProfileOneSizeText = nil
+		self.sizeComparisonMultiSizeText = nil
+		self.bodyProfileMultiSizeText = nil
+		self.noDataText = nil
+	}
 
-    enum TrimType: String {
-        case ONELINE = ""
-        case MULTIPLELINES = "<br>"
-    }
+	enum TrimType: String {
+		case ONELINE = ""
+		case MULTIPLELINES = "<br>"
+	}
 
 	/// Gets the default text where the recommendation is not available
 	internal func getNoDataText() -> String {
@@ -71,37 +71,37 @@ internal class VirtusizeI18nLocalization {
 	}
 
 	/// Gets the text for an accessory where the recommendation for product comparison is provided
-    internal func getHasProductAccessoryText() -> String {
+	internal func getHasProductAccessoryText() -> String {
 		let hasProductAccessoryTopText = self.hasProductAccessoryTopText ??
 			Localization.shared.localize("inpage_has_product_top_text")
 		let hasProductAccessoryBottomText = self.hasProductAccessoryBottomText ??
 			Localization.shared.localize("inpage_has_product_bottom_text")
-        return "\(hasProductAccessoryTopText) %{boldStart}\(hasProductAccessoryBottomText)%{boldEnd}"
-    }
+		return "\(hasProductAccessoryTopText) %{boldStart}\(hasProductAccessoryBottomText)%{boldEnd}"
+	}
 
 	/// Gets the product comparison text for a one-size product
 	internal func getOneSizeProductComparisonText(
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize
 	) -> String {
-        if sizeComparisonRecommendedSize.bestFitScore > 84 {
+		if sizeComparisonRecommendedSize.bestFitScore > 84 {
 			let oneSizeCloseTopText = self.oneSizeCloseTopText ??
 				Localization.shared.localize("inpage_one_size_close_top_text")
 			let oneSizeCloseBottomText = self.oneSizeCloseBottomText ??
 				Localization.shared.localize("inpage_one_size_close_bottom_text")
-            return "\(oneSizeCloseTopText) %{boldStart}\(oneSizeCloseBottomText)%{boldEnd}"
-        } else if sizeComparisonRecommendedSize.isStoreProductSmaller == true {
+			return "\(oneSizeCloseTopText) %{boldStart}\(oneSizeCloseBottomText)%{boldEnd}"
+		} else if sizeComparisonRecommendedSize.isStoreProductSmaller == true {
 			let oneSizeSmallerTopText = self.oneSizeSmallerTopText ??
 				Localization.shared.localize("inpage_one_size_smaller_top_text")
 			let oneSizeSmallerBottomText = self.oneSizeSmallerBottomText ??
 				Localization.shared.localize("inpage_one_size_smaller_bottom_text")
-            return "\(oneSizeSmallerTopText) %{boldStart}\(oneSizeSmallerBottomText)%{boldEnd}"
-        }
+			return "\(oneSizeSmallerTopText) %{boldStart}\(oneSizeSmallerBottomText)%{boldEnd}"
+		}
 		let oneSizeLargerTopText = self.oneSizeLargerTopText ??
 			Localization.shared.localize("inpage_one_size_larger_top_text")
 		let oneSizeLargerBottomText = self.oneSizeLargerBottomText ??
 			Localization.shared.localize("inpage_one_size_larger_bottom_text")
-        return "\(oneSizeLargerTopText) %{boldStart}\(oneSizeLargerBottomText)%{boldEnd}"
-    }
+		return "\(oneSizeLargerTopText) %{boldStart}\(oneSizeLargerBottomText)%{boldEnd}"
+	}
 
 	/// Gets the product comparison text for a multi-size product
 	internal func getMultiSizeProductionComparisonText(_ sizeComparisonRecommendedSizeName: String) -> String {
@@ -116,9 +116,9 @@ internal class VirtusizeI18nLocalization {
 	}
 
 	/// Gets the recommendation text for a multi-size product based on a user body profile
-    internal func getMultiSizeBodyProfileText(_ bodyProfileRecommendedSizeName: String) -> String {
+	internal func getMultiSizeBodyProfileText(_ bodyProfileRecommendedSizeName: String) -> String {
 		let bodyProfileMultiSizeText = self.bodyProfileMultiSizeText ??
 			Localization.shared.localize("inpage_multi_size_body_profile_text")
-        return "\(bodyProfileMultiSizeText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"
-    }
+		return "\(bodyProfileMultiSizeText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"
+	}
 }

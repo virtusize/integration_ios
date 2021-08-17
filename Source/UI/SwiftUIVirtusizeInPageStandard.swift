@@ -29,6 +29,7 @@ import SwiftUI
 @available(iOS 13.0, *)
 public struct SwiftUIVirtusizeInPageStandard: View {
 
+	private var product: VirtusizeProduct
 	private var action: (() -> Void)?
 	private var uiView: ((VirtusizeInPageStandard) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
@@ -36,10 +37,12 @@ public struct SwiftUIVirtusizeInPageStandard: View {
 	@State private var desiredSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 92)
 
 	public init(
+		product: VirtusizeProduct,
 		action: (() -> Void)? = nil,
 		uiView: ((VirtusizeInPageStandard) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
+		self.product = product
 		self.action = action
 		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
@@ -47,6 +50,7 @@ public struct SwiftUIVirtusizeInPageStandard: View {
 
 	public var body: some View {
 		VirtusizeInPageStandardWrapper(
+			product: product,
 			desiredSize: $desiredSize,
 			action: action,
 			uiView: uiView,
@@ -61,16 +65,19 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 
 	@Binding var desiredSize: CGSize
 
+	private var product: VirtusizeProduct
 	private var action: (() -> Void)?
 	private var uiView: ((VirtusizeInPageStandard) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	public init(
+		product: VirtusizeProduct,
 		desiredSize: Binding<CGSize>,
 		action: (() -> Void)? = nil,
 		uiView: ((VirtusizeInPageStandard) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
+		self.product = product
 		self._desiredSize = desiredSize
 		self.action = action
 		self.uiView = uiView
@@ -86,7 +93,7 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 
 		context.coordinator.action = action
 
-		Virtusize.setVirtusizeView(self, virtusizeInPageStandard)
+		Virtusize.setVirtusizeView(self, virtusizeInPageStandard, product: product)
 
 		return virtusizeInPageStandard
 	}

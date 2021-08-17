@@ -1,5 +1,5 @@
 //
-//  BodyProfileRecommendedSize.swift
+//  VirtusizeUserBodyProfile.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -22,16 +22,16 @@
 //  THE SOFTWARE.
 //
 
-/// This structure represents the response for the recommendation API based on the user body profile
-public struct BodyProfileRecommendedSize: Codable {
-	/// The recommended size name
-	let sizeName: String
-
-	/// The store product that is associated with this recommendation
-	public var product: VirtusizeServerProduct?
-
-	public init(sizeName: String, product: VirtusizeServerProduct? = nil) {
-		self.sizeName = sizeName
-		self.product = product
-	}
+/// This class represents the response of the API request to get the user body profile data
+public class VirtusizeUserBodyProfile: Codable {
+	/// The user's gender
+	let gender: String
+	/// The user's age
+	let age: Int?
+	/// The user's height
+	let height: Int?
+	/// The user's weight
+	let weight: String?
+	/// The user's body measurement data, such as hip, bust, waist and so on.
+	let bodyData: [String: Int?]?
 }

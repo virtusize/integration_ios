@@ -30,6 +30,7 @@ import UIKit
 @available(iOS 13.0, *)
 public struct SwiftUIVirtusizeInPageMini: View {
 
+	private var product: VirtusizeProduct
 	private var action: (() -> Void)?
 	private var uiView: ((VirtusizeInPageMini) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
@@ -37,10 +38,12 @@ public struct SwiftUIVirtusizeInPageMini: View {
 	@State private var desiredSize: CGSize = CGSize()
 
 	public init(
+		product: VirtusizeProduct,
 		action: (() -> Void)? = nil,
 		uiView: ((VirtusizeInPageMini) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
+		self.product = product
 		self.action = action
 		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
@@ -48,6 +51,7 @@ public struct SwiftUIVirtusizeInPageMini: View {
 
 	public var body: some View {
 		VirtusizeInPageMiniWrapper(
+			product: product,
 			desiredSize: $desiredSize,
 			action: action,
 			uiKitView: uiView,
@@ -60,6 +64,7 @@ public struct SwiftUIVirtusizeInPageMini: View {
 @available(iOS 13.0, *)
 private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 
+	private var product: VirtusizeProduct
 	private var action: (() -> Void)?
 	private var uiKitView: ((VirtusizeInPageMini) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
@@ -67,11 +72,13 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 	@Binding var desiredSize: CGSize
 
 	public init(
+		product: VirtusizeProduct,
 		desiredSize: Binding<CGSize>,
 		action: (() -> Void)? = nil,
 		uiKitView: ((VirtusizeInPageMini) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
+		self.product = product
 		self._desiredSize = desiredSize
 		self.action = action
 		self.uiKitView = uiKitView
@@ -87,7 +94,7 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 
 		context.coordinator.action = action
 
-		Virtusize.setVirtusizeView(self, virtusizeInPageMini)
+		Virtusize.setSwiftUIVirtusizeView(self, virtusizeInPageMini, product: product)
 
 		return virtusizeInPageMini
 	}

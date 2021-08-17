@@ -26,6 +26,10 @@ import UIKit
 import WebKit
 import Virtusize
 
+fileprivate final class ProcessPool: WKProcessPool {
+	static let shared = ProcessPool()
+}
+
 class WebViewController: UIViewController {
 
 	private var webView: VirtusizeWebView?
@@ -39,6 +43,8 @@ class WebViewController: UIViewController {
 
 		let webView = VirtusizeWebView(frame: .zero) { configuration in
 			// set the configuration here
+			// Optional: Set up a shared WKProcessPool to allow cookie sharing.
+			configuration.processPool = ProcessPool.shared
 		}
 		webView.uiDelegate = self
 		webView.navigationDelegate = self
@@ -100,7 +106,11 @@ extension WebViewController: WKNavigationDelegate {
 		print("WebViewController: didFinish")
 	}
 
-	func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+	func webView(
+		_ webView: WKWebView,
+		decidePolicyFor navigationResponse: WKNavigationResponse,
+		decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void
+	) {
 		print("WebViewController: decidePolicyFor")
 		decisionHandler(.allow)
 	}

@@ -24,19 +24,19 @@
 
 /// A structure represents the event in Virtusize API
 public struct VirtusizeEvent {
-    /// The name of the event
-    public let name: String
+	/// The name of the event
+	public let name: String
 
-    /// The additional data in the event
-    public let data: Any?
+	/// The additional data in the event
+	public let data: Any?
 }
 
 extension VirtusizeEvent {
 
-    /// Initializes the VirtusizeEvent structure
-    internal init(name: String) {
-        self.init(name: name, data: nil)
-    }
+	/// Initializes the VirtusizeEvent structure
+	internal init(name: String) {
+		self.init(name: name, data: nil)
+	}
 
 	/// Initializes the VirtusizeEvent structure
 	internal init(name: VirtusizeEventName) {

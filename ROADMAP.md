@@ -1,8 +1,14 @@
 # ROADMAP
 
-## 2.2.1
+## 2.3.0
 
 ### Release date: 
+
+- [x] Fix bugs and improve the way to integrate the SDK
+
+## 2.2.1
+
+### Release date: 21/06/10
 
 - [x] Fix SNS Login on the web version of Virtusize integration through the SDK
 

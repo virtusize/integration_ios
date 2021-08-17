@@ -1,7 +1,7 @@
 //
-//  VirtusizeProductType.swift
+//  VirtusizeNotification.swift
 //
-//  Copyright (c) 2020 Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,16 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the product type info
-internal class VirtusizeProductType: Codable {
-    // swiftlint:disable identifier_name
-    /// The ID of a product type
-    let id: Int
-    /// The name of a product type
-    let name: String
-    /// The weights of this product type for the calculation of the fitting score
-    let weights: [String: Double]
-    /// The product type list that this product type is compatible with
-    let compatibleWith: [Int]
+extension Notification.Name {
+	static let productDataCheck = Notification.Name(NotificationKey.productDataCheck)
+	static let storeProduct = Notification.Name(NotificationKey.storeProduct)
+	static let sizeRecommendationData = Notification.Name(NotificationKey.sizeRecommendationData)
+	static let inPageError = Notification.Name(NotificationKey.inPageError)
+}
+
+struct NotificationKey {
+	static let productDataCheck = "productDataCheck"
+	static let storeProduct = "storeProduct"
+	static let sizeRecommendationData = "sizeRecommendationData"
+	static let inPageError = "inPageError"
 }

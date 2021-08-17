@@ -24,20 +24,20 @@
 
 /// This structure wraps the parameters of product image meta data for the API request `sendProductImage`
 internal struct VirtusizeProductMetaData: Codable {
-    /// An integer that represents the store id from the product data
-    private let storeId: Int?
-    /// A string to represent the id that will be used to reference this product in Virtusize API
-    private let externalId: String
-    /// The URL string of the product image that is fully qualified with the domain and the protocol
-    private let imageUrl: String
-    /// The API key that is unique and provided for Virtusize clients
-    private let apiKey: String
+	/// An integer that represents the store id from the product data
+	private let storeId: Int?
+	/// A string to represent the id that will be used to reference this product in Virtusize API
+	private let externalId: String
+	/// The URL string of the product image that is fully qualified with the domain and the protocol
+	private let imageUrl: String
+	/// The API key that is unique and provided for Virtusize clients
+	private let apiKey: String
 
-    /// Initializes the VirtusizeProductMetaData structure
-    public init(storeId: Int?, externalId: String, imageUrl: String, apiKey: String) {
-        self.storeId = storeId
-        self.externalId = externalId
-        self.imageUrl = imageUrl
-        self.apiKey = apiKey
-    }
+	/// Initializes the VirtusizeProductMetaData structure
+	public init(storeId: Int?, externalId: String, imageUrl: String, apiKey: String) {
+		self.storeId = storeId
+		self.externalId = externalId
+		self.imageUrl = imageUrl
+		self.apiKey = apiKey
+	}
 }

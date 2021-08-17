@@ -31,34 +31,34 @@ internal class FindBestFitHelper {
 	///   - userProducts: The list of user products
 	///   - storeProduct: The store product
 	///   - productTypes: The list of available product types
-    static func findBestFitProductSize(
-        userProducts: [VirtusizeInternalProduct],
-        storeProduct: VirtusizeInternalProduct,
-        productTypes: [VirtusizeProductType]
-    ) -> SizeComparisonRecommendedSize? {
-        let storeProductType = productTypes.first(where: { $0.id == storeProduct.productType })
-        let compatibleUserProducts = userProducts.filter {
-            (storeProductType?.compatibleWith.contains($0.productType) ?? false)
-        }
-        var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
-        compatibleUserProducts.forEach({ userProduct in
-            let userProductSize = userProduct.sizes[0]
-            storeProduct.sizes.forEach({ storeProductSize in
-                let storeProductFitInfo = getStoreProductFitInfo(
-                    userProductSize: userProductSize,
-                    storeProductSize: storeProductSize,
-                    storeProductTypeScoreWeights: storeProductType?.weights ?? [:]
-                )
-                if storeProductFitInfo.fitScore > sizeComparisonRecommendedSize.bestFitScore {
-                    sizeComparisonRecommendedSize.bestFitScore = storeProductFitInfo.fitScore
+	static func findBestFitProductSize(
+		userProducts: [VirtusizeServerProduct],
+		storeProduct: VirtusizeServerProduct,
+		productTypes: [VirtusizeProductType]
+	) -> SizeComparisonRecommendedSize? {
+		let storeProductType = productTypes.first(where: { $0.id == storeProduct.productType })
+		let compatibleUserProducts = userProducts.filter {
+			(storeProductType?.compatibleWith.contains($0.productType) ?? false)
+		}
+		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()
+		compatibleUserProducts.forEach({ userProduct in
+			let userProductSize = userProduct.sizes[0]
+			storeProduct.sizes.forEach({ storeProductSize in
+				let storeProductFitInfo = getStoreProductFitInfo(
+					userProductSize: userProductSize,
+					storeProductSize: storeProductSize,
+					storeProductTypeScoreWeights: storeProductType?.weights ?? [:]
+				)
+				if storeProductFitInfo.fitScore > sizeComparisonRecommendedSize.bestFitScore {
+					sizeComparisonRecommendedSize.bestFitScore = storeProductFitInfo.fitScore
 					sizeComparisonRecommendedSize.bestStoreProductSize = storeProductSize
-                    sizeComparisonRecommendedSize.bestUserProduct = userProduct
-                    sizeComparisonRecommendedSize.isStoreProductSmaller = storeProductFitInfo.isSmaller
-                }
-            })
-        })
-        return sizeComparisonRecommendedSize
-    }
+					sizeComparisonRecommendedSize.bestUserProduct = userProduct
+					sizeComparisonRecommendedSize.isStoreProductSmaller = storeProductFitInfo.isSmaller
+				}
+			})
+		})
+		return sizeComparisonRecommendedSize
+	}
 
 	/// Gets the product comparison fit info
 	///
@@ -66,30 +66,30 @@ internal class FindBestFitHelper {
 	///   - userProductSize: The size of a user product
 	///   - storeProductSize: The size of a store product
 	///   - storeProductTypeScoreWeights: The weights of the store product for calculation
-    static func getStoreProductFitInfo(
-        userProductSize: VirtusizeProductSize,
-        storeProductSize: VirtusizeProductSize,
-        storeProductTypeScoreWeights: [String: Double]
-    ) -> ProductComparisonFitInfo {
-        var rawScore = 0.0
-        var isSmaller: Bool?
+	static func getStoreProductFitInfo(
+		userProductSize: VirtusizeProductSize,
+		storeProductSize: VirtusizeProductSize,
+		storeProductTypeScoreWeights: [String: Double]
+	) -> ProductComparisonFitInfo {
+		var rawScore = 0.0
+		var isSmaller: Bool?
 
-        storeProductTypeScoreWeights.sorted { $0.1 > $1.1 }.forEach({ weight in
-            let userProductSizeMeasurement = userProductSize.measurements
-                .first(where: { $0.key == weight.key })?.value
-            let storeProductSizeMeasurement = storeProductSize.measurements
-                .first(where: { $0.key == weight.key })?.value
-            if userProductSizeMeasurement != nil && storeProductSizeMeasurement != nil {
-                rawScore += Double(
-                    abs(weight.value * Double(userProductSizeMeasurement! - storeProductSizeMeasurement!))
-                )
-                isSmaller = isSmaller ?? (userProductSizeMeasurement! - storeProductSizeMeasurement! > 0)
-            }
-        })
+		storeProductTypeScoreWeights.sorted { $0.1 > $1.1 }.forEach({ weight in
+			let userProductSizeMeasurement = userProductSize.measurements
+				.first(where: { $0.key == weight.key })?.value
+			let storeProductSizeMeasurement = storeProductSize.measurements
+				.first(where: { $0.key == weight.key })?.value
+			if userProductSizeMeasurement != nil && storeProductSizeMeasurement != nil {
+				rawScore += Double(
+					abs(weight.value * Double(userProductSizeMeasurement! - storeProductSizeMeasurement!))
+				)
+				isSmaller = isSmaller ?? (userProductSizeMeasurement! - storeProductSizeMeasurement! > 0)
+			}
+		})
 
-        let adjustScore = rawScore / 10.0
-        let fitScore = max(100 - adjustScore, 20)
+		let adjustScore = rawScore / 10.0
+		let fitScore = max(100 - adjustScore, 20)
 
-        return ProductComparisonFitInfo(fitScore: fitScore, isSmaller: isSmaller)
-    }
+		return ProductComparisonFitInfo(fitScore: fitScore, isSmaller: isSmaller)
+	}
 }

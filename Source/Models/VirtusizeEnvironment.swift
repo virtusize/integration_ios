@@ -23,64 +23,65 @@
 //
 
 /// This enum contains all available Virtusize environments
-public enum VirtusizeEnvironment: String {
-    case staging="staging.virtusize.jp"
-    case global="api.virtusize.com"
-    case japan="api.virtusize.jp"
-    case korea="api.virtusize.kr"
+public enum VirtusizeEnvironment: String, CaseIterable {
+	case staging="staging.virtusize.jp"
+	case global="api.virtusize.com"
+	case japan="api.virtusize.jp"
+	case korea="api.virtusize.kr"
 
-    /// Gets the services URL for the `productDataCheck` and `getSize` requests
-    internal func servicesUrl() -> String {
+	/// Gets the services URL for the `productDataCheck` and `getSize` requests
+	internal func servicesUrl() -> String {
+		// swiftlint:disable switch_case_alignment
 		switch self {
-		case .staging, .japan:
-			return "services.virtusize.jp"
-		case .global:
-			return "services.virtusize.com"
-		case .korea:
-			return "services.virtusize.kr"
+			case .staging, .japan:
+				return "services.virtusize.jp"
+			case .global:
+				return "services.virtusize.com"
+			case .korea:
+				return "services.virtusize.kr"
 		}
-    }
+	}
 
-    /// Gets the URL for the `i18n` request
-    internal func i18nUrl() -> String {
-        return "i18n.virtusize.com"
-    }
+	/// Gets the URL for the `i18n` request
+	internal func i18nUrl() -> String {
+		return "i18n.virtusize.com"
+	}
 
 	/// Gets the static API URL for the `VirtusizeWebView` request
 	internal func virtusizeStaticApiUrl() -> String {
 		switch self {
-		case .staging, .japan:
-			return "static.api.virtusize.jp"
-		case .global:
-			return "static.api.virtusize.com"
-		case .korea:
-			return "static.api.virtusize.kr"
+			case .staging, .japan:
+				return "static.api.virtusize.jp"
+			case .global:
+				return "static.api.virtusize.com"
+			case .korea:
+				return "static.api.virtusize.kr"
 		}
 	}
 
 	/// Gets the event API URL corresponding to the Virtusize environment
 	internal func eventApiUrl() -> String {
 		switch self {
-		case .staging:
-			return "events.staging.virtusize.jp"
-		case .japan:
-			return "events.virtusize.jp"
-		case .global:
-			return "events.virtusize.com"
-		case .korea:
-			return "events.virtusize.kr"
+			case .staging:
+				return "events.staging.virtusize.jp"
+			case .japan:
+				return "events.virtusize.jp"
+			case .global:
+				return "events.virtusize.com"
+			case .korea:
+				return "events.virtusize.kr"
 		}
 	}
 
-    /// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
-    internal func virtusizeRegion() -> VirtusizeRegion {
-        switch self {
-        case .staging, .japan:
-            return VirtusizeRegion.JAPAN
-        case .global:
-            return VirtusizeRegion.COM
-        case .korea:
-            return VirtusizeRegion.KOREA
-        }
-    }
+	/// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
+	internal func virtusizeRegion() -> VirtusizeRegion {
+		switch self {
+			case .staging, .japan:
+				return VirtusizeRegion.JAPAN
+			case .global:
+				return VirtusizeRegion.COM
+			case .korea:
+				return VirtusizeRegion.KOREA
+		}
+	}
 }
