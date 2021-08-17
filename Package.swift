@@ -19,18 +19,7 @@ let package = Package(
 			dependencies: [],
 			path: "Virtusize/Sources",
 			exclude: ["Info.plist"],
-			resources: [.copy("Resources")]
-		),
-		.testTarget(
-			name: "VirtusizeTests",
-			dependencies: ["Virtusize"],
-			path: "Virtusize/Tests",
-			exclude: ["Info.plist"],
-			resources: [
-				.process("i18n_en.json"),
-				.process("i18n_jp.json"),
-				.process("i18n_ko.json")
-			]
+			resources: [.process("Resources")]
 		)
 	]
 )

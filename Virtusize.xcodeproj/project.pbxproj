@@ -275,7 +275,7 @@
 		4DED8D12205755C3001CA7DF = {
 			isa = PBXGroup;
 			children = (
-				9CF77B9A26CBBF860019889E /* Virtusize */,
+				9C1BDF6A26CC23E20020BDA5 /* Virtusize */,
 				9CF77B9726CBBF7A0019889E /* Virtusize.podspec */,
 				DFB2F0F1219BC40E00A69D1D /* CHANGES.md */,
 				9C4B38A026BBA84B00B73FE5 /* LICENSE */,
@@ -346,6 +346,15 @@
 				9C106EB324FE41EC0012EE51 /* VirtusizeProductImageView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		9C1BDF6A26CC23E20020BDA5 /* Virtusize */ = {
+			isa = PBXGroup;
+			children = (
+				4DED8D29205755C3001CA7DF /* Tests */,
+				4DED8D1E205755C3001CA7DF /* Sources */,
+			);
+			path = Virtusize;
 			sourceTree = "<group>";
 		};
 		9C35F96625F02AC30004E9CD /* Resources */ = {
@@ -488,15 +497,6 @@
 				9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		9CF77B9A26CBBF860019889E /* Virtusize */ = {
-			isa = PBXGroup;
-			children = (
-				4DED8D1E205755C3001CA7DF /* Sources */,
-				4DED8D29205755C3001CA7DF /* Tests */,
-			);
-			path = Virtusize;
 			sourceTree = "<group>";
 		};
 		DF71642621A284E9002C7202 /* Models */ = {
