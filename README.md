@@ -26,6 +26,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 - [Requirements](#requirements)
 - [Installation](#installation)
   - [CocoaPods](#cocoapods)
+  - [Swift Package Manager](#swift-package-manager)
   - [Carthage](#carthage)
 - [Setup](#setup)
   - [Initialization](#1-initialization)
