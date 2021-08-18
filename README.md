@@ -78,7 +78,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.3.0'
+pod 'Virtusize', '~> 2.3.1'
 end
 ```
 
@@ -88,6 +88,18 @@ Then, run the following command:
 $ pod repo update
 $ pod install
 ```
+
+
+### Swift Package Manager
+
+Starting with the  `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
+
+1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
+2. Select a minimum version of `2.3.1`
+3. Click **Next**
+
+
+
 ### Carthage
 
 Install using the [Carthage](https://github.com/Carthage/Carthage) dependency manager. You can install it with the following command:
