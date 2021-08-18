@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.3.1
+- Feature: Add the Swift Package Manager support
+
 ### 2.3.0
 
 - Feature: Add the MIT license
