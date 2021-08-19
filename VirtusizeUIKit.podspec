@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.authors = { 'Virtusize' => 'client.support@virtusize.com' }
   s.source = { :git => 'https://github.com/virtusize/integration_ios.git', :tag => s.version }
 
-  s.platform     = :ios
+  s.platform = :ios
   s.ios.deployment_target = '10.3'
   s.swift_version = '5'
 
