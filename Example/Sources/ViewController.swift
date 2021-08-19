@@ -122,7 +122,7 @@ class ViewController: UIViewController {
 		// You can set the Virtusize InPage Standard style
 		inPageStandard.style = .BLACK
 		// You can set the background color of the size check button
-		inPageStandard.inPageStandardButtonBackgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+		inPageStandard.inPageStandardButtonBackgroundColor = .vsGray900Color
 		// You can set the font sizes for the InPage texts
 		inPageStandard.buttonFontSize = 12
 		inPageStandard.messageFontSize = 12

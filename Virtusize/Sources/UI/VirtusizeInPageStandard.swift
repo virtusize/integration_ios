@@ -390,23 +390,23 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		vsSignatureImageView.image = VirtusizeAssets.vsSignature
 
         privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
-        privacyPolicyLink.textColor = .vsBlackColor
+        privacyPolicyLink.textColor = .vsGray900Color
         privacyPolicyLink.setContentHuggingPriority(.required, for: .vertical)
 
 		messageStackView.axis = .vertical
 		messageStackView.distribution = .equalSpacing
 
         topMessageLabel.numberOfLines = 0
-        topMessageLabel.textColor = .vsBlackColor
+        topMessageLabel.textColor = .vsGray900Color
         bottomMessageLabel.numberOfLines = 0
-        bottomMessageLabel.textColor = .vsBlackColor
+        bottomMessageLabel.textColor = .vsGray900Color
 
         if inPageStandardButtonBackgroundColor != nil {
             checkSizeButton.backgroundColor = inPageStandardButtonBackgroundColor
         } else if style == .TEAL {
             checkSizeButton.backgroundColor = .vsTealColor
         } else {
-            checkSizeButton.backgroundColor = .vsBlackColor
+            checkSizeButton.backgroundColor = .vsGray900Color
         }
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
