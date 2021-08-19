@@ -13,6 +13,12 @@ Pod::Spec.new do |s|
   s.swift_version = '5'
 
   s.source_files = ["Virtusize/Sources/*.{swift, h}", "Virtusize/Sources/**/*.swift"]
-	s.resources = "Virtusize/Sources/Resources/**/*.otf"
   s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/VirtusizeAssets.xcassets"] }
+  s.dependency = 'VirtusizeUIKit', s.version
+
+  s.subspec 'VirtusizeUIKit' do |ui_kit|
+    ui_kit.source_files = ['VirtusizeUIKit/Sources/*.{swift, h}', 'VirtusizeUIKit/Sources/**/*.swift']
+    ui_kit.resources = 'VirtusizeUIKit/Sources/Resources/**/*.otf'
+  end
+
 end

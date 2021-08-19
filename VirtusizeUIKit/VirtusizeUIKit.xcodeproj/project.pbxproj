@@ -22,6 +22,7 @@
 		9CA446F626CE43E500D4013C /* NotoSansCJKKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F226CE43E500D4013C /* NotoSansCJKKR-Bold.otf */; };
 		9CA446F926CE448D00D4013C /* NotoSansCJKKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */; };
 		9CA446FA26CE448D00D4013C /* NotoSansCJKJP-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */; };
+		9CA4471826CE7A4700D4013C /* VirtusizeUIKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		9CA446F226CE43E500D4013C /* NotoSansCJKKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Bold.otf"; path = "Fonts/NotoSansCJKKR-Bold.otf"; sourceTree = "<group>"; };
 		9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Medium.otf"; path = "Fonts/NotoSansCJKKR-Medium.otf"; sourceTree = "<group>"; };
 		9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKJP-Medium.ttf"; path = "Fonts/NotoSansCJKJP-Medium.ttf"; sourceTree = "<group>"; };
+		9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VirtusizeUIKit.podspec; path = ../VirtusizeUIKit.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 		9CA4467026CE192100D4013C = {
 			isa = PBXGroup;
 			children = (
+				9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */,
 				9CA4467C26CE192100D4013C /* Sources */,
 				9CA4468726CE192100D4013C /* Tests */,
 				9CA4467B26CE192100D4013C /* Products */,
@@ -273,6 +276,7 @@
 				9CA446F426CE43E500D4013C /* NotoSansCJKJP-Bold.otf in Resources */,
 				9CA446FA26CE448D00D4013C /* NotoSansCJKJP-Medium.ttf in Resources */,
 				9CA446F326CE43E500D4013C /* NotoSansCJKKR-Regular.otf in Resources */,
+				9CA4471826CE7A4700D4013C /* VirtusizeUIKit.podspec in Resources */,
 				9CA446F926CE448D00D4013C /* NotoSansCJKKR-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
