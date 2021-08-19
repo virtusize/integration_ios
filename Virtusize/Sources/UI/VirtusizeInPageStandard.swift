@@ -94,6 +94,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		addSubviews()
 		setConstraints()
 		setStyle()
+		setTextStyle()
 
 		inPageStandardView.addGestureRecognizer(
 			UITapGestureRecognizer(target: self, action: #selector(clickInPageViewAction))
@@ -374,7 +375,6 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		NSLayoutConstraint.activate(allConstraints)
 	}
 
-	// swiftlint:disable function_body_length
 	private func setStyle() {
 		inPageStandardView.backgroundColor = .white
 		inPageStandardView.layer.masksToBounds = false
@@ -412,6 +412,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
         checkSizeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+		checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
 
 		let rightArrowImageTemplate = VirtusizeAssets.rightArrow?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
 		checkSizeButton.setImage(rightArrowImageTemplate, for: .normal)
@@ -427,37 +428,35 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		errorText.numberOfLines = 0
 		errorText.textColor = .vsGray700Color
 		errorText.isHidden = true
+	}
 
-		let displayLanguage = Virtusize.params?.language
-		let messageTextSize = messageFontSize ?? 12
-		let buttonTextSize = buttonFontSize ?? 12
-		switch displayLanguage {
+	private func setTextStyle() {
+		let vsTypography: VirtusizeTypography
+		switch Virtusize.params?.language {
 			// swiftlint:disable switch_case_alignment
 			case .ENGLISH:
-				topMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 2)
-				bottomMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 6, weight: .bold)
-				checkSizeButton.titleLabel?.font = VirtusizeFont.system(size: buttonTextSize + 2)
-				privacyPolicyLink.font = VirtusizeFont.system(size: messageTextSize)
-				errorText.font = VirtusizeFont.system(size: messageTextSize)
+				vsTypography = VirtusizeTypography(language: .ENGLISH)
 				messageLineSpacing = 2
+				messageStackView.spacing = messageLineSpacing
 			case .JAPANESE:
-				topMessageLabel.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize)
-				bottomMessageLabel.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize + 4, weight: .bold)
-				checkSizeButton.titleLabel?.font = VirtusizeFont.notoSansCJKJP(size: buttonTextSize)
-				privacyPolicyLink.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize - 2)
-				errorText.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize - 2)
+				vsTypography = VirtusizeTypography(language: .JAPANESE)
 				messageLineSpacing = 0
+				messageStackView.spacing = messageLineSpacing
 			case .KOREAN:
-				topMessageLabel.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize)
-				bottomMessageLabel.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize + 4, weight: .bold)
-				checkSizeButton.titleLabel?.font = VirtusizeFont.notoSansCJKKR(size: buttonTextSize)
-				privacyPolicyLink.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize - 2)
-				errorText.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize - 2)
+				vsTypography = VirtusizeTypography(language: .KOREAN)
 				messageLineSpacing = 0
+				messageStackView.spacing = messageLineSpacing
 			default:
-				break
+				vsTypography = VirtusizeTypography()
+				messageLineSpacing = 2
+				messageStackView.spacing = messageLineSpacing
 		}
-		checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
+		topMessageLabel.font = vsTypography.smallFont
+		bottomMessageLabel.font = vsTypography.largeBoldFont
+		checkSizeButton.titleLabel?.font = vsTypography.smallFont
+		privacyPolicyLink.font = vsTypography.xSmallFont
+		errorText.font = vsTypography.xSmallFont
+
 		messageStackView.spacing = messageLineSpacing
 	}
 

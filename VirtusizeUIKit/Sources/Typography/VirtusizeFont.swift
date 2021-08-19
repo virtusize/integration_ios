@@ -26,18 +26,23 @@
 import UIKit
 
 /// This class to used to get UIFonts from font files
-public class VirtusizeFont {
+internal class VirtusizeFont {
 
 	/// This enum contains all available font weights used in this SDK
 	public enum FontWeight: String {
 		case regular = "-Regular"
+		case medium = "-Medium"
 		case bold = "-Bold"
 
 		var uiFontWeight: UIFont.Weight {
-			if self == .regular {
-				return .regular
-			} else {
-				return .bold
+			// swiftlint:disable switch_case_alignment
+			switch self {
+				case .regular:
+					return .regular
+				case .medium:
+					return .medium
+				case .bold:
+					return .bold
 			}
 		}
 	}

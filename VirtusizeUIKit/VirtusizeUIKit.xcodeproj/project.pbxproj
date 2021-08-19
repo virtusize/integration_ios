@@ -14,6 +14,14 @@
 		9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446A826CE261F00D4013C /* VirtusizeColors.swift */; };
 		9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */; };
 		9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */; };
+		9CA446C926CE358700D4013C /* VirtusizeTypographyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446C826CE358700D4013C /* VirtusizeTypographyTests.swift */; };
+		9CA446D526CE37BD00D4013C /* VirtusizeUILanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446D426CE37BD00D4013C /* VirtusizeUILanguage.swift */; };
+		9CA446F326CE43E500D4013C /* NotoSansCJKKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446EF26CE43E500D4013C /* NotoSansCJKKR-Regular.otf */; };
+		9CA446F426CE43E500D4013C /* NotoSansCJKJP-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F026CE43E500D4013C /* NotoSansCJKJP-Bold.otf */; };
+		9CA446F526CE43E500D4013C /* NotoSansCJKJP-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F126CE43E500D4013C /* NotoSansCJKJP-Regular.otf */; };
+		9CA446F626CE43E500D4013C /* NotoSansCJKKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F226CE43E500D4013C /* NotoSansCJKKR-Bold.otf */; };
+		9CA446F926CE448D00D4013C /* NotoSansCJKKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */; };
+		9CA446FA26CE448D00D4013C /* NotoSansCJKJP-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +45,15 @@
 		9CA446A826CE261F00D4013C /* VirtusizeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeColors.swift; sourceTree = "<group>"; };
 		9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeFont.swift; sourceTree = "<group>"; };
 		9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeTypography.swift; sourceTree = "<group>"; };
+		9CA446C826CE358700D4013C /* VirtusizeTypographyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeTypographyTests.swift; sourceTree = "<group>"; };
+		9CA446CC26CE36FA00D4013C /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CA446D426CE37BD00D4013C /* VirtusizeUILanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUILanguage.swift; sourceTree = "<group>"; };
+		9CA446EF26CE43E500D4013C /* NotoSansCJKKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Regular.otf"; path = "Fonts/NotoSansCJKKR-Regular.otf"; sourceTree = "<group>"; };
+		9CA446F026CE43E500D4013C /* NotoSansCJKJP-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKJP-Bold.otf"; path = "Fonts/NotoSansCJKJP-Bold.otf"; sourceTree = "<group>"; };
+		9CA446F126CE43E500D4013C /* NotoSansCJKJP-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKJP-Regular.otf"; path = "Fonts/NotoSansCJKJP-Regular.otf"; sourceTree = "<group>"; };
+		9CA446F226CE43E500D4013C /* NotoSansCJKKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Bold.otf"; path = "Fonts/NotoSansCJKKR-Bold.otf"; sourceTree = "<group>"; };
+		9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Medium.otf"; path = "Fonts/NotoSansCJKKR-Medium.otf"; sourceTree = "<group>"; };
+		9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKJP-Medium.ttf"; path = "Fonts/NotoSansCJKJP-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +81,7 @@
 				9CA4467C26CE192100D4013C /* Sources */,
 				9CA4468726CE192100D4013C /* Tests */,
 				9CA4467B26CE192100D4013C /* Products */,
+				9CA446CB26CE36FA00D4013C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +97,7 @@
 		9CA4467C26CE192100D4013C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9CA446E426CE434900D4013C /* Resources */,
 				9CA446AE26CE2CD600D4013C /* Typography */,
 				9CA446A726CE25DC00D4013C /* Colors */,
 				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
@@ -91,6 +110,7 @@
 		9CA4468726CE192100D4013C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				9CA446C726CE356400D4013C /* Typography */,
 				9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */,
 				9CA4468A26CE192100D4013C /* Info.plist */,
 			);
@@ -110,8 +130,46 @@
 			children = (
 				9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */,
 				9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */,
+				9CA446D426CE37BD00D4013C /* VirtusizeUILanguage.swift */,
 			);
 			path = Typography;
+			sourceTree = "<group>";
+		};
+		9CA446C726CE356400D4013C /* Typography */ = {
+			isa = PBXGroup;
+			children = (
+				9CA446C826CE358700D4013C /* VirtusizeTypographyTests.swift */,
+			);
+			path = Typography;
+			sourceTree = "<group>";
+		};
+		9CA446CB26CE36FA00D4013C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9CA446CC26CE36FA00D4013C /* Virtusize.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9CA446E426CE434900D4013C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9CA446EE26CE43DB00D4013C /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9CA446EE26CE43DB00D4013C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9CA446F026CE43E500D4013C /* NotoSansCJKJP-Bold.otf */,
+				9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */,
+				9CA446F126CE43E500D4013C /* NotoSansCJKJP-Regular.otf */,
+				9CA446F226CE43E500D4013C /* NotoSansCJKKR-Bold.otf */,
+				9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */,
+				9CA446EF26CE43E500D4013C /* NotoSansCJKKR-Regular.otf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +249,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
+				ko,
 			);
 			mainGroup = 9CA4467026CE192100D4013C;
 			productRefGroup = 9CA4467B26CE192100D4013C /* Products */;
@@ -208,6 +268,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CA446F526CE43E500D4013C /* NotoSansCJKJP-Regular.otf in Resources */,
+				9CA446F626CE43E500D4013C /* NotoSansCJKKR-Bold.otf in Resources */,
+				9CA446F426CE43E500D4013C /* NotoSansCJKJP-Bold.otf in Resources */,
+				9CA446FA26CE448D00D4013C /* NotoSansCJKJP-Medium.ttf in Resources */,
+				9CA446F326CE43E500D4013C /* NotoSansCJKKR-Regular.otf in Resources */,
+				9CA446F926CE448D00D4013C /* NotoSansCJKKR-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +295,7 @@
 				9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */,
 				9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */,
 				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,
+				9CA446D526CE37BD00D4013C /* VirtusizeUILanguage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CA446C926CE358700D4013C /* VirtusizeTypographyTests.swift in Sources */,
 				9CA4468926CE192100D4013C /* VirtusizeUIKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
