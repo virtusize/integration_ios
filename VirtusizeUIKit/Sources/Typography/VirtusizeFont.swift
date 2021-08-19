@@ -1,5 +1,6 @@
 //
-//  Font.swift
+//  VirtusizeFont.swift
+//  VirtusizeUIKit
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -25,10 +26,10 @@
 import UIKit
 
 /// This class to used to get UIFonts from font files
-class Font {
+public class VirtusizeFont {
 
 	/// This enum contains all available font weights used in this SDK
-	internal enum FontWeight: String {
+	public enum FontWeight: String {
 		case regular = "-Regular"
 		case bold = "-Bold"
 
@@ -47,15 +48,15 @@ class Font {
 		case notoSansCJKKR = "NotoSansCJKKR"
 	}
 
-	static func system(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+	public static func system(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
 		return UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
 	}
 
-	static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+	public static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
 		return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
 	}
 
-	static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+	public static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
 		return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
 	}
 

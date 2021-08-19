@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import VirtusizeUIKit
 
 /// This class is the custom Virtusize InPage Mini view that can be added in the client's layout file.
 public class VirtusizeInPageMini: VirtusizeInPageView {
@@ -205,17 +206,17 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		switch displayLanguage {
 			// swiftlint:disable switch_case_alignment
 			case .ENGLISH:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+				inPageMiniMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.system(size: buttonTextSize + 2)
 			case .JAPANESE:
-				inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
+				inPageMiniMessageLabel.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.notoSansCJKJP(size: buttonTextSize)
 			case .KOREAN:
-				inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
+				inPageMiniMessageLabel.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.notoSansCJKKR(size: buttonTextSize)
 			default:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+				inPageMiniMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.system(size: buttonTextSize + 2)
 		}
 	}
 
