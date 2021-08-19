@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import VirtusizeUIKit
 
 // swiftlint:disable type_body_length file_length
 /// This class is the custom Virtusize InPage Standard view that can be added in the client's layout file.
@@ -390,23 +391,23 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		vsSignatureImageView.image = VirtusizeAssets.vsSignature
 
         privacyPolicyLink.text = Localization.shared.localize("privacy_policy")
-        privacyPolicyLink.textColor = .vsBlackColor
+        privacyPolicyLink.textColor = .vsGray900Color
         privacyPolicyLink.setContentHuggingPriority(.required, for: .vertical)
 
 		messageStackView.axis = .vertical
 		messageStackView.distribution = .equalSpacing
 
         topMessageLabel.numberOfLines = 0
-        topMessageLabel.textColor = .vsBlackColor
+        topMessageLabel.textColor = .vsGray900Color
         bottomMessageLabel.numberOfLines = 0
-        bottomMessageLabel.textColor = .vsBlackColor
+        bottomMessageLabel.textColor = .vsGray900Color
 
         if inPageStandardButtonBackgroundColor != nil {
             checkSizeButton.backgroundColor = inPageStandardButtonBackgroundColor
         } else if style == .TEAL {
             checkSizeButton.backgroundColor = .vsTealColor
         } else {
-            checkSizeButton.backgroundColor = .vsBlackColor
+            checkSizeButton.backgroundColor = .vsGray900Color
         }
         checkSizeButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 6)
         checkSizeButton.setTitle(Localization.shared.localize("check_size"), for: .normal)
@@ -433,25 +434,25 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		switch displayLanguage {
 			// swiftlint:disable switch_case_alignment
 			case .ENGLISH:
-				topMessageLabel.font = Font.system(size: messageTextSize + 2)
-				bottomMessageLabel.font = Font.system(size: messageTextSize + 6, weight: .bold)
-				checkSizeButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
-				privacyPolicyLink.font = Font.system(size: messageTextSize)
-				errorText.font = Font.system(size: messageTextSize)
+				topMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 2)
+				bottomMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 6, weight: .bold)
+				checkSizeButton.titleLabel?.font = VirtusizeFont.system(size: buttonTextSize + 2)
+				privacyPolicyLink.font = VirtusizeFont.system(size: messageTextSize)
+				errorText.font = VirtusizeFont.system(size: messageTextSize)
 				messageLineSpacing = 2
 			case .JAPANESE:
-				topMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize)
-				bottomMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize + 4, weight: .bold)
-				checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
-				privacyPolicyLink.font = Font.notoSansCJKJP(size: messageTextSize - 2)
-				errorText.font = Font.notoSansCJKJP(size: messageTextSize - 2)
+				topMessageLabel.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize)
+				bottomMessageLabel.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize + 4, weight: .bold)
+				checkSizeButton.titleLabel?.font = VirtusizeFont.notoSansCJKJP(size: buttonTextSize)
+				privacyPolicyLink.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize - 2)
+				errorText.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize - 2)
 				messageLineSpacing = 0
 			case .KOREAN:
-				topMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize)
-				bottomMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize + 4, weight: .bold)
-				checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
-				privacyPolicyLink.font = Font.notoSansCJKKR(size: messageTextSize - 2)
-				errorText.font = Font.notoSansCJKKR(size: messageTextSize - 2)
+				topMessageLabel.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize)
+				bottomMessageLabel.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize + 4, weight: .bold)
+				checkSizeButton.titleLabel?.font = VirtusizeFont.notoSansCJKKR(size: buttonTextSize)
+				privacyPolicyLink.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize - 2)
+				errorText.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize - 2)
 				messageLineSpacing = 0
 			default:
 				break

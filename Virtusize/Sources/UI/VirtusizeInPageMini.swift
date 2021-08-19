@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import VirtusizeUIKit
 
 /// This class is the custom Virtusize InPage Mini view that can be added in the client's layout file.
 public class VirtusizeInPageMini: VirtusizeInPageView {
@@ -182,8 +183,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			inPageMiniSizeCheckButton.setTitleColor(.vsTealColor, for: .normal)
 			inPageMiniSizeCheckButton.imageView?.tintColor = .vsTealColor
 		} else {
-			inPageMiniSizeCheckButton.setTitleColor(.vsBlackColor, for: .normal)
-			inPageMiniSizeCheckButton.imageView?.tintColor = .vsBlackColor
+			inPageMiniSizeCheckButton.setTitleColor(.vsGray900Color, for: .normal)
+			inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
 		}
 		inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 	}
@@ -194,7 +195,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		} else if style == .TEAL {
 			return .vsTealColor
 		} else {
-			return .vsBlackColor
+			return .vsGray900Color
 		}
 	}
 
@@ -205,24 +206,24 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		switch displayLanguage {
 			// swiftlint:disable switch_case_alignment
 			case .ENGLISH:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+				inPageMiniMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.system(size: buttonTextSize + 2)
 			case .JAPANESE:
-				inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
+				inPageMiniMessageLabel.font = VirtusizeFont.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.notoSansCJKJP(size: buttonTextSize)
 			case .KOREAN:
-				inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
+				inPageMiniMessageLabel.font = VirtusizeFont.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.notoSansCJKKR(size: buttonTextSize)
 			default:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+				inPageMiniMessageLabel.font = VirtusizeFont.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+				inPageMiniSizeCheckButton.titleLabel?.font = VirtusizeFont.system(size: buttonTextSize + 2)
 		}
 	}
 
 	internal override func setLoadingScreen(loading: Bool) {
         backgroundColor = loading ? .white : getBackgroundColor()
         inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
-        inPageMiniMessageLabel.textColor = loading ? .vsBlackColor : .white
+        inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
         setupTextsStyle(messageLabelIsBold: loading)
 		if loading {
 			startLoadingTextAnimation(

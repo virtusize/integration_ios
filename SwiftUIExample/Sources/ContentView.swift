@@ -62,7 +62,7 @@ struct ContentView: View {
 				// (Optional) You can customize the button by accessing it here
 				uiView: { virtusizeButton in
 						virtusizeButton.setTitle("サイズチェック", for: .normal)
-						virtusizeButton.backgroundColor = .vsBlackColor
+						virtusizeButton.backgroundColor = .vsGray900Color
 				},
 				// (Optional) You can use our default styles: either Black or Teal for the button
 				// If you want to customize the button on your own, please omit defaultStyle
@@ -81,7 +81,7 @@ struct ContentView: View {
 				uiView: { virtusizeInPageStandard in
 					virtusizeInPageStandard.buttonFontSize = 12
 					virtusizeInPageStandard.messageFontSize = 12
-					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsBlackColor
+					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsGray900Color
 					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
 				},
 				// (Optional): You can use our default styles: either Black or Teal for the InPage Standard view.

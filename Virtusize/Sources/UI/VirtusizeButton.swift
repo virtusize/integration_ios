@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import VirtusizeUIKit
 
 /// This class is the custom Virtusize button that is added in the client's layout file.
 public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtocol {
@@ -36,7 +37,7 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 	override public var isHighlighted: Bool {
 		didSet {
 			if style == .BLACK {
-				backgroundColor = isHighlighted ? .vsBlackPressedColor : .vsBlackColor
+				backgroundColor = isHighlighted ? .vsGray900PressedColor : .vsGray900Color
 			} else if style == .TEAL {
 				backgroundColor = isHighlighted ? .vsTealPressedColor : .vsTealColor
 			}
@@ -106,13 +107,13 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 	private func setStyle() {
 		if style == .NONE {
 			setTitle(Localization.shared.localize("check_size"), for: .normal)
-			setTitleColor(.vsBlackColor, for: .normal)
-			setTitleColor(.vsBlackPressedColor, for: .highlighted)
+			setTitleColor(.vsGray900Color, for: .normal)
+			setTitleColor(.vsGray900PressedColor, for: .highlighted)
 			return
 		}
 
 		if style == .BLACK {
-			backgroundColor = .vsBlackColor
+			backgroundColor = .vsGray900Color
 		} else if style == .TEAL {
 			backgroundColor = .vsTealColor
 		}

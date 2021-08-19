@@ -2,12 +2,19 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:VirtusizeUIKit/VirtusizeUIKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Virtusize.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Example/Example.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:SwiftUIExample/SwiftUIExample.xcodeproj">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "Examples">
+      <FileRef
+         location = "group:Example/Example.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:SwiftUIExample/SwiftUIExample.xcodeproj">
+      </FileRef>
+   </Group>
 </Workspace>

@@ -1,8 +1,8 @@
 //
-//  Colors.swift
-//  Virtusize
+//  VirtusizeUIKit.h
+//  VirtusizeUIKit
 //
-//  Copyright (c) 2018 Virtusize KK
+//  Copyright (c) 2021 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +23,14 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
+#import <Foundation/Foundation.h>
 
-#if canImport(SwiftUI)
-import SwiftUI
+//! Project version number for VirtusizeUIKit.
+FOUNDATION_EXPORT double VirtusizeUIKitVersionNumber;
 
-#if (arch(arm64) || arch(x86_64))
-@available(iOS 13.0, *)
-internal extension Color {
-	static var vsInPageShadowColor: Color { Color(UIColor.vsInPageShadowColor) }
-}
-#endif
+//! Project version string for VirtusizeUIKit.
+FOUNDATION_EXPORT const unsigned char VirtusizeUIKitVersionString[];
 
-#endif
+// In this header, you should import all the public headers of your framework using statements like #import <VirtusizeUIKit/PublicHeader.h>
 
-/// The Virtusize themed colors used in the Virtusize SDK
-internal extension UIColor {
-	static var vsInPageShadowColor: UIColor { #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) }
-}
+

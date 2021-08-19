@@ -98,7 +98,7 @@ internal class VirtusizeProductImageView: UIView {
 		} else {
 			circleBorderLayer.path = UIBezierPath(ovalIn: bounds).cgPath
 			circleBorderLayer.lineWidth = 1.0
-			circleBorderLayer.strokeColor = UIColor.vsDarkTealColor.cgColor
+			circleBorderLayer.strokeColor = UIColor.vsGrdPrimaryDarkColor.cgColor
 			circleBorderLayer.lineDashPattern = [4, 3]
 			circleBorderLayer.frame = bounds
 			circleBorderLayer.fillColor = nil

@@ -1,0 +1,506 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9CA4468426CE192100D4013C /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */; };
+		9CA4468926CE192100D4013C /* VirtusizeUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */; };
+		9CA4468B26CE192100D4013C /* VirtusizeUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */; };
+		9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446A826CE261F00D4013C /* VirtusizeColors.swift */; };
+		9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */; };
+		9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9CA4468526CE192100D4013C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CA4467126CE192100D4013C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9CA4467926CE192100D4013C;
+			remoteInfo = VirtusizeUIKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtusizeUIKit.h; sourceTree = "<group>"; };
+		9CA4467E26CE192100D4013C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CA4468326CE192100D4013C /* VirtusizeUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtusizeUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIKitTests.swift; sourceTree = "<group>"; };
+		9CA4468A26CE192100D4013C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeUIKit.swift; sourceTree = "<group>"; };
+		9CA446A826CE261F00D4013C /* VirtusizeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeColors.swift; sourceTree = "<group>"; };
+		9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeFont.swift; sourceTree = "<group>"; };
+		9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeTypography.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9CA4467726CE192100D4013C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CA4468026CE192100D4013C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CA4468426CE192100D4013C /* VirtusizeUIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9CA4467026CE192100D4013C = {
+			isa = PBXGroup;
+			children = (
+				9CA4467C26CE192100D4013C /* Sources */,
+				9CA4468726CE192100D4013C /* Tests */,
+				9CA4467B26CE192100D4013C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9CA4467B26CE192100D4013C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */,
+				9CA4468326CE192100D4013C /* VirtusizeUIKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9CA4467C26CE192100D4013C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				9CA446AE26CE2CD600D4013C /* Typography */,
+				9CA446A726CE25DC00D4013C /* Colors */,
+				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
+				9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */,
+				9CA4467E26CE192100D4013C /* Info.plist */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		9CA4468726CE192100D4013C /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */,
+				9CA4468A26CE192100D4013C /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		9CA446A726CE25DC00D4013C /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				9CA446A826CE261F00D4013C /* VirtusizeColors.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		9CA446AE26CE2CD600D4013C /* Typography */ = {
+			isa = PBXGroup;
+			children = (
+				9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */,
+				9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */,
+			);
+			path = Typography;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		9CA4467526CE192100D4013C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CA4468B26CE192100D4013C /* VirtusizeUIKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		9CA4467926CE192100D4013C /* VirtusizeUIKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CA4468E26CE192100D4013C /* Build configuration list for PBXNativeTarget "VirtusizeUIKit" */;
+			buildPhases = (
+				9CA4467526CE192100D4013C /* Headers */,
+				9CA4467626CE192100D4013C /* Sources */,
+				9CA4467726CE192100D4013C /* Frameworks */,
+				9CA4467826CE192100D4013C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VirtusizeUIKit;
+			productName = VirtusizeUIKit;
+			productReference = 9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		9CA4468226CE192100D4013C /* VirtusizeUIKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CA4469126CE192100D4013C /* Build configuration list for PBXNativeTarget "VirtusizeUIKitTests" */;
+			buildPhases = (
+				9CA4467F26CE192100D4013C /* Sources */,
+				9CA4468026CE192100D4013C /* Frameworks */,
+				9CA4468126CE192100D4013C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CA4468626CE192100D4013C /* PBXTargetDependency */,
+			);
+			name = VirtusizeUIKitTests;
+			productName = VirtusizeUIKitTests;
+			productReference = 9CA4468326CE192100D4013C /* VirtusizeUIKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9CA4467126CE192100D4013C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = "";
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				ORGANIZATIONNAME = "Virtusize KK";
+				TargetAttributes = {
+					9CA4467926CE192100D4013C = {
+						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
+					};
+					9CA4468226CE192100D4013C = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+				};
+			};
+			buildConfigurationList = 9CA4467426CE192100D4013C /* Build configuration list for PBXProject "VirtusizeUIKit" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9CA4467026CE192100D4013C;
+			productRefGroup = 9CA4467B26CE192100D4013C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9CA4467926CE192100D4013C /* VirtusizeUIKit */,
+				9CA4468226CE192100D4013C /* VirtusizeUIKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9CA4467826CE192100D4013C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CA4468126CE192100D4013C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9CA4467626CE192100D4013C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */,
+				9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */,
+				9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */,
+				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CA4467F26CE192100D4013C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CA4468926CE192100D4013C /* VirtusizeUIKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9CA4468626CE192100D4013C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9CA4467926CE192100D4013C /* VirtusizeUIKit */;
+			targetProxy = 9CA4468526CE192100D4013C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9CA4468C26CE192100D4013C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9CA4468D26CE192100D4013C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9CA4468F26CE192100D4013C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.3.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeUIKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 10.3;
+			};
+			name = Debug;
+		};
+		9CA4469026CE192100D4013C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.3.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeUIKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 10.3;
+			};
+			name = Release;
+		};
+		9CA4469226CE192100D4013C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeUIKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 10.3;
+			};
+			name = Debug;
+		};
+		9CA4469326CE192100D4013C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeUIKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 10.3;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9CA4467426CE192100D4013C /* Build configuration list for PBXProject "VirtusizeUIKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CA4468C26CE192100D4013C /* Debug */,
+				9CA4468D26CE192100D4013C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CA4468E26CE192100D4013C /* Build configuration list for PBXNativeTarget "VirtusizeUIKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CA4468F26CE192100D4013C /* Debug */,
+				9CA4469026CE192100D4013C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CA4469126CE192100D4013C /* Build configuration list for PBXNativeTarget "VirtusizeUIKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CA4469226CE192100D4013C /* Debug */,
+				9CA4469326CE192100D4013C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9CA4467126CE192100D4013C /* Project object */;
+}
