@@ -16,10 +16,16 @@ let package = Package(
 	targets: [
 		.target(
 			name: "Virtusize",
-			dependencies: [],
+			dependencies: ["VirtusizeUIKit"],
 			path: "Virtusize/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
+		),
+		.target(
+			name: "VirtusizeUIKit",
+			dependencies: [],
+			path: "VirtusizeUIKit/Sources",
+			exclude: ["Info.plist"]
 		)
 	]
 )
