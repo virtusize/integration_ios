@@ -26,6 +26,7 @@
 		9CA4472726CF603700D4013C /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472626CF603700D4013C /* Image+Extensions.swift */; };
 		9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472826CF687800D4013C /* VirtusizeAssets.swift */; };
 		9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472A26CF689B00D4013C /* Base64ImageString.swift */; };
+		9CA4473826CF84F900D4013C /* VirtusizeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4473626CF84F900D4013C /* VirtusizeLocalizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C8692C626CF8581005ECBE1 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
 		9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtusizeUIKit.h; sourceTree = "<group>"; };
 		9CA4467E26CE192100D4013C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +65,8 @@
 		9CA4472626CF603700D4013C /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
 		9CA4472826CF687800D4013C /* VirtusizeAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAssets.swift; sourceTree = "<group>"; };
 		9CA4472A26CF689B00D4013C /* Base64ImageString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64ImageString.swift; sourceTree = "<group>"; };
+		9CA4473726CF84F900D4013C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
+		9CDAE6C326CF85A000CBF7EF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,14 +111,14 @@
 		9CA4467C26CE192100D4013C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				9CA4472326CF600F00D4013C /* Utils */,
-				9CA446E426CE434900D4013C /* Resources */,
-				9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */,
-				9CA446AE26CE2CD600D4013C /* Typography */,
-				9CA446A726CE25DC00D4013C /* Colors */,
-				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
 				9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */,
 				9CA4467E26CE192100D4013C /* Info.plist */,
+				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
+				9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */,
+				9CA446A726CE25DC00D4013C /* Colors */,
+				9CA446E426CE434900D4013C /* Resources */,
+				9CA446AE26CE2CD600D4013C /* Typography */,
+				9CA4472326CF600F00D4013C /* Utils */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -157,6 +161,7 @@
 		9CA446E426CE434900D4013C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9CA4473126CF821C00D4013C /* Localizations */,
 				9CA446EE26CE43DB00D4013C /* Fonts */,
 			);
 			path = Resources;
@@ -185,6 +190,15 @@
 			);
 			path = Utils;
 			sourceTree = "<group>";
+		};
+		9CA4473126CF821C00D4013C /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+				9CA4473626CF84F900D4013C /* VirtusizeLocalizable.strings */,
+			);
+			name = Localizations;
+			path = /Users/kuei/Desktop/Virtusize/integration_ios/VirtusizeUIKit/Sources/Resources/Localizations;
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -285,6 +299,7 @@
 				9CA446F526CE43E500D4013C /* NotoSansCJKJP-Regular.otf in Resources */,
 				9CA446F626CE43E500D4013C /* NotoSansCJKKR-Bold.otf in Resources */,
 				9CA446F426CE43E500D4013C /* NotoSansCJKJP-Bold.otf in Resources */,
+				9CA4473826CF84F900D4013C /* VirtusizeLocalizable.strings in Resources */,
 				9CA446FA26CE448D00D4013C /* NotoSansCJKJP-Medium.ttf in Resources */,
 				9CA446F326CE43E500D4013C /* NotoSansCJKKR-Regular.otf in Resources */,
 				9CA4471826CE7A4700D4013C /* VirtusizeUIKit.podspec in Resources */,
@@ -335,6 +350,19 @@
 			targetProxy = 9CA4468526CE192100D4013C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9CA4473626CF84F900D4013C /* VirtusizeLocalizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CA4473726CF84F900D4013C /* en */,
+				9C8692C626CF8581005ECBE1 /* ko */,
+				9CDAE6C326CF85A000CBF7EF /* ja */,
+			);
+			name = VirtusizeLocalizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9CA4468C26CE192100D4013C /* Debug */ = {

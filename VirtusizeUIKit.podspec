@@ -14,5 +14,7 @@ Pod::Spec.new do |s|
 	
 	s.source_files = ['VirtusizeUIKit/Sources/*.{swift, h}', 'VirtusizeUIKit/Sources/**/*.swift']
 	s.resources = 'VirtusizeUIKit/Sources/Resources/**/*.otf'
-	s.resource_bundle = { 'VirtusizeUIKit' => ['VirtusizeUIKit/Sources/VirtusizeAssets.xcassets'] }
+	s.resource_bundle = {
+		'VirtusizeUIKit' => ['VirtusizeUIKit/Sources/VirtusizeAssets.xcassets'], 'Virtusize/Sources/Resources/**/*.lproj'
+	}
 end

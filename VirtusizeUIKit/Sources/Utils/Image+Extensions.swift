@@ -30,7 +30,7 @@ public extension UIImage {
 	///
 	/// - Parameter name: The image name.
 	convenience init?(bundleNamed name: String) {
-		self.init(named: name, in: BundleLoader.getVirtusizeResourceBundle(resourceName: "VirtusizeUIKit"), compatibleWith: nil)
+		self.init(named: name, in: BundleLoader.virtusizeUIKitResourceBundle, compatibleWith: nil)
 	}
 
 	/// Adds the padding to a `UIImage`

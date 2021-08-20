@@ -27,7 +27,7 @@ import Foundation
 /// The class is to access different types of bundles for the SDK
 public class BundleLoader: NSObject {
 	/// The bundle is used for resources like images
-	public static func getVirtusizeResourceBundle(resourceName: String) -> Bundle {
+	public static var virtusizeUIKitResourceBundle: Bundle {
 		var bundle: Bundle?
 		// Swift Package Manager bundle
 		#if SWIFT_PACKAGE
@@ -35,20 +35,20 @@ public class BundleLoader: NSObject {
 		#endif
 
 		if bundle == nil {
-			// Virtusize.bundle
-			bundle = Bundle(path: "\(resourceName).bundle")
+			// VirtusizeUIKit.bundle
+			bundle = Bundle(path: "VirtusizeUIKit.bundle")
 		}
 
 		if bundle == nil {
-			// Virtusize.framework/Virtusize.bundle
-			if let path = Bundle(for: BundleLoader.self).path(forResource: resourceName, ofType: "bundle") {
+			// VirtusizeUIKit.framework/VirtusizeUIKit.bundle
+			if let path = Bundle(for: BundleLoader.self).path(forResource: "VirtusizeUIKit", ofType: "bundle") {
 				bundle = Bundle(path: path)
 			}
 		}
 
 		if bundle == nil {
-			// Virtusize.framework
-			bundle = Bundle(for: BundleLoader.self)
+			// VirtusizeUIKit.framework
+			bundle = Bundle(for: self)
 		}
 
 		if let bundle = bundle {

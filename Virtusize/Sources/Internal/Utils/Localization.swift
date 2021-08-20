@@ -49,8 +49,7 @@ internal class Localization {
 	/// Gets the bundle that is used for localization
 	/// - Parameter language: `VirtusizeLanguage`
 	static func virtusizeLocalizationBundle(language: VirtusizeLanguage? = nil) -> Bundle {
-		var bundle =
-			BundleLoader.getVirtusizeResourceBundle(resourceName: "Virtusize")
+		var bundle = BundleLoader.virtusizeUIKitResourceBundle
 		if let localizableBundlePath = bundle.path(
 			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
 			ofType: "lproj"
