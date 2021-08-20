@@ -23,7 +23,9 @@
 //
 
 import UIKit
+#if canImport(VirtusizeUIKit)
 import VirtusizeUIKit
+#endif
 
 /// This class is the custom Virtusize InPage Mini view that can be added in the client's layout file.
 public class VirtusizeInPageMini: VirtusizeInPageView {

@@ -56,7 +56,7 @@ final public class VirtusizeAssets {
 	///   - productType: The product type, which is fetched from the store product info
 	///   - style: The product style, which is fetched from the store product info
 	/// - Returns: The  product type placeholder`UIImage`
-	internal static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
+	public static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
 		var placeholderImage = UIImage(bundleNamed: "\(productType)")
 		if let style = style,
 		   let productTypeWithStyleImage = UIImage(bundleNamed: "\(productType)_\(style)") {

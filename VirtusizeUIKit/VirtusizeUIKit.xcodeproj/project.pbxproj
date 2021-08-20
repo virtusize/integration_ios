@@ -22,6 +22,10 @@
 		9CA446F926CE448D00D4013C /* NotoSansCJKKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */; };
 		9CA446FA26CE448D00D4013C /* NotoSansCJKJP-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */; };
 		9CA4471826CE7A4700D4013C /* VirtusizeUIKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */; };
+		9CA4472526CF602300D4013C /* BundleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472426CF602300D4013C /* BundleLoader.swift */; };
+		9CA4472726CF603700D4013C /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472626CF603700D4013C /* Image+Extensions.swift */; };
+		9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472826CF687800D4013C /* VirtusizeAssets.swift */; };
+		9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472A26CF689B00D4013C /* Base64ImageString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +57,12 @@
 		9CA446F226CE43E500D4013C /* NotoSansCJKKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Bold.otf"; path = "Fonts/NotoSansCJKKR-Bold.otf"; sourceTree = "<group>"; };
 		9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Medium.otf"; path = "Fonts/NotoSansCJKKR-Medium.otf"; sourceTree = "<group>"; };
 		9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKJP-Medium.ttf"; path = "Fonts/NotoSansCJKJP-Medium.ttf"; sourceTree = "<group>"; };
-		9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VirtusizeUIKit.podspec; path = ../VirtusizeUIKit.podspec; sourceTree = "<group>"; };
+		9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = VirtusizeUIKit.podspec; path = ../VirtusizeUIKit.podspec; sourceTree = "<group>"; };
+		9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VirtusizeAssets.xcassets; sourceTree = "<group>"; };
+		9CA4472426CF602300D4013C /* BundleLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleLoader.swift; sourceTree = "<group>"; };
+		9CA4472626CF603700D4013C /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
+		9CA4472826CF687800D4013C /* VirtusizeAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAssets.swift; sourceTree = "<group>"; };
+		9CA4472A26CF689B00D4013C /* Base64ImageString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64ImageString.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +107,9 @@
 		9CA4467C26CE192100D4013C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9CA4472326CF600F00D4013C /* Utils */,
 				9CA446E426CE434900D4013C /* Resources */,
+				9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */,
 				9CA446AE26CE2CD600D4013C /* Typography */,
 				9CA446A726CE25DC00D4013C /* Colors */,
 				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
@@ -162,6 +173,17 @@
 				9CA446EF26CE43E500D4013C /* NotoSansCJKKR-Regular.otf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		9CA4472326CF600F00D4013C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9CA4472426CF602300D4013C /* BundleLoader.swift */,
+				9CA4472626CF603700D4013C /* Image+Extensions.swift */,
+				9CA4472826CF687800D4013C /* VirtusizeAssets.swift */,
+				9CA4472A26CF689B00D4013C /* Base64ImageString.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,8 +306,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */,
+				9CA4472526CF602300D4013C /* BundleLoader.swift in Sources */,
 				9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */,
+				9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */,
 				9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */,
+				9CA4472726CF603700D4013C /* Image+Extensions.swift in Sources */,
 				9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */,
 				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,
 				9CA446D526CE37BD00D4013C /* VirtusizeUILanguage.swift in Sources */,

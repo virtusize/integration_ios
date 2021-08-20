@@ -25,9 +25,9 @@
 import Foundation
 
 /// The class is to access different types of bundles for the SDK
-internal class BundleLoader: NSObject {
+public class BundleLoader: NSObject {
 	/// The bundle is used for resources like images
-	static var virtusizeResourceBundle: Bundle = {
+	public static func getVirtusizeResourceBundle(resourceName: String) -> Bundle {
 		var bundle: Bundle?
 		// Swift Package Manager bundle
 		#if SWIFT_PACKAGE
@@ -36,12 +36,12 @@ internal class BundleLoader: NSObject {
 
 		if bundle == nil {
 			// Virtusize.bundle
-			bundle = Bundle(path: "Virtusize.bundle")
+			bundle = Bundle(path: "\(resourceName).bundle")
 		}
 
 		if bundle == nil {
 			// Virtusize.framework/Virtusize.bundle
-			if let path = Bundle(for: BundleLoader.self).path(forResource: "Virtusize", ofType: "bundle") {
+			if let path = Bundle(for: BundleLoader.self).path(forResource: resourceName, ofType: "bundle") {
 				bundle = Bundle(path: path)
 			}
 		}
@@ -57,19 +57,5 @@ internal class BundleLoader: NSObject {
 			// Fallback to Bundle.main to ensure there is always a bundle.
 			return Bundle.main
 		}
-	}()
-
-	/// Gets the bundle that is used for localization
-	/// - Parameter language: `VirtusizeLanguage`
-	static func virtusizeLocalizationBundle(language: VirtusizeLanguage? = nil) -> Bundle {
-		var bundle = virtusizeResourceBundle
-		if let localizableBundlePath = bundle.path(
-			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
-			ofType: "lproj"
-		),
-		let localizableBundle = Bundle(path: localizableBundlePath) {
-			bundle = localizableBundle
-		}
-		return bundle
 	}
 }

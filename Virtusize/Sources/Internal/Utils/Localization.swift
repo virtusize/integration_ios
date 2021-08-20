@@ -23,6 +23,9 @@
 //
 
 import Foundation
+#if canImport(VirtusizeUIKit)
+import VirtusizeUIKit
+#endif
 
 /// This class is used to localize texts in the SDK
 internal class Localization {
@@ -36,10 +39,25 @@ internal class Localization {
 	///   - language: Pass `VirtusizeLanguage` if you'd like to localize the text in a designated language
 	/// - Returns: A localized string based on the device's default language
 	func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
-		return BundleLoader.virtusizeLocalizationBundle(
+		return Localization.virtusizeLocalizationBundle(
 			language: language
 		).localizedString(
 			forKey: key, value: nil, table: "VirtusizeLocalizable"
 		)
+	}
+
+	/// Gets the bundle that is used for localization
+	/// - Parameter language: `VirtusizeLanguage`
+	static func virtusizeLocalizationBundle(language: VirtusizeLanguage? = nil) -> Bundle {
+		var bundle =
+			BundleLoader.getVirtusizeResourceBundle(resourceName: "Virtusize")
+		if let localizableBundlePath = bundle.path(
+			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
+			ofType: "lproj"
+		),
+		let localizableBundle = Bundle(path: localizableBundlePath) {
+			bundle = localizableBundle
+		}
+		return bundle
 	}
 }

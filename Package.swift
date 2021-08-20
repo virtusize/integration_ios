@@ -8,9 +8,8 @@ let package = Package(
 	defaultLocalization: "en",
 	platforms: [.iOS(.v10)],
 	products: [
-		.library(
-			name: "Virtusize",
-			targets: ["Virtusize"])
+		.library(name: "Virtusize", targets: ["Virtusize"]),
+		.library(name: "VirtusizeUIKit", targets: ["VirtusizeUIKit"])
 	],
 	dependencies: [],
 	targets: [
@@ -25,7 +24,8 @@ let package = Package(
 			name: "VirtusizeUIKit",
 			dependencies: [],
 			path: "VirtusizeUIKit/Sources",
-			exclude: ["Info.plist"]
+			exclude: ["Info.plist"],
+			resources: [.process("Resources")]
 		)
 	]
 )

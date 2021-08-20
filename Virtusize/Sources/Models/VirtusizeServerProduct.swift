@@ -24,6 +24,9 @@
 
 import UIKit
 import Foundation
+#if canImport(VirtusizeUIKit)
+import VirtusizeUIKit
+#endif
 
 /// This structure represents a product from the Virtusize server
 public class VirtusizeServerProduct: Codable {

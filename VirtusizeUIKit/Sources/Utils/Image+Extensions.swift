@@ -24,13 +24,13 @@
 
 import UIKit
 
-internal extension UIImage {
+public extension UIImage {
 
 	/// Creates a `UIImage` object in the Virtusize framework bundle.
 	///
 	/// - Parameter name: The image name.
 	convenience init?(bundleNamed name: String) {
-		self.init(named: name, in: BundleLoader.virtusizeResourceBundle, compatibleWith: nil)
+		self.init(named: name, in: BundleLoader.getVirtusizeResourceBundle(resourceName: "VirtusizeUIKit"), compatibleWith: nil)
 	}
 
 	/// Adds the padding to a `UIImage`
