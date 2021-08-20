@@ -26,7 +26,7 @@ import UIKit
 
 public extension UIImage {
 
-	/// Creates a `UIImage` object in the Virtusize framework bundle.
+	/// Creates a `UIImage` object in the VirtusizeUIKit framework bundle.
 	///
 	/// - Parameter name: The image name.
 	convenience init?(bundleNamed name: String) {

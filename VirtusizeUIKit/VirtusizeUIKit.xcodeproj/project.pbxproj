@@ -27,6 +27,7 @@
 		9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472826CF687800D4013C /* VirtusizeAssets.swift */; };
 		9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472A26CF689B00D4013C /* Base64ImageString.swift */; };
 		9CA4473826CF84F900D4013C /* VirtusizeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4473626CF84F900D4013C /* VirtusizeLocalizable.strings */; };
+		9CDAE6CC26CF9A9300CBF7EF /* VirtusizeAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +297,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CDAE6CC26CF9A9300CBF7EF /* VirtusizeAssets.xcassets in Resources */,
 				9CA446F526CE43E500D4013C /* NotoSansCJKJP-Regular.otf in Resources */,
 				9CA446F626CE43E500D4013C /* NotoSansCJKKR-Bold.otf in Resources */,
 				9CA446F426CE43E500D4013C /* NotoSansCJKJP-Bold.otf in Resources */,
