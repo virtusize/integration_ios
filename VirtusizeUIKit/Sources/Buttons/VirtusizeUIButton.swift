@@ -28,6 +28,18 @@ import Foundation
 
 public class VirtusizeUIButton: UIButton {
 
+	public var style = VirtusizeUIButtonStyle.default {
+		didSet {
+			setStyle()
+		}
+	}
+
+	public override var isEnabled: Bool {
+		didSet {
+			setStyle()
+		}
+	}
+
 	private let rippleView = UIView()
 	private var rippleShapeLayer: CAShapeLayer?
 	private var rippleMask: CAShapeLayer {
@@ -94,7 +106,11 @@ public class VirtusizeUIButton: UIButton {
 		rippleShapeLayer!.path = UIBezierPath(
 			ovalIn: CGRect(x: 0, y: 0, width: maxBoundSize, height: maxBoundSize)
 		).cgPath
-		rippleShapeLayer!.fillColor = backgroundColor?.darker(by: 10)?.cgColor
+		if backgroundColor?.isBright == true {
+			rippleShapeLayer!.fillColor = backgroundColor?.darker(by: 10)?.cgColor
+		} else {
+			rippleShapeLayer!.fillColor =  backgroundColor?.lighter(by: 20)?.cgColor
+		}
 		rippleShapeLayer!.position =  CGPoint(x: touchLocation.x, y: touchLocation.y)
 		rippleShapeLayer!.opacity = 0
 
@@ -144,30 +160,65 @@ public class VirtusizeUIButton: UIButton {
 	}
 
 	func setup() {
-		backgroundColor = .white
+		addRippleView()
+		setStyle()
+	}
 
-		setRippleView()
-		setButtonShadow()
+	func setStyle() {
+		if !isEnabled {
+			backgroundColor = .vsGray300Color
+			hideBorder()
+			hideShadow()
+			setTitleColor(.vsGray700Color, for: .normal)
+		} else {
+			if style == .default {
+			   backgroundColor = .white
+			   hideBorder()
+			   setShadow()
+		   } else if style == .inverted {
+			   backgroundColor = .vsGray900Color
+			   hideBorder()
+			   setShadow()
+		   } else if style == .flat {
+			   backgroundColor = .white
+			   setBorder()
+			   hideShadow()
+		   }
+		   setTitleColor(backgroundColor == .white ? .vsGray900Color : .white, for: .normal)
+		}
+
+		rippleView.backgroundColor = backgroundColor
 
 		contentEdgeInsets = UIEdgeInsets(top: 14, left: 16, bottom: 14, right: 16)
 		layer.cornerRadius = intrinsicContentSize.height / 2
 
 		setTitle("Default Button", for: .normal)
-		setTitleColor(backgroundColor == .white ? .vsGray900Color : .white, for: .normal)
 		titleLabel?.font = VirtusizeTypography().boldFont
 	}
 
-	private func setRippleView() {
-		rippleView.backgroundColor = backgroundColor
+	private func addRippleView() {
 		rippleView.frame = bounds
 		rippleView.alpha = 0
 		addSubview(rippleView)
 	}
 
-	private func setButtonShadow() {
+	private func setShadow() {
 		layer.shadowColor = UIColor.vsShadowColor.cgColor
-		layer.shadowOpacity = 1
 		layer.shadowOffset = CGSize(width: 0, height: 4)
 		layer.shadowRadius = 12
+		layer.shadowOpacity = 1
+	}
+
+	private func hideShadow() {
+		layer.shadowOpacity = 0
+	}
+
+	private func setBorder() {
+		layer.borderColor = UIColor.vsGray300Color.cgColor
+		layer.borderWidth = 1
+	}
+
+	private func hideBorder() {
+		layer.borderWidth = 0
 	}
 }

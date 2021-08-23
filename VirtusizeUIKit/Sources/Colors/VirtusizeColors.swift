@@ -36,6 +36,7 @@ public extension Color {
 	static var vsGray800Color: Color { Color(UIColor.vsGray800Color) }
 	static var vsGray700Color: Color { Color(UIColor.vsGray700Color) }
 	static var vsGray400Color: Color { Color(UIColor.vsGray400Color) }
+	static var vsGray300Color: Color { Color(UIColor.vsGray300Color) }
 	static var vsGray200Color: Color { Color(UIColor.vsGray200Color) }
 	static var vsTealColor: Color { Color(UIColor.vsTealColor) }
 	static var vsTealPressedColor: Color { Color(UIColor.vsTealPressedColor) }
@@ -53,6 +54,7 @@ public extension UIColor {
 	static var vsGray800Color: UIColor { #colorLiteral(red: 0.4980392157, green: 0.5137254902, blue: 0.5137254902, alpha: 1) }
 	static var vsGray700Color: UIColor { #colorLiteral(red: 0.7176470588, green: 0.7254901961, blue: 0.7254901961, alpha: 1) }
 	static var vsGray400Color: UIColor { #colorLiteral(red: 0.7176470588, green: 0.7254901961, blue: 0.7254901961, alpha: 1) }
+	static var vsGray300Color: UIColor { #colorLiteral(red: 0.9294117647, green: 0.9294117647, blue: 0.9294117647, alpha: 1) }
 	static var vsGray200Color: UIColor { #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) }
 	static var vsTealColor: UIColor { #colorLiteral(red: 0.2431372549, green: 0.8235294118, blue: 0.7294117647, alpha: 1) }
 	static var vsTealPressedColor: UIColor { #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1) }

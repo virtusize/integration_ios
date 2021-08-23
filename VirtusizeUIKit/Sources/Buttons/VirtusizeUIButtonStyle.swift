@@ -1,5 +1,5 @@
 //
-//  UIColor+Extensions.swift
+//  VirtusizeUIButtonStyle.swift
 //  VirtusizeUIKit
 //
 //  Copyright (c) 2021 Virtusize KK
@@ -23,40 +23,10 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
 import Foundation
 
-extension UIColor {
-
-	/// Color brightness is determined by the following formula:
-	/// ((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
-	var isBright: Bool {
-		let brightness = Float(((rgba.red * 299) + (rgba.green * 587) + (rgba.blue * 114)) / 1000)
-		let threshold = Float(0.5)
-		return brightness > threshold
-	}
-
-	func lighter(by percentage: CGFloat) -> UIColor? {
-		return self.adjustLightness(by: abs(percentage) )
-	}
-
-	func darker(by percentage: CGFloat) -> UIColor? {
-		return self.adjustLightness(by: -1 * abs(percentage) )
-	}
-
-	private typealias RGBA = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
-	private var rgba: RGBA {
-		var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
-		getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-		return (red, green, blue, alpha)
-	}
-
-	private func adjustLightness(by percentage: CGFloat) -> UIColor {
-		return UIColor(
-			red: min(rgba.red + percentage/100, 1.0),
-			green: min(rgba.green + percentage/100, 1.0),
-			blue: min(rgba.blue + percentage/100, 1.0),
-			alpha: rgba.alpha
-		)
-	}
+public enum VirtusizeUIButtonStyle {
+	case `default`
+	case inverted
+	case flat
 }
