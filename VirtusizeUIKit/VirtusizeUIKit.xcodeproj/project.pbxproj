@@ -27,6 +27,8 @@
 		9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472826CF687800D4013C /* VirtusizeAssets.swift */; };
 		9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472A26CF689B00D4013C /* Base64ImageString.swift */; };
 		9CA4473826CF84F900D4013C /* VirtusizeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4473626CF84F900D4013C /* VirtusizeLocalizable.strings */; };
+		9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */; };
+		9CDAE6C926CF93FE00CBF7EF /* VirtusizeUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */; };
 		9CDAE6CC26CF9A9300CBF7EF /* VirtusizeAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -67,7 +69,9 @@
 		9CA4472826CF687800D4013C /* VirtusizeAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAssets.swift; sourceTree = "<group>"; };
 		9CA4472A26CF689B00D4013C /* Base64ImageString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64ImageString.swift; sourceTree = "<group>"; };
 		9CA4473726CF84F900D4013C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
+		9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		9CDAE6C326CF85A000CBF7EF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
+		9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 		9CA4467C26CE192100D4013C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9CDAE6C726CF93F100CBF7EF /* Buttons */,
 				9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */,
 				9CA4467E26CE192100D4013C /* Info.plist */,
 				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
@@ -188,6 +193,7 @@
 				9CA4472626CF603700D4013C /* Image+Extensions.swift */,
 				9CA4472826CF687800D4013C /* VirtusizeAssets.swift */,
 				9CA4472A26CF689B00D4013C /* Base64ImageString.swift */,
+				9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -200,6 +206,14 @@
 			name = Localizations;
 			path = /Users/kuei/Desktop/Virtusize/integration_ios/VirtusizeUIKit/Sources/Resources/Localizations;
 			sourceTree = "<absolute>";
+		};
+		9CDAE6C726CF93F100CBF7EF /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -324,12 +338,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */,
+				9CDAE6C926CF93FE00CBF7EF /* VirtusizeUIButton.swift in Sources */,
 				9CA4472526CF602300D4013C /* BundleLoader.swift in Sources */,
 				9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */,
 				9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */,
 				9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */,
 				9CA4472726CF603700D4013C /* Image+Extensions.swift in Sources */,
 				9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */,
+				9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */,
 				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,
 				9CA446D526CE37BD00D4013C /* VirtusizeUILanguage.swift in Sources */,
 			);

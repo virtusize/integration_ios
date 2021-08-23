@@ -25,6 +25,7 @@
 import UIKit
 import WebKit
 import Virtusize
+import VirtusizeUIKit
 
 class ViewController: UIViewController {
 
@@ -131,8 +132,21 @@ class ViewController: UIViewController {
 		inPageStandard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		inPageStandard.topAnchor.constraint(equalTo: inPageMini2.bottomAnchor, constant: 16).isActive = true
 
+		let dsButton = VirtusizeUIButton()
+		view.addSubview(dsButton)
+		dsButton.setTitle("Design System", for: .normal)
+		dsButton.translatesAutoresizingMaskIntoConstraints = false
+		dsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		dsButton.topAnchor.constraint(equalTo: inPageStandard.bottomAnchor, constant: 32).isActive = true
+		dsButton.addTarget(self, action: #selector(clickDesignSystemButton), for: .touchUpInside)
+
 		// MARK: The Order API
-		sendOrderSample()
+//		sendOrderSample()
+	}
+
+	@objc private func clickDesignSystemButton() {
+		let viewController = DesignSystemViewController()
+		navigationController?.pushViewController(viewController, animated: true)
 	}
 
 	/// Demonstrates how to send an order to the Virtusize server

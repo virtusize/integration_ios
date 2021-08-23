@@ -380,7 +380,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	private func setStyle() {
 		inPageStandardView.backgroundColor = .white
 		inPageStandardView.layer.masksToBounds = false
-		inPageStandardView.layer.shadowColor = UIColor.vsInPageShadowColor.cgColor
+		inPageStandardView.layer.shadowColor = UIColor.vsShadowColor.cgColor
 		inPageStandardView.layer.shadowOpacity = 1
 		inPageStandardView.layer.shadowOffset = CGSize(width: 0, height: 2)
 		inPageStandardView.layer.shadowRadius = 10

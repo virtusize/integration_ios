@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X6m-DX-7JE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-619" y="90"/>
+            <point key="canvasLocation" x="-652" y="116"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -34,11 +34,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3C-Eg-THm" customClass="VirtusizeButton" customModule="Virtusize">
-                                <rect key="frame" x="163" y="433" width="88" height="30"/>
+                                <rect key="frame" x="163" y="184" width="88" height="30"/>
                                 <state key="normal" title="Check the fit"/>
                             </button>
                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="fih-qK-nOb" customClass="VirtusizeInPageMini" customModule="Virtusize">
-                                <rect key="frame" x="16" y="479" width="382" height="30"/>
+                                <rect key="frame" x="16" y="230" width="382" height="30"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
@@ -46,10 +46,10 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="fih-qK-nOb" firstAttribute="leading" secondItem="a7D-ow-IdL" secondAttribute="leading" constant="16" id="FOj-0k-ElL"/>
+                            <constraint firstItem="I3C-Eg-THm" firstAttribute="top" secondItem="a7D-ow-IdL" secondAttribute="top" constant="96" id="Hyy-vC-Q40"/>
                             <constraint firstItem="a7D-ow-IdL" firstAttribute="trailing" secondItem="fih-qK-nOb" secondAttribute="trailing" constant="16" id="MWQ-KJ-KiN"/>
                             <constraint firstItem="I3C-Eg-THm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PMi-FD-eLI"/>
                             <constraint firstItem="fih-qK-nOb" firstAttribute="top" secondItem="I3C-Eg-THm" secondAttribute="bottom" constant="16" id="kqm-OI-WSd"/>
-                            <constraint firstItem="I3C-Eg-THm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="s6S-eh-wAa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6E5-ni-3bE"/>
@@ -61,21 +61,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="115.84821428571428"/>
-        </scene>
-        <!--Product View Controller-->
-        <scene sceneID="zMU-6b-kdk">
-            <objects>
-                <viewController storyboardIdentifier="ProductViewController" id="4cP-y0-rZv" customClass="ProductViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ClG-MF-PdY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="4lv-Ir-Fv0"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X2n-Ep-qDs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1116" y="100"/>
         </scene>
     </scenes>
     <resources>
