@@ -90,7 +90,7 @@ extension VirtusizeWebView: WKUIDelegate {
 			}
 		}
 
-		if navigationAction.targetFrame == nil && isLinkFromSNSAuth(url: url.absoluteString) {
+		if navigationAction.targetFrame == nil && (isLinkFromSNSAuth(url: url.absoluteString) || isFitIllustratorLink(url: url.absoluteString)) {
 			// swiftlint:disable line_length
 			// By default, the Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a web view.
 			// By setting up the user agent, Google recognizes the web view as a Safari browser
@@ -98,6 +98,13 @@ extension VirtusizeWebView: WKUIDelegate {
 			let popupWebView = WKWebView(frame: webView.frame, configuration: configuration)
 			popupWebView.uiDelegate = self
 			webView.addSubview(popupWebView)
+			popupWebView.translatesAutoresizingMaskIntoConstraints = false
+			NSLayoutConstraint.activate([
+				popupWebView.topAnchor.constraint(equalTo: webView.topAnchor),
+				popupWebView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+				popupWebView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+				popupWebView.bottomAnchor.constraint(equalTo: webView.bottomAnchor)
+			])
 			return popupWebView
 		}
 
@@ -223,9 +230,14 @@ extension VirtusizeWebView: WKUIDelegate {
 		return url != nil && (url!.contains("surveymonkey") || (url!.contains("virtusize") && url!.contains("privacy")))
 	}
 
-	/// Checks if a URL is a link from SNS authentication
+	/// Checks if a URL is a link from Virtusize SNS authentication
 	private func isLinkFromSNSAuth(url: String?) -> Bool {
-		return url != nil && (url!.contains("facebook") || url!.contains("google")) && url!.contains("oauth")
+		return url != nil && url!.contains("virtusize") && (url!.contains("facebook") || url!.contains("google")) && url!.contains("oauth")
+	}
+
+	/// Checks if a URL is a link from Virtusize Fit Illustrator
+	private func isFitIllustratorLink(url: String?) -> Bool {
+		return url != nil && url!.contains("virtusize") && url!.contains("fit-illustrator")
 	}
 }
 
