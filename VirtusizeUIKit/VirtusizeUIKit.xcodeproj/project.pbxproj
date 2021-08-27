@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C5B6ABC26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */; };
 		9CA4468426CE192100D4013C /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */; };
 		9CA4468926CE192100D4013C /* VirtusizeUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */; };
 		9CA4468B26CE192100D4013C /* VirtusizeUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButtonSize.swift; sourceTree = "<group>"; };
 		9C8692C626CF8581005ECBE1 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
 		9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtusizeUIKit.h; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			children = (
 				9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */,
 				9CC9296F26D385BA00AD97D1 /* VirtusizeUIButtonStyle.swift */,
+				9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */,
 				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,
 				9CA446D526CE37BD00D4013C /* VirtusizeUILanguage.swift in Sources */,
+				9C5B6ABC26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

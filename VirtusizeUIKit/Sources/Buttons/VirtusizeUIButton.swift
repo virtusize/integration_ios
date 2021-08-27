@@ -34,6 +34,12 @@ public class VirtusizeUIButton: UIButton {
 		}
 	}
 
+	public var size = VirtusizeUIButtonSize.large {
+		didSet {
+			setStyle()
+		}
+	}
+
 	public override var isEnabled: Bool {
 		didSet {
 			setStyle()
@@ -190,28 +196,26 @@ public class VirtusizeUIButton: UIButton {
 				hideBorder()
 				setShadow()
 			} else if style == .default {
-			   backgroundColor = .white
-			   hideBorder()
-			   setShadow()
-		   } else if style == .inverted {
-			   backgroundColor = .vsGray900Color
-			   hideBorder()
-			   setShadow()
-		   } else if style == .flat {
-			   backgroundColor = .white
-			   setBorder()
-			   hideShadow()
-		   }
-		   setTitleColor(backgroundColor == .white ? .vsGray900Color : .white, for: .normal)
+				backgroundColor = .white
+				hideBorder()
+				setShadow()
+			} else if style == .inverted {
+				backgroundColor = .vsGray900Color
+				hideBorder()
+				setShadow()
+			} else if style == .flat {
+				backgroundColor = .white
+				setBorder()
+				hideShadow()
+			}
+			setTitleColor(backgroundColor == .white ? .vsGray900Color : .white, for: .normal)
 		}
 
 		rippleView.backgroundColor = backgroundColor
 
-		contentEdgeInsets = UIEdgeInsets(top: 14, left: 16, bottom: 14, right: 16)
-		layer.cornerRadius = intrinsicContentSize.height / 2
+		setButtonSize()
 
 		setTitle("Default Button", for: .normal)
-		titleLabel?.font = VirtusizeTypography().boldFont
 	}
 
 	private func addRippleView() {
@@ -238,5 +242,30 @@ public class VirtusizeUIButton: UIButton {
 
 	private func hideBorder() {
 		layer.borderWidth = 0
+	}
+
+	private func setButtonSize() {
+		let typography = VirtusizeTypography()
+		switch size {
+			case .small:
+				titleLabel?.font = typography.xSmallBoldFont
+				contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+			case .medium:
+				titleLabel?.font = typography.smallBoldFont
+				contentEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
+			case .large:
+				titleLabel?.font = typography.normalBoldFont
+				contentEdgeInsets = UIEdgeInsets(top: 14, left: 16, bottom: 14, right: 16)
+			case .xlarge:
+				titleLabel?.font = typography.largeBoldFont
+				contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+			case .xxlarge:
+				titleLabel?.font = typography.xLargeBoldFont
+				contentEdgeInsets = UIEdgeInsets(top: 20, left: 24, bottom: 20, right: 24)
+			default:
+				titleLabel?.font = typography.normalBoldFont
+				contentEdgeInsets = UIEdgeInsets(top: 14, left: 16, bottom: 9.5, right: 16)
+		}
+		layer.cornerRadius = intrinsicContentSize.height / 2
 	}
 }
