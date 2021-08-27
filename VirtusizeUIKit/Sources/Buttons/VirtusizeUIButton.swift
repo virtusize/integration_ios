@@ -40,6 +40,12 @@ public class VirtusizeUIButton: UIButton {
 		}
 	}
 
+	public override var backgroundColor: UIColor? {
+		didSet {
+			setStyle()
+		}
+	}
+
 	private let rippleView = UIView()
 	private var rippleShapeLayer: CAShapeLayer?
 	private var rippleMask: CAShapeLayer {
@@ -77,12 +83,21 @@ public class VirtusizeUIButton: UIButton {
 			},
 			completion: nil
 		)
+
 		return super.beginTracking(touch, with: event)
+	}
+
+	public override func cancelTracking(with event: UIEvent?) {
+		super.cancelTracking(with: event)
+		releaseAnimation()
 	}
 
 	public override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
 		super.endTracking(touch, with: event)
+		releaseAnimation()
+	}
 
+	private func releaseAnimation() {
 		setRippleLayer(touchLocation: startTouchLocation!, holdAnimation: false)
 
 		UIView.animate(withDuration: 0.1, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
@@ -117,28 +132,28 @@ public class VirtusizeUIButton: UIButton {
 		rippleView.layer.addSublayer(rippleShapeLayer!)
 
 		if holdAnimation {
-			// From
-			rippleShapeLayer!.transform = CATransform3DMakeScale(0, 0, 0)
-			rippleShapeLayer!.opacity = 1.0
+			let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+			scaleAnimation.fromValue = 0.0
+			scaleAnimation.toValue = 0.65
 
-			// To
-			CATransaction.begin()
-			CATransaction.setAnimationDuration(0.7)
-			rippleShapeLayer!.opacity = 0.5
+			let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+			opacityAnimation.fromValue = 0.0
+			opacityAnimation.toValue = 1.0
 
-			CATransaction.begin()
-			CATransaction.setAnimationDuration(0.7)
-			rippleShapeLayer!.transform = CATransform3DMakeScale(0.5, 0.5, 0.5)
-			CATransaction.commit()
+			let animationGroup = CAAnimationGroup()
+			animationGroup.animations = [scaleAnimation, opacityAnimation]
+			animationGroup.fillMode = CAMediaTimingFillMode.forwards
+			animationGroup.duration = CFTimeInterval(0.3)
+			animationGroup.isRemovedOnCompletion = false
 
-			CATransaction.commit()
+			rippleShapeLayer!.add(animationGroup, forKey: "holdRippleEffect")
 		} else {
 			let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
-			scaleAnimation.fromValue = 0.5
+			scaleAnimation.fromValue = 0.65
 			scaleAnimation.toValue = 1.5
 
 			let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-			opacityAnimation.fromValue = 0.5
+			opacityAnimation.fromValue = 1.0
 			opacityAnimation.toValue = 0.0
 
 			let animationGroup = CAAnimationGroup()
@@ -148,7 +163,7 @@ public class VirtusizeUIButton: UIButton {
 			animationGroup.repeatCount = 1
 			animationGroup.isRemovedOnCompletion = true
 
-			rippleShapeLayer!.add(animationGroup, forKey: "rippleEffect")
+			rippleShapeLayer!.add(animationGroup, forKey: "releaseRippleEffect")
 		}
 	}
 
@@ -171,7 +186,10 @@ public class VirtusizeUIButton: UIButton {
 			hideShadow()
 			setTitleColor(.vsGray700Color, for: .normal)
 		} else {
-			if style == .default {
+			if backgroundColor != nil {
+				hideBorder()
+				setShadow()
+			} else if style == .default {
 			   backgroundColor = .white
 			   hideBorder()
 			   setShadow()
