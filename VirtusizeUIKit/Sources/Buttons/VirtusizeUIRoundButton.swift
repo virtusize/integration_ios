@@ -1,5 +1,5 @@
 //
-//  VirtusizeUIButton.swift
+//  VirtusizeUIRoundButton.swift
 //  VirtusizeUIKit
 //
 //  Copyright (c) 2021 Virtusize KK
@@ -26,7 +26,12 @@
 import UIKit
 import Foundation
 
-public class VirtusizeUIButton: UIButton {
+public class VirtusizeUIRoundButton: UIButton {
+	struct Constant {
+		static let size = CGFloat(40)
+		static let padding = CGFloat(8)
+		static let maxImageSize = CGFloat(size - 2 * padding)
+	}
 
 	public var style = VirtusizeUIButtonStyle.default {
 		didSet {
@@ -173,39 +178,55 @@ public class VirtusizeUIButton: UIButton {
 		}
 	}
 
-	public override func layoutSubviews() {
-		super.layoutSubviews()
-
-		rippleView.frame = bounds
-		rippleView.layer.mask = rippleMask
-	}
-
 	private func setup() {
 		addRippleView()
+		addImage(VirtusizeAssets.searchProduct)
 		setStyle()
+	}
+
+	private func addImage(_ image: UIImage?) {
+		guard let image = image else {
+			return
+		}
+		var resizeImage = image
+		if image.size.width > image.size.height {
+			let originWidth = image.size.width
+			resizeImage = image.resize(
+				to: CGSize(width: Constant.maxImageSize, height: image.size.height * Constant.maxImageSize / originWidth)
+			)
+		} else {
+			let originHeight = image.size.height
+			resizeImage = image.resize(
+				to: CGSize(width: image.size.width * Constant.maxImageSize / originHeight, height: Constant.maxImageSize)
+			)
+		}
+		print(resizeImage.size)
+		setImage(resizeImage.withAlpha(0), for: .normal)
+		let imageView = UIImageView(image: image)
+		addSubview(imageView)
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+			imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+		])
 	}
 
 	private func setStyle() {
 		if !isEnabled {
 			backgroundColor = .vsGray300Color
-			hideBorder()
 			hideShadow()
 			setTitleColor(.vsGray700Color, for: .normal)
 		} else {
 			if backgroundColor != nil {
-				hideBorder()
 				setShadow()
 			} else if style == .default {
 				backgroundColor = .white
-				hideBorder()
 				setShadow()
 			} else if style == .inverted {
 				backgroundColor = .vsGray900Color
-				hideBorder()
 				setShadow()
 			} else if style == .flat {
 				backgroundColor = .white
-				setBorder()
 				hideShadow()
 			}
 			setTitleColor(backgroundColor == .white ? .vsGray900Color : .white, for: .normal)
@@ -214,8 +235,6 @@ public class VirtusizeUIButton: UIButton {
 		rippleView.backgroundColor = backgroundColor
 
 		setButtonSize()
-
-		setTitle("Default Button", for: .normal)
 	}
 
 	private func addRippleView() {
@@ -235,35 +254,16 @@ public class VirtusizeUIButton: UIButton {
 		layer.shadowOpacity = 0
 	}
 
-	private func setBorder() {
-		layer.borderColor = UIColor.vsGray300Color.cgColor
-		layer.borderWidth = 1
-	}
-
-	private func hideBorder() {
-		layer.borderWidth = 0
-	}
-
 	private func setButtonSize() {
 		let typography = VirtusizeTypography()
-		// swiftlint:disable switch_case_alignment
-		switch size {
-			case .small:
-				titleLabel?.font = typography.xSmallBoldFont
-				contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-			case .medium:
-				titleLabel?.font = typography.smallBoldFont
-				contentEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
-			case .large:
-				titleLabel?.font = typography.normalBoldFont
-				contentEdgeInsets = UIEdgeInsets(top: 14, left: 16, bottom: 14, right: 16)
-			case .xlarge:
-				titleLabel?.font = typography.largeBoldFont
-				contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-			case .xxlarge:
-				titleLabel?.font = typography.xLargeBoldFont
-				contentEdgeInsets = UIEdgeInsets(top: 20, left: 24, bottom: 20, right: 24)
-		}
-		layer.cornerRadius = intrinsicContentSize.height / 2
+		titleLabel?.font = typography.normalBoldFont
+		contentEdgeInsets = UIEdgeInsets(
+			top: Constant.padding,
+			left: Constant.padding,
+			bottom: Constant.padding,
+			right: Constant.padding
+		)
+		layer.cornerRadius = Constant.size / 2
 	}
+
 }

@@ -50,6 +50,10 @@ final public class VirtusizeAssets {
 		return UIImage(bundleNamed: "error_hanger")
 	}()
 
+	public static let searchProduct: UIImage? = {
+		return UIImage(bundleNamed: "search_product")
+	}()
+
 	/// Gets the product placeholder image by the product type and style
 	///
 	/// - Parameters:
