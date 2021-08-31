@@ -110,7 +110,7 @@ public class VirtusizeUIBaseButton: UIButton {
 
 		rippleShapeLayerAnimation(holdAnimation: holdAnimation)
 	}
-	
+
 	private func rippleShapeLayerAnimation(holdAnimation: Bool) {
 		if holdAnimation {
 			let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -166,7 +166,7 @@ public class VirtusizeUIBaseButton: UIButton {
 			hideShadow()
 			setTitleColor(.vsGray700Color, for: .normal)
 		} else {
-			if backgroundColor != nil {
+			if isCustomBackgroundColor {
 				hideBorder()
 				setShadow()
 			} else if style == .default {
@@ -194,7 +194,14 @@ public class VirtusizeUIBaseButton: UIButton {
 		guard backgroundColor != color else {
 			return
 		}
-		backgroundColor = color
+		if isCustomBackgroundColor {
+			backgroundColor = color
+		}
+	}
+
+	private var isCustomBackgroundColor: Bool {
+		return backgroundColor != nil && (((style == .default || style == .flat) && backgroundColor != .white) ||
+			(style == .inverted && backgroundColor != .vsGray900Color))
 	}
 
 	private func setShadow() {
