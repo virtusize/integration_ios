@@ -26,14 +26,7 @@
 import UIKit
 import Foundation
 
-public class VirtusizeUIButton: UIButton {
-
-	public var style = VirtusizeUIButtonStyle.default {
-		didSet {
-			setStyle()
-		}
-	}
-
+public class VirtusizeUIButton: VirtusizeUIBaseButton {
 	public var size = VirtusizeUIButtonSize.large {
 		didSet {
 			setStyle()
@@ -52,19 +45,6 @@ public class VirtusizeUIButton: UIButton {
 		}
 	}
 
-	private let rippleView = UIView()
-	private var rippleShapeLayer: CAShapeLayer?
-	private var rippleMask: CAShapeLayer {
-		let maskLayer = CAShapeLayer()
-		maskLayer.path = UIBezierPath(
-			roundedRect: bounds,
-			cornerRadius: layer.cornerRadius
-		).cgPath
-		return maskLayer
-	}
-
-	private var startTouchLocation: CGPoint?
-
 	public init() {
 		super.init(frame: .zero)
 		setup()
@@ -75,104 +55,6 @@ public class VirtusizeUIButton: UIButton {
 		setup()
 	}
 
-	public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-		startTouchLocation = touch.location(in: self)
-
-		setRippleLayer(touchLocation: startTouchLocation!, holdAnimation: true)
-
-		UIView.animate(
-			withDuration: 0.1,
-			delay: 0,
-			options: UIView.AnimationOptions.allowUserInteraction,
-			animations: {
-				self.rippleView.alpha = 1
-			},
-			completion: nil
-		)
-
-		return super.beginTracking(touch, with: event)
-	}
-
-	public override func cancelTracking(with event: UIEvent?) {
-		super.cancelTracking(with: event)
-		releaseAnimation()
-	}
-
-	public override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-		super.endTracking(touch, with: event)
-		releaseAnimation()
-	}
-
-	private func releaseAnimation() {
-		setRippleLayer(touchLocation: startTouchLocation!, holdAnimation: false)
-
-		UIView.animate(withDuration: 0.1, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
-			self.rippleView.alpha = 1
-		}, completion: { _ in
-			UIView.animate(withDuration: 0.6, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
-				self.rippleView.alpha = 0
-			}, completion: nil)
-		})
-	}
-
-	private func setRippleLayer(touchLocation: CGPoint, holdAnimation: Bool) {
-		if rippleShapeLayer != nil {
-			rippleShapeLayer?.removeFromSuperlayer()
-			rippleShapeLayer = nil
-		}
-		rippleShapeLayer = CAShapeLayer()
-		let maxBoundSize = max(bounds.size.width, bounds.size.height)
-		rippleShapeLayer!.bounds = CGRect(x: 0, y: 0, width: maxBoundSize, height: maxBoundSize)
-		rippleShapeLayer!.cornerRadius = maxBoundSize / 2
-		rippleShapeLayer!.path = UIBezierPath(
-			ovalIn: CGRect(x: 0, y: 0, width: maxBoundSize, height: maxBoundSize)
-		).cgPath
-		if backgroundColor?.isBright == true {
-			rippleShapeLayer!.fillColor = backgroundColor?.darker(by: 10)?.cgColor
-		} else {
-			rippleShapeLayer!.fillColor =  backgroundColor?.lighter(by: 20)?.cgColor
-		}
-		rippleShapeLayer!.position =  CGPoint(x: touchLocation.x, y: touchLocation.y)
-		rippleShapeLayer!.opacity = 0
-
-		rippleView.layer.addSublayer(rippleShapeLayer!)
-
-		if holdAnimation {
-			let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
-			scaleAnimation.fromValue = 0.0
-			scaleAnimation.toValue = 0.65
-
-			let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-			opacityAnimation.fromValue = 0.0
-			opacityAnimation.toValue = 1.0
-
-			let animationGroup = CAAnimationGroup()
-			animationGroup.animations = [scaleAnimation, opacityAnimation]
-			animationGroup.fillMode = CAMediaTimingFillMode.forwards
-			animationGroup.duration = CFTimeInterval(0.3)
-			animationGroup.isRemovedOnCompletion = false
-
-			rippleShapeLayer!.add(animationGroup, forKey: "holdRippleEffect")
-		} else {
-			let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
-			scaleAnimation.fromValue = 0.65
-			scaleAnimation.toValue = 1.5
-
-			let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-			opacityAnimation.fromValue = 1.0
-			opacityAnimation.toValue = 0.0
-
-			let animationGroup = CAAnimationGroup()
-			animationGroup.animations = [scaleAnimation, opacityAnimation]
-			animationGroup.timingFunction = CAMediaTimingFunction(name: .easeOut)
-			animationGroup.duration = CFTimeInterval(0.7)
-			animationGroup.repeatCount = 1
-			animationGroup.isRemovedOnCompletion = true
-
-			rippleShapeLayer!.add(animationGroup, forKey: "releaseRippleEffect")
-		}
-	}
-
 	public override func layoutSubviews() {
 		super.layoutSubviews()
 
@@ -180,71 +62,13 @@ public class VirtusizeUIButton: UIButton {
 		rippleView.layer.mask = rippleMask
 	}
 
-	private func setup() {
-		addRippleView()
-		setStyle()
-	}
-
-	private func setStyle() {
-		if !isEnabled {
-			backgroundColor = .vsGray300Color
-			hideBorder()
-			hideShadow()
-			setTitleColor(.vsGray700Color, for: .normal)
-		} else {
-			if backgroundColor != nil {
-				hideBorder()
-				setShadow()
-			} else if style == .default {
-				backgroundColor = .white
-				hideBorder()
-				setShadow()
-			} else if style == .inverted {
-				backgroundColor = .vsGray900Color
-				hideBorder()
-				setShadow()
-			} else if style == .flat {
-				backgroundColor = .white
-				setBorder()
-				hideShadow()
-			}
-			setTitleColor(backgroundColor == .white ? .vsGray900Color : .white, for: .normal)
-		}
-
-		rippleView.backgroundColor = backgroundColor
-
-		setButtonSize()
+	internal override func setStyle() {
+		super.setStyle()
 
 		setTitle("Default Button", for: .normal)
 	}
 
-	private func addRippleView() {
-		rippleView.frame = bounds
-		rippleView.alpha = 0
-		addSubview(rippleView)
-	}
-
-	private func setShadow() {
-		layer.shadowColor = UIColor.vsShadowColor.cgColor
-		layer.shadowOffset = CGSize(width: 0, height: 4)
-		layer.shadowRadius = 12
-		layer.shadowOpacity = 1
-	}
-
-	private func hideShadow() {
-		layer.shadowOpacity = 0
-	}
-
-	private func setBorder() {
-		layer.borderColor = UIColor.vsGray300Color.cgColor
-		layer.borderWidth = 1
-	}
-
-	private func hideBorder() {
-		layer.borderWidth = 0
-	}
-
-	private func setButtonSize() {
+	override internal func setButtonSize() {
 		let typography = VirtusizeTypography()
 		// swiftlint:disable switch_case_alignment
 		switch size {
