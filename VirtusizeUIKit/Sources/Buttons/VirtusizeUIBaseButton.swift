@@ -194,7 +194,7 @@ public class VirtusizeUIBaseButton: UIButton {
 		guard backgroundColor != color else {
 			return
 		}
-		if isCustomBackgroundColor {
+		if !isCustomBackgroundColor {
 			backgroundColor = color
 		}
 	}
