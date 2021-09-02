@@ -39,7 +39,7 @@ final public class VirtusizeAssets {
 	}()
 
 	public static let rightArrow: UIImage? = {
-		return UIImage(bundleNamed: "right_arrow")
+		return UIImage(for: VirtusizeAssets.self, bundleNamed: "right_arrow")
 	}()
 
 	public static let vsSignature: UIImage? = {
@@ -47,11 +47,11 @@ final public class VirtusizeAssets {
 	}()
 
 	public static let errorHanger: UIImage? = {
-		return UIImage(bundleNamed: "error_hanger")
+		return UIImage(for: VirtusizeAssets.self, bundleNamed: "error_hanger")
 	}()
 
 	public static let searchProduct: UIImage? = {
-		return UIImage(bundleNamed: "search_product")
+		return UIImage(for: VirtusizeAssets.self, bundleNamed: "search_product")
 	}()
 
 	/// Gets the product placeholder image by the product type and style
@@ -61,9 +61,9 @@ final public class VirtusizeAssets {
 	///   - style: The product style, which is fetched from the store product info
 	/// - Returns: The  product type placeholder`UIImage`
 	public static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
-		var placeholderImage = UIImage(bundleNamed: "\(productType)")
+		var placeholderImage = UIImage(for: VirtusizeAssets.self, bundleNamed: "\(productType)")
 		if let style = style,
-		   let productTypeWithStyleImage = UIImage(bundleNamed: "\(productType)_\(style)") {
+		   let productTypeWithStyleImage = UIImage(for: VirtusizeAssets.self, bundleNamed: "\(productType)_\(style)") {
 			placeholderImage = productTypeWithStyleImage
 		}
 		return placeholderImage

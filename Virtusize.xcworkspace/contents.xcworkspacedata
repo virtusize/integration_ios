@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:VirtusizeCore/VirtusizeCore.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:VirtusizeUIKit/VirtusizeUIKit.xcodeproj">
    </FileRef>
    <FileRef

@@ -1,7 +1,8 @@
 //
-//  BundleLoader.swift
+//  VirtusizeCore.h
+//  VirtusizeCore
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2021 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +23,14 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+#import <Foundation/Foundation.h>
 
-/// The class is to access different types of bundles for the SDK
-public class BundleLoader: NSObject {
-	/// The bundle is used for resources like images
-	public static var virtusizeUIKitResourceBundle: Bundle {
-		var bundle: Bundle?
-		// Swift Package Manager bundle
-		#if SWIFT_PACKAGE
-		bundle = Bundle.module
-		#endif
+//! Project version number for VirtusizeCore.
+FOUNDATION_EXPORT double VirtusizeCoreVersionNumber;
 
-		if bundle == nil {
-			// VirtusizeUIKit.bundle
-			bundle = Bundle(path: "VirtusizeUIKit.bundle")
-		}
+//! Project version string for VirtusizeCore.
+FOUNDATION_EXPORT const unsigned char VirtusizeCoreVersionString[];
 
-		if bundle == nil {
-			// VirtusizeUIKit.framework/VirtusizeUIKit.bundle
-			if let path = Bundle(for: BundleLoader.self).path(forResource: "VirtusizeUIKit", ofType: "bundle") {
-				bundle = Bundle(path: path)
-			}
-		}
+// In this header, you should import all the public headers of your framework using statements like #import <VirtusizeCore/PublicHeader.h>
 
-		if bundle == nil {
-			// VirtusizeUIKit.framework
-			bundle = Bundle(for: self)
-		}
 
-		if let bundle = bundle {
-			return bundle
-		} else {
-			// Fallback to Bundle.main to ensure there is always a bundle.
-			return Bundle.main
-		}
-	}
-}
