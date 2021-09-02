@@ -25,4 +25,10 @@
 import VirtusizeCore
 import Foundation
 
-public class VirtusizeUIKitBundleLoader: BundleLoader {}
+public class VirtusizeUIKitBundleLoader: BundleLoaderProtocol {
+	public static let bundleClass: AnyClass = VirtusizeUIKitBundleLoader.self
+	public static let bundleName = "VirtusizeUIKit"
+	#if SWIFT_PACKAGE
+	public static let spmResourceBundle  = Bundle.module
+	#endif
+}

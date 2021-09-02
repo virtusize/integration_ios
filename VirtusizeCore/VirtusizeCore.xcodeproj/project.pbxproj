@@ -14,6 +14,7 @@
 		9CDA632D26E06746008C039B /* BundleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA632C26E06746008C039B /* BundleLoader.swift */; };
 		9CDA633826E073AA008C039B /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA633726E073AA008C039B /* UIApplication+Extensions.swift */; };
 		9CDA633D26E0771D008C039B /* VirtusizeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CDA633B26E0771D008C039B /* VirtusizeLocalizable.strings */; };
+		9CDA634726E08158008C039B /* BundleLoaderProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA634626E08158008C039B /* BundleLoaderProtocal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		9CDA633C26E0771D008C039B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
 		9CDA633E26E07724008C039B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
 		9CDA633F26E07729008C039B /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
+		9CDA634626E08158008C039B /* BundleLoaderProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleLoaderProtocal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		9CDA632226E05EDD008C039B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9CDA634626E08158008C039B /* BundleLoaderProtocal.swift */,
 				9CDA633726E073AA008C039B /* UIApplication+Extensions.swift */,
 				9CDA632C26E06746008C039B /* BundleLoader.swift */,
 			);
@@ -244,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CDA634726E08158008C039B /* BundleLoaderProtocal.swift in Sources */,
 				9CDA633826E073AA008C039B /* UIApplication+Extensions.swift in Sources */,
 				9CDA632D26E06746008C039B /* BundleLoader.swift in Sources */,
 			);

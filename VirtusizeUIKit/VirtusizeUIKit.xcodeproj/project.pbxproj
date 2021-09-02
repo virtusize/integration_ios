@@ -35,8 +35,8 @@
 		9CA4DBAF26DE2E9B0031FD4E /* VirtusizeUITooltipParamsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4DBAE26DE2E9B0031FD4E /* VirtusizeUITooltipParamsBuilder.swift */; };
 		9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */; };
 		9CC9297026D385BB00AD97D1 /* VirtusizeUIButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9296F26D385BA00AD97D1 /* VirtusizeUIButtonStyle.swift */; };
+		9CDA634926E0817D008C039B /* VirtusizeAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CDA634826E0817D008C039B /* VirtusizeAssets.xcassets */; };
 		9CDAE6C926CF93FE00CBF7EF /* VirtusizeUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */; };
-		9CDAE6CC26CF9A9300CBF7EF /* VirtusizeAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +73,6 @@
 		9CA446F726CE448D00D4013C /* NotoSansCJKKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKKR-Medium.otf"; path = "Fonts/NotoSansCJKKR-Medium.otf"; sourceTree = "<group>"; };
 		9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansCJKJP-Medium.ttf"; path = "Fonts/NotoSansCJKJP-Medium.ttf"; sourceTree = "<group>"; };
 		9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = VirtusizeUIKit.podspec; path = ../VirtusizeUIKit.podspec; sourceTree = "<group>"; };
-		9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VirtusizeAssets.xcassets; sourceTree = "<group>"; };
 		9CA4472426CF602300D4013C /* VirtusizeUIKitBundleLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeUIKitBundleLoader.swift; sourceTree = "<group>"; };
 		9CA4472626CF603700D4013C /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9CA4472826CF687800D4013C /* VirtusizeAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAssets.swift; sourceTree = "<group>"; };
@@ -83,6 +82,7 @@
 		9CA4DBAE26DE2E9B0031FD4E /* VirtusizeUITooltipParamsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUITooltipParamsBuilder.swift; sourceTree = "<group>"; };
 		9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		9CC9296F26D385BA00AD97D1 /* VirtusizeUIButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButtonStyle.swift; sourceTree = "<group>"; };
+		9CDA634826E0817D008C039B /* VirtusizeAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VirtusizeAssets.xcassets; sourceTree = "<group>"; };
 		9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,7 +132,6 @@
 				9CA4DBAB26DE22DE0031FD4E /* Tooltip */,
 				9CDAE6C726CF93F100CBF7EF /* Buttons */,
 				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
-				9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */,
 				9CA446A726CE25DC00D4013C /* Colors */,
 				9CA446E426CE434900D4013C /* Resources */,
 				9CA446AE26CE2CD600D4013C /* Typography */,
@@ -179,6 +178,7 @@
 		9CA446E426CE434900D4013C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9CDA634826E0817D008C039B /* VirtusizeAssets.xcassets */,
 				9CA446EE26CE43DB00D4013C /* Fonts */,
 			);
 			path = Resources;
@@ -337,7 +337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CDAE6CC26CF9A9300CBF7EF /* VirtusizeAssets.xcassets in Resources */,
+				9CDA634926E0817D008C039B /* VirtusizeAssets.xcassets in Resources */,
 				9CA446F526CE43E500D4013C /* NotoSansCJKJP-Regular.otf in Resources */,
 				9CA446F626CE43E500D4013C /* NotoSansCJKKR-Bold.otf in Resources */,
 				9CA446F426CE43E500D4013C /* NotoSansCJKJP-Bold.otf in Resources */,

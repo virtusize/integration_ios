@@ -77,7 +77,6 @@
 		9CB98B9B24B2C5B400C51F20 /* VirtusizeParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9724B2C5B400C51F20 /* VirtusizeParams.swift */; };
 		9CB98B9C24B2C5B400C51F20 /* VirtusizeRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9624B2C5B400C51F20 /* VirtusizeRegion.swift */; };
 		9CC2A3962685960400FF0864 /* VirtusizeFlutterReposiory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2A3952685960400FF0864 /* VirtusizeFlutterReposiory.swift */; };
-		9CDA632F26E068ED008C039B /* VirtusizeBundleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA632E26E068ED008C039B /* VirtusizeBundleLoader.swift */; };
 		9CDA633626E06E2F008C039B /* VirtusizeLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA633526E06E2F008C039B /* VirtusizeLanguage.swift */; };
 		9CE7786C24B4121E00E4A127 /* Virtusize.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE7786A24B4121E00E4A127 /* Virtusize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CEAB7AE24D67EBE00F969E1 /* HTTPURLResponse+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAB7AD24D67EBE00F969E1 /* HTTPURLResponse+Extensions.swift */; };
@@ -203,7 +202,6 @@
 		9CB98B9724B2C5B400C51F20 /* VirtusizeParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeParams.swift; sourceTree = "<group>"; };
 		9CBDF5DD25AFFA0600E42012 /* README-JP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "README-JP.md"; sourceTree = "<group>"; };
 		9CC2A3952685960400FF0864 /* VirtusizeFlutterReposiory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeFlutterReposiory.swift; sourceTree = "<group>"; };
-		9CDA632E26E068ED008C039B /* VirtusizeBundleLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeBundleLoader.swift; sourceTree = "<group>"; };
 		9CDA633526E06E2F008C039B /* VirtusizeLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeLanguage.swift; sourceTree = "<group>"; };
 		9CE7786A24B4121E00E4A127 /* Virtusize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Virtusize.h; sourceTree = "<group>"; };
 		9CEAB7AD24D67EBE00F969E1 /* HTTPURLResponse+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+Extensions.swift"; sourceTree = "<group>"; };
@@ -429,7 +427,6 @@
 				9CEAB7AD24D67EBE00F969E1 /* HTTPURLResponse+Extensions.swift */,
 				9C106EED24FF99390012EE51 /* String+Extensions.swift */,
 				9CFF411225B98FA900B21D4E /* Observable.swift */,
-				9CDA632E26E068ED008C039B /* VirtusizeBundleLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -742,7 +739,6 @@
 				9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */,
 				9C3DE37725BA9CC70082C140 /* VirtusizeWebViewController.swift in Sources */,
 				9C106EEE24FF99390012EE51 /* String+Extensions.swift in Sources */,
-				9CDA632F26E068ED008C039B /* VirtusizeBundleLoader.swift in Sources */,
 				4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */,
 				9CEAB7C924D9676200F969E1 /* VirtusizeServerProduct.swift in Sources */,
 				9CFF411325B98FA900B21D4E /* Observable.swift in Sources */,

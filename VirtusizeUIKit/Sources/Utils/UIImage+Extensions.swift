@@ -32,7 +32,7 @@ public extension UIImage {
 	convenience init?(for aClass: AnyClass, bundleNamed name: String) {
 		self.init(
 			named: name,
-			in: VirtusizeUIKitBundleLoader.getResourceBundle(for: aClass, name: "VirtusizeUIKit"),
+			in: VirtusizeUIKitBundleLoader.resourceBundle,
 			compatibleWith: nil
 		)
 	}

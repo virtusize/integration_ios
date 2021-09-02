@@ -26,51 +26,10 @@
 import Foundation
 
 /// The class is to access different types of bundles for the SDK
-open class BundleLoader: NSObject {
-	/// The bundle is used for resources like images
-	public static func getResourceBundle(for aClass: AnyClass, name: String) -> Bundle {
-		var bundle: Bundle?
-		// Swift Package Manager bundle
-		#if SWIFT_PACKAGE
-		bundle = Bundle.module
-		#endif
-
-		if bundle == nil {
-			// name.bundle
-			bundle = Bundle(path: "\(name).bundle")
-		}
-
-		if bundle == nil {
-			// name.framework/name.bundle
-			if let path = Bundle(for: aClass).path(forResource: name, ofType: "bundle") {
-				bundle = Bundle(path: path)
-			}
-		}
-
-		if bundle == nil {
-			// name.framework
-			bundle = Bundle(for: aClass)
-		}
-
-		if let bundle = bundle {
-			return bundle
-		} else {
-			// Fallback to Bundle.main to ensure there is always a bundle.
-			return Bundle.main
-		}
-	}
-
-	/// Gets the bundle that is used for localization
-	/// - Parameter language: `VirtusizeLanguage`
-	public static func localizationBundle(language: String? = nil) -> Bundle {
-		var bundle = getResourceBundle(for: BundleLoader.self, name: "VirtusizeCore")
-		if let localizableBundlePath = bundle.path(
-			forResource: language,
-			ofType: "lproj"
-		),
-		let localizableBundle = Bundle(path: localizableBundlePath) {
-			bundle = localizableBundle
-		}
-		return bundle
-	}
+open class BundleLoader: BundleLoaderProtocol {
+	public static let bundleClass: AnyClass = BundleLoader.self
+	public static let bundleName = "VirtusizeCore"
+	#if SWIFT_PACKAGE
+	public static let spmResourceBundle  = Bundle.module
+	#endif
 }
