@@ -23,7 +23,6 @@
 //  THE SOFTWARE.
 //
 
-
 import UIKit
 
 extension CGRect {

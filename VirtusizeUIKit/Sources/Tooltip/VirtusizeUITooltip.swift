@@ -25,15 +25,18 @@
 
 import UIKit
 import Foundation
+import VirtusizeCore
 
 public class VirtusizeUITooltip: UIView {
 	private(set) var params: VirtusizeUITooltipParams
 	private var container: UIWindow?
 
-	struct Constant {
+	private struct Constants {
 		static let arrowWidth = CGFloat(13)
 		static let arrowHeight = CGFloat(7)
+		static let bubblePadding = CGFloat(10)
 		static let windowEdgeToTooltipMargin = CGFloat(16)
+		static let anchorViewToTooltipMargin = CGFloat(5)
 		static let maxTooltipWidth = UIScreen.main.bounds.width - windowEdgeToTooltipMargin
 	}
 
@@ -52,7 +55,7 @@ public class VirtusizeUITooltip: UIView {
 		var textSize = params.text.boundingRect(
 			with:
 				CGSize(
-					width: Constant.maxTooltipWidth,
+					width: Constants.maxTooltipWidth,
 					height: .greatestFiniteMagnitude
 				),
 			options: .usesLineFragmentOrigin,
@@ -69,8 +72,8 @@ public class VirtusizeUITooltip: UIView {
 
 	private lazy var contentSize: CGSize = {
 		// bottom
-		let width = bubbleSize.width
-		let height = Constant.arrowHeight + bubbleSize.height
+		let width = bubbleSize.width + Constants.bubblePadding * 2
+		let height = bubbleSize.height + Constants.arrowHeight + Constants.bubblePadding * 2
 
 		return CGSize(width: width, height: height)
 	}()
@@ -84,8 +87,9 @@ public class VirtusizeUITooltip: UIView {
 
 	public init (params: VirtusizeUITooltipParams) {
 		self.params = params
-
 		super.init(frame: .zero)
+
+		backgroundColor = .clear
 	}
 
 	@available(*, unavailable)
@@ -110,7 +114,7 @@ public class VirtusizeUITooltip: UIView {
 
 		// Bottom
 		let updatedX: CGFloat = anchorViewFrame.center.x - contentSize.width / 2
-		let updatedY: CGFloat = anchorViewFrame.origin.y + anchorViewFrame.height
+		let updatedY: CGFloat = anchorViewFrame.origin.y + anchorViewFrame.height + Constants.anchorViewToTooltipMargin
 
 		frame = CGRect(
 			x: updatedX,
@@ -130,9 +134,105 @@ public class VirtusizeUITooltip: UIView {
 
 		guard let context = UIGraphicsGetCurrentContext() else { return }
 
+		drawBubble(to: context, rect)
+		drawArrow(to: context, rect)
+		drawText(to: context, rect)
+	}
+
+	private func drawBubble(to context: CGContext, _ rect: CGRect) {
+		context.saveGState()
+
+		let radius: CGFloat = 10
+		let path = UIBezierPath()
+		// bottom
+		let additionalY = Constants.arrowHeight
+
+		// top left corner
+		path.addArc(
+			withCenter: CGPoint(x: radius, y: radius + additionalY),
+			radius: radius,
+			startAngle: CGFloat.pi,
+			endAngle: CGFloat.pi * 3 / 2,
+			clockwise: true
+		)
+		// top right corner
+		path.addArc(
+			withCenter: CGPoint(x: bounds.width - radius, y: radius + additionalY),
+			radius: radius,
+			startAngle: CGFloat.pi * 3 / 2,
+			endAngle: 0,
+			clockwise: true
+		)
+		// bottom right corner
+		path.addArc(
+			withCenter: CGPoint(x: bounds.width - radius, y: bounds.height - radius),
+			radius: radius,
+			startAngle: 0,
+			endAngle: CGFloat.pi / 2,
+			clockwise: true
+		)
+		// bottom left corner
+		path.addArc(
+			withCenter: CGPoint(x: radius, y: bounds.height  - radius),
+			radius: radius,
+			startAngle: CGFloat.pi / 2,
+			endAngle: CGFloat.pi,
+			clockwise: true
+		)
+
+		path.close()
+
+		context.addPath(path.cgPath)
+		context.clip()
+
 		context.setFillColor(UIColor.vsGray900Color.cgColor)
-		context.addRect(rect)
-		context.drawPath(using: .fill)
-		context.fill(rect)
+		context.fill(bounds)
+
+		context.restoreGState()
+	}
+
+	private func drawArrow(to context: CGContext, _ rect: CGRect) {
+		context.saveGState()
+
+		context.beginPath()
+		// bottom
+		context.move(to: CGPoint(x: bounds.center.x, y: bounds.minY))
+		context.addLine(to: CGPoint(x: bounds.center.x - Constants.arrowWidth / 2, y: bounds.minY + Constants.arrowHeight))
+		context.addLine(to: CGPoint(x: bounds.center.x + Constants.arrowWidth / 2, y: bounds.minY + Constants.arrowHeight))
+		context.closePath()
+
+		context.setFillColor(UIColor.vsGray900Color.cgColor)
+		context.fillPath()
+		context.closePath()
+
+		context.restoreGState()
+	}
+
+	private func drawText(to context: CGContext, _ rect: CGRect) {
+		context.saveGState()
+
+		// bottom
+		let additionalY = Constants.arrowHeight
+
+		let textRect = CGRect(
+			x: rect.origin.x + Constants.bubblePadding,
+			y: rect.origin.y + Constants.bubblePadding + additionalY,
+			width: contentSize.width,
+			height: contentSize.height
+		)
+
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.alignment = .left
+		paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
+
+		let attributes = [
+			NSAttributedString.Key.font: params.font,
+			NSAttributedString.Key.foregroundColor: UIColor.white,
+			NSAttributedString.Key.paragraphStyle: paragraphStyle
+		]
+
+		params.text.draw(in: textRect, withAttributes: attributes)
+
+		context.restoreGState()
 	}
 }

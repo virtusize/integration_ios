@@ -29,7 +29,7 @@ import Foundation
 public class VirtusizeUITooltipParamsBuilder {
 	private var anchorView: UIView?
 	private var text: String = "Similar Items"
-	private var font: UIFont = VirtusizeTypography().bodyFont
+	private var font: UIFont = VirtusizeTypography().xSmallFont
 	private var position: VirtusizeUITooltip.Position = .bottom
 
 	public init() {}
@@ -49,7 +49,7 @@ public class VirtusizeUITooltipParamsBuilder {
 		return self
 	}
 
-	public func setPosition(pos: VirtusizeUITooltip.Position)-> VirtusizeUITooltipParamsBuilder {
+	public func setPosition(pos: VirtusizeUITooltip.Position) -> VirtusizeUITooltipParamsBuilder {
 		position = pos
 		return self
 	}
