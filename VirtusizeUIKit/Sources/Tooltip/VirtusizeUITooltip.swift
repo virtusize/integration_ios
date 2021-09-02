@@ -35,6 +35,7 @@ public class VirtusizeUITooltip: UIView {
 		static let arrowWidth = CGFloat(13)
 		static let arrowHeight = CGFloat(7)
 		static let bubblePadding = CGFloat(10)
+		static let bubbleRadius = CGFloat(10)
 		static let windowEdgeToTooltipMargin = CGFloat(16)
 		static let anchorViewToTooltipMargin = CGFloat(5)
 		static let maxTooltipWidth = UIScreen.main.bounds.width - windowEdgeToTooltipMargin
@@ -49,7 +50,7 @@ public class VirtusizeUITooltip: UIView {
 		   return view
 	   }()
 
-	private lazy var bubbleSize: CGSize = {
+	private lazy var textSize: CGSize = {
 		var attributes = [NSAttributedString.Key.font: params.font]
 
 		var textSize = params.text.boundingRect(
@@ -71,9 +72,18 @@ public class VirtusizeUITooltip: UIView {
 		}()
 
 	private lazy var contentSize: CGSize = {
-		// bottom
-		let width = bubbleSize.width + Constants.bubblePadding * 2
-		let height = bubbleSize.height + Constants.arrowHeight + Constants.bubblePadding * 2
+		let width: CGFloat
+		let height: CGFloat
+
+		if params.position == .left {
+			// left
+			width = textSize.width + Constants.bubblePadding * 2 + Constants.arrowHeight
+			height = textSize.height + Constants.bubblePadding * 2
+		} else {
+			// bottom
+			width = textSize.width + Constants.bubblePadding * 2
+			height = textSize.height + Constants.bubblePadding * 2 + Constants.arrowHeight
+		}
 
 		return CGSize(width: width, height: height)
 	}()
@@ -112,9 +122,18 @@ public class VirtusizeUITooltip: UIView {
 	private func updateFrame() {
 		let anchorViewFrame = params.anchorView!.convert(params.anchorView!.bounds, to: UIApplication.safeShared?.keyWindow)
 
-		// Bottom
-		let updatedX: CGFloat = anchorViewFrame.center.x - contentSize.width / 2
-		let updatedY: CGFloat = anchorViewFrame.origin.y + anchorViewFrame.height + Constants.anchorViewToTooltipMargin
+		let updatedX: CGFloat
+		let updatedY: CGFloat
+
+		if params.position == .left {
+			// left
+			updatedX = anchorViewFrame.origin.x - contentSize.width - Constants.anchorViewToTooltipMargin
+			updatedY = anchorViewFrame.origin.y
+		} else {
+			// Bottom
+			updatedX = anchorViewFrame.center.x - contentSize.width / 2
+			updatedY = anchorViewFrame.origin.y + anchorViewFrame.height + Constants.anchorViewToTooltipMargin
+		}
 
 		frame = CGRect(
 			x: updatedX,
@@ -141,15 +160,25 @@ public class VirtusizeUITooltip: UIView {
 
 	private func drawBubble(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
-
-		let radius: CGFloat = 10
+		
 		let path = UIBezierPath()
-		// bottom
-		let additionalY = Constants.arrowHeight
+
+		var leftX: CGFloat = 0
+		var bottomY: CGFloat = 0
+
+		if params.position == .left {
+			// left
+			leftX = -Constants.arrowHeight
+		} else {
+			// bottom
+			bottomY = Constants.arrowHeight
+		}
+		
+		let radius = Constants.bubbleRadius
 
 		// top left corner
 		path.addArc(
-			withCenter: CGPoint(x: radius, y: radius + additionalY),
+			withCenter: CGPoint(x: radius, y: radius + bottomY),
 			radius: radius,
 			startAngle: CGFloat.pi,
 			endAngle: CGFloat.pi * 3 / 2,
@@ -157,7 +186,7 @@ public class VirtusizeUITooltip: UIView {
 		)
 		// top right corner
 		path.addArc(
-			withCenter: CGPoint(x: bounds.width - radius, y: radius + additionalY),
+			withCenter: CGPoint(x: rect.width - radius + leftX, y: radius + bottomY),
 			radius: radius,
 			startAngle: CGFloat.pi * 3 / 2,
 			endAngle: 0,
@@ -165,7 +194,7 @@ public class VirtusizeUITooltip: UIView {
 		)
 		// bottom right corner
 		path.addArc(
-			withCenter: CGPoint(x: bounds.width - radius, y: bounds.height - radius),
+			withCenter: CGPoint(x: rect.width - radius + leftX, y: rect.height - radius),
 			radius: radius,
 			startAngle: 0,
 			endAngle: CGFloat.pi / 2,
@@ -173,7 +202,7 @@ public class VirtusizeUITooltip: UIView {
 		)
 		// bottom left corner
 		path.addArc(
-			withCenter: CGPoint(x: radius, y: bounds.height  - radius),
+			withCenter: CGPoint(x: radius, y: rect.height  - radius),
 			radius: radius,
 			startAngle: CGFloat.pi / 2,
 			endAngle: CGFloat.pi,
@@ -186,7 +215,7 @@ public class VirtusizeUITooltip: UIView {
 		context.clip()
 
 		context.setFillColor(UIColor.vsGray900Color.cgColor)
-		context.fill(bounds)
+		context.fill(rect)
 
 		context.restoreGState()
 	}
@@ -195,15 +224,23 @@ public class VirtusizeUITooltip: UIView {
 		context.saveGState()
 
 		context.beginPath()
-		// bottom
-		context.move(to: CGPoint(x: bounds.center.x, y: bounds.minY))
-		context.addLine(to: CGPoint(x: bounds.center.x - Constants.arrowWidth / 2, y: bounds.minY + Constants.arrowHeight))
-		context.addLine(to: CGPoint(x: bounds.center.x + Constants.arrowWidth / 2, y: bounds.minY + Constants.arrowHeight))
+
+		if params.position == .left {
+			// left: draw an arrow on the right
+			context.move(to: CGPoint(x: rect.width - Constants.arrowHeight + Constants.arrowHeight, y: rect.center.y))
+			context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y - Constants.arrowWidth / 2))
+			context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y + Constants.arrowWidth / 2))
+		} else {
+			// bottom
+			context.move(to: CGPoint(x: rect.center.x, y: rect.minY))
+			context.addLine(to: CGPoint(x: rect.center.x - Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
+			context.addLine(to: CGPoint(x: rect.center.x + Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
+		}
+
 		context.closePath()
 
 		context.setFillColor(UIColor.vsGray900Color.cgColor)
 		context.fillPath()
-		context.closePath()
 
 		context.restoreGState()
 	}
@@ -211,12 +248,18 @@ public class VirtusizeUITooltip: UIView {
 	private func drawText(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
 
-		// bottom
-		let additionalY = Constants.arrowHeight
+		var bottomY: CGFloat = 0
+
+		if params.position == .left {
+
+		} else {
+			// bottom
+			bottomY = Constants.arrowHeight
+		}
 
 		let textRect = CGRect(
 			x: rect.origin.x + Constants.bubblePadding,
-			y: rect.origin.y + Constants.bubblePadding + additionalY,
+			y: rect.origin.y + Constants.bubblePadding + bottomY,
 			width: contentSize.width,
 			height: contentSize.height
 		)
