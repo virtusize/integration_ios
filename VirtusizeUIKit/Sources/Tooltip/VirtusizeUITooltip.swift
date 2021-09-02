@@ -128,7 +128,7 @@ public class VirtusizeUITooltip: UIView {
 		if params.position == .left {
 			// left
 			updatedX = anchorViewFrame.origin.x - contentSize.width - Constants.anchorViewToTooltipMargin
-			updatedY = anchorViewFrame.origin.y
+			updatedY = anchorViewFrame.center.y - contentSize.height / 2
 		} else {
 			// Bottom
 			updatedX = anchorViewFrame.center.x - contentSize.width / 2
@@ -160,7 +160,7 @@ public class VirtusizeUITooltip: UIView {
 
 	private func drawBubble(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
-		
+
 		let path = UIBezierPath()
 
 		var leftX: CGFloat = 0
@@ -173,7 +173,7 @@ public class VirtusizeUITooltip: UIView {
 			// bottom
 			bottomY = Constants.arrowHeight
 		}
-		
+
 		let radius = Constants.bubbleRadius
 
 		// top left corner
