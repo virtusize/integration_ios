@@ -29,9 +29,9 @@ public extension UIImage {
 	/// Creates a `UIImage` object in the VirtusizeUIKit framework bundle.
 	///
 	/// - Parameter name: The image name.
-	convenience init?(for aClass: AnyClass, bundleNamed name: String) {
+	internal convenience init?(named: String) {
 		self.init(
-			named: name,
+			named: named,
 			in: VirtusizeUIKitBundleLoader.resourceBundle,
 			compatibleWith: nil
 		)
