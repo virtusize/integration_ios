@@ -54,6 +54,14 @@ final public class VirtusizeAssets {
 		return UIImage(named: "search_product")
 	}()
 
+	public static let whiteClose: UIImage? = {
+		return UIImage(named: "close_white")
+	}()
+
+	public static let blackClose: UIImage? = {
+		return UIImage(named: "close_black")
+	}()
+
 	/// Gets the product placeholder image by the product type and style
 	///
 	/// - Parameters:

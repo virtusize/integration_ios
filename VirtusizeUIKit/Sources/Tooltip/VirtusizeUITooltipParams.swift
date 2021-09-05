@@ -31,4 +31,5 @@ public struct VirtusizeUITooltipParams {
 	internal let text: String
 	internal let font: UIFont
 	internal let position: VirtusizeUITooltip.Position
+	internal let showCloseButton: Bool
 }

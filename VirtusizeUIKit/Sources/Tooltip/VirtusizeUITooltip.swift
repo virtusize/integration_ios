@@ -36,9 +36,10 @@ public class VirtusizeUITooltip: UIView {
 		static let arrowHeight = CGFloat(7)
 		static let bubblePadding = CGFloat(10)
 		static let bubbleRadius = CGFloat(10)
+		static let closeCrossSize = CGFloat(12)
+		static let closeCrossPadding = CGFloat(10)
 		static let windowEdgeToTooltipMargin = CGFloat(16)
 		static let anchorViewToTooltipMargin = CGFloat(5)
-		static let maxTooltipWidth = UIScreen.main.bounds.width - windowEdgeToTooltipMargin
 	}
 
 	private lazy var dismissView: UIView = {
@@ -53,10 +54,30 @@ public class VirtusizeUITooltip: UIView {
 	private lazy var textSize: CGSize = {
 		var attributes = [NSAttributedString.Key.font: params.font]
 
+		var maxTextSizeWidth: CGFloat
+
+		if params.position == .left {
+			// left
+			maxTextSizeWidth = params.anchorView!.frame.origin.x
+				- Constants.anchorViewToTooltipMargin
+				- Constants.arrowHeight
+				- Constants.bubblePadding * 2
+				- Constants.windowEdgeToTooltipMargin
+		} else {
+			// bottom
+			maxTextSizeWidth = UIScreen.main.bounds.width
+				- Constants.bubblePadding * 2
+				- Constants.windowEdgeToTooltipMargin * 2
+		}
+
+		if params.showCloseButton {
+			maxTextSizeWidth -= (Constants.closeCrossSize + Constants.closeCrossPadding)
+		}
+
 		var textSize = params.text.boundingRect(
 			with:
 				CGSize(
-					width: Constants.maxTooltipWidth,
+					width: maxTextSizeWidth,
 					height: .greatestFiniteMagnitude
 				),
 			options: .usesLineFragmentOrigin,
@@ -72,8 +93,8 @@ public class VirtusizeUITooltip: UIView {
 		}()
 
 	private lazy var contentSize: CGSize = {
-		let width: CGFloat
-		let height: CGFloat
+		var width: CGFloat
+		var height: CGFloat
 
 		if params.position == .left {
 			// left
@@ -83,6 +104,11 @@ public class VirtusizeUITooltip: UIView {
 			// bottom
 			width = textSize.width + Constants.bubblePadding * 2
 			height = textSize.height + Constants.bubblePadding * 2 + Constants.arrowHeight
+		}
+
+		if params.showCloseButton {
+			width += Constants.closeCrossSize + Constants.closeCrossPadding * 2
+			height += Constants.closeCrossSize
 		}
 
 		return CGSize(width: width, height: height)
@@ -154,6 +180,9 @@ public class VirtusizeUITooltip: UIView {
 		guard let context = UIGraphicsGetCurrentContext() else { return }
 
 		drawBubble(to: context, rect)
+		if params.showCloseButton {
+			drawCloseCross(to: context, rect)
+		}
 		drawArrow(to: context, rect)
 		drawText(to: context, rect)
 	}
@@ -220,6 +249,38 @@ public class VirtusizeUITooltip: UIView {
 		context.restoreGState()
 	}
 
+	private func drawCloseCross(to context: CGContext, _ rect: CGRect) {
+		context.saveGState()
+
+		let closeCrossX: CGFloat
+		let closeCrossY: CGFloat
+
+		if params.position == .left {
+			// left
+			closeCrossX = rect.maxX
+				- Constants.arrowHeight
+				- Constants.bubblePadding
+				- Constants.closeCrossSize
+			closeCrossY = Constants.bubblePadding
+		} else {
+			// bottom
+			closeCrossX = rect.maxX - Constants.bubblePadding - Constants.closeCrossSize
+			closeCrossY = rect.minY + Constants.arrowHeight + Constants.closeCrossPadding
+		}
+
+		context.draw(
+			VirtusizeAssets.whiteClose!.cgImage!,
+			in: CGRect(
+				x: closeCrossX,
+				y: closeCrossY,
+				width: Constants.closeCrossSize,
+				height: Constants.closeCrossSize
+			)
+		)
+
+		context.restoreGState()
+	}
+
 	private func drawArrow(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
 
@@ -248,20 +309,26 @@ public class VirtusizeUITooltip: UIView {
 	private func drawText(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
 
-		var bottomY: CGFloat = 0
+		var shiftX: CGFloat = 0
+		var shiftY: CGFloat = 0
 
 		if params.position == .left {
 
 		} else {
 			// bottom
-			bottomY = Constants.arrowHeight
+			shiftY = Constants.arrowHeight
+		}
+
+		if params.showCloseButton {
+			shiftX += Constants.closeCrossSize / 2
+			shiftY += Constants.closeCrossSize / 2
 		}
 
 		let textRect = CGRect(
-			x: rect.origin.x + Constants.bubblePadding,
-			y: rect.origin.y + Constants.bubblePadding + bottomY,
-			width: contentSize.width,
-			height: contentSize.height
+			x: rect.origin.x + Constants.bubblePadding + shiftX,
+			y: rect.origin.y + Constants.bubblePadding + shiftY,
+			width: textSize.width,
+			height: textSize.height
 		)
 
 		let paragraphStyle = NSMutableParagraphStyle()

@@ -28,9 +28,10 @@ import Foundation
 
 public class VirtusizeUITooltipParamsBuilder {
 	private var anchorView: UIView?
-	private var text: String = "Similar Items"
-	private var font: UIFont = VirtusizeTypography().xSmallFont
+	private var text: String = "SIMILAR ITEMS"
+	private var font: UIFont = VirtusizeTypography().smallBoldFont
 	private var position: VirtusizeUITooltip.Position = .bottom
+	private var showClose: Bool = false
 
 	public init() {}
 
@@ -54,12 +55,18 @@ public class VirtusizeUITooltipParamsBuilder {
 		return self
 	}
 
+	public func showCloseButton() -> VirtusizeUITooltipParamsBuilder {
+		showClose = true
+		return self
+	}
+
 	public func build() -> VirtusizeUITooltipParams {
 		return VirtusizeUITooltipParams(
 			anchorView: anchorView,
 			text: text,
 			font: font,
-			position: position
+			position: position,
+			showCloseButton: showClose
 		)
 	}
 }
