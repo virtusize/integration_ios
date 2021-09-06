@@ -33,7 +33,13 @@ public class VirtusizeUIRoundButton: VirtusizeUIBaseButton {
 		static let maxImageSize = CGFloat(size - 2 * padding)
 	}
 
-	public var roundImageView: UIImageView!
+	private var roundImageView: UIImageView!
+
+	public var image: UIImage? = VirtusizeAssets.searchProduct {
+		didSet {
+			setStyle()
+		}
+	}
 
 	public init() {
 		super.init(frame: .zero)
@@ -47,12 +53,12 @@ public class VirtusizeUIRoundButton: VirtusizeUIBaseButton {
 
 	internal override func setup() {
 		super.setup()
-		addImage(VirtusizeAssets.searchProduct)
 	}
 
 	internal override func setStyle() {
 		super.setStyle()
 
+		addImage(image)
 		if style == .inverted {
 			roundImageView.image = roundImageView.image?.withRenderingMode(.alwaysTemplate)
 			roundImageView.tintColor = .white
@@ -76,13 +82,17 @@ public class VirtusizeUIRoundButton: VirtusizeUIBaseButton {
 			)
 		}
 		setImage(resizeImage.withAlpha(0), for: .normal)
-		roundImageView = UIImageView(image: image)
-		addSubview(roundImageView)
-		roundImageView.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			roundImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-			roundImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
-		])
+		if roundImageView == nil {
+			roundImageView = UIImageView(image: resizeImage)
+			addSubview(roundImageView)
+			roundImageView.translatesAutoresizingMaskIntoConstraints = false
+			NSLayoutConstraint.activate([
+				roundImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+				roundImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+			])
+		} else {
+			roundImageView.image = resizeImage
+		}
 	}
 
 	override internal func setButtonSize() {

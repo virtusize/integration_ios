@@ -166,14 +166,7 @@ public class VirtusizeUIBaseButton: UIButton {
 			hideShadow()
 			setTitleColor(.vsGray700Color, for: .normal)
 		} else {
-			if isCustomBackgroundColor {
-				hideBorder()
-				setShadow()
-			} else if style == .default {
-				setBackgroundColor(color: .white)
-				hideBorder()
-				setShadow()
-			} else if style == .inverted {
+			if style == .inverted {
 				setBackgroundColor(color: .vsGray900Color)
 				hideBorder()
 				setShadow()
@@ -181,6 +174,13 @@ public class VirtusizeUIBaseButton: UIButton {
 				setBackgroundColor(color: .white)
 				setBorder()
 				hideShadow()
+			} else if isCustomBackgroundColor {
+				hideBorder()
+				setShadow()
+			} else if style == .default {
+				setBackgroundColor(color: .white)
+				hideBorder()
+				setShadow()
 			}
 			setTitleColor(backgroundColor == .white ? .vsGray900Color : .white, for: .normal)
 		}
@@ -194,9 +194,7 @@ public class VirtusizeUIBaseButton: UIButton {
 		guard backgroundColor != color else {
 			return
 		}
-		if !isCustomBackgroundColor {
-			backgroundColor = color
-		}
+		backgroundColor = color
 	}
 
 	private var isCustomBackgroundColor: Bool {
