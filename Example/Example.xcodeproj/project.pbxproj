@@ -18,6 +18,7 @@
 		9CDA634426E08144008C039B /* Virtusize.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDA634226E08144008C039B /* Virtusize.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CDAE6CB26CF97DA00CBF7EF /* DesignSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE6CA26CF97DA00CBF7EF /* DesignSystemViewController.swift */; };
 		9CDAE6CE26CFAC1D00CBF7EF /* ButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE6CD26CFAC1D00CBF7EF /* ButtonViewController.swift */; };
+		9CDD601726E5EA3800105D43 /* TooltipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDD601626E5EA3800105D43 /* TooltipViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,7 @@
 		9CDA634226E08144008C039B /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CDAE6CA26CF97DA00CBF7EF /* DesignSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemViewController.swift; sourceTree = "<group>"; };
 		9CDAE6CD26CFAC1D00CBF7EF /* ButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewController.swift; sourceTree = "<group>"; };
+		9CDD601626E5EA3800105D43 /* TooltipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			children = (
 				9CDAE6CA26CF97DA00CBF7EF /* DesignSystemViewController.swift */,
 				9CDAE6CD26CFAC1D00CBF7EF /* ButtonViewController.swift */,
+				9CDD601626E5EA3800105D43 /* TooltipViewController.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 				9C454D0426686DD7003BF5BE /* WebViewController.swift in Sources */,
 				9CDAE6CB26CF97DA00CBF7EF /* DesignSystemViewController.swift in Sources */,
 				9C4B389E26BBA18800B73FE5 /* ProductViewController.swift in Sources */,
+				9CDD601726E5EA3800105D43 /* TooltipViewController.swift in Sources */,
 				9CDAE6CE26CFAC1D00CBF7EF /* ButtonViewController.swift in Sources */,
 				4DED8D4520575A9C001CA7DF /* AppDelegate.swift in Sources */,
 			);

@@ -58,7 +58,7 @@ public class VirtusizeUITooltip: UIView {
 		var maxTextSizeWidth: CGFloat
 
 		switch params.position {
-			case .bottom:
+			case .top, .bottom:
 				maxTextSizeWidth = UIScreen.main.bounds.width
 					- Constants.bubblePadding * 2
 					- Constants.windowEdgeToTooltipMargin * 2
@@ -102,7 +102,7 @@ public class VirtusizeUITooltip: UIView {
 		var height: CGFloat
 
 		switch params.position {
-			case .bottom:
+			case .top, .bottom:
 				width = textSize.width + Constants.bubblePadding * 2
 				height = textSize.height + Constants.bubblePadding * 2
 
@@ -130,7 +130,8 @@ public class VirtusizeUITooltip: UIView {
 	}()
 
 	public enum Position {
-		// TODO: Implement the top and right positions
+		// TODO: Implement the right position
+		case top
 		case bottom
 		case left
 	}
@@ -167,6 +168,9 @@ public class VirtusizeUITooltip: UIView {
 		let updatedY: CGFloat
 
 		switch params.position {
+			case .top:
+				updatedX = anchorViewFrame.center.x - contentSize.width / 2
+				updatedY = anchorViewFrame.origin.y - Constants.anchorViewToTooltipMargin - contentSize.height
 			case .bottom:
 				updatedX = anchorViewFrame.center.x - contentSize.width / 2
 				updatedY = anchorViewFrame.origin.y + anchorViewFrame.height + Constants.anchorViewToTooltipMargin
@@ -213,10 +217,13 @@ public class VirtusizeUITooltip: UIView {
 		let path = UIBezierPath()
 
 		var leftX: CGFloat = 0
+		var topY: CGFloat = 0
 		var bottomY: CGFloat = 0
 
 		if params.showTip {
 			switch params.position {
+				case .top:
+					topY = -Constants.tipHeight
 				case .bottom:
 					bottomY = Constants.tipHeight
 				case .left:
@@ -247,7 +254,7 @@ public class VirtusizeUITooltip: UIView {
 		)
 		// bottom right corner
 		path.addArc(
-			withCenter: CGPoint(x: rect.width - radius + leftX, y: rect.height - radius),
+			withCenter: CGPoint(x: rect.width - radius + leftX, y: rect.height - radius + topY),
 			radius: radius,
 			startAngle: 0,
 			endAngle: CGFloat.pi / 2,
@@ -255,7 +262,7 @@ public class VirtusizeUITooltip: UIView {
 		)
 		// bottom left corner
 		path.addArc(
-			withCenter: CGPoint(x: radius, y: rect.height  - radius),
+			withCenter: CGPoint(x: radius, y: rect.height  - radius + topY),
 			radius: radius,
 			startAngle: CGFloat.pi / 2,
 			endAngle: CGFloat.pi,
@@ -302,11 +309,11 @@ public class VirtusizeUITooltip: UIView {
 		var closeCrossY: CGFloat
 
 		switch params.position {
-			case .bottom:
+			case .top, .bottom:
 				closeCrossX = rect.maxX - Constants.bubblePadding - Constants.closeCrossSize
 				closeCrossY = rect.minY + Constants.closeCrossPadding
 
-				if params.showTip {
+				if params.position == .bottom && params.showTip {
 					closeCrossY += Constants.tipHeight
 				}
 			case .left:
@@ -314,7 +321,7 @@ public class VirtusizeUITooltip: UIView {
 					- Constants.bubblePadding
 					- Constants.closeCrossSize
 				closeCrossY = Constants.bubblePadding
-				
+
 				if params.showTip {
 					closeCrossX -= Constants.tipHeight
 				}
@@ -350,22 +357,25 @@ public class VirtusizeUITooltip: UIView {
 		let leftTipPoint: CGPoint
 		let rightTipPoint: CGPoint
 
-		let shiftX: CGFloat
-		let shiftY: CGFloat
-		if params.showBorder {
-			shiftX = -Constants.borderWidth
-			shiftY = Constants.borderWidth
-		} else {
-			shiftX = 0
-			shiftY = 0
-		}
-
+		var shiftX: CGFloat = 0
+		var shiftY: CGFloat = 0
 		switch params.position {
-			case .bottom:
-				topTipPoint = CGPoint(x: rect.center.x, y: rect.minY)
-				leftTipPoint = CGPoint(x: rect.center.x - Constants.tipWidth / 2, y: rect.minY + Constants.tipHeight + shiftY)
-				rightTipPoint = CGPoint(x: rect.center.x + Constants.tipWidth / 2, y: rect.minY + Constants.tipHeight + shiftY)
+			case .top, .bottom:
+				var startingY: CGFloat = 0
+				if params.position == .top {
+					startingY = rect.maxY
+					shiftY = -(Constants.tipHeight + Constants.borderWidth)
+				} else if params.position == .bottom {
+					startingY = rect.minY
+					shiftY = (Constants.tipHeight + Constants.borderWidth)
+				}
+				topTipPoint = CGPoint(x: rect.center.x, y: startingY)
+				leftTipPoint = CGPoint(x: rect.center.x - Constants.tipWidth / 2, y: startingY + shiftY)
+				rightTipPoint = CGPoint(x: rect.center.x + Constants.tipWidth / 2, y: startingY + shiftY)
 			case .left:
+				if params.showBorder {
+					shiftX = -Constants.borderWidth
+				}
 				topTipPoint = CGPoint(x: rect.width - Constants.tipHeight + Constants.tipHeight, y: rect.center.y)
 				leftTipPoint = CGPoint(x: rect.width - Constants.tipHeight + shiftX, y: rect.center.y - Constants.tipWidth / 2)
 				rightTipPoint = CGPoint(x: rect.width - Constants.tipHeight + shiftX, y: rect.center.y + Constants.tipWidth / 2)
@@ -477,7 +487,7 @@ public class VirtusizeUITooltip: UIView {
 
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.alignment = .left
-		paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
+		paragraphStyle.lineBreakMode = .byWordWrapping
 
 		let textColor: UIColor
 		if params.showInvertedStyle {
