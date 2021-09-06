@@ -31,7 +31,11 @@ public class VirtusizeUITooltipParamsBuilder {
 	private var text: String = "SIMILAR ITEMS"
 	private var font: UIFont = VirtusizeTypography().smallBoldFont
 	private var position: VirtusizeUITooltip.Position = .bottom
-	private var showClose: Bool = false
+	private var showCloseButton: Bool = true
+	private var showTip: Bool = true
+	private var showInvertedStyle: Bool = false
+	private var showBorder: Bool = true
+	private var overlay: Bool = false
 
 	public init() {}
 
@@ -55,18 +59,57 @@ public class VirtusizeUITooltipParamsBuilder {
 		return self
 	}
 
-	public func showCloseButton() -> VirtusizeUITooltipParamsBuilder {
-		showClose = true
+	public func hideCloseButton() -> VirtusizeUITooltipParamsBuilder {
+		showCloseButton = false
+		return self
+	}
+
+	public func hideTip() -> VirtusizeUITooltipParamsBuilder {
+		showTip = false
+		return self
+	}
+
+	public func invertedStyle() -> VirtusizeUITooltipParamsBuilder {
+		showInvertedStyle = true
+		return self
+	}
+
+	public func noBorder() -> VirtusizeUITooltipParamsBuilder {
+		showBorder = false
+		return self
+	}
+
+	public func showOverlay() -> VirtusizeUITooltipParamsBuilder {
+		overlay = true
 		return self
 	}
 
 	public func build() -> VirtusizeUITooltipParams {
+		guard let anchorView = anchorView else {
+			fatalError("Please set an anchor view")
+		}
 		return VirtusizeUITooltipParams(
 			anchorView: anchorView,
 			text: text,
 			font: font,
 			position: position,
-			showCloseButton: showClose
+			showCloseButton: showCloseButton,
+			showTip: showTip,
+			showInvertedStyle: showInvertedStyle,
+			showBorder: showBorder,
+			showOverlay: overlay
 		)
 	}
+}
+
+public struct VirtusizeUITooltipParams {
+	internal let anchorView: UIView
+	internal let text: String
+	internal let font: UIFont
+	internal let position: VirtusizeUITooltip.Position
+	internal let showCloseButton: Bool
+	internal let showTip: Bool
+	internal let showInvertedStyle: Bool
+	internal let showBorder: Bool
+	internal let showOverlay: Bool
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9C0BB97126DF78820043DC6D /* VirtusizeUITooltipParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BB97026DF78820043DC6D /* VirtusizeUITooltipParams.swift */; };
 		9C0BB97326DFB12E0043DC6D /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BB97226DFB12E0043DC6D /* CGRect+Extensions.swift */; };
 		9C5B6ABC26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */; };
 		9C5B6ABE26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B6ABD26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift */; };
@@ -66,7 +65,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9C0BB97026DF78820043DC6D /* VirtusizeUITooltipParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUITooltipParams.swift; sourceTree = "<group>"; };
 		9C0BB97226DFB12E0043DC6D /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButtonSize.swift; sourceTree = "<group>"; };
 		9C5B6ABD26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIRoundButton.swift; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 			children = (
 				9CA4DBAC26DE24AD0031FD4E /* VirtusizeUITooltip.swift */,
 				9CA4DBAE26DE2E9B0031FD4E /* VirtusizeUITooltipParamsBuilder.swift */,
-				9C0BB97026DF78820043DC6D /* VirtusizeUITooltipParams.swift */,
 			);
 			path = Tooltip;
 			sourceTree = "<group>";
@@ -385,7 +382,6 @@
 				9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */,
 				9CDAE6C926CF93FE00CBF7EF /* VirtusizeUIButton.swift in Sources */,
 				9CA4472526CF602300D4013C /* VirtusizeUIKitBundleLoader.swift in Sources */,
-				9C0BB97126DF78820043DC6D /* VirtusizeUITooltipParams.swift in Sources */,
 				9CA4DBAD26DE24AD0031FD4E /* VirtusizeUITooltip.swift in Sources */,
 				9CC9297026D385BB00AD97D1 /* VirtusizeUIButtonStyle.swift in Sources */,
 				9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */,

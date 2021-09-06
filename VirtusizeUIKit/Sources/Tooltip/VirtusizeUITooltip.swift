@@ -32,10 +32,11 @@ public class VirtusizeUITooltip: UIView {
 	private var container: UIWindow?
 
 	private struct Constants {
-		static let arrowWidth = CGFloat(13)
-		static let arrowHeight = CGFloat(7)
+		static let tipWidth = CGFloat(13)
+		static let tipHeight = CGFloat(7)
 		static let bubblePadding = CGFloat(10)
 		static let bubbleRadius = CGFloat(10)
+		static let borderWidth = CGFloat(1)
 		static let closeCrossSize = CGFloat(12)
 		static let closeCrossPadding = CGFloat(10)
 		static let windowEdgeToTooltipMargin = CGFloat(16)
@@ -45,7 +46,7 @@ public class VirtusizeUITooltip: UIView {
 	private lazy var dismissView: UIView = {
 		   let view = UIView()
 
-		   view.backgroundColor = .clear
+		view.backgroundColor = params.showOverlay ? .vsOverlayColor : .clear
 		   view.frame = UIScreen.main.bounds
 
 		   return view
@@ -62,11 +63,14 @@ public class VirtusizeUITooltip: UIView {
 					- Constants.bubblePadding * 2
 					- Constants.windowEdgeToTooltipMargin * 2
 			case .left:
-				maxTextSizeWidth = params.anchorView!.frame.origin.x
+				maxTextSizeWidth = params.anchorView.frame.origin.x
 					- Constants.anchorViewToTooltipMargin
-					- Constants.arrowHeight
 					- Constants.bubblePadding * 2
 					- Constants.windowEdgeToTooltipMargin
+
+				if params.showTip {
+					maxTextSizeWidth -= Constants.tipHeight
+				}
 			default:
 				maxTextSizeWidth = 0
 		}
@@ -100,22 +104,34 @@ public class VirtusizeUITooltip: UIView {
 		switch params.position {
 			case .bottom:
 				width = textSize.width + Constants.bubblePadding * 2
-				height = textSize.height + Constants.bubblePadding * 2 + Constants.arrowHeight
-			case .left:
-				width = textSize.width + Constants.bubblePadding * 2 + Constants.arrowHeight
 				height = textSize.height + Constants.bubblePadding * 2
+
+				if params.showTip {
+					height += Constants.tipHeight
+				}
+			case .left:
+				width = textSize.width + Constants.bubblePadding * 2
+				height = textSize.height + Constants.bubblePadding * 2
+
+				if params.showTip {
+					width += Constants.tipHeight
+				}
 			default:
 				width = 0
 				height = 0
+		}
+
+		if params.showCloseButton {
+			width += Constants.closeCrossSize + Constants.closeCrossPadding * 2
+			height += Constants.closeCrossSize
 		}
 
 		return CGSize(width: width, height: height)
 	}()
 
 	public enum Position {
-		case top
+		// TODO: Implement the top and right positions
 		case bottom
-		case right
 		case left
 	}
 
@@ -135,16 +151,17 @@ public class VirtusizeUITooltip: UIView {
 		// The initial frame size is 0. We need to update the frame of the tooltip
 		updateFrame()
 
-		params.anchorView!.superview?.addSubview(self)
-		params.anchorView!.superview?.addSubview(dismissView)
+		params.anchorView.superview?.addSubview(dismissView)
+		params.anchorView.superview?.addSubview(self)
 
-		let tap = UITapGestureRecognizer(target: self, action: #selector(dismiss))
-		addGestureRecognizer(tap)
-		dismissView.addGestureRecognizer(tap)
+		let dismissViewTap = UITapGestureRecognizer(target: self, action: #selector(dismiss))
+		dismissView.addGestureRecognizer(dismissViewTap)
+		let tooltipTap = UITapGestureRecognizer(target: self, action: #selector(dismiss))
+		addGestureRecognizer(tooltipTap)
 	}
 
 	private func updateFrame() {
-		let anchorViewFrame = params.anchorView!.convert(params.anchorView!.bounds, to: UIApplication.safeShared?.keyWindow)
+		let anchorViewFrame = params.anchorView.convert(params.anchorView.bounds, to: UIApplication.safeShared?.keyWindow)
 
 		let updatedX: CGFloat
 		let updatedY: CGFloat
@@ -179,15 +196,18 @@ public class VirtusizeUITooltip: UIView {
 
 		guard let context = UIGraphicsGetCurrentContext() else { return }
 
-		drawBubble(to: context, rect)
+		drawTooltipBody(to: context, rect)
 		if params.showCloseButton {
 			drawCloseCross(to: context, rect)
 		}
-		drawArrow(to: context, rect)
+
+		if params.showTip {
+			drawTip(to: context, rect)
+		}
 		drawText(to: context, rect)
 	}
 
-	private func drawBubble(to context: CGContext, _ rect: CGRect) {
+	private func drawTooltipBody(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
 
 		let path = UIBezierPath()
@@ -195,14 +215,16 @@ public class VirtusizeUITooltip: UIView {
 		var leftX: CGFloat = 0
 		var bottomY: CGFloat = 0
 
-		switch params.position {
-			case .bottom:
-				bottomY = Constants.arrowHeight
-			case .left:
-				leftX = -Constants.arrowHeight
-			default:
-				leftX = 0
-				bottomY = 0
+		if params.showTip {
+			switch params.position {
+				case .bottom:
+					bottomY = Constants.tipHeight
+				case .left:
+					leftX = -Constants.tipHeight
+				default:
+					leftX = 0
+					bottomY = 0
+			}
 		}
 
 		let radius = Constants.bubbleRadius
@@ -245,8 +267,30 @@ public class VirtusizeUITooltip: UIView {
 		context.addPath(path.cgPath)
 		context.clip()
 
-		context.setFillColor(UIColor.vsGray900Color.cgColor)
-		context.fill(rect)
+		if params.showInvertedStyle {
+			context.setFillColor(UIColor.white.cgColor)
+			context.fill(rect)
+
+			if params.showBorder {
+				drawPath(
+					to: context,
+					path.cgPath,
+					pathWidth: Constants.borderWidth * 2
+				)
+			}
+		} else {
+			context.setFillColor(UIColor.vsGray900Color.cgColor)
+			context.fill(rect)
+
+			if params.showBorder {
+				drawPath(
+					to: context,
+					path.cgPath,
+					pathWidth: Constants.borderWidth * 2,
+					color: .white
+				)
+			}
+		}
 
 		context.restoreGState()
 	}
@@ -254,26 +298,40 @@ public class VirtusizeUITooltip: UIView {
 	private func drawCloseCross(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
 
-		let closeCrossX: CGFloat
-		let closeCrossY: CGFloat
+		var closeCrossX: CGFloat
+		var closeCrossY: CGFloat
 
 		switch params.position {
 			case .bottom:
 				closeCrossX = rect.maxX - Constants.bubblePadding - Constants.closeCrossSize
-				closeCrossY = rect.minY + Constants.arrowHeight + Constants.closeCrossPadding
+				closeCrossY = rect.minY + Constants.closeCrossPadding
+
+				if params.showTip {
+					closeCrossY += Constants.tipHeight
+				}
 			case .left:
 				closeCrossX = rect.maxX
-					- Constants.arrowHeight
 					- Constants.bubblePadding
 					- Constants.closeCrossSize
 				closeCrossY = Constants.bubblePadding
+				
+				if params.showTip {
+					closeCrossX -= Constants.tipHeight
+				}
 			default:
 				closeCrossX = 0
 				closeCrossY = 0
 		}
 
+		let closeImage: UIImage
+		if params.showInvertedStyle {
+			closeImage = VirtusizeAssets.blackClose!
+		} else {
+			closeImage = VirtusizeAssets.whiteClose!
+		}
+
 		context.draw(
-			VirtusizeAssets.whiteClose!.cgImage!,
+			closeImage.cgImage!,
 			in: CGRect(
 				x: closeCrossX,
 				y: closeCrossY,
@@ -285,29 +343,105 @@ public class VirtusizeUITooltip: UIView {
 		context.restoreGState()
 	}
 
-	private func drawArrow(to context: CGContext, _ rect: CGRect) {
+	private func drawTip(to context: CGContext, _ rect: CGRect) {
 		context.saveGState()
 
-		context.beginPath()
+		let topTipPoint: CGPoint
+		let leftTipPoint: CGPoint
+		let rightTipPoint: CGPoint
+
+		let shiftX: CGFloat
+		let shiftY: CGFloat
+		if params.showBorder {
+			shiftX = -Constants.borderWidth
+			shiftY = Constants.borderWidth
+		} else {
+			shiftX = 0
+			shiftY = 0
+		}
 
 		switch params.position {
 			case .bottom:
-				context.move(to: CGPoint(x: rect.center.x, y: rect.minY))
-				context.addLine(to: CGPoint(x: rect.center.x - Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
-				context.addLine(to: CGPoint(x: rect.center.x + Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
+				topTipPoint = CGPoint(x: rect.center.x, y: rect.minY)
+				leftTipPoint = CGPoint(x: rect.center.x - Constants.tipWidth / 2, y: rect.minY + Constants.tipHeight + shiftY)
+				rightTipPoint = CGPoint(x: rect.center.x + Constants.tipWidth / 2, y: rect.minY + Constants.tipHeight + shiftY)
 			case .left:
-				// draw an arrow on the right
-				context.move(to: CGPoint(x: rect.width - Constants.arrowHeight + Constants.arrowHeight, y: rect.center.y))
-				context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y - Constants.arrowWidth / 2))
-				context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y + Constants.arrowWidth / 2))
+				topTipPoint = CGPoint(x: rect.width - Constants.tipHeight + Constants.tipHeight, y: rect.center.y)
+				leftTipPoint = CGPoint(x: rect.width - Constants.tipHeight + shiftX, y: rect.center.y - Constants.tipWidth / 2)
+				rightTipPoint = CGPoint(x: rect.width - Constants.tipHeight + shiftX, y: rect.center.y + Constants.tipWidth / 2)
 			default:
-				break
+				topTipPoint = CGPoint()
+				leftTipPoint = CGPoint()
+				rightTipPoint = CGPoint()
 		}
 
+		context.beginPath()
+		context.move(to: topTipPoint)
+		context.addLine(to: leftTipPoint)
+		context.addLine(to: rightTipPoint)
 		context.closePath()
 
-		context.setFillColor(UIColor.vsGray900Color.cgColor)
-		context.fillPath()
+		let bottomBorderPath = UIBezierPath()
+		bottomBorderPath.move(to: leftTipPoint)
+		bottomBorderPath.addLine(to: rightTipPoint)
+		bottomBorderPath.close()
+
+		let leftBorderPath = UIBezierPath()
+		leftBorderPath.move(to: topTipPoint)
+		leftBorderPath.addLine(to: leftTipPoint)
+		leftBorderPath.close()
+
+		let rightBorderPath = UIBezierPath()
+		rightBorderPath.move(to: topTipPoint)
+		rightBorderPath.addLine(to: rightTipPoint)
+		rightBorderPath.close()
+
+		if params.showInvertedStyle {
+			context.setFillColor(UIColor.white.cgColor)
+			context.fillPath()
+
+			if params.showBorder {
+				// Overlay the line from the bubble
+				drawPath(
+					to: context,
+					bottomBorderPath.cgPath,
+					pathWidth: Constants.borderWidth * 2,
+					color: .white
+				)
+				drawPath(to: context, leftBorderPath.cgPath)
+				drawPath(to: context, rightBorderPath.cgPath)
+			}
+		} else {
+			context.setFillColor(UIColor.vsGray900Color.cgColor)
+			context.fillPath()
+
+			if params.showBorder {
+				// Overlay the line from the bubble
+				drawPath(
+					to: context,
+					bottomBorderPath.cgPath,
+					pathWidth: Constants.borderWidth * 2
+				)
+				drawPath(to: context, leftBorderPath.cgPath, color: .white)
+				drawPath(to: context, rightBorderPath.cgPath, color: .white)
+			}
+		}
+
+		context.restoreGState()
+	}
+
+	private func drawPath(
+		to context: CGContext,
+		_ path: CGPath,
+		pathWidth: CGFloat = Constants.borderWidth,
+		color: UIColor = .vsGray900Color
+	) {
+		context.saveGState()
+
+		context.setStrokeColor(color.cgColor)
+		context.setLineWidth(pathWidth)
+		context.addPath(path)
+		context.strokePath()
 
 		context.restoreGState()
 	}
@@ -318,13 +452,15 @@ public class VirtusizeUITooltip: UIView {
 		var shiftX: CGFloat = 0
 		var shiftY: CGFloat = 0
 
-		switch params.position {
-			case .bottom:
-				shiftY = Constants.arrowHeight
-			case .left:
-				break
-			default:
-				break
+		if params.showTip {
+			switch params.position {
+				case .bottom:
+					shiftY = Constants.tipHeight
+				case .left:
+					break
+				default:
+					break
+			}
 		}
 
 		if params.showCloseButton {
@@ -343,9 +479,16 @@ public class VirtusizeUITooltip: UIView {
 		paragraphStyle.alignment = .left
 		paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
 
+		let textColor: UIColor
+		if params.showInvertedStyle {
+			textColor = .vsGray900Color
+		} else {
+			textColor = .white
+		}
+
 		let attributes = [
 			NSAttributedString.Key.font: params.font,
-			NSAttributedString.Key.foregroundColor: UIColor.white,
+			NSAttributedString.Key.foregroundColor: textColor,
 			NSAttributedString.Key.paragraphStyle: paragraphStyle
 		]
 
