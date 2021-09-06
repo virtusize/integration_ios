@@ -39,17 +39,56 @@ class ButtonViewController: UIViewController {
 		scrollView.backgroundColor = .white
 		scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-		let button1 = VirtusizeUIButton()
-		button1.translatesAutoresizingMaskIntoConstraints = false
-		scrollView.addSubview(button1)
+		let defaultButton = VirtusizeUIButton()
+		defaultButton.setTitle("Default Button", for: .normal)
+		defaultButton.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(defaultButton)
+
+		let flatButton = VirtusizeUIButton()
+		flatButton.style = .flat
+		flatButton.setTitle("Flat Button", for: .normal)
+		flatButton.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(flatButton)
+
+		let invertedButton = VirtusizeUIButton()
+		invertedButton.style = .inverted
+		invertedButton.setTitle("Inverted Button", for: .normal)
+		invertedButton.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(invertedButton)
+
+		let disabledButton = VirtusizeUIButton()
+		disabledButton.isEnabled = false
+		disabledButton.setTitle("Disabled Button", for: .normal)
+		disabledButton.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(disabledButton)
+
+		let roundButton1 = VirtusizeUIRoundButton()
+		roundButton1.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(roundButton1)
+
+		let roundButton2 = VirtusizeUIRoundButton()
+		roundButton2.image = VirtusizeAssets.errorHanger
+		roundButton2.style = .inverted
+		roundButton2.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(roundButton2)
 
 		NSLayoutConstraint.activate([
 			scrollView.topAnchor.constraint(equalTo: view.topAnchor),
 			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-			button1.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-			button1.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor)
+			defaultButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+			defaultButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+			flatButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+			flatButton.topAnchor.constraint(equalTo: defaultButton.bottomAnchor, constant: 16),
+			invertedButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+			invertedButton.topAnchor.constraint(equalTo: flatButton.bottomAnchor, constant: 16),
+			disabledButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+			disabledButton.topAnchor.constraint(equalTo: invertedButton.bottomAnchor, constant: 16),
+			roundButton1.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+			roundButton1.topAnchor.constraint(equalTo: disabledButton.bottomAnchor, constant: 16),
+			roundButton2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+			roundButton2.topAnchor.constraint(equalTo: roundButton1.bottomAnchor, constant: 16)
 		])
 	}
 }
