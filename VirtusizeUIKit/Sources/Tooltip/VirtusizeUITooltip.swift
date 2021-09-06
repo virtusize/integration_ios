@@ -56,18 +56,19 @@ public class VirtusizeUITooltip: UIView {
 
 		var maxTextSizeWidth: CGFloat
 
-		if params.position == .left {
-			// left
-			maxTextSizeWidth = params.anchorView!.frame.origin.x
-				- Constants.anchorViewToTooltipMargin
-				- Constants.arrowHeight
-				- Constants.bubblePadding * 2
-				- Constants.windowEdgeToTooltipMargin
-		} else {
-			// bottom
-			maxTextSizeWidth = UIScreen.main.bounds.width
-				- Constants.bubblePadding * 2
-				- Constants.windowEdgeToTooltipMargin * 2
+		switch params.position {
+			case .bottom:
+				maxTextSizeWidth = UIScreen.main.bounds.width
+					- Constants.bubblePadding * 2
+					- Constants.windowEdgeToTooltipMargin * 2
+			case .left:
+				maxTextSizeWidth = params.anchorView!.frame.origin.x
+					- Constants.anchorViewToTooltipMargin
+					- Constants.arrowHeight
+					- Constants.bubblePadding * 2
+					- Constants.windowEdgeToTooltipMargin
+			default:
+				maxTextSizeWidth = 0
 		}
 
 		if params.showCloseButton {
@@ -96,19 +97,16 @@ public class VirtusizeUITooltip: UIView {
 		var width: CGFloat
 		var height: CGFloat
 
-		if params.position == .left {
-			// left
-			width = textSize.width + Constants.bubblePadding * 2 + Constants.arrowHeight
-			height = textSize.height + Constants.bubblePadding * 2
-		} else {
-			// bottom
-			width = textSize.width + Constants.bubblePadding * 2
-			height = textSize.height + Constants.bubblePadding * 2 + Constants.arrowHeight
-		}
-
-		if params.showCloseButton {
-			width += Constants.closeCrossSize + Constants.closeCrossPadding * 2
-			height += Constants.closeCrossSize
+		switch params.position {
+			case .bottom:
+				width = textSize.width + Constants.bubblePadding * 2
+				height = textSize.height + Constants.bubblePadding * 2 + Constants.arrowHeight
+			case .left:
+				width = textSize.width + Constants.bubblePadding * 2 + Constants.arrowHeight
+				height = textSize.height + Constants.bubblePadding * 2
+			default:
+				width = 0
+				height = 0
 		}
 
 		return CGSize(width: width, height: height)
@@ -151,14 +149,16 @@ public class VirtusizeUITooltip: UIView {
 		let updatedX: CGFloat
 		let updatedY: CGFloat
 
-		if params.position == .left {
-			// left
-			updatedX = anchorViewFrame.origin.x - contentSize.width - Constants.anchorViewToTooltipMargin
-			updatedY = anchorViewFrame.center.y - contentSize.height / 2
-		} else {
-			// Bottom
-			updatedX = anchorViewFrame.center.x - contentSize.width / 2
-			updatedY = anchorViewFrame.origin.y + anchorViewFrame.height + Constants.anchorViewToTooltipMargin
+		switch params.position {
+			case .bottom:
+				updatedX = anchorViewFrame.center.x - contentSize.width / 2
+				updatedY = anchorViewFrame.origin.y + anchorViewFrame.height + Constants.anchorViewToTooltipMargin
+			case .left:
+				updatedX = anchorViewFrame.origin.x - contentSize.width - Constants.anchorViewToTooltipMargin
+				updatedY = anchorViewFrame.center.y - contentSize.height / 2
+			default:
+				updatedX = 0
+				updatedY = 0
 		}
 
 		frame = CGRect(
@@ -195,12 +195,14 @@ public class VirtusizeUITooltip: UIView {
 		var leftX: CGFloat = 0
 		var bottomY: CGFloat = 0
 
-		if params.position == .left {
-			// left
-			leftX = -Constants.arrowHeight
-		} else {
-			// bottom
-			bottomY = Constants.arrowHeight
+		switch params.position {
+			case .bottom:
+				bottomY = Constants.arrowHeight
+			case .left:
+				leftX = -Constants.arrowHeight
+			default:
+				leftX = 0
+				bottomY = 0
 		}
 
 		let radius = Constants.bubbleRadius
@@ -255,17 +257,19 @@ public class VirtusizeUITooltip: UIView {
 		let closeCrossX: CGFloat
 		let closeCrossY: CGFloat
 
-		if params.position == .left {
-			// left
-			closeCrossX = rect.maxX
-				- Constants.arrowHeight
-				- Constants.bubblePadding
-				- Constants.closeCrossSize
-			closeCrossY = Constants.bubblePadding
-		} else {
-			// bottom
-			closeCrossX = rect.maxX - Constants.bubblePadding - Constants.closeCrossSize
-			closeCrossY = rect.minY + Constants.arrowHeight + Constants.closeCrossPadding
+		switch params.position {
+			case .bottom:
+				closeCrossX = rect.maxX - Constants.bubblePadding - Constants.closeCrossSize
+				closeCrossY = rect.minY + Constants.arrowHeight + Constants.closeCrossPadding
+			case .left:
+				closeCrossX = rect.maxX
+					- Constants.arrowHeight
+					- Constants.bubblePadding
+					- Constants.closeCrossSize
+				closeCrossY = Constants.bubblePadding
+			default:
+				closeCrossX = 0
+				closeCrossY = 0
 		}
 
 		context.draw(
@@ -286,16 +290,18 @@ public class VirtusizeUITooltip: UIView {
 
 		context.beginPath()
 
-		if params.position == .left {
-			// left: draw an arrow on the right
-			context.move(to: CGPoint(x: rect.width - Constants.arrowHeight + Constants.arrowHeight, y: rect.center.y))
-			context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y - Constants.arrowWidth / 2))
-			context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y + Constants.arrowWidth / 2))
-		} else {
-			// bottom
-			context.move(to: CGPoint(x: rect.center.x, y: rect.minY))
-			context.addLine(to: CGPoint(x: rect.center.x - Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
-			context.addLine(to: CGPoint(x: rect.center.x + Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
+		switch params.position {
+			case .bottom:
+				context.move(to: CGPoint(x: rect.center.x, y: rect.minY))
+				context.addLine(to: CGPoint(x: rect.center.x - Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
+				context.addLine(to: CGPoint(x: rect.center.x + Constants.arrowWidth / 2, y: rect.minY + Constants.arrowHeight))
+			case .left:
+				// draw an arrow on the right
+				context.move(to: CGPoint(x: rect.width - Constants.arrowHeight + Constants.arrowHeight, y: rect.center.y))
+				context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y - Constants.arrowWidth / 2))
+				context.addLine(to: CGPoint(x: rect.width - Constants.arrowHeight, y: rect.center.y + Constants.arrowWidth / 2))
+			default:
+				break
 		}
 
 		context.closePath()
@@ -312,11 +318,13 @@ public class VirtusizeUITooltip: UIView {
 		var shiftX: CGFloat = 0
 		var shiftY: CGFloat = 0
 
-		if params.position == .left {
-
-		} else {
-			// bottom
-			shiftY = Constants.arrowHeight
+		switch params.position {
+			case .bottom:
+				shiftY = Constants.arrowHeight
+			case .left:
+				break
+			default:
+				break
 		}
 
 		if params.showCloseButton {
