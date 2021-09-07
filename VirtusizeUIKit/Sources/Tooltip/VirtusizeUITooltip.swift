@@ -45,13 +45,13 @@ public class VirtusizeUITooltip: UIView {
 	}
 
 	private lazy var dismissView: UIView = {
-		   let view = UIView()
-
+		let view = UIView()
+		
 		view.backgroundColor = params.showOverlay ? .vsOverlayColor : .clear
-		   view.frame = UIScreen.main.bounds
-
-		   return view
-	   }()
+		view.frame = UIScreen.main.bounds
+		
+		return view
+	}()
 
 	private lazy var textSize: CGSize = {
 		var attributes = [NSAttributedString.Key.font: params.font]
