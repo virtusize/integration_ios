@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 	s.name = 'VirtusizeCore'
 	s.version = '2.3.2'
 	s.license = { :type => 'MIT', :file => 'LICENSE' }
-	s.summary = 'Virtusize UI toolkit for iOS'
+	s.summary = 'Virtusize Core for iOS'
 	s.homepage = 'https://www.virtusize.com/'
 	s.documentation_url = 'https://github.com/virtusize/integration_ios'
 	s.authors = { 'Virtusize' => 'client.support@virtusize.com' }
