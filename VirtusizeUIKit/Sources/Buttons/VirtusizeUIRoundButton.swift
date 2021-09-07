@@ -27,7 +27,7 @@ import UIKit
 import Foundation
 
 public class VirtusizeUIRoundButton: VirtusizeUIBaseButton {
-	struct Constant {
+	struct Constants {
 		static let size = CGFloat(40)
 		static let padding = CGFloat(8)
 		static let maxImageSize = CGFloat(size - 2 * padding)
@@ -73,15 +73,20 @@ public class VirtusizeUIRoundButton: VirtusizeUIBaseButton {
 		if image.size.width > image.size.height {
 			let originWidth = image.size.width
 			resizeImage = image.resize(
-				to: CGSize(width: Constant.maxImageSize, height: image.size.height * Constant.maxImageSize / originWidth)
+				to: CGSize(width: Constants.maxImageSize, height: image.size.height * Constants.maxImageSize / originWidth)
 			)
 		} else {
 			let originHeight = image.size.height
 			resizeImage = image.resize(
-				to: CGSize(width: image.size.width * Constant.maxImageSize / originHeight, height: Constant.maxImageSize)
+				to: CGSize(width: image.size.width * Constants.maxImageSize / originHeight, height: Constants.maxImageSize)
 			)
 		}
-		setImage(resizeImage.withAlpha(0), for: .normal)
+		setImage(
+			image.resize(
+				to: CGSize(width: Constants.maxImageSize, height: Constants.maxImageSize)
+			).withAlpha(0),
+			for: .normal
+		)
 		if roundImageView == nil {
 			roundImageView = UIImageView(image: resizeImage)
 			addSubview(roundImageView)
@@ -96,14 +101,12 @@ public class VirtusizeUIRoundButton: VirtusizeUIBaseButton {
 	}
 
 	override internal func setButtonSize() {
-		let typography = VirtusizeTypography()
-		titleLabel?.font = typography.normalBoldFont
 		contentEdgeInsets = UIEdgeInsets(
-			top: Constant.padding,
-			left: Constant.padding,
-			bottom: Constant.padding,
-			right: Constant.padding
+			top: Constants.padding,
+			left: Constants.padding,
+			bottom: Constants.padding,
+			right: Constants.padding
 		)
-		layer.cornerRadius = Constant.size / 2
+		layer.cornerRadius = Constants.size / 2
 	}
 }

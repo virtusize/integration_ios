@@ -69,4 +69,18 @@ public extension UIImage {
 			draw(in: CGRect(origin: .zero, size: size), blendMode: .normal, alpha: alpha)
 		}
 	}
+
+	func tintColor(_ color: UIColor) -> UIImage? {
+		let image = withRenderingMode(.alwaysTemplate)
+		UIGraphicsBeginImageContextWithOptions(size, false, scale)
+		color.set()
+		image.draw(in: CGRect(origin: .zero, size: size))
+
+		guard let coloredImage = UIGraphicsGetImageFromCurrentImageContext() else {
+			return nil
+		}
+
+		UIGraphicsEndImageContext()
+		return coloredImage
+	}
 }
