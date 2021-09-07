@@ -27,6 +27,11 @@ import UIKit
 import Foundation
 
 public class VirtusizeUIButton: VirtusizeUIBaseButton {
+	struct Constants {
+		static let imagePadding = CGFloat(4)
+		static let imageSize = CGFloat(24)
+	}
+
 	public var size = VirtusizeUIButtonSize.large {
 		didSet {
 			setStyle()
@@ -43,6 +48,79 @@ public class VirtusizeUIButton: VirtusizeUIBaseButton {
 		didSet {
 			setStyle()
 		}
+	}
+
+	public var leftImage: UIImage? {
+		didSet {
+			setAttributedTitle()
+		}
+	}
+
+	public var rightImage: UIImage? {
+		didSet {
+			setAttributedTitle()
+		}
+	}
+
+	private func setAttributedTitle() {
+		var attributedTitle = NSMutableAttributedString()
+
+		if var leftImage = leftImage {
+			if style == .inverted {
+				leftImage = leftImage.tintColor(.white) ?? leftImage
+			}
+			let leftAttachment = NSTextAttachment(data: nil, ofType: nil)
+			let leftResizedImage = resizeImage(image: leftImage)
+			leftAttachment.image = leftResizedImage
+			leftAttachment.bounds = CGRect(
+				x: 0,
+				y: ((titleLabel?.font.capHeight ?? 0) - leftResizedImage.size.height) / 2,
+				width: leftResizedImage.size.width,
+				height: leftResizedImage.size.height
+			)
+			let attributedString = NSAttributedString(attachment: leftAttachment)
+			let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+
+			attributedTitle = mutableAttributedString
+			attributedTitle.append(
+				NSAttributedString(string: "\u{200B}", attributes: [NSAttributedString.Key.kern: Constants.imagePadding])
+			)
+		}
+
+		if let title = currentTitle {
+			attributedTitle.append(NSAttributedString(string: title))
+		}
+
+		if var rightImage = rightImage {
+			if style == .inverted {
+				rightImage = rightImage.tintColor(.white) ?? rightImage
+			}
+			attributedTitle.append(
+				NSAttributedString(string: "\u{200B}", attributes: [NSAttributedString.Key.kern: Constants.imagePadding])
+			)
+			let rightAttachment = NSTextAttachment(data: nil, ofType: nil)
+			let rightResizedImage = resizeImage(image: rightImage)
+			rightAttachment.image = rightResizedImage
+			rightAttachment.bounds = CGRect(
+				x: 0,
+				y: ((titleLabel?.font.capHeight ?? 0) - rightResizedImage.size.height) / 2,
+				width: rightResizedImage.size.width,
+				height: rightResizedImage.size.height
+			)
+			let attributedString = NSAttributedString(attachment: rightAttachment)
+			let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+			attributedTitle.append(mutableAttributedString)
+		}
+
+		setAttributedTitle(attributedTitle, for: .normal)
+	}
+
+	private func resizeImage(image: UIImage) -> UIImage {
+		let originalHeight = image.size.height
+		let resizedImage = image.resize(
+			to: CGSize(width: image.size.width * Constants.imageSize / originalHeight, height: Constants.imageSize)
+		)
+		return resizedImage
 	}
 
 	public init() {

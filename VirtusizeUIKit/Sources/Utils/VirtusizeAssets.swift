@@ -28,30 +28,44 @@ import UIKit
 final public class VirtusizeAssets {
 	public static let bundle = Bundle(for: VirtusizeAssets.self)
 
-	public static let icon: UIImage? = {
-		return Base64ImageString.icon.image
-	}()
-	public static let logo: UIImage? = {
-		return Base64ImageString.logo.image
-	}()
 	public static let cancel: UIImage? = {
 		return Base64ImageString.cancel.image
-	}()
-
-	public static let rightArrow: UIImage? = {
-		return UIImage(bundleNamed: "right_arrow")
-	}()
-
-	public static let vsSignature: UIImage? = {
-		return Base64ImageString.vsSignature.image
 	}()
 
 	public static let errorHanger: UIImage? = {
 		return UIImage(bundleNamed: "error_hanger")
 	}()
 
+	public static let fbIcon: UIImage? = {
+		return UIImage(bundleNamed: "fb")
+	}()
+
+	public static let heartSolid: UIImage? = {
+		return UIImage(bundleNamed: "heart_solid")
+	}()
+
+	public static let icon: UIImage? = {
+		return Base64ImageString.icon.image
+	}()
+
+	public static let lock: UIImage? = {
+		return UIImage(bundleNamed: "lock")
+	}()
+
+	public static let logo: UIImage? = {
+		return Base64ImageString.logo.image
+	}()
+
+	public static let rightArrow: UIImage? = {
+		return UIImage(bundleNamed: "right_arrow")
+	}()
+
 	public static let searchProduct: UIImage? = {
 		return UIImage(bundleNamed: "search_product")
+	}()
+
+	public static let vsSignature: UIImage? = {
+		return Base64ImageString.vsSignature.image
 	}()
 
 	/// Gets the product placeholder image by the product type and style
