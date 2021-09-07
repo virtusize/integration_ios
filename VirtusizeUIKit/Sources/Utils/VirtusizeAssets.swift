@@ -32,24 +32,24 @@ final public class VirtusizeAssets {
 		return Base64ImageString.cancel.image
 	}()
 
-    public static let whiteClose: UIImage? = {
-		return UIImage(named: "close_white")
-	}()
-
-	public static let blackClose: UIImage? = {
+	public static let closeBlack: UIImage? = {
 		return UIImage(named: "close_black")
 	}()
 
+    public static let closeWhite: UIImage? = {
+		return UIImage(named: "close_white")
+	}()
+
 	public static let errorHanger: UIImage? = {
-		return UIImage(bundleNamed: "error_hanger")
+		return UIImage(named: "error_hanger")
 	}()
 
 	public static let fbIcon: UIImage? = {
-		return UIImage(bundleNamed: "fb")
+		return UIImage(named: "fb")
 	}()
 
 	public static let heartSolid: UIImage? = {
-		return UIImage(bundleNamed: "heart_solid")
+		return UIImage(named: "heart_solid")
 	}()
 
 	public static let icon: UIImage? = {
@@ -57,7 +57,7 @@ final public class VirtusizeAssets {
 	}()
 
 	public static let lock: UIImage? = {
-		return UIImage(bundleNamed: "lock")
+		return UIImage(named: "lock")
 	}()
 
 	public static let logo: UIImage? = {
@@ -69,7 +69,7 @@ final public class VirtusizeAssets {
 	}()
 
 	public static let searchProduct: UIImage? = {
-		return UIImage(bundleNamed: "search_product")
+		return UIImage(named: "search_product")
 	}()
 
 	public static let vsSignature: UIImage? = {

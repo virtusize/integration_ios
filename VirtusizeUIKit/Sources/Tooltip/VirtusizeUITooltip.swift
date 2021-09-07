@@ -361,9 +361,9 @@ public class VirtusizeUITooltip: UIView {
 
 		let closeImage: UIImage
 		if params.showInvertedStyle {
-			closeImage = VirtusizeAssets.blackClose!
+			closeImage = VirtusizeAssets.closeBlack!
 		} else {
-			closeImage = VirtusizeAssets.whiteClose!
+			closeImage = VirtusizeAssets.closeWhite!
 		}
 
 		context.draw(
