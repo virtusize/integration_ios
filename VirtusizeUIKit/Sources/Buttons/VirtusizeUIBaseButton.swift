@@ -49,7 +49,8 @@ public class VirtusizeUIBaseButton: UIButton {
 	public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
 		startTouchLocation = touch.location(in: self)
 
-		setRippleLayer(touchLocation: startTouchLocation!, holdAnimation: true)
+		setRippleLayer(touchLocation: startTouchLocation)
+		rippleAnimation(holdAnimation: false)
 
 		UIView.animate(
 			withDuration: 0.1,
@@ -66,16 +67,17 @@ public class VirtusizeUIBaseButton: UIButton {
 
 	public override func cancelTracking(with event: UIEvent?) {
 		super.cancelTracking(with: event)
-		releaseAnimation()
+		releaseRippleAnimation()
 	}
 
 	public override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
 		super.endTracking(touch, with: event)
-		releaseAnimation()
+		releaseRippleAnimation()
 	}
 
-	private func releaseAnimation() {
-		setRippleLayer(touchLocation: startTouchLocation!, holdAnimation: false)
+	private func releaseRippleAnimation() {
+		setRippleLayer(touchLocation: startTouchLocation)
+		rippleAnimation(holdAnimation: false)
 
 		UIView.animate(withDuration: 0.1, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
 			self.rippleView.alpha = 1
@@ -86,32 +88,43 @@ public class VirtusizeUIBaseButton: UIButton {
 		})
 	}
 
-	private func setRippleLayer(touchLocation: CGPoint, holdAnimation: Bool) {
+	private func setRippleLayer(touchLocation: CGPoint?) {
 		if rippleShapeLayer != nil {
 			rippleShapeLayer?.removeFromSuperlayer()
 			rippleShapeLayer = nil
 		}
-		rippleShapeLayer = CAShapeLayer()
-		let maxBoundSize = max(bounds.size.width, bounds.size.height)
-		rippleShapeLayer!.bounds = CGRect(x: 0, y: 0, width: maxBoundSize, height: maxBoundSize)
-		rippleShapeLayer!.cornerRadius = maxBoundSize / 2
-		rippleShapeLayer!.path = UIBezierPath(
-			ovalIn: CGRect(x: 0, y: 0, width: maxBoundSize, height: maxBoundSize)
-		).cgPath
-		if backgroundColor?.isBright == true {
-			rippleShapeLayer!.fillColor = backgroundColor?.darker(by: 10)?.cgColor
-		} else {
-			rippleShapeLayer!.fillColor =  backgroundColor?.lighter(by: 20)?.cgColor
+
+		guard let touchLocation = touchLocation else {
+			return
 		}
-		rippleShapeLayer!.position =  CGPoint(x: touchLocation.x, y: touchLocation.y)
-		rippleShapeLayer!.opacity = 0
 
-		rippleView.layer.addSublayer(rippleShapeLayer!)
-
-		rippleShapeLayerAnimation(holdAnimation: holdAnimation)
+		let rippleLayer = configureRippleLayer(touchLocation: touchLocation)
+		rippleShapeLayer = rippleLayer
+		rippleView.layer.addSublayer(rippleLayer)
 	}
 
-	private func rippleShapeLayerAnimation(holdAnimation: Bool) {
+	private func configureRippleLayer(touchLocation: CGPoint) -> CAShapeLayer {
+		let rippleLayer = CAShapeLayer()
+		let maxBoundSize = max(bounds.size.width, bounds.size.height)
+		rippleLayer.bounds = CGRect(x: 0, y: 0, width: maxBoundSize, height: maxBoundSize)
+		rippleLayer.cornerRadius = maxBoundSize / 2
+		rippleLayer.path = UIBezierPath(
+			ovalIn: CGRect(x: 0, y: 0, width: maxBoundSize, height: maxBoundSize)
+		).cgPath
+
+		if backgroundColor?.isBright == true {
+			rippleLayer.fillColor = backgroundColor?.darker(by: 10)?.cgColor
+		} else {
+			rippleLayer.fillColor = backgroundColor?.lighter(by: 20)?.cgColor
+		}
+
+		rippleLayer.position = CGPoint(x: touchLocation.x, y: touchLocation.y)
+		rippleLayer.opacity = 0
+
+		return rippleLayer
+	}
+
+	private func rippleAnimation(holdAnimation: Bool) {
 		if holdAnimation {
 			let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
 			scaleAnimation.fromValue = 0.0
@@ -127,7 +140,7 @@ public class VirtusizeUIBaseButton: UIButton {
 			animationGroup.duration = CFTimeInterval(0.3)
 			animationGroup.isRemovedOnCompletion = false
 
-			rippleShapeLayer!.add(animationGroup, forKey: "holdRippleEffect")
+			rippleShapeLayer?.add(animationGroup, forKey: "holdRippleEffect")
 		} else {
 			let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
 			scaleAnimation.fromValue = 0.65
@@ -144,7 +157,7 @@ public class VirtusizeUIBaseButton: UIButton {
 			animationGroup.repeatCount = 1
 			animationGroup.isRemovedOnCompletion = true
 
-			rippleShapeLayer!.add(animationGroup, forKey: "releaseRippleEffect")
+			rippleShapeLayer?.add(animationGroup, forKey: "releaseRippleEffect")
 		}
 	}
 
