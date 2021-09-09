@@ -28,45 +28,45 @@ import Foundation
 import VirtusizeUIKit
 
 class TooltipViewController: UIViewController {
-	private var tooltip1: VirtusizeUITooltip?
+	private var generalTooltip: VirtusizeUITooltip?
 	private var tooltipParamsArray: [VirtusizeUITooltipParams] = []
 	private var tooltipParamsArrayIndex = 0
 
-	private var tooltip2: VirtusizeUITooltip?
+	private var fittingRoomEntryTooltip: VirtusizeUITooltip?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
 		title = "Tooltip Example"
 
-		let tooltip1Button = VirtusizeUIButton()
-		tooltip1Button.setTitle("Show Tooltip", for: .normal)
-		tooltip1Button.translatesAutoresizingMaskIntoConstraints = false
-		view.addSubview(tooltip1Button)
-		tooltip1Button.addTarget(self, action: #selector(showTooltip1), for: .touchUpInside)
+		let showTooltipButton = VirtusizeUIButton()
+		showTooltipButton.setTitle("Show Tooltip", for: .normal)
+		showTooltipButton.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(showTooltipButton)
+		showTooltipButton.addTarget(self, action: #selector(showTooltip1), for: .touchUpInside)
 
-		let tooltip2Button = VirtusizeUIRoundButton()
-		tooltip2Button.translatesAutoresizingMaskIntoConstraints = false
-		view.addSubview(tooltip2Button)
-		tooltip2Button.addTarget(self, action: #selector(showTooltip2), for: .touchUpInside)
+		let fittingRoomEntryButton = VirtusizeUIRoundButton()
+		fittingRoomEntryButton.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(fittingRoomEntryButton)
+		fittingRoomEntryButton.addTarget(self, action: #selector(showTooltip2), for: .touchUpInside)
 
 		NSLayoutConstraint.activate([
-			tooltip1Button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			tooltip1Button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-			tooltip2Button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-			tooltip2Button.topAnchor.constraint(equalTo: tooltip1Button.bottomAnchor, constant: 16)
+			showTooltipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			showTooltipButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+			fittingRoomEntryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+			fittingRoomEntryButton.topAnchor.constraint(equalTo: showTooltipButton.bottomAnchor, constant: 16)
 		])
 
 		tooltipParamsArray.append(
 			VirtusizeUITooltipParamsBuilder()
-				.setAnchorView(tooltip1Button)
+				.setAnchorView(showTooltipButton)
 				.setText(text: "A tooltip appears adjacent to the element. Clicking \"Close\" will dismiss the tooltip.")
 				.build()
 		)
 
 		tooltipParamsArray.append(
 			VirtusizeUITooltipParamsBuilder()
-				.setAnchorView(tooltip1Button)
+				.setAnchorView(showTooltipButton)
 				.setText(text: "You can set an \"invertedStyle\" prop to change the color. or \"position\" prop to change the position relative to the anchor")
 				.setPosition(pos: .top)
 				.invertedStyle()
@@ -75,7 +75,7 @@ class TooltipViewController: UIViewController {
 
 		tooltipParamsArray.append(
 			VirtusizeUITooltipParamsBuilder()
-				.setAnchorView(tooltip1Button)
+				.setAnchorView(showTooltipButton)
 				.setText(text: "You can also set \"hideTip\" and \"hideCloseButton\" to not show each of these")
 				.hideTip()
 				.hideCloseButton()
@@ -84,7 +84,7 @@ class TooltipViewController: UIViewController {
 
 		tooltipParamsArray.append(
 			VirtusizeUITooltipParamsBuilder()
-				.setAnchorView(tooltip1Button)
+				.setAnchorView(showTooltipButton)
 				.setText(
 					text: "You can also set \"showOverlay\" prop to show a dark overlay, " +
 						"and \"noBorder\" to remove the border around the carrot"
@@ -95,9 +95,9 @@ class TooltipViewController: UIViewController {
 				.build()
 		)
 
-		tooltip2 = VirtusizeUITooltip(
+		fittingRoomEntryTooltip = VirtusizeUITooltip(
 			params: VirtusizeUITooltipParamsBuilder()
-				.setAnchorView(tooltip2Button)
+				.setAnchorView(fittingRoomEntryButton)
 				.setPosition(pos: .left)
 				.hideCloseButton()
 				.noBorder()
@@ -106,8 +106,8 @@ class TooltipViewController: UIViewController {
 	}
 
 	@objc private func showTooltip1() {
-		tooltip1 = VirtusizeUITooltip(params: tooltipParamsArray[tooltipParamsArrayIndex])
-		tooltip1?.show()
+		generalTooltip = VirtusizeUITooltip(params: tooltipParamsArray[tooltipParamsArrayIndex])
+		generalTooltip?.show()
 		tooltipParamsArrayIndex += 1
 		if tooltipParamsArrayIndex > tooltipParamsArray.count - 1 {
 			tooltipParamsArrayIndex = 0
@@ -115,6 +115,6 @@ class TooltipViewController: UIViewController {
 	}
 
 	@objc private func showTooltip2() {
-		tooltip2?.show()
+		fittingRoomEntryTooltip?.show()
 	}
 }
