@@ -151,7 +151,6 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 extension VirtusizeButton: VirtusizeEventHandler {
 
 	public func userOpenedWidget() {
-		print("userOpenedWidget")
 		handleUserOpenedWidget()
 	}
 

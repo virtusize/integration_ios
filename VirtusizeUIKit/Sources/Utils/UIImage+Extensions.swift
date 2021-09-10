@@ -1,5 +1,5 @@
 //
-//  Image+Extensions.swift
+//  UIImage+Extensions.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -51,5 +51,32 @@ public extension UIImage {
 		}
 		UIGraphicsEndImageContext()
 		return imageWithInsets
+	}
+
+	func resize(to newSize: CGSize) -> UIImage {
+		let image = UIGraphicsImageRenderer(size: newSize).image { (_) in
+			draw(in: CGRect(origin: .zero, size: newSize))
+		}
+		return image.withRenderingMode(renderingMode)
+	}
+
+	func withAlpha(_ alpha: CGFloat) -> UIImage {
+		return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { (_) in
+			draw(in: CGRect(origin: .zero, size: size), blendMode: .normal, alpha: alpha)
+		}
+	}
+
+	func tintColor(_ color: UIColor) -> UIImage? {
+		let image = withRenderingMode(.alwaysTemplate)
+		UIGraphicsBeginImageContextWithOptions(size, false, scale)
+		color.set()
+		image.draw(in: CGRect(origin: .zero, size: size))
+
+		guard let coloredImage = UIGraphicsGetImageFromCurrentImageContext() else {
+			return nil
+		}
+
+		UIGraphicsEndImageContext()
+		return coloredImage
 	}
 }

@@ -36,13 +36,11 @@ class ProductViewController: UIViewController {
 		"vs_skirt",
 		"vs_pants"
 	]
-	public convenience init() {
-		self.init(nibName: nil, bundle: nil)
-	}
 
 	// swiftlint:disable function_body_length
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.backgroundColor = UIColor.white
 
 		let randomExternalID = externalIDList.randomElement()!
 		self.navigationItem.title = "Virtusize Product \(randomExternalID)"

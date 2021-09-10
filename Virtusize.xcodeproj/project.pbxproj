@@ -69,7 +69,6 @@
 		9C9797CA25BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9797C925BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift */; };
 		9CA4469F26CE1A2700D4013C /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA4469E26CE1A2700D4013C /* VirtusizeUIKit.framework */; };
 		9CA446A026CE1A2700D4013C /* VirtusizeUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA4469E26CE1A2700D4013C /* VirtusizeUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9CA446AD26CE2B6E00D4013C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446AC26CE2B6E00D4013C /* Colors.swift */; };
 		9CA4471626CE7A3800D4013C /* Virtusize.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4471526CE7A3800D4013C /* Virtusize.podspec */; };
 		9CA4473526CF834400D4013C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4473426CF834400D4013C /* Localization.swift */; };
 		9CA6820F24BC709300ADA871 /* VirtusizeParamsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA6820E24BC709300ADA871 /* VirtusizeParamsBuilder.swift */; };
@@ -195,7 +194,6 @@
 		9C969FDB24EC1DFD00DD642F /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		9C9797C925BEC18400E4F55D /* SwiftUIVirtusizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIVirtusizeViewController.swift; sourceTree = "<group>"; };
 		9CA4469E26CE1A2700D4013C /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9CA446AC26CE2B6E00D4013C /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9CA4471526CE7A3800D4013C /* Virtusize.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Virtusize.podspec; sourceTree = "<group>"; };
 		9CA4473426CF834400D4013C /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		9CA6820E24BC709300ADA871 /* VirtusizeParamsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeParamsBuilder.swift; sourceTree = "<group>"; };
@@ -432,7 +430,6 @@
 				9CEAB7AD24D67EBE00F969E1 /* HTTPURLResponse+Extensions.swift */,
 				9C106EED24FF99390012EE51 /* String+Extensions.swift */,
 				9CFF411225B98FA900B21D4E /* Observable.swift */,
-				9CA446AC26CE2B6E00D4013C /* Colors.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -712,7 +709,6 @@
 				9C7DA17324973FBD00AD6B42 /* APISessionProtocol.swift in Sources */,
 				9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */,
 				9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */,
-				9CA446AD26CE2B6E00D4013C /* Colors.swift in Sources */,
 				9C1169342521F270006827B9 /* VirtusizeGetSizeParams.swift in Sources */,
 				9C11691F2521DEB1006827B9 /* VirtusizeAnyCodable.swift in Sources */,
 				9CA4473526CF834400D4013C /* Localization.swift in Sources */,

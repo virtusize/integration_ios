@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C5B6ABC26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */; };
+		9C5B6ABE26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B6ABD26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift */; };
 		9CA4468426CE192100D4013C /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */; };
 		9CA4468926CE192100D4013C /* VirtusizeUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */; };
 		9CA4468B26CE192100D4013C /* VirtusizeUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,10 +25,14 @@
 		9CA446FA26CE448D00D4013C /* NotoSansCJKJP-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CA446F826CE448D00D4013C /* NotoSansCJKJP-Medium.ttf */; };
 		9CA4471826CE7A4700D4013C /* VirtusizeUIKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */; };
 		9CA4472526CF602300D4013C /* BundleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472426CF602300D4013C /* BundleLoader.swift */; };
-		9CA4472726CF603700D4013C /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472626CF603700D4013C /* Image+Extensions.swift */; };
+		9CA4472726CF603700D4013C /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472626CF603700D4013C /* UIImage+Extensions.swift */; };
 		9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472826CF687800D4013C /* VirtusizeAssets.swift */; };
 		9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4472A26CF689B00D4013C /* Base64ImageString.swift */; };
 		9CA4473826CF84F900D4013C /* VirtusizeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4473626CF84F900D4013C /* VirtusizeLocalizable.strings */; };
+		9CA4DBAA26DDEB280031FD4E /* VirtusizeUIBaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4DBA926DDEB280031FD4E /* VirtusizeUIBaseButton.swift */; };
+		9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */; };
+		9CC9297026D385BB00AD97D1 /* VirtusizeUIButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9296F26D385BA00AD97D1 /* VirtusizeUIButtonStyle.swift */; };
+		9CDAE6C926CF93FE00CBF7EF /* VirtusizeUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */; };
 		9CDAE6CC26CF9A9300CBF7EF /* VirtusizeAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButtonSize.swift; sourceTree = "<group>"; };
+		9C5B6ABD26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIRoundButton.swift; sourceTree = "<group>"; };
 		9C8692C626CF8581005ECBE1 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
 		9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtusizeUIKit.h; sourceTree = "<group>"; };
@@ -63,11 +71,15 @@
 		9CA4471726CE7A4700D4013C /* VirtusizeUIKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = VirtusizeUIKit.podspec; path = ../VirtusizeUIKit.podspec; sourceTree = "<group>"; };
 		9CA4472226CF5F3000D4013C /* VirtusizeAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VirtusizeAssets.xcassets; sourceTree = "<group>"; };
 		9CA4472426CF602300D4013C /* BundleLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleLoader.swift; sourceTree = "<group>"; };
-		9CA4472626CF603700D4013C /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
+		9CA4472626CF603700D4013C /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9CA4472826CF687800D4013C /* VirtusizeAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAssets.swift; sourceTree = "<group>"; };
 		9CA4472A26CF689B00D4013C /* Base64ImageString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64ImageString.swift; sourceTree = "<group>"; };
 		9CA4473726CF84F900D4013C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
+		9CA4DBA926DDEB280031FD4E /* VirtusizeUIBaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIBaseButton.swift; sourceTree = "<group>"; };
+		9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		9CC9296F26D385BA00AD97D1 /* VirtusizeUIButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButtonStyle.swift; sourceTree = "<group>"; };
 		9CDAE6C326CF85A000CBF7EF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/VirtusizeLocalizable.strings; sourceTree = "<group>"; };
+		9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +124,7 @@
 		9CA4467C26CE192100D4013C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9CDAE6C726CF93F100CBF7EF /* Buttons */,
 				9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */,
 				9CA4467E26CE192100D4013C /* Info.plist */,
 				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
@@ -185,9 +198,10 @@
 			isa = PBXGroup;
 			children = (
 				9CA4472426CF602300D4013C /* BundleLoader.swift */,
-				9CA4472626CF603700D4013C /* Image+Extensions.swift */,
+				9CA4472626CF603700D4013C /* UIImage+Extensions.swift */,
 				9CA4472826CF687800D4013C /* VirtusizeAssets.swift */,
 				9CA4472A26CF689B00D4013C /* Base64ImageString.swift */,
+				9CC9296D26D367F200AD97D1 /* UIColor+Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -200,6 +214,18 @@
 			name = Localizations;
 			path = /Users/kuei/Desktop/Virtusize/integration_ios/VirtusizeUIKit/Sources/Resources/Localizations;
 			sourceTree = "<absolute>";
+		};
+		9CDAE6C726CF93F100CBF7EF /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */,
+				9CC9296F26D385BA00AD97D1 /* VirtusizeUIButtonStyle.swift */,
+				9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */,
+				9C5B6ABD26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift */,
+				9CA4DBA926DDEB280031FD4E /* VirtusizeUIBaseButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -324,14 +350,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CA4472926CF687800D4013C /* VirtusizeAssets.swift in Sources */,
+				9CDAE6C926CF93FE00CBF7EF /* VirtusizeUIButton.swift in Sources */,
 				9CA4472526CF602300D4013C /* BundleLoader.swift in Sources */,
+				9CC9297026D385BB00AD97D1 /* VirtusizeUIButtonStyle.swift in Sources */,
 				9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */,
 				9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */,
 				9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */,
-				9CA4472726CF603700D4013C /* Image+Extensions.swift in Sources */,
+				9CA4472726CF603700D4013C /* UIImage+Extensions.swift in Sources */,
 				9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */,
+				9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */,
 				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,
 				9CA446D526CE37BD00D4013C /* VirtusizeUILanguage.swift in Sources */,
+				9C5B6ABE26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift in Sources */,
+				9CA4DBAA26DDEB280031FD4E /* VirtusizeUIBaseButton.swift in Sources */,
+				9C5B6ABC26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
