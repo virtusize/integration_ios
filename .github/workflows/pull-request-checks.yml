@@ -7,8 +7,6 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Dependencies
-        run: pod install --repo-update
       - name: Build the project
         run: make build
       - name: Swift Lint
