@@ -16,22 +16,21 @@ export HELP_MESSAGE
 
 build:
 
-	xcodebuild build \
-		-quiet \
-		-workspace "Virtusize.xcworkspace" \
-		-scheme "Virtusize" \
-		-destination "platform=iOS Simulator,name=iPhone 8,OS=14.4" \
-		clean build
-
-test:
-
-	xcodebuild build \
+	xcodebuild clean build \
 		-quiet \
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "Virtusize" \
 		-sdk "iphonesimulator" \
-		-destination "platform=iOS Simulator,name=iPhone 8,OS=14.4" \
-		clean build test
+		-destination "platform=iOS Simulator,name=iPhone 8,OS=latest"
+
+test:
+
+	xcodebuild clean test \
+		-quiet \
+		-workspace "Virtusize.xcworkspace" \
+		-scheme "Virtusize" \
+		-sdk "iphonesimulator" \
+		-destination "platform=iOS Simulator,name=iPhone 8,OS=latest"
 
 clean:
 
