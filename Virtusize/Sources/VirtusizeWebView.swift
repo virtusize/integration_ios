@@ -353,23 +353,13 @@ extension VirtusizeWebView: WKNavigationDelegate {
 		authenticationChallenge challenge: URLAuthenticationChallenge,
 		shouldAllowDeprecatedTLS decisionHandler: @escaping (Bool) -> Void
 	) {
-		if wkNavigationDelegate?.webView?(
+		guard wkNavigationDelegate?.webView?(
 			webView,
 			authenticationChallenge: challenge,
 			shouldAllowDeprecatedTLS: decisionHandler
-		) == nil {
+		) != nil else {
 			decisionHandler(false)
 			return
 		}
-	}
-
-	@available(iOS 14.5, *)
-	public func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
-		wkNavigationDelegate?.webView?(webView, navigationAction: navigationAction, didBecome: download)
-	}
-
-	@available(iOS 14.5, *)
-	public func webView(_ webView: WKWebView, navigationResponse: WKNavigationResponse, didBecome download: WKDownload) {
-		wkNavigationDelegate?.webView?(webView, navigationResponse: navigationResponse, didBecome: download)
 	}
 }

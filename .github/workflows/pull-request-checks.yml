@@ -4,7 +4,7 @@ on: [pull_request]
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -14,7 +14,7 @@ jobs:
         run: make build
 
   lint:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
         run: pod lib lint --allow-warnings
 
   test:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2

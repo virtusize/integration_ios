@@ -28,7 +28,7 @@ test:
 	xcodebuild clean test \
 		-quiet \
 		-workspace "Virtusize.xcworkspace" \
-		-scheme "Virtusize" \
+		-scheme "VirtusizeTests" \
 		-sdk "iphonesimulator" \
 		-destination "platform=iOS Simulator,name=iPhone 8,OS=latest"
 
