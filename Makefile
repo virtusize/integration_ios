@@ -20,7 +20,7 @@ build:
 		-quiet \
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "Virtusize" \
-		-destination "platform=iOS Simulator,name=iPhone 8,OS=13.5" \
+		-destination "platform=iOS Simulator,name=iPhone 8,OS=14.4" \
 		clean build
 
 test:
@@ -30,7 +30,7 @@ test:
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "Virtusize" \
 		-sdk "iphonesimulator" \
-		-destination "platform=iOS Simulator,name=iPhone 8,OS=13.5" \
+		-destination "platform=iOS Simulator,name=iPhone 8,OS=14.4" \
 		clean build test
 
 clean:
