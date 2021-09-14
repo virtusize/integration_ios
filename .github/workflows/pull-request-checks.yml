@@ -1,0 +1,21 @@
+name: Pull request CI checks
+
+on: [pull_request]
+
+build:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run:
+        pod install --repo-update
+	- name: Build the project
+      run:
+        make build
+    - name: Swift Lint
+      run: swiftlint
+    - name: Run Tests
+      run:
+		make test
+    - name: Pod Lint
+      run: pod lib lint --allow-warnings
