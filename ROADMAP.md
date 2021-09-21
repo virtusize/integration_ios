@@ -1,8 +1,14 @@
 # ROADMAP
 
+## 2.4.0
+
+### Release date:
+
+- [x] Setup Github Actions for CI/CD
+
 ## 2.3.0
 
-### Release date: 
+### Release date: 21/08/16
 
 - [x] Fix bugs and improve the way to integrate the SDK
 
