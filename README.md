@@ -54,7 +54,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 ## Requirements
 
 - iOS 10.3+
-- Xcode 11+
+- Xcode 12+
 - Swift 5.0+
 
 
