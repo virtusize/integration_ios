@@ -1,0 +1,32 @@
+name: Pull request CI checks
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Clean build directory
+        run: make clean
+      - name: Execute build
+        run: make build
+
+  lint:
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Swift Lint
+        run: swiftlint
+      - name: Pod Lint
+        run: pod lib lint --allow-warnings
+
+  test:
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Run Tests
+        run: make test
