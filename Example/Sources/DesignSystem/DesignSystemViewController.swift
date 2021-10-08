@@ -29,7 +29,7 @@ class DesignSystemViewController: UITableViewController {
 	enum DesignSystemComponent: Int, CaseIterable {
 		case button
 		case tooltip
-		
+
 		var title: String {
 			switch self {
 				case .button: return "Buttons"
