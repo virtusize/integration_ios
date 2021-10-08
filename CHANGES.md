@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.4.0
+
+- Feature: Setup Github Actions for CI/CD
+
 ### 2.3.2
 - Bugfix: Fix the SNS login issue on Fit Illustrator
 

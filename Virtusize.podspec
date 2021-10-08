@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name = 'Virtusize'
-	s.version = '2.3.2'
+  s.version = '2.4.0'
 	s.license = { :type => 'MIT', :file => 'LICENSE' }
 	s.summary = 'Integrate Virtusize on iOS devices'
 	s.homepage = 'https://www.virtusize.com/'
@@ -13,7 +13,6 @@ Pod::Spec.new do |s|
 	s.swift_version = '5'
 	
 	s.source_files = ['Virtusize/Sources/*.{swift, h}', 'Virtusize/Sources/**/*.swift']
-	
 	s.subspec 'VirtusizeCore' do |core|
 		core.source_files = ['VirtusizeCore/Sources/*.{swift, h}', 'VirtusizeCore/Sources/**/*.swift']
 		core.resource_bundle = {
@@ -21,7 +20,6 @@ Pod::Spec.new do |s|
 		}
 	end
 	# s.dependency = 'VirtusizeCore', s.version
-	
 	s.subspec 'VirtusizeUIKit' do |ui_kit|
 		ui_kit.source_files = ['VirtusizeUIKit/Sources/*.{swift, h}', 'VirtusizeUIKit/Sources/**/*.swift']
 		ui_kit.resources = 'VirtusizeUIKit/Sources/Resources/**/*.otf'

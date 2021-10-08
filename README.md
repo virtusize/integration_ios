@@ -54,7 +54,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 ## Requirements
 
 - iOS 10.3+
-- Xcode 10.1+
+- Xcode 12+
 - Swift 5.0+
 
 
@@ -79,7 +79,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.3.2'
+pod 'Virtusize', '~> 2.4.0'
 end
 ```
 
