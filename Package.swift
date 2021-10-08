@@ -15,15 +15,22 @@ let package = Package(
 	targets: [
 		.target(
 			name: "Virtusize",
-			dependencies: ["VirtusizeUIKit"],
+			dependencies: ["VirtusizeUIKit", "VirtusizeCore"],
 			path: "Virtusize/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
 		),
 		.target(
 			name: "VirtusizeUIKit",
-			dependencies: [],
+			dependencies: ["VirtusizeCore"],
 			path: "VirtusizeUIKit/Sources",
+			exclude: ["Info.plist"],
+			resources: [.process("Resources")]
+		),
+		.target(
+			name: "VirtusizeCore",
+			dependencies: [],
+			path: "VirtusizeCore/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
 		)

@@ -1,7 +1,8 @@
 //
-//  Localization.swift
+//  VirtusizeCoreTests.swift
+//  VirtusizeCoreTests
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,25 +23,29 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-import VirtusizeCore
+import XCTest
+@testable import VirtusizeCore
 
-/// This class is used to localize texts in the SDK
-internal class Localization {
+class VirtusizeCoreTests: XCTestCase {
 
-	static let shared: Localization = Localization()
+    override func setUpWithError() throws {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
 
-	/// Localizes a text corresponding to a key
-	///
-	/// - Parameters:
-	///   - key: The key for a string in the table identified by tableName.
-	///   - language: Pass `VirtusizeLanguage` if you'd like to localize the text in a designated language
-	/// - Returns: A localized string based on the device's default language
-	func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
-		return BundleLoader.localizationBundle(
-			language: language?.rawValue ?? Virtusize.params?.language.rawValue
-		).localizedString(
-			forKey: key, value: nil, table: "VirtusizeLocalizable"
-		)
-	}
+    override func tearDownWithError() throws {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+
+    func testExample() throws {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+
+    func testPerformanceExample() throws {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 //
-//  Localization.swift
+//  VirtusizeUIKitBundleLoader.swift
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,25 +22,13 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
 import VirtusizeCore
+import Foundation
 
-/// This class is used to localize texts in the SDK
-internal class Localization {
-
-	static let shared: Localization = Localization()
-
-	/// Localizes a text corresponding to a key
-	///
-	/// - Parameters:
-	///   - key: The key for a string in the table identified by tableName.
-	///   - language: Pass `VirtusizeLanguage` if you'd like to localize the text in a designated language
-	/// - Returns: A localized string based on the device's default language
-	func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
-		return BundleLoader.localizationBundle(
-			language: language?.rawValue ?? Virtusize.params?.language.rawValue
-		).localizedString(
-			forKey: key, value: nil, table: "VirtusizeLocalizable"
-		)
-	}
+public class VirtusizeUIKitBundleLoader: BundleLoaderProtocol {
+	public static let bundleClass: AnyClass = VirtusizeUIKitBundleLoader.self
+	public static let bundleName = "VirtusizeUIKit"
+	#if SWIFT_PACKAGE
+	public static let spmResourceBundle  = Bundle.module
+	#endif
 }

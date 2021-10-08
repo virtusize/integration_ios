@@ -1,7 +1,8 @@
 //
-//  UIApplication+Extensions.swift
+//  VirtusizeCore.h
+//  VirtusizeCore
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,28 +23,14 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
+#import <Foundation/Foundation.h>
 
-#if !os(watchOS)
-internal extension UIApplication {
+//! Project version number for VirtusizeCore.
+FOUNDATION_EXPORT double VirtusizeCoreVersionNumber;
 
-	/// A safe accessor for `UIApplication.shared`
-	///
-	/// - Note: `UIApplication.shared` is not supported under app extension. It needs to be accessed in a safe way.
-	static var safeShared: UIApplication? {
-		let sharedSelector = NSSelectorFromString("sharedApplication")
-		guard UIApplication.responds(to: sharedSelector) else {
-			return nil
-		}
-		return UIApplication.perform(sharedSelector)?.takeUnretainedValue() as? UIApplication
-	}
+//! Project version string for VirtusizeCore.
+FOUNDATION_EXPORT const unsigned char VirtusizeCoreVersionString[];
 
-	/// A safe accessor to call the function that opens a URL
-	func safeOpenURL(_ url: URL) {
-		guard self.canOpenURL(url) else { return }
-		guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
-			return
-		}
-	}
-}
-#endif
+// In this header, you should import all the public headers of your framework using statements like #import <VirtusizeCore/PublicHeader.h>
+
+

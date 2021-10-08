@@ -42,6 +42,7 @@ public extension Color {
 	static var vsTealPressedColor: Color { Color(UIColor.vsTealPressedColor) }
 	static var vsGrdPrimaryDarkColor: Color { Color(UIColor.vsGrdPrimaryDarkColor) }
 	static var vsShadowColor: Color { Color(UIColor.vsShadowColor) }
+	static var vsOverlayColor: Color { Color(UIColor.vsOverlayColor) }
 }
 #endif
 
@@ -60,4 +61,5 @@ public extension UIColor {
 	static var vsTealPressedColor: UIColor { #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1) }
 	static var vsGrdPrimaryDarkColor: UIColor { #colorLiteral(red: 0.0862745098, green: 0.7764705882, blue: 0.7254901961, alpha: 1) }
 	static var vsShadowColor: UIColor { #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.12) }
+	static var vsOverlayColor: UIColor { #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6049972756) }
 }

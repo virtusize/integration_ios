@@ -1,7 +1,8 @@
 //
-//  BundleLoader.swift
+//  UIApplication+Extensions.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2021 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +23,28 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-/// The class is to access different types of bundles for the SDK
-public class BundleLoader: NSObject {
-	/// The bundle is used for resources like images
-	public static var virtusizeUIKitResourceBundle: Bundle {
-		var bundle: Bundle?
-		// Swift Package Manager bundle
-		#if SWIFT_PACKAGE
-		bundle = Bundle.module
-		#endif
+#if !os(watchOS)
+public extension UIApplication {
 
-		if bundle == nil {
-			// VirtusizeUIKit.bundle
-			bundle = Bundle(path: "VirtusizeUIKit.bundle")
+	/// A safe accessor for `UIApplication.shared`
+	///
+	/// - Note: `UIApplication.shared` is not supported under app extension. It needs to be accessed in a safe way.
+	static var safeShared: UIApplication? {
+		let sharedSelector = NSSelectorFromString("sharedApplication")
+		guard UIApplication.responds(to: sharedSelector) else {
+			return nil
 		}
+		return UIApplication.perform(sharedSelector)?.takeUnretainedValue() as? UIApplication
+	}
 
-		if bundle == nil {
-			// VirtusizeUIKit.framework/VirtusizeUIKit.bundle
-			if let path = Bundle(for: BundleLoader.self).path(forResource: "VirtusizeUIKit", ofType: "bundle") {
-				bundle = Bundle(path: path)
-			}
-		}
-
-		if bundle == nil {
-			// VirtusizeUIKit.framework
-			bundle = Bundle(for: self)
-		}
-
-		if let bundle = bundle {
-			return bundle
-		} else {
-			// Fallback to Bundle.main to ensure there is always a bundle.
-			return Bundle.main
+	/// A safe accessor to call the function that opens a URL
+	func safeOpenURL(_ url: URL) {
+		guard self.canOpenURL(url) else { return }
+		guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
+			return
 		}
 	}
 }
+#endif

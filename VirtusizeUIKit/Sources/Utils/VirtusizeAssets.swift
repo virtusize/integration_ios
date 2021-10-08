@@ -32,16 +32,24 @@ final public class VirtusizeAssets {
 		return Base64ImageString.cancel.image
 	}()
 
+	public static let closeBlack: UIImage? = {
+		return UIImage(named: "close_black")
+	}()
+
+    public static let closeWhite: UIImage? = {
+		return UIImage(named: "close_white")
+	}()
+
 	public static let errorHanger: UIImage? = {
-		return UIImage(bundleNamed: "error_hanger")
+		return UIImage(named: "error_hanger")
 	}()
 
 	public static let fbIcon: UIImage? = {
-		return UIImage(bundleNamed: "fb")
+		return UIImage(named: "fb")
 	}()
 
 	public static let heartSolid: UIImage? = {
-		return UIImage(bundleNamed: "heart_solid")
+		return UIImage(named: "heart_solid")
 	}()
 
 	public static let icon: UIImage? = {
@@ -49,7 +57,7 @@ final public class VirtusizeAssets {
 	}()
 
 	public static let lock: UIImage? = {
-		return UIImage(bundleNamed: "lock")
+		return UIImage(named: "lock")
 	}()
 
 	public static let logo: UIImage? = {
@@ -57,11 +65,11 @@ final public class VirtusizeAssets {
 	}()
 
 	public static let rightArrow: UIImage? = {
-		return UIImage(bundleNamed: "right_arrow")
+		return UIImage(named: "right_arrow")
 	}()
 
 	public static let searchProduct: UIImage? = {
-		return UIImage(bundleNamed: "search_product")
+		return UIImage(named: "search_product")
 	}()
 
 	public static let vsSignature: UIImage? = {
@@ -75,9 +83,9 @@ final public class VirtusizeAssets {
 	///   - style: The product style, which is fetched from the store product info
 	/// - Returns: The  product type placeholder`UIImage`
 	public static func getProductPlaceholderImage(productType: Int, style: String? = nil) -> UIImage? {
-		var placeholderImage = UIImage(bundleNamed: "\(productType)")
+		var placeholderImage = UIImage(named: "\(productType)")
 		if let style = style,
-		   let productTypeWithStyleImage = UIImage(bundleNamed: "\(productType)_\(style)") {
+		   let productTypeWithStyleImage = UIImage(named: "\(productType)_\(style)") {
 			placeholderImage = productTypeWithStyleImage
 		}
 		return placeholderImage

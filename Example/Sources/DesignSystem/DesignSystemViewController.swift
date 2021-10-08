@@ -28,10 +28,12 @@ import UIKit
 class DesignSystemViewController: UITableViewController {
 	enum DesignSystemComponent: Int, CaseIterable {
 		case button
-
+		case tooltip
+		
 		var title: String {
 			switch self {
-			case .button: return "Buttons"
+				case .button: return "Buttons"
+				case .tooltip: return "Tooltips"
 			}
 		}
 	}
@@ -63,10 +65,15 @@ class DesignSystemViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		guard DesignSystemComponent(rawValue: indexPath.row) != nil else { return }
+		guard let component = DesignSystemComponent(rawValue: indexPath.row) else { return }
 
-		let viewController = ButtonViewController()
-		navigationController?.pushViewController(viewController, animated: true)
+		if component == .button {
+			let viewController = ButtonViewController()
+			navigationController?.pushViewController(viewController, animated: true)
+		} else if component == .tooltip {
+			let viewController = TooltipViewController()
+			navigationController?.pushViewController(viewController, animated: true)
+		}
 	}
 
 }

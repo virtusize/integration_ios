@@ -29,8 +29,12 @@ public extension UIImage {
 	/// Creates a `UIImage` object in the VirtusizeUIKit framework bundle.
 	///
 	/// - Parameter name: The image name.
-	convenience init?(bundleNamed name: String) {
-		self.init(named: name, in: BundleLoader.virtusizeUIKitResourceBundle, compatibleWith: nil)
+	internal convenience init?(named: String) {
+		self.init(
+			named: named,
+			in: VirtusizeUIKitBundleLoader.resourceBundle,
+			compatibleWith: nil
+		)
 	}
 
 	/// Adds the padding to a `UIImage`
