@@ -1,6 +1,6 @@
 //
-//  VirtusizeNotification.swift
-//  VirtusizeUIKit
+//  DesignSystemComponent.swift
+//  Example
 //
 //  Copyright (c) 2021 Virtusize KK
 //
@@ -23,27 +23,17 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
+enum DesignSystemComponent: Int, CaseIterable {
+	case button
+	case tooltip
+	case notification
 
-public class VirtusizeNotification: UIView {
-
-	public var autoClose = true
-	public var autoCloseDelay = 2000
-	public var position = VirtusizePosition.top
-
-	public init (
-		title: String,
-		style: VirtusizeNotificationStyle = .info
-	) {
-		super.init(frame: .zero)
-	}
-
-	@available(*, unavailable)
-	public required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented. Use init(title:, style:) instead.")
-	}
-	
-	public func show() {
-		
+	var title: String {
+		switch self {
+			case .button: return "Buttons"
+			case .tooltip: return "Tooltips"
+			case .notification: return "Notifications"
+		}
 	}
 }
+

@@ -1,6 +1,6 @@
 //
-//  VirtusizeNotification.swift
-//  VirtusizeUIKit
+//  NotificationViewController.swift
+//  Example
 //
 //  Copyright (c) 2021 Virtusize KK
 //
@@ -24,26 +24,20 @@
 //
 
 import UIKit
+import VirtusizeUIKit
 
-public class VirtusizeNotification: UIView {
+class NotificationViewController: UIViewController {
 
-	public var autoClose = true
-	public var autoCloseDelay = 2000
-	public var position = VirtusizePosition.top
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.backgroundColor = .white
+		title = DesignSystemComponent.notification.title
 
-	public init (
-		title: String,
-		style: VirtusizeNotificationStyle = .info
-	) {
-		super.init(frame: .zero)
-	}
+		let notification = VirtusizeNotification(
+			title: "Test Notification",
+			style: .info
+		)
 
-	@available(*, unavailable)
-	public required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented. Use init(title:, style:) instead.")
-	}
-	
-	public func show() {
-		
+		notification.show()
 	}
 }
