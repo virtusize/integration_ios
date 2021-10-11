@@ -42,7 +42,7 @@ class APIEndpointsTests: XCTestCase {
     func testProductDataCheckEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.productDataCheck(externalId: dummyExternalId)
 
-        XCTAssertEqual(endpoint.components.host, "services.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/stg/product/check")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 3)
@@ -89,7 +89,7 @@ class APIEndpointsTests: XCTestCase {
 
 		let endpoint = APIEndpoints.virtusizeWebView
 
-		XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
+		XCTAssertEqual(endpoint.components.host, "static.api.virtusize.com")
 		XCTAssertEqual(endpoint.components.path, "/a/aoyama/staging/sdk-webview.html")
 
 		XCTAssertNil(endpoint.components.queryItems)
@@ -98,7 +98,7 @@ class APIEndpointsTests: XCTestCase {
     func testStoreViewApiKeyEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.storeViewApiKey
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/stores/api-key/test_APIKey")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 1)
@@ -111,7 +111,7 @@ class APIEndpointsTests: XCTestCase {
     func testOrdersEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.orders
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/orders")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -120,7 +120,7 @@ class APIEndpointsTests: XCTestCase {
     func testStoreProductsEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.storeProducts(productId: 7110384)
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/store-products/7110384")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 1)
@@ -133,7 +133,7 @@ class APIEndpointsTests: XCTestCase {
     func testUserProductsEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.userProducts
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-products")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -142,7 +142,7 @@ class APIEndpointsTests: XCTestCase {
     func testProductTypesEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.productTypes
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/product-types")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -160,7 +160,7 @@ class APIEndpointsTests: XCTestCase {
     func testUserBodyMeasurementsEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.userBodyMeasurements
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-body-measurements")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -169,7 +169,7 @@ class APIEndpointsTests: XCTestCase {
     func testGetSizeEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.getSize
 
-        XCTAssertEqual(endpoint.components.host, "services.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/stg/ds-functions/size-rec/get-size")
 
         XCTAssertNil(endpoint.components.queryItems)

@@ -175,7 +175,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualError: VirtusizeError?
 
-		let requestURL = "https://staging.virtusize.jp/a/api/v3/stores/api-key/\(Virtusize.APIKey!)?format=json"
+		let requestURL = "https://staging.virtusize.com/a/api/v3/stores/api-key/\(Virtusize.APIKey!)?format=json"
 		let response = HTTPURLResponse(url: URL(string: requestURL)!, statusCode: 403, httpVersion: nil, headerFields: nil)
 		VirtusizeAPIService.session = MockURLSession(
 			data: TestFixtures.retrieveStoreInfoErrorJsonResponse.data(using: .utf8),
