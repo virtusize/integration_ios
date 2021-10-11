@@ -24,7 +24,7 @@
 
 /// This enum contains all available Virtusize environments
 public enum VirtusizeEnvironment: String, CaseIterable {
-	case staging="staging.virtusize.jp"
+	case staging="staging.virtusize.com"
 	case global="api.virtusize.com"
 	case japan="api.virtusize.jp"
 	case korea="api.virtusize.kr"
@@ -33,10 +33,10 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 	internal func servicesUrl() -> String {
 		// swiftlint:disable switch_case_alignment
 		switch self {
-			case .staging, .japan:
-				return "services.virtusize.jp"
-			case .global:
+			case .staging, .global:
 				return "services.virtusize.com"
+			case .japan:
+				return "services.virtusize.jp"
 			case .korea:
 				return "services.virtusize.kr"
 		}
@@ -50,10 +50,10 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 	/// Gets the static API URL for the `VirtusizeWebView` request
 	internal func virtusizeStaticApiUrl() -> String {
 		switch self {
-			case .staging, .japan:
-				return "static.api.virtusize.jp"
-			case .global:
+			case .staging, .global:
 				return "static.api.virtusize.com"
+			case .japan:
+				return "static.api.virtusize.jp"
 			case .korea:
 				return "static.api.virtusize.kr"
 		}
@@ -63,7 +63,7 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 	internal func eventApiUrl() -> String {
 		switch self {
 			case .staging:
-				return "events.staging.virtusize.jp"
+				return "events.staging.virtusize.com"
 			case .japan:
 				return "events.virtusize.jp"
 			case .global:
@@ -76,10 +76,10 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 	/// Gets the `VirtusizeRegion` corresponding to the Virtusize environment
 	internal func virtusizeRegion() -> VirtusizeRegion {
 		switch self {
-			case .staging, .japan:
-				return VirtusizeRegion.JAPAN
-			case .global:
+			case .staging, .global:
 				return VirtusizeRegion.COM
+			case .japan:
+				return VirtusizeRegion.JAPAN
 			case .korea:
 				return VirtusizeRegion.KOREA
 		}
