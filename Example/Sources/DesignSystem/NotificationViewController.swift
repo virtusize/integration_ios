@@ -33,7 +33,7 @@ class NotificationViewController: UIViewController {
 		view.backgroundColor = .white
 		title = DesignSystemComponent.notification.title
 
-		let notification = VirtusizeNotification(
+		let notification = VirtusizeUINotification(
 			title: "Test Notification",
 			style: .info
 		)

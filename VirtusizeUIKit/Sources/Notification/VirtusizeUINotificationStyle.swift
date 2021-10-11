@@ -1,5 +1,5 @@
 //
-//  VirtusizeNotificationStyle.swift
+//  VirtusizeUINotificationStyle.swift
 //  VirtusizeUIKit
 //
 //  Copyright (c) 2021 Virtusize KK
@@ -23,7 +23,7 @@
 //  THE SOFTWARE.
 //
 
-public enum VirtusizeNotificationStyle: Int {
+public enum VirtusizeUINotificationStyle: Int {
 	case info
 	case success
 	case error

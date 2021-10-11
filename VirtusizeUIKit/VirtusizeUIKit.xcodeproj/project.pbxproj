@@ -10,9 +10,9 @@
 		9C0BB97326DFB12E0043DC6D /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BB97226DFB12E0043DC6D /* CGRect+Extensions.swift */; };
 		9C5B6ABC26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */; };
 		9C5B6ABE26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B6ABD26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift */; };
-		9C8324A6270FF38A00157C80 /* VirtusizeNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324A5270FF38A00157C80 /* VirtusizeNotification.swift */; };
-		9C8324A82710118D00157C80 /* VirtusizeNotificationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324A72710118D00157C80 /* VirtusizeNotificationStyle.swift */; };
-		9C8324AA271012B300157C80 /* VirtusizeNotificationPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324A9271012B300157C80 /* VirtusizeNotificationPosition.swift */; };
+		9C8324A6270FF38A00157C80 /* VirtusizeUINotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324A5270FF38A00157C80 /* VirtusizeUINotification.swift */; };
+		9C8324A82710118D00157C80 /* VirtusizeUINotificationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324A72710118D00157C80 /* VirtusizeUINotificationStyle.swift */; };
+		9C8324AA271012B300157C80 /* VirtusizeUINotificationPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324A9271012B300157C80 /* VirtusizeUINotificationPosition.swift */; };
 		9CA4468426CE192100D4013C /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */; };
 		9CA4468926CE192100D4013C /* VirtusizeUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */; };
 		9CA4468B26CE192100D4013C /* VirtusizeUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,9 +71,9 @@
 		9C0BB97226DFB12E0043DC6D /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		9C5B6ABB26D8AAEC0083B7A3 /* VirtusizeUIButtonSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIButtonSize.swift; sourceTree = "<group>"; };
 		9C5B6ABD26D8B6730083B7A3 /* VirtusizeUIRoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIRoundButton.swift; sourceTree = "<group>"; };
-		9C8324A5270FF38A00157C80 /* VirtusizeNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeNotification.swift; sourceTree = "<group>"; };
-		9C8324A72710118D00157C80 /* VirtusizeNotificationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeNotificationStyle.swift; sourceTree = "<group>"; };
-		9C8324A9271012B300157C80 /* VirtusizeNotificationPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeNotificationPosition.swift; sourceTree = "<group>"; };
+		9C8324A5270FF38A00157C80 /* VirtusizeUINotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUINotification.swift; sourceTree = "<group>"; };
+		9C8324A72710118D00157C80 /* VirtusizeUINotificationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUINotificationStyle.swift; sourceTree = "<group>"; };
+		9C8324A9271012B300157C80 /* VirtusizeUINotificationPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUINotificationPosition.swift; sourceTree = "<group>"; };
 		9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VirtusizeUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtusizeUIKit.h; sourceTree = "<group>"; };
 		9CA4467E26CE192100D4013C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -130,9 +130,9 @@
 		9C8324A4270FF37000157C80 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
-				9C8324A5270FF38A00157C80 /* VirtusizeNotification.swift */,
-				9C8324A72710118D00157C80 /* VirtusizeNotificationStyle.swift */,
-				9C8324A9271012B300157C80 /* VirtusizeNotificationPosition.swift */,
+				9C8324A5270FF38A00157C80 /* VirtusizeUINotification.swift */,
+				9C8324A72710118D00157C80 /* VirtusizeUINotificationStyle.swift */,
+				9C8324A9271012B300157C80 /* VirtusizeUINotificationPosition.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -403,14 +403,14 @@
 				9CC9297026D385BB00AD97D1 /* VirtusizeUIButtonStyle.swift in Sources */,
 				9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */,
 				9CA4472B26CF689B00D4013C /* Base64ImageString.swift in Sources */,
-				9C8324AA271012B300157C80 /* VirtusizeNotificationPosition.swift in Sources */,
+				9C8324AA271012B300157C80 /* VirtusizeUINotificationPosition.swift in Sources */,
 				9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */,
-				9C8324A82710118D00157C80 /* VirtusizeNotificationStyle.swift in Sources */,
+				9C8324A82710118D00157C80 /* VirtusizeUINotificationStyle.swift in Sources */,
 				9CA4DBAF26DE2E9B0031FD4E /* VirtusizeUITooltipParamsBuilder.swift in Sources */,
 				9CA4472726CF603700D4013C /* UIImage+Extensions.swift in Sources */,
 				9C0BB97326DFB12E0043DC6D /* CGRect+Extensions.swift in Sources */,
 				9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */,
-				9C8324A6270FF38A00157C80 /* VirtusizeNotification.swift in Sources */,
+				9C8324A6270FF38A00157C80 /* VirtusizeUINotification.swift in Sources */,
 				9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */,
 				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,
 				9CA446D526CE37BD00D4013C /* VirtusizeUILanguage.swift in Sources */,
