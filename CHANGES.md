@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.4.1
+
+- Bugfix: Use the staging API for staging
+
 ### 2.4.0
 
 - Feature: Setup Github Actions for CI/CD
