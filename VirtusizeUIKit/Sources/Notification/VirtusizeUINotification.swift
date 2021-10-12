@@ -43,14 +43,23 @@ public class VirtusizeUINotification: UIView {
 		static let notificationMargin = CGFloat(8)
 		static let leftImageViewSize = CGFloat(24)
 		static let closeImageViewSize = CGFloat(16)
+		static let frameAnimationDuration = 0.2
 	}
 
-	private lazy var appWindow: UIWindow? = {
+	private var appWindow: UIWindow? {
 		return UIApplication.safeShared?.windows.first { $0.isKeyWindow }
-	}()
+	}
+	
+	private var statusBarHeight: CGFloat {
+		UIApplication.safeShared?.statusBarFrame.height ?? 0
+	}
 
-	private var titleLabelHeight: CGFloat {
+	private var notificationHeight: CGFloat {
 		return titleLabel.intrinsicContentSize.height + Constants.contentPadding * 2
+	}
+
+	private enum NotificationFrameStatus {
+		case start, end
 	}
 
 	public init (
@@ -60,7 +69,6 @@ public class VirtusizeUINotification: UIView {
 		super.init(frame: .zero)
 
 		backgroundColor = .vsGray900Color
-		layer.cornerRadius = 5
 		setNotificationShadow()
 
 		contentView = UIView()
@@ -130,37 +138,28 @@ public class VirtusizeUINotification: UIView {
 		])
 	}
 
-	public func show(position: VirtusizeUINotificationPosition = .top) {
+	public func show() {
 		guard !isDisplaying else { return }
 
-		self.setConstraintsForContentView(position: position)
-		self.updateFrame(position: position)
+		setConstraintsForContentView()
+		setFrame(.start)
 
-		self.appWindow?.addSubview(self)
+		appWindow?.addSubview(self)
 
-		self.isDisplaying = true
+		isDisplaying = true
 
-		alpha = 0
 		UIView.animate(
-			withDuration: 0,
-			delay: 0,
-			options: .curveEaseInOut,
+			withDuration: Constants.frameAnimationDuration,
+			delay: 0.0,
+			usingSpringWithDamping: 0.7,
+			initialSpringVelocity: 1,
+			options: .curveLinear,
 			animations: {
-				self.alpha = 1
+				self.setFrame(.end)
 			},
 			completion: { completed in
 				if completed && self.autoClose {
-					UIView.animate(
-						withDuration: 0,
-						delay: self.autoCloseDelay,
-						options: .curveEaseInOut,
-						animations: {
-							self.alpha = 0
-						},
-						completion: { _ in
-							self.dismiss()
-						}
-					)
+					self.dismiss()
 				}
 			}
 		)
@@ -170,42 +169,41 @@ public class VirtusizeUINotification: UIView {
 		guard isDisplaying else { return }
 
 		isDisplaying = false
-		self.removeFromSuperview()
+
+		UIView.animate(
+			withDuration: Constants.frameAnimationDuration,
+			delay: autoCloseDelay,
+			animations: {
+				self.setFrame(.start)
+			},
+			completion: { _ in
+				self.removeFromSuperview()
+			}
+		)
 	}
 
-	private func setConstraintsForContentView(position: VirtusizeUINotificationPosition) {
+	private func setConstraintsForContentView() {
 		guard let contentViewSuperview = contentView.superview else {
 			fatalError("contentView.superview is found nil.")
 		}
 
 		contentView.translatesAutoresizingMaskIntoConstraints = false
 		var contentViewConstraints: [NSLayoutConstraint] = []
-		if position == .top {
-			contentViewConstraints.append(contentView.topAnchor.constraint(equalTo: contentViewSuperview.topAnchor))
-		} else if position == .bottom {
-			contentViewConstraints.append(contentView.bottomAnchor.constraint(equalTo: contentViewSuperview.bottomAnchor))
-		}
+		contentViewConstraints.append(contentView.topAnchor.constraint(equalTo: contentViewSuperview.topAnchor))
 		contentViewConstraints.append(contentView.leftAnchor.constraint(equalTo: contentViewSuperview.leftAnchor))
 		contentViewConstraints.append(contentView.rightAnchor.constraint(equalTo: contentViewSuperview.rightAnchor))
-		contentViewConstraints.append(contentView.heightAnchor.constraint(equalToConstant: titleLabelHeight))
+		contentViewConstraints.append(contentView.heightAnchor.constraint(equalToConstant: notificationHeight))
 		NSLayoutConstraint.activate(contentViewConstraints)
 	}
 
-	private func updateFrame(position: VirtusizeUINotificationPosition) {
+	private func setFrame(_ status: NotificationFrameStatus) {
 		guard let window = appWindow else { return }
 
-		var bottomPadding: CGFloat = 0
-		if #available(iOS 11.0, *) {
-			bottomPadding = window.safeAreaInsets.bottom
-		}
-
 		frame = CGRect(
-			x: Constants.notificationMargin,
-			y: position == .top ?
-				(UIApplication.safeShared?.statusBarFrame.height ?? 0) :
-				window.screen.bounds.height - titleLabelHeight - Constants.notificationMargin - bottomPadding,
-			width: window.screen.bounds.width - Constants.notificationMargin * 2,
-			height: titleLabelHeight
+			x: 0,
+			y: statusBarHeight,
+			width: window.screen.bounds.width,
+			height: status == .start ? 0 : notificationHeight
 		)
 	}
 }

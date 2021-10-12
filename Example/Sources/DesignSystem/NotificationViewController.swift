@@ -27,17 +27,31 @@ import UIKit
 import VirtusizeUIKit
 
 class NotificationViewController: UIViewController {
+	private var notification: VirtusizeUINotification!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
 		title = DesignSystemComponent.notification.title
 
-		let notification = VirtusizeUINotification(
+		let defaultButton = VirtusizeUIButton()
+		defaultButton.setTitle("Show Notification", for: .normal)
+		defaultButton.translatesAutoresizingMaskIntoConstraints = false
+		defaultButton.addTarget(self, action: #selector(showNotification), for: .touchUpInside)
+		view.addSubview(defaultButton)
+
+		NSLayoutConstraint.activate([
+			defaultButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			defaultButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+		])
+
+		notification = VirtusizeUINotification(
 			title: "Test Notification",
 			style: .info
 		)
+	}
 
+	@objc func showNotification() {
 		notification.show()
 	}
 }
