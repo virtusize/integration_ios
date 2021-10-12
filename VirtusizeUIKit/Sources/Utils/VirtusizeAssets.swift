@@ -28,8 +28,16 @@ import UIKit
 final public class VirtusizeAssets {
 	public static let bundle = Bundle(for: VirtusizeAssets.self)
 
+	public static let alert: UIImage? = {
+		return UIImage(named: "alert")
+	}()
+
 	public static let cancel: UIImage? = {
 		return Base64ImageString.cancel.image
+	}()
+
+	public static let circleCheck: UIImage? = {
+		return UIImage(named: "circle_check")
 	}()
 
 	public static let closeBlack: UIImage? = {
@@ -54,6 +62,10 @@ final public class VirtusizeAssets {
 
 	public static let icon: UIImage? = {
 		return Base64ImageString.icon.image
+	}()
+
+	public static let info: UIImage? = {
+		return UIImage(named: "info")
 	}()
 
 	public static let lock: UIImage? = {

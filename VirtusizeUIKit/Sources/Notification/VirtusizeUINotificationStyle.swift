@@ -23,8 +23,18 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 public enum VirtusizeUINotificationStyle: Int {
 	case info
 	case success
 	case error
+
+	var icon: UIImage? {
+		switch self {
+			case .info: return VirtusizeAssets.info
+			case .success: return VirtusizeAssets.circleCheck
+			case .error: return VirtusizeAssets.alert
+		}
+	}
 }

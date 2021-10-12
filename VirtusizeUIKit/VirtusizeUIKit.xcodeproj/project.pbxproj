@@ -15,7 +15,6 @@
 		9CA4468426CE192100D4013C /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA4467A26CE192100D4013C /* VirtusizeUIKit.framework */; };
 		9CA4468926CE192100D4013C /* VirtusizeUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */; };
 		9CA4468B26CE192100D4013C /* VirtusizeUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CA4467D26CE192100D4013C /* VirtusizeUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */; };
 		9CA446A926CE261F00D4013C /* VirtusizeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446A826CE261F00D4013C /* VirtusizeColors.swift */; };
 		9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */; };
 		9CA446B426CE2E9900D4013C /* VirtusizeTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */; };
@@ -78,7 +77,6 @@
 		9CA4468326CE192100D4013C /* VirtusizeUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtusizeUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA4468826CE192100D4013C /* VirtusizeUIKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUIKitTests.swift; sourceTree = "<group>"; };
 		9CA4468A26CE192100D4013C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeUIKit.swift; sourceTree = "<group>"; };
 		9CA446A826CE261F00D4013C /* VirtusizeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeColors.swift; sourceTree = "<group>"; };
 		9CA446B126CE2D0F00D4013C /* VirtusizeFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeFont.swift; sourceTree = "<group>"; };
 		9CA446B326CE2E9900D4013C /* VirtusizeTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeTypography.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				9CDA632526E05FB9008C039B /* Supporting Files */,
 				9CA4DBAB26DE22DE0031FD4E /* Tooltip */,
 				9CDAE6C726CF93F100CBF7EF /* Buttons */,
-				9CA446A226CE1DBF00D4013C /* VirtusizeUIKit.swift */,
 				9CA446A726CE25DC00D4013C /* Colors */,
 				9CA446E426CE434900D4013C /* Resources */,
 				9CA446AE26CE2CD600D4013C /* Typography */,
@@ -405,7 +402,6 @@
 				9CA4DBAF26DE2E9B0031FD4E /* VirtusizeUITooltipParamsBuilder.swift in Sources */,
 				9CA4472726CF603700D4013C /* UIImage+Extensions.swift in Sources */,
 				9C0BB97326DFB12E0043DC6D /* CGRect+Extensions.swift in Sources */,
-				9CA446A326CE1DBF00D4013C /* VirtusizeUIKit.swift in Sources */,
 				9C8324A6270FF38A00157C80 /* VirtusizeUINotification.swift in Sources */,
 				9CC9296E26D367F200AD97D1 /* UIColor+Extensions.swift in Sources */,
 				9CA446B226CE2D0F00D4013C /* VirtusizeFont.swift in Sources */,

@@ -68,7 +68,7 @@ public class VirtusizeUINotification: UIView {
 	) {
 		super.init(frame: .zero)
 
-		backgroundColor = .vsGray900Color
+		backgroundColor = .white
 		setNotificationShadow()
 
 		contentView = UIView()
@@ -80,10 +80,11 @@ public class VirtusizeUINotification: UIView {
 	}
 
 	private func setNotificationShadow() {
+		layer.masksToBounds = false
 		layer.shadowColor = UIColor.vsShadowColor.cgColor
-		layer.shadowOpacity = 1
-		layer.shadowRadius = 16
 		layer.shadowOffset = CGSize(width: 0, height: 4)
+		layer.shadowRadius = 16
+		layer.shadowOpacity = 1
 	}
 
 	@available(*, unavailable)
@@ -92,7 +93,7 @@ public class VirtusizeUINotification: UIView {
 	}
 
 	private func setNotificationImageView(style: VirtusizeUINotificationStyle) {
-		notificationImageView = UIImageView(image: VirtusizeAssets.logo)
+		notificationImageView = UIImageView(image: style.icon)
 
 		contentView.addSubview(notificationImageView)
 
@@ -106,7 +107,7 @@ public class VirtusizeUINotification: UIView {
 	}
 
 	private func setCloseImageView() {
-		closeImageView = UIImageView(image: VirtusizeAssets.closeWhite)
+		closeImageView = UIImageView(image: VirtusizeAssets.closeBlack)
 		closeImageView.image = closeImageView.image?.withPadding(inset: 3)
 
 		contentView.addSubview(closeImageView)
@@ -125,7 +126,8 @@ public class VirtusizeUINotification: UIView {
 		titleLabel.text = title
 		titleLabel.numberOfLines = 0
 
-		titleLabel.textColor = .white
+		titleLabel.textColor = .vsGray900Color
+		titleLabel.font = VirtusizeTypography().smallFont
 
 		contentView.addSubview(titleLabel)
 
@@ -142,18 +144,15 @@ public class VirtusizeUINotification: UIView {
 		guard !isDisplaying else { return }
 
 		setConstraintsForContentView()
-		setFrame(.start)
 
 		appWindow?.addSubview(self)
 
 		isDisplaying = true
+		setFrame(.start)
 
 		UIView.animate(
 			withDuration: Constants.frameAnimationDuration,
 			delay: 0.0,
-			usingSpringWithDamping: 0.7,
-			initialSpringVelocity: 1,
-			options: .curveLinear,
 			animations: {
 				self.setFrame(.end)
 			},
@@ -200,10 +199,10 @@ public class VirtusizeUINotification: UIView {
 		guard let window = appWindow else { return }
 
 		frame = CGRect(
-			x: 0,
-			y: statusBarHeight,
-			width: window.screen.bounds.width,
-			height: status == .start ? 0 : notificationHeight
+			x: Constants.notificationMargin,
+			y: status == .start ? 0 : statusBarHeight,
+			width: window.screen.bounds.width - Constants.notificationMargin * 2,
+			height: notificationHeight
 		)
 	}
 }

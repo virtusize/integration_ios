@@ -46,7 +46,7 @@ class NotificationViewController: UIViewController {
 		])
 
 		notification = VirtusizeUINotification(
-			title: "Test Notification",
+			title: "Some informational message for you.",
 			style: .info
 		)
 	}
