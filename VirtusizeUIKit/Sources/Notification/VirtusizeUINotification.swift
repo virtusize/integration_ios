@@ -39,7 +39,8 @@ public class VirtusizeUINotification: UIView {
 	private var isDisplaying = false
 
 	private struct Constants {
-		static let padding = CGFloat(10)
+		static let contentPadding = CGFloat(10)
+		static let notificationMargin = CGFloat(8)
 		static let leftImageViewSize = CGFloat(24)
 		static let closeImageViewSize = CGFloat(16)
 	}
@@ -49,7 +50,7 @@ public class VirtusizeUINotification: UIView {
 	}()
 
 	private var titleLabelHeight: CGFloat {
-		return titleLabel.intrinsicContentSize.height + Constants.padding * 2
+		return titleLabel.intrinsicContentSize.height + Constants.contentPadding * 2
 	}
 
 	public init (
@@ -57,7 +58,10 @@ public class VirtusizeUINotification: UIView {
 		style: VirtusizeUINotificationStyle = .info
 	) {
 		super.init(frame: .zero)
+
 		backgroundColor = .vsGray900Color
+		layer.cornerRadius = 5
+		setNotificationShadow()
 
 		contentView = UIView()
 		addSubview(contentView)
@@ -65,6 +69,13 @@ public class VirtusizeUINotification: UIView {
 		setNotificationImageView(style: style)
 		setCloseImageView()
 		setTitle(title)
+	}
+
+	private func setNotificationShadow() {
+		layer.shadowColor = UIColor.vsShadowColor.cgColor
+		layer.shadowOpacity = 1
+		layer.shadowRadius = 16
+		layer.shadowOffset = CGSize(width: 0, height: 4)
 	}
 
 	@available(*, unavailable)
@@ -130,17 +141,29 @@ public class VirtusizeUINotification: UIView {
 		self.isDisplaying = true
 
 		alpha = 0
-		UIView.animate(withDuration: 0, delay: 0, options: .curveEaseInOut, animations: {
-			self.alpha = 1
-		}){ completed in
-			if completed && self.autoClose {
-				UIView.animate(withDuration: 0, delay: self.autoCloseDelay, options: .curveEaseInOut, animations: {
-					self.alpha = 0
-				}){ completed in
-					self.dismiss()
+		UIView.animate(
+			withDuration: 0,
+			delay: 0,
+			options: .curveEaseInOut,
+			animations: {
+				self.alpha = 1
+			},
+			completion: { completed in
+				if completed && self.autoClose {
+					UIView.animate(
+						withDuration: 0,
+						delay: self.autoCloseDelay,
+						options: .curveEaseInOut,
+						animations: {
+							self.alpha = 0
+						},
+						completion: { _ in
+							self.dismiss()
+						}
+					)
 				}
 			}
-		}
+		)
 	}
 
 	public func dismiss() {
@@ -170,11 +193,18 @@ public class VirtusizeUINotification: UIView {
 
 	private func updateFrame(position: VirtusizeUINotificationPosition) {
 		guard let window = appWindow else { return }
+
+		var bottomPadding: CGFloat = 0
+		if #available(iOS 11.0, *) {
+			bottomPadding = window.safeAreaInsets.bottom
+		}
+
 		frame = CGRect(
-			x: position == .top ? 0 : 0,
+			x: Constants.notificationMargin,
 			y: position == .top ?
-				(UIApplication.safeShared?.statusBarFrame.height ?? 0) : window.screen.bounds.height - titleLabelHeight,
-			width: window.screen.bounds.width,
+				(UIApplication.safeShared?.statusBarFrame.height ?? 0) :
+				window.screen.bounds.height - titleLabelHeight - Constants.notificationMargin - bottomPadding,
+			width: window.screen.bounds.width - Constants.notificationMargin * 2,
 			height: titleLabelHeight
 		)
 	}
