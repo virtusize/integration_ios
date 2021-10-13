@@ -40,8 +40,7 @@ public class VirtusizeUINotification: UIView {
 
 	private struct Constants {
 		static let contentPadding = CGFloat(10)
-		static let notificationMargin = CGFloat(8)
-		static let leftImageViewSize = CGFloat(24)
+		static let notificationImageViewSize = CGFloat(24)
 		static let closeImageViewSize = CGFloat(16)
 		static let frameAnimationDuration = 0.2
 	}
@@ -101,8 +100,8 @@ public class VirtusizeUINotification: UIView {
 		NSLayoutConstraint.activate([
 			notificationImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 			notificationImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-			notificationImageView.widthAnchor.constraint(equalToConstant: Constants.leftImageViewSize),
-			notificationImageView.heightAnchor.constraint(equalToConstant: Constants.leftImageViewSize)
+			notificationImageView.widthAnchor.constraint(equalToConstant: Constants.notificationImageViewSize),
+			notificationImageView.heightAnchor.constraint(equalToConstant: Constants.notificationImageViewSize)
 		])
 	}
 
@@ -148,30 +147,41 @@ public class VirtusizeUINotification: UIView {
 		appWindow?.addSubview(self)
 
 		isDisplaying = true
+
 		setFrame(.start)
+		setSubviewsVisibilities(isHidden: true)
 
 		UIView.animate(
 			withDuration: Constants.frameAnimationDuration,
 			delay: 0.0,
+			options: [.curveLinear],
 			animations: {
 				self.setFrame(.end)
 			},
 			completion: { completed in
-				if completed && self.autoClose {
-					self.dismiss()
+				if completed {
+					self.setSubviewsVisibilities(isHidden: false)
+					if self.autoClose {
+						self.perform(
+							#selector(self.dismiss),
+							with: nil,
+							afterDelay: self.autoCloseDelay
+						)
+					}
 				}
 			}
 		)
 	}
 
-	public func dismiss() {
+	@objc public func dismiss() {
 		guard isDisplaying else { return }
 
 		isDisplaying = false
+		setSubviewsVisibilities(isHidden: true)
 
 		UIView.animate(
 			withDuration: Constants.frameAnimationDuration,
-			delay: autoCloseDelay,
+			delay: 0.0,
 			animations: {
 				self.setFrame(.start)
 			},
@@ -199,10 +209,16 @@ public class VirtusizeUINotification: UIView {
 		guard let window = appWindow else { return }
 
 		frame = CGRect(
-			x: Constants.notificationMargin,
-			y: status == .start ? 0 : statusBarHeight,
-			width: window.screen.bounds.width - Constants.notificationMargin * 2,
-			height: notificationHeight
+			x: 0,
+			y: statusBarHeight,
+			width: window.screen.bounds.width,
+			height: status == .start ? 0 : notificationHeight
 		)
+	}
+
+	private func setSubviewsVisibilities(isHidden: Bool) {
+		for view in contentView.subviews {
+			view.isHidden = isHidden
+		}
 	}
 }
