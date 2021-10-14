@@ -39,6 +39,7 @@ public class VirtusizeUINotification: UIView {
 	private var isDisplaying = false
 
 	private struct Constants {
+		static let navigationBarHeight = CGFloat(48)
 		static let contentPadding = CGFloat(10)
 		static let notificationImageViewSize = CGFloat(24)
 		static let closeImageViewSize = CGFloat(16)
@@ -48,13 +49,16 @@ public class VirtusizeUINotification: UIView {
 	private var appWindow: UIWindow? {
 		return UIApplication.safeShared?.windows.first { $0.isKeyWindow }
 	}
-	
+
 	private var statusBarHeight: CGFloat {
 		UIApplication.safeShared?.statusBarFrame.height ?? 0
 	}
 
 	private var notificationHeight: CGFloat {
-		return titleLabel.intrinsicContentSize.height + Constants.contentPadding * 2
+		return max(
+			titleLabel.intrinsicContentSize.height + Constants.contentPadding * 2,
+			Constants.navigationBarHeight
+		)
 	}
 
 	private enum NotificationFrameStatus {
