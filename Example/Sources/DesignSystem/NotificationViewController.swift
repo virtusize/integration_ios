@@ -27,7 +27,12 @@ import UIKit
 import VirtusizeUIKit
 
 class NotificationViewController: UIViewController {
-	private var notification: VirtusizeUINotification!
+	private var infoNotification: VirtusizeUINotification!
+	private var successNotification: VirtusizeUINotification!
+	private var errorNotification: VirtusizeUINotification!
+
+	private var notifications: [VirtusizeUINotification] = []
+	private var index = 0
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -45,13 +50,30 @@ class NotificationViewController: UIViewController {
 			defaultButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
 		])
 
-		notification = VirtusizeUINotification(
+		infoNotification = VirtusizeUINotification(
 			title: "Some informational message for you.",
 			style: .info
 		)
+		notifications.append(infoNotification)
+
+		successNotification = VirtusizeUINotification(
+			title: "Thank you for your patronage.",
+			style: .success
+		)
+		notifications.append(successNotification)
+
+		errorNotification = VirtusizeUINotification(
+			title: "Oh no, something went wrong!",
+			style: .error
+		)
+		notifications.append(errorNotification)
 	}
 
 	@objc func showNotification() {
-		notification.show()
+		if index > notifications.count - 1 {
+			index = 0
+		}
+		notifications[index].show()
+		index += 1
 	}
 }
