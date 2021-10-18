@@ -48,10 +48,12 @@ internal enum APIEndpoints {
 		components.scheme = "https"
 		components.host = hostname
 
+		let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+
 		// swiftlint:disable switch_case_alignment
 		switch self {
 			case .productDataCheck(let externalId):
-				components.path = (Virtusize.environment == .staging) ? "/stg/product/check" : "/product/check"
+				components.path = "\(envPathForServicesAPI)/product/check"
 				components.queryItems = dataCheckQueryItems(externalId: externalId)
 
 			case .productMetaDataHints:
@@ -61,7 +63,7 @@ internal enum APIEndpoints {
 				break
 
 			case .virtusizeWebView:
-				let envPath = (Virtusize.environment == .staging) ? "staging" : "latest"
+				let envPath = Virtusize.environment.isProdEnv ? "latest" : "staging"
 				components.path = "/a/aoyama/\(envPath)/sdk-webview.html"
 
 			case .storeViewApiKey:
@@ -91,8 +93,7 @@ internal enum APIEndpoints {
 				components.path = "/a/api/v3/user-body-measurements"
 
 			case .getSize:
-				let envPath = (Virtusize.environment == .staging) ? "/stg" : ""
-				components.path =  "\(envPath)/ds-functions/size-rec/get-size"
+				components.path =  "\(envPathForServicesAPI)/ds-functions/size-rec/get-size"
 
 			case .i18n(let langCode):
 				components.path = "/bundle-payloads/aoyama/\(langCode)"
