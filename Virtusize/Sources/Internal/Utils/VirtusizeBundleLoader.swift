@@ -22,7 +22,6 @@
 //  THE SOFTWARE.
 //
 
-import VirtusizeCore
 import Foundation
 
 public class VirtusizeBundleLoader: BundleLoaderProtocol {

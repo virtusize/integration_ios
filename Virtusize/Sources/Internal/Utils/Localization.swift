@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import VirtusizeCore
 
 /// This class is used to localize texts in the SDK
 internal class Localization {

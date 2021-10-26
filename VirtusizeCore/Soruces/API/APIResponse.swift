@@ -25,17 +25,17 @@
 import Foundation
 
 // The wrapper for the API response
-internal struct APIResponse {
+public struct APIResponse {
 	/// The API response status code
-	var code: Int?
+	public var code: Int?
 	/// The API response data
-	var data: Data?
+	public var data: Data?
 	/// The API response in `URLResponse`
 	var response: URLResponse?
 	/// The API response error
 	var error: Error?
 	/// The API response error in the format of `VirtusizeError`
-	var virtusizeError: VirtusizeError?
+	public var virtusizeError: VirtusizeError?
 
 	init(code: Int?, data: Data?, response: URLResponse?, error: Error?) {
 		self.code = code
@@ -45,16 +45,16 @@ internal struct APIResponse {
 	}
 }
 
-internal typealias Code = Int
+public typealias Code = Int
 
-internal enum APIResult<Value> {
+public enum APIResult<Value> {
 	case success(Value? = nil, String? = nil)
 	case failure(Code? = nil, VirtusizeError? = nil)
 }
 
 extension APIResult {
 	/// The string of the API result 
-	var string: String? {
+	public var string: String? {
 		// swiftlint:disable switch_case_alignment
 		switch self {
 			case let .success(_, jsonString):
@@ -65,7 +65,7 @@ extension APIResult {
 	}
 
 	/// The API result when the request is successful
-	var success: Value? {
+	public var success: Value? {
 		if case .success(let value, _) = self {
 			return value
 		} else {
@@ -74,7 +74,7 @@ extension APIResult {
 	}
 
 	/// The API error status code
-	var errorCode: Int? {
+	public var errorCode: Int? {
 		if case .failure(let code, _) = self {
 			return code
 		} else {
@@ -83,7 +83,7 @@ extension APIResult {
 	}
 
 	/// The API result when the request fails
-	var failure: VirtusizeError? {
+	public var failure: VirtusizeError? {
 		if case .failure(_, let error) = self {
 			return error
 		} else {
@@ -91,7 +91,7 @@ extension APIResult {
 		}
 	}
 
-	var isSuccessful: Bool {
+	public var isSuccessful: Bool {
 		return failure == nil
 	}
 }
