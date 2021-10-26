@@ -1,5 +1,6 @@
 //
 //  UIApplication+Extensions.swift
+//  VirtusizeCore
 //
 //  Copyright (c) 2018-present Virtusize KK
 //
@@ -25,7 +26,7 @@
 import UIKit
 
 #if !os(watchOS)
-internal extension UIApplication {
+public extension UIApplication {
 
 	/// A safe accessor for `UIApplication.shared`
 	///

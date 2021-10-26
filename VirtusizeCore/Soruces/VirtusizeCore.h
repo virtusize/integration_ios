@@ -1,7 +1,8 @@
 //
-//  Localization.swift
+//  VirtusizeCore.h
+//  VirtusizeCore
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,25 +23,14 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-import VirtusizeCore
+#import <Foundation/Foundation.h>
 
-/// This class is used to localize texts in the SDK
-internal class Localization {
+//! Project version number for VirtusizeCore.
+FOUNDATION_EXPORT double VirtusizeCoreVersionNumber;
 
-	static let shared: Localization = Localization()
+//! Project version string for VirtusizeCore.
+FOUNDATION_EXPORT const unsigned char VirtusizeCoreVersionString[];
 
-	/// Localizes a text corresponding to a key
-	///
-	/// - Parameters:
-	///   - key: The key for a string in the table identified by tableName.
-	///   - language: Pass `VirtusizeLanguage` if you'd like to localize the text in a designated language
-	/// - Returns: A localized string based on the device's default language
-	func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
-		return VirtusizeCoreBundleLoader.localizationBundle(
-			language: language?.rawValue ?? Virtusize.params?.language.rawValue
-		).localizedString(
-			forKey: key, value: nil, table: "VirtusizeLocalizable"
-		)
-	}
-}
+// In this header, you should import all the public headers of your framework using statements like #import <VirtusizeCore/PublicHeader.h>
+
+
