@@ -24,12 +24,10 @@
 //
 
 import Foundation
-
 import UIKit
-import Foundation
 
 /// This class is to handle API requests to the Virtusize server
-public class VirtusizeAPIService {
+open class APIService {
 
 	/// A closure that is called when the operation completes
 	public typealias CompletionHandler = (Data?) -> Void
@@ -59,7 +57,7 @@ public class VirtusizeAPIService {
 		error errorHandler: ErrorHandler? = nil
 	) {
 		let task: URLSessionDataTask
-		task = VirtusizeAPIService.session.dataTask(with: request) { (data, response, error) in
+		task = APIService.session.dataTask(with: request) { (data, response, error) in
 			guard error == nil else {
 				DispatchQueue.main.async {
 					errorHandler?(VirtusizeError.apiRequestError(request.url, error!.localizedDescription))
@@ -119,7 +117,7 @@ public class VirtusizeAPIService {
 		var apiResponse: APIResponse?
 		let semaphore = DispatchSemaphore(value: 0)
 		let task: URLSessionDataTask
-		task = VirtusizeAPIService.session.dataTask(with: request) { (data, response, error) in
+		task = APIService.session.dataTask(with: request) { (data, response, error) in
 			apiResponse = APIResponse(
 				code: (response as? HTTPURLResponse)?.statusCode ?? nil,
 				data: data,

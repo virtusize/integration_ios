@@ -17,7 +17,7 @@
 		9C35062F2727B782003BEF82 /* BundleLoaderProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35062D2727B781003BEF82 /* BundleLoaderProtocal.swift */; };
 		9C3506662727FEBD003BEF82 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3506652727FEBD003BEF82 /* APIRequest.swift */; };
 		9C3506692727FF4B003BEF82 /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3506682727FF4B003BEF82 /* UserDefaultsHelper.swift */; };
-		9C35066B27280222003BEF82 /* VirtusizeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35066A27280222003BEF82 /* VirtusizeAPIService.swift */; };
+		9C35066B27280222003BEF82 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35066A27280222003BEF82 /* APIService.swift */; };
 		9C35066F27280313003BEF82 /* VirtusizeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35066E27280313003BEF82 /* VirtusizeError.swift */; };
 		9C35067127280326003BEF82 /* APISessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35067027280326003BEF82 /* APISessionProtocol.swift */; };
 		9C35067327280367003BEF82 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35067227280367003BEF82 /* APIResponse.swift */; };
@@ -50,7 +50,7 @@
 		9C35062D2727B781003BEF82 /* BundleLoaderProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleLoaderProtocal.swift; sourceTree = "<group>"; };
 		9C3506652727FEBD003BEF82 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = API/APIRequest.swift; sourceTree = "<group>"; };
 		9C3506682727FF4B003BEF82 /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDefaultsHelper.swift; path = Workers/UserDefaultsHelper.swift; sourceTree = "<group>"; };
-		9C35066A27280222003BEF82 /* VirtusizeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VirtusizeAPIService.swift; path = API/VirtusizeAPIService.swift; sourceTree = "<group>"; };
+		9C35066A27280222003BEF82 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = API/APIService.swift; sourceTree = "<group>"; };
 		9C35066E27280313003BEF82 /* VirtusizeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeError.swift; sourceTree = "<group>"; };
 		9C35067027280326003BEF82 /* APISessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APISessionProtocol.swift; path = API/APISessionProtocol.swift; sourceTree = "<group>"; };
 		9C35067227280367003BEF82 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIResponse.swift; path = API/APIResponse.swift; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 				9C35067227280367003BEF82 /* APIResponse.swift */,
 				9C35067027280326003BEF82 /* APISessionProtocol.swift */,
 				9C3506652727FEBD003BEF82 /* APIRequest.swift */,
-				9C35066A27280222003BEF82 /* VirtusizeAPIService.swift */,
+				9C35066A27280222003BEF82 /* APIService.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -298,7 +298,7 @@
 				9C35062E2727B781003BEF82 /* VirtusizeCoreBundleLoader.swift in Sources */,
 				9C35067127280326003BEF82 /* APISessionProtocol.swift in Sources */,
 				9C3506662727FEBD003BEF82 /* APIRequest.swift in Sources */,
-				9C35066B27280222003BEF82 /* VirtusizeAPIService.swift in Sources */,
+				9C35066B27280222003BEF82 /* APIService.swift in Sources */,
 				9C35066F27280313003BEF82 /* VirtusizeError.swift in Sources */,
 				9C35061927279586003BEF82 /* UIApplication+Extensions.swift in Sources */,
 				9C35067327280367003BEF82 /* APIResponse.swift in Sources */,

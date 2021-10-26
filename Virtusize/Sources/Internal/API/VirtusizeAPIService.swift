@@ -26,7 +26,7 @@ import UIKit
 import Foundation
 
 /// This class is to handle API requests to the Virtusize server
-extension VirtusizeAPIService {
+class VirtusizeAPIService: APIService {
 	/// The API request for product check
 	///
 	/// - Parameters:
