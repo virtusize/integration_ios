@@ -190,6 +190,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import SafariServices;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -206,6 +207,21 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="VirtusizeAuth",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
+
+@class NSURL;
+@class SFSafariViewControllerConfiguration;
+@class NSNumber;
+
+SWIFT_CLASS("_TtC13VirtusizeAuth29VirtusizeSafariViewController")
+@interface VirtusizeSafariViewController : SFSafariViewController
+- (nonnull instancetype)initWithURL:(NSURL * _Nonnull)URL configuration:(SFSafariViewControllerConfiguration * _Nonnull)configuration SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithURL:(NSURL * _Nonnull)URL entersReaderIfAvailable:(BOOL)entersReaderIfAvailable SWIFT_UNAVAILABLE;
+@end
+
+
+@interface VirtusizeSafariViewController (SWIFT_EXTENSION(VirtusizeAuth)) <SFSafariViewControllerDelegate>
+- (void)safariViewController:(SFSafariViewController * _Nonnull)controller initialLoadDidRedirectToURL:(NSURL * _Nonnull)URL;
+@end
 
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
@@ -404,6 +420,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import SafariServices;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -420,6 +437,21 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="VirtusizeAuth",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
+
+@class NSURL;
+@class SFSafariViewControllerConfiguration;
+@class NSNumber;
+
+SWIFT_CLASS("_TtC13VirtusizeAuth29VirtusizeSafariViewController")
+@interface VirtusizeSafariViewController : SFSafariViewController
+- (nonnull instancetype)initWithURL:(NSURL * _Nonnull)URL configuration:(SFSafariViewControllerConfiguration * _Nonnull)configuration SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithURL:(NSURL * _Nonnull)URL entersReaderIfAvailable:(BOOL)entersReaderIfAvailable SWIFT_UNAVAILABLE;
+@end
+
+
+@interface VirtusizeSafariViewController (SWIFT_EXTENSION(VirtusizeAuth)) <SFSafariViewControllerDelegate>
+- (void)safariViewController:(SFSafariViewController * _Nonnull)controller initialLoadDidRedirectToURL:(NSURL * _Nonnull)URL;
+@end
 
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
