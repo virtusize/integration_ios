@@ -9,6 +9,7 @@ import UIKit
 import VirtusizeCore
 import WebKit
 @_hasMissingDesignatedInitializers public class VirtusizeAuth {
-  public static func isSNSAuth(viewController: UIKit.UIViewController, webView: WebKit.WKWebView?, url: Foundation.URL) -> Swift.Bool
+  public class func isSNSAuth(viewController: UIKit.UIViewController, webView: WebKit.WKWebView?, url: Foundation.URL) -> Swift.Bool
+  public class func setAppBundleId(_ appBundleId: Swift.String!)
   @objc deinit
 }
