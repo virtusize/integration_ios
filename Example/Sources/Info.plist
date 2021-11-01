@@ -25,7 +25,7 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>virtusize</string>
+				<string>com.virtusize.Example.virtusize</string>
 			</array>
 		</dict>
 	</array>
