@@ -24,6 +24,9 @@
 
 import UIKit
 import Foundation
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 /// This class is to handle API requests to the Virtusize server
 class VirtusizeAPIService: APIService {

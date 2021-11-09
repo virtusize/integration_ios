@@ -1,5 +1,6 @@
 //
 //  Image+Extensions.swift
+//  Virtusize
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -23,6 +24,9 @@
 //
 
 import UIKit
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 internal extension UIImage {
 

@@ -1,5 +1,6 @@
 //
 //  VirtusizeBundleLoader.swift
+//  Virtusize
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -23,6 +24,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 public class VirtusizeBundleLoader: BundleLoaderProtocol {
 	public static let bundleClass: AnyClass = VirtusizeBundleLoader.self

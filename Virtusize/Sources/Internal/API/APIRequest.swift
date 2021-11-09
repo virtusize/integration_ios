@@ -23,6 +23,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 internal typealias JSONObject = [String: Any]
 internal typealias JSONArray = [JSONObject]

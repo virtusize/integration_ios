@@ -22,6 +22,10 @@
 //  THE SOFTWARE.
 //
 
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
+
 /// The class that wraps the parameters we can pass to the Virtusize web app
 public class VirtusizeParams {
 	/// The `VirtusizeRegion` that is used to set the region of the config url domains within the Virtusize web app

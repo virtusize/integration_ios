@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D6C5790205FB76B00DA910E /* UserDefaultsHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C578F205FB76B00DA910E /* UserDefaultsHelperTests.swift */; };
 		4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5792205FB9BA00DA910E /* Virtusize.swift */; };
 		4D6C579A205FCBE900DA910E /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5799205FCBE900DA910E /* APIRequest.swift */; };
 		9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */; };
@@ -139,7 +138,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4D6C578F205FB76B00DA910E /* UserDefaultsHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelperTests.swift; sourceTree = "<group>"; };
 		4D6C5792205FB9BA00DA910E /* Virtusize.swift */ = {isa = PBXFileReference; indentWidth = 0; lastKnownFileType = sourcecode.swift; path = Virtusize.swift; sourceTree = "<group>"; };
 		4D6C5799205FCBE900DA910E /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4DED8D1C205755C3001CA7DF /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -414,7 +412,7 @@
 		9C4B9D752491FF950065808E /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				4D6C578F205FB76B00DA910E /* UserDefaultsHelperTests.swift */,
+				9CEC8D8F252AC54F001CBDFB /* FindBestFitHelperTests.swift */,
 				9C969FD224EBE0C300DD642F /* DeserializerTests.swift */,
 			);
 			name = Workers;
@@ -437,7 +435,6 @@
 			children = (
 				9C6DDE3124DD314B0021073A /* LocalizationTests.swift */,
 				9C969FDB24EC1DFD00DD642F /* TestUtils.swift */,
-				9CEC8D8F252AC54F001CBDFB /* FindBestFitHelperTests.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -809,7 +806,6 @@
 				9C11693E2521F683006827B9 /* VirtusizeGetSizeParamsTests.swift in Sources */,
 				9C969FD324EBE0C400DD642F /* DeserializerTests.swift in Sources */,
 				9C6DDE2024DB021B0021073A /* VirtusizeProductTypeTests.swift in Sources */,
-				4D6C5790205FB76B00DA910E /* UserDefaultsHelperTests.swift in Sources */,
 				9C1BDF6226CC1F640020BDA5 /* VirtusizeAPIServiceTests.swift in Sources */,
 				9C969FDC24EC1DFD00DD642F /* TestUtils.swift in Sources */,
 				9CEAB7C724D95CFF00F969E1 /* VirtusizeProductSizeTests.swift in Sources */,

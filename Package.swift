@@ -15,8 +15,19 @@ let package = Package(
 	dependencies: [],
 	targets: [
 		.target(
-			name: "Virtusize",
+			name: "VirtusizeCore",
 			dependencies: [],
+			path: "VirtusizeCore/Sources",
+			exclude: ["Info.plist"],
+			resources: [.process("Resources")]
+		),
+		.binaryTarget(
+			name: "VirtusizeAuth",
+			path: "Frameworks/VirtusizeAuth.xcframework"
+		),
+		.target(
+			name: "Virtusize",
+			dependencies: ["VirtusizeCore", "VirtusizeAuth"],
 			path: "Virtusize/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
