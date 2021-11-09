@@ -6,11 +6,7 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		tgMIZA6766akURwQViTqmLbNViI=
-		</data>
-		<key>VirtusizCore.podspec</key>
-		<data>
-		t0pxowhx3qscOy8c3nT/Eltu9Mg=
+		vmY8e92dxfH/ZZeqKX3CwRmaeRI=
 		</data>
 		<key>en.lproj/VirtusizeLocalizable.strings</key>
 		<dict>
@@ -42,17 +38,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>VirtusizCore.podspec</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			t0pxowhx3qscOy8c3nT/Eltu9Mg=
-			</data>
-			<key>hash2</key>
-			<data>
-			06FHe4b7Iy4dqZh+2GYWmTEMZu+HiBXHIHVZFhyZFj8=
-			</data>
-		</dict>
 		<key>en.lproj/VirtusizeLocalizable.strings</key>
 		<dict>
 			<key>hash</key>
