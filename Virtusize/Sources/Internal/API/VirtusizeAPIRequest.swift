@@ -27,14 +27,6 @@ import Foundation
 import VirtusizeCore
 #endif
 
-internal typealias JSONObject = [String: Any]
-internal typealias JSONArray = [JSONObject]
-
-/// This enum contains supported HTTP request methods
-internal enum APIMethod: String {
-	case get = "GET", post = "POST", delete = "DELETE"
-}
-
 extension APIRequest {
 	/// Gets the `URLRequest` for the `productCheck` request
 	///
