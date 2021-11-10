@@ -22,7 +22,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string>com.virtusize.Example.virtusize</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.virtusize.Example.virtusize</string>

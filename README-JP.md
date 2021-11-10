@@ -31,9 +31,10 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 - [セットアップ](#setup)
   - [はじめに](#1-はじめに)
   - [Load Product with Virtusize SDK](#2-load-product-with-virtusize-sdk)
-  - [VirtusizeMessageHandlerの実装（オプション）](#3-virtusizemessagehandlerの実装オプション)
-  - [クッキー共有の許可（オプション）](#4-クッキー共有の許可オプション)
-  - [製品データチェックを聞く（オプション）](#5-製品データチェックを聞くオプション)
+  - [Enable SNS Auentication](#3-enable-sns-auentication)
+  - [VirtusizeMessageHandlerの実装（オプション）](#4-virtusizemessagehandlerの実装オプション)
+  - [クッキー共有の許可（オプション）](#5-クッキー共有の許可オプション)
+  - [製品データチェックを聞く（オプション）](#6-製品データチェックを聞くオプション)
 - [Virtusize Views](#virtusize-views)
   - [バーチャサイズ・ボタン（Virtusize Button）](#1-バーチャサイズボタンvirtusize-button)
   - [バーチャサイズ・インページ（Virtuzie InPage）](#2-バーチャサイズインページvirtuzie-inpage)
@@ -196,9 +197,34 @@ override func viewDidLoad() {
 }
 ```
 
+### 3. Enable SNS authentication
 
+The SNS authentication flow requires switching to a SFSafariViewController which will load a web page for a user to login with their SNS account. You must register a URL type with your app bundle app ID ending with .virtusize and send it to the `VirtusizeAuth.setAppBundleId` method.
 
-### 3. VirtusizeMessageHandlerの実装（オプション）
+(1) Register a URL type
+
+In Xcode, click on your project's **Info** tab and select **URL Types**.
+
+Add a new URL type and set the URL Schemes and identifier to `com.your-company.your-app.virtusize`
+
+![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
+
+(2) Set the app bundle ID
+
+In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
+
+``` Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    // Virtusize initialization omitted for brevity
+
+    // Set the app bundle ID
+    VirtusizeAuth.setAppBundleId("com.your-company.your-app")
+
+    return true
+}
+```
+
+### 4. VirtusizeMessageHandlerの実装（オプション）
 
 `VirtusizeMessageHandler`プロトコルには2つの必須メソッドがあります。
 
@@ -227,7 +253,7 @@ extension ViewController: VirtusizeMessageHandler {
 
 
 
-### 4. クッキー共有の許可（オプション）
+### 5. クッキー共有の許可（オプション）
 
 `VirtusizeWebViewController` はオプションで `processPool:WKProcessPool` パラメーターを受け取り、クッキーの共有を許可します。
 
@@ -238,7 +264,7 @@ Virtusize.processPool = WKProcessPool()
 
 
 
-### 5. 製品データチェックを聞く（オプション）
+### 6. 製品データチェックを聞く（オプション）
 
 ボタンが `externalId` で初期化されると、SDK は製品が解析されてデータベースに追加されたかどうかをチェックするために API を呼び出します。
 
