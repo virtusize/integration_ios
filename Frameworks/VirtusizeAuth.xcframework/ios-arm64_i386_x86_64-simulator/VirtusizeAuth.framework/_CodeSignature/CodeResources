@@ -10,11 +10,15 @@
 		</data>
 		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore</key>
 		<data>
-		tXaqf/47c58USDsJiT21zExOpTo=
+		VrwXLNtIwIPejouBgE5bWRL0mhI=
+		</data>
+		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore.podspec</key>
+		<data>
+		uR80bzTU/eXqx8bvR+k4q/A9gjM=
 		</data>
 		<key>Frameworks/VirtusizeCore.framework/_CodeSignature/CodeResources</key>
 		<data>
-		l5Omnkwo9Fk9Crf91+pPg3G0ypE=
+		9+aWrPdRg4ArapPtGSbDBAH5mJM=
 		</data>
 		<key>Frameworks/VirtusizeCore.framework/en.lproj/VirtusizeLocalizable.strings</key>
 		<dict>
@@ -153,22 +157,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tXaqf/47c58USDsJiT21zExOpTo=
+			VrwXLNtIwIPejouBgE5bWRL0mhI=
 			</data>
 			<key>hash2</key>
 			<data>
-			As0X5C2RduzY4RtB2kNNYhCsDDFwjMgmYXlObxxklXk=
+			CakOrk/6oSaa+SL8vlsXoEk4l5m/Ef3oBgO4pxUqexU=
+			</data>
+		</dict>
+		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore.podspec</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			uR80bzTU/eXqx8bvR+k4q/A9gjM=
+			</data>
+			<key>hash2</key>
+			<data>
+			d/pK60mw8wvBbz8/D8yuQFH3wL7FrAR1ZfeExJK/KQY=
 			</data>
 		</dict>
 		<key>Frameworks/VirtusizeCore.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			l5Omnkwo9Fk9Crf91+pPg3G0ypE=
+			9+aWrPdRg4ArapPtGSbDBAH5mJM=
 			</data>
 			<key>hash2</key>
 			<data>
-			10HSIT6Ok2TX26yNHjjvyilmYLu/PvMb6TjD3exQWtE=
+			ap0QVdSEY5wi60cSVZ3Fl9S8vVSD36qwvTaQ+lkKXn8=
 			</data>
 		</dict>
 		<key>Frameworks/VirtusizeCore.framework/en.lproj/VirtusizeLocalizable.strings</key>

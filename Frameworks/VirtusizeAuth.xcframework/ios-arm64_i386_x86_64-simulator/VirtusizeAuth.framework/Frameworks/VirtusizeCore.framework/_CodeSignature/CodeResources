@@ -8,6 +8,10 @@
 		<data>
 		vmY8e92dxfH/ZZeqKX3CwRmaeRI=
 		</data>
+		<key>VirtusizeCore.podspec</key>
+		<data>
+		uR80bzTU/eXqx8bvR+k4q/A9gjM=
+		</data>
 		<key>en.lproj/VirtusizeLocalizable.strings</key>
 		<dict>
 			<key>hash</key>
@@ -38,6 +42,17 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>VirtusizeCore.podspec</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			uR80bzTU/eXqx8bvR+k4q/A9gjM=
+			</data>
+			<key>hash2</key>
+			<data>
+			d/pK60mw8wvBbz8/D8yuQFH3wL7FrAR1ZfeExJK/KQY=
+			</data>
+		</dict>
 		<key>en.lproj/VirtusizeLocalizable.strings</key>
 		<dict>
 			<key>hash</key>
