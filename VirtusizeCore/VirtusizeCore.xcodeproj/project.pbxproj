@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C2B0D58273AB660004B10BB /* VirtusizeCore.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9C2B0D57273AB660004B10BB /* VirtusizeCore.podspec */; };
 		9C3505FD2727074A003BEF82 /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3505F32727074A003BEF82 /* VirtusizeCore.framework */; };
 		9C3506042727074A003BEF82 /* VirtusizeCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C3505F62727074A003BEF82 /* VirtusizeCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9C35061927279586003BEF82 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35061827279586003BEF82 /* UIApplication+Extensions.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C2B0D57273AB660004B10BB /* VirtusizeCore.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VirtusizeCore.podspec; path = ../VirtusizeCore.podspec; sourceTree = "<group>"; };
 		9C3505F32727074A003BEF82 /* VirtusizeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VirtusizeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C3505F62727074A003BEF82 /* VirtusizeCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtusizeCore.h; sourceTree = "<group>"; };
 		9C3505F72727074A003BEF82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		9C3505E92727074A003BEF82 = {
 			isa = PBXGroup;
 			children = (
+				9C2B0D57273AB660004B10BB /* VirtusizeCore.podspec */,
 				9C3505F52727074A003BEF82 /* Sources */,
 				9C3506002727074A003BEF82 /* Tests */,
 				9C3505F42727074A003BEF82 /* Products */,
@@ -279,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C35062727279829003BEF82 /* VirtusizeLocalizable.strings in Resources */,
+				9C2B0D58273AB660004B10BB /* VirtusizeCore.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

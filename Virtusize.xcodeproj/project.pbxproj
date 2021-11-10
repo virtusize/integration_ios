@@ -222,7 +222,7 @@
 		9CEC8D8B252AB963001CBDFB /* ProductComparisonFitInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductComparisonFitInfo.swift; sourceTree = "<group>"; };
 		9CEC8D8F252AC54F001CBDFB /* FindBestFitHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBestFitHelperTests.swift; sourceTree = "<group>"; };
 		9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeComparisonRecommendedSize.swift; sourceTree = "<group>"; };
-		9CF77B9726CBBF7A0019889E /* Virtusize.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Virtusize.podspec; sourceTree = "<group>"; };
+		9CF77B9726CBBF7A0019889E /* Virtusize.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Virtusize.podspec; sourceTree = "<group>"; };
 		9CF77B9B26CBBFCB0019889E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CF77B9D26CBC01B0019889E /* Base64ImageString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Base64ImageString.swift; path = Sources/Internal/Constants/Base64ImageString.swift; sourceTree = "<group>"; };
 		9CF77B9E26CBC01B0019889E /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = Sources/Internal/Constants/Colors.swift; sourceTree = "<group>"; };
@@ -281,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				9CF77B9726CBBF7A0019889E /* Virtusize.podspec */,
+				9C2B0CF4273A8AD0004B10BB /* Frameworks */,
 				4DED8D1E205755C3001CA7DF /* Sources */,
 				4DED8D29205755C3001CA7DF /* Tests */,
 				4DED8D1D205755C3001CA7DF /* Products */,
@@ -289,7 +290,6 @@
 				9CBDF5DD25AFFA0600E42012 /* README-JP.md */,
 				DFB2F0EF219BC3D900A69D1D /* README.md */,
 				DF71642421A2818E002C7202 /* ROADMAP.md */,
-				9C2B0CF4273A8AD0004B10BB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

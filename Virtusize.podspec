@@ -21,5 +21,6 @@ Pod::Spec.new do |s|
 		'VirtusizeCore' => ['VirtusizeCore/Sources/Resources/**/*.lproj']
 	}
   end
+  # s.dependency 'VirtusizeCore', s.version
 
 end
