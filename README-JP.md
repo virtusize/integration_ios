@@ -197,11 +197,15 @@ override func viewDidLoad() {
 }
 ```
 
+
+
 ### 3. Enable SNS authentication
 
-The SNS authentication flow requires switching to a SFSafariViewController which will load a web page for a user to login with their SNS account. You must register a URL type with your app bundle app ID ending with .virtusize and send it to the `VirtusizeAuth.setAppBundleId` method.
+The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController.
 
-(1) Register a URL type
+ You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
+
+**(1) Register a URL type**
 
 In Xcode, click on your project's **Info** tab and select **URL Types**.
 
@@ -209,20 +213,29 @@ Add a new URL type and set the URL Schemes and identifier to `com.your-company.y
 
 ![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
 
-(2) Set the app bundle ID
+**(2) Set the app's bundle ID**
 
 In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
 
 ``` Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // Virtusize initialization omitted for brevity
+	// Virtusize initialization omitted for brevity
 
-    // Set the app bundle ID
-    VirtusizeAuth.setAppBundleId("com.your-company.your-app")
+	// Set the app bundle ID
+	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
 
-    return true
+	return true
 }
 ```
+
+**❗IMPORTANT**	
+
+1. The URL type must include your app's bundle ID and **end with .virtusize**.
+
+2. If you have multiple app targets, add the URL type for all of them.
+
+
+
 
 ### 4. VirtusizeMessageHandlerの実装（オプション）
 
