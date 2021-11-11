@@ -37,7 +37,7 @@ class TooltipViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
-		title = "Tooltip Example"
+		title = DesignSystemComponent.tooltip.title
 
 		let showTooltipButton = VirtusizeUIButton()
 		showTooltipButton.setTitle("Show Tooltip", for: .normal)

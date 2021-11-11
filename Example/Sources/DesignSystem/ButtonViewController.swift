@@ -34,7 +34,7 @@ class ButtonViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
-		title = "Button Example"
+		title = DesignSystemComponent.button.title
 
 		views.translatesAutoresizingMaskIntoConstraints = false
 

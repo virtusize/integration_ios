@@ -17,8 +17,7 @@ let package = Package(
 			name: "Virtusize",
 			dependencies: ["VirtusizeUIKit", "VirtusizeCore"],
 			path: "Virtusize/Sources",
-			exclude: ["Info.plist"],
-			resources: [.process("Resources")]
+			exclude: ["Info.plist"]
 		),
 		.target(
 			name: "VirtusizeUIKit",

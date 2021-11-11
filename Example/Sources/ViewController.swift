@@ -204,6 +204,16 @@ class ViewController: UIViewController {
 		navigationController?.navigationBar.titleTextAttributes = textAttributes
 		navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
 		navigationController?.navigationBar.barTintColor = UIColor.vsTealColor
+		setNavigationBarCustomHeight()
+	}
+
+	private func setNavigationBarCustomHeight() {
+		navigationController?.navigationBar.frame = CGRect(
+			x: 0,
+			y: UIApplication.shared.statusBarFrame.height,
+			width: view.window?.bounds.width ?? 0,
+			height: 48
+		)
 	}
 }
 

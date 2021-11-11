@@ -1,6 +1,6 @@
 //
-//  VirtusizeUIKit.swift
-//  VirtusizeUIKit
+//  DesignSystemComponent.swift
+//  Example
 //
 //  Copyright (c) 2021 Virtusize KK
 //
@@ -23,8 +23,17 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+enum DesignSystemComponent: Int, CaseIterable {
+	case button
+	case tooltip
+	case notification
 
-struct VirtusizeUIKit {
-	static let hello = "Hello VirtusizeUIKit"
+	var title: String {
+		switch self {
+			case .button: return "Buttons"
+			case .tooltip: return "Tooltips"
+			case .notification: return "Notifications"
+		}
+	}
 }
+

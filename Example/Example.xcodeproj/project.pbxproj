@@ -14,6 +14,8 @@
 		4DED8D4F20575A9C001CA7DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED8D4D20575A9C001CA7DF /* LaunchScreen.storyboard */; };
 		9C454D0426686DD7003BF5BE /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C454D0326686DD7003BF5BE /* WebViewController.swift */; };
 		9C4B389E26BBA18800B73FE5 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */; };
+		9C8324AC27101CAA00157C80 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324AB27101CAA00157C80 /* NotificationViewController.swift */; };
+		9C8324AE27101EB900157C80 /* DesignSystemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8324AD27101EB900157C80 /* DesignSystemComponent.swift */; };
 		9CDA634326E08144008C039B /* Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDA634226E08144008C039B /* Virtusize.framework */; };
 		9CDA634426E08144008C039B /* Virtusize.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDA634226E08144008C039B /* Virtusize.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CDAE6CB26CF97DA00CBF7EF /* DesignSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE6CA26CF97DA00CBF7EF /* DesignSystemViewController.swift */; };
@@ -46,6 +48,8 @@
 		9C1BDF5C26CC1E860020BDA5 /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C454D0326686DD7003BF5BE /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		9C8324AB27101CAA00157C80 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		9C8324AD27101EB900157C80 /* DesignSystemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemComponent.swift; sourceTree = "<group>"; };
 		9CDA634226E08144008C039B /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CDAE6CA26CF97DA00CBF7EF /* DesignSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemViewController.swift; sourceTree = "<group>"; };
 		9CDAE6CD26CFAC1D00CBF7EF /* ButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewController.swift; sourceTree = "<group>"; };
@@ -117,9 +121,11 @@
 		9CDAE6CF26CFAC2200CBF7EF /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				9C8324AD27101EB900157C80 /* DesignSystemComponent.swift */,
 				9CDAE6CA26CF97DA00CBF7EF /* DesignSystemViewController.swift */,
 				9CDAE6CD26CFAC1D00CBF7EF /* ButtonViewController.swift */,
 				9CDD601626E5EA3800105D43 /* TooltipViewController.swift */,
+				9C8324AB27101CAA00157C80 /* NotificationViewController.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -223,7 +229,9 @@
 			files = (
 				4DED8D4720575A9C001CA7DF /* ViewController.swift in Sources */,
 				9C454D0426686DD7003BF5BE /* WebViewController.swift in Sources */,
+				9C8324AC27101CAA00157C80 /* NotificationViewController.swift in Sources */,
 				9CDAE6CB26CF97DA00CBF7EF /* DesignSystemViewController.swift in Sources */,
+				9C8324AE27101EB900157C80 /* DesignSystemComponent.swift in Sources */,
 				9C4B389E26BBA18800B73FE5 /* ProductViewController.swift in Sources */,
 				9CDD601726E5EA3800105D43 /* TooltipViewController.swift in Sources */,
 				9CDAE6CE26CFAC1D00CBF7EF /* ButtonViewController.swift in Sources */,
