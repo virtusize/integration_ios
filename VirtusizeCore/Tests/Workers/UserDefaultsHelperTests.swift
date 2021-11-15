@@ -24,7 +24,7 @@
 
 import Foundation
 import XCTest
-@testable import Virtusize
+@testable import VirtusizeCore
 
 class UserDefaultsHelperTests: XCTestCase {
 

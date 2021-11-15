@@ -28,5 +28,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Run Tests
-        run: make test
+      - name: Run VirtusizeTests
+        run: make virtusize-test
+      - name: Run VirtusizeCoreTests
+        run: make virtusize-core-test
