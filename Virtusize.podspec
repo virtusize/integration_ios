@@ -15,12 +15,6 @@ Pod::Spec.new do |s|
   s.source_files = ["Virtusize/Sources/*.{swift, h}", "Virtusize/Sources/**/*.swift"]
   s.resources = "Virtusize/Sources/Resources/**/*.otf"
   s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/VirtusizeAssets.xcassets"] }
-  s.subspec 'VirtusizeCore' do |core|
-	core.source_files = ['VirtusizeCore/Sources/*.{swift, h}', 'VirtusizeCore/Sources/**/*.swift']
-	core.resource_bundle = {
-		'VirtusizeCore' => ['VirtusizeCore/Sources/Resources/**/*.lproj']
-	}
-  end
-  # s.dependency 'VirtusizeCore', s.version
+  s.dependency 'VirtusizeCore', s.version
 
 end

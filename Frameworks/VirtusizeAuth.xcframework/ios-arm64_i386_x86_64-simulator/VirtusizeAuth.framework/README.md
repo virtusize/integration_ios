@@ -1,1 +1,0 @@
-# virtusize-auth-ios
