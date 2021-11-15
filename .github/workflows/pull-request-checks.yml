@@ -20,15 +20,17 @@ jobs:
         uses: actions/checkout@v2
       - name: Swift Lint
         run: swiftlint
-      - name: Pod Lint
-        run: pod lib lint --allow-warnings
+      - name: Pod Lint for VirtusizeCore
+        run: pod lib lint VirtusizeCore.podspec --allow-warnings
+      - name: Pod Lint for Virtusize
+        run: pod lib lint Virtusize.podspec --allow-warnings
 
   test:
     runs-on: macos-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Run VirtusizeTests
-        run: make virtusize-test
       - name: Run VirtusizeCoreTests
         run: make virtusize-core-test
+      - name: Run VirtusizeTests
+        run: make virtusize-test
