@@ -25,6 +25,9 @@
 import UIKit
 import WebKit
 import Virtusize
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 class ViewController: UIViewController {
 

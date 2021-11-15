@@ -50,7 +50,7 @@
 		9C3506652727FEBD003BEF82 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = API/APIRequest.swift; sourceTree = "<group>"; };
 		9C3506682727FF4B003BEF82 /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDefaultsHelper.swift; path = Workers/UserDefaultsHelper.swift; sourceTree = "<group>"; };
 		9C35066A27280222003BEF82 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = API/APIService.swift; sourceTree = "<group>"; };
-		9C35066E27280313003BEF82 /* VirtusizeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeError.swift; sourceTree = "<group>"; };
+		9C35066E27280313003BEF82 /* VirtusizeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VirtusizeError.swift; path = Models/VirtusizeError.swift; sourceTree = "<group>"; };
 		9C35067027280326003BEF82 /* APISessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APISessionProtocol.swift; path = API/APISessionProtocol.swift; sourceTree = "<group>"; };
 		9C35067227280367003BEF82 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIResponse.swift; path = API/APIResponse.swift; sourceTree = "<group>"; };
 		9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+Extensions.swift"; sourceTree = "<group>"; };
