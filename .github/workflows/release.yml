@@ -4,6 +4,9 @@ on:
   release:
     types: [released]
 
+env:
+  COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+
 jobs:
   build:
     runs-on: macOS-latest
@@ -24,8 +27,6 @@ jobs:
     - name: Push VirtusizeCore to CocoaPods
       run: |
         pod trunk push VirtusizeCore.podspec --allow-warnings
-      env:
-        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
     - name: Pod Validation for Virtusize
       run: |
@@ -36,5 +37,3 @@ jobs:
     - name: Push Virtusize to CocoaPods
       run: |
         pod trunk push Virtusize.podspec --allow-warnings
-      env:
-        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
