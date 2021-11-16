@@ -15,11 +15,13 @@ let package = Package(
 			name: "VirtusizeCore",
 			targets: ["VirtusizeCore"])
 	],
-	dependencies: [],
+	dependencies: [
+		.package(name: "VirtusizeAuth", url: "https://github.com/virtusize/virtusize_auth_ios.git", from: "0.0.1")
+	],
 	targets: [
 		.target(
 			name: "Virtusize",
-			dependencies: ["VirtusizeCore"],
+			dependencies: ["VirtusizeCore", "VirtusizeAuth"],
 			path: "Virtusize/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]

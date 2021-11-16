@@ -25,6 +25,7 @@
 import UIKit
 import WebKit
 @_exported import VirtusizeCore
+import VirtusizeAuth
 
 /// The methods of this protocol notify you with Virtusize specific messages such as errors as
 /// `VirtusizeError` and events as `VirtusizeEvent`
@@ -192,6 +193,10 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 				sharedApplication.safeOpenURL(url)
 				return nil
 			}
+		}
+
+		if VirtusizeAuth.isSNSAuthURL(viewController: self, webView: webView, url: url) {
+			return nil
 		}
 
 		// swiftlint:disable line_length

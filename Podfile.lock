@@ -1,0 +1,16 @@
+PODS:
+  - VirtusizeAuth (0.0.1)
+
+DEPENDENCIES:
+  - VirtusizeAuth (~> 0.0.1)
+
+SPEC REPOS:
+  trunk:
+    - VirtusizeAuth
+
+SPEC CHECKSUMS:
+  VirtusizeAuth: 9b78d1bde8891f7bc30f847af5faca9db41bdfee
+
+PODFILE CHECKSUM: 2b38e2c77926b300028ec062561c0d930967cfeb
+
+COCOAPODS: 1.11.2
