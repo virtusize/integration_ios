@@ -1,7 +1,7 @@
 //
-//  BrowserID.swift
+//  UserDefaultsHelper.swift
 //
-//  Copyright (c) 2018-20 Virtusize KK
+//  Copyright (c) 2018 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,14 @@
 import Foundation
 
 /// This class is used to get the browser identifier and the auth header specific to this SDK
-final internal class UserDefaultsHelper {
+final public class UserDefaultsHelper {
 
 	let authKey = "VIRTUSIZE_AUTH"
 	let tokenKey = "VIRTUSIZE_TOKEN"
 	let bidKey = "BID"
 
 	/// A static instance of `UserDefaultsHelper` used inside the SDK
-	internal static let current = UserDefaultsHelper()
+	public static let current = UserDefaultsHelper()
 
 	/// 'UserDefaults' to save the browser identifier locally
 	internal var defaults: UserDefaults
@@ -48,7 +48,7 @@ final internal class UserDefaultsHelper {
 	}
 
 	/// The auth token for the session API
-	internal var authToken: String? {
+	public var authToken: String? {
 		get {
 			return defaults.value(forKey: authKey) as? String
 		}
@@ -59,7 +59,7 @@ final internal class UserDefaultsHelper {
 	}
 
 	/// The access token for the API requests to get user data
-	internal var accessToken: String? {
+	public var accessToken: String? {
 		get {
 			return defaults.value(forKey: tokenKey) as? String
 		}
@@ -70,7 +70,7 @@ final internal class UserDefaultsHelper {
 	}
 
 	/// The browser identifier as String
-	internal var identifier: String {
+	public var identifier: String {
 		get {
 			if let token = defaults.value(forKey: bidKey) as? String {
 				return token

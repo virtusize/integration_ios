@@ -24,6 +24,7 @@
 
 import XCTest
 @testable import Virtusize
+@testable import VirtusizeCore
 
 // swiftlint:disable type_body_length file_length
 class VirtusizeAPIServiceTests: XCTestCase {

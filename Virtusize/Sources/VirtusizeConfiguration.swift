@@ -21,8 +21,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
+
 import Foundation
 
 struct VirtusizeConfiguration {
-	static let SDKVersion = "2.4.1"
+	static let SDKVersion = "2.4.2"
 }

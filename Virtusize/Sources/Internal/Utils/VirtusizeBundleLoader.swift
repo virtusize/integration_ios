@@ -1,7 +1,8 @@
 //
-//  UIApplication+Extensions.swift
+//  VirtusizeBundleLoader.swift
+//  Virtusize
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,28 +23,15 @@
 //  THE SOFTWARE.
 //
 
-import UIKit
-
-#if !os(watchOS)
-internal extension UIApplication {
-
-	/// A safe accessor for `UIApplication.shared`
-	///
-	/// - Note: `UIApplication.shared` is not supported under app extension. It needs to be accessed in a safe way.
-	static var safeShared: UIApplication? {
-		let sharedSelector = NSSelectorFromString("sharedApplication")
-		guard UIApplication.responds(to: sharedSelector) else {
-			return nil
-		}
-		return UIApplication.perform(sharedSelector)?.takeUnretainedValue() as? UIApplication
-	}
-
-	/// A safe accessor to call the function that opens a URL
-	func safeOpenURL(_ url: URL) {
-		guard self.canOpenURL(url) else { return }
-		guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
-			return
-		}
-	}
-}
+import Foundation
+#if SWIFT_PACKAGE
+import VirtusizeCore
 #endif
+
+public class VirtusizeBundleLoader: BundleLoaderProtocol {
+	public static let bundleClass: AnyClass = VirtusizeBundleLoader.self
+	public static let bundleName = "Virtusize"
+	#if SWIFT_PACKAGE
+	public static let spmResourceBundle  = Bundle.module
+	#endif
+}

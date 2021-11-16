@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			// including "modelInfo", "generalFit", "brandSizing" and "material".
 			.setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
 			.build()
+
 		return true
 	}
 }

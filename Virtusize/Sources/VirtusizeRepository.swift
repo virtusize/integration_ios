@@ -23,6 +23,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 /// This class is used to handle the logic required to access remote and local data sources
 internal class VirtusizeRepository: NSObject {

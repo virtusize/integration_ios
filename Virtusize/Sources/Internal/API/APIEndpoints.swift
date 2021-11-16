@@ -64,7 +64,9 @@ internal enum APIEndpoints {
 
 			case .virtusizeWebView:
 				let envPath = Virtusize.environment.isProdEnv ? "latest" : "staging"
-				components.path = "/a/aoyama/\(envPath)/sdk-webview.html"
+				// TODO: change the endpoint back once the development is done
+				components.path = "/a/aoyama/testing/sns-test/sdk-webview.html"
+				// components.path = "/a/aoyama/\(envPath)/sdk-webview.html"
 
 			case .storeViewApiKey:
 				components.path = "/a/api/v3/stores/api-key/\(apiKey)"

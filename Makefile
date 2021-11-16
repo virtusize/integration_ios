@@ -23,12 +23,21 @@ build:
 		-sdk "iphonesimulator" \
 		-destination "platform=iOS Simulator,name=iPhone 8,OS=latest"
 
-test:
+virtusize-test:
 
 	xcodebuild clean test \
 		-quiet \
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "VirtusizeTests" \
+		-sdk "iphonesimulator" \
+		-destination "platform=iOS Simulator,name=iPhone 8,OS=latest"
+
+virtusize-core-test:
+
+	xcodebuild clean test \
+		-quiet \
+		-workspace "Virtusize.xcworkspace" \
+		-scheme "VirtusizeCoreTests" \
 		-sdk "iphonesimulator" \
 		-destination "platform=iOS Simulator,name=iPhone 8,OS=latest"
 

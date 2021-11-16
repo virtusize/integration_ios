@@ -24,6 +24,9 @@
 
 import UIKit
 import Foundation
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 typealias Payload = JSONObject
 

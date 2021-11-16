@@ -10,14 +10,24 @@ let package = Package(
 	products: [
 		.library(
 			name: "Virtusize",
-			targets: ["Virtusize"])
+			targets: ["Virtusize"]),
+		.library(
+			name: "VirtusizeCore",
+			targets: ["VirtusizeCore"])
 	],
 	dependencies: [],
 	targets: [
 		.target(
 			name: "Virtusize",
-			dependencies: [],
+			dependencies: ["VirtusizeCore"],
 			path: "Virtusize/Sources",
+			exclude: ["Info.plist"],
+			resources: [.process("Resources")]
+		),
+		.target(
+			name: "VirtusizeCore",
+			dependencies: [],
+			path: "VirtusizeCore/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
 		)

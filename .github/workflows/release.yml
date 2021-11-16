@@ -4,6 +4,9 @@ on:
   release:
     types: [released]
 
+env:
+  COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+
 jobs:
   build:
     runs-on: macOS-latest
@@ -15,14 +18,22 @@ jobs:
     - name: Install Cocoapods
       run: gem install cocoapods
 
-    - name: Pod validation
+    - name: Pod Validation for VirtusizeCore
       run: |
         set -e -o pipefail
-        pod lib lint --allow-warnings
-        pod spec lint --allow-warnings
+        pod lib lint VirtusizeCore.podspec --allow-warnings
+        pod spec lint VirtusizeCore.podspec --allow-warnings
 
-    - name: Push to CocoaPods
+    - name: Push VirtusizeCore to CocoaPods
       run: |
-        pod trunk push --allow-warnings
-      env:
-        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        pod trunk push VirtusizeCore.podspec --allow-warnings
+
+    - name: Pod Validation for Virtusize
+      run: |
+        set -e -o pipefail
+        pod lib lint Virtusize.podspec --allow-warnings
+        pod spec lint Virtusize.podspec --allow-warnings
+
+    - name: Push Virtusize to CocoaPods
+      run: |
+        pod trunk push Virtusize.podspec --allow-warnings

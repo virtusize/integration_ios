@@ -23,6 +23,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 /// A structure that helps to deserialize the models specific to the Virtusize API
 internal struct Deserializer {

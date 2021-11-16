@@ -1,7 +1,8 @@
 //
-//  BundleLoader.swift
+//  BundleLoaderProtocol.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2021 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,31 +25,38 @@
 
 import Foundation
 
-/// The class is to access different types of bundles for the SDK
-internal class BundleLoader: NSObject {
+public protocol BundleLoaderProtocol {
+	static var bundleClass: AnyClass { get }
+	static var bundleName: String { get }
+	#if SWIFT_PACKAGE
+	static var spmResourceBundle: Bundle { get }
+	#endif
+}
+
+public extension BundleLoaderProtocol {
 	/// The bundle is used for resources like images
-	static var virtusizeResourceBundle: Bundle = {
+	static var resourceBundle: Bundle {
 		var bundle: Bundle?
 		// Swift Package Manager bundle
 		#if SWIFT_PACKAGE
-		bundle = Bundle.module
+		bundle = spmResourceBundle
 		#endif
 
 		if bundle == nil {
-			// Virtusize.bundle
-			bundle = Bundle(path: "Virtusize.bundle")
+			// name.bundle
+			bundle = Bundle(path: "\(bundleName).bundle")
 		}
 
 		if bundle == nil {
-			// Virtusize.framework/Virtusize.bundle
-			if let path = Bundle(for: BundleLoader.self).path(forResource: "Virtusize", ofType: "bundle") {
+			// name.framework/name.bundle
+			if let path = Bundle(for: bundleClass).path(forResource: bundleName, ofType: "bundle") {
 				bundle = Bundle(path: path)
 			}
 		}
 
 		if bundle == nil {
-			// Virtusize.framework
-			bundle = Bundle(for: BundleLoader.self)
+			// name.framework
+			bundle = Bundle(for: bundleClass)
 		}
 
 		if let bundle = bundle {
@@ -57,14 +65,14 @@ internal class BundleLoader: NSObject {
 			// Fallback to Bundle.main to ensure there is always a bundle.
 			return Bundle.main
 		}
-	}()
+	}
 
 	/// Gets the bundle that is used for localization
 	/// - Parameter language: `VirtusizeLanguage`
-	static func virtusizeLocalizationBundle(language: VirtusizeLanguage? = nil) -> Bundle {
-		var bundle = virtusizeResourceBundle
+	static func localizationBundle(language: String? = nil) -> Bundle {
+		var bundle = resourceBundle
 		if let localizableBundlePath = bundle.path(
-			forResource: language?.rawValue ?? Virtusize.params?.language.rawValue,
+			forResource: language,
 			ofType: "lproj"
 		),
 		let localizableBundle = Bundle(path: localizableBundlePath) {

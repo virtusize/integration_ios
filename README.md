@@ -31,9 +31,10 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 - [Setup](#setup)
   - [Initialization](#1-initialization)
   - [Load Product with Virtusize SDK](#2-load-product-with-virtusize-sdk)
-  - [Implement VirtusizeMessageHandler (Optional)](#3-implement-virtusizemessagehandler-optional)
-  - [Allow Cookie Sharing (Optional)](#4-allow-cookie-sharing-optional)
-  - [Listen to Product Data Check (Optional)](#5-listen-to-product-data-check-optional)
+  - [Enable SNS authentication](#3-enable-sns-authentication)
+  - [Implement VirtusizeMessageHandler (Optional)](#4-implement-virtusizemessagehandler-optional)
+  - [Allow Cookie Sharing (Optional)](#5-allow-cookie-sharing-optional)
+  - [Listen to Product Data Check (Optional)](#6-listen-to-product-data-check-optional)
 - [Virtusize Views](#virtusize-views)
   - [Virtusize Button](#1-virtusize-button)
   - [Virtusize InPage](#2-virtusize-inpage)
@@ -79,7 +80,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.4.1'
+pod 'Virtusize', '~> 2.4.2'
 end
 ```
 
@@ -96,7 +97,7 @@ $ pod install
 Starting with the  `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.3.2`
+2. Select a minimum version of `2.4.2`
 3. Click **Next**
 
 
@@ -198,7 +199,43 @@ override func viewDidLoad() {
 
 
 
-### 3. Implement VirtusizeMessageHandler (Optional)
+### 3. Enable SNS authentication
+
+The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController. 
+
+You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
+
+**(1) Register a URL type**
+
+In Xcode, click on your project's **Info** tab and select **URL Types**.
+
+Add a new URL type and set the URL Schemes and identifier to `com.your-company.your-app.virtusize`
+
+![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
+
+**(2) Set the app's bundle ID**
+
+In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
+
+``` Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	// Virtusize initialization omitted for brevity
+
+	// Set the app bundle ID
+	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
+
+	return true
+}
+```
+
+**❗IMPORTANT**
+
+1. The URL type must include your app's bundle ID and **end with .virtusize**.
+2. If you have multiple app targets, add the URL type for all of them.
+
+
+
+### 4. Implement VirtusizeMessageHandler (Optional)
 
 The `VirtusizeMessageHandler`  protocol has two required methods:
 
@@ -228,7 +265,7 @@ extension ViewController: VirtusizeMessageHandler {
 
 
 
-### 4. Allow Cookie Sharing (Optional)
+### 5. Allow Cookie Sharing (Optional)
 
 The `VirtusizeWebViewController` accepts an optional `processPool:WKProcessPool` paramater to allow cookie sharing.
 
@@ -239,7 +276,7 @@ Virtusize.processPool = WKProcessPool()
 
 
 
-### 5. Listen to Product Data Check (Optional)
+### 6. Listen to Product Data Check (Optional)
 
 When the button is initialized with an  `exernalId` , the SDK calls our API to check if the product has been parsed and added to our database.
 

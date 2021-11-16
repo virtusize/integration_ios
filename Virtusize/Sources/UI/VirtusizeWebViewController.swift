@@ -24,6 +24,9 @@
 
 import UIKit
 import WebKit
+#if SWIFT_PACKAGE
+@_exported import VirtusizeCore
+#endif
 
 /// The methods of this protocol notify you with Virtusize specific messages such as errors as
 /// `VirtusizeError` and events as `VirtusizeEvent`
@@ -192,6 +195,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 				return nil
 			}
 		}
+
 		// swiftlint:disable line_length
 		guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
 			// By default, The Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a Webview.

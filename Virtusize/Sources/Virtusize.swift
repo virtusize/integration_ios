@@ -23,6 +23,9 @@
 //
 
 import WebKit
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 /// The main class used by Virtusize clients to perform all available operations related to fit check
 public class Virtusize {

@@ -1,5 +1,6 @@
 //
 //  Image+Extensions.swift
+//  Virtusize
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -23,6 +24,9 @@
 //
 
 import UIKit
+#if SWIFT_PACKAGE
+import VirtusizeCore
+#endif
 
 internal extension UIImage {
 
@@ -30,7 +34,7 @@ internal extension UIImage {
 	///
 	/// - Parameter name: The image name.
 	convenience init?(bundleNamed name: String) {
-		self.init(named: name, in: BundleLoader.virtusizeResourceBundle, compatibleWith: nil)
+		self.init(named: name, in: VirtusizeBundleLoader.resourceBundle, compatibleWith: nil)
 	}
 
 	/// Adds the padding to a `UIImage`

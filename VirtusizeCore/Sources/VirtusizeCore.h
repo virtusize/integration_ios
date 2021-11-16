@@ -1,7 +1,8 @@
 //
-//  Virtusize.h
+//  VirtusizeCore.h
+//  VirtusizeCore
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +23,14 @@
 //  THE SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
 
-@import UIKit;
-@import VirtusizeCore;
+//! Project version number for VirtusizeCore.
+FOUNDATION_EXPORT double VirtusizeCoreVersionNumber;
 
-FOUNDATION_EXPORT double VirtusizeVersionNumber;
-FOUNDATION_EXPORT const unsigned char VirtusizeVersionString[];
+//! Project version string for VirtusizeCore.
+FOUNDATION_EXPORT const unsigned char VirtusizeCoreVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <VirtusizeCore/PublicHeader.h>
+
+

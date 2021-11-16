@@ -5,6 +5,9 @@
       location = "group:Virtusize.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:VirtusizeCore/VirtusizeCore.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Example/Example.xcodeproj">
    </FileRef>
 </Workspace>
