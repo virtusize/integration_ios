@@ -49,3 +49,7 @@ playground.xcworkspace
 
 # Carthage
 Carthage/Build
+
+# xcframework
+
+VirtusizeCore/archives/
