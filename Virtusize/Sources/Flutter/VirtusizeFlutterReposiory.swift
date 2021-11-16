@@ -23,9 +23,7 @@
 //
 
 import Foundation
-#if SWIFT_PACKAGE
 import VirtusizeCore
-#endif
 
 public class VirtusizeFlutterRepository: NSObject {
 	public static let shared: VirtusizeFlutterRepository = {

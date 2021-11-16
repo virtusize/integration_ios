@@ -24,9 +24,7 @@
 //
 
 import UIKit
-#if SWIFT_PACKAGE
 import VirtusizeCore
-#endif
 
 internal extension UIImage {
 

@@ -27,6 +27,7 @@ jobs:
     - name: Push VirtusizeCore to CocoaPods
       run: |
         pod trunk push VirtusizeCore.podspec --allow-warnings
+        pod repo update
 
     - name: Pod Validation for Virtusize
       run: |
@@ -37,3 +38,4 @@ jobs:
     - name: Push Virtusize to CocoaPods
       run: |
         pod trunk push Virtusize.podspec --allow-warnings
+        pod repo update

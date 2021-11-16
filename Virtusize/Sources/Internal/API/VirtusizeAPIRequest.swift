@@ -23,9 +23,7 @@
 //
 
 import Foundation
-#if SWIFT_PACKAGE
 import VirtusizeCore
-#endif
 
 extension APIRequest {
 	/// Gets the `URLRequest` for the `productCheck` request

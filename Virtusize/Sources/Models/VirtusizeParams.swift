@@ -22,9 +22,7 @@
 //  THE SOFTWARE.
 //
 
-#if SWIFT_PACKAGE
 import VirtusizeCore
-#endif
 
 /// The class that wraps the parameters we can pass to the Virtusize web app
 public class VirtusizeParams {

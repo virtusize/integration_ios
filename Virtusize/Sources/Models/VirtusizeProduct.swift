@@ -23,9 +23,7 @@
 //
 
 import Foundation
-#if SWIFT_PACKAGE
 import VirtusizeCore
-#endif
 
 /// This structure represents a product in the Virtusize SDK
 public class VirtusizeProduct: Codable {
