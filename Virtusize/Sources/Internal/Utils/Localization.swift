@@ -23,9 +23,7 @@
 //
 
 import Foundation
-#if SWIFT_PACKAGE
 import VirtusizeCore
-#endif
 
 /// This class is used to localize texts in the SDK
 internal class Localization {

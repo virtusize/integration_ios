@@ -24,9 +24,7 @@
 
 import UIKit
 import WebKit
-#if SWIFT_PACKAGE
 @_exported import VirtusizeCore
-#endif
 
 /// The methods of this protocol notify you with Virtusize specific messages such as errors as
 /// `VirtusizeError` and events as `VirtusizeEvent`
