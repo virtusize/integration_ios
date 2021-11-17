@@ -10,7 +10,7 @@ let package = Package(
 	products: [
 		.library(
 			name: "Virtusize",
-			targets: ["Virtusize", "VirtusizeAuth"]),
+			targets: ["Virtusize"]),
 		.library(
 			name: "VirtusizeCore",
 			targets: ["VirtusizeCore"])
@@ -33,7 +33,7 @@ let package = Package(
 		),
 		.binaryTarget(
 			name: "VirtusizeAuth",
-			path: "VirtusizeAuth/Sources/VirtusizeAuth.xcframework"
+			path: "Virtusize/Sources/VirtusizeAuth.xcframework"
 		)
 	]
 )

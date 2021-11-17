@@ -1,6 +1,6 @@
 //
-//  VirtusizeAuth.h
-//  VirtusizeAuth
+//  VirtusizeExports.swift
+//  Virtusize
 //
 //  Copyright (c) 2021 Virtusize KK
 //
@@ -23,14 +23,6 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
 
-//! Project version number for VirtusizeAuth.
-FOUNDATION_EXPORT double VirtusizeAuthVersionNumber;
-
-//! Project version string for VirtusizeAuth.
-FOUNDATION_EXPORT const unsigned char VirtusizeAuthVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <VirtusizeAuth/PublicHeader.h>
-
-
+import Foundation
+@_exported import VirtusizeAuth
