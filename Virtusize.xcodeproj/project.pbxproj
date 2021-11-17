@@ -81,6 +81,8 @@
 		9CEAA7312743E21F00D8689C /* Pods_Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5E06CD3035FFAFAA00896D /* Pods_Virtusize.framework */; };
 		9CEAA7342743E22A00D8689C /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEAA7332743E22A00D8689C /* VirtusizeAuth.xcframework */; platformFilter = ios; };
 		9CEAA7352743E22A00D8689C /* VirtusizeAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEAA7332743E22A00D8689C /* VirtusizeAuth.xcframework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9CEAA7502744AA3A00D8689C /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEAA74F2744AA3A00D8689C /* VirtusizeAuth.xcframework */; platformFilter = ios; };
+		9CEAA7512744AA3A00D8689C /* VirtusizeAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEAA74F2744AA3A00D8689C /* VirtusizeAuth.xcframework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CEAB7B024D930F000F969E1 /* VirtusizeBrandSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAB7AF24D930F000F969E1 /* VirtusizeBrandSizing.swift */; };
 		9CEAB7B624D93EC400F969E1 /* VirtusizeBrandSizingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAB7B424D93D4100F969E1 /* VirtusizeBrandSizingTests.swift */; };
 		9CEAB7B824D940CE00F969E1 /* VirtusizeServerProductAdditionalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAB7B724D940CE00F969E1 /* VirtusizeServerProductAdditionalInfo.swift */; };
@@ -132,6 +134,7 @@
 			files = (
 				9C25E40F27421F9800CFEA88 /* VirtusizeCore.framework in Embed Frameworks */,
 				9CEAA7352743E22A00D8689C /* VirtusizeAuth.xcframework in Embed Frameworks */,
+				9CEAA7512744AA3A00D8689C /* VirtusizeAuth.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,6 +213,7 @@
 		9CE7785724B3794500E4A127 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		9CE7786A24B4121E00E4A127 /* Virtusize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Virtusize.h; sourceTree = "<group>"; };
 		9CEAA7332743E22A00D8689C /* VirtusizeAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VirtusizeAuth.xcframework; path = Pods/VirtusizeAuth/VirtusizeAuth.xcframework; sourceTree = "<group>"; };
+		9CEAA74F2744AA3A00D8689C /* VirtusizeAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VirtusizeAuth.xcframework; path = VirtusizeAuth/Sources/VirtusizeAuth.xcframework; sourceTree = "<group>"; };
 		9CEAB7AF24D930F000F969E1 /* VirtusizeBrandSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeBrandSizing.swift; sourceTree = "<group>"; };
 		9CEAB7B424D93D4100F969E1 /* VirtusizeBrandSizingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeBrandSizingTests.swift; sourceTree = "<group>"; };
 		9CEAB7B724D940CE00F969E1 /* VirtusizeServerProductAdditionalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeServerProductAdditionalInfo.swift; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 				9CEAA7312743E21F00D8689C /* Pods_Virtusize.framework in Frameworks */,
 				9C25E40E27421F9800CFEA88 /* VirtusizeCore.framework in Frameworks */,
 				9CEAA7342743E22A00D8689C /* VirtusizeAuth.xcframework in Frameworks */,
+				9CEAA7502744AA3A00D8689C /* VirtusizeAuth.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +371,7 @@
 		9C25E40C27421F9800CFEA88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CEAA74F2744AA3A00D8689C /* VirtusizeAuth.xcframework */,
 				9CEAA7332743E22A00D8689C /* VirtusizeAuth.xcframework */,
 				9C25E40D27421F9800CFEA88 /* VirtusizeCore.framework */,
 				8D5E06CD3035FFAFAA00896D /* Pods_Virtusize.framework */,
