@@ -33,7 +33,7 @@ let package = Package(
 		),
 		.binaryTarget(
 			name: "VirtusizeAuth",
-			path: "Virtusize/Sources/VirtusizeAuth.xcframework"
+			path: "Frameworks/VirtusizeAuth.xcframework"
 		)
 	]
 )

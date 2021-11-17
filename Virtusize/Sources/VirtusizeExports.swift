@@ -23,6 +23,5 @@
 //  THE SOFTWARE.
 //
 
-
 import Foundation
 @_exported import VirtusizeAuth
