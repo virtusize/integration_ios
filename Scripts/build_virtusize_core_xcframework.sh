@@ -3,7 +3,7 @@
 cd VirtusizeCore
 
 # Remove the old /archives folder
-rm -r archives
+rm -rf archives
 
 # iOS Simulators
 xcodebuild -quiet archive \
