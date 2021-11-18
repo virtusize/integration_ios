@@ -11,6 +11,7 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '10.3'
   s.swift_version = '5'
+  s.xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
 
   s.source_files = ['VirtusizeCore/Sources/*.{swift, h}', 'VirtusizeCore/Sources/**/*.swift']
   s.resource_bundle = { 'VirtusizeCore' => ['VirtusizeCore/Sources/Resources/**/*.lproj'] }
