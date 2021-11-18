@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Virtusize'
-  s.version = '2.4.3'
+  s.version = '2.5.0'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.summary = 'Integrate Virtusize on iOS devices'
   s.homepage = 'https://www.virtusize.com/'

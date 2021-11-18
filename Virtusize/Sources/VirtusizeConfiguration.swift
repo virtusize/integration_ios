@@ -25,5 +25,5 @@
 import Foundation
 
 struct VirtusizeConfiguration {
-	static let SDKVersion = "2.4.3"
+	static let SDKVersion = "2.5.0"
 }

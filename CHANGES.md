@@ -13,6 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.5.0
+
+- Feature: Perform Virtusize SNS authentication with SFSafariViewController
+
 ### 2.4.3
 
 - Bugfix: Fix errors when running `pod spec lint`
