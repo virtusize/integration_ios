@@ -24,7 +24,7 @@
 
 import UIKit
 import WebKit
-@_exported import VirtusizeCore
+import VirtusizeCore
 import VirtusizeAuth
 
 /// The methods of this protocol notify you with Virtusize specific messages such as errors as

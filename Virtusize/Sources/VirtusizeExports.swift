@@ -25,3 +25,4 @@
 
 import Foundation
 @_exported import VirtusizeAuth
+@_exported import VirtusizeCore
