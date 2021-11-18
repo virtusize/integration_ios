@@ -14,6 +14,4 @@ Pod::Spec.new do |s|
 
   s.source_files = ['VirtusizeCore/Sources/*.{swift, h}', 'VirtusizeCore/Sources/**/*.swift']
   s.resource_bundle = { 'VirtusizeCore' => ['VirtusizeCore/Sources/Resources/**/*.lproj'] }
-  
-  s.pod_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
 end

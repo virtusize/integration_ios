@@ -1,7 +1,8 @@
 //
-//  Virtusize.h
+//  VirtusizeExports.swift
+//  Virtusize
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2021 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +23,6 @@
 //  THE SOFTWARE.
 //
 
-
-@import UIKit;
-
-FOUNDATION_EXPORT double VirtusizeVersionNumber;
-FOUNDATION_EXPORT const unsigned char VirtusizeVersionString[];
+import Foundation
+@_exported import VirtusizeAuth
+@_exported import VirtusizeCore
