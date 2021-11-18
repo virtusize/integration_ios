@@ -10,15 +10,15 @@
 		</data>
 		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore</key>
 		<data>
-		X8yj81CAtLBFSwUK/Nb6Ng4GdjU=
+		qnR6rwvz5ac1OIyuBLwcPf1SY4U=
 		</data>
 		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore.podspec</key>
 		<data>
-		9S7OtUAv1DtzgYtIgK3kb3v9fB8=
+		p8qhiNHA+RTT1AazGZj+fQuWOOE=
 		</data>
 		<key>Frameworks/VirtusizeCore.framework/_CodeSignature/CodeResources</key>
 		<data>
-		fPUJllhx2qIGFLxRoop1gFJip1Q=
+		Um0b60IqkIWMGm4IhIVhENafGYE=
 		</data>
 		<key>Frameworks/VirtusizeCore.framework/en.lproj/VirtusizeLocalizable.strings</key>
 		<dict>
@@ -157,33 +157,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			X8yj81CAtLBFSwUK/Nb6Ng4GdjU=
+			qnR6rwvz5ac1OIyuBLwcPf1SY4U=
 			</data>
 			<key>hash2</key>
 			<data>
-			Smiw9Sys4KpTYVCFtlqxnoKp6mPMSeWnZ653Wr2QVD4=
+			MOLcATVq/sPpnsvUeNhQ7ixnXyjQfd2N5n9/bzc96fg=
 			</data>
 		</dict>
 		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore.podspec</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9S7OtUAv1DtzgYtIgK3kb3v9fB8=
+			p8qhiNHA+RTT1AazGZj+fQuWOOE=
 			</data>
 			<key>hash2</key>
 			<data>
-			CWZ+2i6TLkhb9nODp3dWj6Ajnuqv4e37o5+KHBTtw9Y=
+			NFAWAsQoosYcXY5QBXMtgASlqqcOb4jM0TEL0XMJkdc=
 			</data>
 		</dict>
 		<key>Frameworks/VirtusizeCore.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			fPUJllhx2qIGFLxRoop1gFJip1Q=
+			Um0b60IqkIWMGm4IhIVhENafGYE=
 			</data>
 			<key>hash2</key>
 			<data>
-			qp2WdiYxEtLL9L2pL7LNERK1+sj1Sl5lEjM5B7qSKWs=
+			QM4LkZw7VjvX1Dagzf9Nxi5opyqEUg8E1PL7VZXG9v0=
 			</data>
 		</dict>
 		<key>Frameworks/VirtusizeCore.framework/en.lproj/VirtusizeLocalizable.strings</key>
