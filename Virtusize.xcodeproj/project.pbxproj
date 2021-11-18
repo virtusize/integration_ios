@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,8 +25,6 @@
 		9C1F83B7251481040061B777 /* StoreProductFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDE3424DD317F0021073A /* StoreProductFixtures.swift */; };
 		9C1F83B8251481080061B777 /* UserProductFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90F97C2512FF6C008FEFD6 /* UserProductFixtures.swift */; };
 		9C1F83B92514810B0061B777 /* UserBodyProfileFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F83AE25147FCF0061B777 /* UserBodyProfileFixtures.swift */; };
-		9C25E40E27421F9800CFEA88 /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C25E40D27421F9800CFEA88 /* VirtusizeCore.framework */; };
-		9C25E40F27421F9800CFEA88 /* VirtusizeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C25E40D27421F9800CFEA88 /* VirtusizeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C32A14B250279D00062C11D /* VirtusizeInPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */; };
 		9C33F699252449E1008DBF41 /* BodyProfileRecommendedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C33F698252449E1008DBF41 /* BodyProfileRecommendedSize.swift */; };
 		9C3506312727CA42003BEF82 /* VirtusizeBundleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3506302727CA42003BEF82 /* VirtusizeBundleLoader.swift */; };
@@ -76,6 +74,11 @@
 		9CB98B9D24B2C5B400C51F20 /* VirtusizeLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB98B9424B2C5B400C51F20 /* VirtusizeLanguage.swift */; };
 		9CBDF5D425AFEE6300E42012 /* VirtusizeAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBDF5D325AFEE6300E42012 /* VirtusizeAssets.swift */; };
 		9CC2A3962685960400FF0864 /* VirtusizeFlutterReposiory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2A3952685960400FF0864 /* VirtusizeFlutterReposiory.swift */; };
+		9CD9CDCC2745E14B00C25D92 /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD9CDCB2745E14B00C25D92 /* VirtusizeCore.framework */; };
+		9CD9CDCD2745E14B00C25D92 /* VirtusizeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD9CDCB2745E14B00C25D92 /* VirtusizeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9CE6CA7D2744F6B700AAFF20 /* VirtusizeExports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6CA7C2744F6B700AAFF20 /* VirtusizeExports.swift */; };
+		9CE6CA9A2744F9D700AAFF20 /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE6CA992744F9D700AAFF20 /* VirtusizeAuth.xcframework */; platformFilter = ios; };
+		9CE6CA9B2744F9D700AAFF20 /* VirtusizeAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE6CA992744F9D700AAFF20 /* VirtusizeAuth.xcframework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CE7785824B3794500E4A127 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE7785724B3794500E4A127 /* Localization.swift */; };
 		9CE7786C24B4121E00E4A127 /* Virtusize.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE7786A24B4121E00E4A127 /* Virtusize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CEAB7B024D930F000F969E1 /* VirtusizeBrandSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAB7AF24D930F000F969E1 /* VirtusizeBrandSizing.swift */; };
@@ -127,7 +130,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9C25E40F27421F9800CFEA88 /* VirtusizeCore.framework in Embed Frameworks */,
+				9CE6CA9B2744F9D700AAFF20 /* VirtusizeAuth.xcframework in Embed Frameworks */,
+				9CD9CDCD2745E14B00C25D92 /* VirtusizeCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,7 +155,6 @@
 		9C1F83A925147E8F0061B777 /* VirtusizeUserBodyProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfileTests.swift; sourceTree = "<group>"; };
 		9C1F83AC25147F4C0061B777 /* VirtusizeUserBodyProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeUserBodyProfile.swift; sourceTree = "<group>"; };
 		9C1F83AE25147FCF0061B777 /* UserBodyProfileFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBodyProfileFixtures.swift; sourceTree = "<group>"; };
-		9C25E40D27421F9800CFEA88 /* VirtusizeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageView.swift; sourceTree = "<group>"; };
 		9C33F698252449E1008DBF41 /* BodyProfileRecommendedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyProfileRecommendedSize.swift; sourceTree = "<group>"; };
 		9C3506302727CA42003BEF82 /* VirtusizeBundleLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeBundleLoader.swift; sourceTree = "<group>"; };
@@ -202,6 +205,9 @@
 		9CBDF5D325AFEE6300E42012 /* VirtusizeAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAssets.swift; sourceTree = "<group>"; };
 		9CBDF5DD25AFFA0600E42012 /* README-JP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "README-JP.md"; sourceTree = "<group>"; };
 		9CC2A3952685960400FF0864 /* VirtusizeFlutterReposiory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeFlutterReposiory.swift; sourceTree = "<group>"; };
+		9CD9CDCB2745E14B00C25D92 /* VirtusizeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CE6CA7C2744F6B700AAFF20 /* VirtusizeExports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeExports.swift; sourceTree = "<group>"; };
+		9CE6CA992744F9D700AAFF20 /* VirtusizeAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VirtusizeAuth.xcframework; path = Frameworks/VirtusizeAuth.xcframework; sourceTree = "<group>"; };
 		9CE7785724B3794500E4A127 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		9CE7786A24B4121E00E4A127 /* Virtusize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Virtusize.h; sourceTree = "<group>"; };
 		9CEAB7AF24D930F000F969E1 /* VirtusizeBrandSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeBrandSizing.swift; sourceTree = "<group>"; };
@@ -245,7 +251,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C25E40E27421F9800CFEA88 /* VirtusizeCore.framework in Frameworks */,
+				9CE6CA9A2744F9D700AAFF20 /* VirtusizeAuth.xcframework in Frameworks */,
+				9CD9CDCC2745E14B00C25D92 /* VirtusizeCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +283,6 @@
 			isa = PBXGroup;
 			children = (
 				9CF77B9726CBBF7A0019889E /* Virtusize.podspec */,
-				9C25E40C27421F9800CFEA88 /* Frameworks */,
 				4DED8D1E205755C3001CA7DF /* Sources */,
 				4DED8D29205755C3001CA7DF /* Tests */,
 				4DED8D1D205755C3001CA7DF /* Products */,
@@ -285,6 +291,7 @@
 				9CBDF5DD25AFFA0600E42012 /* README-JP.md */,
 				DFB2F0EF219BC3D900A69D1D /* README.md */,
 				DF71642421A2818E002C7202 /* ROADMAP.md */,
+				9CE6CA982744F9D600AAFF20 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -304,6 +311,7 @@
 				9C01389026AE916A007F5392 /* Flutter */,
 				9C35F99C25F02CAD0004E9CD /* VirtusizeAssets.xcassets */,
 				9C35F96625F02AC30004E9CD /* Resources */,
+				9CE6CA7C2744F6B700AAFF20 /* VirtusizeExports.swift */,
 				4D6C5792205FB9BA00DA910E /* Virtusize.swift */,
 				9C787FC825DB793400346F2A /* VirtusizeEventHandler.swift */,
 				9CFF40C825B5C9D500B21D4E /* VirtusizeRepository.swift */,
@@ -350,14 +358,6 @@
 				9C106EB324FE41EC0012EE51 /* VirtusizeProductImageView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		9C25E40C27421F9800CFEA88 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9C25E40D27421F9800CFEA88 /* VirtusizeCore.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9C35F96625F02AC30004E9CD /* Resources */ = {
@@ -440,6 +440,15 @@
 				9C969FD724EBF71200DD642F /* i18n_ko.json */,
 			);
 			name = "JSON Test Files";
+			sourceTree = "<group>";
+		};
+		9CE6CA982744F9D600AAFF20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9CD9CDCB2745E14B00C25D92 /* VirtusizeCore.framework */,
+				9CE6CA992744F9D700AAFF20 /* VirtusizeAuth.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9CE7785624B3791E00E4A127 /* Utils */ = {
@@ -775,6 +784,7 @@
 				DFFAA95C21A39A75000F0F70 /* APIEvent.swift in Sources */,
 				9CF77BA026CBC01B0019889E /* Colors.swift in Sources */,
 				9C6DDE2B24DCF2270021073A /* VirtusizeProductCheckData.swift in Sources */,
+				9CE6CA7D2744F6B700AAFF20 /* VirtusizeExports.swift in Sources */,
 				9C1F83B92514810B0061B777 /* UserBodyProfileFixtures.swift in Sources */,
 				DF71642E21A28DE8002C7202 /* VirtusizeProduct.swift in Sources */,
 				9CB98B9B24B2C5B400C51F20 /* VirtusizeParams.swift in Sources */,
@@ -939,7 +949,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
@@ -962,7 +973,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Virtusize/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -985,7 +1000,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Virtusize/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.Virtusize;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -998,14 +1017,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Virtusize/Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1024,7 +1047,11 @@
 				DEVELOPMENT_TEAM = Z57T9D7E3B;
 				INFOPLIST_FILE = Virtusize/Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.virtusize.VirtusizeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

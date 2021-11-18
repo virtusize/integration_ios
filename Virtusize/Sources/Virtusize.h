@@ -24,7 +24,6 @@
 
 
 @import UIKit;
-@import VirtusizeCore;
 
 FOUNDATION_EXPORT double VirtusizeVersionNumber;
 FOUNDATION_EXPORT const unsigned char VirtusizeVersionString[];
