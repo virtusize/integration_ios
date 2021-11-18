@@ -11,12 +11,12 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '10.3'
   s.swift_version = '5'
-  s.xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
   
   s.source_files = ["Virtusize/Sources/*.{swift, h}", "Virtusize/Sources/**/*.swift"]
   s.resources = "Virtusize/Sources/Resources/**/*.otf"
   s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/VirtusizeAssets.xcassets"] }
 
+  s.pod_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
   s.vendored_frameworks = "Frameworks/VirtusizeAuth.xcframework"
   s.dependency "VirtusizeCore", "<= #{s.version}"
 end
