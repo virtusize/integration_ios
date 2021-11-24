@@ -190,7 +190,10 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreGraphics;
+@import Foundation;
 @import SafariServices;
+@import WebKit;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -221,6 +224,66 @@ SWIFT_CLASS("_TtC13VirtusizeAuth29VirtusizeSafariViewController")
 
 @interface VirtusizeSafariViewController (SWIFT_EXTENSION(VirtusizeAuth)) <SFSafariViewControllerDelegate>
 - (void)safariViewController:(SFSafariViewController * _Nonnull)controller initialLoadDidRedirectToURL:(NSURL * _Nonnull)URL;
+@end
+
+@protocol WKUIDelegate;
+@protocol WKNavigationDelegate;
+@class NSCoder;
+@class WKWebViewConfiguration;
+
+SWIFT_CLASS("_TtC13VirtusizeAuth16VirtusizeWebView")
+@interface VirtusizeWebView : WKWebView
+@property (nonatomic, strong) id <WKUIDelegate> _Nullable UIDelegate;
+@property (nonatomic, strong) id <WKNavigationDelegate> _Nullable navigationDelegate;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame configuration:(WKWebViewConfiguration * _Nonnull)configuration SWIFT_UNAVAILABLE;
+@end
+
+@class WKNavigationAction;
+@class WKWebpagePreferences;
+@class WKNavigationResponse;
+@class WKNavigation;
+@class NSURLAuthenticationChallenge;
+@class NSURLCredential;
+
+@interface VirtusizeWebView (SWIFT_EXTENSION(VirtusizeAuth)) <WKNavigationDelegate>
+- (void)webView:(WKWebView * _Nonnull)webView decidePolicyForNavigationAction:(WKNavigationAction * _Nonnull)navigationAction decisionHandler:(void (^ _Nonnull)(WKNavigationActionPolicy))decisionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView decidePolicyForNavigationAction:(WKNavigationAction * _Nonnull)navigationAction preferences:(WKWebpagePreferences * _Nonnull)preferences decisionHandler:(void (^ _Nonnull)(WKNavigationActionPolicy, WKWebpagePreferences * _Nonnull))decisionHandler SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView decidePolicyForNavigationResponse:(WKNavigationResponse * _Nonnull)navigationResponse decisionHandler:(void (^ _Nonnull)(WKNavigationResponsePolicy))decisionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView didStartProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFailProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (void)webView:(WKWebView * _Nonnull)webView didCommitNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFinishNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFailNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (void)webView:(WKWebView * _Nonnull)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge completionHandler:(void (^ _Nonnull)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler;
+- (void)webViewWebContentProcessDidTerminate:(WKWebView * _Nonnull)webView;
+- (void)webView:(WKWebView * _Nonnull)webView authenticationChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge shouldAllowDeprecatedTLS:(void (^ _Nonnull)(BOOL))decisionHandler SWIFT_AVAILABILITY(ios,introduced=14.0);
+@end
+
+@class WKWindowFeatures;
+@class NSString;
+@class WKFrameInfo;
+@class WKPreviewElementInfo;
+@protocol WKPreviewActionItem;
+@class UIViewController;
+@class WKContextMenuElementInfo;
+@class UIContextMenuConfiguration;
+@protocol UIContextMenuInteractionCommitAnimating;
+
+@interface VirtusizeWebView (SWIFT_EXTENSION(VirtusizeAuth)) <WKUIDelegate>
+- (WKWebView * _Nullable)webView:(WKWebView * _Nonnull)webView createWebViewWithConfiguration:(WKWebViewConfiguration * _Nonnull)configuration forNavigationAction:(WKNavigationAction * _Nonnull)navigationAction windowFeatures:(WKWindowFeatures * _Nonnull)windowFeatures SWIFT_WARN_UNUSED_RESULT;
+- (void)webViewDidClose:(WKWebView * _Nonnull)webView;
+- (void)webView:(WKWebView * _Nonnull)webView runJavaScriptAlertPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(void))completionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView runJavaScriptConfirmPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(BOOL))completionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView runJavaScriptTextInputPanelWithPrompt:(NSString * _Nonnull)prompt defaultText:(NSString * _Nullable)defaultText initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(NSString * _Nullable))completionHandler;
+- (BOOL)webView:(WKWebView * _Nonnull)webView shouldPreviewElement:(WKPreviewElementInfo * _Nonnull)elementInfo SWIFT_WARN_UNUSED_RESULT;
+- (UIViewController * _Nullable)webView:(WKWebView * _Nonnull)webView previewingViewControllerForElement:(WKPreviewElementInfo * _Nonnull)elementInfo defaultActions:(NSArray<id <WKPreviewActionItem>> * _Nonnull)previewActions SWIFT_WARN_UNUSED_RESULT;
+- (void)webView:(WKWebView * _Nonnull)webView commitPreviewingViewController:(UIViewController * _Nonnull)previewingViewController;
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuConfigurationForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo completionHandler:(void (^ _Nonnull)(UIContextMenuConfiguration * _Nullable))completionHandler SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuWillPresentForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo willCommitWithAnimator:(id <UIContextMenuInteractionCommitAnimating> _Nonnull)animator SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuDidEndForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo SWIFT_AVAILABILITY(ios,introduced=13.0);
 @end
 
 #if __has_attribute(external_source_symbol)
@@ -420,7 +483,10 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreGraphics;
+@import Foundation;
 @import SafariServices;
+@import WebKit;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -451,6 +517,66 @@ SWIFT_CLASS("_TtC13VirtusizeAuth29VirtusizeSafariViewController")
 
 @interface VirtusizeSafariViewController (SWIFT_EXTENSION(VirtusizeAuth)) <SFSafariViewControllerDelegate>
 - (void)safariViewController:(SFSafariViewController * _Nonnull)controller initialLoadDidRedirectToURL:(NSURL * _Nonnull)URL;
+@end
+
+@protocol WKUIDelegate;
+@protocol WKNavigationDelegate;
+@class NSCoder;
+@class WKWebViewConfiguration;
+
+SWIFT_CLASS("_TtC13VirtusizeAuth16VirtusizeWebView")
+@interface VirtusizeWebView : WKWebView
+@property (nonatomic, strong) id <WKUIDelegate> _Nullable UIDelegate;
+@property (nonatomic, strong) id <WKNavigationDelegate> _Nullable navigationDelegate;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame configuration:(WKWebViewConfiguration * _Nonnull)configuration SWIFT_UNAVAILABLE;
+@end
+
+@class WKNavigationAction;
+@class WKWebpagePreferences;
+@class WKNavigationResponse;
+@class WKNavigation;
+@class NSURLAuthenticationChallenge;
+@class NSURLCredential;
+
+@interface VirtusizeWebView (SWIFT_EXTENSION(VirtusizeAuth)) <WKNavigationDelegate>
+- (void)webView:(WKWebView * _Nonnull)webView decidePolicyForNavigationAction:(WKNavigationAction * _Nonnull)navigationAction decisionHandler:(void (^ _Nonnull)(WKNavigationActionPolicy))decisionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView decidePolicyForNavigationAction:(WKNavigationAction * _Nonnull)navigationAction preferences:(WKWebpagePreferences * _Nonnull)preferences decisionHandler:(void (^ _Nonnull)(WKNavigationActionPolicy, WKWebpagePreferences * _Nonnull))decisionHandler SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView decidePolicyForNavigationResponse:(WKNavigationResponse * _Nonnull)navigationResponse decisionHandler:(void (^ _Nonnull)(WKNavigationResponsePolicy))decisionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView didStartProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFailProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (void)webView:(WKWebView * _Nonnull)webView didCommitNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFinishNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFailNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (void)webView:(WKWebView * _Nonnull)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge completionHandler:(void (^ _Nonnull)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler;
+- (void)webViewWebContentProcessDidTerminate:(WKWebView * _Nonnull)webView;
+- (void)webView:(WKWebView * _Nonnull)webView authenticationChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge shouldAllowDeprecatedTLS:(void (^ _Nonnull)(BOOL))decisionHandler SWIFT_AVAILABILITY(ios,introduced=14.0);
+@end
+
+@class WKWindowFeatures;
+@class NSString;
+@class WKFrameInfo;
+@class WKPreviewElementInfo;
+@protocol WKPreviewActionItem;
+@class UIViewController;
+@class WKContextMenuElementInfo;
+@class UIContextMenuConfiguration;
+@protocol UIContextMenuInteractionCommitAnimating;
+
+@interface VirtusizeWebView (SWIFT_EXTENSION(VirtusizeAuth)) <WKUIDelegate>
+- (WKWebView * _Nullable)webView:(WKWebView * _Nonnull)webView createWebViewWithConfiguration:(WKWebViewConfiguration * _Nonnull)configuration forNavigationAction:(WKNavigationAction * _Nonnull)navigationAction windowFeatures:(WKWindowFeatures * _Nonnull)windowFeatures SWIFT_WARN_UNUSED_RESULT;
+- (void)webViewDidClose:(WKWebView * _Nonnull)webView;
+- (void)webView:(WKWebView * _Nonnull)webView runJavaScriptAlertPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(void))completionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView runJavaScriptConfirmPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(BOOL))completionHandler;
+- (void)webView:(WKWebView * _Nonnull)webView runJavaScriptTextInputPanelWithPrompt:(NSString * _Nonnull)prompt defaultText:(NSString * _Nullable)defaultText initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(NSString * _Nullable))completionHandler;
+- (BOOL)webView:(WKWebView * _Nonnull)webView shouldPreviewElement:(WKPreviewElementInfo * _Nonnull)elementInfo SWIFT_WARN_UNUSED_RESULT;
+- (UIViewController * _Nullable)webView:(WKWebView * _Nonnull)webView previewingViewControllerForElement:(WKPreviewElementInfo * _Nonnull)elementInfo defaultActions:(NSArray<id <WKPreviewActionItem>> * _Nonnull)previewActions SWIFT_WARN_UNUSED_RESULT;
+- (void)webView:(WKWebView * _Nonnull)webView commitPreviewingViewController:(UIViewController * _Nonnull)previewingViewController;
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuConfigurationForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo completionHandler:(void (^ _Nonnull)(UIContextMenuConfiguration * _Nullable))completionHandler SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuWillPresentForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo willCommitWithAnimator:(id <UIContextMenuInteractionCommitAnimating> _Nonnull)animator SWIFT_AVAILABILITY(ios,introduced=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView contextMenuDidEndForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo SWIFT_AVAILABILITY(ios,introduced=13.0);
 @end
 
 #if __has_attribute(external_source_symbol)
