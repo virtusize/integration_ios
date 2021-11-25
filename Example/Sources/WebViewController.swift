@@ -76,12 +76,7 @@ class WebViewController: UIViewController {
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
-		webView.load(
-			URLRequest(
-				url: URL(
-					string: "https://virtusize-jp-demo.s3-ap-northeast-1.amazonaws.com/sns-auth-test/index.html")!
-			)
-		)
+		webView.load(URLRequest(url: URL(string: "https://demo.virtusize.com")!))
 	}
 }
 
