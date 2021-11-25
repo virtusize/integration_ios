@@ -18,14 +18,18 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Swift Lint
-        run: swiftlint
       - name: Update CocoaPods Specs
         run: pod repo update
+      - name: Swift Lint
+        run: swiftlint
       - name: Pod Lint for VirtusizeCore
         run: pod lib lint VirtusizeCore.podspec --allow-warnings
       - name: Pod Lint for Virtusize
-        run: pod lib lint Virtusize.podspec --allow-warnings
+        uses: nick-invision/retry@v2.0.0
+        with:
+          timeout_minutes: 60
+          max_attempts: 3
+          command: pod lib lint Virtusize.podspec --allow-warnings
 
   test:
     runs-on: macos-latest
