@@ -13,6 +13,11 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.5.1
+
+- Feature: Handle SNS auth for web view apps
+- Bugfix: Change back the SDK webview URL
+
 ### 2.5.0
 
 - Feature: Perform Virtusize SNS authentication with SFSafariViewController

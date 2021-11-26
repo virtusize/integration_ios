@@ -8,6 +8,59 @@ import UIKit
 @_exported import VirtusizeAuth
 import VirtusizeCore
 import WebKit
+@_hasMissingDesignatedInitializers public class VirtusizeURLCheck {
+  public static func isExternalLinkFromVirtusize(url: Swift.String?) -> Swift.Bool
+  public static func isLinkFromSNSAuth(url: Swift.String?) -> Swift.Bool
+  @objc deinit
+}
+@objc open class VirtusizeWebView : WebKit.WKWebView {
+  @objc override dynamic open var uiDelegate: WebKit.WKUIDelegate? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic open var navigationDelegate: WebKit.WKNavigationDelegate? {
+    @objc get
+    @objc set
+  }
+  public init(frame: CoreGraphics.CGRect, configurationClosure: ((WebKit.WKWebViewConfiguration) -> Swift.Void)? = nil)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect, configuration: WebKit.WKWebViewConfiguration)
+  @objc deinit
+}
+extension VirtusizeWebView : WebKit.WKUIDelegate {
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, createWebViewWith configuration: WebKit.WKWebViewConfiguration, for navigationAction: WebKit.WKNavigationAction, windowFeatures: WebKit.WKWindowFeatures) -> WebKit.WKWebView?
+  @objc dynamic public func webViewDidClose(_ webView: WebKit.WKWebView)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptAlertPanelWithMessage message: Swift.String, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping () -> Swift.Void)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptConfirmPanelWithMessage message: Swift.String, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: Swift.String, defaultText: Swift.String?, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping (Swift.String?) -> Swift.Void)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, shouldPreviewElement elementInfo: WebKit.WKPreviewElementInfo) -> Swift.Bool
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, previewingViewControllerForElement elementInfo: WebKit.WKPreviewElementInfo, defaultActions previewActions: [WebKit.WKPreviewActionItem]) -> UIKit.UIViewController?
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, commitPreviewingViewController previewingViewController: UIKit.UIViewController)
+  @available(iOS 13.0, *)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, contextMenuConfigurationForElement elementInfo: WebKit.WKContextMenuElementInfo, completionHandler: @escaping (UIKit.UIContextMenuConfiguration?) -> Swift.Void)
+  @available(iOS 13.0, *)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, contextMenuWillPresentForElement elementInfo: WebKit.WKContextMenuElementInfo)
+  @available(iOS 13.0, *)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, contextMenuForElement elementInfo: WebKit.WKContextMenuElementInfo, willCommitWithAnimator animator: UIKit.UIContextMenuInteractionCommitAnimating)
+  @available(iOS 13.0, *)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, contextMenuDidEndForElement elementInfo: WebKit.WKContextMenuElementInfo)
+}
+extension VirtusizeWebView : WebKit.WKNavigationDelegate {
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy) -> Swift.Void)
+  @available(iOS 13.0, *)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, preferences: WebKit.WKWebpagePreferences, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy, WebKit.WKWebpagePreferences) -> Swift.Void)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationResponse: WebKit.WKNavigationResponse, decisionHandler: @escaping (WebKit.WKNavigationResponsePolicy) -> Swift.Void)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didStartProvisionalNavigation navigation: WebKit.WKNavigation!)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WebKit.WKNavigation!)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFailProvisionalNavigation navigation: WebKit.WKNavigation!, withError error: Swift.Error)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didCommit navigation: WebKit.WKNavigation!)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFinish navigation: WebKit.WKNavigation!)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFail navigation: WebKit.WKNavigation!, withError error: Swift.Error)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didReceive challenge: Foundation.URLAuthenticationChallenge, completionHandler: @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void)
+  @objc dynamic public func webViewWebContentProcessDidTerminate(_ webView: WebKit.WKWebView)
+  @available(iOS 14.0, *)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, authenticationChallenge challenge: Foundation.URLAuthenticationChallenge, shouldAllowDeprecatedTLS decisionHandler: @escaping (Swift.Bool) -> Swift.Void)
+}
 @_hasMissingDesignatedInitializers public class VirtusizeAuth {
   public class func isSNSAuthURL(viewController: UIKit.UIViewController, webView: WebKit.WKWebView?, url: Foundation.URL) -> Swift.Bool
   public class func setAppBundleId(_ appBundleId: Swift.String!)

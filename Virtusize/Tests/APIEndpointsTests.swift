@@ -80,9 +80,7 @@ class APIEndpointsTests: XCTestCase {
 
         XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
 
-		// TODO: Change it back when it's ready for the release
-		// XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-webview.html")
-		XCTAssertEqual(endpoint.components.path, "/a/aoyama/testing/sns-test/sdk-webview.html")
+		XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-webview.html")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
@@ -93,9 +91,7 @@ class APIEndpointsTests: XCTestCase {
 		let endpoint = APIEndpoints.virtusizeWebView
 
 		XCTAssertEqual(endpoint.components.host, "static.api.virtusize.com")
-		// TODO: Change it back when it's ready for the release
-		// XCTAssertEqual(endpoint.components.path, "/a/aoyama/staging/sdk-webview.html")
-		XCTAssertEqual(endpoint.components.path, "/a/aoyama/testing/sns-test/sdk-webview.html")
+		XCTAssertEqual(endpoint.components.path, "/a/aoyama/staging/sdk-webview.html")
 
 		XCTAssertNil(endpoint.components.queryItems)
 	}
