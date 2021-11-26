@@ -80,7 +80,7 @@ platform :ios, '10.3'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.5.0'
+pod 'Virtusize', '~> 2.5.1'
 end
 ```
 
@@ -97,7 +97,7 @@ $ pod install
 Starting with the  `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.5.0`
+2. Select a minimum version of `2.5.1`
 3. Click **Next**
 
 
@@ -685,39 +685,9 @@ Virtusize.sendOrder(
 
 ## Enable SNS Login in Virtusize for Native Webview Apps
 
-The built-in WKWebView blocks any popup windows by default. To fix and enable SNS login on the web version of Virtusize integration in your web view, please use this method: 
+Use the [Virtusize Auth SDK](https://github.com/virtusize/virtusize_auth_ios)
 
-1. If you build your UI purely with UIKit, replace your `WKWebView` with **`VirtusizeWebView`** in your Swift file. If you use the WKWebViewConfiguration object to configure your web view, please access it from the closure like the example below.
 
-   - Swift
-
-   ```diff
-   - var webView: WKWebView
-   + var webView: VirtusizeWebView
-   ```
-
-   ```swift
-   webView = VirtusizeWebView(frame: .zero) { configuration in
-	   // access the WKWebViewConfiguration object here to customize it
-	   
-	   // If you want to allow cookie sharing between multiple VirtusizeWebViews,
-	   // assign the same WKProcessPool object to configuration.processPool
-	   configuration.processPool = WKProcessPool()
-   }
-   ```
-   
-2. If you build your UI with Xcode's Interface Builder, make sure that you set the Custom Class of your web view to **`VirtusizeWebView`** in the Identity inspector to fix SNS login in Virtusize.
-
-   - Swift
-
-   ```diff
-   - @IBOutlet weak var webview: WKWebView!
-   + @IBOutlet weak var webview: VirtusizeWebView!
-   ```
-
-   - Interface Builder
-   
-     ![](https://user-images.githubusercontent.com/7802052/121308895-87e3b500-c93c-11eb-8745-f4bf22bccdba.png)
 
 
 ## Build
