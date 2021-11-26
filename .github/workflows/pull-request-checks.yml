@@ -29,6 +29,7 @@ jobs:
         with:
           timeout_minutes: 60
           max_attempts: 3
+          retry_on: error
           command: pod lib lint Virtusize.podspec --allow-warnings
 
   test:
