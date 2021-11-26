@@ -8,6 +8,11 @@ import UIKit
 @_exported import VirtusizeAuth
 import VirtusizeCore
 import WebKit
+@_hasMissingDesignatedInitializers public class VirtusizeURLCheck {
+  public static func isExternalLinkFromVirtusize(url: Swift.String?) -> Swift.Bool
+  public static func isLinkFromSNSAuth(url: Swift.String?) -> Swift.Bool
+  @objc deinit
+}
 @objc open class VirtusizeWebView : WebKit.WKWebView {
   @objc override dynamic open var uiDelegate: WebKit.WKUIDelegate? {
     @objc get
