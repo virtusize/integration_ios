@@ -8,10 +8,14 @@ Use list notation, and following prefixes:
 - Cleanup - any code removal or non visible maintenance change
 - Refactor - code refactoring, keeping same functionality
 - Bugfix - when fixing any major bug
-- Docs - for any improvement to documentation
+- c - for any improvement to documentation
 
 
 ## NEXT RELEASE for Version 2.x.x
+
+### 2.5.2
+-  Cleanup: Update to iOS 12.3 (za)
+-  Docs: Update Readme file to update Requirements: iOS version  
 
 ### 2.5.1
 
