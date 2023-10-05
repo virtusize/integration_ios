@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Virtusize'
-  s.version = '2.5.2'
+  s.version = '2.5.3'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.summary = 'Integrate Virtusize on iOS devices'
   s.homepage = 'https://www.virtusize.com/'
@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/Resources/VirtusizeAssets.xcassets"] }
 
   s.pod_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
-  s.dependency "VirtusizeAuth", "1.0.2"
+  s.dependency "VirtusizeAuth", "1.0.3"
   s.dependency "VirtusizeCore", "<= #{s.version}"
 end
