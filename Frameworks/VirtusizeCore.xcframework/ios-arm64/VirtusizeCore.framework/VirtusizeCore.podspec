@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'VirtusizeCore'
-  s.version = '2.5.0'
+  s.version = '2.5.3'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.summary = 'Virtusize Core for iOS'
   s.homepage = 'https://www.virtusize.com/'
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'https://github.com/virtusize/integration_ios.git', :tag => "#{s.version}" }
 
   s.platform = :ios
-  s.ios.deployment_target = '10.3'
+  s.ios.deployment_target = '13.0'
   s.swift_version = '5'
 
   s.source_files = ['VirtusizeCore/Sources/*.{swift, h}', 'VirtusizeCore/Sources/**/*.swift']
