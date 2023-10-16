@@ -12,6 +12,14 @@ Use list notation, and following prefixes:
 
 
 ## NEXT RELEASE for Version 2.x.x
+### 2.5.4
+- Refactor/Bugfix: Change VirtusizeAuth class name to VirtusizeAuthorization to resolve nested Class archive run time issue
+- Cleanup: Update deployment target to 13
+- Cleanup: Remove deprecated Method from VirtusizeWebView
+- Cleanup: Update VirtusizeCore framework deplyment target to ios 13
+- Cleanup: Update VirtusizeAuth POD Version to 1.1.0
+- Docs: Update Readme file to update Requirements: iOS version 
+
 ### 2.5.3
 -  Cleanup: Update VirtusizeAuth POD Version to 1.0.3
 -  Docs: Update Readme file to update Requirements: iOS version 
