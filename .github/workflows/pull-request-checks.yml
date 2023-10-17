@@ -7,7 +7,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Clean build directory
         run: make clean
       - name: Execute build
@@ -17,7 +17,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Update CocoaPods Specs
         run: pod repo update
       - name: Swift Lint
@@ -25,7 +25,7 @@ jobs:
       - name: Pod Lint for VirtusizeCore
         run: pod lib lint VirtusizeCore.podspec --allow-warnings
       - name: Pod Lint for Virtusize
-        uses: nick-invision/retry@v2.0.0
+        uses: nick-fields/retry@v2.9.0
         with:
           timeout_minutes: 60
           max_attempts: 3
@@ -36,7 +36,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Run VirtusizeCoreTests
         run: make virtusize-core-test
       - name: Run VirtusizeTests
