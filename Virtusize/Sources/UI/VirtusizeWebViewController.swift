@@ -195,7 +195,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			}
 		}
 
-		if VirtusizeAuth.isSNSAuthURL(viewController: self, webView: webView, url: url) {
+		if VirtusizeAuthorization.isSNSAuthURL(viewController: self, webView: webView, url: url) {
 			return nil
 		}
 

@@ -50,17 +50,25 @@ public extension UIApplication {
     /// Gets the top most view controller
 	///
 	/// - Parameter baseVC: the base view controller
-	func getTopMostViewController(
-		baseVC: UIViewController? = UIApplication.safeShared?.keyWindow?.rootViewController
-	) -> UIViewController? {
+	func getTopMostViewController() -> UIViewController? {
+       let baseVC : UIViewController? = UIApplication.safeShared?.windows.filter {$0.isKeyWindow}.first?.rootViewController
 		if let navVC = baseVC as? UINavigationController {
-			return getTopMostViewController(baseVC: navVC.visibleViewController)
+			return navVC.visibleViewController
 		} else if let tabController = baseVC as? UITabBarController, let selectedTabVC = tabController.selectedViewController {
-			return getTopMostViewController(baseVC: selectedTabVC)
+			return selectedTabVC
 		} else if let presentedVC = baseVC?.presentedViewController {
-			return getTopMostViewController(baseVC: presentedVC)
+			return presentedVC
 		}
 		return baseVC
 	}
+}
+extension UIWindow {
+    static var key: UIWindow? {
+        if #available(iOS 13, *) {
+            return UIApplication.safeShared?.windows.first { $0.isKeyWindow }
+        } else {
+            return UIApplication.safeShared?.keyWindow
+        }
+    }
 }
 #endif
