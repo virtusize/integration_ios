@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			.setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
 			.build()
 
-		VirtusizeAuth.setAppBundleId("com.virtusize.Example")
+		VirtusizeAuthorization.setAppBundleId("com.virtusize.Example")
 
 		return true
 	}

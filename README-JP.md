@@ -54,7 +54,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## 対応バージョン
 
-- iOS 12.0+
+- iOS 13.0+
 - Xcode 12+
 - Swift 5.0+
 
@@ -76,11 +76,11 @@ Virtusize SDKをXcodeのCocosPodsを使ってプロジェクトに実装する�
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '12.0'
+platform :ios, '13.0'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.5.3'
+pod 'Virtusize', '~> 2.5.4'
 end
 ```
 
@@ -97,7 +97,7 @@ $ pod install
 Starting with the  `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.5.3`
+2. Select a minimum version of `2.5.4`
 3. Click **Next**
 
 
