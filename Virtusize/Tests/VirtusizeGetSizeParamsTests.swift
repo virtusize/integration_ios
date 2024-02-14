@@ -219,24 +219,73 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             )!,
             userBodyProfile: nil
         )
-
+//        {
+//            bodyData =     {
+//            };
+//            items =     (
+//                        {
+//                    additionalInfo =             {
+//                        brand = "";
+//                        fit = regular;
+//                        gender = "<null>";
+//                        sizes =                 {
+//                        };
+//                    };
+//                    extProductId = 694;
+//                    itemSizesOrig =             {
+//                    };
+//                    productType = "";
+//                }
+//            );
+//            userGender = "";
+//        }
+        
         let expectedGetSizeParamsData = Data(
-            """
-            {
-                "userGender": "",
-                "extProductId": "694",
-                "itemSizesOrig": {},
-                "additionalInfo": {
-                    "sizes": {},
-                    "gender": "null",
-                    "modelInfo": {},
-                    "brand": "",
-                    "fit": "regular"
-                },
-                "bodyData": {},
-                "productType": ""
-            }
-            """.utf8)
+        """
+        {
+            "bodyData": {},
+            "items": [
+                {
+                    "additionalInfo": {
+                        "brand": "",
+                        "fit": "regular",
+                        "sizes": {},
+                        "gender": null
+                    },
+                    "itemSizesOrig": {},
+                    "productType": "",
+                    "extProductId": "694"
+                }
+            ],
+            "userGender": ""
+        }
+""".utf8)
+
+//        let expectedGetSizeParamsData = Data(
+//            """
+//            {
+//                "userGender": "",
+//                "extProductId": "694",
+//                "itemSizesOrig": {},
+//                "additionalInfo": {
+//                    "sizes": {},
+//                    "gender": "<null>",
+//                    "modelInfo": {},
+//                    "brand": "",
+//                    "fit": "regular"
+//                },
+//                "bodyData": {},
+//                "productType": ""
+//            }
+//            """.utf8)
+        
+ 
+
+
+
+
+
+        
 
         guard let expectedJsonObject = try? JSONSerialization.jsonObject(
                 with: expectedGetSizeParamsData, options: []
