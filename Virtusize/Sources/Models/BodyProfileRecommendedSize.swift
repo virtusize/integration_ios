@@ -23,45 +23,8 @@
 //
 
 /// This structure represents the response for the recommendation API based on the user body profile
-//public struct BodyProfileRecommendedSize: Codable {
-//	/// The recommended size name
-//	let sizeName: String
-//
-//	/// The store product that is associated with this recommendation
-//	public var product: VirtusizeServerProduct?
-//
-//	public init(sizeName: String, product: VirtusizeServerProduct? = nil) {
-//		self.sizeName = sizeName
-//		self.product = product
-//	}
-//}
-//public struct BodyProfileRecommendedSize: Codable {
-//    let extProductId: String?
-//    let sizeName: String?
-//    let secondSize: String?
-//    let fitScore : Int?
-//    let secondFitScore: Int?
-//    let fitScoreDifference: Int?
-//    let virtualItem: VirtualItem?
-//    let willFit: Bool?
-//    let thresholdFitScore: Int?
-//    let scenario: String?
-//    let willFitForSizes: WillFitForSizes?
-//    
-//    init(extProductId: String? = nil, sizeName: String, secondSize: String? = nil, fitScore: Int? = nil, secondFitScore: Int? = nil, fitScoreDifference: Int? = nil, virtualItem: VirtualItem? = nil, willFit : Bool? = nil, thresholdFitScore: Int? = nil, scenario : String? = nil, willFitForSizes: WillFitForSizes? = nil ) {
-//        self.extProductId = extProductId
-//        self.sizeName = sizeName
-//        self.secondSize = secondSize
-//        self.fitScore = fitScore
-//        self.secondFitScore = secondFitScore
-//        self.fitScoreDifference = fitScoreDifference
-//        self.virtualItem = virtualItem
-//        self.willFit = willFit
-//        self.thresholdFitScore = thresholdFitScore
-//        self.scenario = scenario
-//        self.willFitForSizes = willFitForSizes
-//    }
-//}
+
+
 public struct BodyProfileRecommendedSize: Codable {
     let extProductId : String?
     let sizeName : String?
