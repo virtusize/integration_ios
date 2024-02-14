@@ -35,59 +35,68 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             userBodyProfile: TestFixtures.getUserBodyProfile()
         )
 
+        
+//        "extProductId": "694",
+//        "brand": "Virtusize",
+//        "modelInfo": {
+//                "hip": 85,
+//                "size": "38",
+//                "bust": 78,
+//                "waist": 56,
+//                "height": 165
+//            },
+//            "fit": "regular"
+//        },
         let expectedGetSizeParamsData = Data(
             """
             {
                 "userGender": "female",
                 "userHeight": 1630,
-                "userWeight": 50.00,
-                "extProductId": "694",
-                "itemSizesOrig": {
-                    "37": {
-                        "sleeve": 845,
-                        "bust": 660,
-                        "height": 760
-                    },
-                    "36": {
-                        "sleeve": 825,
-                        "bust": 645,
-                        "height": 750
-                    },
-                    "35": {
-                        "sleeve": 805,
-                        "bust": 630,
-                        "height": 740
+                "userWeight": 50,
+                "items": [
+                    {
+                        "additionalInfo": {
+                            "brand": "Virtusize",
+                            "fit": "regular",
+                            "sizes": {
+                            "35": {
+                                "sleeve": 805,
+                                "bust": 630,
+                                "height": 740
+                            },
+                            "36": {
+                                "sleeve": 825,
+                                "bust": 645,
+                                "height": 750
+                            },
+                            "37": {
+                                "sleeve": 845,
+                                "bust": 660,
+                                "height": 760
+                            }},
+                            "gender": "female"
+                        },
+                        "itemSizesOrig": {
+                            "35": {
+                                "sleeve": 805,
+                                "bust": 630,
+                                "height": 740
+                            },
+                            "36": {
+                                "sleeve": 825,
+                                "bust": 645,
+                                "height": 750
+                            },
+                            "37": {
+                                "sleeve": 845,
+                                "bust": 660,
+                                "height": 760
+                            }
+                        },
+                        "productType": "jacket",
+                        "extProductId": "694"
                     }
-                },
-                "additionalInfo": {
-                    "sizes": {
-                        "37": {
-                            "sleeve": 845,
-                            "bust": 660,
-                            "height": 760
-                        },
-                        "36": {
-                            "sleeve": 825,
-                            "bust": 645,
-                            "height": 750
-                        },
-                        "35": {
-                            "sleeve": 805,
-                            "bust": 630,
-                            "height": 740
-                        }
-                    },
-                    "gender": "female",
-                    "brand": "Virtusize",
-                    "modelInfo": {
-                        "hip": 85,
-                        "size": "38",
-                        "bust": 78,
-                        "waist": 56,
-                        "height": 165
-                    },
-                    "fit": "regular"
-                },
+                ],
                 "bodyData": {
                     "neck": {
                         "value": 300,
@@ -177,8 +186,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "value": 830,
                         "predicted": true
                     }
-                },
-                "productType": "jacket"
+                }
             }
             """.utf8)
 
