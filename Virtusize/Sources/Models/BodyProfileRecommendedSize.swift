@@ -103,8 +103,8 @@ struct VirtualItem: Codable {
 struct WillFitForSizes: Codable {
     let large : Bool?
     let  medium  : Bool?
-    let extra_small: Bool?
-    let extra_large: Bool?
+    let extraSmall: Bool?
+    let extraLarge: Bool?
     let small: Bool?
     
     
@@ -112,8 +112,8 @@ struct WillFitForSizes: Codable {
 
         case large = "large"
         case medium = "medium"
-        case extra_small = "extra small"
-        case extra_large = "extra large"
+        case extraSmall = "extra small"
+        case extraLarge = "extra large"
         case small = "small"
         
     }
