@@ -12,6 +12,13 @@ Use list notation, and following prefixes:
 
 
 ## NEXT RELEASE for Version 2.x.x
+### 2.5.7
+- Refactor: Change the get-size endpoint from https://services.virtusize.jp/ds-functions/size-rec/get-size ➝ https://size-recommendation.virtusize.jp/item
+- Refactor: Change in request body of VirtusizeGetSizeParams: Remove "modelInfo" key,  in "gender" now getting value from VirtusizeUserBodyProfile
+- Refactor: Change in Responce Model of BodyProfileRecommendedSize
+- Docs: Update Readme file to update pod version 
+
+
 ### 2.5.4
 - Refactor/Bugfix: Change VirtusizeAuth class name to VirtusizeAuthorization to resolve nested Class archive run time issue
 - Cleanup: Update deployment target to 13

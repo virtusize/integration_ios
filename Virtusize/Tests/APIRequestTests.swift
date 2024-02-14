@@ -157,10 +157,11 @@ class APIRequestTests: XCTestCase {
         XCTAssertNotNil(apiRequest?.httpBody)
         let actualParams = try? JSONDecoder().decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
         XCTAssertNotNil(actualParams)
-        XCTAssertEqual(actualParams?.additionalInfo.count, 5)
-        XCTAssertEqual(actualParams?.additionalInfo["gender"]?.value as? String, "male")
+        XCTAssertEqual(actualParams?.items.additionalInfo.count, 5)
+       
+        XCTAssertEqual(actualParams?.items.additionalInfo["gender"]?.value as? String, "male")
         XCTAssertEqual(
-            actualParams?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
+            actualParams?.items.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
             ["37": [
                 "sleeve": 845,
                 "bust": 660,
@@ -179,27 +180,27 @@ class APIRequestTests: XCTestCase {
             ]
         )
         XCTAssertEqual(
-            (actualParams?.additionalInfo["modelInfo"]?.value as? [String: Any])?["size"] as? String,
+            (actualParams?.items.additionalInfo["modelInfo"]?.value as? [String: Any])?["size"] as? String,
             "38"
         )
         XCTAssertEqual(
-            (actualParams?.additionalInfo["modelInfo"]?.value as? [String: Any])?["hip"] as? Int,
+            (actualParams?.items.additionalInfo["modelInfo"]?.value as? [String: Any])?["hip"] as? Int,
             85
         )
-        XCTAssertEqual(actualParams?.additionalInfo["brand"]?.value as? String, "Virtusize")
-        XCTAssertEqual(actualParams?.additionalInfo["fit"]?.value as? String, "regular")
+        XCTAssertEqual(actualParams?.items.additionalInfo["brand"]?.value as? String, "Virtusize")
+        XCTAssertEqual(actualParams?.items.additionalInfo["fit"]?.value as? String, "regular")
         XCTAssertEqual(actualParams?.bodyData.count, 22)
         XCTAssertEqual((actualParams?.bodyData["chest"])?["value"]?.value as? Int, 755)
-        XCTAssertEqual(actualParams?.itemSizesOrig.count, 3)
-        XCTAssertEqual(actualParams?.itemSizesOrig["36"]?["bust"], 645)
+        XCTAssertEqual(actualParams?.items.itemSizesOrig.count, 3)
+        XCTAssertEqual(actualParams?.items.itemSizesOrig["36"]?["bust"], 645)
 		XCTAssertEqual(actualParams?.userGender, "female")
 		XCTAssertEqual(actualParams?.userHeight, 1630)
 		XCTAssertEqual(actualParams?.userWeight, 50.00)
-		XCTAssertEqual(actualParams?.extProductId, TestFixtures.externalProductId)
-        XCTAssertEqual(actualParams?.productType, "jacket")
+		XCTAssertEqual(actualParams?.items.extProductId, TestFixtures.externalProductId)
+        XCTAssertEqual(actualParams?.items.productType, "jacket")
 		XCTAssertEqual(
 			apiRequest?.url?.absoluteString,
-			"https://services.virtusize.com/stg/ds-functions/size-rec/get-size"
+			"https://size-recommendation.virtusize.com/item"
 		)
     }
 

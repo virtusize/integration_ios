@@ -176,14 +176,19 @@ class VirtusizeAPIService: APIService {
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
-	) -> APIResult<BodyProfileRecommendedSize> {
+	) -> APIResult<BodyProfileRecommendedSizeArray> {
 		guard let request = APIRequest.getBodyProfileRecommendedSize(
 				productTypes: productTypes,
 				storeProduct: storeProduct,
-				userBodyProfile: userBodyProfile) else {
+				userBodyProfile: userBodyProfile)
+        else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
+      ///  print ("Request: \(request)")
+        
+     
+        
+		return getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
 	}
 
 	/// The API request for getting i18 localization texts

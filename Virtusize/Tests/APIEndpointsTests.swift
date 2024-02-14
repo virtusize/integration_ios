@@ -170,12 +170,12 @@ class APIEndpointsTests: XCTestCase {
     func testGetSizeEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.getSize
 
-        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
-        XCTAssertEqual(endpoint.components.path, "/stg/ds-functions/size-rec/get-size")
+        XCTAssertEqual(endpoint.components.host, "size-recommendation.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/item")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
-
+    
     private func getQueryParametersDict(queryItems: [URLQueryItem]?) -> [String: String] {
         guard let items = queryItems else {
             return [:]

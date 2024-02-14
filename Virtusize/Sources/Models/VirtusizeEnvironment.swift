@@ -50,6 +50,23 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 				return "services.virtusize.kr"
 		}
 	}
+    
+    /// Gets the services URL for the ``getSize` requests
+    internal func getSizeUrl() -> String {
+        // swiftlint:disable switch_case_alignment
+        switch self {
+            case .testing:
+                return "size-recommendation.virtusize.jp"
+            case .staging:
+                return "size-recommendation.virtusize.com"
+            case .global:
+                return "size-recommendation.virtusize.com"
+            case .japan:
+                return "size-recommendation.virtusize.jp"
+            case .korea:
+                return "size-recommendation.virtusize.kr"
+        }
+    }
 
 	/// Gets the URL for the `i18n` request
 	internal func i18nUrl() -> String {
