@@ -15,7 +15,7 @@ Use list notation, and following prefixes:
 ### 2.5.7
 - Refactor: Change the get-size endpoint from https://services.virtusize.jp/ds-functions/size-rec/get-size ➝ https://size-recommendation.virtusize.jp/item
 - Refactor: Change in request body of VirtusizeGetSizeParams: Remove "modelInfo" key,  in "gender" now getting value from VirtusizeUserBodyProfile
-- Refactor: Change in Responce Model of BodyProfileRecommendedSize
+- Refactor: Change in response Model of BodyProfileRecommendedSize
 - Docs: Update Readme file to update pod version 
 
 

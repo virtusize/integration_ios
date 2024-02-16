@@ -25,22 +25,16 @@
 // swiftlint:disable line_length
 /// The structure that wraps the parameters for the API request to get the recommended size based on a user's body profile
 internal struct VirtusizeGetSizeParams: Codable {
-    /// The store product additional info
-   // var additionalInfo: [String: VirtusizeAnyCodable] = [:]
+   
     /// The user body data
     var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
-    /// The store product size info
-  //  var itemSizesOrig: [String: [String: Int?]] = [:]
-    /// The store product type
-  //  var productType: String = ""
     /// The user's gender
     var userGender: String = ""
     /// The user's height
     var userHeight: Int?
     /// The user's weight
     var userWeight: Float?
-    /// The external product ID provided by the client
-   // var extProductId: String = ""
+
     
     var items : [VirtusizeGetSizeItemsParam]
     

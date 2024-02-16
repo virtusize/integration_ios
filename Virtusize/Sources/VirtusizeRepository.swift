@@ -286,7 +286,7 @@ internal class VirtusizeRepository: NSObject {
 			return
 		}
         bodyProfileRecommendedSize?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
-		//bodyProfileRecommendedSize = BodyProfileRecommendedSize(sizeName: recommendedSize)
+		
 	}
 
 	/// Removes the deleted user product by the product ID from the user product list

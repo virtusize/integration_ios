@@ -60,8 +60,7 @@ open class APIService {
         
 		task = APIService.session.dataTask(with: request) { (data, response, error) in
             
-            print("request :\(request.url?.absoluteString ?? "")")
-            print("error \(error.debugDescription)")
+          
 			guard error == nil else {
 				DispatchQueue.main.async {
 					errorHandler?(VirtusizeError.apiRequestError(request.url, error!.localizedDescription))
@@ -176,7 +175,7 @@ open class APIService {
 		do {
 			let result = try JSONDecoder().decode(type!, from: data)
 			let jsonString = String(data: data, encoding: String.Encoding.utf8)
-           // print("Json String  \(jsonString)" )
+          
 			return .success(result, jsonString)
             
 		} catch {

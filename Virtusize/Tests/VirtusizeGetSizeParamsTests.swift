@@ -35,18 +35,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             userBodyProfile: TestFixtures.getUserBodyProfile()
         )
 
-        
-//        "extProductId": "694",
-//        "brand": "Virtusize",
-//        "modelInfo": {
-//                "hip": 85,
-//                "size": "38",
-//                "bust": 78,
-//                "waist": 56,
-//                "height": 165
-//            },
-//            "fit": "regular"
-//        },
+
         let expectedGetSizeParamsData = Data(
             """
             {
@@ -227,26 +216,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             )!,
             userBodyProfile: nil
         )
-//        {
-//            bodyData =     {
-//            };
-//            items =     (
-//                        {
-//                    additionalInfo =             {
-//                        brand = "";
-//                        fit = regular;
-//                        gender = "<null>";
-//                        sizes =                 {
-//                        };
-//                    };
-//                    extProductId = 694;
-//                    itemSizesOrig =             {
-//                    };
-//                    productType = "";
-//                }
-//            );
-//            userGender = "";
-//        }
+
         
         let expectedGetSizeParamsData = Data(
         """
@@ -268,29 +238,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             "userGender": ""
         }
 """.utf8)
-
-//        let expectedGetSizeParamsData = Data(
-//            """
-//            {
-//                "userGender": "",
-//                "extProductId": "694",
-//                "itemSizesOrig": {},
-//                "additionalInfo": {
-//                    "sizes": {},
-//                    "gender": "<null>",
-//                    "modelInfo": {},
-//                    "brand": "",
-//                    "fit": "regular"
-//                },
-//                "bodyData": {},
-//                "productType": ""
-//            }
-//            """.utf8)
-        
- 
-
-
-
 
 
         

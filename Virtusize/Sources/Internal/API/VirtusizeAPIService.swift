@@ -184,7 +184,7 @@ class VirtusizeAPIService: APIService {
         else {
 			return .failure(nil)
 		}
-      ///  print ("Request: \(request)")
+      
         
      
         
