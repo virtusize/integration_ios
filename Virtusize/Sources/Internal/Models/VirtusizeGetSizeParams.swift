@@ -79,7 +79,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         if let weight = userBodyProfile?.weight {
             userWeight = Float(weight)
         }
-       //let extProductId = storeProduct.externalId
+      
         
         items = [VirtusizeGetSizeItemsParam(additionalInfo: additionalInfo,itemSizesOrig: itemSizesOrig,productType: productType, extProductId: storeProduct.externalId)]
         
