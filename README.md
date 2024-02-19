@@ -127,7 +127,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
     // For using the Order API, Virtusize.userID is required
     Virtusize.userID = "123"
-    // By default, the Virtusize environment will be set to .global
+    // By default, the Virtusize environment will be set to .GLOBAL
     Virtusize.environment = .STAGING
     Virtusize.params = VirtusizeParamsBuilder()
         // By default, the initial language will be set based on the Virtusize environment
@@ -145,7 +145,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-The environment is the region you are running the integration from, either `.staging`, `.global`, `.japan` or `.korea`
+The environment is the region you are running the integration from, either `.STAGING`, `.GLOBAL`, `.JAPAN` or `.korea`
 
 You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to change the configuration of the integration. Possible configuration methods are shown in the following table:
 

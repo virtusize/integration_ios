@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
 		// For using the Order API, Virtusize.userID is required
 		Virtusize.userID = "123"
-		// By default, the Virtusize environment will be set to .global
+		// By default, the Virtusize environment will be set to .JAPAN
 		Virtusize.environment = .JAPAN
 		Virtusize.params = VirtusizeParamsBuilder()
 			// By default, the initial language will be set based on the Virtusize environment
