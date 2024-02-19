@@ -52,7 +52,7 @@ internal struct VirtusizeGetSizeParams: Codable {
     ) {
         
    ///Chirag : Commented modelInfo not getting proper value  but its optional
-   ///Chirag: Gender value geting from userBodyProfile, not geting from storeProduct.storeProductMeta?.additionalInfo
+   ///Chirag: Gender value geting from userBodyProfile, not getting from storeProduct.storeProductMeta?.additionalInfo
        let additionalInfo = [
             "brand": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
