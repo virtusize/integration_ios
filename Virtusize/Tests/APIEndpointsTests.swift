@@ -32,7 +32,7 @@ class APIEndpointsTests: XCTestCase {
     override func setUpWithError() throws {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
-        Virtusize.environment = .staging
+        Virtusize.environment = .STAGING
     }
 
     override func tearDownWithError() throws {
@@ -55,7 +55,7 @@ class APIEndpointsTests: XCTestCase {
     }
 
     func testProductMetaDataHintsEndpoint_returnExpectedComponents() {
-        Virtusize.environment = .global
+        Virtusize.environment = .GLOBAL
         let endpoint = APIEndpoints.productMetaDataHints
 
         XCTAssertEqual(endpoint.components.host, "api.virtusize.com")
@@ -65,7 +65,7 @@ class APIEndpointsTests: XCTestCase {
     }
 
     func testEventsEndpoint_returnExpectedComponents() {
-        Virtusize.environment = .korea
+        Virtusize.environment = .KOREA
         let endpoint = APIEndpoints.events
         XCTAssertEqual(endpoint.components.host, "events.virtusize.kr")
         XCTAssertEqual(endpoint.components.path, "")
@@ -74,7 +74,7 @@ class APIEndpointsTests: XCTestCase {
     }
 
     func testVirtusizeWebViewEndpoint_japanEnv_returnExpectedComponents() {
-        Virtusize.environment = .japan
+        Virtusize.environment = .JAPAN
 
         let endpoint = APIEndpoints.virtusizeWebView
 
@@ -86,7 +86,7 @@ class APIEndpointsTests: XCTestCase {
     }
 
 	func testVirtusizeWebViewEndpoint_stagingEnv_returnExpectedComponents() {
-		Virtusize.environment = .staging
+		Virtusize.environment = .STAGING
 
 		let endpoint = APIEndpoints.virtusizeWebView
 

@@ -30,7 +30,7 @@ class APIRequestTests: XCTestCase {
     override func setUpWithError() throws {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
-        Virtusize.environment = .staging
+        Virtusize.environment = .STAGING
 		UserDefaultsHelper.current.accessToken = "access_token"
     }
 

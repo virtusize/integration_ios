@@ -128,7 +128,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     // For using the Order API, Virtusize.userID is required
     Virtusize.userID = "123"
     // By default, the Virtusize environment will be set to .global
-    Virtusize.environment = .staging
+    Virtusize.environment = .STAGING
     Virtusize.params = VirtusizeParamsBuilder()
         // By default, the initial language will be set based on the Virtusize environment
         .setLanguage(.JAPANESE)
