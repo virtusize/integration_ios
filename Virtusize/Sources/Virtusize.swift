@@ -35,8 +35,8 @@ public class Virtusize {
 	/// The user id that is the unique user id from the client system
 	public static var userID: String?
 
-	/// The Virtusize environment that defaults to the `global` domain
-	public static var environment = VirtusizeEnvironment.global
+	/// The Virtusize environment that defaults to the `GLOBAL` domain
+	public static var environment = VirtusizeEnvironment.GLOBAL
 
 	/// The Virtusize parameter object contains the parameters to be passed to the Virtusize web app
 	public static var params: VirtusizeParams? = VirtusizeParamsBuilder().build()

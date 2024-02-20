@@ -80,7 +80,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.5.4'
+pod 'Virtusize', '~> 2.5.7'
 end
 ```
 
@@ -97,7 +97,7 @@ $ pod install
 Starting with the  `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.5.4`
+2. Select a minimum version of `2.5.7`
 3. Click **Next**
 
 
@@ -138,8 +138,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
     // For using the Order API, Virtusize.userID is required
     Virtusize.userID = "123"
-    // By default, the Virtusize environment will be set to .global
-    Virtusize.environment = .staging
+    // By default, the Virtusize environment will be set to .GLOBAL
+    Virtusize.environment = .STAGING
     Virtusize.params = VirtusizeParamsBuilder()
         // By default, the initial language will be set based on the Virtusize environment
         .setLanguage(.JAPANESE)
@@ -156,7 +156,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-環境は、実装をしている環境を選択してください `.staging`,  `.global`, `.japan` ,もしくは`.korea`から選択できます。
+環境は、実装をしている環境を選択してください `.STAGING`,  `.GLOBAL`, `.JAPAN` ,もしくは`.KOREA`から選択できます。
 
 **VirtusizeParamsBuilder**を使用して実装構成を変更することにより、`Virtusize.params`をセットアップできます。可能な構成方法を次の表に示します。
 
