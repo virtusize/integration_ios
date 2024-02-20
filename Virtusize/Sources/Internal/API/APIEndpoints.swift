@@ -93,19 +93,22 @@ internal enum APIEndpoints {
 				components.path = "/a/api/v3/user-body-measurements"
 
 			case .getSize:
-				components.path =  "\(envPathForServicesAPI)/ds-functions/size-rec/get-size"
+				components.path =  "/item"
 
 			case .i18n(let langCode):
 				components.path = "/bundle-payloads/aoyama/\(langCode)"
 		}
+   
 		return components
 	}
 
 	var hostname: String {
 		// swiftlint:disable switch_case_alignment
 		switch self {
-			case .productDataCheck, .getSize:
+			case .productDataCheck:
 				return Virtusize.environment.servicesUrl()
+            case  .getSize:
+                return Virtusize.environment.getSizeUrl()
 			case .virtusizeWebView:
 				return Virtusize.environment.virtusizeStaticApiUrl()
 			case .i18n:

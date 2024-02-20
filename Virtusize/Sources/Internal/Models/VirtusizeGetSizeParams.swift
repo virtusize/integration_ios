@@ -25,63 +25,67 @@
 // swiftlint:disable line_length
 /// The structure that wraps the parameters for the API request to get the recommended size based on a user's body profile
 internal struct VirtusizeGetSizeParams: Codable {
-	/// The store product additional info
-	var additionalInfo: [String: VirtusizeAnyCodable] = [:]
-	/// The user body data
-	var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
-	/// The store product size info
-	var itemSizesOrig: [String: [String: Int?]] = [:]
-	/// The store product type
-	var productType: String = ""
-	/// The user's gender
-	var userGender: String = ""
-	/// The user's height
-	var userHeight: Int?
-	/// The user's weight
-	var userWeight: Float?
-	/// The external product ID provided by the client
-	var extProductId: String = ""
+   
+    /// The user body data
+    var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
+    /// The user's gender
+    var userGender: String = ""
+    /// The user's height
+    var userHeight: Int?
+    /// The user's weight
+    var userWeight: Float?
 
-	/// Initializes the VirtusizeGetSizeParams structure
-	///
-	/// - Parameters:
-	///   - productTypes: The list of available `VirtusizeProductType`
-	///   - storeProduct: The store product info in the type of `VirtusizeInternalProduct`
-	///   - userBodyProfile: The user body profile
-	init(
-		productTypes: [VirtusizeProductType],
-		storeProduct: VirtusizeServerProduct,
-		userBodyProfile: VirtusizeUserBodyProfile?
-	) {
-		additionalInfo = [
-			"brand": VirtusizeAnyCodable(
-				storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
-			),
-			"fit": VirtusizeAnyCodable(
-				storeProduct.storeProductMeta?.additionalInfo?.fit ?? "regular"
-			),
-			"sizes": VirtusizeAnyCodable(
-				storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
-			),
-			"modelInfo": VirtusizeAnyCodable(
-				getModelInfoDict(storeProduct: storeProduct)
-			),
-			"gender": VirtusizeAnyCodable(
-				storeProduct.storeProductMeta?.additionalInfo?.gender ?? storeProduct.storeProductMeta?.gender ?? nil
-			)
-		]
-		bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
-		itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
-		if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
-			productType = productTypes[index].name
-		}
-		userGender = userBodyProfile?.gender ?? ""
-		userHeight = userBodyProfile?.height
-		if let weight = userBodyProfile?.weight {
-			userWeight = Float(weight)
-		}
-		extProductId = storeProduct.externalId
-	}
+    
+    var items : [VirtusizeGetSizeItemsParam]
+    
+    /// Initializes the VirtusizeGetSizeParams structure
+    ///
+    /// - Parameters:
+    ///   - productTypes: The list of available `VirtusizeProductType`
+    ///   - storeProduct: The store product info in the type of `VirtusizeInternalProduct`
+    ///   - userBodyProfile: The user body profile
+    init(
+        productTypes: [VirtusizeProductType],
+        storeProduct: VirtusizeServerProduct,
+        userBodyProfile: VirtusizeUserBodyProfile?
+        
+    ) {
+        
+   ///Chirag : Commented modelInfo not getting proper value  but its optional
+   ///Chirag: Gender value getting from userBodyProfile, not getting from storeProduct.storeProductMeta?.additionalInfo
+       let additionalInfo = [
+            "brand": VirtusizeAnyCodable(
+                storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
+            ),
+            "fit": VirtusizeAnyCodable(
+                storeProduct.storeProductMeta?.additionalInfo?.fit ?? "regular"
+            ),
+            "sizes": VirtusizeAnyCodable(
+                storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
+            ),
+
+            "gender": VirtusizeAnyCodable(
+                userBodyProfile?.gender ?? nil
+            )
+        ]
+        bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
+        let itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
+        var productType = ""
+        if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
+            productType = productTypes[index].name
+        }
+        userGender = userBodyProfile?.gender ?? ""
+        userHeight = userBodyProfile?.height
+        if let weight = userBodyProfile?.weight {
+            userWeight = Float(weight)
+        }
+      
+        
+        items = [VirtusizeGetSizeItemsParam(additionalInfo: additionalInfo,itemSizesOrig: itemSizesOrig,productType: productType, extProductId: storeProduct.externalId)]
+        
+        
+    }
+}
 
 	/// Gets the dictionary of the model info
 	private func getModelInfoDict(storeProduct: VirtusizeServerProduct) -> [String: Any] {
@@ -130,4 +134,5 @@ internal struct VirtusizeGetSizeParams: Codable {
 		}
 		return itemSizesDict
 	}
-}
+    
+
