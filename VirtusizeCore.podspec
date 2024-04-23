@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'VirtusizeCore'
-  s.version = '2.5.7'
+  s.version = '2.5.8'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.summary = 'Virtusize Core for iOS'
   s.homepage = 'https://www.virtusize.com/'
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.swift_version = '5'
 
   s.source_files = ['VirtusizeCore/Sources/*.{swift, h}', 'VirtusizeCore/Sources/**/*.swift']
-  s.resource_bundle = { 'VirtusizeCore' => ['VirtusizeCore/Sources/Resources/**/*.lproj'] }
+  s.resource_bundle = { 'VirtusizeCore' => ['VirtusizeCore/Sources/Resources/**/*.lproj', "VirtusizeCore/Sources/Resources/PrivacyInfo.xcprivacy"] }
   
   s.pod_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
 end
