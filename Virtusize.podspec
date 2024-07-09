@@ -13,4 +13,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5'
 
   s.source_files = 'Source/*.swift', 'Source/**/*.swift'
+  s.resource_bundle = { 'Virtusize' => ['Source/PrivacyInfo.xcprivacy'] }
 end
