@@ -12,11 +12,13 @@ Use list notation, and following prefixes:
 
 
 ## NEXT RELEASE for Version 2.x.x
+### 2.5.9
+- Fix: Update current privacy manifest 
+
 ### 2.5.8
 - Feature : Added PrivacyInfo file to VirtusizeCore
 - Feature : Added PrivacyInfo file to Virtusize
 - Docs: Update Readme file to update pod version 
-
 
 ### 2.5.7
 - Refactor: Change the get-size endpoint from https://services.virtusize.jp/ds-functions/size-rec/get-size ➝ https://size-recommendation.virtusize.jp/item
@@ -25,8 +27,6 @@ Use list notation, and following prefixes:
 - Refactor: VirtusizeEnvironment enum cases key set to Uppercase 
 - Cleanup: Remove Print functions and unnecessary commented code from BodyProfileRecommendedSize, VirtusizeAPIService, VirtusizeAPIRequest
 - Docs: Update Readme file to update pod version 
-
-
 
 ### 2.5.4
 - Refactor/Bugfix: Change VirtusizeAuth class name to VirtusizeAuthorization to resolve nested Class archive run time issue
