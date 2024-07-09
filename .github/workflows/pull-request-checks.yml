@@ -20,7 +20,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Update CocoaPods Specs
         run: pod repo update
-      - name: Swift Lint
+      - name: Install SwiftLint
+        run: brew install swiftlint
+      - name: Run SwiftLint
         run: swiftlint
       - name: Pod Lint for VirtusizeCore
         run: pod lib lint VirtusizeCore.podspec --allow-warnings
