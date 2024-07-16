@@ -1,5 +1,8 @@
 # ROADMAP
 
+## 1.4.2
+- Feature: Configure privacy manifests
+
 ## 1.4.1
 - Feature: Update the Product Data Check URL
 
