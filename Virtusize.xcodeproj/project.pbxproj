@@ -62,7 +62,8 @@
 		9C787FCD25DB7A3D00346F2A /* SizeRecommendationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C787FCC25DB7A3D00346F2A /* SizeRecommendationType.swift */; };
 		9C84B3FD26C2566B00DDF434 /* VirtusizeViewEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C84B3FC26C2566B00DDF434 /* VirtusizeViewEventProtocol.swift */; };
 		9C84B40126C276CA00DDF434 /* VirtusizeNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C84B40026C276CA00DDF434 /* VirtusizeNotification.swift */; };
-		9C8C62492C4982AA008D4930 /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C62482C4982AA008D4930 /* VirtusizeUIKit.framework */; };
+		9C8C624B2C49831F008D4930 /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C62482C4982AA008D4930 /* VirtusizeUIKit.framework */; };
+		9C8C624C2C49831F008D4930 /* VirtusizeUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C62482C4982AA008D4930 /* VirtusizeUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C969FD124EB5F8A00DD642F /* VirtusizeI18nLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */; };
 		9C969FD324EBE0C400DD642F /* DeserializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD224EBE0C300DD642F /* DeserializerTests.swift */; };
 		9C969FD824EBF71200DD642F /* i18n_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C969FD524EBF71200DD642F /* i18n_en.json */; };
@@ -126,6 +127,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9C28A3A62C497B7E004EFD4C /* VirtusizeCore.framework in Embed Frameworks */,
+				9C8C624C2C49831F008D4930 /* VirtusizeUIKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,7 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C28A3A52C497B7E004EFD4C /* VirtusizeCore.framework in Frameworks */,
-				9C8C62492C4982AA008D4930 /* VirtusizeUIKit.framework in Frameworks */,
+				9C8C624B2C49831F008D4930 /* VirtusizeUIKit.framework in Frameworks */,
 				9C28A3982C497732004EFD4C /* VirtusizeAuth.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
