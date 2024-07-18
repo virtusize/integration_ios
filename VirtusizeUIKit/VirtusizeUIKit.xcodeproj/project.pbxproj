@@ -36,7 +36,6 @@
 		9CC9297026D385BB00AD97D1 /* VirtusizeUIButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9296F26D385BA00AD97D1 /* VirtusizeUIButtonStyle.swift */; };
 		9CDA634926E0817D008C039B /* VirtusizeAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CDA634826E0817D008C039B /* VirtusizeAssets.xcassets */; };
 		9CDA635026E087ED008C039B /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDA634F26E087ED008C039B /* VirtusizeCore.framework */; };
-		9CDA635126E087ED008C039B /* VirtusizeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDA634F26E087ED008C039B /* VirtusizeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CDAE6C926CF93FE00CBF7EF /* VirtusizeUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDAE6C826CF93FE00CBF7EF /* VirtusizeUIButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,20 +48,6 @@
 			remoteInfo = VirtusizeUIKit;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		9CDA635226E087EE008C039B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				9CDA635126E087ED008C039B /* VirtusizeCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9C0BB97226DFB12E0043DC6D /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
@@ -279,7 +264,6 @@
 				9CA4467626CE192100D4013C /* Sources */,
 				9CA4467726CE192100D4013C /* Frameworks */,
 				9CA4467826CE192100D4013C /* Resources */,
-				9CDA635226E087EE008C039B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
