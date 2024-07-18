@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name = 'VirtusizeUIKit'
-	s.version = '2.3.2'
+	s.version = '2.5.9'
 	s.license = { :type => 'MIT', :file => 'LICENSE' }
 	s.summary = 'Virtusize UI toolkit for iOS'
 	s.homepage = 'https://www.virtusize.com/'
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 	s.source = { :git => 'https://github.com/virtusize/integration_ios.git', :tag => s.version }
 	
 	s.platform = :ios
-	s.ios.deployment_target = '10.3'
+	s.ios.deployment_target = '13.0'
 	s.swift_version = '5'
 	
 	s.source_files = ['VirtusizeUIKit/Sources/*.{swift, h}', 'VirtusizeUIKit/Sources/**/*.swift']
@@ -17,4 +17,5 @@ Pod::Spec.new do |s|
 	s.resource_bundle = {
 		'VirtusizeUIKit' => ['VirtusizeUIKit/Sources/Resources/VirtusizeAssets.xcassets']
 	}
+    s.dependency "VirtusizeCore", "<= #{s.version}"
 end
