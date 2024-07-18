@@ -1,5 +1,5 @@
 //
-//  APIRequest.swift
+//  VirtusizeAPIRequest.swift
 //
 //  Copyright (c) 2018-present Virtusize KK
 //
@@ -23,85 +23,9 @@
 //
 
 import Foundation
+import VirtusizeCore
 
-internal typealias JSONObject = [String: Any]
-internal typealias JSONArray = [JSONObject]
-
-/// This enum contains supported HTTP request methods
-internal enum APIMethod: String {
-	case get = "GET", post = "POST", delete = "DELETE"
-}
-
-/// A structure to get `URLRequest`s for Virtusize API requests
-internal struct APIRequest {
-	/// Gets a `URLRequest` for a HTTP request
-	///
-	/// - Parameters:
-	///   - components: `URLComponents` to obtain the `URL`
-	///   - method: An `APIMethod` that defaults to the `GET` HTTP method
-	/// - Returns: A `URLRequest` for this HTTP request
-	private static func HTTPRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
-		guard let url = components.url else {
-			fatalError("Endpoint URL components creation failed")
-		}
-
-		var request = URLRequest(url: url)
-		request.httpMethod = method.rawValue
-		return request
-	}
-
-	/// Gets the `URLRequest` for the HTTP request where the Browser Identifier is added
-	///
-	/// - Parameters:
-	///   - components: `URLComponents` to obtain the `URL`
-	///   - method: An `APIMethod` that defaults to the `GET` HTTP method
-	/// - Returns: A `URLRequest` for this HTTP request
-	private static func apiRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
-		var request = HTTPRequest(components: components, method: method)
-		request.addValue(UserDefaultsHelper.current.identifier, forHTTPHeaderField: "x-vs-bid")
-		return request
-	}
-
-	/// Gets the `URLRequest` for the HTTP request that gets user sessions
-	///
-	/// - Parameters:
-	///   - components: `URLComponents` to obtain the `URL`
-	/// - Returns: A `URLRequest` for this HTTP request
-	private static func apiRequestWithAuthHeader(components: URLComponents, method: APIMethod = .post) -> URLRequest {
-		var request = apiRequest(components: components, method: method)
-		request.addValue(UserDefaultsHelper.current.authToken ?? "", forHTTPHeaderField: "x-vs-auth")
-		request.addValue("", forHTTPHeaderField: "Cookie")
-		return request
-	}
-
-	/// Gets the `URLRequest` for the HTTP request that requires authentication
-	///
-	/// - Parameters:
-	///   - components: `URLComponents` to obtain the `URL`
-	///   - method: An `APIMethod` that defaults to the `GET` HTTP method
-	/// - Returns: A `URLRequest` for this HTTP request
-	private static func apiRequestWithAuthorization(components: URLComponents, method: APIMethod = .get) -> URLRequest {
-		var request = apiRequest(components: components, method: method)
-		guard let accessToken = UserDefaultsHelper.current.accessToken else {
-			return request
-		}
-		request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")
-		return request
-	}
-
-	/// Gets the `URLRequest` for the HTTP request where the request body is added
-	///
-	/// - Parameters:
-	///   - components: `URLComponents` to obtain the `URL`
-	///   - payload: A `Data` that is sent as the message body of the request
-	/// - Returns: A `URLRequest` for this HTTP request
-	private static func apiRequest(components: URLComponents, withPayload payload: Data) -> URLRequest {
-		var request = apiRequest(components: components, method: .post)
-		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-		request.httpBody = payload
-		return request
-	}
-
+extension APIRequest {
 	/// Gets the `URLRequest` for the `productCheck` request
 	///
 	/// - Parameter product: `VirtusizeProduct` for which check needs to be performed
@@ -253,6 +177,25 @@ internal struct APIRequest {
 		) else {
 			return nil
 		}
+/*
+ Chirag: Belows Logic is for to check request Body
+        // Print JSON from data
+    do {
+     
+            if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                // Convert JSON object back to Data for pretty printing
+                let prettyPrintedData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+                
+                // Convert the Data to a string
+                if let prettyPrintedString = String(data: prettyPrintedData, encoding: .utf8) {
+                    print(prettyPrintedString)
+                }
+            }
+        } catch {
+            print("Error converting JSON data to string: \(error.localizedDescription)")
+        }
+   */
+       
 		return apiRequest(components: endpoint.components, withPayload: jsonData)
 	}
 

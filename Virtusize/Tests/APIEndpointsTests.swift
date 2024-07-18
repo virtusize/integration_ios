@@ -32,7 +32,7 @@ class APIEndpointsTests: XCTestCase {
     override func setUpWithError() throws {
         Virtusize.APIKey = "test_APIKey"
         Virtusize.userID = "123"
-        Virtusize.environment = .staging
+        Virtusize.environment = .STAGING
     }
 
     override func tearDownWithError() throws {
@@ -42,7 +42,7 @@ class APIEndpointsTests: XCTestCase {
     func testProductDataCheckEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.productDataCheck(externalId: dummyExternalId)
 
-        XCTAssertEqual(endpoint.components.host, "services.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/stg/product/check")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 3)
@@ -55,7 +55,7 @@ class APIEndpointsTests: XCTestCase {
     }
 
     func testProductMetaDataHintsEndpoint_returnExpectedComponents() {
-        Virtusize.environment = .global
+        Virtusize.environment = .GLOBAL
         let endpoint = APIEndpoints.productMetaDataHints
 
         XCTAssertEqual(endpoint.components.host, "api.virtusize.com")
@@ -65,7 +65,7 @@ class APIEndpointsTests: XCTestCase {
     }
 
     func testEventsEndpoint_returnExpectedComponents() {
-        Virtusize.environment = .korea
+        Virtusize.environment = .KOREA
         let endpoint = APIEndpoints.events
         XCTAssertEqual(endpoint.components.host, "events.virtusize.kr")
         XCTAssertEqual(endpoint.components.path, "")
@@ -74,22 +74,23 @@ class APIEndpointsTests: XCTestCase {
     }
 
     func testVirtusizeWebViewEndpoint_japanEnv_returnExpectedComponents() {
-        Virtusize.environment = .japan
+        Virtusize.environment = .JAPAN
 
         let endpoint = APIEndpoints.virtusizeWebView
 
         XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
-        XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-webview.html")
+
+		XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-webview.html")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
 
 	func testVirtusizeWebViewEndpoint_stagingEnv_returnExpectedComponents() {
-		Virtusize.environment = .staging
+		Virtusize.environment = .STAGING
 
 		let endpoint = APIEndpoints.virtusizeWebView
 
-		XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
+		XCTAssertEqual(endpoint.components.host, "static.api.virtusize.com")
 		XCTAssertEqual(endpoint.components.path, "/a/aoyama/staging/sdk-webview.html")
 
 		XCTAssertNil(endpoint.components.queryItems)
@@ -98,7 +99,7 @@ class APIEndpointsTests: XCTestCase {
     func testStoreViewApiKeyEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.storeViewApiKey
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/stores/api-key/test_APIKey")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 1)
@@ -111,7 +112,7 @@ class APIEndpointsTests: XCTestCase {
     func testOrdersEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.orders
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/orders")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -120,7 +121,7 @@ class APIEndpointsTests: XCTestCase {
     func testStoreProductsEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.storeProducts(productId: 7110384)
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/store-products/7110384")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 1)
@@ -133,7 +134,7 @@ class APIEndpointsTests: XCTestCase {
     func testUserProductsEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.userProducts
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-products")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -142,7 +143,7 @@ class APIEndpointsTests: XCTestCase {
     func testProductTypesEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.productTypes
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/product-types")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -160,7 +161,7 @@ class APIEndpointsTests: XCTestCase {
     func testUserBodyMeasurementsEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.userBodyMeasurements
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-body-measurements")
 
         XCTAssertNil(endpoint.components.queryItems)
@@ -169,12 +170,12 @@ class APIEndpointsTests: XCTestCase {
     func testGetSizeEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.getSize
 
-        XCTAssertEqual(endpoint.components.host, "services.virtusize.jp")
-        XCTAssertEqual(endpoint.components.path, "/stg/ds-functions/size-rec/get-size")
+        XCTAssertEqual(endpoint.components.host, "size-recommendation.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/item")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
-
+    
     private func getQueryParametersDict(queryItems: [URLQueryItem]?) -> [String: String] {
         guard let items = queryItems else {
             return [:]

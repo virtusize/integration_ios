@@ -31,9 +31,10 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 - [セットアップ](#setup)
   - [はじめに](#1-はじめに)
   - [Load Product with Virtusize SDK](#2-load-product-with-virtusize-sdk)
-  - [VirtusizeMessageHandlerの実装（オプション）](#3-virtusizemessagehandlerの実装オプション)
-  - [クッキー共有の許可（オプション）](#4-クッキー共有の許可オプション)
-  - [製品データチェックを聞く（オプション）](#5-製品データチェックを聞くオプション)
+  - [Enable SNS Auentication](#3-enable-sns-auentication)
+  - [VirtusizeMessageHandlerの実装（オプション）](#4-virtusizemessagehandlerの実装オプション)
+  - [クッキー共有の許可（オプション）](#5-クッキー共有の許可オプション)
+  - [製品データチェックを聞く（オプション）](#6-製品データチェックを聞くオプション)
 - [Virtusize Views](#virtusize-views)
   - [バーチャサイズ・ボタン（Virtusize Button）](#1-バーチャサイズボタンvirtusize-button)
   - [バーチャサイズ・インページ（Virtuzie InPage）](#2-バーチャサイズインページvirtuzie-inpage)
@@ -53,7 +54,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## 対応バージョン
 
-- iOS 10.3+
+- iOS 13.0+
 - Xcode 12+
 - Swift 5.0+
 
@@ -75,11 +76,11 @@ Virtusize SDKをXcodeのCocosPodsを使ってプロジェクトに実装する�
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.3'
+platform :ios, '13.0'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.4.0'
+pod 'Virtusize', '~> 2.5.9'
 end
 ```
 
@@ -96,7 +97,7 @@ $ pod install
 Starting with the  `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.3.2`
+2. Select a minimum version of `2.5.9`
 3. Click **Next**
 
 
@@ -137,8 +138,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
     // For using the Order API, Virtusize.userID is required
     Virtusize.userID = "123"
-    // By default, the Virtusize environment will be set to .global
-    Virtusize.environment = .staging
+    // By default, the Virtusize environment will be set to .GLOBAL
+    Virtusize.environment = .STAGING
     Virtusize.params = VirtusizeParamsBuilder()
         // By default, the initial language will be set based on the Virtusize environment
         .setLanguage(.JAPANESE)
@@ -155,7 +156,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-環境は、実装をしている環境を選択してください `.staging`,  `.global`, `.japan` ,もしくは`.korea`から選択できます。
+環境は、実装をしている環境を選択してください `.STAGING`,  `.GLOBAL`, `.JAPAN` ,もしくは`.KOREA`から選択できます。
 
 **VirtusizeParamsBuilder**を使用して実装構成を変更することにより、`Virtusize.params`をセットアップできます。可能な構成方法を次の表に示します。
 
@@ -198,7 +199,45 @@ override func viewDidLoad() {
 
 
 
-### 3. VirtusizeMessageHandlerの実装（オプション）
+### 3. Enable SNS authentication
+
+The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController.
+
+ You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
+
+**(1) Register a URL type**
+
+In Xcode, click on your project's **Info** tab and select **URL Types**.
+
+Add a new URL type and set the URL Schemes and identifier to `com.your-company.your-app.virtusize`
+
+![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
+
+**(2) Set the app's bundle ID**
+
+In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
+
+``` Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	// Virtusize initialization omitted for brevity
+
+	// Set the app bundle ID
+	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
+
+	return true
+}
+```
+
+**❗IMPORTANT**	
+
+1. The URL type must include your app's bundle ID and **end with .virtusize**.
+
+2. If you have multiple app targets, add the URL type for all of them.
+
+
+
+
+### 4. VirtusizeMessageHandlerの実装（オプション）
 
 `VirtusizeMessageHandler`プロトコルには2つの必須メソッドがあります。
 
@@ -227,7 +266,7 @@ extension ViewController: VirtusizeMessageHandler {
 
 
 
-### 4. クッキー共有の許可（オプション）
+### 5. クッキー共有の許可（オプション）
 
 `VirtusizeWebViewController` はオプションで `processPool:WKProcessPool` パラメーターを受け取り、クッキーの共有を許可します。
 
@@ -238,7 +277,7 @@ Virtusize.processPool = WKProcessPool()
 
 
 
-### 5. 製品データチェックを聞く（オプション）
+### 6. 製品データチェックを聞く（オプション）
 
 ボタンが `externalId` で初期化されると、SDK は製品が解析されてデータベースに追加されたかどうかをチェックするために API を呼び出します。
 
@@ -907,39 +946,7 @@ Virtusize.sendOrder(
 
 ## Enable SNS Login in Virtusize for Native Webview Apps
 
-The built-in WKWebView blocks any popup windows by default. To fix and enable SNS login on the web version of Virtusize integration in your web view, please use this method: 
-
-1. If you build your UI purely with UIKit, replace your `WKWebView` with **`VirtusizeWebView`** in your Swift file. If you use the WKWebViewConfiguration object to configure your web view, please access it from the closure like the example below.
-
-   - Swift
-
-   ```diff
-   - var webView: WKWebView
-   + var webView: VirtusizeWebView
-   ```
-
-   ```swift
-   webView = VirtusizeWebView(frame: .zero) { configuration in
-	   // access the WKWebViewConfiguration object here to customize it
-	   
-	   // If you want to allow cookie sharing between multiple VirtusizeWebViews,
-	   // assign the same WKProcessPool object to configuration.processPool
-	   configuration.processPool = WKProcessPool()
-   }
-   ```
-   
-2. If you build your UI with Xcode's Interface Builder, make sure that you set the Custom Class of your web view to **`VirtusizeWebView`** in the Identity inspector to fix SNS login in Virtusize.
-
-   - Swift
-
-   ```diff
-   - @IBOutlet weak var webview: WKWebView!
-   + @IBOutlet weak var webview: VirtusizeWebView!
-   ```
-
-   - Interface Builder
-   
-	 ![](https://user-images.githubusercontent.com/7802052/121308895-87e3b500-c93c-11eb-8745-f4bf22bccdba.png)
+Use the [Virtusize Auth SDK](https://github.com/virtusize/virtusize_auth_ios)
 
 
 

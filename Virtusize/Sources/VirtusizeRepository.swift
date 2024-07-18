@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import VirtusizeCore
 
 /// This class is used to handle the logic required to access remote and local data sources
 internal class VirtusizeRepository: NSObject {
@@ -44,7 +45,7 @@ internal class VirtusizeRepository: NSObject {
 	private var userProducts: [VirtusizeServerProduct]?
 	private var userBodyProfile: VirtusizeUserBodyProfile?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
-	private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	private var bodyProfileRecommendedSize: BodyProfileRecommendedSizeArray?
 
 	/// A set to cache the store product information of all the visited products
 	internal var serverProductSet: Set<VirtusizeServerProduct> = []
@@ -198,14 +199,18 @@ internal class VirtusizeRepository: NSObject {
 				Virtusize.inPageError = (true, storeProduct!.externalId)
 				return
 			}
-		}
+ 		}
 
 		if let userBodyProfile = userBodyProfile {
+            
 			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
 				productTypes: productTypes!,
 				storeProduct: storeProduct!,
 				userBodyProfile: userBodyProfile
 			).success
+            
+        
+            
 		}
 
 		var userProducts = self.userProducts ?? []
@@ -277,9 +282,9 @@ internal class VirtusizeRepository: NSObject {
 			case .compareProduct:
 				Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
 			case .body:
-				Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize)
+            Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize?[0])
 			default:
-				Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+            Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize?[0])
 		}
 	}
 
@@ -290,7 +295,8 @@ internal class VirtusizeRepository: NSObject {
 		guard let recommendedSize = recommendedSize else {
 			return
 		}
-		bodyProfileRecommendedSize = BodyProfileRecommendedSize(sizeName: recommendedSize)
+        bodyProfileRecommendedSize?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
+		
 	}
 
 	/// Removes the deleted user product by the product ID from the user product list

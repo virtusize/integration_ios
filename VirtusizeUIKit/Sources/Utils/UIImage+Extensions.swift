@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import VirtusizeCore
 
 public extension UIImage {
 

@@ -6,16 +6,17 @@ import PackageDescription
 let package = Package(
 	name: "Virtusize",
 	defaultLocalization: "en",
-	platforms: [.iOS(.v10)],
+	platforms: [.iOS(.v13)],
 	products: [
 		.library(name: "Virtusize", targets: ["Virtusize"]),
-		.library(name: "VirtusizeUIKit", targets: ["VirtusizeUIKit"])
+		.library(name: "VirtusizeUIKit", targets: ["VirtusizeUIKit"]),
+		.library(name: "VirtusizeCore", targets: ["VirtusizeCore"])
 	],
 	dependencies: [],
 	targets: [
 		.target(
 			name: "Virtusize",
-			dependencies: ["VirtusizeUIKit", "VirtusizeCore"],
+			dependencies: ["VirtusizeUIKit", "VirtusizeCore", "VirtusizeAuth"],
 			path: "Virtusize/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
@@ -33,6 +34,10 @@ let package = Package(
 			path: "VirtusizeCore/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
+		),
+		.binaryTarget(
+			name: "VirtusizeAuth",
+			path: "Frameworks/VirtusizeAuth.xcframework"
 		)
 	]
 )

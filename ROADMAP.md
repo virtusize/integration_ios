@@ -1,8 +1,14 @@
 # ROADMAP
 
-## 2.4.0
+## 2.5.0
 
 ### Release date:
+
+- [x] Perform Virtusize SNS authentication with SFSafariViewController
+
+## 2.4.0
+
+### Release date: 21/09/28
 
 - [x] Setup Github Actions for CI/CD
 

@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import VirtusizeCore
+
 /// The class that wraps the parameters we can pass to the Virtusize web app
 public class VirtusizeParams {
 	/// The `VirtusizeRegion` that is used to set the region of the config url domains within the Virtusize web app
@@ -80,7 +82,7 @@ public class VirtusizeParams {
 		paramsScript += "\(ParamKey.detailsPanelCards): \(detailsPanelCards.map { category in category.rawValue }), "
 		paramsScript += "\(ParamKey.language): '\(language.rawValue)', "
 		paramsScript += "\(ParamKey.region): '\(region.rawValue)', "
-		paramsScript += "\(ParamKey.environment): '\(Virtusize.environment == .staging ? "staging" : "production")'})"
+		paramsScript += "\(ParamKey.environment): '\(Virtusize.environment.isProdEnv ? "production" : "staging")'})"
 		return paramsScript
 	}
 

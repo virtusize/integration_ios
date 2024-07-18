@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import VirtusizeCore
 
 /// This structure represents a product in the Virtusize SDK
 public class VirtusizeProduct: Codable {

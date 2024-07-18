@@ -8,10 +8,62 @@ Use list notation, and following prefixes:
 - Cleanup - any code removal or non visible maintenance change
 - Refactor - code refactoring, keeping same functionality
 - Bugfix - when fixing any major bug
-- Docs - for any improvement to documentation
+- c - for any improvement to documentation
 
 
 ## NEXT RELEASE for Version 2.x.x
+### 2.5.9
+- Fix: Update current privacy manifest 
+
+### 2.5.8
+- Feature : Added PrivacyInfo file to VirtusizeCore
+- Feature : Added PrivacyInfo file to Virtusize
+- Docs: Update Readme file to update pod version 
+
+### 2.5.7
+- Refactor: Change the get-size endpoint from https://services.virtusize.jp/ds-functions/size-rec/get-size ➝ https://size-recommendation.virtusize.jp/item
+- Refactor: Change in request body of VirtusizeGetSizeParams: Remove "modelInfo" key,  in "gender" now getting value from VirtusizeUserBodyProfile
+- Refactor: Change in response Model of BodyProfileRecommendedSize
+- Refactor: VirtusizeEnvironment enum cases key set to Uppercase 
+- Cleanup: Remove Print functions and unnecessary commented code from BodyProfileRecommendedSize, VirtusizeAPIService, VirtusizeAPIRequest
+- Docs: Update Readme file to update pod version 
+
+### 2.5.4
+- Refactor/Bugfix: Change VirtusizeAuth class name to VirtusizeAuthorization to resolve nested Class archive run time issue
+- Cleanup: Update deployment target to 13
+- Cleanup: Remove deprecated Method from VirtusizeWebView
+- Cleanup: Update VirtusizeCore framework deplyment target to ios 13
+- Cleanup: Update VirtusizeAuth POD Version to 1.1.0
+- Docs: Update Readme file to update Requirements: iOS version 
+
+### 2.5.3
+-  Cleanup: Update VirtusizeAuth POD Version to 1.0.3
+-  Docs: Update Readme file to update Requirements: iOS version 
+
+### 2.5.2
+-  Cleanup: Update to iOS 12.3 (za)
+-  Docs: Update Readme file to update Requirements: iOS version  
+
+### 2.5.1
+
+- Feature: Handle SNS auth for web view apps
+- Bugfix: Change back the SDK webview URL
+
+### 2.5.0
+
+- Feature: Perform Virtusize SNS authentication with SFSafariViewController
+
+### 2.4.3
+
+- Bugfix: Fix errors when running `pod spec lint`
+
+### 2.4.2 (Invalid)
+
+- Feature: Release the `VirtusizeCore` module
+
+### 2.4.1
+
+- Bugfix: Use the staging API for staging
 
 ### 2.4.0
 

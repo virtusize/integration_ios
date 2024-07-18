@@ -23,15 +23,64 @@
 //
 
 /// This structure represents the response for the recommendation API based on the user body profile
+
+
 public struct BodyProfileRecommendedSize: Codable {
-	/// The recommended size name
-	let sizeName: String
-
-	/// The store product that is associated with this recommendation
-	public var product: VirtusizeServerProduct?
-
-	public init(sizeName: String, product: VirtusizeServerProduct? = nil) {
-		self.sizeName = sizeName
-		self.product = product
-	}
+    let extProductId : String?
+    let sizeName : String?
+    let secondSize : String?
+    let fitScore : Double?
+    let secondFitScore : Double?
+    let fitScoreDifference : Double?
+    let virtualItem : VirtualItem?
+    let willFit : Bool?
+    let thresholdFitScore : Double?
+    let scenario : String?
+    let willFitForSizes : WillFitForSizes?
+    // swiftlint:disable line_length
+    init(extProductId: String? = nil, sizeName: String, secondSize: String? = nil, fitScore: Double? = nil, secondFitScore: Double? = nil, fitScoreDifference: Double? = nil, virtualItem: VirtualItem? = nil, willFit : Bool? = nil, thresholdFitScore: Double? = nil, scenario : String? = nil, willFitForSizes: WillFitForSizes? = nil ) {
+        self.extProductId = extProductId
+        self.sizeName = sizeName
+        self.secondSize = secondSize
+        self.fitScore = fitScore
+        self.secondFitScore = secondFitScore
+        self.fitScoreDifference = fitScoreDifference
+        self.virtualItem = virtualItem
+        self.willFit = willFit
+        self.thresholdFitScore = thresholdFitScore
+        self.scenario = scenario
+        self.willFitForSizes = willFitForSizes
+    }
+    // swiftlint:enable line_length
 }
+public typealias BodyProfileRecommendedSizeArray = [BodyProfileRecommendedSize]
+// MARK: - VirtualItem
+struct VirtualItem: Codable {
+    let bust : Double?
+    let waist : Double?
+    let hip : Double?
+    let inseam: String?
+    let sleeve: String?
+}
+
+// MARK: - WillFitForSizes
+struct WillFitForSizes: Codable {
+    let large : Bool?
+    let  medium  : Bool?
+    let extraSmall: Bool?
+    let extraLarge: Bool?
+    let small: Bool?
+    
+    
+    enum CodingKeys: String, CodingKey {
+
+        case large = "large"
+        case medium = "medium"
+        case extraSmall = "extra small"
+        case extraLarge = "extra large"
+        case small = "small"
+        
+    }
+}
+
+

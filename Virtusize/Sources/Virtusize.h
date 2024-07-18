@@ -23,7 +23,7 @@
 //
 
 
-@import UIKit;
+//@import UIKit;
 
-FOUNDATION_EXPORT double VirtusizeVersionNumber;
-FOUNDATION_EXPORT const unsigned char VirtusizeVersionString[];
+extern double VirtusizeVersionNumber;
+extern const unsigned char VirtusizeVersionString[];
