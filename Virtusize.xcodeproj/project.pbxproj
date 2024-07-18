@@ -27,7 +27,6 @@
 		9C1F83B8251481080061B777 /* UserProductFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90F97C2512FF6C008FEFD6 /* UserProductFixtures.swift */; };
 		9C1F83B92514810B0061B777 /* UserBodyProfileFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1F83AE25147FCF0061B777 /* UserBodyProfileFixtures.swift */; };
 		9C28A38D2C497440004EFD4C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9C28A38C2C497440004EFD4C /* PrivacyInfo.xcprivacy */; };
-		9C28A3982C497732004EFD4C /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */; };
 		9C28A3A52C497B7E004EFD4C /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C28A3912C4975E5004EFD4C /* VirtusizeCore.framework */; };
 		9C28A3A62C497B7E004EFD4C /* VirtusizeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C28A3912C4975E5004EFD4C /* VirtusizeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C28A3B52C497FAC004EFD4C /* SwiftUIVirtusizeInPageStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C28A3B12C497FAC004EFD4C /* SwiftUIVirtusizeInPageStandard.swift */; };
@@ -64,6 +63,8 @@
 		9C84B40126C276CA00DDF434 /* VirtusizeNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C84B40026C276CA00DDF434 /* VirtusizeNotification.swift */; };
 		9C8C624B2C49831F008D4930 /* VirtusizeUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C62482C4982AA008D4930 /* VirtusizeUIKit.framework */; };
 		9C8C624C2C49831F008D4930 /* VirtusizeUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C62482C4982AA008D4930 /* VirtusizeUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C8C624D2C4983B2008D4930 /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */; };
+		9C8C624E2C4983B2008D4930 /* VirtusizeAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C969FD124EB5F8A00DD642F /* VirtusizeI18nLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */; };
 		9C969FD324EBE0C400DD642F /* DeserializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD224EBE0C300DD642F /* DeserializerTests.swift */; };
 		9C969FD824EBF71200DD642F /* i18n_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C969FD524EBF71200DD642F /* i18n_en.json */; };
@@ -128,6 +129,7 @@
 			files = (
 				9C28A3A62C497B7E004EFD4C /* VirtusizeCore.framework in Embed Frameworks */,
 				9C8C624C2C49831F008D4930 /* VirtusizeUIKit.framework in Embed Frameworks */,
+				9C8C624E2C4983B2008D4930 /* VirtusizeAuth.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,7 +252,7 @@
 			files = (
 				9C28A3A52C497B7E004EFD4C /* VirtusizeCore.framework in Frameworks */,
 				9C8C624B2C49831F008D4930 /* VirtusizeUIKit.framework in Frameworks */,
-				9C28A3982C497732004EFD4C /* VirtusizeAuth.xcframework in Frameworks */,
+				9C8C624D2C4983B2008D4930 /* VirtusizeAuth.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,7 +1046,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z57T9D7E3B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Virtusize/Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

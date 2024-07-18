@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		84CF03B72BD7A2BA00C08920 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 84CF03B62BD7A2BA00C08920 /* PrivacyInfo.xcprivacy */; };
 		9C2B0D58273AB660004B10BB /* VirtusizeCore.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9C2B0D57273AB660004B10BB /* VirtusizeCore.podspec */; };
-		9C3505FD2727074A003BEF82 /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3505F32727074A003BEF82 /* VirtusizeCore.framework */; };
 		9C3506042727074A003BEF82 /* VirtusizeCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C3505F62727074A003BEF82 /* VirtusizeCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9C35061927279586003BEF82 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35061827279586003BEF82 /* UIApplication+Extensions.swift */; };
 		9C35062727279829003BEF82 /* VirtusizeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C35062527279829003BEF82 /* VirtusizeLocalizable.strings */; };
@@ -24,16 +23,6 @@
 		9C35067527280396003BEF82 /* HTTPURLResponse+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */; };
 		9C6E36C72739616E00608640 /* UserDefaultsHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6E36C52739616900608640 /* UserDefaultsHelperTests.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9C3505FE2727074A003BEF82 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9C3505EA2727074A003BEF82 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9C3505F22727074A003BEF82;
-			remoteInfo = VirtusizeCore;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		84CF03B62BD7A2BA00C08920 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -71,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C3505FD2727074A003BEF82 /* VirtusizeCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,7 +223,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9C3505FF2727074A003BEF82 /* PBXTargetDependency */,
 			);
 			name = VirtusizeCoreTests;
 			productName = VirtusizeCoreTests;
@@ -349,14 +336,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9C3505FF2727074A003BEF82 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9C3505F22727074A003BEF82 /* VirtusizeCore */;
-			targetProxy = 9C3505FE2727074A003BEF82 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9C35062527279829003BEF82 /* VirtusizeLocalizable.strings */ = {
@@ -561,7 +540,7 @@
 		9C35060B2727074A003BEF82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -580,7 +559,7 @@
 		9C35060C2727074A003BEF82 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
