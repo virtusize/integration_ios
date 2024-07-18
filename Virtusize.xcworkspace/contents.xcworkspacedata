@@ -8,7 +8,7 @@
       location = "group:VirtusizeUIKit/VirtusizeUIKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Virtusize.xcodeproj">
+      location = "group:VirtusizeCore/../Virtusize.xcodeproj">
    </FileRef>
    <Group
       location = "container:"

@@ -44,6 +44,8 @@ extension UIColor {
 		return self.adjustLightness(by: -1 * abs(percentage) )
 	}
 
+    // TODO: Fix swiftlint
+    // swiftlint:disable large_tuple
 	private typealias RGBA = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
 	private var rgba: RGBA {
 		var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
