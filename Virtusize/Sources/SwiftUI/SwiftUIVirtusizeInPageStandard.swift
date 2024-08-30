@@ -35,6 +35,7 @@ public struct SwiftUIVirtusizeInPageStandard: View {
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	@State private var desiredSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 92)
+    @State private var horizontalMargin: CGFloat = 0
 
 	public init(
 		product: VirtusizeProduct,
@@ -52,11 +53,13 @@ public struct SwiftUIVirtusizeInPageStandard: View {
 		VirtusizeInPageStandardWrapper(
 			product: product,
 			desiredSize: $desiredSize,
+            horizontalMargin: $horizontalMargin,
 			action: action,
 			uiView: uiView,
 			defaultStyle: virtusizeDefaultStyle
 		)
-		.frame(width: desiredSize.width, height: max(desiredSize.height, 92), alignment: .center)
+        .offset(x: horizontalMargin)
+        .frame(width: desiredSize.width, height: max(desiredSize.height, 92), alignment: .center)
 	}
 }
 
@@ -64,6 +67,7 @@ public struct SwiftUIVirtusizeInPageStandard: View {
 private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 
 	@Binding var desiredSize: CGSize
+    @Binding var horizontalMargin: CGFloat
 
 	private var product: VirtusizeProduct
 	private var action: (() -> Void)?
@@ -73,12 +77,14 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 	public init(
 		product: VirtusizeProduct,
 		desiredSize: Binding<CGSize>,
+        horizontalMargin: Binding<CGFloat>,
 		action: (() -> Void)? = nil,
 		uiView: ((VirtusizeInPageStandard) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self.product = product
 		self._desiredSize = desiredSize
+        self._horizontalMargin = horizontalMargin
 		self.action = action
 		self.uiView = uiView
 		self.virtusizeDefaultStyle = defaultStyle
@@ -128,6 +134,7 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 		}
 
 		uiView.setContentViewListener(listener: { view in
+            horizontalMargin = view.userSetMargin
 			desiredSize = CGSize(
 				width: UIScreen.main.bounds.size.width,
 				height: view.frame.height
