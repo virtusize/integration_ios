@@ -17,11 +17,11 @@
 		846A3E9C2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846A3E9B2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework */; };
 		846A3E9D2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 846A3E9B2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		846A3E9E2ADE6A15005C5AA1 /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846A3E9B2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework */; };
-		846A3EA02ADE6A1B005C5AA1 /* VirtusizeCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846A3E9F2ADE6A1B005C5AA1 /* VirtusizeCore.xcframework */; };
-		846A3EA12ADE6A1B005C5AA1 /* VirtusizeCore.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 846A3E9F2ADE6A1B005C5AA1 /* VirtusizeCore.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C454D0426686DD7003BF5BE /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C454D0326686DD7003BF5BE /* WebViewController.swift */; };
 		9C4B389E26BBA18800B73FE5 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */; };
 		9C7B94DD27422BC1009BDC9B /* Virtusize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7B94DC27422BC1009BDC9B /* Virtusize.framework */; };
+		9CD71EC82C843F87009AB172 /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD71EC72C843F87009AB172 /* VirtusizeCore.framework */; };
+		9CD71EC92C843F87009AB172 /* VirtusizeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD71EC72C843F87009AB172 /* VirtusizeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,7 +32,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				846A3E992ADE6882005C5AA1 /* Virtusize.framework in Embed Frameworks */,
-				846A3EA12ADE6A1B005C5AA1 /* VirtusizeCore.xcframework in Embed Frameworks */,
+				9CD71EC92C843F87009AB172 /* VirtusizeCore.framework in Embed Frameworks */,
 				846A3E9D2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -49,10 +49,10 @@
 		4DED8D4E20575A9C001CA7DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DED8D5020575A9C001CA7DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846A3E9B2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VirtusizeAuth.xcframework; path = ../Frameworks/VirtusizeAuth.xcframework; sourceTree = "<group>"; };
-		846A3E9F2ADE6A1B005C5AA1 /* VirtusizeCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VirtusizeCore.xcframework; path = ../Frameworks/VirtusizeCore.xcframework; sourceTree = "<group>"; };
 		9C454D0326686DD7003BF5BE /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		9C4B389D26BBA18800B73FE5 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 		9C7B94DC27422BC1009BDC9B /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CD71EC72C843F87009AB172 /* VirtusizeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,11 +60,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CD71EC82C843F87009AB172 /* VirtusizeCore.framework in Frameworks */,
 				846A3E982ADE6882005C5AA1 /* Virtusize.framework in Frameworks */,
 				9C7B94DD27422BC1009BDC9B /* Virtusize.framework in Frameworks */,
 				846A3E9C2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework in Frameworks */,
 				846A3E9E2ADE6A15005C5AA1 /* VirtusizeAuth.xcframework in Frameworks */,
-				846A3EA02ADE6A1B005C5AA1 /* VirtusizeCore.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +114,7 @@
 		9C7B94DB27422BC1009BDC9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				846A3E9F2ADE6A1B005C5AA1 /* VirtusizeCore.xcframework */,
+				9CD71EC72C843F87009AB172 /* VirtusizeCore.framework */,
 				846A3E9B2ADE69DE005C5AA1 /* VirtusizeAuth.xcframework */,
 				9C7B94DC27422BC1009BDC9B /* Virtusize.framework */,
 			);
