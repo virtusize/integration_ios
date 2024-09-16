@@ -1,7 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
-// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name VirtusizeAuth
-// swift-module-flags-ignorable: -enable-bare-slash-regex
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name VirtusizeAuth
 import Foundation
 import SafariServices
 import Swift
@@ -14,6 +13,7 @@ import _SwiftConcurrencyShims
 @_hasMissingDesignatedInitializers public class VirtusizeURLCheck {
   public static func isExternalLinkFromVirtusize(url: Swift.String?) -> Swift.Bool
   public static func isLinkFromSNSAuth(url: Swift.String?) -> Swift.Bool
+  public static func isFitIllustratorLink(url: Swift.String?) -> Swift.Bool
   @objc deinit
 }
 @objc @_Concurrency.MainActor(unsafe) public class VirtusizeWebView : WebKit.WKWebView {
@@ -35,6 +35,12 @@ extension VirtusizeAuth.VirtusizeWebView : WebKit.WKUIDelegate {
   @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptAlertPanelWithMessage message: Swift.String, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping () -> Swift.Void)
   @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptConfirmPanelWithMessage message: Swift.String, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
   @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: Swift.String, defaultText: Swift.String?, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping (Swift.String?) -> Swift.Void)
+  @available(iOS, introduced: 10.0, deprecated: 13.0)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, shouldPreviewElement elementInfo: WebKit.WKPreviewElementInfo) -> Swift.Bool
+  @available(iOS, introduced: 10.0, deprecated: 13.0)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, previewingViewControllerForElement elementInfo: WebKit.WKPreviewElementInfo, defaultActions previewActions: [any WebKit.WKPreviewActionItem]) -> UIKit.UIViewController?
+  @available(iOS, introduced: 10.0, deprecated: 13.0)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, commitPreviewingViewController previewingViewController: UIKit.UIViewController)
   @available(iOS 13.0, *)
   @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, contextMenuConfigurationForElement elementInfo: WebKit.WKContextMenuElementInfo, completionHandler: @escaping (UIKit.UIContextMenuConfiguration?) -> Swift.Void)
   @available(iOS 13.0, *)
