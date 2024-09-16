@@ -12,6 +12,8 @@ Use list notation, and following prefixes:
 
 
 ## NEXT RELEASE for Version 2.x.x
+
+### 2.5.10
 - Fix: Google Sign In Issue
 - Fix: Update Virtusize Auth SDK 
 
