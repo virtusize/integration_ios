@@ -17,8 +17,6 @@ Pod::Spec.new do |s|
   s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/Resources/PrivacyInfo.xcprivacy"] }
 
   s.pod_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
-  s.dependency "VirtusizeAuth", "1.1.0"
+  s.dependency "VirtusizeAuth", "1.1.2"
   s.dependency "VirtusizeCore", "<= #{s.version}"
- # s.vendored_frameworks = "Virtusize/Sources/VirtusizeAuth.xcframework", "Virtusize/Sources/VirtusizeCore.xcframework"
- #s.vendored_frameworks = "Virtusize/Sources/VirtusizeAuth.xcframework"
 end
