@@ -8,10 +8,13 @@ Use list notation, and following prefixes:
 - Cleanup - any code removal or non visible maintenance change
 - Refactor - code refactoring, keeping same functionality
 - Bugfix - when fixing any major bug
-- c - for any improvement to documentation
+- Docs - for any improvement to documentation
 
 
 ## NEXT RELEASE for Version 2.x.x
+- Fix: Google Sign In Issue
+- Fix: Update Virtusize Auth SDK 
+
 ### 2.5.9
 - Fix: Update current privacy manifest 
 
