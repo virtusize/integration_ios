@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### Next Release
+- Refactor: Update the Virtusize web view URL to the following format: https://static.api.virtusize.jp/a/aoyama/\(version)/sdk-webview.html
+
 ### 2.5.10
 - Fix: Google Sign In Issue
 - Fix: Update Virtusize Auth SDK 
