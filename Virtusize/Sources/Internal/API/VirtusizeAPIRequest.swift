@@ -80,11 +80,20 @@ extension APIRequest {
 		return apiRequest(components: endpoint.components, withPayload: payloadData)
 	}
 
+    /// Gets the `URLRequest` for the `latestAoyamaVersion` request
+    ///
+    /// - Returns: A `URLRequest` for the `latestAoyamaVersion` request
+    internal static func fetchLatestAoyamaVersion() -> URLRequest {
+        let endpoint = APIEndpoints.latestAoyamaVersion
+        return apiRequest(components: endpoint.components)
+    }
+
 	/// Gets the `URLRequest` for the `VirtusizeWebView` request
-	///
+    /// - Parameters:
+    ///   - version: The version of Aoyama
 	/// - Returns: A `URLRequest` for the `VirtusizeWebView` request
-	internal static func virtusizeWebView() -> URLRequest? {
-		let endpoint = APIEndpoints.virtusizeWebView
+    internal static func virtusizeWebView(version: String) -> URLRequest? {
+        let endpoint = APIEndpoints.virtusizeWebView(version: version)
 		return HTTPRequest(components: endpoint.components)
 	}
 
@@ -177,25 +186,6 @@ extension APIRequest {
 		) else {
 			return nil
 		}
-/*
- Chirag: Belows Logic is for to check request Body
-        // Print JSON from data
-    do {
-     
-            if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
-                // Convert JSON object back to Data for pretty printing
-                let prettyPrintedData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-                
-                // Convert the Data to a string
-                if let prettyPrintedString = String(data: prettyPrintedData, encoding: .utf8) {
-                    print(prettyPrintedString)
-                }
-            }
-        } catch {
-            print("Error converting JSON data to string: \(error.localizedDescription)")
-        }
-   */
-       
 		return apiRequest(components: endpoint.components, withPayload: jsonData)
 	}
 
