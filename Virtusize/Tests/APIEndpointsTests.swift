@@ -76,11 +76,11 @@ class APIEndpointsTests: XCTestCase {
     func testVirtusizeWebViewEndpoint_japanEnv_returnExpectedComponents() {
         Virtusize.environment = .JAPAN
 
-        let endpoint = APIEndpoints.virtusizeWebView
+        let endpoint = APIEndpoints.virtusizeWebView(version: "3.2.6")
 
         XCTAssertEqual(endpoint.components.host, "static.api.virtusize.jp")
 
-		XCTAssertEqual(endpoint.components.path, "/a/aoyama/latest/sdk-webview.html")
+		XCTAssertEqual(endpoint.components.path, "/a/aoyama/3.2.6/sdk-webview.html")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
@@ -88,10 +88,10 @@ class APIEndpointsTests: XCTestCase {
 	func testVirtusizeWebViewEndpoint_stagingEnv_returnExpectedComponents() {
 		Virtusize.environment = .STAGING
 
-		let endpoint = APIEndpoints.virtusizeWebView
+		let endpoint = APIEndpoints.virtusizeWebView(version: "3.2.6")
 
 		XCTAssertEqual(endpoint.components.host, "static.api.virtusize.com")
-		XCTAssertEqual(endpoint.components.path, "/a/aoyama/staging/sdk-webview.html")
+		XCTAssertEqual(endpoint.components.path, "/a/aoyama/3.2.6/sdk-webview.html")
 
 		XCTAssertNil(endpoint.components.queryItems)
 	}
