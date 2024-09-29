@@ -165,14 +165,14 @@ class VirtusizeAPIService: APIService {
 		return getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
 	}
 
-	/// The API request for retrieving the recommended size based on the user body profile
+	/// The API request for retrieving the recommended sizes based on the user body profile
 	///
 	/// - Parameters:
 	///   - productTypes: A list of product types
 	///   - storeProduct: The store product data
 	///   - userBodyProfile: the user body profile data
-	/// - Returns: the user body profile recommended size in the type of `BodyProfileRecommendedSize`
-	internal static func getBodyProfileRecommendedSizeAsync(
+	/// - Returns: the user body profile recommended size array in the type of `BodyProfileRecommendedSize`
+	internal static func getBodyProfileRecommendedSizesAsync(
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile

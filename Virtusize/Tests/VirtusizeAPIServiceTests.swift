@@ -617,7 +617,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
 
     func testGetUserBodyRecommendedSize() {
         let expectation = self.expectation(description: "Virtusize.getUserBodyRecommendedSize reaches the callback")
-        var actualRecommendedSizes: [BodyProfileRecommendedSize]?
+        var actualRecommendedSizes: BodyProfileRecommendedSizeArray?
 
         VirtusizeAPIService.session = MockURLSession(
             data: "[{\"sizeName\": \"35\"}]".data(using: .utf8),
@@ -626,7 +626,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         )
 
         DispatchQueue.global().async {
-            actualRecommendedSizes = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
+            actualRecommendedSizes = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
                 productTypes: TestFixtures.getProductTypes(),
                 storeProduct: TestFixtures.getStoreProduct(gender: "female")!,
                 userBodyProfile: TestFixtures.getUserBodyProfile()!
@@ -644,7 +644,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         }
 
         XCTAssertNotNil(actualRecommendedSizes)
-        XCTAssertEqual(actualRecommendedSizes?[0].sizeName, "35")
+        XCTAssertEqual(actualRecommendedSizes?.first?.sizeName, "35")
     }
 }
 
