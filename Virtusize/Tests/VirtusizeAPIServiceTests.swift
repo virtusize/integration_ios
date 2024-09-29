@@ -35,6 +35,27 @@ class VirtusizeAPIServiceTests: XCTestCase {
         Virtusize.environment = .STAGING
     }
 
+    func testFetchLatestAoyamaVersion() {
+        let expectation = self.expectation(description: "Virtusize.fetchLatestAoyamaVersion reaches the callback")
+        var actualVersion: String?
+        DispatchQueue.global().async {
+
+            actualVersion = VirtusizeAPIService.fetchLatestAoyamaVersion().success
+
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectations error: \(error)")
+            }
+        }
+
+        XCTAssertEqual(actualVersion, VirtusizeConfiguration.defaultAoyamaVersion)
+    }
+
     func testProductDataCheck_hasExpectedCallbackData() {
         let expectation = self.expectation(description: "Virtusize.productCheck reaches the callback")
         var actualProduct: VirtusizeProduct?
@@ -42,9 +63,9 @@ class VirtusizeAPIServiceTests: XCTestCase {
                                                      urlResponse: nil,
                                                      error: nil)
         DispatchQueue.global().async {
-            
+
             actualProduct = VirtusizeAPIService.productCheckAsync(product: TestFixtures.virtusizeProduct).success
-            
+
             DispatchQueue.main.async {
                 expectation.fulfill()
             }
@@ -403,7 +424,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         )
 
         DispatchQueue.global().async {
- 
+
             actualError = VirtusizeAPIService.getUserProductsAsync().failure
 
             DispatchQueue.main.async {
