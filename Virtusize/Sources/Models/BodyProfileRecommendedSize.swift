@@ -23,8 +23,6 @@
 //
 
 /// This structure represents the response for the recommendation API based on the user body profile
-
-
 public struct BodyProfileRecommendedSize: Codable {
     let extProductId : String?
     let sizeName : String?
@@ -53,34 +51,31 @@ public struct BodyProfileRecommendedSize: Codable {
     }
     // swiftlint:enable line_length
 }
+
 public typealias BodyProfileRecommendedSizeArray = [BodyProfileRecommendedSize]
+
 // MARK: - VirtualItem
 struct VirtualItem: Codable {
-    let bust : Double?
-    let waist : Double?
-    let hip : Double?
+    let bust: Double?
+    let waist: Double?
+    let hip: Double?
     let inseam: String?
     let sleeve: String?
 }
 
 // MARK: - WillFitForSizes
 struct WillFitForSizes: Codable {
-    let large : Bool?
-    let  medium  : Bool?
+    let large: Bool?
+    let medium: Bool?
     let extraSmall: Bool?
     let extraLarge: Bool?
     let small: Bool?
-    
-    
-    enum CodingKeys: String, CodingKey {
 
+    enum CodingKeys: String, CodingKey {
         case large = "large"
         case medium = "medium"
         case extraSmall = "extra small"
         case extraLarge = "extra large"
         case small = "small"
-        
     }
 }
-
-

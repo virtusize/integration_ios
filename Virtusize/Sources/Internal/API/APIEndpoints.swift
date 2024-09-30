@@ -29,7 +29,8 @@ internal enum APIEndpoints {
 	case productDataCheck(externalId: String)
 	case productMetaDataHints
 	case events
-	case virtusizeWebView
+    case latestAoyamaVersion
+	case virtusizeWebView(version: String)
 	case storeViewApiKey
 	case orders
 	case storeProducts(productId: Int)
@@ -42,6 +43,23 @@ internal enum APIEndpoints {
 	case i18n(langCode: String)
 
 	// MARK: - Properties
+    var hostname: String {
+        // swiftlint:disable switch_case_alignment
+        switch self {
+            case .productDataCheck:
+                return Virtusize.environment.servicesUrl()
+            case  .getSize:
+                return Virtusize.environment.getSizeUrl()
+        case .latestAoyamaVersion, .virtusizeWebView:
+                return Virtusize.environment.virtusizeStaticApiUrl()
+            case .i18n:
+                return Virtusize.environment.i18nUrl()
+            case .events:
+                return Virtusize.environment.eventApiUrl()
+            default:
+                return Virtusize.environment.rawValue
+        }
+    }
 
 	var components: URLComponents {
 		var components = URLComponents()
@@ -50,7 +68,6 @@ internal enum APIEndpoints {
 
 		let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
 
-		// swiftlint:disable switch_case_alignment
 		switch self {
 			case .productDataCheck(let externalId):
 				components.path = "\(envPathForServicesAPI)/product/check"
@@ -62,9 +79,11 @@ internal enum APIEndpoints {
 			case .events:
 				break
 
-			case .virtusizeWebView:
-				let envPath = Virtusize.environment.isProdEnv ? "latest" : "staging"
-				components.path = "/a/aoyama/\(envPath)/sdk-webview.html"
+            case .latestAoyamaVersion:
+                components.path = "/a/aoyama/latest.txt"
+
+			case .virtusizeWebView(let version):
+				components.path = "/a/aoyama/\(version)/sdk-webview.html"
 
 			case .storeViewApiKey:
 				components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -98,26 +117,8 @@ internal enum APIEndpoints {
 			case .i18n(let langCode):
 				components.path = "/bundle-payloads/aoyama/\(langCode)"
 		}
-   
-		return components
-	}
 
-	var hostname: String {
-		// swiftlint:disable switch_case_alignment
-		switch self {
-			case .productDataCheck:
-				return Virtusize.environment.servicesUrl()
-            case  .getSize:
-                return Virtusize.environment.getSizeUrl()
-			case .virtusizeWebView:
-				return Virtusize.environment.virtusizeStaticApiUrl()
-			case .i18n:
-				return Virtusize.environment.i18nUrl()
-			case .events:
-				return Virtusize.environment.eventApiUrl()
-			default:
-				return Virtusize.environment.rawValue
-		}
+		return components
 	}
 
 	var apiKey: String {

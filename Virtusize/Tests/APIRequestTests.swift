@@ -37,6 +37,17 @@ class APIRequestTests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    func testVirtusizeWebView_expectedApiRequest() {
+        let apiRequest = APIRequest.virtusizeWebView(version: VirtusizeConfiguration.defaultAoyamaVersion)
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.get.rawValue)
+        XCTAssertNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://static.api.virtusize.com/a/aoyama/\(VirtusizeConfiguration.defaultAoyamaVersion)/sdk-webview.html"
+        )
+    }
 
     func testRetrieveStoreInfo_expectedHeaders() {
         let apiRequest = APIRequest.retrieveStoreInfo()

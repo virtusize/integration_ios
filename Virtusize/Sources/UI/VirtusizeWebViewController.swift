@@ -117,11 +117,12 @@ public final class VirtusizeWebViewController: UIViewController {
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
-		// If the request is invalid, the controller should be dismissed
-		guard let request = APIRequest.virtusizeWebView() else {
-			reportError(error: .invalidRequest)
-			return
-		}
+        // If the request is invalid, the controller should be dismissed
+        guard let version = VirtusizeAPIService.fetchLatestAoyamaVersion().success,
+              let request = APIRequest.virtusizeWebView(version: version) else {
+            reportError(error: .invalidRequest)
+            return
+        }
 		webView.load(request)
 	}
 

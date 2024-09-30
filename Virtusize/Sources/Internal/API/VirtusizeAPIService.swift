@@ -165,14 +165,14 @@ class VirtusizeAPIService: APIService {
 		return getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
 	}
 
-	/// The API request for retrieving the recommended size based on the user body profile
+	/// The API request for retrieving the recommended sizes based on the user body profile
 	///
 	/// - Parameters:
 	///   - productTypes: A list of product types
 	///   - storeProduct: The store product data
 	///   - userBodyProfile: the user body profile data
-	/// - Returns: the user body profile recommended size in the type of `BodyProfileRecommendedSize`
-	internal static func getBodyProfileRecommendedSizeAsync(
+	/// - Returns: the user body profile recommended size array in the type of `BodyProfileRecommendedSize`
+	internal static func getBodyProfileRecommendedSizesAsync(
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
@@ -184,10 +184,6 @@ class VirtusizeAPIService: APIService {
         else {
 			return .failure(nil)
 		}
-      
-        
-     
-        
 		return getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
 	}
 
@@ -225,4 +221,18 @@ class VirtusizeAPIService: APIService {
 		}
 		return .success(image, nil)
 	}
+
+    // The API request for fetching the latest version of Aoyama from a txt URL
+    ///
+    /// - Returns: the version in `String`
+    internal static func fetchLatestAoyamaVersion() -> APIResult<String> {
+        let request = APIRequest.fetchLatestAoyamaVersion()
+        let apiResponse = VirtusizeAPIService.performAsync(request)
+        guard let data = apiResponse?.data,
+              let version = String(data: data, encoding: .utf8) else {
+            return .failure(apiResponse?.code, apiResponse?.virtusizeError)
+        }
+        let trimmedVersion = version.trimmingCharacters(in: .whitespacesAndNewlines)
+        return .success(trimmedVersion, nil)
+    }
 }

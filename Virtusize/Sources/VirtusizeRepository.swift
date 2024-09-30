@@ -45,7 +45,7 @@ internal class VirtusizeRepository: NSObject {
 	private var userProducts: [VirtusizeServerProduct]?
 	private var userBodyProfile: VirtusizeUserBodyProfile?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
-	private var bodyProfileRecommendedSize: BodyProfileRecommendedSizeArray?
+	private var bodyProfileRecommendedSizes: BodyProfileRecommendedSizeArray?
 
 	/// A set to cache the store product information of all the visited products
 	private var serverStoreProductSet: Set<VirtusizeServerProduct> = []
@@ -192,15 +192,11 @@ internal class VirtusizeRepository: NSObject {
  		}
 
 		if let userBodyProfile = userBodyProfile {
-            
-			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
+			bodyProfileRecommendedSizes = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
 				productTypes: productTypes!,
 				storeProduct: storeProduct!,
 				userBodyProfile: userBodyProfile
 			).success
-            
-        
-            
 		}
 
 		var userProducts = self.userProducts ?? []
@@ -221,7 +217,7 @@ internal class VirtusizeRepository: NSObject {
 		userProducts = nil
 		sizeComparisonRecommendedSize = nil
 		userBodyProfile = nil
-		bodyProfileRecommendedSize = nil
+		bodyProfileRecommendedSizes = nil
 	}
 
 	/// Updates the user session by calling the session API
@@ -272,9 +268,9 @@ internal class VirtusizeRepository: NSObject {
 			case .compareProduct:
 				Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
 			case .body:
-            Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize?[0])
+            Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSizes?.first)
 			default:
-            Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize?[0])
+            Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSizes?.first)
 		}
 	}
 
@@ -285,8 +281,7 @@ internal class VirtusizeRepository: NSObject {
 		guard let recommendedSize = recommendedSize else {
 			return
 		}
-        bodyProfileRecommendedSize?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
-		
+        bodyProfileRecommendedSizes?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
 	}
 
 	/// Removes the deleted user product by the product ID from the user product list

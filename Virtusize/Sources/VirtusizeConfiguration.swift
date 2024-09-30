@@ -26,4 +26,5 @@ import Foundation
 
 struct VirtusizeConfiguration {
 	static let SDKVersion = "2.5.10"
+    static let defaultAoyamaVersion = "3.2.6"
 }

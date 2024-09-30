@@ -140,7 +140,7 @@ public class VirtusizeFlutterRepository: NSObject {
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
 	) -> BodyProfileRecommendedSizeArray? {
-		let response = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
+		let response = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
 			productTypes: productTypes,
 			storeProduct: storeProduct,
 			userBodyProfile: userBodyProfile
