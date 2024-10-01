@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.5.11
+- Fix: Update Virtusize Auth SDK to fix the issue of missing PrivacyInfo.xcprivacy
+
 ### 2.5.10
 - Fix: Google Sign In Issue
 - Fix: Update Virtusize Auth SDK 
