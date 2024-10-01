@@ -1,0 +1,121 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
+// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name VirtusizeCore
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import Foundation
+import Swift
+import UIKit
+@_exported import VirtusizeCore
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_hasMissingDesignatedInitializers final public class UserDefaultsHelper {
+  public static let current: VirtusizeCore.UserDefaultsHelper
+  final public var authToken: Swift.String? {
+    get
+    set
+  }
+  final public var accessToken: Swift.String? {
+    get
+    set
+  }
+  final public var identifier: Swift.String {
+    get
+    set
+  }
+  @objc deinit
+}
+public protocol BundleLoaderProtocol {
+  static var bundleClass: Swift.AnyClass { get }
+  static var bundleName: Swift.String { get }
+}
+extension VirtusizeCore.BundleLoaderProtocol {
+  public static var resourceBundle: Foundation.Bundle {
+    get
+  }
+  public static func localizationBundle(language: Swift.String? = nil) -> Foundation.Bundle
+}
+@_hasMissingDesignatedInitializers open class VirtusizeCoreBundleLoader : VirtusizeCore.BundleLoaderProtocol {
+  public static let bundleClass: Swift.AnyClass
+  public static let bundleName: Swift.String
+  @objc deinit
+}
+public typealias JSONObject = [Swift.String : Any]
+public enum APIMethod : Swift.String {
+  case get, post, delete
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct APIRequest {
+  public static func HTTPRequest(components: Foundation.URLComponents, method: VirtusizeCore.APIMethod = .get) -> Foundation.URLRequest
+  public static func apiRequest(components: Foundation.URLComponents, method: VirtusizeCore.APIMethod = .get) -> Foundation.URLRequest
+  public static func apiRequestWithAuthHeader(components: Foundation.URLComponents, method: VirtusizeCore.APIMethod = .post) -> Foundation.URLRequest
+  public static func apiRequestWithAuthorization(components: Foundation.URLComponents, method: VirtusizeCore.APIMethod = .get) -> Foundation.URLRequest
+  public static func apiRequest(components: Foundation.URLComponents, withPayload payload: Foundation.Data) -> Foundation.URLRequest
+}
+@_hasMissingDesignatedInitializers open class APIService {
+  public typealias CompletionHandler = (Foundation.Data?) -> Swift.Void
+  public typealias ErrorHandler = (VirtusizeCore.VirtusizeError) -> Swift.Void
+  public static func perform(_ request: Foundation.URLRequest, completion completionHandler: VirtusizeCore.APIService.CompletionHandler? = nil, error errorHandler: VirtusizeCore.APIService.ErrorHandler? = nil)
+  public static func performAsync(_ request: Foundation.URLRequest) -> VirtusizeCore.APIResponse?
+  public static func getAPIResultAsync<T>(request: Foundation.URLRequest, type: T.Type?) -> VirtusizeCore.APIResult<T> where T : Swift.Decodable
+  @objc deinit
+}
+public enum VirtusizeError : Swift.Error {
+  case deserializationError
+  case encodingError
+  case invalidPayload
+  case invalidProduct
+  case invalidRequest
+  case invalidVsParamScript
+  case navigationError(any Swift.Error)
+  case jsonDecodingFailed(Swift.String, any Swift.Error)
+  case apiRequestError(Foundation.URL?, Swift.String?)
+  case failToLoadImage(Foundation.URL?)
+  case unknownError
+}
+extension VirtusizeCore.VirtusizeError : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension UIKit.UIApplication {
+  @_Concurrency.MainActor @preconcurrency public static var safeShared: UIKit.UIApplication? {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public func safeOpenURL(_ url: Foundation.URL)
+  @_Concurrency.MainActor @preconcurrency public func getTopMostViewController() -> UIKit.UIViewController?
+}
+public struct APIResponse {
+  public var code: Swift.Int?
+  public var data: Foundation.Data?
+  public var virtusizeError: VirtusizeCore.VirtusizeError?
+}
+public typealias Code = Swift.Int
+public enum APIResult<Value> {
+  case success(_: Value? = nil, _: Swift.String? = nil)
+  case failure(_: VirtusizeCore.Code? = nil, _: VirtusizeCore.VirtusizeError? = nil)
+}
+extension VirtusizeCore.APIResult {
+  public var string: Swift.String? {
+    get
+  }
+  public var success: Value? {
+    get
+  }
+  public var errorCode: Swift.Int? {
+    get
+  }
+  public var failure: VirtusizeCore.VirtusizeError? {
+    get
+  }
+  public var isSuccessful: Swift.Bool {
+    get
+  }
+}
+extension VirtusizeCore.APIMethod : Swift.Equatable {}
+extension VirtusizeCore.APIMethod : Swift.Hashable {}
+extension VirtusizeCore.APIMethod : Swift.RawRepresentable {}
