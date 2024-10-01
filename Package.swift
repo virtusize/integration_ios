@@ -8,10 +8,7 @@ let package = Package(
 	products: [
 		.library(
 			name: "Virtusize",
-			targets: ["Virtusize"]),
-		.library(
-			name: "VirtusizeCore",
-			targets: ["VirtusizeCore"])
+			targets: ["Virtusize", "VirtusizeCore", "VirtusizeAuth"])
 	],
 	dependencies: [],
 	targets: [
