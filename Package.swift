@@ -13,13 +13,11 @@ let package = Package(
 			name: "VirtusizeCore",
 			targets: ["VirtusizeCore"])
 	],
-	dependencies: [
-        .package(url: "https://github.com/virtusize/virtusize_auth_ios.git", .branch("hotfix/1.1.3"))
-    ],
+	dependencies: [],
 	targets: [
 		.target(
 			name: "Virtusize",
-			dependencies: ["VirtusizeCore", .product(name: "VirtusizeAuth", package: "virtusize_auth_ios")],
+			dependencies: ["VirtusizeCore", "VirtusizeAuth"],
 			path: "Virtusize/Sources",
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
@@ -31,5 +29,9 @@ let package = Package(
 			exclude: ["Info.plist"],
 			resources: [.process("Resources")]
 		),
+        .binaryTarget(
+            name: "VirtusizeAuth",
+            path: "Frameworks/VirtusizeAuth.xcframework"
+        )
 	]
 )
