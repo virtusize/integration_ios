@@ -4,53 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Frameworks/VirtusizeCore.framework/Info.plist</key>
-		<data>
-		GlyRb9Xt73xMiwII/Rr8HWe1wUE=
-		</data>
-		<key>Frameworks/VirtusizeCore.framework/PrivacyInfo.xcprivacy</key>
-		<data>
-		PnvOOLZvyzHtaCAsVERevfii7aM=
-		</data>
-		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore</key>
-		<data>
-		qLCXKkwv7CzAbsSoieRYmH8swyY=
-		</data>
-		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore.podspec</key>
-		<data>
-		mwW5j3zvSR3WsWrv/+fIv8cxfOM=
-		</data>
-		<key>Frameworks/VirtusizeCore.framework/_CodeSignature/CodeResources</key>
-		<data>
-		ltLlnGWCTSyEr3OvZqQFgTfZpUg=
-		</data>
-		<key>Frameworks/VirtusizeCore.framework/en.lproj/VirtusizeLocalizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Ksqyxop7Xp/EMZCpZqrGfnFYW3Y=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/ja.lproj/VirtusizeLocalizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			BoPx+WXJENSX/KPHPqyHC2qxSgs=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/ko.lproj/VirtusizeLocalizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			AMU8OfnhfxBaSrSYQVHmiPex+Uc=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
 		<key>Headers/VirtusizeAuth-Swift.h</key>
 		<data>
 		+dWjC1kW5cu/MMYffJ6ZTl7RMUs=
@@ -118,68 +71,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/VirtusizeCore.framework/Info.plist</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			VzuGOqnW0qDvqp2sC1cNxMLRG/D79CzrLPCLfaS79vQ=
-			</data>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/PrivacyInfo.xcprivacy</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			GfqwS6u/MzexbH7U2vadh5H9eOLtyt1nYZ7ZzXAp5CU=
-			</data>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			7AlURWv7L8o12ChN3CeaAPjTnSmwo29RFNcjjly5eAs=
-			</data>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/VirtusizeCore.podspec</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			GFWS6r9/HIrNvWztJYUmn5TXCOB3LQlPijZrZJ5aGBU=
-			</data>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/_CodeSignature/CodeResources</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			FIUeIZiJC+N6Iwyb+8veOy5jgW7rebj/eQLdiFVJVUI=
-			</data>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/en.lproj/VirtusizeLocalizable.strings</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			cIrV5YnNxNH9Qf8xjj77mfek8D9RcIVNCxFZMlLJauo=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/ja.lproj/VirtusizeLocalizable.strings</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			oWfS1tNAyEXBr1TDIwVAu2L68ClR02TLvSQH22u4xPk=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Frameworks/VirtusizeCore.framework/ko.lproj/VirtusizeLocalizable.strings</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			8NW5TzmuFW/NpjccH8n5r4tLcN2lcWujURT8/dcD1VY=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
 		<key>Headers/VirtusizeAuth-Swift.h</key>
 		<dict>
 			<key>hash2</key>
