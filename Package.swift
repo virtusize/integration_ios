@@ -14,7 +14,7 @@ let package = Package(
 			targets: ["VirtusizeCore"])
 	],
 	dependencies: [
-        .package(url: "https://github.com/virtusize/virtusize_auth_ios.git", from: "1.1.3")
+        .package(url: "https://github.com/virtusize/virtusize_auth_ios.git", .branch("hotfix/1.1.3"))
     ],
 	targets: [
 		.target(
