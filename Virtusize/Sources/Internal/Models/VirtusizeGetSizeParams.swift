@@ -131,4 +131,3 @@ internal struct VirtusizeGetSizeParams: Codable {
 		}
 		return itemSizesDict
 	}
-
