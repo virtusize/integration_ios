@@ -28,10 +28,4 @@ internal struct VirtusizeBrandSizing: Codable {
 	let compare: String
 	/// If the value is true, it is to compare with the brand items. Otherwise, with the items of most brands
 	let itemBrand: Bool
-
-	/// Initializes the VirtusizeBrandSizing structure
-	internal init(compare: String, itemBrand: Bool) {
-		self.compare = compare
-		self.itemBrand = itemBrand
-	}
 }

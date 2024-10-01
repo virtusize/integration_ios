@@ -51,7 +51,7 @@ public extension UIApplication {
 	///
 	/// - Parameter baseVC: the base view controller
 	func getTopMostViewController() -> UIViewController? {
-       let baseVC : UIViewController? = UIApplication.safeShared?.windows.filter {$0.isKeyWindow}.first?.rootViewController
+       let baseVC: UIViewController? = UIApplication.safeShared?.windows.filter {$0.isKeyWindow}.first?.rootViewController
 		if let navVC = baseVC as? UINavigationController {
 			return navVC.visibleViewController
 		} else if let tabController = baseVC as? UITabBarController, let selectedTabVC = tabController.selectedViewController {
