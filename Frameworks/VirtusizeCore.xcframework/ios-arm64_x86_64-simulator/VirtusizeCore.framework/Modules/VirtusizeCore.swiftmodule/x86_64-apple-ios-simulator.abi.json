@@ -1315,6 +1315,13 @@
         ]
       },
       {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "VirtusizeCore"
+      },
+      {
         "kind": "TypeDecl",
         "name": "APIService",
         "printedName": "APIService",

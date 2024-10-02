@@ -18,7 +18,7 @@
 		</data>
 		<key>Modules/VirtusizeCore.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		VEmlX/Ya17fj6n1OMGJi5N5e10k=
+		O2tRlaIttMyMGDF5zhRzcqkxW4A=
 		</data>
 		<key>Modules/VirtusizeCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/VirtusizeCore.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		hWjsW+4sfrNIMXt7ynm4s3iHzpY=
+		gDjXgRuLQP9n8MS3JYTJ0ZZBIuM=
 		</data>
 		<key>Modules/VirtusizeCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		VEmlX/Ya17fj6n1OMGJi5N5e10k=
+		O2tRlaIttMyMGDF5zhRzcqkxW4A=
 		</data>
 		<key>Modules/VirtusizeCore.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Modules/VirtusizeCore.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		gw5C6GX8VWVCFMcyztw2PVaCScs=
+		7biDZUzjXV3QhU5ZCwpgctW9GZQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>VirtusizeCore.podspec</key>
 		<data>
-		CRW5HTMAKBg0RS8zeh3nuFzOFsg=
+		mwW5j3zvSR3WsWrv/+fIv8cxfOM=
 		</data>
 		<key>en.lproj/VirtusizeLocalizable.strings</key>
 		<dict>
@@ -116,7 +116,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			sUqyzdq+XGxEck/46ZlIgyjMOYHu6geKPrrNxplYWeY=
+			LXbDShfH1BbC5j8QA/8o51fnESxMAILO4EOSSUfOnS8=
 			</data>
 		</dict>
 		<key>Modules/VirtusizeCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -144,14 +144,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			jXcR/CD/xTx839DytVZNtsU9Io9srbAQD1b4MoZh9W4=
+			LPsIq7o4/TXJCL3u+pGaEGrOeeorBtkx9yNsEx6tbfY=
 			</data>
 		</dict>
 		<key>Modules/VirtusizeCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sUqyzdq+XGxEck/46ZlIgyjMOYHu6geKPrrNxplYWeY=
+			LXbDShfH1BbC5j8QA/8o51fnESxMAILO4EOSSUfOnS8=
 			</data>
 		</dict>
 		<key>Modules/VirtusizeCore.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
@@ -179,7 +179,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			C1CqTCiYAJID1wTmllmzpqXzBq4Zq5GeSRRX+0wofQQ=
+			Gzx+NV/ealgSN/2J/FLv7Fxv5GHJ2zy854vzEp87Ncc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -200,7 +200,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			A6YKpzsZ+42Smi8OnFkP7dOdfN++8kiIPWueL0oojzM=
+			GFWS6r9/HIrNvWztJYUmn5TXCOB3LQlPijZrZJ5aGBU=
 			</data>
 		</dict>
 		<key>en.lproj/VirtusizeLocalizable.strings</key>

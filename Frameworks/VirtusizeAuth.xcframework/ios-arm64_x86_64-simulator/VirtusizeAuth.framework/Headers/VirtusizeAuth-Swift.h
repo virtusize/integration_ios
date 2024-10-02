@@ -357,6 +357,9 @@ SWIFT_CLASS("_TtC13VirtusizeAuth16VirtusizeWebView")
 @class WKWindowFeatures;
 @class NSString;
 @class WKFrameInfo;
+@class WKPreviewElementInfo;
+@protocol WKPreviewActionItem;
+@class UIViewController;
 @class WKContextMenuElementInfo;
 @class UIContextMenuConfiguration;
 @protocol UIContextMenuInteractionCommitAnimating;
@@ -367,6 +370,9 @@ SWIFT_CLASS("_TtC13VirtusizeAuth16VirtusizeWebView")
 - (void)webView:(WKWebView * _Nonnull)webView runJavaScriptAlertPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(void))completionHandler;
 - (void)webView:(WKWebView * _Nonnull)webView runJavaScriptConfirmPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(BOOL))completionHandler;
 - (void)webView:(WKWebView * _Nonnull)webView runJavaScriptTextInputPanelWithPrompt:(NSString * _Nonnull)prompt defaultText:(NSString * _Nullable)defaultText initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(NSString * _Nullable))completionHandler;
+- (BOOL)webView:(WKWebView * _Nonnull)webView shouldPreviewElement:(WKPreviewElementInfo * _Nonnull)elementInfo SWIFT_WARN_UNUSED_RESULT SWIFT_AVAILABILITY(ios,introduced=10.0,deprecated=13.0);
+- (UIViewController * _Nullable)webView:(WKWebView * _Nonnull)webView previewingViewControllerForElement:(WKPreviewElementInfo * _Nonnull)elementInfo defaultActions:(NSArray<id <WKPreviewActionItem>> * _Nonnull)previewActions SWIFT_WARN_UNUSED_RESULT SWIFT_AVAILABILITY(ios,introduced=10.0,deprecated=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView commitPreviewingViewController:(UIViewController * _Nonnull)previewingViewController SWIFT_AVAILABILITY(ios,introduced=10.0,deprecated=13.0);
 - (void)webView:(WKWebView * _Nonnull)webView contextMenuConfigurationForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo completionHandler:(void (^ _Nonnull)(UIContextMenuConfiguration * _Nullable))completionHandler SWIFT_AVAILABILITY(ios,introduced=13.0);
 - (void)webView:(WKWebView * _Nonnull)webView contextMenuWillPresentForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo SWIFT_AVAILABILITY(ios,introduced=13.0);
 - (void)webView:(WKWebView * _Nonnull)webView contextMenuForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo willCommitWithAnimator:(id <UIContextMenuInteractionCommitAnimating> _Nonnull)animator SWIFT_AVAILABILITY(ios,introduced=13.0);
@@ -740,6 +746,9 @@ SWIFT_CLASS("_TtC13VirtusizeAuth16VirtusizeWebView")
 @class WKWindowFeatures;
 @class NSString;
 @class WKFrameInfo;
+@class WKPreviewElementInfo;
+@protocol WKPreviewActionItem;
+@class UIViewController;
 @class WKContextMenuElementInfo;
 @class UIContextMenuConfiguration;
 @protocol UIContextMenuInteractionCommitAnimating;
@@ -750,6 +759,9 @@ SWIFT_CLASS("_TtC13VirtusizeAuth16VirtusizeWebView")
 - (void)webView:(WKWebView * _Nonnull)webView runJavaScriptAlertPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(void))completionHandler;
 - (void)webView:(WKWebView * _Nonnull)webView runJavaScriptConfirmPanelWithMessage:(NSString * _Nonnull)message initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(BOOL))completionHandler;
 - (void)webView:(WKWebView * _Nonnull)webView runJavaScriptTextInputPanelWithPrompt:(NSString * _Nonnull)prompt defaultText:(NSString * _Nullable)defaultText initiatedByFrame:(WKFrameInfo * _Nonnull)frame completionHandler:(void (^ _Nonnull)(NSString * _Nullable))completionHandler;
+- (BOOL)webView:(WKWebView * _Nonnull)webView shouldPreviewElement:(WKPreviewElementInfo * _Nonnull)elementInfo SWIFT_WARN_UNUSED_RESULT SWIFT_AVAILABILITY(ios,introduced=10.0,deprecated=13.0);
+- (UIViewController * _Nullable)webView:(WKWebView * _Nonnull)webView previewingViewControllerForElement:(WKPreviewElementInfo * _Nonnull)elementInfo defaultActions:(NSArray<id <WKPreviewActionItem>> * _Nonnull)previewActions SWIFT_WARN_UNUSED_RESULT SWIFT_AVAILABILITY(ios,introduced=10.0,deprecated=13.0);
+- (void)webView:(WKWebView * _Nonnull)webView commitPreviewingViewController:(UIViewController * _Nonnull)previewingViewController SWIFT_AVAILABILITY(ios,introduced=10.0,deprecated=13.0);
 - (void)webView:(WKWebView * _Nonnull)webView contextMenuConfigurationForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo completionHandler:(void (^ _Nonnull)(UIContextMenuConfiguration * _Nullable))completionHandler SWIFT_AVAILABILITY(ios,introduced=13.0);
 - (void)webView:(WKWebView * _Nonnull)webView contextMenuWillPresentForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo SWIFT_AVAILABILITY(ios,introduced=13.0);
 - (void)webView:(WKWebView * _Nonnull)webView contextMenuForElement:(WKContextMenuElementInfo * _Nonnull)elementInfo willCommitWithAnimator:(id <UIContextMenuInteractionCommitAnimating> _Nonnull)animator SWIFT_AVAILABILITY(ios,introduced=13.0);

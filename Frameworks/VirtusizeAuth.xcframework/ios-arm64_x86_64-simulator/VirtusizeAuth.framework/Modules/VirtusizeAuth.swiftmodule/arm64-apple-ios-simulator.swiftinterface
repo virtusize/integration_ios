@@ -14,6 +14,7 @@ import _SwiftConcurrencyShims
 @_hasMissingDesignatedInitializers public class VirtusizeURLCheck {
   public static func isExternalLinkFromVirtusize(url: Swift.String?) -> Swift.Bool
   public static func isLinkFromSNSAuth(url: Swift.String?) -> Swift.Bool
+  public static func isFitIllustratorLink(url: Swift.String?) -> Swift.Bool
   @objc deinit
 }
 @objc @_Concurrency.MainActor @preconcurrency public class VirtusizeWebView : WebKit.WKWebView {
@@ -35,6 +36,12 @@ extension VirtusizeAuth.VirtusizeWebView : WebKit.WKUIDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptAlertPanelWithMessage message: Swift.String, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping () -> Swift.Void)
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptConfirmPanelWithMessage message: Swift.String, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: Swift.String, defaultText: Swift.String?, initiatedByFrame frame: WebKit.WKFrameInfo, completionHandler: @escaping (Swift.String?) -> Swift.Void)
+  @available(iOS, introduced: 10.0, deprecated: 13.0)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, shouldPreviewElement elementInfo: WebKit.WKPreviewElementInfo) -> Swift.Bool
+  @available(iOS, introduced: 10.0, deprecated: 13.0)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, previewingViewControllerForElement elementInfo: WebKit.WKPreviewElementInfo, defaultActions previewActions: [any WebKit.WKPreviewActionItem]) -> UIKit.UIViewController?
+  @available(iOS, introduced: 10.0, deprecated: 13.0)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, commitPreviewingViewController previewingViewController: UIKit.UIViewController)
   @available(iOS 13.0, *)
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, contextMenuConfigurationForElement elementInfo: WebKit.WKContextMenuElementInfo, completionHandler: @escaping (UIKit.UIContextMenuConfiguration?) -> Swift.Void)
   @available(iOS 13.0, *)
