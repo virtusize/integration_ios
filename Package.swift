@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
@@ -15,11 +15,14 @@ let package = Package(
             targets: ["VirtusizeCore"]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/virtusize/virtusize_auth_ios.git", .branch("hotfix/1.1.3"))
+    ],
+
     targets: [
         .target(
             name: "Virtusize",
-            dependencies: ["VirtusizeCore", "VirtusizeAuth"],
+            dependencies: ["VirtusizeCore", .product(name: "VirtusizeAuth", package: "virtusize_auth_ios")],
             path: "Virtusize/Sources",
             exclude: ["Info.plist"],
             resources: [.process("Resources")]
@@ -31,9 +34,5 @@ let package = Package(
             exclude: ["Info.plist"],
             resources: [.process("Resources")]
         ),
-        .binaryTarget(
-            name: "VirtusizeAuth",
-            path: "Frameworks/VirtusizeAuth.xcframework"
-        )
     ]
 )
