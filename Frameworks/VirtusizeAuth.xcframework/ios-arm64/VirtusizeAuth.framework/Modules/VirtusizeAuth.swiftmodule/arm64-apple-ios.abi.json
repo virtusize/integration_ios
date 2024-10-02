@@ -1,8 +1,8 @@
 {
   "ABIRoot": {
     "kind": "Root",
-    "name": "TopLevel",
-    "printedName": "TopLevel",
+    "name": "VirtusizeAuth",
+    "printedName": "VirtusizeAuth",
     "children": [
       {
         "kind": "Import",
@@ -104,44 +104,6 @@
               "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "isFitIllustratorLink",
-            "printedName": "isFitIllustratorLink(url:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Bool",
-                "printedName": "Swift.Bool",
-                "usr": "s:Sb"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:13VirtusizeAuth0A8URLCheckC20isFitIllustratorLink3urlSbSSSg_tFZ",
-            "mangledName": "$s13VirtusizeAuth0A8URLCheckC20isFitIllustratorLink3urlSbSSSg_tFZ",
-            "moduleName": "VirtusizeAuth",
-            "static": true,
-            "declAttributes": [
-              "Final",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Class",
@@ -152,7 +114,23 @@
           "AccessControl",
           "RawDocComment"
         ],
-        "hasMissingDesignatedInitializers": true
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -208,6 +186,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override",
               "AccessControl"
@@ -315,6 +294,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override",
               "AccessControl"
@@ -443,6 +423,7 @@
             "mangledName": "$s13VirtusizeAuth0A7WebViewC5frame20configurationClosureACSo6CGRectV_ySo05WKWebD13ConfigurationCcSgtcfc",
             "moduleName": "VirtusizeAuth",
             "declAttributes": [
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -483,6 +464,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Required"
@@ -523,6 +505,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override"
             ],
@@ -580,6 +563,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -611,6 +595,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -671,6 +656,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -732,6 +718,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -815,152 +802,9 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
-            ],
-            "isFromExtension": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "webView",
-            "printedName": "webView(_:shouldPreviewElement:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Bool",
-                "printedName": "Swift.Bool",
-                "usr": "s:Sb"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "WKWebView",
-                "printedName": "WebKit.WKWebView",
-                "usr": "c:objc(cs)WKWebView"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "WKPreviewElementInfo",
-                "printedName": "WebKit.WKPreviewElementInfo",
-                "usr": "c:objc(cs)WKPreviewElementInfo"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "c:@CM@VirtusizeAuth@objc(cs)VirtusizeWebView(im)webView:shouldPreviewElement:",
-            "mangledName": "$s13VirtusizeAuth0A7WebViewC03webD0_20shouldPreviewElementSbSo05WKWebD0C_So09WKPreviewH4InfoCtF",
-            "moduleName": "VirtusizeAuth",
-            "deprecated": true,
-            "intro_iOS": "10.0",
-            "objc_name": "webView:shouldPreviewElement:",
-            "declAttributes": [
-              "Dynamic",
-              "ObjC",
-              "Custom",
-              "AccessControl",
-              "Available"
-            ],
-            "isFromExtension": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "webView",
-            "printedName": "webView(_:previewingViewControllerForElement:defaultActions:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "UIKit.UIViewController?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "UIViewController",
-                    "printedName": "UIKit.UIViewController",
-                    "usr": "c:objc(cs)UIViewController"
-                  }
-                ],
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "WKWebView",
-                "printedName": "WebKit.WKWebView",
-                "usr": "c:objc(cs)WKWebView"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "WKPreviewElementInfo",
-                "printedName": "WebKit.WKPreviewElementInfo",
-                "usr": "c:objc(cs)WKPreviewElementInfo"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Array",
-                "printedName": "[any WebKit.WKPreviewActionItem]",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "WKPreviewActionItem",
-                    "printedName": "any WebKit.WKPreviewActionItem",
-                    "usr": "c:objc(pl)WKPreviewActionItem"
-                  }
-                ],
-                "usr": "s:Sa"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "c:@CM@VirtusizeAuth@objc(cs)VirtusizeWebView(im)webView:previewingViewControllerForElement:defaultActions:",
-            "mangledName": "$s13VirtusizeAuth0A7WebViewC03webD0_010previewingD20ControllerForElement14defaultActionsSo06UIViewG0CSgSo05WKWebD0C_So09WKPreviewI4InfoCSaySo0N10ActionItem_pGtF",
-            "moduleName": "VirtusizeAuth",
-            "deprecated": true,
-            "intro_iOS": "10.0",
-            "objc_name": "webView:previewingViewControllerForElement:defaultActions:",
-            "declAttributes": [
-              "Dynamic",
-              "ObjC",
-              "Custom",
-              "AccessControl",
-              "Available"
-            ],
-            "isFromExtension": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "webView",
-            "printedName": "webView(_:commitPreviewingViewController:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "WKWebView",
-                "printedName": "WebKit.WKWebView",
-                "usr": "c:objc(cs)WKWebView"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "UIViewController",
-                "printedName": "UIKit.UIViewController",
-                "usr": "c:objc(cs)UIViewController"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "c:@CM@VirtusizeAuth@objc(cs)VirtusizeWebView(im)webView:commitPreviewingViewController:",
-            "mangledName": "$s13VirtusizeAuth0A7WebViewC03webD0_016commitPreviewingD10ControllerySo05WKWebD0C_So06UIViewH0CtF",
-            "moduleName": "VirtusizeAuth",
-            "deprecated": true,
-            "intro_iOS": "10.0",
-            "objc_name": "webView:commitPreviewingViewController:",
-            "declAttributes": [
-              "Dynamic",
-              "ObjC",
-              "Custom",
-              "AccessControl",
-              "Available"
             ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
@@ -1023,9 +867,11 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
-              "Available"
+              "Available",
+              "RawDocComment"
             ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
@@ -1062,6 +908,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1107,6 +954,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1146,6 +994,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1202,6 +1051,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1277,6 +1127,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1333,6 +1184,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1378,6 +1230,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1423,6 +1276,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1474,6 +1328,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1519,6 +1374,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1564,6 +1420,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1615,6 +1472,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1691,6 +1549,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1722,6 +1581,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1778,6 +1638,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1791,6 +1652,7 @@
         "mangledName": "$s13VirtusizeAuth0A7WebViewC",
         "moduleName": "VirtusizeAuth",
         "declAttributes": [
+          "Preconcurrency",
           "Custom",
           "AccessControl",
           "ObjC"
@@ -1803,6 +1665,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -1998,7 +1874,23 @@
         "declAttributes": [
           "AccessControl"
         ],
-        "hasMissingDesignatedInitializers": true
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -2066,51 +1958,23 @@
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/VirtusizeWebView.swift",
-      "kind": "StringLiteral",
-      "offset": 1310,
-      "length": 16,
-      "value": "\"VirtusizeAuth.VirtusizeWebView\""
-    },
-    {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
       "kind": "StringLiteral",
-      "offset": 1724,
+      "offset": 1720,
       "length": 12,
       "value": "\"given_name\""
     },
     {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
       "kind": "StringLiteral",
-      "offset": 1757,
+      "offset": 1753,
       "length": 13,
       "value": "\"family_name\""
     },
     {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
       "kind": "StringLiteral",
-      "offset": 1817,
-      "length": 9,
-      "value": "\"picture\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1724,
-      "length": 12,
-      "value": "\"given_name\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1757,
-      "length": 13,
-      "value": "\"family_name\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1817,
+      "offset": 1813,
       "length": 9,
       "value": "\"picture\""
     },
@@ -2127,20 +1991,6 @@
       "offset": 1376,
       "length": 14,
       "value": "\"redirect_uri\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Views\/VirtusizeSafariViewController.swift",
-      "kind": "StringLiteral",
-      "offset": 1251,
-      "length": 29,
-      "value": "\"VirtusizeAuth.VirtusizeSafariViewController\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Views\/VirtusizeSafariViewController.swift",
-      "kind": "StringLiteral",
-      "offset": 1251,
-      "length": 29,
-      "value": "\"VirtusizeAuth.VirtusizeSafariViewController\""
     },
     {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
@@ -2173,28 +2023,14 @@
     {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
       "kind": "StringLiteral",
-      "offset": 1615,
+      "offset": 1612,
       "length": 12,
       "value": "\"first_name\""
     },
     {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
       "kind": "StringLiteral",
-      "offset": 1646,
-      "length": 11,
-      "value": "\"last_name\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1615,
-      "length": 12,
-      "value": "\"first_name\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1646,
+      "offset": 1643,
       "length": 11,
       "value": "\"last_name\""
     }
