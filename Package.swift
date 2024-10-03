@@ -22,7 +22,7 @@ let package = Package(
     targets: [
         .target(
             name: "Virtusize",
-            dependencies: ["VirtusizeCore", .product(name: "VirtusizeAuth", package: "virtusize_auth_ios")],
+            dependencies: [.product(name: "VirtusizeAuth", package: "virtusize_auth_ios")],
             path: "Virtusize/Sources",
             exclude: ["Info.plist"],
             resources: [.process("Resources")]
