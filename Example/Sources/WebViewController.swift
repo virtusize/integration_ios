@@ -26,7 +26,7 @@ import UIKit
 import WebKit
 import Virtusize
 
-fileprivate final class ProcessPool: WKProcessPool {
+private final class ProcessPool: WKProcessPool {
 	static let shared = ProcessPool()
 }
 

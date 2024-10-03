@@ -50,7 +50,7 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 				return "services.virtusize.kr"
 		}
 	}
-    
+
     /// Gets the services URL for the ``getSize` requests
     internal func getSizeUrl() -> String {
         // swiftlint:disable switch_case_alignment

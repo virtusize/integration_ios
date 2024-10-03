@@ -25,7 +25,7 @@
 // swiftlint:disable line_length
 /// The structure that wraps the parameters for the API request to get the recommended size based on a user's body profile
 internal struct VirtusizeGetSizeParams: Codable {
-   
+
     /// The user body data
     var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
     /// The user's gender
@@ -35,9 +35,8 @@ internal struct VirtusizeGetSizeParams: Codable {
     /// The user's weight
     var userWeight: Float?
 
-    
-    var items : [VirtusizeGetSizeItemsParam]
-    
+    var items: [VirtusizeGetSizeItemsParam]
+
     /// Initializes the VirtusizeGetSizeParams structure
     ///
     /// - Parameters:
@@ -48,11 +47,11 @@ internal struct VirtusizeGetSizeParams: Codable {
         productTypes: [VirtusizeProductType],
         storeProduct: VirtusizeServerProduct,
         userBodyProfile: VirtusizeUserBodyProfile?
-        
+
     ) {
-        
-   ///Chirag : Commented modelInfo not getting proper value  but its optional
-   ///Chirag: Gender value getting from userBodyProfile, not getting from storeProduct.storeProductMeta?.additionalInfo
+
+   /// Chirag : Commented modelInfo not getting proper value  but its optional
+   /// Chirag: Gender value getting from userBodyProfile, not getting from storeProduct.storeProductMeta?.additionalInfo
        let additionalInfo = [
             "brand": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
@@ -79,11 +78,9 @@ internal struct VirtusizeGetSizeParams: Codable {
         if let weight = userBodyProfile?.weight {
             userWeight = Float(weight)
         }
-      
-        
-        items = [VirtusizeGetSizeItemsParam(additionalInfo: additionalInfo,itemSizesOrig: itemSizesOrig,productType: productType, extProductId: storeProduct.externalId)]
-        
-        
+
+        items = [VirtusizeGetSizeItemsParam(additionalInfo: additionalInfo, itemSizesOrig: itemSizesOrig, productType: productType, extProductId: storeProduct.externalId)]
+
     }
 }
 
@@ -134,5 +131,3 @@ internal struct VirtusizeGetSizeParams: Codable {
 		}
 		return itemSizesDict
 	}
-    
-

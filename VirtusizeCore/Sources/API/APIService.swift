@@ -24,7 +24,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// This class is to handle API requests to the Virtusize server
 open class APIService {
@@ -57,10 +56,9 @@ open class APIService {
 		error errorHandler: ErrorHandler? = nil
 	) {
 		let task: URLSessionDataTask
-        
+
 		task = APIService.session.dataTask(with: request) { (data, response, error) in
-            
-          
+
 			guard error == nil else {
 				DispatchQueue.main.async {
 					errorHandler?(VirtusizeError.apiRequestError(request.url, error!.localizedDescription))
@@ -175,9 +173,9 @@ open class APIService {
 		do {
 			let result = try JSONDecoder().decode(type!, from: data)
 			let jsonString = String(data: data, encoding: String.Encoding.utf8)
-          
+
 			return .success(result, jsonString)
-            
+
 		} catch {
 			return .failure(apiResponse?.code, VirtusizeError.jsonDecodingFailed(String(describing: type), error))
 		}

@@ -1,0 +1,11 @@
+framework module VirtusizeCore {
+  umbrella header "VirtusizeCore.h"
+  export *
+
+  module * { export * }
+}
+
+module VirtusizeCore.Swift {
+  header "VirtusizeCore-Swift.h"
+  requires objc
+}
