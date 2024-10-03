@@ -35,7 +35,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             userBodyProfile: TestFixtures.getUserBodyProfile()
         )
 
-
         let expectedGetSizeParamsData = Data(
             """
             {
@@ -217,7 +216,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             userBodyProfile: nil
         )
 
-        
         let expectedGetSizeParamsData = Data(
         """
         {
@@ -238,9 +236,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             "userGender": ""
         }
 """.utf8)
-
-
-        
 
         guard let expectedJsonObject = try? JSONSerialization.jsonObject(
                 with: expectedGetSizeParamsData, options: []

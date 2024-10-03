@@ -184,6 +184,7 @@ class VirtusizeAPIService: APIService {
         else {
 			return .failure(nil)
 		}
+
 		return getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
 	}
 

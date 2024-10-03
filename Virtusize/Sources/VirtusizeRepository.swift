@@ -192,7 +192,7 @@ internal class VirtusizeRepository: NSObject {
  		}
 
 		if let userBodyProfile = userBodyProfile {
-			bodyProfileRecommendedSizes = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
+			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
 				productTypes: productTypes!,
 				storeProduct: storeProduct!,
 				userBodyProfile: userBodyProfile
@@ -281,7 +281,7 @@ internal class VirtusizeRepository: NSObject {
 		guard let recommendedSize = recommendedSize else {
 			return
 		}
-        bodyProfileRecommendedSizes?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
+        bodyProfileRecommendedSize?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
 	}
 
 	/// Removes the deleted user product by the product ID from the user product list

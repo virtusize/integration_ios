@@ -24,7 +24,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// This class is to handle API requests to the Virtusize server
 open class APIService {

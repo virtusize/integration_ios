@@ -169,7 +169,7 @@ class APIRequestTests: XCTestCase {
         let actualParams = try? JSONDecoder().decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
         XCTAssertNotNil(actualParams)
         XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 4)
-       
+
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["gender"]?.value as? String, "female")
         XCTAssertEqual(
             actualParams?.items.first?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
@@ -190,8 +190,7 @@ class APIRequestTests: XCTestCase {
             ]
             ]
         )
-        
-       
+
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["brand"]?.value as? String, "Virtusize")
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["fit"]?.value as? String, "regular")
         XCTAssertEqual(actualParams?.bodyData.count, 22)

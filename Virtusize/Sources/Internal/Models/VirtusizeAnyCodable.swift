@@ -45,11 +45,9 @@ extension VirtusizeAnyCodable: Codable {
 			self.init(array.map { $0.value })
 		} else if let dictionary = try? container.decode([String: VirtusizeAnyCodable].self) {
 			self.init(dictionary.mapValues { $0.value })
-		} else if let dictionary = try? container.decode( [String : [String : Int?]].self) {
+		} else if let dictionary = try? container.decode( [String: [String: Int?]].self) {
             self.init(dictionary.mapValues { $0.values })
-        }
-       
-            else {
+        } else {
 			throw DecodingError.dataCorruptedError(
 				in: container,
 				debugDescription: "VirtusizeAnyCodable value cannot be decoded"

@@ -17,7 +17,7 @@ Explain the current situation of the code
 
 ## ☑️ Checklist
 
-- [ ] Useless comments and/or `Log.d` etc are **removed**
+- [ ] Useless comments and/or `print` etc are **removed**
 - [ ] Unit test are **covered**
 - [ ] Code has been **deployed and tested** on STG
 - [ ] ClickUp ticket status has been **updated** to `production`

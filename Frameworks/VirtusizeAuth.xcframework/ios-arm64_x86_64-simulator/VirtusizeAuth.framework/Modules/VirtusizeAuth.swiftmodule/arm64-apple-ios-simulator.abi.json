@@ -1,8 +1,8 @@
 {
   "ABIRoot": {
     "kind": "Root",
-    "name": "TopLevel",
-    "printedName": "TopLevel",
+    "name": "VirtusizeAuth",
+    "printedName": "VirtusizeAuth",
     "children": [
       {
         "kind": "Import",
@@ -152,7 +152,23 @@
           "AccessControl",
           "RawDocComment"
         ],
-        "hasMissingDesignatedInitializers": true
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -208,6 +224,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override",
               "AccessControl"
@@ -315,6 +332,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override",
               "AccessControl"
@@ -443,6 +461,7 @@
             "mangledName": "$s13VirtusizeAuth0A7WebViewC5frame20configurationClosureACSo6CGRectV_ySo05WKWebD13ConfigurationCcSgtcfc",
             "moduleName": "VirtusizeAuth",
             "declAttributes": [
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -483,6 +502,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Required"
@@ -523,6 +543,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override"
             ],
@@ -580,6 +601,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -611,6 +633,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -671,6 +694,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -732,6 +756,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -815,6 +840,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -855,6 +881,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -918,6 +945,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -958,6 +986,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1023,6 +1052,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1062,6 +1092,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1107,6 +1138,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1146,6 +1178,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1202,6 +1235,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1277,6 +1311,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1333,6 +1368,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1378,6 +1414,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1423,6 +1460,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1474,6 +1512,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1519,6 +1558,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1564,6 +1604,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1615,6 +1656,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1691,6 +1733,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1722,6 +1765,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -1778,6 +1822,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "Available"
@@ -1791,6 +1836,7 @@
         "mangledName": "$s13VirtusizeAuth0A7WebViewC",
         "moduleName": "VirtusizeAuth",
         "declAttributes": [
+          "Preconcurrency",
           "Custom",
           "AccessControl",
           "ObjC"
@@ -1803,6 +1849,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -1998,7 +2058,23 @@
         "declAttributes": [
           "AccessControl"
         ],
-        "hasMissingDesignatedInitializers": true
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -2066,34 +2142,6 @@
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/VirtusizeWebView.swift",
-      "kind": "StringLiteral",
-      "offset": 1310,
-      "length": 16,
-      "value": "\"VirtusizeAuth.VirtusizeWebView\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1724,
-      "length": 12,
-      "value": "\"given_name\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1757,
-      "length": 13,
-      "value": "\"family_name\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1817,
-      "length": 9,
-      "value": "\"picture\""
-    },
-    {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
       "kind": "StringLiteral",
       "offset": 1724,
@@ -2129,20 +2177,6 @@
       "value": "\"redirect_uri\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Views\/VirtusizeSafariViewController.swift",
-      "kind": "StringLiteral",
-      "offset": 1251,
-      "length": 29,
-      "value": "\"VirtusizeAuth.VirtusizeSafariViewController\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Views\/VirtusizeSafariViewController.swift",
-      "kind": "StringLiteral",
-      "offset": 1251,
-      "length": 29,
-      "value": "\"VirtusizeAuth.VirtusizeSafariViewController\""
-    },
-    {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
       "kind": "StringLiteral",
       "offset": 1273,
@@ -2169,20 +2203,6 @@
       "offset": 1407,
       "length": 74,
       "value": "\"461467476386-ruegfhmmm6846mf13skp9g5bqh7rb1f9.apps.googleusercontent.com\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1615,
-      "length": 12,
-      "value": "\"first_name\""
-    },
-    {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
-      "kind": "StringLiteral",
-      "offset": 1646,
-      "length": 11,
-      "value": "\"last_name\""
     },
     {
       "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
