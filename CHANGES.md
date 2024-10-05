@@ -16,6 +16,9 @@ Use list notation, and following prefixes:
 ### Next Release
 - Refactor: Update the Virtusize web view URL to the following format: https://static.api.virtusize.jp/a/aoyama/\(version)/sdk-webview.html
 
+### 2.5.12
+- Fix: Update Virtusize Auth SDK to fix the issue of invalid PrivacyInfo.xcprivacy
+
 ### 2.5.11
 - Fix: Update Virtusize Auth SDK to fix the issue of missing PrivacyInfo.xcprivacy
 
