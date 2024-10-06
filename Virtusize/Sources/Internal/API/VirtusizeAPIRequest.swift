@@ -92,10 +92,18 @@ extension APIRequest {
     /// - Parameters:
     ///   - version: The version of Aoyama
 	/// - Returns: A `URLRequest` for the `VirtusizeWebView` request
-    internal static func virtusizeWebView(version: String) -> URLRequest? {
+    internal static func virtusizeWebView(version: String) -> URLRequest {
         let endpoint = APIEndpoints.virtusizeWebView(version: version)
 		return HTTPRequest(components: endpoint.components)
 	}
+
+    /// Gets the `URLRequest` for the `VirtusizeWebView` request for specific clients
+    ///
+    /// - Returns: A `URLRequest` for the `VirtusizeWebView` request
+    internal static func virtusizeWebViewForSpecificClients() -> URLRequest {
+        let endpoint = APIEndpoints.virtusizeWebViewForSpecificClients
+        return HTTPRequest(components: endpoint.components)
+    }
 
 	/// Gets the `URLRequest` for the `storeViewApiKey` request
 	///

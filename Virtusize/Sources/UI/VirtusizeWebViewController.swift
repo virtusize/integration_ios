@@ -118,8 +118,7 @@ public final class VirtusizeWebViewController: UIViewController {
 		}
 
         // If the request is invalid, the controller should be dismissed
-        guard let version = VirtusizeAPIService.fetchLatestAoyamaVersion().success,
-              let request = APIRequest.virtusizeWebView(version: version) else {
+        guard let request = getWebViewURL() else {
             reportError(error: .invalidRequest)
             return
         }
@@ -145,6 +144,18 @@ public final class VirtusizeWebViewController: UIViewController {
 	@objc internal func shouldClose() {
 		dismiss(animated: true, completion: nil)
 	}
+
+    private func getWebViewURL() -> URLRequest? {
+        let storeId = product?.productCheckData?.storeId
+        if storeId == 99 {
+            return APIRequest.virtusizeWebViewForSpecificClients()
+        } else {
+            guard let version = VirtusizeAPIService.fetchLatestAoyamaVersion().success else {
+                return nil
+            }
+            return APIRequest.virtusizeWebView(version: version)
+        }
+    }
 }
 
 extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {

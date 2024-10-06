@@ -30,7 +30,8 @@ internal enum APIEndpoints {
 	case productMetaDataHints
 	case events
     case latestAoyamaVersion
-	case virtusizeWebView(version: String)
+    case virtusizeWebView(version: String)
+    case virtusizeWebViewForSpecificClients
 	case storeViewApiKey
 	case orders
 	case storeProducts(productId: Int)
@@ -41,16 +42,16 @@ internal enum APIEndpoints {
 	case userBodyMeasurements
 	case getSize
 	case i18n(langCode: String)
-
-	// MARK: - Properties
+    
+    // swiftlint:disable switch_case_alignment
+    // MARK: - Properties
     var hostname: String {
-        // swiftlint:disable switch_case_alignment
         switch self {
             case .productDataCheck:
                 return Virtusize.environment.servicesUrl()
             case  .getSize:
                 return Virtusize.environment.getSizeUrl()
-        case .latestAoyamaVersion, .virtusizeWebView:
+            case .latestAoyamaVersion, .virtusizeWebView, .virtusizeWebViewForSpecificClients:
                 return Virtusize.environment.virtusizeStaticApiUrl()
             case .i18n:
                 return Virtusize.environment.i18nUrl()
@@ -61,65 +62,66 @@ internal enum APIEndpoints {
         }
     }
 
-	var components: URLComponents {
-		var components = URLComponents()
-		components.scheme = "https"
-		components.host = hostname
+    var components: URLComponents {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = hostname
+        switch self {
+            case .productDataCheck(let externalId):
+                let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+                components.path = "\(envPathForServicesAPI)/product/check"
+                components.queryItems = dataCheckQueryItems(externalId: externalId)
 
-		let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+            case .productMetaDataHints:
+                components.path = "/rest-api/v1/product-meta-data-hints"
 
-		switch self {
-			case .productDataCheck(let externalId):
-				components.path = "\(envPathForServicesAPI)/product/check"
-				components.queryItems = dataCheckQueryItems(externalId: externalId)
-
-			case .productMetaDataHints:
-				components.path = "/rest-api/v1/product-meta-data-hints"
-
-			case .events:
-				break
-
+            case .events:
+                break
+ 
             case .latestAoyamaVersion:
                 components.path = "/a/aoyama/latest.txt"
 
-			case .virtusizeWebView(let version):
-				components.path = "/a/aoyama/\(version)/sdk-webview.html"
+            case .virtusizeWebView(let version):
+                components.path = "/a/aoyama/\(version)/sdk-webview.html"
 
-			case .storeViewApiKey:
-				components.path = "/a/api/v3/stores/api-key/\(apiKey)"
-				components.queryItems = jsonFormatQueryItems()
+            case .virtusizeWebViewForSpecificClients:
+                components.path = "/a/aoyama/testing/privacy-policy-phase2-vue/sdk-webview.html"
 
-			case .orders:
-				components.path = "/a/api/v3/orders"
+            case .storeViewApiKey:
+                components.path = "/a/api/v3/stores/api-key/\(apiKey)"
+                components.queryItems = jsonFormatQueryItems()
 
-			case .storeProducts(let productId):
-				components.path = "/a/api/v3/store-products/\(productId)"
-				components.queryItems = jsonFormatQueryItems()
+            case .orders:
+                components.path = "/a/api/v3/orders"
 
-			case .productTypes:
-				components.path = "/a/api/v3/product-types"
+            case .storeProducts(let productId):
+                components.path = "/a/api/v3/store-products/\(productId)"
+                components.queryItems = jsonFormatQueryItems()
 
-			case .sessions:
-				components.path = "/a/api/v3/sessions"
+            case .productTypes:
+                components.path = "/a/api/v3/product-types"
 
-			case .user:
-				components.path = "/a/api/v3/users/me"
+            case .sessions:
+                components.path = "/a/api/v3/sessions"
 
-			case .userProducts:
-				components.path = "/a/api/v3/user-products"
+            case .user:
+                components.path = "/a/api/v3/users/me"
 
-			case .userBodyMeasurements:
-				components.path = "/a/api/v3/user-body-measurements"
+            case .userProducts:
+                components.path = "/a/api/v3/user-products"
 
-			case .getSize:
-				components.path =  "/item"
+            case .userBodyMeasurements:
+                components.path = "/a/api/v3/user-body-measurements"
 
-			case .i18n(let langCode):
-				components.path = "/bundle-payloads/aoyama/\(langCode)"
-		}
+            case .getSize:
+                components.path =  "/item"
 
-		return components
-	}
+            case .i18n(let langCode):
+                components.path = "/bundle-payloads/aoyama/\(langCode)"
+        }
+
+        return components
+    }
 
 	var apiKey: String {
 		guard let apiKey = Virtusize.APIKey else {
