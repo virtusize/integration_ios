@@ -80,6 +80,7 @@ public final class VirtusizeWebViewController: UIViewController {
 		contentController.add(self, name: "eventHandler")
 
 		let config = WKWebViewConfiguration()
+        config.preferences.javaScriptCanOpenWindowsAutomatically = true
 		config.userContentController = contentController
 
 		if let processPool = self.processPool {
