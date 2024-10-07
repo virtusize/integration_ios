@@ -42,7 +42,7 @@ internal enum APIEndpoints {
 	case userBodyMeasurements
 	case getSize
 	case i18n(langCode: String)
-    
+
     // swiftlint:disable switch_case_alignment
     // MARK: - Properties
     var hostname: String {
