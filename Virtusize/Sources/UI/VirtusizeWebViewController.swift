@@ -52,7 +52,6 @@ public final class VirtusizeWebViewController: UIViewController {
 
 	public convenience init?(
 		product: VirtusizeProduct? = nil,
-		userSessionResponse: String? = nil,
 		messageHandler: VirtusizeMessageHandler? = nil,
 		eventHandler: VirtusizeEventHandler? = nil,
 		processPool: WKProcessPool? = nil
@@ -60,11 +59,10 @@ public final class VirtusizeWebViewController: UIViewController {
 		self.init(nibName: nil, bundle: nil)
 		self.modalPresentationStyle = .fullScreen
 		self.product = product
-		self.userSessionResponse =
-			(userSessionResponse != nil) ? userSessionResponse! : VirtusizeRepository.shared.userSessionResponse
 		self.messageHandler = messageHandler
-		self.processPool = processPool
 		self.eventHandler = eventHandler
+        self.processPool = processPool
+        self.userSessionResponse = VirtusizeRepository.shared.userSessionResponse
 
 		guard product?.productCheckData != nil else {
 			reportError(error: .invalidProduct)
