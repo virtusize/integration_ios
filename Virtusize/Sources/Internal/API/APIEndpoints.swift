@@ -77,7 +77,7 @@ internal enum APIEndpoints {
 
             case .events:
                 break
- 
+
             case .latestAoyamaVersion:
                 components.path = "/a/aoyama/latest.txt"
 
