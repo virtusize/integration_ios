@@ -34,7 +34,7 @@ internal class VirtusizeStoreRepository {
     private static let storeData: [StoreName: StoreId] = [
         .unitedArrows: 99
     ]
-    
+
     static func getStoreId(for store: StoreName) -> StoreId? {
         return storeData[store]
     }
