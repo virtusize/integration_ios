@@ -27,7 +27,7 @@ import Foundation
 internal typealias StoreId = Int
 
 internal enum StoreName: String {
-    case unitedArrows = "UnitedArrows"
+    case unitedArrows = "united_arrows"
 }
 
 internal class VirtusizeStoreRepository {
