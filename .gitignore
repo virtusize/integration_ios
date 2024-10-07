@@ -27,7 +27,6 @@ xcuserdata
 .DS_Store
 
 # Dictionary Data
-Data
 /fastlane/screenshots
 /Screenshots
 /Japanese.ipa
@@ -72,5 +71,4 @@ Pods/
 Carthage/Build
 
 # xcframework
-
 VirtusizeCore/archives/
