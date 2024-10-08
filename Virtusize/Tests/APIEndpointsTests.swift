@@ -72,7 +72,7 @@ class APIEndpointsTests: XCTestCase {
 
         XCTAssertNil(endpoint.components.queryItems)
     }
-    
+
     func testLatestAoyamaVersionEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.latestAoyamaVersion
 
