@@ -45,7 +45,7 @@ internal class VirtusizeRepository: NSObject {
 	private var userProducts: [VirtusizeServerProduct]?
 	private var userBodyProfile: VirtusizeUserBodyProfile?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
-	private var bodyProfileRecommendedSize: BodyProfileRecommendedSizeArray?
+	private var bodyProfileRecommendedSizes: BodyProfileRecommendedSizeArray?
 
 	/// A set to cache the store product information of all the visited products
 	private var serverStoreProductSet: Set<VirtusizeServerProduct> = []
@@ -120,36 +120,36 @@ internal class VirtusizeRepository: NSObject {
 	///   - productId: the product ID from the Virtusize server
 	///   - onSuccess: the closure is called if the data from the server is successfully fetched
 	internal func fetchInitialData(
-		externalProductId: String,
-		productId: Int?,
-		onSuccess: (VirtusizeServerProduct
-		) -> Void) {
+        externalProductId: String,
+        productId: Int?,
+        onSuccess: (VirtusizeServerProduct) -> Void
+    ) {
 		guard let productId = productId else {
-			return
+            return
 		}
 
 		let serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
 
-		if serverStoreProduct == nil {
+		guard let storeProduct = serverStoreProduct else {
 			Virtusize.inPageError = (true, externalProductId)
-			return
+            return
 		}
 
-		self.serverStoreProductSet.insert(serverStoreProduct!)
+		self.serverStoreProductSet.insert(storeProduct)
 
 		productTypes = VirtusizeAPIService.getProductTypesAsync().success
 		if productTypes == nil {
 			Virtusize.inPageError = (true, externalProductId)
-			return
+            return
 		}
 
 		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
 		if i18nLocalization == nil {
 			Virtusize.inPageError = (true, externalProductId)
-			return
+            return
 		}
 
-		onSuccess(serverStoreProduct!)
+        onSuccess(storeProduct)
 	}
 
 	/// Fetches data for InPage recommendation
@@ -163,9 +163,12 @@ internal class VirtusizeRepository: NSObject {
 		shouldUpdateUserProducts: Bool = true,
 		shouldUpdateBodyProfile: Bool = true
 	) {
-		var storeProduct = storeProduct ?? lastProductOnVirtusizeWebView
-		if let productId = storeProduct?.id,
-		   let product = serverStoreProductSet.filter({ product in
+        guard var storeProduct = storeProduct ?? lastProductOnVirtusizeWebView else {
+            return
+        }
+
+        let productId = storeProduct.id
+		if let product = serverStoreProductSet.filter({ product in
 			product.id == productId
 		   }).first {
 			storeProduct = product
@@ -176,7 +179,7 @@ internal class VirtusizeRepository: NSObject {
 			if userProductsResponse.isSuccessful {
 				userProducts = userProductsResponse.success
 			} else if userProductsResponse.errorCode != 404 {
-				Virtusize.inPageError = (true, storeProduct!.externalId)
+				Virtusize.inPageError = (true, storeProduct.externalId)
 				return
 			}
 		}
@@ -186,19 +189,17 @@ internal class VirtusizeRepository: NSObject {
 			if userBodyProfileResponse.isSuccessful {
 				userBodyProfile = userBodyProfileResponse.success
 			} else if userBodyProfileResponse.errorCode != 404 {
-				Virtusize.inPageError = (true, storeProduct!.externalId)
+				Virtusize.inPageError = (true, storeProduct.externalId)
 				return
 			}
  		}
 
 		if let userBodyProfile = userBodyProfile {
-
-			bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizeAsync(
+			bodyProfileRecommendedSizes = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
 				productTypes: productTypes!,
-				storeProduct: storeProduct!,
+				storeProduct: storeProduct,
 				userBodyProfile: userBodyProfile
 			).success
-
 		}
 
 		var userProducts = self.userProducts ?? []
@@ -206,7 +207,7 @@ internal class VirtusizeRepository: NSObject {
 			userProducts.filter({ product in return product.id == selectedUserProductId }) : userProducts
 		sizeComparisonRecommendedSize = FindBestFitHelper.findBestFitProductSize(
 			userProducts: userProducts,
-			storeProduct: storeProduct!,
+			storeProduct: storeProduct,
 			productTypes: productTypes!
 		)
 	}
@@ -219,7 +220,7 @@ internal class VirtusizeRepository: NSObject {
 		userProducts = nil
 		sizeComparisonRecommendedSize = nil
 		userBodyProfile = nil
-		bodyProfileRecommendedSize = nil
+		bodyProfileRecommendedSizes = nil
 	}
 
 	/// Updates the user session by calling the session API
@@ -235,6 +236,7 @@ internal class VirtusizeRepository: NSObject {
 		if let sessionResponse = userSessionInfoResponse.string {
 			updateUserSessionResponse = sessionResponse
 		}
+
 		userSessionResponse = updateUserSessionResponse
 	}
 
@@ -244,11 +246,10 @@ internal class VirtusizeRepository: NSObject {
 	///   - bid: a browser identifier
 	///   - auth: the auth token for the session API
 	internal func updateUserAuthData(bid: String?, auth: String?) {
-		if let bid = bid {
+        if let bid = bid, bid != UserDefaultsHelper.current.undefinedValue {
 			UserDefaultsHelper.current.identifier = bid
 		}
-		if let auth = auth,
-		   !auth.isEmpty {
+		if let auth = auth, !auth.isEmpty {
 			UserDefaultsHelper.current.authToken = auth
 		}
 	}
@@ -270,9 +271,9 @@ internal class VirtusizeRepository: NSObject {
 			case .compareProduct:
 				Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
 			case .body:
-            Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize?[0])
+            Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSizes?.first)
 			default:
-            Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize?[0])
+            Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSizes?.first)
 		}
 	}
 
@@ -283,8 +284,7 @@ internal class VirtusizeRepository: NSObject {
 		guard let recommendedSize = recommendedSize else {
 			return
 		}
-        bodyProfileRecommendedSize?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
-
+        bodyProfileRecommendedSizes?.append(BodyProfileRecommendedSize(sizeName: recommendedSize))
 	}
 
 	/// Removes the deleted user product by the product ID from the user product list

@@ -52,7 +52,6 @@ public final class VirtusizeWebViewController: UIViewController {
 
 	public convenience init?(
 		product: VirtusizeProduct? = nil,
-		userSessionResponse: String? = nil,
 		messageHandler: VirtusizeMessageHandler? = nil,
 		eventHandler: VirtusizeEventHandler? = nil,
 		processPool: WKProcessPool? = nil
@@ -60,11 +59,10 @@ public final class VirtusizeWebViewController: UIViewController {
 		self.init(nibName: nil, bundle: nil)
 		self.modalPresentationStyle = .fullScreen
 		self.product = product
-		self.userSessionResponse =
-			(userSessionResponse != nil) ? userSessionResponse! : VirtusizeRepository.shared.userSessionResponse
 		self.messageHandler = messageHandler
-		self.processPool = processPool
 		self.eventHandler = eventHandler
+        self.processPool = processPool
+        self.userSessionResponse = VirtusizeRepository.shared.userSessionResponse
 
 		guard product?.productCheckData != nil else {
 			reportError(error: .invalidProduct)
@@ -80,6 +78,7 @@ public final class VirtusizeWebViewController: UIViewController {
 		contentController.add(self, name: "eventHandler")
 
 		let config = WKWebViewConfiguration()
+        config.preferences.javaScriptCanOpenWindowsAutomatically = true
 		config.userContentController = contentController
 
 		if let processPool = self.processPool {
@@ -117,11 +116,11 @@ public final class VirtusizeWebViewController: UIViewController {
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
-		// If the request is invalid, the controller should be dismissed
-		guard let request = APIRequest.virtusizeWebView() else {
-			reportError(error: .invalidRequest)
-			return
-		}
+        // If the request is invalid, the controller should be dismissed
+        guard let request = getWebViewURL() else {
+            reportError(error: .invalidRequest)
+            return
+        }
 		webView.load(request)
 	}
 
@@ -144,6 +143,17 @@ public final class VirtusizeWebViewController: UIViewController {
 	@objc internal func shouldClose() {
 		dismiss(animated: true, completion: nil)
 	}
+
+    private func getWebViewURL() -> URLRequest? {
+        if VirtusizeStoreRepository.getStoreId(for: .unitedArrows) == product?.productCheckData?.storeId {
+            return APIRequest.virtusizeWebViewForSpecificClients()
+        } else {
+            guard let version = VirtusizeAPIService.fetchLatestAoyamaVersion().success else {
+                return nil
+            }
+            return APIRequest.virtusizeWebView(version: version)
+        }
+    }
 }
 
 extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {

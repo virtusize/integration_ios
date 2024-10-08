@@ -1,6 +1,5 @@
 //
-//  VirtusizeCore.h
-//  VirtusizeCore
+//  VirtusizeStoreRepository.swift
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -23,14 +22,20 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-//! Project version number for VirtusizeCore.
-FOUNDATION_EXPORT double VirtusizeCoreVersionNumber;
+internal typealias StoreId = Int
 
-//! Project version string for VirtusizeCore.
-FOUNDATION_EXPORT const unsigned char VirtusizeCoreVersionString[];
+internal enum StoreName: String {
+    case unitedArrows = "united_arrows"
+}
 
-// In this header, you should import all the public headers of your framework using statements like #import <VirtusizeCore/PublicHeader.h>
+internal class VirtusizeStoreRepository {
+    private static let storeData: [StoreName: StoreId] = [
+        .unitedArrows: 99
+    ]
 
-
+    static func getStoreId(for store: StoreName) -> StoreId? {
+        return storeData[store]
+    }
+}

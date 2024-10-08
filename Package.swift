@@ -33,6 +33,6 @@ let package = Package(
             path: "VirtusizeCore/Sources",
             exclude: ["Info.plist"],
             resources: [.process("Resources")]
-        ),
+        )
     ]
 )

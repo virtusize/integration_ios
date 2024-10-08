@@ -52,7 +52,9 @@ public struct BodyProfileRecommendedSize: Codable {
     }
     // swiftlint:enable line_length
 }
+
 public typealias BodyProfileRecommendedSizeArray = [BodyProfileRecommendedSize]
+
 // MARK: - VirtualItem
 struct VirtualItem: Codable {
     let bust: Double?
@@ -65,18 +67,16 @@ struct VirtualItem: Codable {
 // MARK: - WillFitForSizes
 struct WillFitForSizes: Codable {
     let large: Bool?
-    let  medium: Bool?
+    let medium: Bool?
     let extraSmall: Bool?
     let extraLarge: Bool?
     let small: Bool?
 
     enum CodingKeys: String, CodingKey {
-
         case large = "large"
         case medium = "medium"
         case extraSmall = "extra small"
         case extraLarge = "extra large"
         case small = "small"
-
     }
 }
