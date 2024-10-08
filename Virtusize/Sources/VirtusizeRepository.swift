@@ -122,7 +122,7 @@ internal class VirtusizeRepository: NSObject {
 	internal func fetchInitialData(
         externalProductId: String,
         productId: Int?,
-        onSuccess: @escaping (VirtusizeServerProduct) -> Void
+        onSuccess: (VirtusizeServerProduct) -> Void
     ) {
 		guard let productId = productId else {
             return
