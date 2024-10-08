@@ -30,7 +30,7 @@ final public class UserDefaultsHelper {
 	let authKey = "VIRTUSIZE_AUTH"
 	let tokenKey = "VIRTUSIZE_TOKEN"
 	let bidKey = "BID"
-    public let undefinedValue = "undefined"
+    public static let undefinedValue = "undefined"
 
 	/// A static instance of `UserDefaultsHelper` used inside the SDK
 	public static let current = UserDefaultsHelper()

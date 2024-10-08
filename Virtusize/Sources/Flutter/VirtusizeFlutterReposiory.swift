@@ -189,7 +189,7 @@ public class VirtusizeFlutterRepository: NSObject {
 	}
 
 	public func updateUserAuthData(bid: String?, auth: String?) {
-        if let bid = bid, bid != UserDefaultsHelper.current.undefinedValue {
+        if let bid = bid, bid != UserDefaultsHelper.undefinedValue {
 			UserDefaultsHelper.current.identifier = bid
 		}
 		if let auth = auth, !auth.isEmpty {
