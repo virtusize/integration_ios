@@ -117,6 +117,7 @@ public class Virtusize {
 		dispatchQueue.async {
 			virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
 				if let productWithPDCData = productWithPDCData {
+                    virtusizeRepository.updateUserSession()
 					DispatchQueue.main.async {
 						NotificationCenter.default.post(
 							name: .productDataCheck,
@@ -133,7 +134,6 @@ public class Virtusize {
 							object: Virtusize.self,
 							userInfo: [NotificationKey.storeProduct: serverProduct]
 						)
-						virtusizeRepository.updateUserSession()
 						virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
 						virtusizeRepository.updateInPageRecommendation(product: serverProduct)
 					}
