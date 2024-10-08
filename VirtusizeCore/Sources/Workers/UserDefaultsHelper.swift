@@ -30,7 +30,6 @@ final public class UserDefaultsHelper {
 	let authKey = "VIRTUSIZE_AUTH"
 	let tokenKey = "VIRTUSIZE_TOKEN"
 	let bidKey = "BID"
-    public static let undefinedValue = "undefined"
 
 	/// A static instance of `UserDefaultsHelper` used inside the SDK
 	public static let current = UserDefaultsHelper()
@@ -73,7 +72,7 @@ final public class UserDefaultsHelper {
 	/// The browser identifier as String
 	public var identifier: String {
 		get {
-			if let token = defaults.value(forKey: bidKey) as? String, token != undefinedValue {
+            if let token = defaults.value(forKey: bidKey) as? String, token != "undefined" {
 				return token
 			} else {
 				let token = generateIdentifier()
