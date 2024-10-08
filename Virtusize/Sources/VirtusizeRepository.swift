@@ -122,7 +122,7 @@ internal class VirtusizeRepository: NSObject {
 	internal func fetchInitialData(
         externalProductId: String,
         productId: Int?,
-        completion: @escaping (VirtusizeServerProduct) -> Void
+        onSuccess: @escaping (VirtusizeServerProduct) -> Void
     ) {
 		guard let productId = productId else {
             return
@@ -149,7 +149,7 @@ internal class VirtusizeRepository: NSObject {
             return
 		}
 
-        completion(storeProduct)
+        onSuccess(storeProduct)
 	}
 
 	/// Fetches data for InPage recommendation
