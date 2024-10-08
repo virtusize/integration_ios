@@ -111,7 +111,6 @@ public class Virtusize {
 	}
 
 	// MARK: - Methods
-
 	/// A function for clients to populate the Virtusize views by loading a product
 	public class func load(product: VirtusizeProduct) {
 		dispatchQueue.async {
@@ -128,15 +127,15 @@ public class Virtusize {
 					virtusizeRepository.fetchInitialData(
 						externalProductId: product.externalId,
 						productId: productWithPDCData.productCheckData?.productDataId
-					) { serverProduct in
-						NotificationCenter.default.post(
-							name: .storeProduct,
-							object: Virtusize.self,
-							userInfo: [NotificationKey.storeProduct: serverProduct]
-						)
-						virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
-						virtusizeRepository.updateInPageRecommendation(product: serverProduct)
-					}
+                    ) { serverProduct in
+                        NotificationCenter.default.post(
+                            name: .storeProduct,
+                            object: Virtusize.self,
+                            userInfo: [NotificationKey.storeProduct: serverProduct]
+                        )
+                        virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
+                        virtusizeRepository.updateInPageRecommendation(product: serverProduct)
+                    }
 				}
 			}
 		}
