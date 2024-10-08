@@ -1,5 +1,11 @@
 # ROADMAP
 
+## 2.6.0
+
+### Release date:
+
+- [x] Update the Virtusize web view URL
+
 ## 2.5.0
 
 ### Release date:

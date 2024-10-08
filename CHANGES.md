@@ -13,7 +13,7 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### Next Release
+### 2.6.0
 - Refactor: Update the Virtusize web view URL to the following format: https://static.api.virtusize.jp/a/aoyama/\(version)/sdk-webview.html
 - Feature: Add the client sepecifc Virtusize web view URL. The format is as follows: https://static.api.virtusize.jp/a/aoyama/testing/privacy-policy-phase2-vue/sdk-webview.html
 - Bugfix: Fix the issue of the web view loading indefinitely 
