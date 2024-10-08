@@ -246,12 +246,10 @@ internal class VirtusizeRepository: NSObject {
 	///   - bid: a browser identifier
 	///   - auth: the auth token for the session API
 	internal func updateUserAuthData(bid: String?, auth: String?) {
-		if let bid = bid {
         if let bid = bid, bid != UserDefaultsHelper.current.undefinedValue {
 			UserDefaultsHelper.current.identifier = bid
 		}
-		if let auth = auth,
-		   !auth.isEmpty {
+		if let auth = auth, !auth.isEmpty {
 			UserDefaultsHelper.current.authToken = auth
 		}
 	}
