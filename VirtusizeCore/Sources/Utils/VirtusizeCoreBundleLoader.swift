@@ -28,7 +28,7 @@ import Foundation
 /// The class is to access different types of bundles for the SDK
 open class VirtusizeCoreBundleLoader: BundleLoaderProtocol {
 	public static let bundleClass: AnyClass = VirtusizeCoreBundleLoader.self
-	public static let bundleName = "VirtusizeCore"
+	public static let bundleName = "Virtusize_VirtusizeCore"
 	#if SWIFT_PACKAGE
 	public static let spmResourceBundle  = Bundle.module
 	#endif
