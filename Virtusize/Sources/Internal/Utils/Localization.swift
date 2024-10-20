@@ -38,6 +38,7 @@ internal class Localization {
 	/// - Returns: A localized string based on the device's default language
 	func localize(_ key: String, language: VirtusizeLanguage? = nil) -> String {
 		return VirtusizeCoreBundleLoader.localizationBundle(
+            bundleName: VirtusizeConfiguration.resourceBundleName,
 			language: language?.rawValue ?? Virtusize.params?.language.rawValue
 		).localizedString(
 			forKey: key, value: nil, table: "VirtusizeLocalizable"
