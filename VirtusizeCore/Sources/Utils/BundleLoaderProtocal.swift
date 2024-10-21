@@ -27,7 +27,6 @@ import Foundation
 
 public protocol BundleLoaderProtocol {
 	static var bundleClass: AnyClass { get }
-	static var bundleName: String { get }
 	#if SWIFT_PACKAGE
 	static var spmResourceBundle: Bundle { get }
 	#endif
@@ -35,7 +34,8 @@ public protocol BundleLoaderProtocol {
 
 public extension BundleLoaderProtocol {
 	/// The bundle is used for resources like images
-	static var resourceBundle: Bundle {
+    /// - Parameter bundleName: The resource bundle name
+    static func resourceBundle(bundleName: String) -> Bundle {
 		var bundle: Bundle?
 		// Swift Package Manager bundle
 		#if SWIFT_PACKAGE
@@ -68,9 +68,12 @@ public extension BundleLoaderProtocol {
 	}
 
 	/// Gets the bundle that is used for localization
-	/// - Parameter language: `VirtusizeLanguage`
-	static func localizationBundle(language: String? = nil) -> Bundle {
-		var bundle = resourceBundle
+	/// - Parameter
+    /// - Parameters:
+    ///   - bundleName: The resource bundle name
+    ///   - language: `VirtusizeLanguage`
+    static func localizationBundle(bundleName: String, language: String? = nil) -> Bundle {
+        var bundle = resourceBundle(bundleName: bundleName)
 		if let localizableBundlePath = bundle.path(
 			forResource: language,
 			ofType: "lproj"
