@@ -31,9 +31,13 @@ internal extension UIImage {
 	/// Creates a `UIImage` object in the Virtusize framework bundle.
 	///
 	/// - Parameter name: The image name.
-	convenience init?(bundleNamed name: String) {
-		self.init(named: name, in: VirtusizeBundleLoader.resourceBundle, compatibleWith: nil)
-	}
+    convenience init?(bundleNamed name: String) {
+        self.init(
+            named: name,
+            in: VirtusizeBundleLoader.resourceBundle(bundleName: VirtusizeConfiguration.resourceBundleName),
+            compatibleWith: nil
+        )
+    }
 
 	/// Adds the padding to a `UIImage`
 	///
