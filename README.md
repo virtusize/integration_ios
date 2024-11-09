@@ -139,6 +139,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
         // By default, Virtusize displays all the possible info categories in the Product Details tab,
         // including "modelInfo", "generalFit", "brandSizing" and "material".
         .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
+        // By default, Virtusize disables the SNS buttons
+        .setShowSNSButtons(true)
         .build()
 
     return true
@@ -151,12 +153,13 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 
 **VirtusizeParamsBuilder**
 
-| Method               | Argument Type                     | Example                                                                                     | Description                                                                                                                                                                                                                                      | Requirement                                                                                                                |
-| -------------------- | --------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| setLanguage          | VirtusizeLanguage                 | setLanguage(.JAPANESE)                                                                      | Sets the initial language that the integration will load in. The possible values are `VirtusizeLanguage.ENGLISH`, `VirtusizeLanguage.JAPANESE` and `VirtusizeLanguage.KOREAN`                                                                    | No. By default, the initial language will be set based on the Virtusize environment.                                       |
-| setShowSGI           | Boolean                           | setShowSGI(true)                                                                            | Determines whether the integration will fetch SGI and use SGI flow for users to add user generated items to their wardrobe.                                                                                                                      | No. By default, ShowSGI is set to false                                                                                    |
-| setAllowedLanguages  | A list of `VirtusizeLanguage`     | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE])                | The languages that the user can switch to using the Language Selector                                                                                                                                                                            | No. By default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
-| setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab.                      |
+| Method | Argument Type | Example | Description | Requirement |
+| ---------- | ---------------------- | ------------ | ---------------- | ----------------- |
+| setLanguage | VirtusizeLanguage | setLanguage(.JAPANESE) | Sets the initial language that the integration will load in. The possible values are `VirtusizeLanguage.ENGLISH`, `VirtusizeLanguage.JAPANESE` and `VirtusizeLanguage.KOREAN` | No. By default, the initial language will be set based on the Virtusize environment. |
+| setShowSGI | Boolean | setShowSGI(true) | Determines whether the integration will fetch SGI and use SGI flow for users to add user generated items to their wardrobe. | No. By default, ShowSGI is set to false |
+| setAllowedLanguages  | A list of `VirtusizeLanguage` | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | The languages that the user can switch to using the Language Selector | No. By default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
+| setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
+| setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSGI is set to false |
 
 ### 2. Load Product with Virtusize SDK
 
