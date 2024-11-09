@@ -49,6 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			// By default, Virtusize displays all the possible info categories in the Product Details tab,
 			// including "modelInfo", "generalFit", "brandSizing" and "material".
 			.setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
+            // By default, Virtusize disables the SNS buttons
+            .setShowSNSButtons(false)
 			.build()
 
 		VirtusizeAuthorization.setAppBundleId("com.virtusize.Example")

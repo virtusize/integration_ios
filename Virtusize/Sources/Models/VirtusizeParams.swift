@@ -37,6 +37,8 @@ public class VirtusizeParams {
 	private let showSGI: Bool
 	/// The info categories that will be displayed in the Product Details tab
 	private let detailsPanelCards: [VirtusizeInfoCategory]
+    /// The Boolean value to determine whether the Virtusize web app will display the SNS buttons
+    internal let showSNSButtons: Bool
 
 	/// Initializes the VirtusizeParams class
 	init(
@@ -44,13 +46,15 @@ public class VirtusizeParams {
 		language: VirtusizeLanguage,
 		allowedLanguages: [VirtusizeLanguage],
 		showSGI: Bool,
-		detailsPanelCards: [VirtusizeInfoCategory]
+		detailsPanelCards: [VirtusizeInfoCategory],
+        showSNSButtons: Bool
 	) {
 		self.region = region
 		self.language = language
 		self.allowedLanguages = allowedLanguages
 		self.showSGI = showSGI
 		self.detailsPanelCards = detailsPanelCards
+        self.showSNSButtons = showSNSButtons
 	}
 
 	/// Gets the script in JavaScript to be called to pass params to the Virtusize web app
