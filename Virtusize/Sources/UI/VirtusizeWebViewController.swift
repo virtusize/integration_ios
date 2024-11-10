@@ -166,7 +166,9 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return
 		}
 		webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
-		webView.evaluateJavaScript("window.virtusizeSNSEnabled = true;", completionHandler: nil)
+        if let showSNSButtons = Virtusize.params?.showSNSButtons, showSNSButtons {
+            webView.evaluateJavaScript("window.virtusizeSNSEnabled = true;", completionHandler: nil)
+        }
 		checkAndUpdateBrowserID()
 	}
 

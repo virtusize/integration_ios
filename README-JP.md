@@ -80,7 +80,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.6.1'
+pod 'Virtusize', '~> 2.6.2'
 end
 ```
 
@@ -97,7 +97,7 @@ $ pod install
 Starting with the `2.3.1` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.6.1`
+2. Select a minimum version of `2.6.2`
 3. Click **Next**
 
 
@@ -150,6 +150,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
         // By default, Virtusize displays all the possible info categories in the Product Details tab,
         // including "modelInfo", "generalFit", "brandSizing" and "material".
         .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
+        // By default, Virtusize disables the SNS buttons
+        .setShowSNSButtons(true)
         .build()
 
     return true
@@ -168,7 +170,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 | setShowSGI           | Boolean                             | setShowSGI(true)                                             | ユーザーが生成したアイテムをワードローブに追加する方法として、SGIを取得の上、SGIフローを使用するかどうかを決定します。 | 特になし。デフォルトではShowSGIはfalseに設定されています。   |
 | setAllowedLanguages  | `VirtusizeLanguage`列挙のリスト     | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | ユーザーが言語選択ボタンより選択できる言語                   | 特になし。デフォルトでは、英語、日本語、韓国語など、表示可能なすべての言語が表示されるようになっています。 |
 | setDetailsPanelCards | `VirtusizeInfoCategory`列挙のリスト | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | 商品詳細タブに表示する情報のカテゴリ。表示可能カテゴリは以下： `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` および `VirtusizeInfoCategory.MATERIAL` | 特になし。デフォルトでは、商品詳細タブに表示可能なすべての情報カテゴリが表示されます。 |
-
+| setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
 
 
 ### 2. Load Product with Virtusize SDK
