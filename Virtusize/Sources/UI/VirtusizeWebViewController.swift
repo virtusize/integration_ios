@@ -272,6 +272,7 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 		do {
 			let event = try Deserializer.event(data: message.body)
 			let eventData = event.data as? [String: Any]
+            print("[VirtusizeEvent] event: \(event)")
 			// swiftlint:disable switch_case_alignment
 			switch VirtusizeEventName.init(rawValue: event.name) {
 				case .userOpenedWidget:
