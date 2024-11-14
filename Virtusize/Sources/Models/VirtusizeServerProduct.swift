@@ -47,12 +47,14 @@ public class VirtusizeServerProduct: Codable {
 	/// The additional data of type `VirtusizeServerProductMeta`  represents the product
 	let storeProductMeta: VirtusizeServerProductMeta?
 
+    private lazy var imageSize: Int = Int(VirtusizeProductImageView.circleImageSize * UIScreen.main.scale)
+
 	/// The Cloudinary image URL string based on the cloudinary public ID
 	public var cloudinaryImageUrlString: String? {
 		guard !cloudinaryPublicId.isEmpty else {
 			return nil
 		}
-		return "https://res.cloudinary.com/virtusize/image/upload/w_36,h_36/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
+        return "https://res.cloudinary.com/virtusize/image/upload/w_\(imageSize),h_\(imageSize)/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
 	}
 
 	/// The product style of this product
