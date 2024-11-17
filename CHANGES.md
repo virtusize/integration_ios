@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.6.3
+- Fix: Fix the product image resolution
+
 ### 2.6.2
 - Feature: Enable configuration for SNS button visibility.
 
