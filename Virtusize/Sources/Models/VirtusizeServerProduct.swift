@@ -47,7 +47,7 @@ public class VirtusizeServerProduct: Codable {
 	/// The additional data of type `VirtusizeServerProductMeta`  represents the product
 	let storeProductMeta: VirtusizeServerProductMeta?
 
-    private lazy var imageSize: Int = Int(VirtusizeProductImageView.circleImageSize * UIScreen.main.scale)
+    private lazy var imageSize: Int = Int(VirtusizeProductImageView.circleImageSize * pow(UIScreen.main.scale, 2))
 
 	/// The Cloudinary image URL string based on the cloudinary public ID
 	public var cloudinaryImageUrlString: String? {
