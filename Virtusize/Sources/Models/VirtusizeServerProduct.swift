@@ -54,7 +54,7 @@ public class VirtusizeServerProduct: Codable {
 		guard !cloudinaryPublicId.isEmpty else {
 			return nil
 		}
-        return "https://res.cloudinary.com/virtusize/image/upload/w_\(imageSize),h_\(imageSize)/q_auto,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
+        return "https://res.cloudinary.com/virtusize/image/upload/w_\(imageSize),h_\(imageSize)/q_auto:best,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
 	}
 
 	/// The product style of this product
