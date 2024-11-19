@@ -13,7 +13,7 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### 2.6.3
+### 2.6.4
 - Fix: Fix the product image resolution
 
 ### 2.6.2
