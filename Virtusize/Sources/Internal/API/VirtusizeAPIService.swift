@@ -27,7 +27,7 @@ import Foundation
 import VirtusizeCore
 
 /// This class is to handle API requests to the Virtusize server
-class VirtusizeAPIService: APIService {
+class VirtusizeAPIService: APIService {    
 	/// The API request for product check
 	///
 	/// - Parameters:
@@ -35,7 +35,9 @@ class VirtusizeAPIService: APIService {
 	/// - Returns: the product check data in the type of `VirtusizeProduct`
 	internal static func productCheckAsync(product: VirtusizeProduct) -> APIResult<VirtusizeProduct> {
 		let request = APIRequest.productCheck(product: product)
-		return getAPIResultAsync(request: request, type: VirtusizeProduct.self)
+		let result = getAPIResultAsync(request: request, type: VirtusizeProduct.self)
+        storeId = result.success?.productCheckData?.storeId
+        return result
 	}
 
 	/// The API request for sending image of VirtusizeProduct to the Virtusize server

@@ -60,6 +60,9 @@ public struct APIRequest {
 	public static func apiRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
 		var request = HTTPRequest(components: components, method: method)
 		request.addValue(UserDefaultsHelper.current.identifier, forHTTPHeaderField: "x-vs-bid")
+        if let storeId = APIService.currentStoreId {
+            request.addValue(String(storeId), forHTTPHeaderField: "x-vs-store-id")
+        }
 		return request
 	}
 
