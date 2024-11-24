@@ -191,11 +191,11 @@ class APIRequestTests: XCTestCase {
             ]
         )
         XCTAssertEqual(
-            (actualParams?.items.first?.additionalInfo["model_info"]?.value as? [String: Any])?["size"] as? String,
+            (actualParams?.items.first?.additionalInfo["modelInfo"]?.value as? [String: Any])?["size"] as? String,
             "38"
         )
         XCTAssertEqual(
-            (actualParams?.items.first?.additionalInfo["model_info"]?.value as? [String: Any])?["hip"] as? Int,
+            (actualParams?.items.first?.additionalInfo["modelInfo"]?.value as? [String: Any])?["hip"] as? Int,
             85
         )
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["brand"]?.value as? String, "Virtusize")

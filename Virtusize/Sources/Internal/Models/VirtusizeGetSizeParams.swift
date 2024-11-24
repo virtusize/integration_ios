@@ -59,7 +59,7 @@ internal struct VirtusizeGetSizeParams: Codable {
             "sizes": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
             ),
-            "model_info": VirtusizeAnyCodable(getModelInfoDict(storeProduct: storeProduct)),
+            "modelInfo": VirtusizeAnyCodable(getModelInfoDict(storeProduct: storeProduct)),
             "gender": VirtusizeAnyCodable(
                 userBodyProfile?.gender ?? nil
             )

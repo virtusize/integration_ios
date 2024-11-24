@@ -64,7 +64,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                                 }
                             },
                             "gender": "female",
-                            "model_info": {
+                            "modelInfo": {
                                 "hip": 85,
                                 "size": "38",
                                 "bust": 78,
@@ -233,7 +233,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             "brand": "",
                             "fit": "regular",
                             "sizes": {},
-                            "model_info": null,
+                            "modelInfo": null,
                             "gender": null
                         },
                         "itemSizesOrig": {},
