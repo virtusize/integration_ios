@@ -161,15 +161,15 @@ class APIRequestTests: XCTestCase {
         let apiRequest = APIRequest.getBodyProfileRecommendedSize(
             productTypes: TestFixtures.getProductTypes(),
             storeProduct: storeProduct,
-            userBodyProfile: userBodyProfile)
+            userBodyProfile: userBodyProfile
+        )
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
         XCTAssertNotNil(apiRequest?.httpBody)
         let actualParams = try? JSONDecoder().decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
         XCTAssertNotNil(actualParams)
-        XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 4)
-
+        XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 5)
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["gender"]?.value as? String, "female")
         XCTAssertEqual(
             actualParams?.items.first?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
@@ -190,7 +190,14 @@ class APIRequestTests: XCTestCase {
             ]
             ]
         )
-
+        XCTAssertEqual(
+            (actualParams?.items.first?.additionalInfo["model_info"]?.value as? [String: Any])?["size"] as? String,
+            "38"
+        )
+        XCTAssertEqual(
+            (actualParams?.items.first?.additionalInfo["model_info"]?.value as? [String: Any])?["hip"] as? Int,
+            85
+        )
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["brand"]?.value as? String, "Virtusize")
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["fit"]?.value as? String, "regular")
         XCTAssertEqual(actualParams?.bodyData.count, 22)
@@ -207,5 +214,4 @@ class APIRequestTests: XCTestCase {
 			"https://size-recommendation.virtusize.com/item"
 		)
     }
-
 }
