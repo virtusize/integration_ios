@@ -34,7 +34,7 @@ internal struct VirtusizeGetSizeParams: Codable {
     var userHeight: Int?
     /// The user's weight
     var userWeight: Float?
-
+    /// The user's items
     var items: [VirtusizeGetSizeItemsParam]
 
     /// Initializes the VirtusizeGetSizeParams structure
@@ -49,9 +49,6 @@ internal struct VirtusizeGetSizeParams: Codable {
         userBodyProfile: VirtusizeUserBodyProfile?
 
     ) {
-
-   /// Chirag : Commented modelInfo not getting proper value  but its optional
-   /// Chirag: Gender value getting from userBodyProfile, not getting from storeProduct.storeProductMeta?.additionalInfo
        let additionalInfo = [
             "brand": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
@@ -62,7 +59,7 @@ internal struct VirtusizeGetSizeParams: Codable {
             "sizes": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
             ),
-
+            "model_info": VirtusizeAnyCodable(getModelInfoDict(storeProduct: storeProduct)),
             "gender": VirtusizeAnyCodable(
                 userBodyProfile?.gender ?? nil
             )
@@ -79,13 +76,20 @@ internal struct VirtusizeGetSizeParams: Codable {
             userWeight = Float(weight)
         }
 
-        items = [VirtusizeGetSizeItemsParam(additionalInfo: additionalInfo, itemSizesOrig: itemSizesOrig, productType: productType, extProductId: storeProduct.externalId)]
+        items = [
+            VirtusizeGetSizeItemsParam(
+                additionalInfo: additionalInfo,
+                itemSizesOrig: itemSizesOrig,
+                productType: productType,
+                extProductId: storeProduct.externalId
+            )
+        ]
 
     }
 }
 
 	/// Gets the dictionary of the model info
-	private func getModelInfoDict(storeProduct: VirtusizeServerProduct) -> [String: Any] {
+	private func getModelInfoDict(storeProduct: VirtusizeServerProduct) -> [String: Any]? {
 		var modelInfoDict: [String: Any] = [:]
 		if let modelInfo = storeProduct.storeProductMeta?.additionalInfo?.modelInfo {
 			for (name, measurement) in modelInfo {
@@ -96,7 +100,7 @@ internal struct VirtusizeGetSizeParams: Codable {
 				}
 			}
 		}
-		return modelInfoDict
+        return modelInfoDict.isEmpty ? nil : modelInfoDict
 	}
 
 	/// Gets the dictionary of the user body data
