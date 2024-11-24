@@ -13,6 +13,12 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### Next release
+- Fix: Inpage doesn’t recommend anything after coming back to PDP from Comparison screen
+- Fix: Inpage text for on-boarding user has 2 patterns at random
+- Fix: Inpage shows different size from that VS widget shows
+- Fix: Body data tuning is not saved once closing the widget
+
 ### 2.6.4
 - Fix: Fix the product image resolution
 
