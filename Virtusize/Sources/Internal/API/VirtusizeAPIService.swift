@@ -36,7 +36,7 @@ class VirtusizeAPIService: APIService {
 	internal static func productCheckAsync(product: VirtusizeProduct) -> APIResult<VirtusizeProduct> {
 		let request = APIRequest.productCheck(product: product)
 		let result = getAPIResultAsync(request: request, type: VirtusizeProduct.self)
-        storeId = result.success?.productCheckData?.storeId
+        currentStoreId = result.success?.productCheckData?.storeId
         return result
 	}
 
