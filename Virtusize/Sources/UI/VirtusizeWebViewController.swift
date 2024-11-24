@@ -299,6 +299,7 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 				case .userLoggedOut, .userDeletedData:
 					eventHandler?.clearUserData()
 				case .userClosedWidget:
+                    eventHandler?.userClosedWidget()
 					shouldClose()
 				default:
 					break

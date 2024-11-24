@@ -232,4 +232,8 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 	public func clearUserData() {
 		handleClearUserData()
 	}
+
+    public func userClosedWidget() {
+        handleUserClosedWidget()
+    }
 }

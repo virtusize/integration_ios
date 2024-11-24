@@ -102,4 +102,10 @@ extension VirtusizeViewEventProtocol {
 			VirtusizeRepository.shared.updateInPageRecommendation()
 		}
 	}
+    
+    public func handleUserClosedWidget() {
+        Virtusize.dispatchQueue.async {
+            VirtusizeRepository.shared.updateUserSession()
+        }
+    }
 }

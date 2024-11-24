@@ -34,4 +34,5 @@ public protocol VirtusizeEventHandler {
 	func userDeletedProduct(userProductId: Int?)
 	func userUpdatedBodyMeasurements(recommendedSize: String?)
 	func userChangedRecommendationType(changedType: SizeRecommendationType?)
+    func userClosedWidget()
 }

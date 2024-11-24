@@ -171,4 +171,8 @@ extension VirtusizeButton: VirtusizeEventHandler {
 	public func clearUserData() {
 		handleClearUserData()
 	}
+
+    public func userClosedWidget() {
+        handleUserClosedWidget()
+    }
 }

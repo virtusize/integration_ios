@@ -27,7 +27,7 @@ import Foundation
 import VirtusizeCore
 
 /// This class is to handle API requests to the Virtusize server
-class VirtusizeAPIService: APIService {    
+class VirtusizeAPIService: APIService {
 	/// The API request for product check
 	///
 	/// - Parameters:
