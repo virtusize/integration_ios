@@ -23,6 +23,7 @@
 		9C35067327280367003BEF82 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35067227280367003BEF82 /* APIResponse.swift */; };
 		9C35067527280396003BEF82 /* HTTPURLResponse+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */; };
 		9C6E36C72739616E00608640 /* UserDefaultsHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6E36C52739616900608640 /* UserDefaultsHelperTests.swift */; };
+		9CAD1F4C2CF4AB6E00AC104E /* APICache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD1F4B2CF4AB6E00AC104E /* APICache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		9C35067227280367003BEF82 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIResponse.swift; path = API/APIResponse.swift; sourceTree = "<group>"; };
 		9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+Extensions.swift"; sourceTree = "<group>"; };
 		9C6E36C52739616900608640 /* UserDefaultsHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelperTests.swift; sourceTree = "<group>"; };
+		9CAD1F4B2CF4AB6E00AC104E /* APICache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				9C35067027280326003BEF82 /* APISessionProtocol.swift */,
 				9C3506652727FEBD003BEF82 /* APIRequest.swift */,
 				9C35066A27280222003BEF82 /* APIService.swift */,
+				9CAD1F4B2CF4AB6E00AC104E /* APICache.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				9C3506692727FF4B003BEF82 /* UserDefaultsHelper.swift in Sources */,
 				9C35062F2727B782003BEF82 /* BundleLoaderProtocal.swift in Sources */,
 				9C35067527280396003BEF82 /* HTTPURLResponse+Extensions.swift in Sources */,
+				9CAD1F4C2CF4AB6E00AC104E /* APICache.swift in Sources */,
 				9C35062E2727B781003BEF82 /* VirtusizeCoreBundleLoader.swift in Sources */,
 				9C35067127280326003BEF82 /* APISessionProtocol.swift in Sources */,
 				9C3506662727FEBD003BEF82 /* APIRequest.swift in Sources */,

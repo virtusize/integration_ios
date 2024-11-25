@@ -44,9 +44,6 @@ open class APIService {
 		delegateQueue: nil
 	)
 
-    /// Cached Store ID
-    public static var currentStoreId: Int?
-
 	/// Performs an API request.
 	///
 	/// - Parameters:

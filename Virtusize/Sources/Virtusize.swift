@@ -33,7 +33,11 @@ public class Virtusize {
 	public static var APIKey: String?
 
 	/// The user id that is the unique user id from the client system
-	public static var userID: String?
+    public static var userID: String? {
+        didSet{
+            APICache.shared.currentUserId = Virtusize.userID
+        }
+    }
 
 	/// The Virtusize environment that defaults to the `GLOBAL` domain
 	public static var environment = VirtusizeEnvironment.GLOBAL
