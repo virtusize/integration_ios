@@ -95,10 +95,7 @@ extension VirtusizeViewEventProtocol {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.clearUserData()
 			VirtusizeRepository.shared.updateUserSession()
-			VirtusizeRepository.shared.fetchDataForInPageRecommendation(
-				shouldUpdateUserProducts: false,
-				shouldUpdateBodyProfile: false
-			)
+			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
 			VirtusizeRepository.shared.updateInPageRecommendation()
 		}
 	}
