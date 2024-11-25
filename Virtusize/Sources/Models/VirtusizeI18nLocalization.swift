@@ -33,9 +33,10 @@ public class VirtusizeI18nLocalization {
 	var oneSizeCloseBottomText: String?
 	var oneSizeSmallerBottomText: String?
 	var oneSizeLargerBottomText: String?
-	var bodyProfileOneSizeText: String?
+	var oneSizeWillFitResultText: String?
 	var sizeComparisonMultiSizeText: String?
-	var bodyProfileMultiSizeText: String?
+	var willFitResultText: String?
+    var willNotFitResultText: String?
 	var noDataText: String?
 
 	/// Initializes the VirtusizeI18nLocalization structure
@@ -49,9 +50,10 @@ public class VirtusizeI18nLocalization {
 		self.oneSizeCloseBottomText = nil
 		self.oneSizeSmallerBottomText = nil
 		self.oneSizeLargerBottomText = nil
-		self.bodyProfileOneSizeText = nil
+		self.oneSizeWillFitResultText = nil
 		self.sizeComparisonMultiSizeText = nil
-		self.bodyProfileMultiSizeText = nil
+		self.willFitResultText = nil
+        self.willNotFitResultText = nil
 		self.noDataText = nil
 	}
 
@@ -61,8 +63,8 @@ public class VirtusizeI18nLocalization {
 	}
 
 	/// Gets the default text where the recommendation is not available
-	internal func getNoDataText() -> String {
-		return noDataText ?? Localization.shared.localize("inpage_no_data_text")
+	internal func getWillNotFitResultText() -> String {
+        return willNotFitResultText ?? Localization.shared.localize("inpage_will_not_fit_result")
 	}
 
 	/// Gets the default text for an accessory
@@ -112,13 +114,16 @@ public class VirtusizeI18nLocalization {
 
 	/// Gets the recommendation text for an one-size product based on a user body profile
 	internal func getOneSizeBodyProfileText() -> String {
-		return bodyProfileOneSizeText ?? Localization.shared.localize("inpage_one_size_body_profile_text")
+		return oneSizeWillFitResultText ?? Localization.shared.localize("inpage_one_size_will_fit_result_text")
 	}
 
 	/// Gets the recommendation text for a multi-size product based on a user body profile
 	internal func getMultiSizeBodyProfileText(_ bodyProfileRecommendedSizeName: String) -> String {
-		let bodyProfileMultiSizeText = self.bodyProfileMultiSizeText ??
-			Localization.shared.localize("inpage_multi_size_body_profile_text")
-		return "\(bodyProfileMultiSizeText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"
+        let adjustedWillFitResultText = if let storeId = APICache.shared.currentStoreId, StoreId(value: storeId).isUnitedArrorw == true {
+             Localization.shared.localize("inpage_will_fit_result_united_arrows")
+        } else {
+            self.willFitResultText ?? Localization.shared.localize("inpage_will_fit_result")
+        }
+		return "\(adjustedWillFitResultText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"
 	}
 }

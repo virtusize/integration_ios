@@ -58,7 +58,7 @@ class DeserializerTests: XCTestCase {
 			Localization.shared.localize("inpage_one_size_close_bottom_text", language: localizedLang)
 		)
 		XCTAssertEqual(
-			actualI18nLocalization.bodyProfileOneSizeText,
+			actualI18nLocalization.oneSizeWillFitResultText,
 			Localization.shared.localize("inpage_one_size_body_profile_text", language: localizedLang)
 		)
 		XCTAssertEqual(
@@ -93,7 +93,7 @@ class DeserializerTests: XCTestCase {
 			Localization.shared.localize("inpage_one_size_smaller_bottom_text", language: localizedLang)
 		)
 		XCTAssertEqual(
-			actualI18nLocalization.bodyProfileMultiSizeText,
+			actualI18nLocalization.willFitResultText,
 			Localization.shared.localize("inpage_multi_size_body_profile_text", language: localizedLang)
 		)
 		XCTAssertEqual(

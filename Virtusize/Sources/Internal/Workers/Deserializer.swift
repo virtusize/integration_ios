@@ -92,9 +92,10 @@ internal struct Deserializer {
 		i18nLocalization.oneSizeCloseBottomText = oneSizeJSONObject?["close"] as? String
 		i18nLocalization.oneSizeSmallerBottomText = oneSizeJSONObject?["smaller"] as? String
 		i18nLocalization.oneSizeLargerBottomText = oneSizeJSONObject?["larger"] as? String
-		i18nLocalization.bodyProfileOneSizeText = oneSizeJSONObject?["bodyProfile"] as? String
+		i18nLocalization.oneSizeWillFitResultText = inpageJSONObject?["oneSizeWillFitResult"] as? String
 		i18nLocalization.sizeComparisonMultiSizeText = multiSizeJSONObject?["sizeComparison"] as? String
-		i18nLocalization.bodyProfileMultiSizeText = multiSizeJSONObject?["bodyProfile"] as? String
+		i18nLocalization.willFitResultText = inpageJSONObject?["willFitResult"] as? String
+        i18nLocalization.willNotFitResultText = inpageJSONObject?["willNotFitResult"] as? String
 		i18nLocalization.noDataText = inpageJSONObject?["noDataText"] as? String
 
 		return i18nLocalization

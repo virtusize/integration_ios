@@ -1,7 +1,7 @@
 //
-//  APICache.swift
+//  VirtusizeStoreRepository.swift
 //
-//  Copyright (c) 2024 Virtusize KK
+//  Copyright (c) 2021-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,31 @@
 
 import Foundation
 
-public class APICache {
+public class StoreId {
+    let value: Int
 
-    public static let shared = APICache()
+    init(value: Int) {
+        self.value = value
+    }
 
-    /// Cached user ID
-    public var currentUserId: String?
+    public var isUnitedArrorw: Bool {
+        self.value == VirtusizeStoreRepository.getStoreId(for: .unitedArrows).value
+    }
+}
 
-    /// Cached Store ID
-    public var currentStoreId: Int?
+public enum StoreName: String {
+    case unitedArrows = "united_arrows"
+}
+
+public class VirtusizeStoreRepository {
+    private static let storeData: [StoreName: StoreId] = [
+        .unitedArrows: StoreId(value: 99)
+    ]
+
+    public static func getStoreId(for store: StoreName) -> StoreId {
+        guard let storeIdValue = storeData[store]?.value else {
+            fatalError("Store not found")
+        }
+        return StoreId(value: storeIdValue)
+    }
 }

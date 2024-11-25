@@ -24,7 +24,19 @@
 
 import Foundation
 
-internal typealias StoreId = Int
+internal struct StoreId {
+    let value: Int
+    
+    init(value: Int) {
+        self.value = value
+    }
+    
+    var isUnitedArrorw: Bool {
+        get {
+            self.value == VirtusizeStoreRepository.getStoreId(for: .unitedArrows).value
+        }
+    }
+}
 
 internal enum StoreName: String {
     case unitedArrows = "united_arrows"
@@ -32,10 +44,15 @@ internal enum StoreName: String {
 
 internal class VirtusizeStoreRepository {
     private static let storeData: [StoreName: StoreId] = [
-        .unitedArrows: 99
+        .unitedArrows: StoreId(value: 99)
     ]
 
-    static func getStoreId(for store: StoreName) -> StoreId? {
-        return storeData[store]
+    static func getStoreId(for store: StoreName) -> StoreId {
+        guard let storeIdValue = storeData[store]?.value else {
+               fatalError("Store not found")
+           }
+        return StoreId(value: storeIdValue)
     }
+    
+   
 }

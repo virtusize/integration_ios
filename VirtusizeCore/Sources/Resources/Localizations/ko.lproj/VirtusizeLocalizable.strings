@@ -10,10 +10,13 @@
 "inpage_one_size_close_bottom_text" = "당신의 상품과 유사합니다";
 "inpage_one_size_smaller_bottom_text" = "작습니다";
 "inpage_one_size_larger_bottom_text" = "큽니다";
-"inpage_one_size_body_profile_text" = "입어보고 당신의 사이즈를 찾아보세요.";
+"inpage_one_size_will_fit_result_text" = "당신에게 잘 맞는 핏입니다";
 "inpage_multi_size_comparison_text" = "가장 유사한 상품은";
-"inpage_multi_size_body_profile_text" = "추천하는 사이즈는";
 "inpage_no_data_text" = "구매 전에 당신에게 맞는 사이즈를 찾아보세요.";
+"inpage_will_fit_result" = "추천하는 사이즈는";
+"inpage_will_not_fit_result" = "당신에게 잘 맞는지 확인해 보세요";
 "inpage_loading_text" = "사이즈 분석 중";
 "inpage_error_long_text" = "현재 버츄사이즈 서비스를 이용할 수 없습니다.\n 즐거운 쇼핑되세요.";
 "inpage_error_short_text" = "현재 버츄사이즈 서비스를 이용할 수 없습니다.";
+
+"inpage_will_fit_result_united_arrows" = "추천하는 사이즈는";
