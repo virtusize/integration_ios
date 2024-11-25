@@ -34,7 +34,7 @@ public class Virtusize {
 
 	/// The user id that is the unique user id from the client system
     public static var userID: String? {
-        didSet{
+        didSet {
             APICache.shared.currentUserId = Virtusize.userID
         }
     }
