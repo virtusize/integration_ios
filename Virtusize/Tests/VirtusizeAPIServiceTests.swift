@@ -56,10 +56,10 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(actualVersion, VirtusizeConfiguration.defaultAoyamaVersion)
     }
 
-    func testProductDataCheck_hasExpectedCallbackData() {
+    func testProductCheck_hasExpectedCallbackData() {
         let expectation = self.expectation(description: "Virtusize.productCheck reaches the callback")
         var actualProduct: VirtusizeProduct?
-        VirtusizeAPIService.session = MockURLSession(data: TestFixtures.productDataCheckJsonResponse.data(using: .utf8),
+        VirtusizeAPIService.session = MockURLSession(data: TestFixtures.productCheckJsonResponse.data(using: .utf8),
                                                      urlResponse: nil,
                                                      error: nil)
         DispatchQueue.global().async {

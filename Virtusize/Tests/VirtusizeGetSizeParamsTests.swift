@@ -47,22 +47,30 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             "brand": "Virtusize",
                             "fit": "regular",
                             "sizes": {
-                            "35": {
-                                "sleeve": 805,
-                                "bust": 630,
-                                "height": 740
+                                "35": {
+                                    "sleeve": 805,
+                                    "bust": 630,
+                                    "height": 740
+                                },
+                                "36": {
+                                    "sleeve": 825,
+                                    "bust": 645,
+                                    "height": 750
+                                },
+                                "37": {
+                                    "sleeve": 845,
+                                    "bust": 660,
+                                    "height": 760
+                                }
                             },
-                            "36": {
-                                "sleeve": 825,
-                                "bust": 645,
-                                "height": 750
+                            "gender": "female",
+                            "modelInfo": {
+                                "hip": 85,
+                                "size": "38",
+                                "bust": 78,
+                                "waist": 56,
+                                "height": 165
                             },
-                            "37": {
-                                "sleeve": 845,
-                                "bust": 660,
-                                "height": 760
-                            }},
-                            "gender": "female"
                         },
                         "itemSizesOrig": {
                             "35": {
@@ -215,27 +223,28 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             )!,
             userBodyProfile: nil
         )
-
         let expectedGetSizeParamsData = Data(
-        """
-        {
-            "bodyData": {},
-            "items": [
-                {
-                    "additionalInfo": {
-                        "brand": "",
-                        "fit": "regular",
-                        "sizes": {},
-                        "gender": null
-                    },
-                    "itemSizesOrig": {},
-                    "productType": "",
-                    "extProductId": "694"
-                }
-            ],
-            "userGender": ""
-        }
-""".utf8)
+            """
+            {
+                "bodyData": {},
+                "items": [
+                    {
+                        "additionalInfo": {
+                            "brand": "",
+                            "fit": "regular",
+                            "sizes": {},
+                            "modelInfo": null,
+                            "gender": null
+                        },
+                        "itemSizesOrig": {},
+                        "productType": "",
+                        "extProductId": "694"
+                    }
+                ],
+                "userGender": ""
+            }
+            """.utf8
+        )
 
         guard let expectedJsonObject = try? JSONSerialization.jsonObject(
                 with: expectedGetSizeParamsData, options: []

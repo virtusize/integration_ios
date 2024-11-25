@@ -78,9 +78,6 @@ public class VirtusizeParams {
 		paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
 		paramsScript += "\(ParamKey.sessionData): \(userSessionResponse), "
 		paramsScript += "\(ParamKey.externalProductID): '\(externalProductId)', "
-		if let userId = Virtusize.userID {
-			paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
-		}
 		paramsScript += "\(ParamKey.showSGI): \(showSGI), "
 		paramsScript += "\(ParamKey.allowedLanguages): \(getAllowedLanguagesScript(allowedLanguages)), "
 		paramsScript += "\(ParamKey.detailsPanelCards): \(detailsPanelCards.map { category in category.rawValue }), "

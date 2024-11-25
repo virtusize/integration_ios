@@ -34,7 +34,7 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 		return self == .GLOBAL || self == .JAPAN || self == .KOREA
 	}
 
-	/// Gets the services URL for the `productDataCheck` and `getSize` requests
+	/// Gets the services URL for the `productCheck` and `getSize` requests
 	internal func servicesUrl() -> String {
 		// swiftlint:disable switch_case_alignment
 		switch self {

@@ -35,7 +35,9 @@ class VirtusizeAPIService: APIService {
 	/// - Returns: the product check data in the type of `VirtusizeProduct`
 	internal static func productCheckAsync(product: VirtusizeProduct) -> APIResult<VirtusizeProduct> {
 		let request = APIRequest.productCheck(product: product)
-		return getAPIResultAsync(request: request, type: VirtusizeProduct.self)
+		let result = getAPIResultAsync(request: request, type: VirtusizeProduct.self)
+        APICache.shared.currentStoreId = result.success?.productCheckData?.storeId
+        return result
 	}
 
 	/// The API request for sending image of VirtusizeProduct to the Virtusize server
@@ -65,7 +67,7 @@ class VirtusizeAPIService: APIService {
 	///
 	/// - Parameters:
 	///   - event: An event to be sent to the Virtusize server
-	///   - context: The product data from the response of the `productDataCheck` request
+	///   - context: The product data from the response of the `productCheck` request
 	///   - completionHandler: A callback to pass `JSONObject` back when an API request is successful
 	internal static func sendEvent(
 		_ event: VirtusizeEvent,

@@ -56,11 +56,11 @@ internal struct APIEvent {
 		]
 	}
 
-	/// Adds the response from Virtusize API for the `productDataCheck` request to payload
+	/// Adds the response from Virtusize API for the `productCheck` request to payload
 	///
-	/// - Parameter json: The product data from the response of the `productDataCheck` request
-	mutating func align(withContext productDataCheck: JSONObject?) {
-		guard let root = productDataCheck,
+	/// - Parameter json: The product data from the response of the `productCheck` request
+	mutating func align(withContext productCheckData: JSONObject?) {
+		guard let root = productCheckData,
 			  let data = root["data"] as? JSONObject else {
 			return
 		}

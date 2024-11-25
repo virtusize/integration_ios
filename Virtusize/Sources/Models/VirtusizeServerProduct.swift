@@ -147,11 +147,11 @@ public class VirtusizeServerProduct: Codable {
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSizeName: String?
 	) -> String {
+        if bodyProfileRecommendedSizeName != nil {
+            return i18nLocalization.getOneSizeBodyProfileText()
+        }
 		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize, sizeComparisonRecommendedSize.isValid() {
 			return i18nLocalization.getOneSizeProductComparisonText(sizeComparisonRecommendedSize)
-		}
-		if bodyProfileRecommendedSizeName != nil {
-			return i18nLocalization.getOneSizeBodyProfileText()
 		}
 		return i18nLocalization.getNoDataText()
 	}
@@ -162,11 +162,11 @@ public class VirtusizeServerProduct: Codable {
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSizeName: String?
 	) -> String {
+        if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName {
+            return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
+        }
 		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestStoreProductSize?.name {
 			return i18nLocalization.getMultiSizeProductionComparisonText(sizeComparisonRecommendedSizeName)
-		}
-		if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName {
-			return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
 		}
 		return i18nLocalization.getNoDataText()
 	}

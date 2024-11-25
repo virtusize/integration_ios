@@ -39,8 +39,8 @@ class APIEndpointsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testProductDataCheckEndpoint_returnExpectedComponents() {
-        let endpoint = APIEndpoints.productDataCheck(externalId: dummyExternalId)
+    func testProductCheckEndpoint_returnExpectedComponents() {
+        let endpoint = APIEndpoints.productCheck(externalId: dummyExternalId)
 
         XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/stg/product/check")

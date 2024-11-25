@@ -33,7 +33,11 @@ public class Virtusize {
 	public static var APIKey: String?
 
 	/// The user id that is the unique user id from the client system
-	public static var userID: String?
+    public static var userID: String? {
+        didSet {
+            APICache.shared.currentUserId = Virtusize.userID
+        }
+    }
 
 	/// The Virtusize environment that defaults to the `GLOBAL` domain
 	public static var environment = VirtusizeEnvironment.GLOBAL
@@ -48,11 +52,11 @@ public class Virtusize {
 	public static var processPool: WKProcessPool?
 
 	/// NotificationCenter observers for debugging the initial product data check
-	/// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message
+	/// - `Virtusize.productCheckDidFail`, the `UserInfo` will contain a message
 	/// with the cause of the failure
-	/// - `Virtusize.productDataCheckDidSucceed`
-	public static var productDataCheckDidFail = Notification.Name("VirtusizeProductDataCheckDidFail")
-	public static var productDataCheckDidSucceed = Notification.Name("VirtusizeProductDataCheckDidSucceed")
+	/// - `Virtusize.productCheckDidSucceed`
+	public static var productCheckDidFail = Notification.Name("VirtusizeProductCheckDidFail")
+	public static var productCheckDidSucceed = Notification.Name("VirtusizeProductCheckDidSucceed")
 
 	/// The singleton instance of `VirtusizeRepository`
 	private static var virtusizeRepository = VirtusizeRepository.shared
@@ -119,9 +123,9 @@ public class Virtusize {
                     virtusizeRepository.updateUserSession()
 					DispatchQueue.main.async {
 						NotificationCenter.default.post(
-							name: .productDataCheck,
+							name: .productCheckData,
 							object: Virtusize.self,
-							userInfo: [NotificationKey.productDataCheck: productWithPDCData]
+							userInfo: [NotificationKey.productCheckData: productWithPDCData]
 						)
 					}
 					virtusizeRepository.fetchInitialData(

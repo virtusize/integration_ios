@@ -1,7 +1,7 @@
 //
-//  VirtusizeNotification.swift
+//  APICache.swift
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2024 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,13 @@
 
 import Foundation
 
-extension Notification.Name {
-	static let productCheckData = Notification.Name(NotificationKey.productCheckData)
-	static let storeProduct = Notification.Name(NotificationKey.storeProduct)
-	static let sizeRecommendationData = Notification.Name(NotificationKey.sizeRecommendationData)
-	static let inPageError = Notification.Name(NotificationKey.inPageError)
-}
+public class APICache {
+    
+    public static let shared = APICache()
+    
+    /// Cached user ID
+    public var currentUserId: String?
 
-struct NotificationKey {
-	static let productCheckData = "productCheckData"
-	static let storeProduct = "storeProduct"
-	static let sizeRecommendationData = "sizeRecommendationData"
-	static let inPageError = "inPageError"
+    /// Cached Store ID
+    public var currentStoreId: Int?
 }

@@ -60,6 +60,12 @@ public struct APIRequest {
 	public static func apiRequest(components: URLComponents, method: APIMethod = .get) -> URLRequest {
 		var request = HTTPRequest(components: components, method: method)
 		request.addValue(UserDefaultsHelper.current.identifier, forHTTPHeaderField: "x-vs-bid")
+        if let storeId = APICache.shared.currentStoreId {
+            request.addValue(String(storeId), forHTTPHeaderField: "x-vs-store-id")
+        }
+        if let userId = APICache.shared.currentUserId, let authToken = UserDefaultsHelper.current.authToken, !authToken.isEmpty {
+            request.addValue(userId, forHTTPHeaderField: "x-vs-external-user-id")
+        }
 		return request
 	}
 

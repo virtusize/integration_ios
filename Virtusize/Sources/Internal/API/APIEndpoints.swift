@@ -26,7 +26,7 @@ import Foundation
 
 /// This enum represents all available Virtusize endpoints
 internal enum APIEndpoints {
-	case productDataCheck(externalId: String)
+	case productCheck(externalId: String)
 	case productMetaDataHints
 	case events
     case latestAoyamaVersion
@@ -47,7 +47,7 @@ internal enum APIEndpoints {
     // MARK: - Properties
     var hostname: String {
         switch self {
-            case .productDataCheck:
+            case .productCheck:
                 return Virtusize.environment.servicesUrl()
             case  .getSize:
                 return Virtusize.environment.getSizeUrl()
@@ -67,7 +67,7 @@ internal enum APIEndpoints {
         components.scheme = "https"
         components.host = hostname
         switch self {
-            case .productDataCheck(let externalId):
+            case .productCheck(let externalId):
                 let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
                 components.path = "\(envPathForServicesAPI)/product/check"
                 components.queryItems = dataCheckQueryItems(externalId: externalId)
@@ -132,7 +132,7 @@ internal enum APIEndpoints {
 
 	// MARK: - Helper methods
 
-	/// Builds query parameters for the API endpoint `productDataCheck`
+	/// Builds query parameters for the API endpoint `productCheck`
 	///
 	/// - Parameter externalId: A string to represent the id that will be used to reference
 	///  this product in Virtusize API
