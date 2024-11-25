@@ -37,7 +37,7 @@ public class VirtusizeProduct: Codable {
 	/// The URL of the product image that is fully qualified with the domain and the protocol
 	public var imageURL: URL?
 
-	/// The product data from the response of the `productDataCheck` request
+	/// The product data from the response of the `productCheck` request
 	internal var productCheckData: VirtusizeProductCheckData?
 
 	/// The product data as a `JSONObject`

@@ -25,14 +25,14 @@
 import Foundation
 
 extension Notification.Name {
-	static let productDataCheck = Notification.Name(NotificationKey.productDataCheck)
+	static let productCheckData = Notification.Name(NotificationKey.productCheckData)
 	static let storeProduct = Notification.Name(NotificationKey.storeProduct)
 	static let sizeRecommendationData = Notification.Name(NotificationKey.sizeRecommendationData)
 	static let inPageError = Notification.Name(NotificationKey.inPageError)
 }
 
 struct NotificationKey {
-	static let productDataCheck = "productDataCheck"
+	static let productCheckData = "productCheckData"
 	static let storeProduct = "storeProduct"
 	static let sizeRecommendationData = "sizeRecommendationData"
 	static let inPageError = "inPageError"

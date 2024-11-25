@@ -31,7 +31,7 @@ public class VirtusizeFlutterRepository: NSObject {
 		return instance
 	}()
 
-	public func getProductDataCheck(
+	public func getProductCheckData(
 		messageHandler: VirtusizeMessageHandler?,
 		product: VirtusizeProduct
 	) -> (VirtusizeProduct?, String?) {

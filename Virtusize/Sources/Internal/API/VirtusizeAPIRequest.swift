@@ -31,7 +31,7 @@ extension APIRequest {
 	/// - Parameter product: `VirtusizeProduct` for which check needs to be performed
 	/// - Returns: A `URLRequest` for the `productCheck` request
 	internal static func productCheck(product: VirtusizeProduct) -> URLRequest {
-		let endpoint = APIEndpoints.productDataCheck(externalId: product.externalId)
+		let endpoint = APIEndpoints.productCheck(externalId: product.externalId)
 		return apiRequest(components: endpoint.components)
 	}
 
@@ -64,7 +64,7 @@ extension APIRequest {
 	///
 	/// - Parameters:
 	///   - virtusizeEvent: An event to be sent to the Virtusize server
-	///   - context: The product data from the response of the `productDataCheck` request
+	///   - context: The product data from the response of the `productCheck` request
 	/// - Returns: A `URLRequest` for the `sendEvent` request
 	internal static func sendEvent(
 		_ virtusizeEvent: VirtusizeEvent, withContext context: JSONObject?) -> URLRequest? {

@@ -69,8 +69,8 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 	private func addNotificationObserver() {
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(didReceiveProductDataCheck(_:)),
-			name: .productDataCheck,
+			selector: #selector(didReceiveProductCheckData(_:)),
+			name: .productCheckData,
 			object: Virtusize.self
 		)
 
@@ -82,8 +82,8 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 		)
 	}
 
-	@objc func didReceiveProductDataCheck(_ notification: Notification) {
-		shouldUpdateProductDataCheckData(notification) { productWithPDCData in
+	@objc func didReceiveProductCheckData(_ notification: Notification) {
+		shouldUpdateProductCheckData(notification) { productWithPDCData in
 			self.clientProduct = productWithPDCData
 			isHidden = false
 		}

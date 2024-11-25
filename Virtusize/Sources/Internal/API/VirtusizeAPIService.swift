@@ -67,7 +67,7 @@ class VirtusizeAPIService: APIService {
 	///
 	/// - Parameters:
 	///   - event: An event to be sent to the Virtusize server
-	///   - context: The product data from the response of the `productDataCheck` request
+	///   - context: The product data from the response of the `productCheck` request
 	///   - completionHandler: A callback to pass `JSONObject` back when an API request is successful
 	internal static func sendEvent(
 		_ event: VirtusizeEvent,

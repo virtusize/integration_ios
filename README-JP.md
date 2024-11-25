@@ -285,8 +285,8 @@ Virtusize.processPool = WKProcessPool()
 
 そのAPIコールをデバッグするために、`NotificationCenter`をサブスクライブし、2つの`Notification.Name`エイリアスを観ることができます。
 
-- `Virtusize.productDataCheckDidFai`lは、失敗の原因を持つメッセージを含む`UserInfo`を受け取ります。
-- `Virtusize.productDataCheckDidSucceed`は、呼び出しが成功した場合に送信されます。
+- `Virtusize.productCheckDidFai`lは、失敗の原因を持つメッセージを含む`UserInfo`を受け取ります。
+- `Virtusize.productCheckDidSucceed`は、呼び出しが成功した場合に送信されます。
 
 チェックに失敗した場合は、ボタンが非表示になります。
 

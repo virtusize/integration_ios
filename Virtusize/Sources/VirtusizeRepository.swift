@@ -54,19 +54,19 @@ internal class VirtusizeRepository: NSObject {
 	///
 	/// - Parameters:
 	///   - product: `VirtusizeProduct`
-	///   - onProductDataCheck: a closure to pass a valid`VirtusizeProduct` with the PDC data back
+	///   - onProductCheckData: a closure to pass a valid`VirtusizeProduct` with the PDC data back
 	internal func checkProductValidity(
 		product: VirtusizeProduct,
-		onProductDataCheck: ((VirtusizeProduct?) -> Void)? = nil
+		onProductCheckData: ((VirtusizeProduct?) -> Void)? = nil
 	) {
 		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
 		guard let product = productResponse.success else {
 			NotificationCenter.default.post(
-				name: Virtusize.productDataCheckDidFail,
+				name: Virtusize.productCheckDidFail,
 				object: Virtusize.self,
 				userInfo: ["message": productResponse.string ?? VirtusizeError.unknownError.debugDescription]
 			)
-			onProductDataCheck?(nil)
+			onProductCheckData?(nil)
 			return
 		}
 
@@ -83,11 +83,11 @@ internal class VirtusizeRepository: NSObject {
 
 		guard mutableProduct.productCheckData?.productDataId != nil else {
 			NotificationCenter.default.post(
-				name: Virtusize.productDataCheckDidFail,
+				name: Virtusize.productCheckDidFail,
 				object: Virtusize.self,
 				userInfo: ["message": mutableProduct.dictionary]
 			)
-			onProductDataCheck?(nil)
+			onProductCheckData?(nil)
 			return
 		}
 
@@ -105,12 +105,12 @@ internal class VirtusizeRepository: NSObject {
 		)
 
 		NotificationCenter.default.post(
-			name: Virtusize.productDataCheckDidSucceed,
+			name: Virtusize.productCheckDidSucceed,
 			object: Virtusize.self,
 			userInfo: ["message": mutableProduct.dictionary]
 		)
 
-		onProductDataCheck?(mutableProduct)
+		onProductCheckData?(mutableProduct)
 	}
 
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
@@ -266,16 +266,16 @@ internal class VirtusizeRepository: NSObject {
 		guard let product = product ?? lastProductOnVirtusizeWebView else {
 			return
 		}
-		// swiftlint:disable switch_case_alignment
-		switch type {
-			case .compareProduct:
-				Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
-			case .body:
-            Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize)
-			default:
-            Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
-		}
-	}
+        // swiftlint:disable switch_case_alignment
+        switch type {
+            case .compareProduct:
+                Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
+            case .body:
+                Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize)
+            default:
+                Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+        }
+    }
 
 	/// Updates the user body recommended size
 	///

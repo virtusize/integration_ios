@@ -35,7 +35,7 @@ struct TestFixtures {
 
     static let notFoundResponse = "{\"detail\": \"Not found.\"}"
 
-    static let productDataCheckJsonResponse =
+    static let productCheckJsonResponse =
     """
         {
             "data":{

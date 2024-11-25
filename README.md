@@ -264,8 +264,8 @@ When the button is initialized with an `exernalId` , the SDK calls our API to ch
 
 In order to debug that API call, you can subscribe to the `NotificationCenter` and observe two `Notification.Name` aliases:
 
-- `Virtusize.productDataCheckDidFail`, which receives the `UserInfo` containing a message with the cause of the failure.
-- `Virtusize.productDataCheckDidSucceed` that will be sent if the call is succesfull.
+- `Virtusize.productCheckDidFail`, which receives the `UserInfo` containing a message with the cause of the failure.
+- `Virtusize.productCheckDidSucceed` that will be sent if the call is succesfull.
 
 If the check fails, the button will be hidden.
 

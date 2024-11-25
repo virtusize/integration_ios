@@ -53,16 +53,16 @@ extension VirtusizeView {
 		}
 	}
 
-	internal func shouldUpdateProductDataCheckData(
+	internal func shouldUpdateProductCheckData(
 		_ notification: Notification,
-		onProductDataCheckData: (VirtusizeProduct) -> Void
+		onProductCheckData: (VirtusizeProduct) -> Void
 	) {
 		guard let notificationData = notification.userInfo as? [String: Any],
-			let productWithPDCData = notificationData[NotificationKey.productDataCheck] as? VirtusizeProduct,
+			let productWithPDCData = notificationData[NotificationKey.productCheckData] as? VirtusizeProduct,
 			productWithPDCData.externalId == self.clientProduct?.externalId else {
 			return
 		}
-		onProductDataCheckData(productWithPDCData)
+		onProductCheckData(productWithPDCData)
 	}
 
 	internal func shouldUpdateStoreProduct(

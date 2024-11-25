@@ -56,19 +56,19 @@ class APIEventTests: XCTestCase {
         XCTAssertEqual(payloadJson?["snippetVersion"], "2.6.4")
     }
 
-    func testAPIEvent_alignProductDataCheckContext_hasExpectedPayload() {
-        let data = TestFixtures.productDataCheckJsonResponse.data(using: .utf8)!
-        let productDataCheckJsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
+    func testAPIEvent_alignProductCheckDataContext_hasExpectedPayload() {
+        let data = TestFixtures.productCheckJsonResponse.data(using: .utf8)!
+        let productCheckJsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 
-        event?.align(withContext: productDataCheckJsonObject)
+        event?.align(withContext: productCheckJsonObject)
 
-        let productDataCheckPayloadJson = try? JSONSerialization.jsonObject(
+        let productCheckPayloadJson = try? JSONSerialization.jsonObject(
             with: event!.jsonPayload!, options: []) as? JSONObject
 
-        XCTAssertEqual(productDataCheckPayloadJson?["storeId"] as? Int ?? -1, 2)
-        XCTAssertEqual(productDataCheckPayloadJson?["storeName"] as? String ?? "", "virtusize")
-        XCTAssertEqual(productDataCheckPayloadJson?["storeProductType"] as? String ?? "", "pants")
-        XCTAssertEqual(productDataCheckPayloadJson?["storeProductExternalId"] as? String ?? "", "694")
+        XCTAssertEqual(productCheckPayloadJson?["storeId"] as? Int ?? -1, 2)
+        XCTAssertEqual(productCheckPayloadJson?["storeName"] as? String ?? "", "virtusize")
+        XCTAssertEqual(productCheckPayloadJson?["storeProductType"] as? String ?? "", "pants")
+        XCTAssertEqual(productCheckPayloadJson?["storeProductExternalId"] as? String ?? "", "694")
     }
 
     func testAPIEvent_alignAddtionalEventData_hasExpectedPayload() {
