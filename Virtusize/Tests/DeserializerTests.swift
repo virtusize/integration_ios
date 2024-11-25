@@ -59,12 +59,16 @@ class DeserializerTests: XCTestCase {
 		)
 		XCTAssertEqual(
 			actualI18nLocalization.oneSizeWillFitResultText,
-			Localization.shared.localize("inpage_one_size_body_profile_text", language: localizedLang)
+			Localization.shared.localize("inpage_one_size_will_fit_result_text", language: localizedLang)
 		)
 		XCTAssertEqual(
 			actualI18nLocalization.sizeComparisonMultiSizeText,
 			Localization.shared.localize("inpage_multi_size_comparison_text", language: localizedLang)
 		)
+        XCTAssertEqual(
+            actualI18nLocalization.willNotFitResultText,
+            Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
+        )
         XCTAssertEqual(
             actualI18nLocalization.noDataText,
             Localization.shared.localize("inpage_no_data_text", language: localizedLang)
@@ -94,8 +98,12 @@ class DeserializerTests: XCTestCase {
 		)
 		XCTAssertEqual(
 			actualI18nLocalization.willFitResultText,
-			Localization.shared.localize("inpage_multi_size_body_profile_text", language: localizedLang)
+			Localization.shared.localize("inpage_will_fit_result", language: localizedLang)
 		)
+        XCTAssertEqual(
+            actualI18nLocalization.willNotFitResultText,
+            Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
+        )
 		XCTAssertEqual(
 			actualI18nLocalization.noDataText,
 			Localization.shared.localize("inpage_no_data_text", language: localizedLang)
@@ -123,6 +131,10 @@ class DeserializerTests: XCTestCase {
 			actualI18nLocalization.oneSizeLargerBottomText,
 			Localization.shared.localize("inpage_one_size_larger_bottom_text", language: localizedLang)
 		)
+        XCTAssertEqual(
+            actualI18nLocalization.willNotFitResultText,
+            Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
+        )
         XCTAssertEqual(
             actualI18nLocalization.noDataText,
             Localization.shared.localize("inpage_no_data_text", language: localizedLang)

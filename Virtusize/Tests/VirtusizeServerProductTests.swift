@@ -43,9 +43,10 @@ class VirtusizeServerProductTests: XCTestCase {
 		i18nLocalization.oneSizeCloseBottomText = Localization.shared.localize("inpage_one_size_close_bottom_text")
 		i18nLocalization.oneSizeSmallerBottomText = Localization.shared.localize("inpage_one_size_smaller_bottom_text")
 		i18nLocalization.oneSizeLargerBottomText = Localization.shared.localize("inpage_one_size_larger_bottom_text")
-		i18nLocalization.oneSizeWillFitResultText = Localization.shared.localize("inpage_one_size_body_profile_text")
+		i18nLocalization.oneSizeWillFitResultText = Localization.shared.localize("inpage_one_size_will_fit_result_text")
 		i18nLocalization.sizeComparisonMultiSizeText = Localization.shared.localize("inpage_multi_size_comparison_text")
-		i18nLocalization.willFitResultText = Localization.shared.localize("inpage_multi_size_body_profile_text")
+		i18nLocalization.willFitResultText = Localization.shared.localize("inpage_will_fit_result")
+        i18nLocalization.willNotFitResultText = Localization.shared.localize("inpage_will_not_fit_result")
         i18nLocalization.noDataText = Localization.shared.localize("inpage_no_data_text")
     }
 
@@ -219,7 +220,7 @@ class VirtusizeServerProductTests: XCTestCase {
 		let storeProduct7 = TestFixtures.getStoreProduct(productType: 7, gender: nil)
 		XCTAssertEqual(
 			storeProduct7!.getRecommendationText(i18nLocalization, nil, nil),
-			i18nLocalization.noDataText!
+            i18nLocalization.willNotFitResultText!
 		)
 	}
 }
