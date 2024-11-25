@@ -145,7 +145,7 @@ public final class VirtusizeWebViewController: UIViewController {
 	}
 
     private func getWebViewURL() -> URLRequest? {
-        if let productStoreId = product?.productCheckData?.storeId, StoreId(value: productStoreId).isUnitedArrorws {
+        if let productStoreId = product?.productCheckData?.storeId, StoreId(value: productStoreId).isUnitedArrows {
             return APIRequest.virtusizeWebViewForSpecificClients()
         } else {
             guard let version = VirtusizeAPIService.fetchLatestAoyamaVersion().success else {

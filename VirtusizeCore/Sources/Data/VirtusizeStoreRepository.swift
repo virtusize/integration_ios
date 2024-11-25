@@ -31,7 +31,7 @@ public class StoreId {
         self.value = value
     }
 
-    public var isUnitedArrorws: Bool {
+    public var isUnitedArrows: Bool {
         self.value == VirtusizeStoreRepository.getStoreId(for: .unitedArrows).value
     }
 }
