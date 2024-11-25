@@ -25,9 +25,9 @@
 import Foundation
 
 public class StoreId {
-    let value: Int
+    public let value: Int
 
-    init(value: Int) {
+    public init(value: Int) {
         self.value = value
     }
 
