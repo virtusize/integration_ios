@@ -96,7 +96,7 @@ internal struct Deserializer {
 		i18nLocalization.sizeComparisonMultiSizeText = multiSizeJSONObject?["sizeComparison"] as? String
 		i18nLocalization.willFitResultText = inpageJSONObject?["willFitResult"] as? String
         i18nLocalization.willNotFitResultText = inpageJSONObject?["willNotFitResult"] as? String
-		i18nLocalization.noDataText = inpageJSONObject?["noDataText"] as? String
+		i18nLocalization.bodyDataEmptyText = inpageJSONObject?["bodydataEmpty"] as? String
 
 		return i18nLocalization
 	}

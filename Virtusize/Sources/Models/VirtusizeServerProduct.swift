@@ -121,7 +121,7 @@ public class VirtusizeServerProduct: Codable {
 		_ bodyProfileRecommendedSizeName: String?,
 		_ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
 	) -> String {
-		var text = i18nLocalization.getWillNotFitResultText()
+		var text = i18nLocalization.getBodyDataEmptyText()
 		if isAccessory() {
 			text = accessoryText(i18nLocalization, sizeComparisonRecommendedSize)
 		} else if self.sizes.count == 1 {
@@ -153,7 +153,7 @@ public class VirtusizeServerProduct: Codable {
 		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize, sizeComparisonRecommendedSize.isValid() {
 			return i18nLocalization.getOneSizeProductComparisonText(sizeComparisonRecommendedSize)
 		}
-		return i18nLocalization.getWillNotFitResultText()
+		return i18nLocalization.getBodyDataEmptyText()
 	}
 
 	/// Gets the text for a multi-size product
@@ -168,7 +168,7 @@ public class VirtusizeServerProduct: Codable {
 		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestStoreProductSize?.name {
 			return i18nLocalization.getMultiSizeProductionComparisonText(sizeComparisonRecommendedSizeName)
 		}
-		return i18nLocalization.getWillNotFitResultText()
+		return i18nLocalization.getBodyDataEmptyText()
 	}
 
 	/// Checks if the product is an accessory

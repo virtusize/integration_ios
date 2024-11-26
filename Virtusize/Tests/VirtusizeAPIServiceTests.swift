@@ -506,8 +506,8 @@ class VirtusizeAPIServiceTests: XCTestCase {
             Localization.shared.localize("inpage_default_accessory_text", language: localizedLang)
         )
         XCTAssertEqual(
-            actualI18nLocalization?.noDataText,
-            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+            actualI18nLocalization?.bodyDataEmptyText,
+            Localization.shared.localize("inpage_body_data_empty_text", language: localizedLang)
         )
     }
 

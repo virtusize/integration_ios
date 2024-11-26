@@ -47,7 +47,7 @@ class VirtusizeServerProductTests: XCTestCase {
 		i18nLocalization.sizeComparisonMultiSizeText = Localization.shared.localize("inpage_multi_size_comparison_text")
 		i18nLocalization.willFitResultText = Localization.shared.localize("inpage_will_fit_result")
         i18nLocalization.willNotFitResultText = Localization.shared.localize("inpage_will_not_fit_result")
-        i18nLocalization.noDataText = Localization.shared.localize("inpage_no_data_text")
+        i18nLocalization.bodyDataEmptyText = Localization.shared.localize("inpage_body_data_empty_text")
     }
 
     func testDecoding_validServerProductData_shouldReturnExpectedStructure() {

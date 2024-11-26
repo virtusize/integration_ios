@@ -12,7 +12,7 @@
 "inpage_one_size_larger_bottom_text" = "大きめです";
 "inpage_one_size_will_fit_result_text" = "あなたにフィットします";
 "inpage_multi_size_comparison_text" = "あなたの服に近いサイズ";
-"inpage_no_data_text" = "簡単サイズチェック";
+"inpage_body_data_empty_text" = "簡単サイズチェック";
 "inpage_will_fit_result" = "あなたにフィットするサイズ";
 "inpage_will_not_fit_result" = "試着をおすすめします";
 "inpage_loading_text" = "サイズを分析中";

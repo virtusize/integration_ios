@@ -12,7 +12,7 @@
 "inpage_one_size_larger_bottom_text" = "larger than your item";
 "inpage_one_size_will_fit_result_text" = "This item should fit you";
 "inpage_multi_size_comparison_text" = "The closest size to your item is";
-"inpage_no_data_text" = "Find your right size";
+"inpage_body_data_empty_text" = "Find your right size";
 "inpage_will_fit_result" = "Your recommended size is";
 "inpage_will_not_fit_result" = "Check how it fits you";
 "inpage_loading_text" = "Analyzing the size";

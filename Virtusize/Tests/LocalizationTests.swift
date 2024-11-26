@@ -49,7 +49,7 @@ class LocalizationTests: XCTestCase {
 			"Your recommended size is"
 		)
         XCTAssertEqual(
-            Localization.shared.localize("inpage_no_data_text", language: .ENGLISH),
+            Localization.shared.localize("inpage_body_data_empty_text", language: .ENGLISH),
             "Find your right size"
         )
     }

@@ -37,7 +37,7 @@ public class VirtusizeI18nLocalization {
 	var sizeComparisonMultiSizeText: String?
 	var willFitResultText: String?
     var willNotFitResultText: String?
-	var noDataText: String?
+	var bodyDataEmptyText: String?
 
 	/// Initializes the VirtusizeI18nLocalization structure
 	init() {
@@ -54,7 +54,7 @@ public class VirtusizeI18nLocalization {
 		self.sizeComparisonMultiSizeText = nil
 		self.willFitResultText = nil
         self.willNotFitResultText = nil
-		self.noDataText = nil
+		self.bodyDataEmptyText = nil
 	}
 
 	enum TrimType: String {
@@ -63,8 +63,8 @@ public class VirtusizeI18nLocalization {
 	}
 
 	/// Gets the default text where the recommendation is not available
-	internal func getWillNotFitResultText() -> String {
-        return willNotFitResultText ?? Localization.shared.localize("inpage_will_not_fit_result")
+	internal func getBodyDataEmptyText() -> String {
+        return bodyDataEmptyText ?? Localization.shared.localize("inpage_body_data_empty_text")
 	}
 
 	/// Gets the default text for an accessory

@@ -33,7 +33,7 @@ class DeserializerTests: XCTestCase {
         let actualI18nLocalization = Deserializer.i18n(data: TestFixtures.emptyResponse.data(using: .utf8))
 
         XCTAssertNil(actualI18nLocalization.defaultAccessoryText)
-        XCTAssertNil(actualI18nLocalization.noDataText)
+        XCTAssertNil(actualI18nLocalization.bodyDataEmptyText)
     }
 
     func testI18n_verifyEnglishLocalization_returnExpectedLocalizationTexts() {
@@ -70,8 +70,8 @@ class DeserializerTests: XCTestCase {
             Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
         )
         XCTAssertEqual(
-            actualI18nLocalization.noDataText,
-            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+            actualI18nLocalization.bodyDataEmptyText,
+            Localization.shared.localize("inpage_body_data_empty_text", language: localizedLang)
         )
     }
 
@@ -105,8 +105,8 @@ class DeserializerTests: XCTestCase {
             Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
         )
 		XCTAssertEqual(
-			actualI18nLocalization.noDataText,
-			Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+			actualI18nLocalization.bodyDataEmptyText,
+			Localization.shared.localize("inpage_body_data_empty_text", language: localizedLang)
 		)
     }
 
@@ -136,8 +136,8 @@ class DeserializerTests: XCTestCase {
             Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
         )
         XCTAssertEqual(
-            actualI18nLocalization.noDataText,
-            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+            actualI18nLocalization.bodyDataEmptyText,
+            Localization.shared.localize("inpage_body_data_empty_text", language: localizedLang)
         )
     }
 }
