@@ -216,11 +216,11 @@ class VirtusizeServerProductTests: XCTestCase {
 		)
 	}
 
-	func testGetRecommendationText_multiSizeProduct_noRecommendedSizes_returnNoDataText() {
+	func testGetRecommendationText_multiSizeProduct_noRecommendedSizes_returnBodyDataEmptyText() {
 		let storeProduct7 = TestFixtures.getStoreProduct(productType: 7, gender: nil)
 		XCTAssertEqual(
 			storeProduct7!.getRecommendationText(i18nLocalization, nil, nil),
-            i18nLocalization.willNotFitResultText!
+            i18nLocalization.bodyDataEmptyText!
 		)
 	}
 }
