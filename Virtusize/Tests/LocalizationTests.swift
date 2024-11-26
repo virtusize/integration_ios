@@ -30,7 +30,7 @@ class LocalizationTests: XCTestCase {
     func testLocalization_ExistingLocalizableStrings() {
         XCTAssertEqual(
             Localization.shared.localize("inpage_default_accessory_text", language: .ENGLISH),
-            "See how everyday items fit"
+            "See what fits inside"
         )
 		XCTAssertEqual(
 			Localization.shared.localize("inpage_one_size_smaller_top_text", language: .ENGLISH),
@@ -45,12 +45,12 @@ class LocalizationTests: XCTestCase {
 			"The closest size to your item is"
 		)
 		XCTAssertEqual(
-			Localization.shared.localize("inpage_multi_size_body_profile_text", language: .ENGLISH),
+			Localization.shared.localize("inpage_will_fit_result", language: .ENGLISH),
 			"Your recommended size is"
 		)
         XCTAssertEqual(
-            Localization.shared.localize("inpage_no_data_text", language: .ENGLISH),
-            "Find the right size before purchasing"
+            Localization.shared.localize("inpage_body_data_empty_text", language: .ENGLISH),
+            "Find your right size"
         )
     }
 

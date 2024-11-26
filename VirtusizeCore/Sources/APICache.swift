@@ -25,9 +25,9 @@
 import Foundation
 
 public class APICache {
-    
+
     public static let shared = APICache()
-    
+
     /// Cached user ID
     public var currentUserId: String?
 

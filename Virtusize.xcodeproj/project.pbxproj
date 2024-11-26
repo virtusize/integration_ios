@@ -94,7 +94,6 @@
 		9CEC8D8C252AB963001CBDFB /* ProductComparisonFitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D8B252AB963001CBDFB /* ProductComparisonFitInfo.swift */; };
 		9CEC8D93252AC606001CBDFB /* FindBestFitHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D8F252AC54F001CBDFB /* FindBestFitHelperTests.swift */; };
 		9CEC8D99252B1986001CBDFB /* SizeComparisonRecommendedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */; };
-		9CF1A9AE2CB421F1005D6F86 /* VirtusizeStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF1A9AD2CB421F1005D6F86 /* VirtusizeStoreRepository.swift */; };
 		9CF77B9926CBBF7A0019889E /* Virtusize.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9CF77B9726CBBF7A0019889E /* Virtusize.podspec */; };
 		9CF77B9F26CBC01B0019889E /* Base64ImageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF77B9D26CBC01B0019889E /* Base64ImageString.swift */; };
 		9CF77BA026CBC01B0019889E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF77B9E26CBC01B0019889E /* Colors.swift */; };
@@ -210,7 +209,6 @@
 		9CEC8D8B252AB963001CBDFB /* ProductComparisonFitInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductComparisonFitInfo.swift; sourceTree = "<group>"; };
 		9CEC8D8F252AC54F001CBDFB /* FindBestFitHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBestFitHelperTests.swift; sourceTree = "<group>"; };
 		9CEC8D98252B1986001CBDFB /* SizeComparisonRecommendedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeComparisonRecommendedSize.swift; sourceTree = "<group>"; };
-		9CF1A9AD2CB421F1005D6F86 /* VirtusizeStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeStoreRepository.swift; sourceTree = "<group>"; };
 		9CF77B9726CBBF7A0019889E /* Virtusize.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Virtusize.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9CF77B9B26CBBFCB0019889E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CF77B9D26CBC01B0019889E /* Base64ImageString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Base64ImageString.swift; path = Sources/Internal/Constants/Base64ImageString.swift; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 		4D6C5794205FB9FC00DA910E /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				9CF1A9AC2CB421CB005D6F86 /* Data */,
 				9CEC8D88252AB8EE001CBDFB /* Models */,
 				9C106EB524FE424E0012EE51 /* Views */,
 				9CE7785624B3791E00E4A127 /* Utils */,
@@ -486,14 +483,6 @@
 				9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		9CF1A9AC2CB421CB005D6F86 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				9CF1A9AD2CB421F1005D6F86 /* VirtusizeStoreRepository.swift */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		DF71642621A284E9002C7202 /* Models */ = {
@@ -781,7 +770,6 @@
 				9CFF40A125B5BAD500B21D4E /* VirtusizeAPIService.swift in Sources */,
 				9CBDF5D425AFEE6300E42012 /* VirtusizeAssets.swift in Sources */,
 				DFFAA95C21A39A75000F0F70 /* APIEvent.swift in Sources */,
-				9CF1A9AE2CB421F1005D6F86 /* VirtusizeStoreRepository.swift in Sources */,
 				9CF77BA026CBC01B0019889E /* Colors.swift in Sources */,
 				9C6DDE2B24DCF2270021073A /* VirtusizeProductCheckData.swift in Sources */,
 				9CE6CA7D2744F6B700AAFF20 /* VirtusizeExports.swift in Sources */,
@@ -865,7 +853,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.6.5;
+				CURRENT_PROJECT_VERSION = 2.6.6;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -935,7 +923,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.6.5;
+				CURRENT_PROJECT_VERSION = 2.6.6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

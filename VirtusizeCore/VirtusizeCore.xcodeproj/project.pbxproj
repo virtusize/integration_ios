@@ -24,6 +24,7 @@
 		9C35067527280396003BEF82 /* HTTPURLResponse+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */; };
 		9C6E36C72739616E00608640 /* UserDefaultsHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6E36C52739616900608640 /* UserDefaultsHelperTests.swift */; };
 		9CAD1F4C2CF4AB6E00AC104E /* APICache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD1F4B2CF4AB6E00AC104E /* APICache.swift */; };
+		9CAD1F4E2CF4DA8800AC104E /* VirtusizeStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD1F4D2CF4DA8800AC104E /* VirtusizeStoreRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+Extensions.swift"; sourceTree = "<group>"; };
 		9C6E36C52739616900608640 /* UserDefaultsHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelperTests.swift; sourceTree = "<group>"; };
 		9CAD1F4B2CF4AB6E00AC104E /* APICache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICache.swift; sourceTree = "<group>"; };
+		9CAD1F4D2CF4DA8800AC104E /* VirtusizeStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeStoreRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		9C3505F52727074A003BEF82 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9CAD1F4F2CF4DA8B00AC104E /* Data */,
 				9C35066D272802F8003BEF82 /* Models */,
 				9C3506672727FF38003BEF82 /* Workers */,
 				9C3506642727FEA5003BEF82 /* API */,
@@ -192,6 +195,14 @@
 				9C6E36C52739616900608640 /* UserDefaultsHelperTests.swift */,
 			);
 			path = Workers;
+			sourceTree = "<group>";
+		};
+		9CAD1F4F2CF4DA8B00AC104E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9CAD1F4D2CF4DA8800AC104E /* VirtusizeStoreRepository.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,6 +348,7 @@
 				9C35062E2727B781003BEF82 /* VirtusizeCoreBundleLoader.swift in Sources */,
 				9C35067127280326003BEF82 /* APISessionProtocol.swift in Sources */,
 				9C3506662727FEBD003BEF82 /* APIRequest.swift in Sources */,
+				9CAD1F4E2CF4DA8800AC104E /* VirtusizeStoreRepository.swift in Sources */,
 				9C35066B27280222003BEF82 /* APIService.swift in Sources */,
 				9C35066F27280313003BEF82 /* VirtusizeError.swift in Sources */,
 				9C35061927279586003BEF82 /* UIApplication+Extensions.swift in Sources */,
@@ -411,7 +423,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.6.5;
+				CURRENT_PROJECT_VERSION = 2.6.6;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -476,7 +488,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.6.5;
+				CURRENT_PROJECT_VERSION = 2.6.6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
