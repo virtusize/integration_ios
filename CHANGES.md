@@ -13,7 +13,7 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### Next Release
+### 2.6.6
 - Fix:  Inpage text is not appropriate when the size is recommended
 - Fix: Inpage text for on-boarding user has 2 patterns at random
 
