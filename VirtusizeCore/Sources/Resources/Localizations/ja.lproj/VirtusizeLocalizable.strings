@@ -1,7 +1,7 @@
 "check_size" = "サイズチェック";
 "privacy_policy" = "プライバシーポリシー";
 "privacy_policy_link" = "http://www.virtusize.jp/privacy-policy";
-"inpage_default_accessory_text" = "日用品と比較する";
+"inpage_default_accessory_text" = "サイズ感を確認する";
 "inpage_has_product_top_text" = "あなたのアイテムと";
 "inpage_has_product_bottom_text" = "大きさを比較";
 "inpage_one_size_close_top_text" = "持っている服と";
@@ -10,10 +10,13 @@
 "inpage_one_size_close_bottom_text" = "近いサイズ感です";
 "inpage_one_size_smaller_bottom_text" = "小さめです";
 "inpage_one_size_larger_bottom_text" = "大きめです";
-"inpage_one_size_body_profile_text" = "あなたの体で\nサイズを簡単チェック";
-"inpage_multi_size_comparison_text" = "あなたのアイテムに近いサイズ";
-"inpage_multi_size_body_profile_text" = "あなたにおすすめのサイズ";
-"inpage_no_data_text" = "購入前に簡単サイズチェック";
+"inpage_one_size_will_fit_result_text" = "あなたにフィットします";
+"inpage_multi_size_comparison_text" = "あなたの服に近いサイズ";
+"inpage_body_data_empty_text" = "簡単サイズチェック";
+"inpage_will_fit_result" = "あなたにフィットするサイズ";
+"inpage_will_not_fit_result" = "試着をおすすめします";
 "inpage_loading_text" = "サイズを分析中";
 "inpage_error_long_text" = "現在バーチャサイズは使えませんが、\nそのままお買い物をお楽しみください。";
 "inpage_error_short_text" = "現在バーチャサイズは使えません。";
+
+"inpage_will_fit_result_united_arrows" = "あなたの体型に人気のサイズ";

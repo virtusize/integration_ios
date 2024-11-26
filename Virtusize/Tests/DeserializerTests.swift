@@ -33,7 +33,7 @@ class DeserializerTests: XCTestCase {
         let actualI18nLocalization = Deserializer.i18n(data: TestFixtures.emptyResponse.data(using: .utf8))
 
         XCTAssertNil(actualI18nLocalization.defaultAccessoryText)
-        XCTAssertNil(actualI18nLocalization.noDataText)
+        XCTAssertNil(actualI18nLocalization.bodyDataEmptyText)
     }
 
     func testI18n_verifyEnglishLocalization_returnExpectedLocalizationTexts() {
@@ -58,16 +58,20 @@ class DeserializerTests: XCTestCase {
 			Localization.shared.localize("inpage_one_size_close_bottom_text", language: localizedLang)
 		)
 		XCTAssertEqual(
-			actualI18nLocalization.bodyProfileOneSizeText,
-			Localization.shared.localize("inpage_one_size_body_profile_text", language: localizedLang)
+			actualI18nLocalization.oneSizeWillFitResultText,
+			Localization.shared.localize("inpage_one_size_will_fit_result_text", language: localizedLang)
 		)
 		XCTAssertEqual(
 			actualI18nLocalization.sizeComparisonMultiSizeText,
 			Localization.shared.localize("inpage_multi_size_comparison_text", language: localizedLang)
 		)
         XCTAssertEqual(
-            actualI18nLocalization.noDataText,
-            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+            actualI18nLocalization.willNotFitResultText,
+            Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization.bodyDataEmptyText,
+            Localization.shared.localize("inpage_body_data_empty_text", language: localizedLang)
         )
     }
 
@@ -93,12 +97,16 @@ class DeserializerTests: XCTestCase {
 			Localization.shared.localize("inpage_one_size_smaller_bottom_text", language: localizedLang)
 		)
 		XCTAssertEqual(
-			actualI18nLocalization.bodyProfileMultiSizeText,
-			Localization.shared.localize("inpage_multi_size_body_profile_text", language: localizedLang)
+			actualI18nLocalization.willFitResultText,
+			Localization.shared.localize("inpage_will_fit_result", language: localizedLang)
 		)
+        XCTAssertEqual(
+            actualI18nLocalization.willNotFitResultText,
+            Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
+        )
 		XCTAssertEqual(
-			actualI18nLocalization.noDataText,
-			Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+			actualI18nLocalization.bodyDataEmptyText,
+			Localization.shared.localize("inpage_body_data_empty_text", language: localizedLang)
 		)
     }
 
@@ -124,8 +132,12 @@ class DeserializerTests: XCTestCase {
 			Localization.shared.localize("inpage_one_size_larger_bottom_text", language: localizedLang)
 		)
         XCTAssertEqual(
-            actualI18nLocalization.noDataText,
-            Localization.shared.localize("inpage_no_data_text", language: localizedLang)
+            actualI18nLocalization.willNotFitResultText,
+            Localization.shared.localize("inpage_will_not_fit_result", language: localizedLang)
+        )
+        XCTAssertEqual(
+            actualI18nLocalization.bodyDataEmptyText,
+            Localization.shared.localize("inpage_body_data_empty_text", language: localizedLang)
         )
     }
 }

@@ -1,7 +1,7 @@
 "check_size" = "Check size";
 "privacy_policy" = "Privacy Policy";
 "privacy_policy_link" = "http://www.virtusize.com/site/privacy-policy";
-"inpage_default_accessory_text" = "See how everyday items fit";
+"inpage_default_accessory_text" = "See what fits inside";
 "inpage_has_product_top_text" = "See the size difference from";
 "inpage_has_product_bottom_text" = "your own item";
 "inpage_one_size_close_top_text" = "This item size is";
@@ -10,10 +10,13 @@
 "inpage_one_size_close_bottom_text" = "close to your item";
 "inpage_one_size_smaller_bottom_text" = "smaller than your item";
 "inpage_one_size_larger_bottom_text" = "larger than your item";
-"inpage_one_size_body_profile_text" = "Try it on and find your size";
+"inpage_one_size_will_fit_result_text" = "This item should fit you";
 "inpage_multi_size_comparison_text" = "The closest size to your item is";
-"inpage_multi_size_body_profile_text" = "Your recommended size is";
-"inpage_no_data_text" = "Find the right size before purchasing";
+"inpage_body_data_empty_text" = "Find your right size";
+"inpage_will_fit_result" = "Your recommended size is";
+"inpage_will_not_fit_result" = "Check how it fits you";
 "inpage_loading_text" = "Analyzing the size";
 "inpage_error_long_text" = "Virtusize is not available at the moment.\nPlease enjoy shopping without us.";
 "inpage_error_short_text" = "Virtusize is not available at the moment.";
+
+"inpage_will_fit_result_united_arrows" = "Your recommended size is";
