@@ -45,6 +45,7 @@ clean:
 
 	rm -rf .build/
 
+test: virtusize-test virtusize-core-test
 
 help:
 
