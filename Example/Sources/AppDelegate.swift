@@ -34,12 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		_ application: UIApplication,
 		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-		// Setup LogLevel
-		VirtusizeLogger.logLevel = .debug
-		// Override logger handler, if necessary
-//		VirtusizeLogger.logHandler = { logLevel, message in
-//			print("[Virtusize] \(logLevel): \(message)")
-//		}
+		// Setup Virtusize LogLevel
+		VirtusizeLogger.logLevel = .debug // `.none` is default
+		// Override Virtusize log handler, if necessary
+		//VirtusizeLogger.logHandler = { logLevel, message in
+		//	print("[Virtusize] \(logLevel): \(message)")
+		//}
 
 		// Virtusize.APIKey is required
 		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
@@ -61,8 +61,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .setShowSNSButtons(false)
 			.build()
 
-		VirtusizeAuthorization.setAppBundleId("com.virtusize.Example")
+		// Optional
+		//VirtusizeAuthorization.setAppBundleId("com.virtusize.Example")
 
 		return true
+	}
+
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+		return Virtusize.handleUrl(url)
 	}
 }

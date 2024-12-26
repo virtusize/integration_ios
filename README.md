@@ -161,6 +161,25 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
 | setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
 
+#### (Optional) Confgiure Internal Logger
+
+You can enable internal logger for debugging purpose by updating App delegate:
+
+```Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+		// Setup Virtusize LogLevel
+		VirtusizeLogger.logLevel = .debug // `.none` is default
+		// Override Virtusize log handler, if necessary
+		//VirtusizeLogger.logHandler = { logLevel, message in
+		//	print("[Virtusize] \(logLevel): \(message)")
+		//}
+
+    // ... continue Virtusize and App initialization
+
+    return true
+}
+```
+
 ### 2. Load Product with Virtusize SDK
 
 In the view controller for your product page, you will need to use `Virtusize.load` to populate the Virtusize views:
@@ -193,7 +212,7 @@ The SNS authentication flow requires switching to a SFSafariViewController, whic
 
 You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
 
-**(1) Register a URL type**
+#### (1) Register a URL type
 
 In Xcode, click on your project's **Info** tab and select **URL Types**.
 
@@ -201,13 +220,25 @@ Add a new URL type and set the URL Schemes and identifier to `com.your-company.y
 
 ![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
 
-**(2) Set the app's bundle ID**
+#### (2) Set up application callback handler
 
-In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
+Implement App delegate's `application(_:open:options)` method:
+
+```Swift
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+		return Virtusize.handleUrl(url)
+	}
+```
+
+#### (3 - Optional) Explicitly set the app's bundle ID
+
+By default, `VirtusizeAuth` will be generating SNS callback using `Bundle.main.bundleIdentifier`.  
+
+In case you need to override the vaule, update App Delegate's `application(_:didFinishLaunchingWithOptions:)` method with a `VirtusizeAuth.setAppBundleId` call by providing the app's bundle ID.
 
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-	// Virtusize initialization omitted for brevity
+	// ... Virtusize initialization
 
 	// Set the app bundle ID
 	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
