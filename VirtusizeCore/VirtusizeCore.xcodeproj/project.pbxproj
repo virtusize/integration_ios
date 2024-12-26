@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		523242472D1AC8AE00290069 /* VirtusizeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523242462D1AC89F00290069 /* VirtusizeLogger.swift */; };
+		5232424C2D1D93A100290069 /* VirtusizeLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */; };
 		84CF03B72BD7A2BA00C08920 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 84CF03B62BD7A2BA00C08920 /* PrivacyInfo.xcprivacy */; };
 		9C2B0D58273AB660004B10BB /* VirtusizeCore.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9C2B0D57273AB660004B10BB /* VirtusizeCore.podspec */; };
 		9C3505FD2727074A003BEF82 /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3505F32727074A003BEF82 /* VirtusizeCore.framework */; };
@@ -38,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		523242462D1AC89F00290069 /* VirtusizeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLogger.swift; sourceTree = "<group>"; };
+		5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLoggerTests.swift; sourceTree = "<group>"; };
 		84CF03B62BD7A2BA00C08920 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9C2B0D57273AB660004B10BB /* VirtusizeCore.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = VirtusizeCore.podspec; path = ../VirtusizeCore.podspec; sourceTree = "<group>"; };
 		9C3505F32727074A003BEF82 /* VirtusizeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VirtusizeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5232424A2D1D938000290069 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		9C3505E92727074A003BEF82 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +130,7 @@
 		9C3506002727074A003BEF82 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				5232424A2D1D938000290069 /* Utils */,
 				9C6E36C42739615900608640 /* Workers */,
 				9C3506032727074A003BEF82 /* Info.plist */,
 			);
@@ -136,6 +149,7 @@
 		9C35061727278B7C003BEF82 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				523242462D1AC89F00290069 /* VirtusizeLogger.swift */,
 				9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */,
 				9C35062C2727B781003BEF82 /* VirtusizeCoreBundleLoader.swift */,
 				9C35062D2727B781003BEF82 /* BundleLoaderProtocal.swift */,
@@ -342,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C3506692727FF4B003BEF82 /* UserDefaultsHelper.swift in Sources */,
+				523242472D1AC8AE00290069 /* VirtusizeLogger.swift in Sources */,
 				9C35062F2727B782003BEF82 /* BundleLoaderProtocal.swift in Sources */,
 				9C35067527280396003BEF82 /* HTTPURLResponse+Extensions.swift in Sources */,
 				9CAD1F4C2CF4AB6E00AC104E /* APICache.swift in Sources */,
@@ -361,6 +376,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C6E36C72739616E00608640 /* UserDefaultsHelperTests.swift in Sources */,
+				5232424C2D1D93A100290069 /* VirtusizeLoggerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
