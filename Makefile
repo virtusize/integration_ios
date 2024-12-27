@@ -46,6 +46,11 @@ clean:
 	rm -rf .build/
 
 
+install-git-hooks:
+
+	chmod +x .githooks/pre-push
+	git config core.hooksPath .githooks
+
 help:
 
 	@echo "$$HELP_MESSAGE"
