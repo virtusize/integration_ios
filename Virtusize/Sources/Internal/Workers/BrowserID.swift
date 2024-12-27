@@ -78,9 +78,9 @@ final internal class BrowserID {
 		let randomPart: String = {
 			var ret: String = ""
 			let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+			let max = chars.count
 			for _ in 0..<22 {
-				let max = UInt32(chars.count)
-				let randomNumber = Int(arc4random_uniform(max))
+				let randomNumber = Int.random(in: 0..<max)
 				let randomIndex = chars.index(chars.startIndex, offsetBy: randomNumber)
 				let newCharacter = chars[randomIndex]
 				ret += String(newCharacter)

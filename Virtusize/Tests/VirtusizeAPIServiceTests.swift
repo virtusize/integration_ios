@@ -643,7 +643,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         var actualRecommendedSizes: BodyProfileRecommendedSizeArray?
 
         VirtusizeAPIService.session = MockURLSession(
-            data: "[{\"sizeName\": \"35\"}]".data(using: .utf8),
+            data: Data("[{\"sizeName\": \"35\"}]".utf8),
             urlResponse: nil,
             error: nil
         )
@@ -692,7 +692,7 @@ extension VirtusizeAPIServiceTests {
         }
     }
 
-    class MockTask: URLSessionDataTask {
+    class MockTask: URLSessionDataTask, @unchecked Sendable {
         private let data: Data?
         private let urlResponse: URLResponse?
         private let responseError: Error?
