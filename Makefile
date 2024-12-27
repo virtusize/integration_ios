@@ -45,6 +45,13 @@ clean:
 
 	rm -rf .build/
 
+lint:
+
+	swiftlint --strict
+
+lint-fix:
+
+	swiftlint --fix --strict
 
 help:
 
