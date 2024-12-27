@@ -122,8 +122,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			"messageAndButtonMargin": messageAndButtonMargin
 		]
 
-		// swiftlint:disable line_length
 		let horizontalConstraints = NSLayoutConstraint.constraints(
+			// swiftlint:disable:next line_length
 			withVisualFormat: "H:|-horizontalMargin-[inPageMiniImageView]-0-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-horizontalMargin-|",
 			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
 			metrics: metrics,
@@ -206,8 +206,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		let displayLanguage = Virtusize.params?.language
 		let messageTextSize = messageFontSize ?? 12
 		let buttonTextSize = buttonFontSize ?? 10
+		// swiftlint:disable switch_case_alignment line_length
 		switch displayLanguage {
-			// swiftlint:disable switch_case_alignment
 			case .ENGLISH:
 				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
 				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
@@ -221,6 +221,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
 				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
 		}
+		// swiftlint:enable switch_case_alignment line_length
 	}
 
 	internal override func setLoadingScreen(loading: Bool) {

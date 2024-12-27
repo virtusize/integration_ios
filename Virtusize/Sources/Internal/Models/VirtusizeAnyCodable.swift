@@ -78,5 +78,6 @@ extension VirtusizeAnyCodable: Codable {
 				)
 				throw EncodingError.invalidValue(self.value, context)
 		}
+		// swiftlint:enable switch_case_alignment
 	}
 }

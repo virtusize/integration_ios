@@ -25,9 +25,9 @@
 import XCTest
 @testable import Virtusize
 
-// swiftlint:disable function_body_length type_body_length
 class VirtusizeGetSizeParamsTests: XCTestCase {
 
+	// swiftlint:disable:next function_body_length
     func testEncoding_hasFullGetSizeParamsData_shouldHaveExpectedDictionary() throws {
         let actualGetSizeParams = VirtusizeGetSizeParams(
             productTypes: TestFixtures.getProductTypes(),
@@ -212,6 +212,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         XCTAssertEqual(expectedDict, actualDict)
     }
 
+	// swiftlint:disable:next function_body_length
     func testEncoding_hasEmptyGetSizeParamsData_shouldHaveExpectedDictionary() throws {
         let actualGetSizeParams = VirtusizeGetSizeParams(
             productTypes: [],

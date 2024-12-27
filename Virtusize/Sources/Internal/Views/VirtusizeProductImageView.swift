@@ -53,14 +53,14 @@ internal class VirtusizeProductImageView: UIView {
 	private let circleBorderLayer = CAShapeLayer()
 
 	var image: UIImage? {
+		get {
+			return productImageView.image
+		}
 		set {
 			if productImageView.image != newValue {
 				productImageView.image = newValue
 				setStyle()
 			}
-		}
-		get {
-			return productImageView.image
 		}
 	}
 
@@ -108,7 +108,11 @@ internal class VirtusizeProductImageView: UIView {
 		}
 
 		productImageView.center = center
-        productImageView.frame = CGRect(x: 2, y: 2, width: VirtusizeProductImageView.circleImageSize, height: VirtusizeProductImageView.circleImageSize)
+        productImageView.frame = CGRect(
+			x: 2,
+			y: 2,
+			width: VirtusizeProductImageView.circleImageSize,
+			height: VirtusizeProductImageView.circleImageSize)
         productImageView.layer.cornerRadius = VirtusizeProductImageView.circleImageSize / 2
 		productImageView.layer.masksToBounds = true
 		productImageView.contentMode = .scaleAspectFill

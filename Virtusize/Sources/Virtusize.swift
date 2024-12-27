@@ -63,7 +63,7 @@ public class Virtusize {
 
 	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
 
-	internal typealias SizeRecommendationData = (
+	internal typealias SizeRecommendationData = ( // swiftlint:disable:this large_tuple
 		serverProduct: VirtusizeServerProduct,
 		sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		bodyProfileRecommendedSize: BodyProfileRecommendedSize?
@@ -73,6 +73,9 @@ public class Virtusize {
 	private static var _sizeRecData: SizeRecommendationData?
 	/// The property to be set to updating the size recommendation data for InPage views.
 	internal static var sizeRecData: SizeRecommendationData? {
+		get {
+			return _sizeRecData
+		}
 		set {
 			_sizeRecData = newValue
 			if let sizeRecData = _sizeRecData {
@@ -85,9 +88,6 @@ public class Virtusize {
 				}
 			}
 		}
-		get {
-			return _sizeRecData
-		}
 	}
 
 	internal typealias InPageError = (hasError: Bool, externalProductId: String)
@@ -96,6 +96,9 @@ public class Virtusize {
 	private static var _inPageError: InPageError?
 	/// The property to be set to show the InPage error screen with the associated external product ID
 	internal static var inPageError: InPageError? {
+		get {
+			return _inPageError
+		}
 		set {
 			_inPageError = newValue
 			if let inPageError = _inPageError {
@@ -108,9 +111,6 @@ public class Virtusize {
 					)
 				}
 			}
-		}
-		get {
-			return _inPageError
 		}
 	}
 

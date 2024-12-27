@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+// swiftlint:disable switch_case_alignment
 /// This enum contains all available Virtusize environments
 public enum VirtusizeEnvironment: String, CaseIterable {
 	case TESTING="testing.virtusize.jp"
@@ -36,7 +37,6 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 
 	/// Gets the services URL for the `productCheck` and `getSize` requests
 	internal func servicesUrl() -> String {
-		// swiftlint:disable switch_case_alignment
 		switch self {
 			case .TESTING:
 				return "services.virtusize.jp"
@@ -53,7 +53,6 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 
     /// Gets the services URL for the ``getSize` requests
     internal func getSizeUrl() -> String {
-        // swiftlint:disable switch_case_alignment
         switch self {
             case .TESTING:
                 return "size-recommendation.virtusize.jp"
@@ -113,3 +112,4 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 		}
 	}
 }
+// swiftlint:enable switch_case_alignment

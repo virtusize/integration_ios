@@ -27,7 +27,6 @@ import Foundation
 
 /// This structure represents a product from the Virtusize server
 public class VirtusizeServerProduct: Codable {
-	// swiftlint:disable identifier_name
 	/// An integer to represent the internal product ID in the Virtusize server
 	public let id: Int
 	/// The list of the `VirtusizeProductSize` that this product has
@@ -54,6 +53,7 @@ public class VirtusizeServerProduct: Codable {
 		guard !cloudinaryPublicId.isEmpty else {
 			return nil
 		}
+		// swiftlint:disable:next line_length
         return "https://res.cloudinary.com/virtusize/image/upload/w_\(imageSize),h_\(imageSize)/q_auto:best,f_auto,dpr_auto/\(cloudinaryPublicId).jpg"
 	}
 
@@ -63,7 +63,6 @@ public class VirtusizeServerProduct: Codable {
 	}
 
 	private enum CodingKeys: String, CodingKey {
-		// swiftlint:disable identifier_name
 		case id, sizes, externalId, productType, name, cloudinaryPublicId, store, isFavorite, storeProductMeta
 	}
 

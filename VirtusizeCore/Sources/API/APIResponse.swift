@@ -62,6 +62,7 @@ extension APIResult {
 			case let .failure(_, error):
 				return error?.debugDescription
 		}
+		// swiftlint:enable switch_case_alignment
 	}
 
 	/// The API result when the request is successful

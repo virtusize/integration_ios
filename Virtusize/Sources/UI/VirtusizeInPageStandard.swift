@@ -24,9 +24,8 @@
 
 import UIKit
 
-// swiftlint:disable type_body_length file_length
 /// This class is the custom Virtusize InPage Standard view that can be added in the client's layout file.
-public class VirtusizeInPageStandard: VirtusizeInPageView {
+public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable:this type_body_length
 
 	/// The property to set the background color of the size check button
 	public var inPageStandardButtonBackgroundColor: UIColor? {
@@ -241,7 +240,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		errorText.translatesAutoresizingMaskIntoConstraints = value
 	}
 
-	// swiftlint:disable function_body_length
+	// swiftlint:disable:next function_body_length
 	private func setConstraints() {
 		setAllTranslatesAutoresizingMaskIntoConstraints(value: false)
 
@@ -290,8 +289,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		)
 		allConstraints += vsIconImageViewHorizontalConstraints
 
-		// swiftlint:disable line_length
 		let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
+			// swiftlint:disable:next line_length
 			withVisualFormat: "H:|-defaultMargin-[userProductImageView(==userProductImageSize)]-(productImageViewOffset)-[storeProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
 			options: [.alignAllCenterY],
 			metrics: metrics,
@@ -375,7 +374,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		NSLayoutConstraint.activate(allConstraints)
 	}
 
-	// swiftlint:disable function_body_length
+	// swiftlint:disable:next function_body_length
 	private func setStyle() {
 		inPageStandardView.backgroundColor = .white
 		inPageStandardView.layer.masksToBounds = false
@@ -432,8 +431,8 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		let displayLanguage = Virtusize.params?.language
 		let messageTextSize = messageFontSize ?? 12
 		let buttonTextSize = buttonFontSize ?? 12
+		// swiftlint:disable switch_case_alignment
 		switch displayLanguage {
-			// swiftlint:disable switch_case_alignment
 			case .ENGLISH:
 				topMessageLabel.font = Font.system(size: messageTextSize + 2)
 				bottomMessageLabel.font = Font.system(size: messageTextSize + 6, weight: .bold)
@@ -458,6 +457,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			default:
 				break
 		}
+		// swiftlint:enable switch_case_alignment
 		checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
 		messageStackView.spacing = messageLineSpacing
 	}
@@ -503,9 +503,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 		_ productImageTwo: VirtusizeProductImageView
 	) {
 		productImageOne.alpha = 0.0
-		crossFadeInAnimator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.75, delay: 2.5, options: [.curveEaseIn], animations: {
-			productImageOne.alpha = 1.0
-		})
+		crossFadeInAnimator = UIViewPropertyAnimator.runningPropertyAnimator(
+			withDuration: 0.75,
+			delay: 2.5,
+			options: [.curveEaseIn],
+			animations: {
+				productImageOne.alpha = 1.0
+			}
+		)
 		crossFadeInAnimator?.startAnimation()
 	}
 
@@ -514,11 +519,16 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 	/// - Parameter productImage: The image to be faded out
 	private func fadeOutAnimation(_ productImage: VirtusizeProductImageView) {
 		productImage.alpha = 1.0
-		crossFadeOutAnimator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.75, delay: 2.5, options: [.curveEaseOut], animations: {
-			productImage.alpha = 0.0
-		}, completion: { _ in
-			self.startCrossFadeProductImageViews()
-		})
+		crossFadeOutAnimator = UIViewPropertyAnimator.runningPropertyAnimator(
+			withDuration: 0.75,
+			delay: 2.5,
+			options: [.curveEaseOut],
+			animations: {
+				productImage.alpha = 0.0
+			}, completion: { _ in
+				self.startCrossFadeProductImageViews()
+			}
+		)
 		crossFadeOutAnimator?.startAnimation()
 	}
 
@@ -572,4 +582,4 @@ public class VirtusizeInPageStandard: VirtusizeInPageView {
 			stopLoadingTextAnimation()
 		}
 	}
-}
+} // swiftlint:disable:this file_length

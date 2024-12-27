@@ -68,5 +68,6 @@ extension VirtusizeError: CustomDebugStringConvertible {
 			case .unknownError:
 				return "Virtusize: Unknown Error"
 		}
+		// swiftlint:enable switch_case_alignment
 	}
 }

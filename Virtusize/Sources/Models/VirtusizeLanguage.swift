@@ -39,6 +39,7 @@ public enum VirtusizeLanguage: String, CaseIterable {
 			case .KOREAN:
 				return  "KR"
 		}
+		// swiftlint:enable switch_case_alignment
 	}
 
 	/// The default label for the language selector
@@ -52,5 +53,6 @@ public enum VirtusizeLanguage: String, CaseIterable {
 			case .KOREAN:
 				return  "한국어"
 		}
+		// swiftlint:enable switch_case_alignment
 	}
 }

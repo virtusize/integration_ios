@@ -275,6 +275,7 @@ internal class VirtusizeRepository: NSObject {
             default:
                 Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
         }
+		// swiftlint:enable switch_case_alignment
     }
 
 	/// Updates the user body recommended size

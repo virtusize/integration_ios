@@ -85,6 +85,7 @@ internal enum Base64ImageString: String {
 			default:
 				value = self.rawValue
 		}
+		// swiftlint:enable switch_case_alignment
 		let temp = value.components(separatedBy: ",")
 		let dataDecoded: Data = Data(base64Encoded: temp[1], options: .ignoreUnknownCharacters)!
 		return UIImage(data: dataDecoded, scale: scale)

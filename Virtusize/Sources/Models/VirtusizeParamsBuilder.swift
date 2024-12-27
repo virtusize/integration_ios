@@ -53,7 +53,7 @@ public class VirtusizeParamsBuilder {
 		detailsPanelCards = value
 		return self
 	}
-    
+
     public func setShowSNSButtons(_ value: Bool) -> VirtusizeParamsBuilder {
         showSNSButtons = value
         return self

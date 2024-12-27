@@ -26,7 +26,6 @@ import Foundation
 
 /// This structure represents the response of the request that retrieves the specific store info
 internal struct VirtusizeStore: Codable {
-	// swiftlint:disable identifier_name
 	private let id: Int
 	private let surveyLink: String?
 	private let name: String

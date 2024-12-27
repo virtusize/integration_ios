@@ -43,9 +43,9 @@ internal enum APIEndpoints {
 	case getSize
 	case i18n(langCode: String)
 
-    // swiftlint:disable switch_case_alignment
     // MARK: - Properties
     var hostname: String {
+		// swiftlint:disable switch_case_alignment
         switch self {
             case .productCheck:
                 return Virtusize.environment.servicesUrl()
@@ -60,12 +60,14 @@ internal enum APIEndpoints {
             default:
                 return Virtusize.environment.rawValue
         }
+		// swiftlint:enable switch_case_alignment
     }
 
     var components: URLComponents {
         var components = URLComponents()
         components.scheme = "https"
         components.host = hostname
+		// swiftlint:disable switch_case_alignment
         switch self {
             case .productCheck(let externalId):
                 let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
@@ -119,6 +121,7 @@ internal enum APIEndpoints {
             case .i18n(let langCode):
                 components.path = "/bundle-payloads/aoyama/\(langCode)"
         }
+		// swiftlint:enable switch_case_alignment
 
         return components
     }

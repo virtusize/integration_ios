@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTheFitButton: VirtusizeButton!
     @IBOutlet weak var inPageMini: VirtusizeInPageMini!
 
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         // You can set up the Virtusize button style
         checkTheFitButton.style = .TEAL
 
-        /// you can use `VirtusizeAssets` to access Virtusize SDK assets, including images and colors
+        // you can use `VirtusizeAssets` to access Virtusize SDK assets, including images and colors
         // checkTheFitButton.setImage(VirtusizeAssets.icon, for: .normal)
 
         // 2. Add the VirtusizeButton programmatically
@@ -188,7 +188,8 @@ class ViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+		navigationController?.navigationBar.barStyle = .black
+		navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = UIColor.vsTealColor
     }
 }
@@ -205,6 +206,7 @@ extension ViewController: VirtusizeMessageHandler {
             default:
                 return
         }
+		// swiftlint:enable switch_case_alignment
     }
 
     func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {

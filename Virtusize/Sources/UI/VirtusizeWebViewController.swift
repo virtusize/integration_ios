@@ -211,9 +211,9 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return nil
 		}
 
-		// swiftlint:disable line_length
 		guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
-			// By default, The Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a Webview.
+			// By default, The Google sign-in page shows a 403 error: disallowed_useragent
+			//   if you are visiting it within a Webview.
 			// By setting up the user agent, Google recognizes the web view as a Safari browser
 			configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
 			popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
@@ -262,7 +262,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 
 extension VirtusizeWebViewController: WKScriptMessageHandler {
 	// MARK: - Widget Callbacks
-	// swiftlint:disable cyclomatic_complexity
+	// swiftlint:disable:next cyclomatic_complexity
 	public func userContentController(
 		_ userContentController: WKUserContentController,
 		didReceive message: WKScriptMessage) {
@@ -304,6 +304,7 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 				default:
 					break
 			}
+			// swiftlint:enable switch_case_alignment
 			messageHandler?.virtusizeController(self, didReceiveEvent: event)
 		} catch {
 			if let error = error as? VirtusizeError {
