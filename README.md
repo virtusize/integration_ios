@@ -74,7 +74,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.6.6'
+pod 'Virtusize', '~> 2.7.0'
 end
 ```
 
@@ -90,7 +90,7 @@ $ pod install
 Starting with the `2.3.2` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.6.6`
+2. Select a minimum version of `2.7.0`
 3. Click **Next**
 
 ### Carthage
@@ -161,6 +161,25 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
 | setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
 
+#### (Optional) Confgiure Internal Logger
+
+You can enable internal logger for debugging purpose by updating App delegate:
+
+```Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+		// Setup Virtusize LogLevel
+		VirtusizeLogger.logLevel = .debug // `.none` is default
+		// Override Virtusize log handler, if necessary
+		//VirtusizeLogger.logHandler = { logLevel, message in
+		//	print("[Virtusize] \(logLevel): \(message)")
+		//}
+
+    // ... continue Virtusize and App initialization
+
+    return true
+}
+```
+
 ### 2. Load Product with Virtusize SDK
 
 In the view controller for your product page, you will need to use `Virtusize.load` to populate the Virtusize views:
@@ -191,9 +210,7 @@ override func viewDidLoad() {
 
 The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController.
 
-You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
-
-**(1) Register a URL type**
+#### (1) Register a URL type
 
 In Xcode, click on your project's **Info** tab and select **URL Types**.
 
@@ -201,20 +218,23 @@ Add a new URL type and set the URL Schemes and identifier to `com.your-company.y
 
 ![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
 
-**(2) Set the app's bundle ID**
+#### (2) Set up application callback handler
 
-In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
+Implement App delegate's `application(_:open:options)` method:
 
 ```Swift
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-	// Virtusize initialization omitted for brevity
-
-	// Set the app bundle ID
-	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
-
-	return true
-}
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+		return Virtusize.handleUrl(url)
+	}
 ```
+
+#### (3 - Deprecated) Explicitly set the app's bundle ID
+
+Previously (`<=2.6.6`) you would need to call `VirtusizeAuth.setAppBundleId(bundleId)` to notify SDK about the `bundleId`.  
+
+Starting version `2.7.0` this method is deprecated and removed.  
+
+`VirtusizeAuth` is using `Bundle.main.bundleIdentifier` now to generate SNS callback.  
 
 **❗IMPORTANT**
 

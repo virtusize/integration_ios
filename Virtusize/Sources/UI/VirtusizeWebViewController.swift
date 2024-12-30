@@ -88,6 +88,11 @@ public final class VirtusizeWebViewController: UIViewController {
 		let webView = WKWebView(frame: .zero, configuration: config)
 		webView.navigationDelegate = self
 		webView.uiDelegate = self
+#if DEBUG
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+        }
+#endif
 		view.addSubview(webView)
 		self.webView = webView
 
@@ -219,6 +224,11 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
 			popupWebView!.navigationDelegate = self
 			popupWebView!.uiDelegate = self
+#if DEBUG
+            if #available(iOS 16.4, *) {
+                popupWebView!.isInspectable = true
+            }
+#endif
 			self.view.addSubview(popupWebView!)
 			return popupWebView
 		}

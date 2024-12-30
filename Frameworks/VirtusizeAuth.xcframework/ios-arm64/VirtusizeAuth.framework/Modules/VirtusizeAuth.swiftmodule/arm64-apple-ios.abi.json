@@ -25,6 +25,16 @@
         ]
       },
       {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "VirtusizeAuth",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
         "kind": "TypeDecl",
         "name": "VirtusizeURLCheck",
         "printedName": "VirtusizeURLCheck",
@@ -142,6 +152,36 @@
               "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isSnsCallback",
+            "printedName": "isSnsCallback(url:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13VirtusizeAuth0A8URLCheckC13isSnsCallback3urlSb10Foundation3URLV_tFZ",
+            "mangledName": "$s13VirtusizeAuth0A8URLCheckC13isSnsCallback3urlSb10Foundation3URLV_tFZ",
+            "moduleName": "VirtusizeAuth",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Class",
@@ -149,8 +189,7 @@
         "mangledName": "$s13VirtusizeAuth0A8URLCheckC",
         "moduleName": "VirtusizeAuth",
         "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
+          "AccessControl"
         ],
         "hasMissingDesignatedInitializers": true,
         "conformances": [
@@ -1963,10 +2002,68 @@
         "moduleName": "VirtusizeAuth"
       },
       {
+        "kind": "Import",
+        "name": "VirtusizeCore",
+        "printedName": "VirtusizeCore",
+        "declKind": "Import",
+        "moduleName": "VirtusizeAuth"
+      },
+      {
         "kind": "TypeDecl",
         "name": "VirtusizeAuthorization",
         "printedName": "VirtusizeAuthorization",
         "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "VirtusizeAuthorization",
+                "printedName": "VirtusizeAuth.VirtusizeAuthorization",
+                "usr": "s:13VirtusizeAuth0A13AuthorizationC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:13VirtusizeAuth0A13AuthorizationC6sharedACvpZ",
+            "mangledName": "$s13VirtusizeAuth0A13AuthorizationC6sharedACvpZ",
+            "moduleName": "VirtusizeAuth",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "VirtusizeAuthorization",
+                    "printedName": "VirtusizeAuth.VirtusizeAuthorization",
+                    "usr": "s:13VirtusizeAuth0A13AuthorizationC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:13VirtusizeAuth0A13AuthorizationC6sharedACvgZ",
+                "mangledName": "$s13VirtusizeAuth0A13AuthorizationC6sharedACvgZ",
+                "moduleName": "VirtusizeAuth",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
           {
             "kind": "Function",
             "name": "isSNSAuthURL",
@@ -2046,7 +2143,36 @@
             "moduleName": "VirtusizeAuth",
             "static": true,
             "declAttributes": [
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "handleUrl",
+            "printedName": "handleUrl(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13VirtusizeAuth0A13AuthorizationC9handleUrlySb10Foundation3URLVF",
+            "mangledName": "$s13VirtusizeAuth0A13AuthorizationC9handleUrlySb10Foundation3URLVF",
+            "moduleName": "VirtusizeAuth",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
           }
@@ -2105,6 +2231,13 @@
       },
       {
         "kind": "Import",
+        "name": "VirtusizeCore",
+        "printedName": "VirtusizeCore",
+        "declKind": "Import",
+        "moduleName": "VirtusizeAuth"
+      },
+      {
+        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -2128,91 +2261,98 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/VirtusizeWebView.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/VirtusizeWebView.swift",
       "kind": "BooleanLiteral",
       "offset": 1437,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/VirtusizeWebView.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/VirtusizeWebView.swift",
       "kind": "BooleanLiteral",
       "offset": 1692,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Models\/GoogleUser.swift",
       "kind": "StringLiteral",
       "offset": 1724,
       "length": 12,
       "value": "\"given_name\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Models\/GoogleUser.swift",
       "kind": "StringLiteral",
       "offset": 1757,
       "length": 13,
       "value": "\"family_name\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/GoogleUser.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Models\/GoogleUser.swift",
       "kind": "StringLiteral",
       "offset": 1817,
       "length": 9,
       "value": "\"picture\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/VirtusizeAuthorization.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/VirtusizeAuthorization.swift",
       "kind": "StringLiteral",
-      "offset": 1332,
+      "offset": 1353,
       "length": 8,
       "value": "\"app_id\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/VirtusizeAuthorization.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/VirtusizeAuthorization.swift",
       "kind": "StringLiteral",
-      "offset": 1376,
+      "offset": 1397,
       "length": 14,
       "value": "\"redirect_uri\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/VirtusizeAuthorization.swift",
+      "kind": "StringLiteral",
+      "offset": 1436,
+      "length": 10,
+      "value": "\"sns-auth\""
+    },
+    {
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
       "kind": "StringLiteral",
       "offset": 1273,
       "length": 7,
       "value": "\"state\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
       "kind": "StringLiteral",
       "offset": 1315,
       "length": 14,
       "value": "\"access_token\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
       "kind": "StringLiteral",
       "offset": 1360,
       "length": 17,
       "value": "\"185447204824425\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Utils\/VirtusizeAuthConstants.swift",
       "kind": "StringLiteral",
       "offset": 1407,
       "length": 74,
       "value": "\"461467476386-ruegfhmmm6846mf13skp9g5bqh7rb1f9.apps.googleusercontent.com\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Models\/FacebookUser.swift",
       "kind": "StringLiteral",
       "offset": 1615,
       "length": 12,
       "value": "\"first_name\""
     },
     {
-      "filePath": "\/Users\/kuei\/Desktop\/Programs\/iOS\/virtusize-auth-ios\/VirtusizeAuth\/Models\/FacebookUser.swift",
+      "filePath": "\/Users\/seifer\/Projects\/virtusize\/ios\/auth-private\/VirtusizeAuth\/Models\/FacebookUser.swift",
       "kind": "StringLiteral",
       "offset": 1646,
       "length": 11,

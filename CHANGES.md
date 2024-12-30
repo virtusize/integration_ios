@@ -13,8 +13,13 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.7.0
+- Refactor: Update SNS auth flow to fix an issue when users never returned back to the app after successful authentication
+- Deprecate: `VirtusizeAuthentication.setAppBundleId` method is deprecated and removed, `bundleId` is resolved authomatically now.
+- Feature: Introduce internal logger
+
 ### 2.6.6
-- Fix:  Inpage text is not appropriate when the size is recommended
+- Fix: Inpage text is not appropriate when the size is recommended
 - Fix: Inpage text for on-boarding user has 2 patterns at random
 
 ### 2.6.5

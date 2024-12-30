@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
 // swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name VirtusizeAuth
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface
 import Foundation
@@ -15,6 +15,7 @@ import _SwiftConcurrencyShims
   public static func isExternalLinkFromVirtusize(url: Swift.String?) -> Swift.Bool
   public static func isLinkFromSNSAuth(url: Swift.String?) -> Swift.Bool
   public static func isFitIllustratorLink(url: Swift.String?) -> Swift.Bool
+  public static func isSnsCallback(url: Foundation.URL) -> Swift.Bool
   @objc deinit
 }
 @objc @_Concurrency.MainActor @preconcurrency public class VirtusizeWebView : WebKit.WKWebView {
@@ -68,7 +69,9 @@ extension VirtusizeAuth.VirtusizeWebView : WebKit.WKNavigationDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, authenticationChallenge challenge: Foundation.URLAuthenticationChallenge, shouldAllowDeprecatedTLS decisionHandler: @escaping (Swift.Bool) -> Swift.Void)
 }
 @_hasMissingDesignatedInitializers public class VirtusizeAuthorization {
+  public static let shared: VirtusizeAuth.VirtusizeAuthorization
   public class func isSNSAuthURL(viewController: UIKit.UIViewController, webView: WebKit.WKWebView?, url: Foundation.URL) -> Swift.Bool
   public class func setAppBundleId(_ appBundleId: Swift.String!)
+  public func handleUrl(_ url: Foundation.URL) -> Swift.Bool
   @objc deinit
 }
