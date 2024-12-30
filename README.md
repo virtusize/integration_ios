@@ -210,8 +210,6 @@ override func viewDidLoad() {
 
 The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController.
 
-You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
-
 #### (1) Register a URL type
 
 In Xcode, click on your project's **Info** tab and select **URL Types**.
@@ -230,22 +228,13 @@ Implement App delegate's `application(_:open:options)` method:
 	}
 ```
 
-#### (3 - Optional) Explicitly set the app's bundle ID
+#### (3 - Deprecated) Explicitly set the app's bundle ID
 
-By default, `VirtusizeAuth` will be generating SNS callback using `Bundle.main.bundleIdentifier`.  
+Previously (`<=2.6.6`) you would need to call `VirtusizeAuth.setAppBundleId(bundleId)` to notify SDK about the `bundleId`.  
 
-In case you need to override the vaule, update App Delegate's `application(_:didFinishLaunchingWithOptions:)` method with a `VirtusizeAuth.setAppBundleId` call by providing the app's bundle ID.
+Starting version `2.7.0` this method is deprecated and removed.  
 
-```Swift
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-	// ... Virtusize initialization
-
-	// Set the app bundle ID
-	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
-
-	return true
-}
-```
+`VirtusizeAuth` is using `Bundle.main.bundleIdentifier` now to generate SNS callback.  
 
 **❗IMPORTANT**
 

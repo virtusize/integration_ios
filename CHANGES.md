@@ -15,6 +15,7 @@ Use list notation, and following prefixes:
 
 ### 2.7.0
 - Refactor: Update SNS auth flow to fix an issue when users never returned back to the app after successful authentication
+- Deprecate: `VirtusizeAuthentication.setAppBundleId` method is deprecated and removed, `bundleId` is resolved authomatically now.
 - Feature: Introduce internal logger
 
 ### 2.6.6

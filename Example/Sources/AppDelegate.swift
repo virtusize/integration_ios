@@ -61,9 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .setShowSNSButtons(false)
 			.build()
 
-		// Optional
-		//VirtusizeAuthorization.setAppBundleId("com.virtusize.Example")
-
 		return true
 	}
 
