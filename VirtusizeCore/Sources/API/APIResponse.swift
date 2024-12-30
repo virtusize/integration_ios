@@ -25,7 +25,7 @@
 import Foundation
 
 // The wrapper for the API response
-public struct APIResponse {
+public struct APIResponse: Sendable {
 	/// The API response status code
 	public var code: Int?
 	/// The API response data

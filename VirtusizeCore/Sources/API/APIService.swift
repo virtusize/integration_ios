@@ -112,16 +112,19 @@ open class APIService {
 	/// - Parameter request: A URL load request for an API request
 	/// - Returns the `APIResponse`
 	public static func performAsync(_ request: URLRequest) -> APIResponse? {
+		let syncQueue = DispatchQueue(label: "com.virtusize.performAsync")
 		var apiResponse: APIResponse?
 		let semaphore = DispatchSemaphore(value: 0)
 		let task: URLSessionDataTask
 		task = APIService.session.dataTask(with: request) { (data, response, error) in
-			apiResponse = APIResponse(
-				code: (response as? HTTPURLResponse)?.statusCode ?? nil,
-				data: data,
-				response: response,
-				error: error
-			)
+			syncQueue.sync {
+				apiResponse = APIResponse(
+					code: (response as? HTTPURLResponse)?.statusCode ?? nil,
+					data: data,
+					response: response,
+					error: error
+				)
+			}
 			semaphore.signal()
 		}
 		task.resume()
