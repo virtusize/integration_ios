@@ -206,22 +206,22 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		let displayLanguage = Virtusize.params?.language
 		let messageTextSize = messageFontSize ?? 12
 		let buttonTextSize = buttonFontSize ?? 10
-		// swiftlint:disable switch_case_alignment line_length
+		// swiftlint:disable line_length
 		switch displayLanguage {
-			case .ENGLISH:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
-			case .JAPANESE:
-				inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
-			case .KOREAN:
-				inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
-			default:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+		case .ENGLISH:
+			inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+		case .JAPANESE:
+			inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
+		case .KOREAN:
+			inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
+		default:
+			inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
 		}
-		// swiftlint:enable switch_case_alignment line_length
+		// swiftlint:enable line_length
 	}
 
 	internal override func setLoadingScreen(loading: Bool) {

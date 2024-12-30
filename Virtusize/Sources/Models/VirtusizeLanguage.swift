@@ -30,29 +30,25 @@ public enum VirtusizeLanguage: String, CaseIterable {
 
 	/// A two character lang string (For the Flutter SDK)
 	public var langStr: String {
-		// swiftlint:disable switch_case_alignment
 		switch self {
-			case .ENGLISH:
-				return "EN"
-			case .JAPANESE:
-				return  "JP"
-			case .KOREAN:
-				return  "KR"
+		case .ENGLISH:
+			return "EN"
+		case .JAPANESE:
+			return  "JP"
+		case .KOREAN:
+			return  "KR"
 		}
-		// swiftlint:enable switch_case_alignment
 	}
 
 	/// The default label for the language selector
 	var label: String {
-		// swiftlint:disable switch_case_alignment
 		switch self {
-			case .ENGLISH:
-				return "English"
-			case .JAPANESE:
-				return  "日本語"
-			case .KOREAN:
-				return  "한국어"
+		case .ENGLISH:
+			return "English"
+		case .JAPANESE:
+			return  "日本語"
+		case .KOREAN:
+			return  "한국어"
 		}
-		// swiftlint:enable switch_case_alignment
 	}
 }

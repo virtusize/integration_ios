@@ -431,33 +431,31 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		let displayLanguage = Virtusize.params?.language
 		let messageTextSize = messageFontSize ?? 12
 		let buttonTextSize = buttonFontSize ?? 12
-		// swiftlint:disable switch_case_alignment
 		switch displayLanguage {
-			case .ENGLISH:
-				topMessageLabel.font = Font.system(size: messageTextSize + 2)
-				bottomMessageLabel.font = Font.system(size: messageTextSize + 6, weight: .bold)
-				checkSizeButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
-				privacyPolicyLink.font = Font.system(size: messageTextSize)
-				errorText.font = Font.system(size: messageTextSize)
-				messageLineSpacing = 2
-			case .JAPANESE:
-				topMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize)
-				bottomMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize + 4, weight: .bold)
-				checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
-				privacyPolicyLink.font = Font.notoSansCJKJP(size: messageTextSize - 2)
-				errorText.font = Font.notoSansCJKJP(size: messageTextSize - 2)
-				messageLineSpacing = 0
-			case .KOREAN:
-				topMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize)
-				bottomMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize + 4, weight: .bold)
-				checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
-				privacyPolicyLink.font = Font.notoSansCJKKR(size: messageTextSize - 2)
-				errorText.font = Font.notoSansCJKKR(size: messageTextSize - 2)
-				messageLineSpacing = 0
-			default:
-				break
+		case .ENGLISH:
+			topMessageLabel.font = Font.system(size: messageTextSize + 2)
+			bottomMessageLabel.font = Font.system(size: messageTextSize + 6, weight: .bold)
+			checkSizeButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+			privacyPolicyLink.font = Font.system(size: messageTextSize)
+			errorText.font = Font.system(size: messageTextSize)
+			messageLineSpacing = 2
+		case .JAPANESE:
+			topMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize)
+			bottomMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize + 4, weight: .bold)
+			checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
+			privacyPolicyLink.font = Font.notoSansCJKJP(size: messageTextSize - 2)
+			errorText.font = Font.notoSansCJKJP(size: messageTextSize - 2)
+			messageLineSpacing = 0
+		case .KOREAN:
+			topMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize)
+			bottomMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize + 4, weight: .bold)
+			checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
+			privacyPolicyLink.font = Font.notoSansCJKKR(size: messageTextSize - 2)
+			errorText.font = Font.notoSansCJKKR(size: messageTextSize - 2)
+			messageLineSpacing = 0
+		default:
+			break
 		}
-		// swiftlint:enable switch_case_alignment
 		checkSizeButton.layer.cornerRadius = checkSizeButton.intrinsicContentSize.height / 2
 		messageStackView.spacing = messageLineSpacing
 	}

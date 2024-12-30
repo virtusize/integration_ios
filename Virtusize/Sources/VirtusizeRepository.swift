@@ -266,17 +266,15 @@ internal class VirtusizeRepository: NSObject {
 		guard let product = product ?? lastProductOnVirtusizeWebView else {
 			return
 		}
-        // swiftlint:disable switch_case_alignment
-        switch type {
-            case .compareProduct:
-                Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
-            case .body:
-                Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize)
-            default:
-                Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
-        }
-		// swiftlint:enable switch_case_alignment
-    }
+		switch type {
+		case .compareProduct:
+			Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, nil)
+		case .body:
+			Virtusize.sizeRecData = (product, nil, bodyProfileRecommendedSize)
+		default:
+			Virtusize.sizeRecData = (product, sizeComparisonRecommendedSize, bodyProfileRecommendedSize)
+		}
+	}
 
 	/// Updates the user body recommended size
 	///

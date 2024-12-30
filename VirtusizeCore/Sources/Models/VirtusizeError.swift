@@ -43,31 +43,29 @@ extension VirtusizeError: CustomDebugStringConvertible {
 
 	/// Gets the error message for the VirtusizeError
 	public var debugDescription: String {
-		// swiftlint:disable switch_case_alignment
 		switch self {
-			case .invalidRequest:
-				return "Virtusize: Invalid Request - Malformed query"
-			case .deserializationError:
-				return "Virtusize: Failed to deserialize given event payload"
-			case .encodingError:
-				return "Virtusize: Failed to convert given string to UTF-8 data"
-			case .invalidPayload:
-				return "Virtusize: Event payload does not contain a value for 'name'"
-			case .invalidProduct:
-				return "Virtusize: Product is not available for comparison"
-			case .invalidVsParamScript:
-				return "Virtusize: Failed to fetch the Virtusize parameter script"
-			case .navigationError(let error):
-				return "Virtusize: Navigation blocked – \(error)"
-			case .jsonDecodingFailed(let structName, let error):
-				return "Virtusize: Failed to decode the data response to the struct \(structName). \(error)"
-			case .apiRequestError(let url, let errorDebugDescription):
-				return "Virtusize: API Request \(url?.absoluteString ?? "") - \(errorDebugDescription ?? "")"
-			case .failToLoadImage(let url):
-				return "Virtusize: Fail to load image URL \(url?.absoluteString ?? "")"
-			case .unknownError:
-				return "Virtusize: Unknown Error"
+		case .invalidRequest:
+			return "Virtusize: Invalid Request - Malformed query"
+		case .deserializationError:
+			return "Virtusize: Failed to deserialize given event payload"
+		case .encodingError:
+			return "Virtusize: Failed to convert given string to UTF-8 data"
+		case .invalidPayload:
+			return "Virtusize: Event payload does not contain a value for 'name'"
+		case .invalidProduct:
+			return "Virtusize: Product is not available for comparison"
+		case .invalidVsParamScript:
+			return "Virtusize: Failed to fetch the Virtusize parameter script"
+		case .navigationError(let error):
+			return "Virtusize: Navigation blocked – \(error)"
+		case .jsonDecodingFailed(let structName, let error):
+			return "Virtusize: Failed to decode the data response to the struct \(structName). \(error)"
+		case .apiRequestError(let url, let errorDebugDescription):
+			return "Virtusize: API Request \(url?.absoluteString ?? "") - \(errorDebugDescription ?? "")"
+		case .failToLoadImage(let url):
+			return "Virtusize: Fail to load image URL \(url?.absoluteString ?? "")"
+		case .unknownError:
+			return "Virtusize: Unknown Error"
 		}
-		// swiftlint:enable switch_case_alignment
 	}
 }

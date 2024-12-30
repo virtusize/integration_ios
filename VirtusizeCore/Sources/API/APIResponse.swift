@@ -55,14 +55,12 @@ public enum APIResult<Value> {
 extension APIResult {
 	/// The string of the API result 
 	public var string: String? {
-		// swiftlint:disable switch_case_alignment
 		switch self {
-			case let .success(_, jsonString):
-				return jsonString
-			case let .failure(_, error):
-				return error?.debugDescription
+		case let .success(_, jsonString):
+			return jsonString
+		case let .failure(_, error):
+			return error?.debugDescription
 		}
-		// swiftlint:enable switch_case_alignment
 	}
 
 	/// The API result when the request is successful

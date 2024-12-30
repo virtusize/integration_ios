@@ -195,21 +195,19 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
-        print(event)
-        // swiftlint:disable switch_case_alignment
-        switch event.name {
-            case "user-opened-widget":
-                return
-            case "user-opened-panel-compare":
-                return
-            default:
-                return
-        }
-		// swiftlint:enable switch_case_alignment
-    }
+	func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
+		print(event)
+		switch event.name {
+		case "user-opened-widget":
+			return
+		case "user-opened-panel-compare":
+			return
+		default:
+			return
+		}
+	}
 
-    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
-        print(error)
-    }
+	func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
+		print(error)
+	}
 }

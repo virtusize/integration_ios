@@ -56,36 +56,34 @@ internal enum Base64ImageString: String {
 	var image: UIImage? {
 		let scale = UIScreen.main.scale
 		let value: String
-		// swiftlint:disable switch_case_alignment
 		switch self {
-			case .cancel:
-				if scale == 3.0 {
-					value = Base64ImageString.cancel3x.rawValue
-				} else {
-					value = Base64ImageString.cancel2x.rawValue
-				}
-			case .icon:
-				if scale == 3.0 {
-					value = Base64ImageString.icon3x.rawValue
-				} else {
-					value = Base64ImageString.icon2x.rawValue
-				}
-			case .logo:
-				if scale == 3.0 {
-					value = Base64ImageString.logo3x.rawValue
-				} else {
-					value = Base64ImageString.logo2x.rawValue
-				}
-			case .vsSignature:
-				if scale == 3.0 {
-					value = Base64ImageString.vsSignature3x.rawValue
-				} else {
-					value = Base64ImageString.vsSignature2x.rawValue
-				}
-			default:
-				value = self.rawValue
+		case .cancel:
+			if scale == 3.0 {
+				value = Base64ImageString.cancel3x.rawValue
+			} else {
+				value = Base64ImageString.cancel2x.rawValue
+			}
+		case .icon:
+			if scale == 3.0 {
+				value = Base64ImageString.icon3x.rawValue
+			} else {
+				value = Base64ImageString.icon2x.rawValue
+			}
+		case .logo:
+			if scale == 3.0 {
+				value = Base64ImageString.logo3x.rawValue
+			} else {
+				value = Base64ImageString.logo2x.rawValue
+			}
+		case .vsSignature:
+			if scale == 3.0 {
+				value = Base64ImageString.vsSignature3x.rawValue
+			} else {
+				value = Base64ImageString.vsSignature2x.rawValue
+			}
+		default:
+			value = self.rawValue
 		}
-		// swiftlint:enable switch_case_alignment
 		let temp = value.components(separatedBy: ",")
 		let dataDecoded: Data = Data(base64Encoded: temp[1], options: .ignoreUnknownCharacters)!
 		return UIImage(data: dataDecoded, scale: scale)

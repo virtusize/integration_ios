@@ -272,39 +272,37 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 		do {
 			let event = try Deserializer.event(data: message.body)
 			let eventData = event.data as? [String: Any]
-			// swiftlint:disable switch_case_alignment
 			switch VirtusizeEventName.init(rawValue: event.name) {
-				case .userOpenedWidget:
-					eventHandler?.userOpenedWidget()
-				case .userAuthData:
-					eventHandler?.userAuthData(
-						bid: eventData?["x-vs-bid"] as? String,
-						auth: eventData?["x-vs-auth"] as? String
-					)
-				case .userSelectedProduct:
-					eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
-				case .userAddedProduct:
-					eventHandler?.userAddedProduct()
-				case .userDeletedProduct:
-					eventHandler?.userDeletedProduct(userProductId: eventData?["userProductId"] as? Int)
-				case .userChangedRecommendationType:
-					let recommendationType = eventData?["recommendationType"] as? String
-					let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
-					eventHandler?.userChangedRecommendationType(changedType: changedType)
-				case .userUpdatedBodyMeasurements:
-					let sizeRecName = eventData?["sizeRecName"] as? String
-					eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
-				case .userLoggedIn:
-					eventHandler?.userLoggedIn()
-				case .userLoggedOut, .userDeletedData:
-					eventHandler?.clearUserData()
-				case .userClosedWidget:
-                    eventHandler?.userClosedWidget()
-					shouldClose()
-				default:
-					break
+			case .userOpenedWidget:
+				eventHandler?.userOpenedWidget()
+			case .userAuthData:
+				eventHandler?.userAuthData(
+					bid: eventData?["x-vs-bid"] as? String,
+					auth: eventData?["x-vs-auth"] as? String
+				)
+			case .userSelectedProduct:
+				eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
+			case .userAddedProduct:
+				eventHandler?.userAddedProduct()
+			case .userDeletedProduct:
+				eventHandler?.userDeletedProduct(userProductId: eventData?["userProductId"] as? Int)
+			case .userChangedRecommendationType:
+				let recommendationType = eventData?["recommendationType"] as? String
+				let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
+				eventHandler?.userChangedRecommendationType(changedType: changedType)
+			case .userUpdatedBodyMeasurements:
+				let sizeRecName = eventData?["sizeRecName"] as? String
+				eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
+			case .userLoggedIn:
+				eventHandler?.userLoggedIn()
+			case .userLoggedOut, .userDeletedData:
+				eventHandler?.clearUserData()
+			case .userClosedWidget:
+				eventHandler?.userClosedWidget()
+				shouldClose()
+			default:
+				break
 			}
-			// swiftlint:enable switch_case_alignment
 			messageHandler?.virtusizeController(self, didReceiveEvent: event)
 		} catch {
 			if let error = error as? VirtusizeError {
