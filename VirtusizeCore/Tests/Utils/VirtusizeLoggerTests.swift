@@ -8,7 +8,7 @@
 import Testing
 @testable import VirtusizeCore
 
-struct VirtusizeAuthTests {
+struct VirtusizeLoggerTests {
 	@Test func logHandler() {
 		var invoked = false
 		VirtusizeLogger.logLevel = .debug
