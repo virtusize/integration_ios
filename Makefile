@@ -49,7 +49,7 @@ clean:
 install-git-hooks:
 
 	chmod +x .githooks/pre-push
-	git config core.hooksPath .githooks
+	git config --local core.hooksPath .githooks
 
 help:
 
