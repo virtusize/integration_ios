@@ -39,6 +39,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      # This step should be removed after 6 Jan, 2025 when macos-latest updates XCode from 16.0 to 16.2
+      - name: Latest XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
       - name: Run VirtusizeCoreTests
         run: make virtusize-core-test
       - name: Run VirtusizeTests

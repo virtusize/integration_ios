@@ -161,6 +161,25 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
 | setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
 
+#### (Optional) Confgiure Internal Logger
+
+You can enable internal logger for debugging purpose by updating App delegate:
+
+```Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+		// Setup Virtusize LogLevel
+		VirtusizeLogger.logLevel = .debug // `.none` is default
+		// Override Virtusize log handler, if necessary
+		//VirtusizeLogger.logHandler = { logLevel, message in
+		//	print("[Virtusize] \(logLevel): \(message)")
+		//}
+
+    // ... continue Virtusize and App initialization
+
+    return true
+}
+```
+
 ### 2. Load Product with Virtusize SDK
 
 In the view controller for your product page, you will need to use `Virtusize.load` to populate the Virtusize views:
