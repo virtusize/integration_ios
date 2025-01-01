@@ -644,15 +644,45 @@ Virtusize.sendOrder(
 
 Use the [Virtusize Auth SDK](https://github.com/virtusize/virtusize_auth_ios)
 
-## Build
+## Contributing
+
+### Build
 
 You need to install [SwiftLint](https://github.com/realm/SwiftLint).
 
     make build
 
-## Run all tests
+### Run all tests
 
     make test
+
+### Linter
+
+We use [swiftlint](https://github.com/realm/SwiftLint) for formatting. It's integrated into the XCode build steps.
+But you can also call it from command line.
+
+```sh
+# install swiftlint
+brew install swiftlint
+
+# run linter
+swiftlint
+
+# auto-correct warnings
+swiftlint --fix
+
+# or run linter from Makefile
+make lint
+make lint-fix
+```
+
+### Git Hooks
+
+Ensure to setup the `pre-push` git hooks after cloning the repo.  
+Git hook will run linter and tests on every push automatically.
+```sh
+make install-git-hooks
+```
 
 ## Roadmap
 

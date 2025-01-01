@@ -53,6 +53,11 @@ lint-fix:
 
 	swiftlint --fix --strict
 
+install-git-hooks:
+
+	chmod +x .githooks/pre-push
+	git config --local core.hooksPath .githooks
+
 help:
 
 	@echo "$$HELP_MESSAGE"

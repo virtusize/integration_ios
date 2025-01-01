@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Run tests
+echo "Running tests..."
+make test # linter is run as part of the tests build
+
+status=$?
+if [ "$status" = 0 ] ; then
+    echo "Unit tests ran successfully."
+else
+    echo "Unit tests failed."
+    exit 1
+fi
