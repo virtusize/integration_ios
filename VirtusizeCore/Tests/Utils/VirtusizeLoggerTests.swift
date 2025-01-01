@@ -38,11 +38,11 @@ struct VirtusizeLoggerTests {
 		VirtusizeLogger.debug("hello")
 		#expect(invoked == true)
 	}
-	
+
 	@Test func respectLevel() {
 		var invoked = false
 		VirtusizeLogger.logLevel = .warning
-		VirtusizeLogger.logHandler = { logLevel, message in
+		VirtusizeLogger.logHandler = { _, _ in
 			invoked = true
 		}
 		VirtusizeLogger.debug("hello")

@@ -37,9 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Setup Virtusize LogLevel
 		VirtusizeLogger.logLevel = .debug // `.none` is default
 		// Override Virtusize log handler, if necessary
-		//VirtusizeLogger.logHandler = { logLevel, message in
+		// VirtusizeLogger.logHandler = { logLevel, message in
 		//	print("[Virtusize] \(logLevel): \(message)")
-		//}
+		// }
 
 		// Virtusize.APIKey is required
 		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
