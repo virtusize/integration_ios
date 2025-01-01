@@ -25,7 +25,7 @@
 import Foundation
 
 // The wrapper for the API response
-public struct APIResponse {
+public struct APIResponse: Sendable {
 	/// The API response status code
 	public var code: Int?
 	/// The API response data
@@ -55,12 +55,11 @@ public enum APIResult<Value> {
 extension APIResult {
 	/// The string of the API result 
 	public var string: String? {
-		// swiftlint:disable switch_case_alignment
 		switch self {
-			case let .success(_, jsonString):
-				return jsonString
-			case let .failure(_, error):
-				return error?.debugDescription
+		case let .success(_, jsonString):
+			return jsonString
+		case let .failure(_, error):
+			return error?.debugDescription
 		}
 	}
 

@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTheFitButton: VirtusizeButton!
     @IBOutlet weak var inPageMini: VirtusizeInPageMini!
 
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         // You can set up the Virtusize button style
         checkTheFitButton.style = .TEAL
 
-        /// you can use `VirtusizeAssets` to access Virtusize SDK assets, including images and colors
+        // you can use `VirtusizeAssets` to access Virtusize SDK assets, including images and colors
         // checkTheFitButton.setImage(VirtusizeAssets.icon, for: .normal)
 
         // 2. Add the VirtusizeButton programmatically
@@ -188,26 +188,26 @@ class ViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
+		navigationController?.navigationBar.barStyle = .black
+		navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = UIColor.vsTealColor
     }
 }
 
 extension ViewController: VirtusizeMessageHandler {
-    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
-        print(event)
-        // swiftlint:disable switch_case_alignment
-        switch event.name {
-            case "user-opened-widget":
-                return
-            case "user-opened-panel-compare":
-                return
-            default:
-                return
-        }
-    }
+	func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveEvent event: VirtusizeEvent) {
+		print(event)
+		switch event.name {
+		case "user-opened-widget":
+			return
+		case "user-opened-panel-compare":
+			return
+		default:
+			return
+		}
+	}
 
-    func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
-        print(error)
-    }
+	func virtusizeController(_ controller: VirtusizeWebViewController?, didReceiveError error: VirtusizeError) {
+		print(error)
+	}
 }

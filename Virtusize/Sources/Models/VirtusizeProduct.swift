@@ -48,7 +48,6 @@ public class VirtusizeProduct: Codable {
 		) as? JSONObject
 	}
 
-	// swiftlint:disable identifier_name
 	/// An integer to represent the internal product ID in the Virtusize server
 	public var id: Int? {
 		return productCheckData?.productDataId

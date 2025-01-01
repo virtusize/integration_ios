@@ -23,7 +23,7 @@
 //
 
 import UIKit
-import WebKit
+@preconcurrency import WebKit
 import Virtusize
 
 private final class ProcessPool: WKProcessPool {

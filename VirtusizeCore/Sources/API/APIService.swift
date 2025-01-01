@@ -65,8 +65,8 @@ open class APIService {
 			}
 			if let httpResponse = response as? HTTPURLResponse, !httpResponse.isSuccessful() {
 				var errorDebugDescription = VirtusizeError.unknownError.debugDescription
-				if let data = data {
-					errorDebugDescription = String(decoding: data, as: UTF8.self)
+				if let data = data, let asUtf8 = String(data: data, encoding: .utf8) {
+					errorDebugDescription = asUtf8
 				}
 				DispatchQueue.main.async {
 					errorHandler?(VirtusizeError.apiRequestError(request.url, errorDebugDescription))
@@ -112,16 +112,19 @@ open class APIService {
 	/// - Parameter request: A URL load request for an API request
 	/// - Returns the `APIResponse`
 	public static func performAsync(_ request: URLRequest) -> APIResponse? {
+		let syncQueue = DispatchQueue(label: "com.virtusize.performAsync")
 		var apiResponse: APIResponse?
 		let semaphore = DispatchSemaphore(value: 0)
 		let task: URLSessionDataTask
 		task = APIService.session.dataTask(with: request) { (data, response, error) in
-			apiResponse = APIResponse(
-				code: (response as? HTTPURLResponse)?.statusCode ?? nil,
-				data: data,
-				response: response,
-				error: error
-			)
+			syncQueue.sync {
+				apiResponse = APIResponse(
+					code: (response as? HTTPURLResponse)?.statusCode ?? nil,
+					data: data,
+					response: response,
+					error: error
+				)
+			}
 			semaphore.signal()
 		}
 		task.resume()
@@ -143,8 +146,9 @@ open class APIService {
 
 		if let httpResponse = apiResponse!.response as? HTTPURLResponse, !httpResponse.isSuccessful() {
 			var errorDebugDescription = VirtusizeError.unknownError.debugDescription
-			if let data = apiResponse?.data {
-				errorDebugDescription = String(decoding: data, as: UTF8.self)
+			if let data = apiResponse?.data,
+			   let asUtf8 = String(data: data, encoding: .utf8) {
+				errorDebugDescription = asUtf8
 			}
 			apiResponse!.virtusizeError = VirtusizeError.apiRequestError(request.url, errorDebugDescription)
 		}

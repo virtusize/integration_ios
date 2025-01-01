@@ -119,11 +119,12 @@ public class VirtusizeI18nLocalization {
 
 	/// Gets the recommendation text for a multi-size product based on a user body profile
 	internal func getMultiSizeBodyProfileText(_ bodyProfileRecommendedSizeName: String) -> String {
-        let adjustedWillFitResultText = if let storeId = APICache.shared.currentStoreId, StoreId(value: storeId).isUnitedArrows == true {
-             Localization.shared.localize("inpage_will_fit_result_united_arrows")
-        } else {
-            self.willFitResultText ?? Localization.shared.localize("inpage_will_fit_result")
-        }
+		let adjustedWillFitResultText =
+			if let storeId = APICache.shared.currentStoreId, StoreId(value: storeId).isUnitedArrows == true {
+				Localization.shared.localize("inpage_will_fit_result_united_arrows")
+			} else {
+				self.willFitResultText ?? Localization.shared.localize("inpage_will_fit_result")
+			}
 		return "\(adjustedWillFitResultText) %{boldStart}\(bodyProfileRecommendedSizeName)%{boldEnd}"
 	}
 }

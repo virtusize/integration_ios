@@ -211,9 +211,9 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return nil
 		}
 
-		// swiftlint:disable line_length
 		guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
-			// By default, The Google sign-in page shows a 403 error: disallowed_useragent if you are visiting it within a Webview.
+			// By default, The Google sign-in page shows a 403 error: disallowed_useragent
+			//   if you are visiting it within a Webview.
 			// By setting up the user agent, Google recognizes the web view as a Safari browser
 			configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
 			popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
@@ -262,7 +262,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 
 extension VirtusizeWebViewController: WKScriptMessageHandler {
 	// MARK: - Widget Callbacks
-	// swiftlint:disable cyclomatic_complexity
+	// swiftlint:disable:next cyclomatic_complexity
 	public func userContentController(
 		_ userContentController: WKUserContentController,
 		didReceive message: WKScriptMessage) {
@@ -272,37 +272,36 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 		do {
 			let event = try Deserializer.event(data: message.body)
 			let eventData = event.data as? [String: Any]
-			// swiftlint:disable switch_case_alignment
 			switch VirtusizeEventName.init(rawValue: event.name) {
-				case .userOpenedWidget:
-					eventHandler?.userOpenedWidget()
-				case .userAuthData:
-					eventHandler?.userAuthData(
-						bid: eventData?["x-vs-bid"] as? String,
-						auth: eventData?["x-vs-auth"] as? String
-					)
-				case .userSelectedProduct:
-					eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
-				case .userAddedProduct:
-					eventHandler?.userAddedProduct()
-				case .userDeletedProduct:
-					eventHandler?.userDeletedProduct(userProductId: eventData?["userProductId"] as? Int)
-				case .userChangedRecommendationType:
-					let recommendationType = eventData?["recommendationType"] as? String
-					let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
-					eventHandler?.userChangedRecommendationType(changedType: changedType)
-				case .userUpdatedBodyMeasurements:
-					let sizeRecName = eventData?["sizeRecName"] as? String
-					eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
-				case .userLoggedIn:
-					eventHandler?.userLoggedIn()
-				case .userLoggedOut, .userDeletedData:
-					eventHandler?.clearUserData()
-				case .userClosedWidget:
-                    eventHandler?.userClosedWidget()
-					shouldClose()
-				default:
-					break
+			case .userOpenedWidget:
+				eventHandler?.userOpenedWidget()
+			case .userAuthData:
+				eventHandler?.userAuthData(
+					bid: eventData?["x-vs-bid"] as? String,
+					auth: eventData?["x-vs-auth"] as? String
+				)
+			case .userSelectedProduct:
+				eventHandler?.userSelectedProduct(userProductId: (event.data as? [String: Any])?["userProductId"] as? Int)
+			case .userAddedProduct:
+				eventHandler?.userAddedProduct()
+			case .userDeletedProduct:
+				eventHandler?.userDeletedProduct(userProductId: eventData?["userProductId"] as? Int)
+			case .userChangedRecommendationType:
+				let recommendationType = eventData?["recommendationType"] as? String
+				let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
+				eventHandler?.userChangedRecommendationType(changedType: changedType)
+			case .userUpdatedBodyMeasurements:
+				let sizeRecName = eventData?["sizeRecName"] as? String
+				eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
+			case .userLoggedIn:
+				eventHandler?.userLoggedIn()
+			case .userLoggedOut, .userDeletedData:
+				eventHandler?.clearUserData()
+			case .userClosedWidget:
+				eventHandler?.userClosedWidget()
+				shouldClose()
+			default:
+				break
 			}
 			messageHandler?.virtusizeController(self, didReceiveEvent: event)
 		} catch {

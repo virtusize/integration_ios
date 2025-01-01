@@ -24,7 +24,6 @@
 
 /// This class represents the product type info
 public class VirtusizeProductType: Codable {
-	// swiftlint:disable identifier_name
 	/// The ID of a product type
 	let id: Int
 	/// The name of a product type

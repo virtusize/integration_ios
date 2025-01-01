@@ -57,26 +57,25 @@ extension VirtusizeAnyCodable: Codable {
 
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.singleValueContainer()
-		// swiftlint:disable switch_case_alignment
 		switch self.value {
-			case is Void:
-				try container.encodeNil()
-			case let bool as Bool:
-				try container.encode(bool)
-			case let int as Int:
-				try container.encode(int)
-			case let string as String:
-				try container.encode(string)
-			case let array as [Any?]:
-				try container.encode(array.map { VirtusizeAnyCodable($0) })
-			case let dictionary as [String: Any?]:
-				try container.encode(dictionary.mapValues { VirtusizeAnyCodable($0) })
-			default:
-				let context = EncodingError.Context(
-					codingPath: container.codingPath,
-					debugDescription: "VirtusizeAnyCodable value cannot be encoded"
-				)
-				throw EncodingError.invalidValue(self.value, context)
+		case is Void:
+			try container.encodeNil()
+		case let bool as Bool:
+			try container.encode(bool)
+		case let int as Int:
+			try container.encode(int)
+		case let string as String:
+			try container.encode(string)
+		case let array as [Any?]:
+			try container.encode(array.map { VirtusizeAnyCodable($0) })
+		case let dictionary as [String: Any?]:
+			try container.encode(dictionary.mapValues { VirtusizeAnyCodable($0) })
+		default:
+			let context = EncodingError.Context(
+				codingPath: container.codingPath,
+				debugDescription: "VirtusizeAnyCodable value cannot be encoded"
+			)
+			throw EncodingError.invalidValue(self.value, context)
 		}
 	}
 }
