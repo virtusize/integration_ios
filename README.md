@@ -710,6 +710,9 @@ The subset glyphs limited to the characters used in the localization files.
 
 Whenever you update the localization files ensure to regenerate the subset fonts of the SDK.
 ```sh
+# Ensure to install FontTools
+pip install --upgrade fonttools
+
 sh ./Scripts/build_fonts.sh
 ```
 
