@@ -554,11 +554,11 @@ This is a mini version of InPage which can be placed in your application. The di
 - ##### Default Fonts
 
   - **Japanese**
-    - Noto Sans CJK JP
+    - Noto Sans JP
     - 12pt (Message)
     - 10pt (Button)
   - **Korean**
-    - Noto Sans CJK KR
+    - Noto Sans KR
     - 12pt (Message)
     - 10pt (Button)
   - **English**
@@ -701,6 +701,16 @@ Ensure to setup the `pre-push` git hooks after cloning the repo.
 Git hook will run linter and tests on every push automatically.
 ```sh
 make install-git-hooks
+```
+
+### Fonts & Localisation
+
+We use subset fonts to reduce the overal SDK size.  
+The subset glyphs limited to the characters used in the localization files.
+
+Whenever you update the localization files ensure to regenerate the subset fonts of the SDK.
+```sh
+sh ./Scripts/build_fonts.sh
 ```
 
 ## Roadmap
