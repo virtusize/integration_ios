@@ -705,7 +705,7 @@ make install-git-hooks
 
 ### Fonts & Localisation
 
-We use subset fonts to reduce the overal SDK size.  
+We use subset fonts to reduce the overall SDK size.  
 The subset glyphs limited to the characters used in the localization files.
 
 Whenever you update the localization files ensure to regenerate the subset fonts of the SDK.
