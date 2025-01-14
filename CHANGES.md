@@ -15,7 +15,7 @@ Use list notation, and following prefixes:
 
 ### Next Release
 - Feature: Introduce internal logger (see [README/logger](/README.md#optional-confgiure-internal-logger) for configuration)
-- Change: `InPageMini` and `InPageStandard` controls now use `NotoSans` font instead of `NotoSansCJK` for Japanese and Korean languages
+- Change: `InPageMini` and `InPageStandard` now use `NotoSans` font instead of `NotoSansCJK` for Japanese and Korean languages
 - Refactor: Reduce SDK binary size by using minimal-required subset of `NotoSans` fonts
 
 ### 2.6.6
