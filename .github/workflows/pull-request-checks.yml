@@ -39,6 +39,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      - name: Validate Fonts
+        run: |
+          pip install --upgrade fonttools
+          make validate-fonts
       # This step should be removed after 6 Jan, 2025 when macos-latest updates XCode from 16.0 to 16.2
       - name: Latest XCode
         uses: maxim-lobanov/setup-xcode@v1
