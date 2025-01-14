@@ -21,7 +21,7 @@ build:
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "Virtusize" \
 		-sdk "iphonesimulator" \
-		-destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=latest"
+		-destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=18.1"
 
 virtusize-test:
 
@@ -30,7 +30,7 @@ virtusize-test:
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "VirtusizeTests" \
 		-sdk "iphonesimulator" \
-		-destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=latest"
+		-destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=18.1"
 
 virtusize-core-test:
 
