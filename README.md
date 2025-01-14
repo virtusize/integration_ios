@@ -708,7 +708,7 @@ make install-git-hooks
 We use subset fonts to reduce the overall SDK size.  
 The subset glyphs are limited to the characters used in the localization files.
 
-Whenever you update the localization files ensure to regenerate the subset fonts of the SDK.
+Whenever you update the localization files, ensure to regenerate the subset fonts of the SDK.
 ```sh
 # Ensure to install FontTools
 pip install --upgrade fonttools
