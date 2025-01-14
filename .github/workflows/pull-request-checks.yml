@@ -48,6 +48,8 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
+      - name: Print Installed Simulators
+        run: xcrun simctl list
       - name: Run VirtusizeCoreTests
         run: make virtusize-core-test
       - name: Run VirtusizeTests
