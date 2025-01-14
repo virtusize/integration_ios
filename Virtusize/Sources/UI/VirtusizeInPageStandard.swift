@@ -440,18 +440,18 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 			errorText.font = Font.system(size: messageTextSize)
 			messageLineSpacing = 2
 		case .JAPANESE:
-			topMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize)
-			bottomMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize + 4, weight: .bold)
-			checkSizeButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
-			privacyPolicyLink.font = Font.notoSansCJKJP(size: messageTextSize - 2)
-			errorText.font = Font.notoSansCJKJP(size: messageTextSize - 2)
+			topMessageLabel.font = Font.notoSansJP(size: messageTextSize)
+			bottomMessageLabel.font = Font.notoSansJP(size: messageTextSize + 4, weight: .bold)
+			checkSizeButton.titleLabel?.font = Font.notoSansJP(size: buttonTextSize)
+			privacyPolicyLink.font = Font.notoSansJP(size: messageTextSize - 2)
+			errorText.font = Font.notoSansJP(size: messageTextSize - 2)
 			messageLineSpacing = 0
 		case .KOREAN:
-			topMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize)
-			bottomMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize + 4, weight: .bold)
-			checkSizeButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
-			privacyPolicyLink.font = Font.notoSansCJKKR(size: messageTextSize - 2)
-			errorText.font = Font.notoSansCJKKR(size: messageTextSize - 2)
+			topMessageLabel.font = Font.notoSansKR(size: messageTextSize)
+			bottomMessageLabel.font = Font.notoSansKR(size: messageTextSize + 4, weight: .bold)
+			checkSizeButton.titleLabel?.font = Font.notoSansKR(size: buttonTextSize)
+			privacyPolicyLink.font = Font.notoSansKR(size: messageTextSize - 2)
+			errorText.font = Font.notoSansKR(size: messageTextSize - 2)
 			messageLineSpacing = 0
 		default:
 			break

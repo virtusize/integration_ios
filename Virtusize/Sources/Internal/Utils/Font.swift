@@ -43,20 +43,20 @@ class Font {
 
 	/// This enum contains all available font names used in this SDK
 	private enum FontName: String {
-		case notoSansCJKJP = "NotoSansCJKJP"
-		case notoSansCJKKR = "NotoSansCJKKR"
+		case notoSansJP = "Subset-NotoSansJP"
+		case notoSansKR = "Subset-NotoSansKR"
 	}
 
 	static func system(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
 		return UIFont.systemFont(ofSize: size, weight: weight.uiFontWeight)
 	}
 
-	static func notoSansCJKJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-		return font(fontName: .notoSansCJKJP, type: "otf", weight: weight, size: size)
+	static func notoSansJP(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return font(fontName: .notoSansJP, type: "ttf", weight: weight, size: size)
 	}
 
-	static func notoSansCJKKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
-		return font(fontName: .notoSansCJKKR, type: "otf", weight: weight, size: size)
+	static func notoSansKR(size: CGFloat, weight: FontWeight = .regular) -> UIFont {
+		return font(fontName: .notoSansKR, type: "ttf", weight: weight, size: size)
 	}
 
 	private static func font(fontName: FontName, type: String, weight: FontWeight, size: CGFloat) -> UIFont {
