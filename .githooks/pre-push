@@ -1,8 +1,11 @@
 #!/bin/sh
 
+# Validate fonts
+echo "Validating fonts..."
+make validate-fonts # ensure the font subset supports all localization texts
+
 # Run tests
 echo "Running tests..."
-make validate-fonts # ensure the font subset supports all localization texts
 make test # linter is run as part of the tests build
 
 status=$?
