@@ -18,14 +18,14 @@ rename_font() {
   local new_name="Subset-$font_name"
 
   # Extract TTX XML
-  ttx "$font_dir/$font"
+  ttx -q "$font_dir/$font"
   local ttx_file="$font_dir/$font_name.ttx"
 
   # Rename Font inside the TTX file
   sed -i '' "s/$font_name/$new_name/g" "$ttx_file"
 
   # Re-generate font
-  ttx -o "$font_dir/$new_name.ttf" "$ttx_file"
+  ttx -q -o "$font_dir/$new_name.ttf" "$ttx_file"
 
   # Clean up TTX file
   rm "$ttx_file"
@@ -42,6 +42,8 @@ rename_font() {
 generate_subset_font() {
   local font="$1"
   local language="$2"
+
+  echo "Processing '$font' ..."
 
   # create subset font
   pyftsubset ${SOURCE_FONT_DIR}/${font} \

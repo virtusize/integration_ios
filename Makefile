@@ -55,6 +55,14 @@ lint-fix:
 
 	swiftlint --fix --strict
 
+validate-fonts:
+
+	sh ./Scripts/validate_fonts.sh
+
+build-fonts:
+
+	sh ./Scripts/build_fonts.sh
+
 install-git-hooks:
 
 	chmod +x .githooks/pre-push
