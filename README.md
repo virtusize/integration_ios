@@ -74,7 +74,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.6.6'
+pod 'Virtusize', '~> 2.7.0'
 end
 ```
 
@@ -90,7 +90,7 @@ $ pod install
 Starting with the `2.3.2` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.6.6`
+2. Select a minimum version of `2.7.0`
 3. Click **Next**
 
 ### Carthage
@@ -160,6 +160,25 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setAllowedLanguages  | A list of `VirtusizeLanguage` | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | The languages that the user can switch to using the Language Selector | No. By default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
 | setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
+
+#### (Optional) Confgiure Internal Logger
+
+You can enable internal logger for debugging purpose by updating App delegate:
+
+```Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+		// Setup Virtusize LogLevel
+		VirtusizeLogger.logLevel = .debug // `.none` is default
+		// Override Virtusize log handler, if necessary
+		//VirtusizeLogger.logHandler = { logLevel, message in
+		//	print("[Virtusize] \(logLevel): \(message)")
+		//}
+
+    // ... continue Virtusize and App initialization
+
+    return true
+}
+```
 
 ### 2. Load Product with Virtusize SDK
 
@@ -535,11 +554,11 @@ This is a mini version of InPage which can be placed in your application. The di
 - ##### Default Fonts
 
   - **Japanese**
-    - Noto Sans CJK JP
+    - Noto Sans JP
     - 12pt (Message)
     - 10pt (Button)
   - **Korean**
-    - Noto Sans CJK KR
+    - Noto Sans KR
     - 12pt (Message)
     - 10pt (Button)
   - **English**
@@ -644,15 +663,58 @@ Virtusize.sendOrder(
 
 Use the [Virtusize Auth SDK](https://github.com/virtusize/virtusize_auth_ios)
 
-## Build
+## Contributing
+
+### Build
 
 You need to install [SwiftLint](https://github.com/realm/SwiftLint).
 
     make build
 
-## Run all tests
+### Run all tests
 
     make test
+
+### Linter
+
+We use [swiftlint](https://github.com/realm/SwiftLint) for formatting. It's integrated into the XCode build steps.
+But you can also call it from command line.
+
+```sh
+# install swiftlint
+brew install swiftlint
+
+# run linter
+swiftlint
+
+# auto-correct warnings
+swiftlint --fix
+
+# or run linter from Makefile
+make lint
+make lint-fix
+```
+
+### Git Hooks
+
+Ensure to setup the `pre-push` git hooks after cloning the repo.  
+Git hook will run linter and tests on every push automatically.
+```sh
+make install-git-hooks
+```
+
+### Fonts & Localisation
+
+We use subset fonts to reduce the overall SDK size.  
+The subset glyphs are limited to the characters used in the localization files.
+
+Whenever you update the localization files, ensure to regenerate the subset fonts of the SDK.
+```sh
+# Ensure to install FontTools
+pip install --upgrade fonttools
+
+sh ./Scripts/build_fonts.sh
+```
 
 ## Roadmap
 

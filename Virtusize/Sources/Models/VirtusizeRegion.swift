@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-// swiftlint:disable line_length
+// swiftlint:disable:next line_length
 /// This enum contains all the possible regions that set the region of the config url domains within the Virtusize web app
 public enum VirtusizeRegion: String {
 	case COM = "com"
@@ -31,14 +31,13 @@ public enum VirtusizeRegion: String {
 
 	/// Gets the VirtusizeLanguage value based on the region
 	internal func defaultLanguage() -> VirtusizeLanguage {
-		// swiftlint:disable switch_case_alignment
 		switch self {
-			case .COM:
-				return VirtusizeLanguage.ENGLISH
-			case .JAPAN:
-				return VirtusizeLanguage.JAPANESE
-			case .KOREA:
-				return VirtusizeLanguage.KOREAN
+		case .COM:
+			return VirtusizeLanguage.ENGLISH
+		case .JAPAN:
+			return VirtusizeLanguage.JAPANESE
+		case .KOREA:
+			return VirtusizeLanguage.KOREAN
 		}
 	}
 }

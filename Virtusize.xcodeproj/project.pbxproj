@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5792205FB9BA00DA910E /* Virtusize.swift */; };
 		4D6C579A205FCBE900DA910E /* VirtusizeAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5799205FCBE900DA910E /* VirtusizeAPIRequest.swift */; };
+		52CB715C2D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB71582D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf */; };
+		52CB715D2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB715B2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf */; };
+		52CB715E2D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB71592D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf */; };
+		52CB715F2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB715A2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf */; };
 		8455FFD42B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */; };
 		8455FFDD2B29D45A00019B1B /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */; };
 		84CF03B92BD7A64A00C08920 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */; };
@@ -36,10 +40,6 @@
 		9C35F9D625F0350B0004E9CD /* CHANGES.md in Resources */ = {isa = PBXBuildFile; fileRef = DFB2F0F1219BC40E00A69D1D /* CHANGES.md */; };
 		9C35F9D725F0350B0004E9CD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DFB2F0EF219BC3D900A69D1D /* README.md */; };
 		9C35F9D825F0350B0004E9CD /* VirtusizeAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F99C25F02CAD0004E9CD /* VirtusizeAssets.xcassets */; };
-		9C35F9DA25F0350B0004E9CD /* NotoSansCJKJP-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F98D25F02BFD0004E9CD /* NotoSansCJKJP-Bold.otf */; };
-		9C35F9DB25F0350B0004E9CD /* NotoSansCJKJP-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F98C25F02BFD0004E9CD /* NotoSansCJKJP-Regular.otf */; };
-		9C35F9DC25F0350B0004E9CD /* NotoSansCJKKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F99125F02BFD0004E9CD /* NotoSansCJKKR-Bold.otf */; };
-		9C35F9DD25F0350B0004E9CD /* NotoSansCJKKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C35F98E25F02BFD0004E9CD /* NotoSansCJKKR-Regular.otf */; };
 		9C3DE37725BA9CC70082C140 /* VirtusizeWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3DE37625BA9CC70082C140 /* VirtusizeWebViewController.swift */; };
 		9C4378D7253444F600E8729A /* UserSessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4378D6253444F600E8729A /* UserSessionInfo.swift */; };
 		9C4B38A126BBA84B00B73FE5 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9C4B38A026BBA84B00B73FE5 /* LICENSE */; };
@@ -127,6 +127,10 @@
 		4D6C5799205FCBE900DA910E /* VirtusizeAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAPIRequest.swift; sourceTree = "<group>"; };
 		4DED8D1C205755C3001CA7DF /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DED8D25205755C3001CA7DF /* VirtusizeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtusizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CB71582D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansJP-Bold.ttf"; sourceTree = "<group>"; };
+		52CB71592D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansJP-Regular.ttf"; sourceTree = "<group>"; };
+		52CB715A2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
+		52CB715B2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 		8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeItemsParam.swift; sourceTree = "<group>"; };
 		8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VirtusizeAuth.xcframework; sourceTree = "<group>"; };
 		84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -145,10 +149,6 @@
 		9C32A14A250279D00062C11D /* VirtusizeInPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageView.swift; sourceTree = "<group>"; };
 		9C33F698252449E1008DBF41 /* BodyProfileRecommendedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyProfileRecommendedSize.swift; sourceTree = "<group>"; };
 		9C3506302727CA42003BEF82 /* VirtusizeBundleLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeBundleLoader.swift; sourceTree = "<group>"; };
-		9C35F98C25F02BFD0004E9CD /* NotoSansCJKJP-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Regular.otf"; sourceTree = "<group>"; };
-		9C35F98D25F02BFD0004E9CD /* NotoSansCJKJP-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKJP-Bold.otf"; sourceTree = "<group>"; };
-		9C35F98E25F02BFD0004E9CD /* NotoSansCJKKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKKR-Regular.otf"; sourceTree = "<group>"; };
-		9C35F99125F02BFD0004E9CD /* NotoSansCJKKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKKR-Bold.otf"; sourceTree = "<group>"; };
 		9C35F99C25F02CAD0004E9CD /* VirtusizeAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VirtusizeAssets.xcassets; sourceTree = "<group>"; };
 		9C3DE37625BA9CC70082C140 /* VirtusizeWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtusizeWebViewController.swift; sourceTree = "<group>"; };
 		9C4378D6253444F600E8729A /* UserSessionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionInfo.swift; sourceTree = "<group>"; };
@@ -365,10 +365,10 @@
 		9C35F97925F02BA70004E9CD /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				9C35F98D25F02BFD0004E9CD /* NotoSansCJKJP-Bold.otf */,
-				9C35F98C25F02BFD0004E9CD /* NotoSansCJKJP-Regular.otf */,
-				9C35F99125F02BFD0004E9CD /* NotoSansCJKKR-Bold.otf */,
-				9C35F98E25F02BFD0004E9CD /* NotoSansCJKKR-Regular.otf */,
+				52CB71582D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf */,
+				52CB71592D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf */,
+				52CB715A2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf */,
+				52CB715B2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -661,13 +661,13 @@
 				9CF77B9926CBBF7A0019889E /* Virtusize.podspec in Resources */,
 				9C35F9D625F0350B0004E9CD /* CHANGES.md in Resources */,
 				9C35F9D725F0350B0004E9CD /* README.md in Resources */,
+				52CB715C2D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf in Resources */,
+				52CB715D2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf in Resources */,
+				52CB715E2D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf in Resources */,
+				52CB715F2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf in Resources */,
 				9C35F9D825F0350B0004E9CD /* VirtusizeAssets.xcassets in Resources */,
 				84CF03B92BD7A64A00C08920 /* PrivacyInfo.xcprivacy in Resources */,
 				9C4B38A126BBA84B00B73FE5 /* LICENSE in Resources */,
-				9C35F9DA25F0350B0004E9CD /* NotoSansCJKJP-Bold.otf in Resources */,
-				9C35F9DB25F0350B0004E9CD /* NotoSansCJKJP-Regular.otf in Resources */,
-				9C35F9DC25F0350B0004E9CD /* NotoSansCJKKR-Bold.otf in Resources */,
-				9C35F9DD25F0350B0004E9CD /* NotoSansCJKKR-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,7 +700,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint --strict\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -853,7 +853,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.6.6;
+				CURRENT_PROJECT_VERSION = 2.7.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -923,7 +923,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.6.6;
+				CURRENT_PROJECT_VERSION = 2.7.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

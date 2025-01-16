@@ -122,8 +122,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			"messageAndButtonMargin": messageAndButtonMargin
 		]
 
-		// swiftlint:disable line_length
 		let horizontalConstraints = NSLayoutConstraint.constraints(
+			// swiftlint:disable:next line_length
 			withVisualFormat: "H:|-horizontalMargin-[inPageMiniImageView]-0-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-horizontalMargin-|",
 			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
 			metrics: metrics,
@@ -207,19 +207,18 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		let messageTextSize = messageFontSize ?? 12
 		let buttonTextSize = buttonFontSize ?? 10
 		switch displayLanguage {
-			// swiftlint:disable switch_case_alignment
-			case .ENGLISH:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
-			case .JAPANESE:
-				inPageMiniMessageLabel.font = Font.notoSansCJKJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKJP(size: buttonTextSize)
-			case .KOREAN:
-				inPageMiniMessageLabel.font = Font.notoSansCJKKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansCJKKR(size: buttonTextSize)
-			default:
-				inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
-				inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+		case .ENGLISH:
+			inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
+		case .JAPANESE:
+			inPageMiniMessageLabel.font = Font.notoSansJP(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansJP(size: buttonTextSize)
+		case .KOREAN:
+			inPageMiniMessageLabel.font = Font.notoSansKR(size: messageTextSize, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.notoSansKR(size: buttonTextSize)
+		default:
+			inPageMiniMessageLabel.font = Font.system(size: messageTextSize + 2, weight: messageLabelIsBold ? .bold : .regular)
+			inPageMiniSizeCheckButton.titleLabel?.font = Font.system(size: buttonTextSize + 2)
 		}
 	}
 

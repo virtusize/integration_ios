@@ -13,8 +13,14 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.7.0
+- Feature: Introduce internal logger (see [README/logger](/README.md#optional-confgiure-internal-logger) for configuration)
+- Change: `InPageMini` and `InPageStandard` now use `NotoSans` font instead of `NotoSansCJK` for Japanese and Korean languages
+- Refactor: Reduce SDK binary size by using minimal-required subset of `NotoSans` fonts
+- Feature: Validate fonts support all the localization texts during PR checks
+
 ### 2.6.6
-- Fix:  Inpage text is not appropriate when the size is recommended
+- Fix: Inpage text is not appropriate when the size is recommended
 - Fix: Inpage text for on-boarding user has 2 patterns at random
 
 ### 2.6.5

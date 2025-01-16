@@ -26,7 +26,7 @@ import XCTest
 @testable import Virtusize
 @testable import VirtusizeCore
 
-// swiftlint:disable type_body_length file_length
+// swiftlint:disable:next type_body_length
 class VirtusizeAPIServiceTests: XCTestCase {
 
     override func setUpWithError() throws {
@@ -93,9 +93,10 @@ class VirtusizeAPIServiceTests: XCTestCase {
     func testSendProductImage_hasExpectedCallbackData() {
         let expectation = self.expectation(description: "Virtusize.sendProductImage reaches the callback")
         var actualObject: JSONObject?
-        VirtusizeAPIService.session = MockURLSession(data: TestFixtures.productMetaDataHintsJsonResponse.data(using: .utf8),
-                                                     urlResponse: nil,
-                                                     error: nil)
+        VirtusizeAPIService.session = MockURLSession(
+			data: TestFixtures.productMetaDataHintsJsonResponse.data(using: .utf8),
+			urlResponse: nil,
+			error: nil)
         VirtusizeAPIService.sendProductImage(of: TestFixtures.virtusizeProduct, forStore: 2) { jsonObject in
             actualObject = jsonObject
             expectation.fulfill()
@@ -198,6 +199,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         var actualError: VirtusizeError?
 
         let requestURL = "https://staging.virtusize.com/a/api/v3/stores/api-key/\(Virtusize.APIKey!)?format=json"
+		// swiftlint:disable:next line_length
         let response = HTTPURLResponse(url: URL(string: requestURL)!, statusCode: 403, httpVersion: nil, headerFields: nil)
         VirtusizeAPIService.session = MockURLSession(
             data: TestFixtures.retrieveStoreInfoErrorJsonResponse.data(using: .utf8),
@@ -641,7 +643,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         var actualRecommendedSizes: BodyProfileRecommendedSizeArray?
 
         VirtusizeAPIService.session = MockURLSession(
-            data: "[{\"sizeName\": \"35\"}]".data(using: .utf8),
+            data: Data("[{\"sizeName\": \"35\"}]".utf8),
             urlResponse: nil,
             error: nil
         )
@@ -690,7 +692,7 @@ extension VirtusizeAPIServiceTests {
         }
     }
 
-    class MockTask: URLSessionDataTask {
+    class MockTask: URLSessionDataTask, @unchecked Sendable {
         private let data: Data?
         private let urlResponse: URLResponse?
         private let responseError: Error?
@@ -709,4 +711,4 @@ extension VirtusizeAPIServiceTests {
             }
         }
     }
-}
+} // swiftlint:disable:this file_length

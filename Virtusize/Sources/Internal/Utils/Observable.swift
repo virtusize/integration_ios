@@ -27,9 +27,9 @@ import Foundation
 // The class warps a value in `AnyObject` to make it observable
 internal final class Observable<Value> {
 
-	struct Observer<Value> {
+	struct Observer<TValue> {
 		weak var observer: AnyObject?
-		let block: (Value) -> Void
+		let block: (TValue) -> Void
 	}
 
 	private var observers = [Observer<Value>]()

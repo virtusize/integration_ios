@@ -40,7 +40,6 @@ class ProductViewController: UIViewController {
 		self.init(nibName: nil, bundle: nil)
 	}
 
-	// swiftlint:disable function_body_length
 	override func viewDidLoad() {
 		super.viewDidLoad()
 

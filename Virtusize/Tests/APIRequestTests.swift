@@ -149,7 +149,7 @@ class APIRequestTests: XCTestCase {
         )
     }
 
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length
     func testGetBodyProfileRecommendedSize_expectedHeadersAndHttpBody() {
         guard let storeProduct = TestFixtures.getStoreProduct(gender: "male") else {
             return

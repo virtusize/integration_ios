@@ -41,10 +41,32 @@ virtusize-core-test:
 		-sdk "iphonesimulator" \
 		-destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=latest"
 
+test: virtusize-test virtusize-core-test
+
 clean:
 
 	rm -rf .build/
 
+lint:
+
+	swiftlint --strict
+
+lint-fix:
+
+	swiftlint --fix --strict
+
+validate-fonts:
+
+	sh ./Scripts/validate_fonts.sh
+
+build-fonts:
+
+	sh ./Scripts/build_fonts.sh
+
+install-git-hooks:
+
+	chmod +x .githooks/pre-push
+	git config --local core.hooksPath .githooks
 
 help:
 

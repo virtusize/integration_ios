@@ -40,6 +40,6 @@ protocol APISessionProtocol {
 	/// - Returns: `URLSessionDataTask`
 	func dataTask(
 		with request: URLRequest,
-		completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
+		completionHandler: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void)
 	-> URLSessionDataTask
 }
