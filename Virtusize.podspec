@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '13.0'
   s.swift_version = '5'
-  
+
   s.static_framework = true
   s.source_files = ["Virtusize/Sources/*.{swift, h}", "Virtusize/Sources/**/*.swift"]
   s.resources = "Virtusize/Sources/Resources/**/*.ttf"
@@ -22,5 +22,8 @@ Pod::Spec.new do |s|
       core.source_files = ['VirtusizeCore/Sources/*.{swift, h}', 'VirtusizeCore/Sources/**/*.swift']
       core.resource_bundle = { 'Virtusize_VirtusizeCore' => ['VirtusizeCore/Sources/Resources/**/*.lproj', "VirtusizeCore/Sources/Resources/PrivacyInfo.xcprivacy"] }
   end
-  s.dependency "VirtusizeAuth", "<= 1.1.5"
+  s.subspec 'VirtusizeAuth' do |auth|
+    auth.source_files = ['VirtusizeAuth/Sources/*.{swift, h}', 'VirtusizeAuth/Sources/**/*.swift']
+    auth.resource_bundle = { 'Virtusize_VirtusizeAuth' => ['VirtusizeAuth/Sources/Resources/**/*.lproj', 'VirtusizeAuth/Sources/Resources/PrivacyInfo.xcprivacy'] }
+  end
 end
