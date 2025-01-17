@@ -13,8 +13,8 @@
 		52CB715D2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB715B2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf */; };
 		52CB715E2D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB71592D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf */; };
 		52CB715F2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB715A2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf */; };
+		52FDA2882D3A5C8F007F5AC8 /* VirtusizeAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */; };
 		8455FFD42B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */; };
-		8455FFDD2B29D45A00019B1B /* VirtusizeAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */; };
 		84CF03B92BD7A64A00C08920 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */; };
 		9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */; };
 		9C106EB024FCE0C70012EE51 /* VirtusizeInPageStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EAF24FCE0C70012EE51 /* VirtusizeInPageStandard.swift */; };
@@ -131,8 +131,8 @@
 		52CB71592D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansJP-Regular.ttf"; sourceTree = "<group>"; };
 		52CB715A2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		52CB715B2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeItemsParam.swift; sourceTree = "<group>"; };
-		8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VirtusizeAuth.xcframework; sourceTree = "<group>"; };
 		84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImage.swift; sourceTree = "<group>"; };
 		9C106EAF24FCE0C70012EE51 /* VirtusizeInPageStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageStandard.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8455FFDD2B29D45A00019B1B /* VirtusizeAuth.xcframework in Frameworks */,
+				52FDA2882D3A5C8F007F5AC8 /* VirtusizeAuth.framework in Frameworks */,
 				9C92B3A52CB2DF7F001DD4A2 /* VirtusizeCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,8 +330,8 @@
 		8455FFD92B29D45A00019B1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */,
 				9C92B3A42CB2DF7F001DD4A2 /* VirtusizeCore.framework */,
-				8455FFDB2B29D45A00019B1B /* VirtusizeAuth.xcframework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
