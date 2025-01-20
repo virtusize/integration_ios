@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9C3505F22727074A003BEF82"
-               BuildableName = "VirtusizeCore.framework"
-               BlueprintName = "VirtusizeCore"
-               ReferencedContainer = "container:VirtusizeCore.xcodeproj">
+               BlueprintIdentifier = "9CFEE5E7272579F70051C508"
+               BuildableName = "VirtusizeAuth.framework"
+               BlueprintName = "VirtusizeAuth"
+               ReferencedContainer = "container:VirtusizeAuth.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,14 +29,13 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "NO">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9C3505FB2727074A003BEF82"
-               BuildableName = "VirtusizeCoreTests.xctest"
-               BlueprintName = "VirtusizeCoreTests"
-               ReferencedContainer = "container:VirtusizeCore.xcodeproj">
+               BlueprintIdentifier = "9CFEE5F0272579F70051C508"
+               BuildableName = "VirtusizeAuthTests.xctest"
+               BlueprintName = "VirtusizeAuthTests"
+               ReferencedContainer = "container:VirtusizeAuth.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -61,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9C3505F22727074A003BEF82"
-            BuildableName = "VirtusizeCore.framework"
-            BlueprintName = "VirtusizeCore"
-            ReferencedContainer = "container:VirtusizeCore.xcodeproj">
+            BlueprintIdentifier = "9CFEE5E7272579F70051C508"
+            BuildableName = "VirtusizeAuth.framework"
+            BlueprintName = "VirtusizeAuth"
+            ReferencedContainer = "container:VirtusizeAuth.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

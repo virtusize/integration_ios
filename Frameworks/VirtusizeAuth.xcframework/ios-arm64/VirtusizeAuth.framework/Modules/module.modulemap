@@ -1,4 +1,0 @@
-framework module VirtusizeAuth {
-  header "VirtusizeAuth-Swift.h"
-  requires objc
-}

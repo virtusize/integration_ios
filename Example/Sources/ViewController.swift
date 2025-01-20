@@ -192,6 +192,11 @@ class ViewController: UIViewController {
 		navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = UIColor.vsTealColor
     }
+
+	@IBAction func onShowWebViewTap(_ sender: Any) {
+		let authSample = AuthViewController()
+		navigationController?.pushViewController(authSample, animated: true)
+	}
 }
 
 extension ViewController: VirtusizeMessageHandler {

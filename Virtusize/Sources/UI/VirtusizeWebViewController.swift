@@ -86,6 +86,8 @@ public final class VirtusizeWebViewController: UIViewController {
 		}
 
 		let webView = WKWebView(frame: .zero, configuration: config)
+		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
+		webView.customUserAgent = VirtusizeAuthConstants.userAgent
 		webView.navigationDelegate = self
 		webView.uiDelegate = self
 		view.addSubview(webView)

@@ -29,6 +29,17 @@ jobs:
           pod trunk push VirtusizeCore.podspec --allow-warnings
           pod repo update
 
+      - name: Pod Validation for VirtusizeAuth
+        run: |
+          set -e -o pipefail
+          pod lib lint VirtusizeAuth.podspec --allow-warnings
+          pod spec lint VirtusizeAuth.podspec --allow-warnings
+
+      - name: Push VirtusizeAuth to CocoaPods
+        run: |
+          pod trunk push VirtusizeAuth.podspec --allow-warnings
+          pod repo update
+
       - name: Pod Validation for Virtusize
         run: |
           set -e -o pipefail

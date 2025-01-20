@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L0s-5N-Pzv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L0s-5N-Pzv">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
             <objects>
                 <navigationController id="L0s-5N-Pzv" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eyt-Kj-SJh">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -41,6 +41,14 @@
                                 <rect key="frame" x="16" y="479" width="382" height="30"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3I9-Ft-3Mq">
+                                <rect key="frame" x="125.5" y="298" width="163" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Show as WebView"/>
+                                <connections>
+                                    <action selector="onShowWebViewTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pVH-Mp-MQs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="a7D-ow-IdL"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -48,7 +56,9 @@
                             <constraint firstItem="fih-qK-nOb" firstAttribute="leading" secondItem="a7D-ow-IdL" secondAttribute="leading" constant="16" id="FOj-0k-ElL"/>
                             <constraint firstItem="a7D-ow-IdL" firstAttribute="trailing" secondItem="fih-qK-nOb" secondAttribute="trailing" constant="16" id="MWQ-KJ-KiN"/>
                             <constraint firstItem="I3C-Eg-THm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PMi-FD-eLI"/>
+                            <constraint firstItem="3I9-Ft-3Mq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="crj-hh-vdi"/>
                             <constraint firstItem="fih-qK-nOb" firstAttribute="top" secondItem="I3C-Eg-THm" secondAttribute="bottom" constant="16" id="kqm-OI-WSd"/>
+                            <constraint firstItem="I3C-Eg-THm" firstAttribute="top" secondItem="3I9-Ft-3Mq" secondAttribute="bottom" constant="100" id="oCQ-Jh-GaF"/>
                             <constraint firstItem="I3C-Eg-THm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="s6S-eh-wAa"/>
                         </constraints>
                     </view>
