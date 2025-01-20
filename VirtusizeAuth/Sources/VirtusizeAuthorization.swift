@@ -64,20 +64,20 @@ public class VirtusizeAuthorization {
 	///
 	/// - Returns: true if the URL is successfully handled as Virtusize SNS callback, otherwise false
 	public func handleUrl(_ url: URL) -> Bool {
-//		VirtusizeLogger.debug("handleUrl: \(url)")
+		VirtusizeLogger.debug("handleUrl: \(url)")
 
 		guard let components = URLComponents(string: url.absoluteString),
 			  components.scheme?.hasSuffix("virtusize") == true,
 			  components.host == Constants.authPath
 		else {
 			// not a Virtusize URL
-//			VirtusizeLogger.debug("Not a virtusize URL")
+			VirtusizeLogger.debug("Not a virtusize URL")
 			return false
 		}
 
 		guard let safariVC = safariVewController else {
 			// Auth Screen already closed
-//			VirtusizeLogger.debug("Auth ViewController is not visible")
+			VirtusizeLogger.debug("Auth ViewController is not visible")
 			return false
 		}
 
@@ -139,7 +139,7 @@ public class VirtusizeAuthorization {
 		authUrlString = updateUrlWithSnsType(urlString: authUrlString)
 		authUrlString = updateUrlWithEnvironment(urlString: authUrlString, region: region, env: env)
 
-//		VirtusizeLogger.debug("AuthUrl: \(authUrlString)")
+		VirtusizeLogger.debug("AuthUrl: \(authUrlString)")
 
 		if let authURL = URL(string: authUrlString) {
 			let virtusizeSVC = VirtusizeSafariViewController(webView: webView, url: authURL, onClose: { [weak self] in
@@ -203,7 +203,7 @@ public class VirtusizeAuthorization {
 			}
 
 		guard snsType != nil else {
-//			VirtusizeLogger.error("Failed to resolve SNS Type from known host.")
+			VirtusizeLogger.error("Failed to resolve SNS Type from known host.")
 			return urlString
 		}
 
