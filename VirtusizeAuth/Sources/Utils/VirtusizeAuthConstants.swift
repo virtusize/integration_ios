@@ -25,7 +25,11 @@
 
 import Foundation
 
-class VirtusizeAuthConstants {
+public class VirtusizeAuthConstants {
+	// It's necessary for update WKWebView customUserAgent
+	// to make Google SDK work inside WebView. See https://stackoverflow.com/a/73152331
+	public static let userAgent = "Mozilla/5.0 AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
+
 	static let queryStateKey = "state"
 
 	static let snsAccessTokenKey = "access_token"

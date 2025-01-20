@@ -50,7 +50,7 @@ class AuthViewController: UIViewController {
 //		webView = WKWebView(frame: .zero)
 //		webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
 //		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
-//		webView.customUserAgent = "Mozilla/5.0 AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
+//		webView.customUserAgent = VirtusizeAuthConstants.userAgent
 
 		//
 		// Common for both methods
