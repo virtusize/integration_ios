@@ -208,41 +208,7 @@ override func viewDidLoad() {
 
 ### 3. Enable SNS authentication
 
-The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController.
-
-#### (1) Register a URL type**
-
-In Xcode, click on your project's **Info** tab and select **URL Types**.
-
-Add a new URL type and set the URL Schemes and identifier to `com.your-company.your-app.virtusize`
-
-![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
-
-#### (2) Set up application callback handler
-
-Implement App delegate's `application(_:open:options)` method:
-
-```Swift
-func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-    return Virtusize.handleUrl(url)
-}
-```
-
-Implement Scene delegate's `scene(_:openURLContexts)` method:
-
-```Swift
-func scene(_ scene: UIScene, openURLContexts: Set<UIOpenURLContext>) {
-    if let urlContext = openURLContexts.first {
-        _ = Virtusize.handleUrl(urlContext.url)
-    }
-}
-```
-
-
-**❗IMPORTANT**
-
-1. The URL type must include your app's bundle ID and **end with .virtusize**.
-2. If you have multiple app targets, add the URL type for all of them.
+See [VirtusizeAuth Setup Guide](/VirtusizeAuth/README.md) to enable and configure SNS authentication.
 
 ### 4. Implement VirtusizeMessageHandler (Optional)
 
@@ -665,7 +631,7 @@ Virtusize.sendOrder(
 
 ## Enable SNS Login in Virtusize for Native Webview Apps
 
-Use the [Virtusize Auth SDK](https://github.com/virtusize/virtusize_auth_ios)
+See [VirtusizeAuth for WebView Apps Setup](/VirtusizeAuth/README.md)
 
 ## Contributing
 
