@@ -210,9 +210,7 @@ override func viewDidLoad() {
 
 The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController.
 
-You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
-
-**(1) Register a URL type**
+#### (1) Register a URL type**
 
 In Xcode, click on your project's **Info** tab and select **URL Types**.
 
@@ -220,20 +218,26 @@ Add a new URL type and set the URL Schemes and identifier to `com.your-company.y
 
 ![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
 
-**(2) Set the app's bundle ID**
+#### (2) Set up application callback handler
 
-In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
+Implement App delegate's `application(_:open:options)` method:
 
 ```Swift
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-	// Virtusize initialization omitted for brevity
-
-	// Set the app bundle ID
-	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
-
-	return true
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    return Virtusize.handleUrl(url)
 }
 ```
+
+Implement Scene delegate's `scene(_:openURLContexts)` method:
+
+```Swift
+func scene(_ scene: UIScene, openURLContexts: Set<UIOpenURLContext>) {
+    if let urlContext = openURLContexts.first {
+        _ = Virtusize.handleUrl(urlContext.url)
+    }
+}
+```
+
 
 **❗IMPORTANT**
 
