@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  AuthViewController.swift
 //  VirtusizeAuthExample
 //
 //  Copyright (c) 2021-present Virtusize KK
@@ -38,21 +38,26 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
 
         // Method 1: Use the VirtusizeWebView
-        //		webView = VirtusizeWebView(frame: .zero) { configuration in
-        //			// access the WKWebViewConfiguration object here to customize it
-        //
-        //			// If you want to allow cookie sharing between multiple VirtusizeWebViews,
-        //			// assign the same WKProcessPool object to configuration.processPool
-        //			configuration.processPool = WKProcessPool()
-        //		}
-        // Method 2: Use WKWebView
-        webView = WKWebView(frame: .zero)
-        webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-		// swiftlint:disable:next line_length
-		webView.customUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1"
+		webView = VirtusizeWebView(frame: .zero) { configuration in
+			// access the WKWebViewConfiguration object here to customize it
 
+			// If you want to allow cookie sharing between multiple VirtusizeWebViews,
+			// assign the same WKProcessPool object to configuration.processPool
+			configuration.processPool = WKProcessPool()
+		}
+
+        // Method 2: Use WKWebView
+//		webView = WKWebView(frame: .zero)
+//		webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+//		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
+//		webView.customUserAgent = "Mozilla/5.0 AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
+
+		//
+		// Common for both methods
+		webView.uiDelegate = self
+        webView.navigationDelegate = self
+
+		// For debugging purpose. Should be removed for Production builds or warpped with #if DEBUG
 		if #available(iOS 16.4, *) {
 			webView.isInspectable = true
 		}
@@ -100,7 +105,9 @@ extension AuthViewController: WKUIDelegate {
             // By setting up the user agent, Google recognizes the web view as a Safari browser
             configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
             let popupWebView = WKWebView(frame: webView.frame, configuration: configuration)
-			if #available(iOS 16.4, *) {
+
+            // For debugging purpose. Should be removed for Production builds or warpped with #if DEBUG
+            if #available(iOS 16.4, *) {
 				popupWebView.isInspectable = true
 			}
             popupWebView.uiDelegate = self

@@ -35,12 +35,6 @@ public class VirtusizeAuthorization {
 		static let authPath = "sns-auth"
 	}
 
-	private let trustedSnsHosts = [
-		"facebook.com",
-		"google.com",
-		"line.me"
-	]
-
 	public static let shared = VirtusizeAuthorization()
 
 	private var safariVewController: VirtusizeSafariViewController?
@@ -96,7 +90,7 @@ public class VirtusizeAuthorization {
 		webView: WKWebView?,
 		url: URL
 	) -> Bool {
-		guard VirtusizeURLCheck.isSnsLink(url: url, trustedSnsHosts: trustedSnsHosts) else {
+		guard VirtusizeURLCheck.isSnsLink(url: url, trustedSnsHosts: SnsHost.trustedHosts) else {
 			return false
 		}
 
@@ -191,18 +185,7 @@ public class VirtusizeAuthorization {
 	internal func updateUrlWithSnsType(
 		urlString: String
 	) -> String {
-		let snsType: SNSType? =
-			if urlString.contains("facebook") {
-				SNSType.facebook
-			} else if urlString.contains("google") {
-				SNSType.google
-			} else if urlString.contains("line.me") {
-				SNSType.line
-			} else {
-				nil
-			}
-
-		guard snsType != nil else {
+		guard let snsType = SNSType.from(url: urlString) else {
 			VirtusizeLogger.error("Failed to resolve SNS Type from known host.")
 			return urlString
 		}
@@ -210,7 +193,7 @@ public class VirtusizeAuthorization {
 		return updateUrlStateWithProperty(
 			urlString: urlString,
 			key: VirtusizeAuthConstants.snsTypeKey,
-			value: snsType!.rawValue)
+			value: snsType.rawValue)
 	}
 
 	internal func updateUrlStateWithProperty(

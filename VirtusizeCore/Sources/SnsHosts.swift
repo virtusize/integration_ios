@@ -1,8 +1,7 @@
 //
-//  SNSType.swift
-//  VirtusizeAuth
+//  SnsHosts.swift
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +22,10 @@
 //  THE SOFTWARE.
 //
 
-/// An enum for the supported social networks.
-enum SNSType: String {
-	case facebook
-	case google
-	case line // line.me
+public enum SnsHost: String, CaseIterable {
+	case facebook = "facebook.com"
+	case google = "google.com"
+	case line = "line.me"
 
-	static func from(url: String) -> SNSType? {
-		let patterns: [SNSType: String] = [
-			.facebook: "facebook",
-			.google: "google",
-			.line: "line.me"
-		]
-
-		return patterns.first(where: { url.contains($0.value) })?.key
-	}
+	public static let trustedHosts = SnsHost.allCases.map(\.rawValue)
 }

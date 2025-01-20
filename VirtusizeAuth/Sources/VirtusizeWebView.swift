@@ -65,12 +65,16 @@ public class VirtusizeWebView: WKWebView {
         configuration.preferences = wkPreferences
 		configurationClosure?(configuration)
 		super.init(frame: frame, configuration: configuration)
+		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
+		customUserAgent = "Mozilla/5.0 AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
 		uiDelegate = self
 		navigationDelegate = self
 	}
 
 	required public init?(coder: NSCoder) {
 		super.init(coder: coder)
+		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
+		customUserAgent = "Mozilla/5.0 AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
 		uiDelegate = self
 		navigationDelegate = self
 	}

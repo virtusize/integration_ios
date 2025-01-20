@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		520DD3A12D3EA6270006E6A0 /* SnsHosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DD3A02D3EA61E0006E6A0 /* SnsHosts.swift */; };
 		523242472D1AC8AE00290069 /* VirtusizeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523242462D1AC89F00290069 /* VirtusizeLogger.swift */; };
 		5232424C2D1D93A100290069 /* VirtusizeLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */; };
 		52EED1CF2D24034900A10359 /* Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52EED1CE2D24034900A10359 /* Testing.framework */; platformFilter = ios; };
@@ -56,6 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		520DD3A02D3EA61E0006E6A0 /* SnsHosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsHosts.swift; sourceTree = "<group>"; };
 		523242462D1AC89F00290069 /* VirtusizeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLogger.swift; sourceTree = "<group>"; };
 		5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLoggerTests.swift; sourceTree = "<group>"; };
 		52EED1CE2D24034900A10359 /* Testing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Testing.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/Testing.framework; sourceTree = DEVELOPER_DIR; };
@@ -225,6 +227,7 @@
 		9C35066D272802F8003BEF82 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				520DD3A02D3EA61E0006E6A0 /* SnsHosts.swift */,
 				9C35066E27280313003BEF82 /* VirtusizeError.swift */,
 			);
 			name = Models;
@@ -393,6 +396,7 @@
 				9C3506662727FEBD003BEF82 /* APIRequest.swift in Sources */,
 				9CAD1F4E2CF4DA8800AC104E /* VirtusizeStoreRepository.swift in Sources */,
 				9C35066B27280222003BEF82 /* APIService.swift in Sources */,
+				520DD3A12D3EA6270006E6A0 /* SnsHosts.swift in Sources */,
 				9C35066F27280313003BEF82 /* VirtusizeError.swift in Sources */,
 				9C35061927279586003BEF82 /* UIApplication+Extensions.swift in Sources */,
 				9C35067327280367003BEF82 /* APIResponse.swift in Sources */,
