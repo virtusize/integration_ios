@@ -93,7 +93,7 @@ yourWebView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = tr
 ### Step 2: Set `customUserAgent` to ensure Google SDK works within WebView
 
 ```swift
-yourWebView.customUserAgent = "Mozilla/5.0 AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
+yourWebView.customUserAgent = VirtusizeAuthConstants.userAgent
 ```
 
 ### Step 3: Make sure your view controller confirms the `WKNavigationDelegate` and implement the code below to enable SNS buttons in Virtusize
@@ -181,4 +181,41 @@ extension YourViewController: WKUIDelegate {
         webView.removeFromSuperview()
     }
 }
+```
+
+# Migration Guide (from 2.x to 2.8.0)
+
+## Step 1: Setup AppDelegate or SceneDelegate to handle callback URL
+
+```Swift
+// For older apps - update AppDelegate (when SceneDelegate` is not yet used)
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    return Virtusize.handleUrl(url)
+}
+```
+
+```Swift
+// For newer apps, update SceneDelegate
+func scene(_ scene: UIScene, openURLContexts: Set<UIOpenURLContext>) {
+    if let urlContext = openURLContexts.first {
+        _ = Virtusize.handleUrl(urlContext.url)
+    }
+}
+```
+
+## Step 2: Remove `setAppBundleId` function call
+
+```diff
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	// Virtusize initialization omitted for brevity
+-   VirtusizeAuth.setAppBundleId("com.your-company.your-app")
+	return true
+}
+```
+
+## Step 3: (Optional) for native WebView apps, set `customUserAgent` to ensure Google SDK works within WebView
+
+```swift
+// if yourWebView is WKWebView
+yourWebView.customUserAgent = VirtusizeAuthConstants.userAgent
 ```
