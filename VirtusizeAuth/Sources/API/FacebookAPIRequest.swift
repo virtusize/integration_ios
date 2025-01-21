@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  FacebookAPIRequest.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -22,10 +23,29 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import VirtusizeCore
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+extension APIRequest {
+	/// Get the request to get the Facebook user data.
+	///
+	/// - Parameter accessToken: The access token to use for the request.
+	/// - Returns: A `URLRequest` object.
+	internal static func getFacebookUser(accessToken: String) ->
+	URLRequest {
+		var urlComponents = URLComponents()
+		urlComponents.scheme = "https"
+		urlComponents.host = "graph.facebook.com"
+		urlComponents.path = "/v2.9/me"
+		urlComponents.queryItems = [
+			URLQueryItem(
+				name: "fields",
+				value: "email,first_name,last_name,name,timezone,verified"
+			),
+			URLQueryItem(
+				name: VirtusizeAuthConstants.snsAccessTokenKey,
+				value: accessToken
+			)
+		]
+		return apiRequest(components: urlComponents)
+	}
 }

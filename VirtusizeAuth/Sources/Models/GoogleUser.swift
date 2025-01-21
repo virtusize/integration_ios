@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  GoogleUser.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -22,10 +23,38 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+/// Google user model
+class GoogleUser: Codable, VirtusizeUser {
+	/// The user's unique ID
+	let sub: String
+	/// The user's given name
+	let givenName: String?
+	/// The user's family name
+	let familyName: String?
+	/// The user's full name
+	let name: String
+	/// The user's locale
+	let locale: String?
+	/// The user's profile picture URL
+	let pictureUrl: String?
+	/// The user's email
+	let email: String
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+	var id: String {
+		return self.sub
+	}
+
+	var snsType: String {
+		return SNSType.google.rawValue
+	}
+
+	private enum CodingKeys: String, CodingKey {
+		case sub
+		case givenName = "given_name"
+		case familyName = "family_name"
+		case name
+		case locale
+		case pictureUrl = "picture"
+		case email
+	}
 }

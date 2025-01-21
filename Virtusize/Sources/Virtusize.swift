@@ -175,4 +175,12 @@ public class Virtusize {
 			onError: onError
 		)
 	}
+
+	/// Handles the OAuth callback. Returns true if the URL is known and handled by the SDK
+	///
+	/// - Parameters:
+	///   - url: OAuth callback URL
+	public class func handleUrl(_ url: URL) -> Bool {
+		return VirtusizeAuthorization.shared.handleUrl(url)
+	}
 }

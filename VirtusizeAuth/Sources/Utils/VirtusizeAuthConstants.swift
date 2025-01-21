@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  VirtusizeAuthConstants.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -24,8 +25,16 @@
 
 import Foundation
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+public class VirtusizeAuthConstants {
+	// It's necessary for update WKWebView customUserAgent
+	// to make Google SDK work inside WebView. See https://stackoverflow.com/a/73152331
+	public static let userAgent = "Mozilla/5.0 AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
+
+	static let queryStateKey = "state"
+
+	static let snsAccessTokenKey = "access_token"
+	static let snsCodeKey = "code"
+	static let snsTypeKey = "sns_type"
+	static let regionKey = "region"
+	static let envKey = "env"
 }

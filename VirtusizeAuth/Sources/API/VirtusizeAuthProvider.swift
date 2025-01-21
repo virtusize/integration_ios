@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  VirtusizeAuthProvider.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -22,10 +23,22 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+/// The protocol that all SNS Auth providers must conform to.
+protocol VirtusizeAuthProvider {
+	/// Gets the user's information from the provider with an access token.
+	func getUserInfo(accessToken: String) -> VirtusizeUser?
+}
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+/// Facebook Auth Provider
+class FacebookAuthProvider: VirtusizeAuthProvider {
+	func getUserInfo(accessToken: String) -> VirtusizeUser? {
+		return FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
+	}
+}
+
+/// Google Auth Provider
+class GoogleAuthProvider: VirtusizeAuthProvider {
+	func getUserInfo(accessToken: String) -> VirtusizeUser? {
+		return GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+	}
 }

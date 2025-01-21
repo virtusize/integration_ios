@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  SNSType.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -22,10 +23,19 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+/// An enum for the supported social networks.
+enum SNSType: String {
+	case facebook
+	case google
+	case line // line.me
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+	static func from(url: String) -> SNSType? {
+		let patterns: [SNSType: String] = [
+			.facebook: "facebook",
+			.google: "google",
+			.line: "line.me"
+		]
+
+		return patterns.first(where: { url.contains($0.value) })?.key
+	}
 }

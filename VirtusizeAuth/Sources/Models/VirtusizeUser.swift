@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  VirtusizeUser.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -24,8 +25,14 @@
 
 import Foundation
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+/// Virtusize user model
+protocol VirtusizeUser {
+	/// The user's id
+	var id: String { get }
+	/// The user's social network type
+	var snsType: String { get }
+	/// The user's full name
+	var name: String { get }
+	/// The user's email
+	var email: String { get }
 }

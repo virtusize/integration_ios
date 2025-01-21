@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  FacebookUser.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -22,10 +23,28 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+/// Facebook user model
+class FacebookUser: Codable, VirtusizeUser {
+	/// The user's id
+	let id: String
+	/// The user's first name
+	let firstName: String?
+	/// The user's last name
+	let lastName: String?
+	/// The user's full name
+	let name: String
+	/// The user's email
+	let email: String
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+	var snsType: String {
+		return SNSType.facebook.rawValue
+	}
+
+	private enum CodingKeys: String, CodingKey {
+		case id
+		case firstName = "first_name"
+		case lastName = "last_name"
+		case name
+		case email
+	}
 }

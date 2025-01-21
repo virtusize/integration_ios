@@ -58,11 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			// including "modelInfo", "generalFit", "brandSizing" and "material".
 			.setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
             // By default, Virtusize disables the SNS buttons
-            .setShowSNSButtons(false)
+            .setShowSNSButtons(true)
 			.build()
 
-		VirtusizeAuthorization.setAppBundleId("com.virtusize.Example")
-
 		return true
+	}
+
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+		return Virtusize.handleUrl(url)
 	}
 }

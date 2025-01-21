@@ -1,7 +1,7 @@
 //
-//  VirtusizeConfiguration.swift
+//  SnsHosts.swift
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,10 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+public enum SnsHost: String, CaseIterable {
+	case facebook = "facebook.com"
+	case google = "google.com"
+	case line = "line.me"
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+	public static let trustedHosts = SnsHost.allCases.map(\.rawValue)
 }

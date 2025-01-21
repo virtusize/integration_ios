@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  FacebookAPIService.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -22,10 +23,15 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import VirtusizeCore
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+class FacebookAPIService: APIService {
+	/// Get the user's Facebook profile information
+	///
+	/// - Parameter accessToken: The user's Facebook access token
+	/// - Returns: A `APIResult` containing the user's Facebook profile information
+	static func getUserInfoAsync(accessToken: String) -> APIResult<FacebookUser> {
+		let request = APIRequest.getFacebookUser(accessToken: accessToken)
+		return getAPIResultAsync(request: request, type: FacebookUser.self)
+	}
 }

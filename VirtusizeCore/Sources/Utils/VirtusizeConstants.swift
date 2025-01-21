@@ -1,7 +1,8 @@
 //
-//  VirtusizeConfiguration.swift
+//  VirtusizeConstants.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +23,6 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+public class VirtusizeConstants {
+	public static let virtusizeName = "virtusize"
 }

@@ -1,5 +1,6 @@
 //
-//  VirtusizeConfiguration.swift
+//  GoogleAPIService.swift
+//  VirtusizeAuth
 //
 //  Copyright (c) 2021-present Virtusize KK
 //
@@ -22,10 +23,15 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import VirtusizeCore
 
-struct VirtusizeConfiguration {
-	static let SDKVersion = "2.8.0"
-    static let defaultAoyamaVersion = "3.4.2"
-    static let resourceBundleName = "Virtusize_VirtusizeCore"
+class GoogleAPIService: APIService {
+	/// Get the Google user's information
+	///
+	/// - Parameter accessToken: The access token
+	/// - Returns: A `APIResult` containing the user's Google account information
+	static func getUserInfoAsync(accessToken: String) -> APIResult<GoogleUser> {
+		let request = APIRequest.getGoogleUser(accessToken: accessToken)
+		return getAPIResultAsync(request: request, type: GoogleUser.self)
+	}
 }
