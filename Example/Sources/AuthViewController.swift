@@ -38,19 +38,19 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
 
         // Method 1: Use the VirtusizeWebView
-		webView = VirtusizeWebView(frame: .zero) { configuration in
-			// access the WKWebViewConfiguration object here to customize it
-
-			// If you want to allow cookie sharing between multiple VirtusizeWebViews,
-			// assign the same WKProcessPool object to configuration.processPool
-			configuration.processPool = WKProcessPool()
-		}
+//		webView = VirtusizeWebView(frame: .zero) { configuration in
+//			// access the WKWebViewConfiguration object here to customize it
+//
+//			// If you want to allow cookie sharing between multiple VirtusizeWebViews,
+//			// assign the same WKProcessPool object to configuration.processPool
+//			configuration.processPool = WKProcessPool()
+//		}
 
         // Method 2: Use WKWebView
-//		webView = WKWebView(frame: .zero)
-//		webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
-//		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
-//		webView.customUserAgent = VirtusizeAuthConstants.userAgent
+		webView = WKWebView(frame: .zero)
+		webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
+		webView.customUserAgent = VirtusizeAuthConstants.userAgent
 
 		//
 		// Common for both methods
