@@ -61,7 +61,7 @@ public class VirtusizeAuthorization {
 		VirtusizeLogger.debug("handleUrl: \(url)")
 
 		guard let components = URLComponents(string: url.absoluteString),
-			  components.scheme?.hasSuffix("virtusize") == true,
+			  components.scheme?.hasSuffix(VirtusizeConstants.virtusizeName) == true,
 			  components.host == Constants.authPath
 		else {
 			// not a Virtusize URL

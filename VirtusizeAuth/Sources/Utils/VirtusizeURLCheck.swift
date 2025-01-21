@@ -24,28 +24,30 @@
 //
 
 import Foundation
+import VirtusizeCore
 
 public class VirtusizeURLCheck {
 
 	/// Checks if a URL is an external link from Virtusize to be open on the Safari browser
 	public static func isExternalLinkFromVirtusize(url: String?) -> Bool {
-		return url != nil && (url!.contains("surveymonkey") || (url!.contains("virtusize") && url!.contains("privacy")))
+		return url != nil && (url!.contains("surveymonkey") ||
+							  (url!.contains(VirtusizeConstants.virtusizeName) && url!.contains("privacy")))
 	}
 
 	/// Checks if a URL is a link from Virtusize SNS authentication
 	public static func isLinkFromSNSAuth(url: String?) -> Bool {
-        return url != nil && url!.contains("virtusize") && url!.contains("auth")
+        return url != nil && url!.contains(VirtusizeConstants.virtusizeName) && url!.contains("auth")
 	}
 
     /// Checks if a URL is a link from Virtusize Fit Illustrator
     public static func isFitIllustratorLink(url: String?) -> Bool {
-        return url != nil && url!.contains("virtusize") && url!.contains("fit-illustrator")
+        return url != nil && url!.contains(VirtusizeConstants.virtusizeName) && url!.contains("fit-illustrator")
     }
 
 	/// Checks if an URL is an app specific SNS Callback
 	public static func isSnsCallback(url: URL) -> Bool {
 		guard let components = URLComponents(string: url.absoluteString),
-			  components.scheme?.hasSuffix("virtusize") == true,
+			  components.scheme?.hasSuffix(VirtusizeConstants.virtusizeName) == true,
 			  components.host == "sns-auth"
 		else {
 			return false
@@ -71,9 +73,9 @@ public class VirtusizeURLCheck {
 
 		let isVirtusizeSpecific =
 			if #available(iOS 16.0, *) {
-				url.query()?.contains("virtusize") ?? false
+				url.query()?.contains(VirtusizeConstants.virtusizeName) ?? false
 			} else {
-				url.query?.contains("virtusize") ?? false
+				url.query?.contains(VirtusizeConstants.virtusizeName) ?? false
 			}
 
 		return isKnownHost && isOAuthPath && isVirtusizeSpecific
