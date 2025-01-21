@@ -11,19 +11,27 @@ let package = Package(
             targets: ["Virtusize"]
         ),
         .library(
+            name: "VirtusizeAuth",
+            targets: ["VirtusizeAuth"]
+        ),
+        .library(
             name: "VirtusizeCore",
             targets: ["VirtusizeCore"]
         )
-    ],
-    dependencies: [
-        .package(url: "https://github.com/virtusize/virtusize_auth_ios.git", from: "1.1.5")
     ],
 
     targets: [
         .target(
             name: "Virtusize",
-            dependencies: ["VirtusizeCore", .product(name: "VirtusizeAuth", package: "virtusize_auth_ios")],
+            dependencies: ["VirtusizeCore", "VirtusizeAuth"],
             path: "Virtusize/Sources",
+            exclude: ["Info.plist"],
+            resources: [.process("Resources")]
+        ),
+        .target(
+            name: "VirtusizeAuth",
+            dependencies: ["VirtusizeCore"],
+            path: "VirtusizeAuth/Sources",
             exclude: ["Info.plist"],
             resources: [.process("Resources")]
         ),
