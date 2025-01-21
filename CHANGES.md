@@ -13,7 +13,7 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### Next Release
+### 2.8.0
  - Refactor: Update SNS auth flow to fix an issue when users never returned back to the app after successful authentication
  - Refactor: Move in `VirtusizeAuth` source code into the main repository
  - Deprecate: `VirtusizeAuthentication.setAppBundleId` method is deprecated and removed, `bundleId` is resolved authomatically now.
