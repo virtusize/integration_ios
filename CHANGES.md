@@ -14,6 +14,7 @@ Use list notation, and following prefixes:
 ## NEXT RELEASE for Version 2.x.x
 
 ### Next Release
+- Fix: Release pods synchronously
 - Fix: Compilation error when packages added via Swift Package Manager, due to missing explicit `import Foundation`
 
 ### 2.8.0

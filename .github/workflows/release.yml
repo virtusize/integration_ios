@@ -18,35 +18,23 @@ jobs:
       - name: Install Cocoapods
         run: gem install cocoapods
 
-      - name: Pod Validation for VirtusizeCore
+      - name: Validate All Pods Locally
         run: |
           set -e -o pipefail
-          pod lib lint VirtusizeCore.podspec --allow-warnings
-          pod spec lint VirtusizeCore.podspec --allow-warnings
+          pod lib lint --include-podspecs="Virtusize*.podspec" --allow-warnings
 
+      # `pod trunk push` automatically validates pod version compatability
+      # so there is no need for extra `pod spec lint` call
+      # see https://guides.cocoapods.org/making/getting-setup-with-trunk#deploying-a-library
       - name: Push VirtusizeCore to CocoaPods
         run: |
-          pod trunk push VirtusizeCore.podspec --allow-warnings
-          pod repo update
+          pod trunk push VirtusizeCore.podspec --allow-warnings --synchronous
 
-      - name: Pod Validation for VirtusizeAuth
-        run: |
-          set -e -o pipefail
-          pod lib lint VirtusizeAuth.podspec --allow-warnings
-          pod spec lint VirtusizeAuth.podspec --allow-warnings
-
+      # --synchronous flag ensure the local repo is updated to lint and verify dependant packages
       - name: Push VirtusizeAuth to CocoaPods
         run: |
-          pod trunk push VirtusizeAuth.podspec --allow-warnings
-          pod repo update
-
-      - name: Pod Validation for Virtusize
-        run: |
-          set -e -o pipefail
-          pod lib lint Virtusize.podspec --allow-warnings
-          pod spec lint Virtusize.podspec --allow-warnings
+          pod trunk push VirtusizeAuth.podspec --allow-warnings --synchronous
 
       - name: Push Virtusize to CocoaPods
         run: |
-          pod trunk push Virtusize.podspec --allow-warnings
-          pod repo update
+          pod trunk push Virtusize.podspec --allow-warnings --synchronous
