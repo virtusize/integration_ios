@@ -24,15 +24,8 @@ jobs:
         run: brew install swiftlint
       - name: Run SwiftLint
         run: swiftlint
-      - name: Pod Lint for VirtusizeCore
-        run: pod lib lint VirtusizeCore.podspec --allow-warnings
-      - name: Pod Lint for Virtusize
-        uses: nick-fields/retry@v2.9.0
-        with:
-          timeout_minutes: 60
-          max_attempts: 3
-          retry_on: error
-          command: pod lib lint Virtusize.podspec --allow-warnings
+      - name: Lint Pods
+        run: pod lib lint --include-podspecs="Virtusize*.podspec" --allow-warnings
 
   test:
     runs-on: macos-15

@@ -13,10 +13,15 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.8.1
+- Fix: Release pods synchronously
+- Fix: Compilation error when packages added via Swift Package Manager, due to missing explicit `import Foundation`
+- Fix: Occasional unit-tests failures
+
 ### 2.8.0
- - Refactor: Update SNS auth flow to fix an issue when users never returned back to the app after successful authentication
- - Refactor: Move in `VirtusizeAuth` source code into the main repository
- - Deprecate: `VirtusizeAuthentication.setAppBundleId` method is deprecated and removed, `bundleId` is resolved authomatically now.
+- Refactor: Update SNS auth flow to fix an issue when users never returned back to the app after successful authentication
+- Refactor: Move in `VirtusizeAuth` source code into the main repository
+- Deprecate: `VirtusizeAuthentication.setAppBundleId` method is deprecated and removed, `bundleId` is resolved authomatically now.
 
 ### 2.7.0
 - Feature: Introduce internal logger (see [README/logger](/README.md#optional-confgiure-internal-logger) for configuration)
