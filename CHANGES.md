@@ -15,6 +15,7 @@ Use list notation, and following prefixes:
 
 ### Next Release
 - Fix: Release pods synchronously
+- Fix: Compilation error when packages added via Swift Package Manager, due to missing explicit `import Foundation`
 
 ### 2.8.0
 - Refactor: Update SNS auth flow to fix an issue when users never returned back to the app after successful authentication
