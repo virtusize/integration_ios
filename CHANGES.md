@@ -13,9 +13,10 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### Next Release
+### 2.8.1
 - Fix: Release pods synchronously
 - Fix: Compilation error when packages added via Swift Package Manager, due to missing explicit `import Foundation`
+- Fix: Occasional unit-tests failures
 
 ### 2.8.0
 - Refactor: Update SNS auth flow to fix an issue when users never returned back to the app after successful authentication
