@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### Next Release
+- Feature: Allow to target specific testing environment by branch name `Virtusize.setTestingBranch("branch-name")`
+
 ### 2.8.1
 - Fix: Release pods synchronously
 - Fix: Compilation error when packages added via Swift Package Manager, due to missing explicit `import Foundation`
