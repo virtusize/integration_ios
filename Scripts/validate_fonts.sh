@@ -2,6 +2,8 @@
 
 FONTS_DIR=./Virtusize/Sources/Resources/Fonts
 LOCALIZATION_DIR=./VirtusizeCore/Sources/Resources/Localizations
+TMP_DIR=./.build/tmp/font
+SKIP_CHARS=("0000c6d0") # skip '%' symbol, as it breaks the parsing
 
 # Strategy:
 #   1. Fetch all the glyphs from the font file
@@ -21,7 +23,6 @@ LOCALIZATION_DIR=./VirtusizeCore/Sources/Resources/Localizations
 validate_font_symbols() {
     local font_file=$1
     local text_file=$2
-    local tmp_dir=./.build/tmp/font
 
     # Make TMP directory to save intermidiate files
     mkdir -p $tmp_dir
@@ -29,22 +30,26 @@ validate_font_symbols() {
     # Prepare the unicode lists from both, localization file and font subset
     {
         # Extract Font metadata
-        ttx -q -t cmap -o $tmp_dir/font.ttx $font_file
+        ttx -q -t cmap -o $TMP_DIR/font.ttx $font_file
 
         # Prepare Expected characters
-        grep -o . $text_file | sort | uniq > $tmp_dir/text_chars.txt
+        grep -o . $text_file | sort | uniq > $TMP_DIR/text_chars.txt
 
         # Convert Font glyphs into list of unicodes in a UTF-32 format: \U12345678
-        awk -F'"' '/<map code=/{print $2}' $tmp_dir/font.ttx | sort | uniq | while IFS= read -r code; do
+        awk -F'"' '/<map code=/{print $2}' $TMP_DIR/font.ttx | sort | uniq | while IFS= read -r code; do
             hex="$(printf '%08x' "$((code))")"
             echo "\\U$hex"
-        done > $tmp_dir/font_unicodes.txt
+        done > $TMP_DIR/font_unicodes.txt
 
         # Convert Text characters into list of unicodes in a UTF-32 format: \U12345678
         while IFS= read -r char; do
             hex="$(printf "$char" | iconv -f UTF-8 -t UTF-32BE | xxd -p)"
+            # Skip some characters
+            if [[ " ${SKIP_CHARS[@]} " =~ " $hex " ]]; then
+                continue
+            fi
             echo "\\U$hex"
-        done < $tmp_dir/text_chars.txt | tee > $tmp_dir/text_unicodes.txt
+        done < $TMP_DIR/text_chars.txt | tee > $TMP_DIR/text_unicodes.txt
     }
 
     # Validate all the necessary Unicode characters are preset in the font subset
@@ -53,11 +58,11 @@ validate_font_symbols() {
 
         # Check if each Unicode in text_unicodes.txt is present in the font_unicodes.txt
         while IFS= read -r unicode; do
-            if ! grep -q "$unicode" $tmp_dir/font_unicodes.txt; then
+            if ! grep -q "$unicode" $TMP_DIR/font_unicodes.txt; then
                 echo "Missing character: $unicode"
                 missing=1
             fi
-        done < $tmp_dir/text_unicodes.txt
+        done < $TMP_DIR/text_unicodes.txt
 
         # Output the result
         if [ $missing -eq 0 ]; then
@@ -68,8 +73,6 @@ validate_font_symbols() {
         fi    
     }
 
-    # Clean up tmp directory
-    rm -r $tmp_dir
 }
 
 # Wrapper function 
@@ -77,7 +80,18 @@ validate_font() {
   local font=$1
   local language=$2
 
-  validate_font_symbols "$FONTS_DIR/$font" "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings"
+  # Make TMP directory to save intermidiate files
+  mkdir -p $TMP_DIR
+
+  # Merge local strings with remote json-strings and use this merged file for validation
+  local text_file="$TMP_DIR/strings_$language.txt"
+  cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
+  curl "https://i18n.virtusize.com/bundle-payloads/aoyama/${language}" >> $text_file
+
+  validate_font_symbols "$FONTS_DIR/$font" $text_file
+
+  # Clean up tmp directory
+  rm -r $tmp_dir
 }
 
 
