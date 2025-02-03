@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### Next Release
+- Fix: Ensure SNS buttons are hidden when configured to do so
+
 ### 2.8.1
 - Fix: Release pods synchronously
 - Fix: Compilation error when packages added via Swift Package Manager, due to missing explicit `import Foundation`
