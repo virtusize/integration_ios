@@ -46,7 +46,7 @@ internal enum APIEndpoints {
     // MARK: - Properties
     var hostname: String {
 		switch self {
-		case .productCheck:
+		case .productCheck, .productTypes:
 			return Virtusize.environment.servicesUrl()
 		case  .getSize:
 			return Virtusize.environment.getSizeUrl()
