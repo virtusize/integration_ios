@@ -98,7 +98,8 @@ internal enum APIEndpoints {
 			components.queryItems = jsonFormatQueryItems()
 
 		case .productTypes:
-			components.path = "/a/api/v3/product-types"
+			let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+			components.path = "\(envPathForServicesAPI)/a/api/v3/product-types"
 
 		case .sessions:
 			components.path = "/a/api/v3/sessions"
