@@ -86,7 +86,7 @@ validate_font() {
   # Merge local strings with remote json-strings and use this merged file for validation
   local text_file="$TMP_DIR/strings_$language.txt"
   cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
-  curl "https://i18n.virtusize.com/bundle-payloads/aoyama/${language}" >> $text_file
+  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}" >> $text_file
 
   validate_font_symbols "$FONTS_DIR/$font" $text_file
 
