@@ -15,6 +15,7 @@ Use list notation, and following prefixes:
 
 ### Next Release
 - Fix: use cache-friendly endpoints for faster loading time
+- Fix: Ensure SNS buttons are hidden when configured to do so
 
 ### 2.8.1
 - Fix: Release pods synchronously
