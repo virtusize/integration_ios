@@ -24,9 +24,6 @@ validate_font_symbols() {
     local font_file=$1
     local text_file=$2
 
-    # Make TMP directory to save intermidiate files
-    mkdir -p $tmp_dir
-
     # Prepare the unicode lists from both, localization file and font subset
     {
         # Extract Font metadata
