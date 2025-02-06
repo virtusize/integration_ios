@@ -88,7 +88,7 @@ validate_font() {
   validate_font_symbols "$FONTS_DIR/$font" $text_file
 
   # Clean up tmp directory
-  rm -r $tmp_dir
+  rm -r $TMP_DIR
 }
 
 
