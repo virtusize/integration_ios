@@ -6,6 +6,7 @@
 SOURCE_FONT_DIR=./Fonts
 SDK_FONT_DIR=./Virtusize/Sources/Resources/Fonts
 LOCALIZATION_DIR=./VirtusizeCore/Sources/Resources/Localizations
+TMP_DIR=./.build/tmp/font
 
 # Rename the font file name and it's metadata to ensure they match.
 # The inner font name change is important, so it can be loaded as:
@@ -40,19 +41,24 @@ rename_font() {
 # The font is copied into the Virtusize Resources directory
 # The font is also renamed (file and metadata), to ensure it's properly loaded by the iOS
 generate_subset_font() {
-  local font="$1"
-  local language="$2"
+  local font=$1
+  local language=$2
 
   echo "Processing '$font' ..."
 
+  # Merge local strings with remote json-strings and use this merged file for validation
+  local text_file="$TMP_DIR/strings_$language.txt"
+  cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
+  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}" >> $text_file
+
   # create subset font
-  pyftsubset ${SOURCE_FONT_DIR}/${font} \
-    --output-file=${SDK_FONT_DIR}/${font} \
+  pyftsubset $SOURCE_FONT_DIR/$font \
+    --output-file=$SDK_FONT_DIR/$font \
     --unicodes=U+0020-007E \
-    --text-file=${LOCALIZATION_DIR}/${language}.lproj/VirtusizeLocalizable.strings
+    --text-file=$text_file
 
   # rename font
-  rename_font ${SDK_FONT_DIR} ${font}
+  rename_font $SDK_FONT_DIR $font
 }
 
 # Japanese Regular

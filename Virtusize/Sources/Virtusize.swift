@@ -33,11 +33,11 @@ public class Virtusize {
 	public static var APIKey: String?
 
 	/// The user id that is the unique user id from the client system
-    public static var userID: String? {
-        didSet {
-            APICache.shared.currentUserId = Virtusize.userID
-        }
-    }
+	public static var userID: String? {
+		didSet {
+			APICache.shared.currentUserId = Virtusize.userID
+		}
+	}
 
 	/// The Virtusize environment that defaults to the `GLOBAL` domain
 	public static var environment = VirtusizeEnvironment.GLOBAL
@@ -120,7 +120,7 @@ public class Virtusize {
 		dispatchQueue.async {
 			virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
 				if let productWithPDCData = productWithPDCData {
-                    virtusizeRepository.updateUserSession()
+					virtusizeRepository.updateUserSession()
 					DispatchQueue.main.async {
 						NotificationCenter.default.post(
 							name: .productCheckData,
@@ -131,15 +131,15 @@ public class Virtusize {
 					virtusizeRepository.fetchInitialData(
 						externalProductId: product.externalId,
 						productId: productWithPDCData.productCheckData?.productDataId
-                    ) { serverProduct in
-                        NotificationCenter.default.post(
-                            name: .storeProduct,
-                            object: Virtusize.self,
-                            userInfo: [NotificationKey.storeProduct: serverProduct]
-                        )
-                        virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
-                        virtusizeRepository.updateInPageRecommendation(product: serverProduct)
-                    }
+					) { serverProduct in
+						NotificationCenter.default.post(
+							name: .storeProduct,
+							object: Virtusize.self,
+							userInfo: [NotificationKey.storeProduct: serverProduct]
+						)
+						virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
+						virtusizeRepository.updateInPageRecommendation(product: serverProduct)
+					}
 				}
 			}
 		}

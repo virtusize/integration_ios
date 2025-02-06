@@ -42,9 +42,7 @@ public extension UIApplication {
 	/// A safe accessor to call the function that opens a URL
 	func safeOpenURL(_ url: URL) {
 		guard self.canOpenURL(url) else { return }
-		guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
-			return
-		}
+		self.open(url)
 	}
 
     /// Gets the top most view controller
