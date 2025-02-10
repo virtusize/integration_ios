@@ -18,6 +18,7 @@ Use list notation, and following prefixes:
 - Fix: Use cache-friendly endpoints for faster loading time
 - Fix: Ensure SNS buttons are hidden when configured to do so
 - Fix: Open Privacy Policy page when clicked
+- Fix: Numeric size recommendations now appear correct
 
 ### 2.8.1
 - Fix: Release pods synchronously
