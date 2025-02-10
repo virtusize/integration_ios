@@ -81,17 +81,23 @@ internal enum APIEndpoints {
 			components.path = "/a/aoyama/latest.txt"
 
 		case .virtusizeWebView(let version):
-			if let branch = Virtusize.params?.testingBranch {
-				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
-			} else { // Default
+			switch Virtusize.params?.branch {
+			case .none:
 				components.path = "/a/aoyama/\(version)/sdk-webview.html"
+			case .some("staging"):
+				components.path = "/a/aoyama/staging/sdk-webview.html"
+			case .some(let branch):
+				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
 			}
 
 		case .virtusizeWebViewForSpecificClients:
-			if let branch = Virtusize.params?.testingBranch {
-				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
-			} else { // Default
+			switch Virtusize.params?.branch {
+			case .none:
 				components.path = "/a/aoyama/testing/privacy-policy-phase2-vue/sdk-webview.html"
+			case .some("staging"):
+				components.path = "/a/aoyama/staging/sdk-webview.html"
+			case .some(let branch):
+				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
 			}
 
 		case .storeViewApiKey:

@@ -31,7 +31,7 @@ public class VirtusizeParamsBuilder {
 	private var showSGI: Bool = false
 	private var detailsPanelCards: [VirtusizeInfoCategory] = VirtusizeInfoCategory.allCases
     private var showSNSButtons: Bool = false
-	private var testingBranch: String?
+	private var branch: String?
 
 	public init() {}
 
@@ -60,8 +60,8 @@ public class VirtusizeParamsBuilder {
         return self
     }
 
-	public func setTestingBranch(_ value: String) -> VirtusizeParamsBuilder {
-		testingBranch = value
+	public func setBranch(_ value: String) -> VirtusizeParamsBuilder {
+		branch = value
 		return self
 	}
 
@@ -75,7 +75,7 @@ public class VirtusizeParamsBuilder {
 			showSGI: showSGI,
 			detailsPanelCards: detailsPanelCards,
             showSNSButtons: showSNSButtons,
-			testingBranch: testingBranch
+			branch: branch
 		)
 	}
 }
