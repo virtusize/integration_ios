@@ -186,7 +186,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return nil
 		}
 
-		if isExternalLinks(url: url.absoluteString) {
+		if VirtusizeURLCheck.isExternalLinkFromVirtusize(url: url.absoluteString) {
 			if let sharedApplication = UIApplication.safeShared {
 				sharedApplication.safeOpenURL(url)
 				return nil
@@ -209,11 +209,6 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return popupWebView
 		}
 		return nil
-	}
-
-	/// Checks if a URL is an external link to be open on the Safari browser
-	private func isExternalLinks(url: String?) -> Bool {
-		return url != nil && (url!.contains("survey") || url!.contains("privacy"))
 	}
 
 	public func webViewDidClose(_ webView: WKWebView) {
