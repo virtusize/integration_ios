@@ -28,10 +28,7 @@ import VirtusizeCore
 /// This class is used to handle the logic required to access remote and local data sources
 internal class VirtusizeRepository: NSObject {
 
-	static let shared: VirtusizeRepository = {
-		let instance = VirtusizeRepository()
-		return instance
-	}()
+	static let shared = VirtusizeRepository()
 
 	/// The session API response as a string
 	var userSessionResponse: String = ""
@@ -231,7 +228,9 @@ internal class VirtusizeRepository: NSObject {
 	internal func clearUserData() {
 		_ = VirtusizeAPIService.deleteUserDataAsync()
 		UserDefaultsHelper.current.authToken = ""
+		ExpiringCache.shared.remove(UserSessionInfo.self)
 
+		userSessionResponse = ""
 		userProducts = nil
 		sizeComparisonRecommendedSize = nil
 		userBodyProfile = nil
@@ -241,7 +240,11 @@ internal class VirtusizeRepository: NSObject {
 	/// Updates the user session by calling the session API
 	internal func updateUserSession() {
 		var updateUserSessionResponse = userSessionResponse
-		let userSessionInfoResponse = VirtusizeAPIService.getUserSessionInfoAsync()
+
+		let userSessionInfoResponse = ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: .short) {
+			VirtusizeAPIService.getUserSessionInfoAsync()
+		}
+
 		if let accessToken = userSessionInfoResponse.success?.accessToken {
 			UserDefaultsHelper.current.accessToken = accessToken
 		}
