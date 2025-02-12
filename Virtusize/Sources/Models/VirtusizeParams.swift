@@ -39,6 +39,8 @@ public class VirtusizeParams {
 	private let detailsPanelCards: [VirtusizeInfoCategory]
     /// The Boolean value to determine whether the Virtusize web app will display the SNS buttons
     internal let showSNSButtons: Bool
+	/// The branch name of testing environment. When specified, overrides the default endpoint of the Virtusize web app.
+	internal let branch: String?
 
 	/// Initializes the VirtusizeParams class
 	init(
@@ -47,7 +49,8 @@ public class VirtusizeParams {
 		allowedLanguages: [VirtusizeLanguage],
 		showSGI: Bool,
 		detailsPanelCards: [VirtusizeInfoCategory],
-		showSNSButtons: Bool
+		showSNSButtons: Bool,
+		branch: String?
 	) {
 		self.region = region
 		self.language = language
@@ -55,6 +58,7 @@ public class VirtusizeParams {
 		self.showSGI = showSGI
 		self.detailsPanelCards = detailsPanelCards
         self.showSNSButtons = showSNSButtons
+		self.branch = branch
 	}
 
 	/// Gets the script in JavaScript to be called to pass params to the Virtusize web app
