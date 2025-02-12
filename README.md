@@ -162,7 +162,7 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setAllowedLanguages  | A list of `VirtusizeLanguage` | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | The languages that the user can switch to using the Language Selector | No. By default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
 | setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
-| setBranch | String | setBranch("branch-name")| Targets specific environment branch | No. By default, production environment is targeted. `staging` - staging environment is targetd. `<branch-name>` a specific branch is targeted |
+| setBranch | String | setBranch("branch-name")| Targets specific environment branch | No. By default, production environment is targeted. `staging` - staging environment is targeted. `<branch-name>` a specific branch is targeted |
 
 
 #### (Optional) Confgiure Internal Logger
