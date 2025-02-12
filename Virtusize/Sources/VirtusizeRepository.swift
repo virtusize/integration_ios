@@ -157,7 +157,7 @@ internal class VirtusizeRepository: NSObject {
 	/// - Parameters:
 	///   - selectedUserProductId: the selected product Id from the web view
 	///   to decide a specific user product to compare with the store product
-	internal func fetchDataForInPageRecommendation(
+	internal func fetchDataForInPageRecommendation( // swiftlint:disable:this function_body_length
 		storeProduct: VirtusizeServerProduct? = nil,
 		selectedUserProductId: Int? = nil,
 		shouldUpdateUserProducts: Bool = true,
@@ -174,25 +174,40 @@ internal class VirtusizeRepository: NSObject {
 			storeProduct = product
 		}
 
+		let dispatchGroup = DispatchGroup()
+
+		var inPageError: Virtusize.InPageError?
 		if shouldUpdateUserProducts {
-			let userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
-			if userProductsResponse.isSuccessful {
-				userProducts = userProductsResponse.success
-			} else if userProductsResponse.errorCode != 404 {
-				Virtusize.inPageError = (true, storeProduct.externalId)
-				return
+			dispatchGroup.enter()
+			DispatchQueue.global().async {
+				let userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
+				if userProductsResponse.isSuccessful {
+					self.userProducts = userProductsResponse.success
+				} else if userProductsResponse.errorCode != 404 {
+					inPageError = (true, storeProduct.externalId)
+				}
+				dispatchGroup.leave()
 			}
 		}
 
 		if shouldUpdateBodyProfile {
-			let userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
-			if userBodyProfileResponse.isSuccessful {
-				userBodyProfile = userBodyProfileResponse.success
-			} else if userBodyProfileResponse.errorCode != 404 {
-				Virtusize.inPageError = (true, storeProduct.externalId)
-				return
+			dispatchGroup.enter()
+			DispatchQueue.global().async {
+				let userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
+				if userBodyProfileResponse.isSuccessful {
+					self.userBodyProfile = userBodyProfileResponse.success
+				} else if userBodyProfileResponse.errorCode != 404 {
+					inPageError = (true, storeProduct.externalId)
+				}
+				dispatchGroup.leave()
 			}
  		}
+
+		dispatchGroup.wait()
+		if let inPageError = inPageError {
+			Virtusize.inPageError = inPageError
+			return
+		}
 
 		if let userBodyProfile = userBodyProfile {
             bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
