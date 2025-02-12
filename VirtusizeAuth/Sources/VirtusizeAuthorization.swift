@@ -32,7 +32,6 @@ public class VirtusizeAuthorization {
 	private struct Constants {
 		static let nativeAppIdKey = "app_id"
 		static let queryRedirectUriKey = "redirect_uri"
-		static let authPath = "sns-auth"
 	}
 
 	public static let shared = VirtusizeAuthorization()
@@ -60,10 +59,7 @@ public class VirtusizeAuthorization {
 	public func handleUrl(_ url: URL) -> Bool {
 		VirtusizeLogger.debug("handleUrl: \(url)")
 
-		guard let components = URLComponents(string: url.absoluteString),
-			  components.scheme?.hasSuffix(VirtusizeConstants.virtusizeName) == true,
-			  components.host == Constants.authPath
-		else {
+		guard VirtusizeURLCheck.isSnsCallback(url: url) else {
 			// not a Virtusize URL
 			VirtusizeLogger.debug("Not a virtusize URL")
 			return false
