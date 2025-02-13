@@ -211,7 +211,7 @@ internal class VirtusizeRepository: NSObject {
 
 		if let userProductsResponse = userProductsResponse {
 			if userProductsResponse.isSuccessful {
-				self.userProducts = userProductsResponse.success
+				userProducts = userProductsResponse.success
 			} else if userProductsResponse.errorCode != 404 {
 				Virtusize.inPageError = (true, storeProduct.externalId)
 				return
@@ -220,7 +220,7 @@ internal class VirtusizeRepository: NSObject {
 
 		if let userBodyProfileResponse = userBodyProfileResponse {
 			if userBodyProfileResponse.isSuccessful {
-				self.userBodyProfile = userBodyProfileResponse.success
+				userBodyProfile = userBodyProfileResponse.success
 			} else if userBodyProfileResponse.errorCode != 404 {
 				Virtusize.inPageError = (true, storeProduct.externalId)
 				return
