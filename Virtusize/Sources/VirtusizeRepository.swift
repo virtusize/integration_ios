@@ -126,23 +126,37 @@ internal class VirtusizeRepository: NSObject {
             return
 		}
 
-		let serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
+		var serverStoreProduct: VirtusizeServerProduct?
+
+		let dispatchGroup = DispatchGroup()
+
+		dispatchGroup.enter()
+		DispatchQueue.global().async {
+			serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
+			dispatchGroup.leave()
+		}
+
+		dispatchGroup.enter()
+		DispatchQueue.global().async {
+			self.productTypes = VirtusizeAPIService.getProductTypesAsync().success
+			dispatchGroup.leave()
+		}
+
+		dispatchGroup.enter()
+		DispatchQueue.global().async {
+			self.i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
+			dispatchGroup.leave()
+		}
+
+		dispatchGroup.wait()
 
 		guard let storeProduct = serverStoreProduct else {
 			Virtusize.inPageError = (true, externalProductId)
             return
 		}
-
 		self.serverStoreProductSet.insert(storeProduct)
 
-		productTypes = VirtusizeAPIService.getProductTypesAsync().success
-		if productTypes == nil {
-			Virtusize.inPageError = (true, externalProductId)
-            return
-		}
-
-		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
-		if i18nLocalization == nil {
+		guard productTypes != nil && i18nLocalization != nil else {
 			Virtusize.inPageError = (true, externalProductId)
             return
 		}
