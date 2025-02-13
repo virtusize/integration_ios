@@ -60,8 +60,8 @@ struct VirtualItem: Codable {
     let bust: Double?
     let waist: Double?
     let hip: Double?
-    let inseam: String?
-    let sleeve: String?
+    let inseam: Double?
+    let sleeve: Double?
 }
 
 // MARK: - WillFitForSizes
