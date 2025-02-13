@@ -85,7 +85,7 @@ extension VirtusizeViewEventProtocol {
 
 	public func handleUserLoggedIn() {
 		Virtusize.dispatchQueue.async {
-			VirtusizeRepository.shared.updateUserSession()
+			VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
 			VirtusizeRepository.shared.updateInPageRecommendation()
 		}
@@ -94,7 +94,7 @@ extension VirtusizeViewEventProtocol {
 	public func handleClearUserData() {
 		Virtusize.dispatchQueue.async {
 			VirtusizeRepository.shared.clearUserData()
-			VirtusizeRepository.shared.updateUserSession()
+			VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 			VirtusizeRepository.shared.fetchDataForInPageRecommendation()
 			VirtusizeRepository.shared.updateInPageRecommendation()
 		}
@@ -102,7 +102,7 @@ extension VirtusizeViewEventProtocol {
 
     public func handleUserClosedWidget() {
         Virtusize.dispatchQueue.async {
-            VirtusizeRepository.shared.updateUserSession()
+			VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
         }
     }
 }

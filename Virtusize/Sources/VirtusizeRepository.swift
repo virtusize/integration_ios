@@ -238,10 +238,11 @@ internal class VirtusizeRepository: NSObject {
 	}
 
 	/// Updates the user session by calling the session API
-	internal func updateUserSession() {
+	internal func updateUserSession(forceUpdate: Bool = false) {
 		var updateUserSessionResponse = userSessionResponse
 
-		let userSessionInfoResponse = ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: .short) {
+		let ttl: TimeInterval = forceUpdate ? .zero : .short
+		let userSessionInfoResponse = ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: ttl) {
 			VirtusizeAPIService.getUserSessionInfoAsync()
 		}
 

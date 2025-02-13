@@ -112,11 +112,20 @@ extension ExpiringCache {
 	public func remove(_ typeAsKey: Any.Type) {
 		let key = String(describing: typeAsKey)
 		remove(key)
+
+	public func set<Value>(_ value: Value, forKey typeAsKey: Any.Type) {
+		let key = String(describing: typeAsKey)
+		set(value, forKey: key)
 	}
 }
 
 /// Helper for TimeInterval standard SDK values
 extension TimeInterval {
+	/// Forces value update
+	public static var zero: TimeInterval {
+		return 0
+	}
+
 	public static var short: TimeInterval {
 		return 1800 // 30 minutes
 	}
