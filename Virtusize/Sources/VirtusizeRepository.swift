@@ -43,6 +43,7 @@ internal class VirtusizeRepository: NSObject {
 	private var userBodyProfile: VirtusizeUserBodyProfile?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
     private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	private var hasSessionBodyMeasurement: Bool = false
 
 	/// A set to cache the store product information of all the visited products
 	private var serverStoreProductSet: Set<VirtusizeServerProduct> = []
@@ -154,7 +155,7 @@ internal class VirtusizeRepository: NSObject {
 	/// - Parameters:
 	///   - selectedUserProductId: the selected product Id from the web view
 	///   to decide a specific user product to compare with the store product
-	internal func fetchDataForInPageRecommendation( // swiftlint:disable:this function_body_length
+	internal func fetchDataForInPageRecommendation( // swiftlint:disable:this function_body_length cyclomatic_complexity
 		storeProduct: VirtusizeServerProduct? = nil,
 		selectedUserProductId: Int? = nil,
 		shouldUpdateUserProducts: Bool = true,
@@ -171,39 +172,47 @@ internal class VirtusizeRepository: NSObject {
 			storeProduct = product
 		}
 
+		var userProductsResponse: APIResult<[VirtusizeServerProduct]>?
+		var userBodyProfileResponse: APIResult<VirtusizeUserBodyProfile>?
+
 		let dispatchGroup = DispatchGroup()
 
-		var inPageError: Virtusize.InPageError?
 		if shouldUpdateUserProducts {
 			dispatchGroup.enter()
 			DispatchQueue.global().async {
-				let userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
-				if userProductsResponse.isSuccessful {
-					self.userProducts = userProductsResponse.success
-				} else if userProductsResponse.errorCode != 404 {
-					inPageError = (true, storeProduct.externalId)
-				}
+				userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
 				dispatchGroup.leave()
 			}
 		}
 
-		if shouldUpdateBodyProfile {
+		if shouldUpdateBodyProfile && hasSessionBodyMeasurement {
 			dispatchGroup.enter()
 			DispatchQueue.global().async {
-				let userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
-				if userBodyProfileResponse.isSuccessful {
-					self.userBodyProfile = userBodyProfileResponse.success
-				} else if userBodyProfileResponse.errorCode != 404 {
-					inPageError = (true, storeProduct.externalId)
-				}
+				userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
 				dispatchGroup.leave()
 			}
  		}
 
 		dispatchGroup.wait()
-		if let inPageError = inPageError {
-			Virtusize.inPageError = inPageError
-			return
+
+		if let userProductsResponse = userProductsResponse {
+			if userProductsResponse.isSuccessful {
+				self.userProducts = userProductsResponse.success
+			} else if userProductsResponse.errorCode != 404 {
+				Virtusize.inPageError = (true, storeProduct.externalId)
+				return
+			}
+		}
+
+		if let userBodyProfileResponse = userBodyProfileResponse {
+			if userBodyProfileResponse.isSuccessful {
+				self.userBodyProfile = userBodyProfileResponse.success
+			} else if userBodyProfileResponse.errorCode != 404 {
+				Virtusize.inPageError = (true, storeProduct.externalId)
+				return
+			}
+		} else if !hasSessionBodyMeasurement {
+			userBodyProfile = nil // reset body measurements if the user-session defines so
 		}
 
 		if let userBodyProfile = userBodyProfile {
@@ -255,6 +264,7 @@ internal class VirtusizeRepository: NSObject {
 		if let sessionResponse = userSessionInfoResponse.string {
 			updateUserSessionResponse = sessionResponse
 		}
+		hasSessionBodyMeasurement = userSessionInfoResponse.success?.status.hasBodyMeasurement ?? false
 
 		userSessionResponse = updateUserSessionResponse
 	}

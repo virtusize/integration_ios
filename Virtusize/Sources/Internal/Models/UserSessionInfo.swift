@@ -30,16 +30,24 @@ internal class UserSessionInfo: Codable {
 	let user: User
 	/// The auth token
 	let authToken: String
+	/// The user status data
+	let status: Status
 
 	class User: Codable {
 		/// The browser ID
 		let bid: String
 	}
 
+	class Status: Codable {
+		/// The flag to indicate if user defined body measurements
+		let hasBodyMeasurement: Bool
+	}
+
 	private enum CodingKeys: String, CodingKey {
 		case accessToken = "id"
 		case user = "user"
 		case authToken = "x-vs-auth"
+		case status = "status"
 	}
 
 	required init(from decoder: Decoder) throws {
@@ -47,5 +55,6 @@ internal class UserSessionInfo: Codable {
 		accessToken = try values.decode(String.self, forKey: .accessToken)
 		user = try values.decode(User.self, forKey: .user)
 		authToken = try values.decode(String.self, forKey: .authToken)
+		status = try values.decode(Status.self, forKey: .status)
 	}
 }
