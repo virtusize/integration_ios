@@ -43,7 +43,7 @@ public class ExpiringCache {
 	}
 
 	/// Remove value for specified key
-	public func remove(_ key: String) {
+	public func clear(_ key: String) {
 		cache.removeValue(forKey: key)
 	}
 
@@ -109,9 +109,10 @@ extension ExpiringCache {
 		return get(key) as? Value
 	}
 
-	public func remove(_ typeAsKey: Any.Type) {
+	public func clear(_ typeAsKey: Any.Type) {
 		let key = String(describing: typeAsKey)
-		remove(key)
+		clear(key)
+	}
 
 	public func set<Value>(_ value: Value, forKey typeAsKey: Any.Type) {
 		let key = String(describing: typeAsKey)

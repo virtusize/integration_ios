@@ -251,7 +251,7 @@ internal class VirtusizeRepository: NSObject {
 	internal func clearUserData() {
 		_ = VirtusizeAPIService.deleteUserDataAsync()
 		UserDefaultsHelper.current.authToken = ""
-		ExpiringCache.shared.remove(UserSessionInfo.self)
+		ExpiringCache.shared.clear(UserSessionInfo.self)
 
 		userSessionResponse = ""
 		userProducts = nil
