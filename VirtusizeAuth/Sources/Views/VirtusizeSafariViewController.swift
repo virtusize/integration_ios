@@ -104,28 +104,28 @@ final class VirtusizeSafariViewController: SFSafariViewController {
 			return true
 		}
 
-        DispatchQueue.global().async {
-            if let snsUser = authProvider?.getUserInfo(accessToken: accessToken) {
-                DispatchQueue.main.async { [weak self] in
-                    self?.webView?.evaluateJavaScript(
-                        """
-                            receiveSNSParamsFromSDK(
-                                {
-                                    accessId: '\(snsUser.id)',
-                                    snsType: '\(snsUser.snsType)',
-                                    displayName: '\(snsUser.name)',
-                                    email: '\(snsUser.email)'
-                                }
-                            )
-                        """,
-                        completionHandler: { _, err in
-                            // close the SafariViewController
-							VirtusizeLogger.debug("Closing SNS SafariViewController with error: \(err?.localizedDescription ?? "nil")")
-                            self?.dismiss(animated: true)
-							self?.onClose?()
-                        }
-                    )
-                }
+		Task { @MainActor in
+            if let snsUser = await authProvider?.getUserInfo(accessToken: accessToken) {
+				// WARNING avoid using async `evaluateJavaScript` yet as there is an Apple bug
+				// see https://developer.apple.com/forums/thread/701553
+				self.webView?.evaluateJavaScript(
+					"""
+						receiveSNSParamsFromSDK(
+							{
+								accessId: '\(snsUser.id)',
+								snsType: '\(snsUser.snsType)',
+								displayName: '\(snsUser.name)',
+								email: '\(snsUser.email)'
+							}
+						)
+					""",
+					completionHandler: { _, err in
+						// close the SafariViewController
+						VirtusizeLogger.debug("Closing SNS SafariViewController with error: \(err?.localizedDescription ?? "nil")")
+						self.dismiss(animated: true)
+						self.onClose?()
+					}
+				)
 			} else {
 				VirtusizeLogger.debug("Failed to resolve a user by access token")
 			}

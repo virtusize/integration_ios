@@ -43,6 +43,13 @@ public struct APIResponse: Sendable {
 		self.response = response
 		self.error = error
 	}
+
+	init(error: Error) {
+		self.code = nil
+		self.data = nil
+		self.response = nil
+		self.error = error
+	}
 }
 
 public typealias Code = Int

@@ -34,8 +34,8 @@ public class VirtusizeFlutterRepository: NSObject {
 	public func getProductCheckData(
 		messageHandler: VirtusizeMessageHandler?,
 		product: VirtusizeProduct
-	) -> (VirtusizeProduct?, String?) {
-		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
+	) async -> (VirtusizeProduct?, String?) {
+		let productResponse = await VirtusizeAPIService.productCheckAsync(product: product)
 		var isValidProduct: Bool = false
 		sendEventsAndProductImage(
 			messageHandler: messageHandler,
@@ -99,23 +99,23 @@ public class VirtusizeFlutterRepository: NSObject {
 		onValidProduct(true)
 	}
 
-	public func getStoreProduct(productId: Int) -> VirtusizeServerProduct? {
-		let response = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
+	public func getStoreProduct(productId: Int) async -> VirtusizeServerProduct? {
+		let response = await VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
 		return response.isSuccessful ? response.success : nil
 	}
 
-	public func getProductTypes() -> [VirtusizeProductType]? {
-		let response = VirtusizeAPIService.getProductTypesAsync()
+	public func getProductTypes() async -> [VirtusizeProductType]? {
+		let response = await VirtusizeAPIService.getProductTypesAsync()
 		return response.isSuccessful ? response.success : nil
 	}
 
-	public func getI18nLocalization() -> VirtusizeI18nLocalization? {
-		let response = VirtusizeAPIService.getI18nTextsAsync()
+	public func getI18nLocalization() async -> VirtusizeI18nLocalization? {
+		let response = await VirtusizeAPIService.getI18nTextsAsync()
 		return response.isSuccessful ? response.success : nil
 	}
 
-	public func getUserSessionResponse() -> String? {
-		let userSessionInfoResponse = VirtusizeAPIService.getUserSessionInfoAsync()
+	public func getUserSessionResponse() async -> String? {
+		let userSessionInfoResponse = await VirtusizeAPIService.getUserSessionInfoAsync()
 		if let accessToken = userSessionInfoResponse.success?.accessToken {
 			UserDefaultsHelper.current.accessToken = accessToken
 		}
@@ -125,13 +125,13 @@ public class VirtusizeFlutterRepository: NSObject {
 		return userSessionInfoResponse.isSuccessful ? userSessionInfoResponse.string : nil
 	}
 
-	public func getUserProducts() -> [VirtusizeServerProduct]? {
-		let response = VirtusizeAPIService.getUserProductsAsync()
+	public func getUserProducts() async -> [VirtusizeServerProduct]? {
+		let response = await VirtusizeAPIService.getUserProductsAsync()
 		return response.isSuccessful || response.errorCode == 404 ? response.success ?? [] : nil
 	}
 
-	public func getUserBodyProfile() -> (VirtusizeUserBodyProfile?, Int?) {
-		let response = VirtusizeAPIService.getUserBodyProfileAsync()
+	public func getUserBodyProfile() async -> (VirtusizeUserBodyProfile?, Int?) {
+		let response = await VirtusizeAPIService.getUserBodyProfileAsync()
 		return (response.success, response.errorCode)
 	}
 
@@ -139,8 +139,8 @@ public class VirtusizeFlutterRepository: NSObject {
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
-	) -> BodyProfileRecommendedSizeArray? {
-		let response = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
+	) async -> BodyProfileRecommendedSizeArray? {
+		let response = await VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
 			productTypes: productTypes,
 			storeProduct: storeProduct,
 			userBodyProfile: userBodyProfile
@@ -197,8 +197,8 @@ public class VirtusizeFlutterRepository: NSObject {
 		}
 	}
 
-	public func deleteUser() {
-		let response = VirtusizeAPIService.deleteUserDataAsync()
+	public func deleteUser() async {
+		let response = await VirtusizeAPIService.deleteUserDataAsync()
 		if response.isSuccessful {
 			UserDefaultsHelper.current.authToken = ""
 		}
@@ -212,7 +212,7 @@ public class VirtusizeFlutterRepository: NSObject {
 		_ orderDict: [String: Any?],
 		onSuccess: (() -> Void)? = nil,
 		onError: ((VirtusizeError) -> Void)? = nil
-	) {
+	) async {
 		guard let externalUserId = Virtusize.userID else {
 			fatalError("Please set Virtusize.userID")
 		}
@@ -226,14 +226,14 @@ public class VirtusizeFlutterRepository: NSObject {
 		mutualOrder.apiKey = Virtusize.APIKey
 		mutualOrder.externalUserId = externalUserId
 
-		let retrieveStoreInfoResponse = VirtusizeAPIService.retrieveStoreInfoAsync()
+		let retrieveStoreInfoResponse = await VirtusizeAPIService.retrieveStoreInfoAsync()
 		if let storeInfo = retrieveStoreInfoResponse.success {
 			mutualOrder.region = storeInfo.region ?? "JP"
 		} else {
 			onError?(retrieveStoreInfoResponse.failure ?? .unknownError)
 		}
 
-		let sendOrderWithRegionResponse = VirtusizeAPIService.sendOrderWithRegionAsync(mutualOrder)
+		let sendOrderWithRegionResponse = await VirtusizeAPIService.sendOrderWithRegionAsync(mutualOrder)
 
 		if sendOrderWithRegionResponse.isSuccessful {
 			onSuccess?()

@@ -30,8 +30,8 @@ class FacebookAPIService: APIService {
 	///
 	/// - Parameter accessToken: The user's Facebook access token
 	/// - Returns: A `APIResult` containing the user's Facebook profile information
-	static func getUserInfoAsync(accessToken: String) -> APIResult<FacebookUser> {
+	static func getUserInfoAsync(accessToken: String) async -> APIResult<FacebookUser> {
 		let request = APIRequest.getFacebookUser(accessToken: accessToken)
-		return getAPIResultAsync(request: request, type: FacebookUser.self)
+		return await getAPIResultAsync(request: request, type: FacebookUser.self)
 	}
 }

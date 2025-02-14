@@ -23,16 +23,12 @@
 //  THE SOFTWARE.
 //
 
-private struct CacheEntry {
-	let createdAt: Date
-	let value: Any
-	init(_ value: Any) {
-		self.createdAt = Date()
-		self.value = value
-	}
+private enum CacheEntry {
+	case inProgress(Task<Any, Error>)
+	case ready(Date, Any)
 }
 
-public class ExpiringCache {
+public actor ExpiringCache {
 	public static let shared = ExpiringCache()
 
 	private var cache = [String: CacheEntry]()
@@ -49,34 +45,55 @@ public class ExpiringCache {
 
 	/// Put value into cache by specified key
 	public func set(_ value: Any, forKey key: String) {
-		cache[key] = CacheEntry(value)
+		cache[key] = .ready(Date(), value)
 	}
 
 	/// Return cached value if exists, no matter if it's expired or not
-	public func get(_ key: String) -> Any? {
-		guard let cached = cache[key] else {
+	public func get(_ key: String) async throws -> Any? {
+		switch cache[key] {
+		case .inProgress(let task):
+			return try await task.value
+		case .ready(_, let value):
+			return value
+		case .none:
 			return nil
 		}
-		return cached.value
 	}
 
 	/// Return cached value if it's withing defind TTL (Time To Live) value
 	/// Return "in progress" task, if it's already in progress for the same key
 	/// Fetch, return and cache value, if it's is expired or not yet cached
-	public func getOrFetch(_ key: String, ttl: TimeInterval, fetch: @escaping @Sendable () -> Any) -> Any {
+	public func getOrFetch(
+		_ key: String,
+		ttl: TimeInterval,
+		fetch: @escaping @Sendable () async throws -> Any
+	) async throws -> Any {
 		if let cached = cache[key] {
-			let lifeTime = Date().timeIntervalSince(cached.createdAt)
-			if lifeTime < ttl {
-				print("> hit cache: .ready for '\(key)' (to live or another \(ttl - lifeTime) sec)")
-				return cached.value
-			} else {
-				print("> hit cache: .expired for '\(key)' (outdated for \(lifeTime - ttl) sec)")
+			switch cached {
+			case .inProgress(let task):
+				return try await task.value
+			case .ready(let createdAt, let value):
+				let lifeTime = Date().timeIntervalSince(createdAt)
+				if lifeTime < ttl {
+					return value
+				}
+				// keep loading
 			}
 		}
 
-		let value = fetch()
-		cache[key] = CacheEntry(value)
-		return value
+		let task = Task<Any, Error> {
+			try await fetch()
+		}
+		cache[key] = .inProgress(task)
+
+		do {
+			let result = try await task.value
+			cache[key] = .ready(Date(), result)
+			return result
+		} catch {
+			cache[key] = nil
+			throw error
+		}
 	}
 }
 
@@ -86,8 +103,12 @@ extension ExpiringCache {
 	///   - key: a string key to lookup and store the value
 	///   - ttl: Time To Live in seconds. If the cached value is too old, the new value is loaded using `fetch` action
 	///   - fetch: a function to execute if no value found or expired. Loaded result is stored into the cache
-	public func getOrFetch<Value>(_ key: String, ttl: TimeInterval, fetch: @escaping @Sendable () -> Value) -> Value {
-		let resultObj: Any = getOrFetch(key, ttl: ttl) { fetch() }
+	public func getOrFetch<Value>(
+		_ key: String,
+		ttl: TimeInterval,
+		fetch: @escaping @Sendable () async throws -> Value
+	) async throws -> Value {
+		let resultObj: Any = try await getOrFetch(key, ttl: ttl) { try await fetch() }
 		return resultObj as! Value // swiftlint:disable:this force_cast
 	}
 
@@ -99,14 +120,15 @@ extension ExpiringCache {
 	public func getOrFetch<Value>(
 		_ typeAsKey: Any.Type,
 		ttl: TimeInterval,
-		fetch: @escaping @Sendable () -> Value) -> Value {
-			let key = String(describing: typeAsKey)
-			return getOrFetch(key, ttl: ttl, fetch: fetch)
+		fetch: @escaping @Sendable () async throws -> Value
+	) async throws -> Value {
+		let key = String(describing: typeAsKey)
+		return try await getOrFetch(key, ttl: ttl, fetch: fetch)
 	}
 
 	/// Return cached value if exists, irrelevant of expiration date
-	public func get<Value>(_ key: String) -> Value? {
-		return get(key) as? Value
+	public func get<Value>(_ key: String) async throws -> Value? {
+		return try await get(key) as? Value
 	}
 
 	public func clear(_ typeAsKey: Any.Type) {

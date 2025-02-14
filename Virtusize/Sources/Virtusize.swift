@@ -117,31 +117,41 @@ public class Virtusize {
 	// MARK: - Methods
 	/// A function for clients to populate the Virtusize views by loading a product
 	public class func load(product: VirtusizeProduct) {
-		dispatchQueue.async {
-			virtusizeRepository.checkProductValidity(product: product) { productWithPDCData in
-				if let productWithPDCData = productWithPDCData {
-					virtusizeRepository.updateUserSession()
-					DispatchQueue.main.async {
-						NotificationCenter.default.post(
-							name: .productCheckData,
-							object: Virtusize.self,
-							userInfo: [NotificationKey.productCheckData: productWithPDCData]
-						)
-					}
-					virtusizeRepository.fetchInitialData(
-						externalProductId: product.externalId,
-						productId: productWithPDCData.productCheckData?.productDataId
-					) { serverProduct in
-						NotificationCenter.default.post(
-							name: .storeProduct,
-							object: Virtusize.self,
-							userInfo: [NotificationKey.storeProduct: serverProduct]
-						)
-						virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
-						virtusizeRepository.updateInPageRecommendation(product: serverProduct)
-					}
-				}
+		Task {
+			let productWithPDCData = await virtusizeRepository.checkProductValidity(product: product)
+
+			guard let productWithPDCData = productWithPDCData else {
+				return
 			}
+
+			await virtusizeRepository.updateUserSession()
+			await MainActor.run {
+				NotificationCenter.default.post(
+					name: .productCheckData,
+					object: Virtusize.self,
+					userInfo: [NotificationKey.productCheckData: productWithPDCData]
+				)
+			}
+
+			let serverProduct = await virtusizeRepository.fetchInitialData(
+				externalProductId: product.externalId,
+				productId: productWithPDCData.productCheckData?.productDataId
+			)
+
+			guard let serverProduct = serverProduct else {
+				return
+			}
+
+			await MainActor.run {
+				NotificationCenter.default.post(
+					name: .storeProduct,
+					object: Virtusize.self,
+					userInfo: [NotificationKey.storeProduct: serverProduct]
+				)
+			}
+
+			await virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
+			virtusizeRepository.updateInPageRecommendation(product: serverProduct)
 		}
 	}
 
@@ -169,11 +179,14 @@ public class Virtusize {
 		onSuccess: (() -> Void)? = nil,
 		onError: ((VirtusizeError) -> Void)? = nil
 	) {
-		virtusizeRepository.sendOrder(
-			order,
-			onSuccess: onSuccess,
-			onError: onError
-		)
+		Task {
+			do {
+				try await virtusizeRepository.sendOrder(order)
+				onSuccess?()
+			} catch let error as VirtusizeError {
+				onError?(error)
+			}
+		}
 	}
 
 	/// Handles the OAuth callback. Returns true if the URL is known and handled by the SDK

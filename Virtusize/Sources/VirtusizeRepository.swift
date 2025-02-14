@@ -52,20 +52,16 @@ internal class VirtusizeRepository: NSObject {
 	///
 	/// - Parameters:
 	///   - product: `VirtusizeProduct`
-	///   - onProductCheckData: a closure to pass a valid`VirtusizeProduct` with the PDC data back
-	internal func checkProductValidity(
-		product: VirtusizeProduct,
-		onProductCheckData: ((VirtusizeProduct?) -> Void)? = nil
-	) {
-		let productResponse = VirtusizeAPIService.productCheckAsync(product: product)
+	/// - Returns: a valid`VirtusizeProduct` with the PDC data or nil if check failed
+	internal func checkProductValidity(product: VirtusizeProduct) async -> VirtusizeProduct? {
+		let productResponse = await VirtusizeAPIService.productCheckAsync(product: product)
 		guard let product = productResponse.success else {
 			NotificationCenter.default.post(
 				name: Virtusize.productCheckDidFail,
 				object: Virtusize.self,
 				userInfo: ["message": productResponse.string ?? VirtusizeError.unknownError.debugDescription]
 			)
-			onProductCheckData?(nil)
-			return
+			return nil
 		}
 
 		let mutableProduct = product
@@ -85,8 +81,7 @@ internal class VirtusizeRepository: NSObject {
 				object: Virtusize.self,
 				userInfo: ["message": mutableProduct.dictionary]
 			)
-			onProductCheckData?(nil)
-			return
+			return nil
 		}
 
 		if let sendImageToBackend = mutableProduct.productCheckData?.fetchMetaData,
@@ -108,7 +103,7 @@ internal class VirtusizeRepository: NSObject {
 			userInfo: ["message": mutableProduct.dictionary]
 		)
 
-		onProductCheckData?(mutableProduct)
+		return mutableProduct
 	}
 
 	/// Fetches the initial data such as store product info, product type lists and i18 localization
@@ -116,52 +111,36 @@ internal class VirtusizeRepository: NSObject {
 	/// - Parameters:
 	///   - externalProductId: the external product ID provided by the client
 	///   - productId: the product ID from the Virtusize server
-	///   - onSuccess: the closure is called if the data from the server is successfully fetched
+	/// - Returns: `VirtusizeServerProduct` object loaded from the server, or nil in case of error
+	@MainActor
 	internal func fetchInitialData(
         externalProductId: String,
-        productId: Int?,
-        onSuccess: (VirtusizeServerProduct) -> Void
-    ) {
+        productId: Int?
+    ) async -> VirtusizeServerProduct? {
 		guard let productId = productId else {
-            return
+            return nil
 		}
 
-		var serverStoreProduct: VirtusizeServerProduct?
+		async let serverStoreProductTask = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
+		async let productTypesTask = VirtusizeAPIService.getProductTypesAsync()
+		async let i18nTask = VirtusizeAPIService.getI18nTextsAsync()
 
-		let dispatchGroup = DispatchGroup()
-
-		dispatchGroup.enter()
-		DispatchQueue.global().async {
-			serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
-			dispatchGroup.leave()
-		}
-
-		dispatchGroup.enter()
-		DispatchQueue.global().async {
-			self.productTypes = VirtusizeAPIService.getProductTypesAsync().success
-			dispatchGroup.leave()
-		}
-
-		dispatchGroup.enter()
-		DispatchQueue.global().async {
-			self.i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
-			dispatchGroup.leave()
-		}
-
-		dispatchGroup.wait()
+		let serverStoreProduct = await serverStoreProductTask.success
+		productTypes = await productTypesTask.success
+		i18nLocalization = await i18nTask.success
 
 		guard let storeProduct = serverStoreProduct else {
 			Virtusize.inPageError = (true, externalProductId)
-            return
+            return nil
 		}
 		self.serverStoreProductSet.insert(storeProduct)
 
 		guard productTypes != nil && i18nLocalization != nil else {
 			Virtusize.inPageError = (true, externalProductId)
-            return
+            return nil
 		}
 
-        onSuccess(storeProduct)
+        return storeProduct
 	}
 
 	/// Fetches data for InPage recommendation
@@ -169,12 +148,12 @@ internal class VirtusizeRepository: NSObject {
 	/// - Parameters:
 	///   - selectedUserProductId: the selected product Id from the web view
 	///   to decide a specific user product to compare with the store product
-	internal func fetchDataForInPageRecommendation( // swiftlint:disable:this function_body_length cyclomatic_complexity
+	internal func fetchDataForInPageRecommendation(
 		storeProduct: VirtusizeServerProduct? = nil,
 		selectedUserProductId: Int? = nil,
 		shouldUpdateUserProducts: Bool = true,
 		shouldUpdateBodyProfile: Bool = true
-	) {
+	) async {
         guard var storeProduct = storeProduct ?? lastProductOnVirtusizeWebView else {
             return
         }
@@ -186,28 +165,13 @@ internal class VirtusizeRepository: NSObject {
 			storeProduct = product
 		}
 
-		var userProductsResponse: APIResult<[VirtusizeServerProduct]>?
-		var userBodyProfileResponse: APIResult<VirtusizeUserBodyProfile>?
+		async let userProductsTask = shouldUpdateUserProducts ? VirtusizeAPIService.getUserProductsAsync() : nil
+		async let userBodyProfileTask = shouldUpdateBodyProfile && hasSessionBodyMeasurement
+			? VirtusizeAPIService.getUserBodyProfileAsync()
+			: nil
 
-		let dispatchGroup = DispatchGroup()
-
-		if shouldUpdateUserProducts {
-			dispatchGroup.enter()
-			DispatchQueue.global().async {
-				userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
-				dispatchGroup.leave()
-			}
-		}
-
-		if shouldUpdateBodyProfile && hasSessionBodyMeasurement {
-			dispatchGroup.enter()
-			DispatchQueue.global().async {
-				userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
-				dispatchGroup.leave()
-			}
- 		}
-
-		dispatchGroup.wait()
+		let userProductsResponse = await userProductsTask
+		let userBodyProfileResponse = await userBodyProfileTask
 
 		if let userProductsResponse = userProductsResponse {
 			if userProductsResponse.isSuccessful {
@@ -230,7 +194,7 @@ internal class VirtusizeRepository: NSObject {
 		}
 
 		if let userBodyProfile = userBodyProfile {
-            bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
+            bodyProfileRecommendedSize = await VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
 				productTypes: productTypes!,
 				storeProduct: storeProduct,
 				userBodyProfile: userBodyProfile
@@ -248,39 +212,39 @@ internal class VirtusizeRepository: NSObject {
 	}
 
 	/// Clear user session and the data related to size recommendations
-	internal func clearUserData() {
-		_ = VirtusizeAPIService.deleteUserDataAsync()
+	internal func clearUserData() async {
 		UserDefaultsHelper.current.authToken = ""
-		ExpiringCache.shared.clear(UserSessionInfo.self)
 
 		userSessionResponse = ""
 		userProducts = nil
 		sizeComparisonRecommendedSize = nil
 		userBodyProfile = nil
         bodyProfileRecommendedSize = nil
+
+		await ExpiringCache.shared.clear(UserSessionInfo.self)
+		_ = await VirtusizeAPIService.deleteUserDataAsync()
 	}
 
 	/// Updates the user session by calling the session API
-	internal func updateUserSession(forceUpdate: Bool = false) {
-		var updateUserSessionResponse = userSessionResponse
-
+	internal func updateUserSession(forceUpdate: Bool = false) async {
 		let ttl: TimeInterval = forceUpdate ? .zero : .short
-		let userSessionInfoResponse = ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: ttl) {
-			VirtusizeAPIService.getUserSessionInfoAsync()
+		let userSessionInfoResponse = try? await ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: ttl) {
+			await VirtusizeAPIService.getUserSessionInfoAsync()
 		}
 
-		if let accessToken = userSessionInfoResponse.success?.accessToken {
-			UserDefaultsHelper.current.accessToken = accessToken
+		if let sessionResponse = userSessionInfoResponse?.string {
+			userSessionResponse = sessionResponse
 		}
-		if let authToken = userSessionInfoResponse.success?.authToken, !authToken.isEmpty {
-			UserDefaultsHelper.current.authToken = authToken
-		}
-		if let sessionResponse = userSessionInfoResponse.string {
-			updateUserSessionResponse = sessionResponse
-		}
-		hasSessionBodyMeasurement = userSessionInfoResponse.success?.status.hasBodyMeasurement ?? false
 
-		userSessionResponse = updateUserSessionResponse
+		guard let userSessionInfo = userSessionInfoResponse?.success else {
+			return
+		}
+
+		UserDefaultsHelper.current.accessToken = userSessionInfo.accessToken
+		if !userSessionInfo.authToken.isEmpty {
+			UserDefaultsHelper.current.authToken = userSessionInfo.authToken
+		}
+		hasSessionBodyMeasurement = userSessionInfo.status.hasBodyMeasurement
 	}
 
 	/// Updates the browser ID and the auth token from the data of the event user-auth-data
@@ -343,33 +307,24 @@ internal class VirtusizeRepository: NSObject {
 	///
 	/// - Parameters:
 	///   - order: An order to be send to the server
-	///   - onSuccess: A callback to be called when the request to send an order is successful
-	///   - onError: A callback to pass `VirtusizeError` back when the request to send an order is
-	///    unsuccessful
-	internal func sendOrder(
-		_ order: VirtusizeOrder,
-		onSuccess: (() -> Void)? = nil,
-		onError: ((VirtusizeError) -> Void)? = nil
-	) {
+	/// - Throws:`VirtusizeError` back when the request to send an order is unsuccessful
+	internal func sendOrder(_ order: VirtusizeOrder) async throws {
 		guard let externalUserId = Virtusize.userID else {
 			fatalError("Please set Virtusize.userID")
 		}
 		var mutualOrder = order
 		mutualOrder.externalUserId = externalUserId
 
-		let retrieveStoreInfoResponse = VirtusizeAPIService.retrieveStoreInfoAsync()
+		let retrieveStoreInfoResponse = await VirtusizeAPIService.retrieveStoreInfoAsync()
 		if let storeInfo = retrieveStoreInfoResponse.success {
 			mutualOrder.region = storeInfo.region ?? "JP"
 		} else {
-			onError?(retrieveStoreInfoResponse.failure ?? .unknownError)
+			throw retrieveStoreInfoResponse.failure ?? .unknownError
 		}
 
-		let sendOrderWithRegionResponse = VirtusizeAPIService.sendOrderWithRegionAsync(mutualOrder)
-
-		if sendOrderWithRegionResponse.isSuccessful {
-			onSuccess?()
-		} else {
-			onError?(sendOrderWithRegionResponse.failure ?? .unknownError)
+		let sendOrderWithRegionResponse = await VirtusizeAPIService.sendOrderWithRegionAsync(mutualOrder)
+		if !sendOrderWithRegionResponse.isSuccessful {
+			throw sendOrderWithRegionResponse.failure ?? .unknownError
 		}
 	}
 }

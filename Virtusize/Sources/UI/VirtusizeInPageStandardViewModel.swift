@@ -41,7 +41,7 @@ internal final class VirtusizeInPageStandardViewModel {
 		dispatchQueue.async {
 			self.userProductImageObservable.value = nil
 			let cloudinaryImageURL = bestFitUserProduct.getCloudinaryImageUrl()
-			let loadImageResponse = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL)
+			let loadImageResponse = VirtusizeAPIService.loadImageSync(url: cloudinaryImageURL)
 			if let userProductImage = loadImageResponse.success {
 				self.userProductImageObservable.value = VirtusizeProductImage(
 					image: userProductImage,
@@ -69,14 +69,14 @@ internal final class VirtusizeInPageStandardViewModel {
 		currentExternalProductId = storeProduct.externalId
 
 		dispatchQueue.async {
-			if let clientProductImage = VirtusizeAPIService.loadImageAsync(url: clientProductImageURL).success {
+			if let clientProductImage = VirtusizeAPIService.loadImageSync(url: clientProductImageURL).success {
 				self.storeProductImageObservable.value = VirtusizeProductImage(
 					image: clientProductImage,
 					source: .client
 				)
 			} else {
 				let cloudinaryImageURL = storeProduct.getCloudinaryImageUrl()
-				if let storeProductImage = VirtusizeAPIService.loadImageAsync(url: cloudinaryImageURL).success {
+				if let storeProductImage = VirtusizeAPIService.loadImageSync(url: cloudinaryImageURL).success {
 					self.storeProductImageObservable.value = VirtusizeProductImage(
 						image: storeProductImage,
 						source: .cloudinary
