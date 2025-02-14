@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5792205FB9BA00DA910E /* Virtusize.swift */; };
 		4D6C579A205FCBE900DA910E /* VirtusizeAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C5799205FCBE900DA910E /* VirtusizeAPIRequest.swift */; };
+		52BA97FD2D5276E6004FA802 /* Virtusize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BA97FC2D5276E3004FA802 /* Virtusize.swift */; };
 		52CB715C2D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB71582D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf */; };
 		52CB715D2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB715B2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf */; };
 		52CB715E2D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CB71592D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf */; };
@@ -123,10 +123,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D6C5792205FB9BA00DA910E /* Virtusize.swift */ = {isa = PBXFileReference; indentWidth = 0; lastKnownFileType = sourcecode.swift; path = Virtusize.swift; sourceTree = "<group>"; };
 		4D6C5799205FCBE900DA910E /* VirtusizeAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAPIRequest.swift; sourceTree = "<group>"; };
 		4DED8D1C205755C3001CA7DF /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DED8D25205755C3001CA7DF /* VirtusizeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtusizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52BA97FC2D5276E3004FA802 /* Virtusize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtusize.swift; sourceTree = "<group>"; };
 		52CB71582D32034500E18E57 /* Subset-NotoSansJP-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansJP-Bold.ttf"; sourceTree = "<group>"; };
 		52CB71592D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansJP-Regular.ttf"; sourceTree = "<group>"; };
 		52CB715A2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Subset-NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 				9C35F96625F02AC30004E9CD /* Resources */,
 				4DED8D37205757F0001CA7DF /* Supporting Files */,
 				DFFAA96321A39BFC000F0F70 /* UI */,
-				4D6C5792205FB9BA00DA910E /* Virtusize.swift */,
+				52BA97FC2D5276E3004FA802 /* Virtusize.swift */,
 				9C1BDEA826CC0E7F0020BDA5 /* VirtusizeConfiguration.swift */,
 				9C787FC825DB793400346F2A /* VirtusizeEventHandler.swift */,
 				9CE6CA7C2744F6B700AAFF20 /* VirtusizeExports.swift */,
@@ -742,6 +742,7 @@
 				8455FFD42B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift in Sources */,
 				9CEC8D852529CF58001CBDFB /* FindBestFitHelper.swift in Sources */,
 				9CEAB7BD24D943F400F969E1 /* VirtusizeServerProductMeta.swift in Sources */,
+				52BA97FD2D5276E6004FA802 /* Virtusize.swift in Sources */,
 				9C32A14B250279D00062C11D /* VirtusizeInPageView.swift in Sources */,
 				9C787FC925DB793400346F2A /* VirtusizeEventHandler.swift in Sources */,
 				9CFF40FC25B974D200B21D4E /* VirtusizeViewStyle.swift in Sources */,
@@ -757,7 +758,6 @@
 				9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */,
 				9C3DE37725BA9CC70082C140 /* VirtusizeWebViewController.swift in Sources */,
 				9C106EEE24FF99390012EE51 /* String+Extensions.swift in Sources */,
-				4D6C5793205FB9BA00DA910E /* Virtusize.swift in Sources */,
 				9C3506312727CA42003BEF82 /* VirtusizeBundleLoader.swift in Sources */,
 				9CEAB7C924D9676200F969E1 /* VirtusizeServerProduct.swift in Sources */,
 				9CFF411325B98FA900B21D4E /* Observable.swift in Sources */,
@@ -853,7 +853,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.8.1;
+				CURRENT_PROJECT_VERSION = 2.9.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -923,7 +923,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.8.1;
+				CURRENT_PROJECT_VERSION = 2.9.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

@@ -30,7 +30,7 @@ public class VirtusizeURLCheck {
 
 	/// Checks if a URL is an external link from Virtusize to be open on the Safari browser
 	public static func isExternalLinkFromVirtusize(url: String?) -> Bool {
-		return url != nil && (url!.contains("surveymonkey") ||
+		return url != nil && (url!.contains("survey") ||
 							  (url!.contains(VirtusizeConstants.virtusizeName) && url!.contains("privacy")))
 	}
 

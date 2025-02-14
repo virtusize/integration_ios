@@ -74,7 +74,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target '<your-target-name>' do
-pod 'Virtusize', '~> 2.8.1'
+pod 'Virtusize', '~> 2.9.0'
 end
 ```
 
@@ -90,7 +90,7 @@ $ pod install
 Starting with the `2.3.2` release, Virtusize supports installation via [Swift Package Manager](https://swift.org/package-manager/)
 
 1. In Xcode, select **File** > **Swift Packages** > **Add Package Dependency...** and enter `https://github.com/virtusize/integration_ios.git` as the repository URL.
-2. Select a minimum version of `2.8.1`
+2. Select a minimum version of `2.9.0`
 3. Click **Next**
 
 ### Carthage
@@ -141,6 +141,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
         .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
         // By default, Virtusize disables the SNS buttons
         .setShowSNSButtons(true)
+        // Target the specific environment branch by its name
+        .setBranch("branch-name")
         .build()
 
     return true
@@ -160,6 +162,8 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setAllowedLanguages  | A list of `VirtusizeLanguage` | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | The languages that the user can switch to using the Language Selector | No. By default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
 | setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
+| setBranch | String | setBranch("branch-name")| Targets specific environment branch | No. By default, production environment is targeted. `staging` - staging environment is targeted. `<branch-name>` a specific branch is targeted |
+
 
 #### (Optional) Confgiure Internal Logger
 

@@ -42,9 +42,7 @@ public extension UIApplication {
 	/// A safe accessor to call the function that opens a URL
 	func safeOpenURL(_ url: URL) {
 		guard self.canOpenURL(url) else { return }
-		guard self.perform(NSSelectorFromString("openURL:"), with: url) != nil else {
-			return
-		}
+		self.open(url)
 	}
 
     /// Gets the top most view controller
@@ -69,11 +67,7 @@ public extension UIApplication {
 }
 extension UIWindow {
     static var key: UIWindow? {
-        if #available(iOS 13, *) {
-            return UIApplication.safeShared?.windows.first { $0.isKeyWindow }
-        } else {
-            return UIApplication.safeShared?.keyWindow
-        }
+		return UIApplication.safeShared?.windows.first { $0.isKeyWindow }
     }
 }
 #endif
