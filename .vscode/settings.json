@@ -1,9 +1,0 @@
-{
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.patterns": {
-    ".gitignore": ".gitattributes",
-    "README.md": "README-JP.md, ROADMAP.md, CHANGES.md, LICENSE",
-    "Package.swift": "Package.resolved, *.podspec",
-    "Makefile": ".swiftlint.yml",
-  }
-}
