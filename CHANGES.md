@@ -13,7 +13,7 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### Next Release
+### 2.9.0
 - Feature: Allow to target specific testing environment by branch name `Virtusize.setTestingBranch("branch-name")`
 - Fix: Apply remote i18n strings to build and validate fonts
 - Fix: Use cache-friendly endpoints for faster loading time
