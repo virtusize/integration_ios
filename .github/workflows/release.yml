@@ -28,7 +28,7 @@ jobs:
       # see https://guides.cocoapods.org/making/getting-setup-with-trunk#deploying-a-library
       - name: Push VirtusizeCore to CocoaPods
         run: |
-          # pod trunk push VirtusizeCore.podspec --allow-warnings --synchronous
+          pod trunk push VirtusizeCore.podspec --allow-warnings --synchronous
 
       # --synchronous flag ensure the local repo is updated to lint and verify dependant packages
       - name: Push VirtusizeAuth to CocoaPods
