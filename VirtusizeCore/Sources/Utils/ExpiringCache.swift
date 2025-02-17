@@ -60,7 +60,7 @@ public class ExpiringCache {
 		return cached.value
 	}
 
-	/// Return cached value if it's withing defind TTL (Time To Live) value
+	/// Return cached value if it's within defind TTL (Time To Live) value
 	/// Return "in progress" task, if it's already in progress for the same key
 	/// Fetch, return and cache value, if it's is expired or not yet cached
 	public func getOrFetch(_ key: String, ttl: TimeInterval, fetch: @escaping @Sendable () -> Any) -> Any {
