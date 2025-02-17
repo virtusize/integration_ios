@@ -70,10 +70,12 @@ internal class VirtusizeRepository: NSObject {
 		mutableProduct.productCheckData = product.productCheckData
 
 		// Send the API event where the user saw the product
-		VirtusizeAPIService.sendEvent(
-			VirtusizeEvent(name: .userSawProduct),
-			withContext: mutableProduct.jsonObject
-		)
+		Task { // should NOT be awaited, to not block the main flow
+			await VirtusizeAPIService.sendEvent(
+				VirtusizeEvent(name: .userSawProduct),
+				withContext: mutableProduct.jsonObject
+			)
+		}
 
 		guard mutableProduct.productCheckData?.productDataId != nil else {
 			NotificationCenter.default.post(
@@ -88,14 +90,18 @@ internal class VirtusizeRepository: NSObject {
 		   sendImageToBackend,
 		   product.imageURL != nil,
 		   let storeId = mutableProduct.productCheckData?.storeId {
-			VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
+			Task { // should NOT be awaited, to not block the main flow
+				await VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
+			}
 		}
 
 		// Send the API event where the user saw the widget button
-		VirtusizeAPIService.sendEvent(
-			VirtusizeEvent(name: .userSawWidgetButton),
-			withContext: mutableProduct.jsonObject
-		)
+		Task { // should NOT be awaited, to not block the main flow
+			await VirtusizeAPIService.sendEvent(
+				VirtusizeEvent(name: .userSawWidgetButton),
+				withContext: mutableProduct.jsonObject
+			)
+		}
 
 		NotificationCenter.default.post(
 			name: Virtusize.productCheckDidSucceed,

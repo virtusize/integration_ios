@@ -36,31 +36,27 @@ public class VirtusizeFlutterRepository: NSObject {
 		product: VirtusizeProduct
 	) async -> (VirtusizeProduct?, String?) {
 		let productResponse = await VirtusizeAPIService.productCheckAsync(product: product)
-		var isValidProduct: Bool = false
-		sendEventsAndProductImage(
+		let isValidProduct = await sendEventsAndProductImage(
 			messageHandler: messageHandler,
 			productResponse: productResponse
-		) { isValid in
-			isValidProduct = isValid
-		}
+		)
 		return (isValidProduct ? productResponse.success : nil, isValidProduct ? productResponse.string : nil)
 	}
 
 	private func sendEventsAndProductImage(
 		messageHandler: VirtusizeMessageHandler?,
-		productResponse: APIResult<VirtusizeProduct>,
-		onValidProduct: (Bool) -> Void
-	) {
+		productResponse: APIResult<VirtusizeProduct>
+	) async -> Bool {
 		guard let product = productResponse.success else {
-			onValidProduct(false)
-			return
+			return false
 		}
 
 		// Send the API event where the user saw the product
-		VirtusizeAPIService.sendEvent(
-			VirtusizeEvent(name: .userSawProduct),
-			withContext: product.jsonObject
-		) { eventJSONObject in
+		Task {
+			let eventJSONObject = await VirtusizeAPIService.sendEvent(
+				VirtusizeEvent(name: .userSawProduct),
+				withContext: product.jsonObject
+			)
 			messageHandler?.virtusizeController(
 				nil,
 				didReceiveEvent: VirtusizeEvent(
@@ -71,22 +67,22 @@ public class VirtusizeFlutterRepository: NSObject {
 		}
 
 		guard product.productCheckData?.productDataId != nil else {
-			onValidProduct(false)
-			return
+			return false
 		}
 
 		if let sendImageToBackend = product.productCheckData?.fetchMetaData,
 		   sendImageToBackend,
 		   product.imageURL != nil,
 		   let storeId = product.productCheckData?.storeId {
-			VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
+			_ = await VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
 		}
 
 		// Send the API event where the user saw the widget button
-		VirtusizeAPIService.sendEvent(
-			VirtusizeEvent(name: .userSawWidgetButton),
-			withContext: product.jsonObject
-		) { eventJSONObject in
+		Task {
+			let eventJSONObject = await VirtusizeAPIService.sendEvent(
+				VirtusizeEvent(name: .userSawWidgetButton),
+				withContext: product.jsonObject
+			)
 			messageHandler?.virtusizeController(
 				nil,
 				didReceiveEvent:
@@ -96,7 +92,8 @@ public class VirtusizeFlutterRepository: NSObject {
 					)
 			)
 		}
-		onValidProduct(true)
+
+		return true
 	}
 
 	public func getStoreProduct(productId: Int) async -> VirtusizeServerProduct? {

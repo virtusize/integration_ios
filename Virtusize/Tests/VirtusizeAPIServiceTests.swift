@@ -78,23 +78,20 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(productCheckData?.validProduct, true)
     }
 
-    func testSendProductImage_hasExpectedCallbackData() {
+    func testSendProductImage_hasExpectedCallbackData() async {
         let expectation = self.expectation(description: "Virtusize.sendProductImage reaches the callback")
         var actualObject: JSONObject?
         VirtusizeAPIService.session = MockURLSession(
 			data: TestFixtures.productMetaDataHintsJsonResponse.data(using: .utf8),
 			urlResponse: nil,
 			error: nil)
-        VirtusizeAPIService.sendProductImage(of: TestFixtures.virtusizeProduct, forStore: 2) { jsonObject in
-            actualObject = jsonObject
-            expectation.fulfill()
-        }
+		let task = Task {
+			actualObject = await VirtusizeAPIService.sendProductImage(of: TestFixtures.virtusizeProduct, forStore: 2)
+			expectation.fulfill()
+		}
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualObject?["apiKey"] as? String ?? "", Virtusize.APIKey)
         XCTAssertTrue(actualObject?["cloudinaryPublicId"] is String)
@@ -102,7 +99,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(actualObject?["imageUrl"] as? String ?? "", TestFixtures.productImageUrl)
     }
 
-    func testSendEvent_UserSawProduct_hasExpectedCallbackData() {
+    func testSendEvent_UserSawProduct_hasExpectedCallbackData() async {
         let expectation = self.expectation(description: "Virtusize.sendEvent reaches the callback")
         var actualObject: JSONObject?
         VirtusizeAPIService.session = MockURLSession(
@@ -111,19 +108,16 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        VirtusizeAPIService.sendEvent(
-            VirtusizeEvent(name: "user-saw-product",
-                           data: nil),
-            withContext: nil) { jsonObject in
-                actualObject = jsonObject
-                expectation.fulfill()
-            }
+		let task = Task {
+			actualObject = await VirtusizeAPIService.sendEvent(
+				VirtusizeEvent(name: "user-saw-product",
+							   data: nil),
+				withContext: nil)
+			expectation.fulfill()
+		}
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualObject?["apiKey"] as? String ?? "", Virtusize.APIKey)
         XCTAssertEqual(actualObject?["browserId"] as? String ?? "", TestFixtures.browserID)
