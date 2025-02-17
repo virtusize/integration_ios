@@ -37,18 +37,20 @@ public struct APIResponse: Sendable {
 	/// The API response error in the format of `VirtusizeError`
 	public var virtusizeError: VirtusizeError?
 
-	init(code: Int?, data: Data?, response: URLResponse?, error: Error?) {
+	init(code: Int?, data: Data?, response: URLResponse?, virtusizeError: VirtusizeError?) {
 		self.code = code
 		self.data = data
 		self.response = response
-		self.error = error
+		self.virtusizeError = virtusizeError
+		self.error = nil
 	}
 
-	init(error: Error) {
+	init(error: Error, virtusizeError: VirtusizeError) {
 		self.code = nil
 		self.data = nil
 		self.response = nil
 		self.error = error
+		self.virtusizeError = virtusizeError
 	}
 }
 

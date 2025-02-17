@@ -115,28 +115,31 @@ open class APIService {
 		do {
 			let (data, response) = try await APIService.session.data(for: request)
 
-			var error: VirtusizeError?
+			var virtusizeError: VirtusizeError?
 			if let httpResponse = response as? HTTPURLResponse, !httpResponse.isSuccessful() {
-				var errorDescription =
+				let errorDescription =
 					if let asUtf8 = String(data: data, encoding: .utf8) {
 						asUtf8
 					} else {
 						VirtusizeError.unknownError.debugDescription
 					}
-				error = VirtusizeError.apiRequestError(request.url, errorDescription)
+				virtusizeError = VirtusizeError.apiRequestError(request.url, errorDescription)
 			}
 
 			return APIResponse(
 				code: (response as? HTTPURLResponse)?.statusCode ?? nil,
 				data: data,
 				response: response,
-				error: error
+				virtusizeError: virtusizeError
 			)
 		} catch {
-			return APIResponse(error: VirtusizeError.apiRequestError(
-				request.url,
-				error.localizedDescription
-			))
+			return APIResponse(
+				error: error,
+				virtusizeError: VirtusizeError.apiRequestError(
+					request.url,
+					error.localizedDescription
+				)
+			)
 		}
 	}
 
