@@ -40,6 +40,7 @@ virtusize-core-test:
 		-scheme "VirtusizeCoreTests" \
 		-sdk "iphonesimulator" \
 		-destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=latest"
+		-parallel-testing-enabled NO
 
 test: virtusize-test virtusize-core-test
 

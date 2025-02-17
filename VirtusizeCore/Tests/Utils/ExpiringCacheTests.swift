@@ -26,7 +26,6 @@
 import Testing
 @testable import VirtusizeCore
 
-@MainActor
 struct ExpiringCacheTests {
 	init() async {
 		await ExpiringCache.shared.clearAll()
@@ -57,7 +56,7 @@ struct ExpiringCacheTests {
 			"bar"
 		}
 
-		await Task.yield()
+		try await Task.sleep(nanoseconds: 50_000_000) // 50ms
 
 		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: .zero) {
 			"baz"
