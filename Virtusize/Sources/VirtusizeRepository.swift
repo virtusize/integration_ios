@@ -269,16 +269,16 @@ internal class VirtusizeRepository: NSObject {
 			VirtusizeAPIService.getUserSessionInfoAsync()
 		}
 
-		if let accessToken = userSessionInfoResponse.success?.accessToken {
+		if let accessToken = userSessionInfoResponse?.success?.accessToken {
 			UserDefaultsHelper.current.accessToken = accessToken
 		}
-		if let authToken = userSessionInfoResponse.success?.authToken, !authToken.isEmpty {
+		if let authToken = userSessionInfoResponse?.success?.authToken, !authToken.isEmpty {
 			UserDefaultsHelper.current.authToken = authToken
 		}
-		if let sessionResponse = userSessionInfoResponse.string {
+		if let sessionResponse = userSessionInfoResponse?.string {
 			updateUserSessionResponse = sessionResponse
 		}
-		hasSessionBodyMeasurement = userSessionInfoResponse.success?.status.hasBodyMeasurement ?? false
+		hasSessionBodyMeasurement = userSessionInfoResponse?.success?.status.hasBodyMeasurement ?? false
 
 		userSessionResponse = updateUserSessionResponse
 	}

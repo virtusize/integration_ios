@@ -70,4 +70,12 @@ struct ExpiringCacheTests {
 		}
 		#expect(result == "bar")
 	}
+
+	@Test func typeMismatch() {
+		ExpiringCache.shared.set(1, forKey: "foo")
+		let result = ExpiringCache.shared.getOrFetch("foo", ttl: .short) {
+			return "bar"
+		}
+		#expect(result == nil)
+	}
 }

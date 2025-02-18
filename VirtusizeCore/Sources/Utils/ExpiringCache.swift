@@ -83,9 +83,13 @@ extension ExpiringCache {
 	///   - key: a string key to lookup and store the value
 	///   - ttl: Time To Live in seconds. If the cached value is too old, the new value is loaded using `fetch` action
 	///   - fetch: a function to execute if no value found or expired. Loaded result is stored into the cache
-	public func getOrFetch<Value>(_ key: String, ttl: TimeInterval, fetch: @escaping @Sendable () -> Value) -> Value {
+	internal func getOrFetch<Value>(_ key: String, ttl: TimeInterval, fetch: @escaping @Sendable () -> Value) -> Value? {
 		let resultObj: Any = getOrFetch(key, ttl: ttl) { fetch() }
-		return resultObj as! Value // swiftlint:disable:this force_cast
+		guard let result = resultObj as? Value else {
+			VirtusizeLogger.warn("Type mismatch: Expected \(Value.self), but got \(type(of: resultObj))")
+			return nil
+		}
+		return result
 	}
 
 	/// Return cached value or load and cache
@@ -96,7 +100,7 @@ extension ExpiringCache {
 	public func getOrFetch<Value>(
 		_ typeAsKey: Any.Type,
 		ttl: TimeInterval,
-		fetch: @escaping @Sendable () -> Value) -> Value {
+		fetch: @escaping @Sendable () -> Value) -> Value? {
 			let key = String(describing: typeAsKey)
 			return getOrFetch(key, ttl: ttl, fetch: fetch)
 	}
