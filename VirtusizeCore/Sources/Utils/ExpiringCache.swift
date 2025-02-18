@@ -38,22 +38,22 @@ public class ExpiringCache {
 	private var cache = [String: CacheEntry]()
 
 	/// Remove all cached values
-	public func clearAll() {
+	internal func clearAll() {
 		cache.removeAll()
 	}
 
 	/// Remove value for specified key
-	public func clear(_ key: String) {
+	internal func clear(_ key: String) {
 		cache.removeValue(forKey: key)
 	}
 
 	/// Put value into cache by specified key
-	public func set(_ value: Any, forKey key: String) {
+	internal func set(_ value: Any, forKey key: String) {
 		cache[key] = CacheEntry(value)
 	}
 
 	/// Return cached value if exists, no matter if it's expired or not
-	public func get(_ key: String) -> Any? {
+	internal func get(_ key: String) -> Any? {
 		guard let cached = cache[key] else {
 			return nil
 		}
@@ -63,7 +63,7 @@ public class ExpiringCache {
 	/// Return cached value if it's within defind TTL (Time To Live) value
 	/// Return "in progress" task, if it's already in progress for the same key
 	/// Fetch, return and cache value, if it's is expired or not yet cached
-	public func getOrFetch(_ key: String, ttl: TimeInterval, fetch: @escaping @Sendable () -> Any) -> Any {
+	internal func getOrFetch(_ key: String, ttl: TimeInterval, fetch: @escaping @Sendable () -> Any) -> Any {
 		if let cached = cache[key] {
 			let lifeTime = Date().timeIntervalSince(cached.createdAt)
 			if lifeTime < ttl {
@@ -105,7 +105,7 @@ extension ExpiringCache {
 	}
 
 	/// Return cached value if exists, irrelevant of expiration date
-	public func get<Value>(_ key: String) -> Value? {
+	internal func get<Value>(_ key: String) -> Value? {
 		return get(key) as? Value
 	}
 
@@ -114,7 +114,7 @@ extension ExpiringCache {
 		clear(key)
 	}
 
-	public func set<Value>(_ value: Value, forKey typeAsKey: Any.Type) {
+	internal func set<Value>(_ value: Value, forKey typeAsKey: Any.Type) {
 		let key = String(describing: typeAsKey)
 		set(value, forKey: key)
 	}
