@@ -36,11 +36,7 @@ final class VirtusizeSafariViewController: SFSafariViewController {
 		self.webView = webView
 		self.onClose = onClose
 
-		if #available(iOS 11.0, *) {
-			super.init(url: URL, configuration: SFSafariViewController.Configuration())
-		} else {
-			super.init(url: URL, entersReaderIfAvailable: false)
-		}
+		super.init(url: URL, configuration: SFSafariViewController.Configuration())
 
 		self.modalPresentationStyle = .overCurrentContext
 	}

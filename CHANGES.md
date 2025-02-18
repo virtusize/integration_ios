@@ -14,12 +14,17 @@ Use list notation, and following prefixes:
 ## NEXT RELEASE for Version 2.x.x
 
 ### Next Release
+- Refactor: Optimize product loading time by concurrent loading, memory cache and avoiding unecessary reloading of body measurements
+
+### 2.9.0
 - Feature: Allow to target specific testing environment by branch name `Virtusize.setTestingBranch("branch-name")`
 - Fix: Apply remote i18n strings to build and validate fonts
 - Fix: Use cache-friendly endpoints for faster loading time
 - Fix: Ensure SNS buttons are hidden when configured to do so
 - Fix: Open Privacy Policy page when clicked
-- Refactor: Optimize product loading time by concurrent loading, memory cache and avoiding unecessary reloading of body measurements
+- Fix: Numeric size recommendations now appear correctly
+- Refactor: Remove iOS 11 code as current minimal version is 13
+- Fix: Fix localiztaion bundle name
 
 ### 2.8.1
 - Fix: Release pods synchronously

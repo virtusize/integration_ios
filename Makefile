@@ -2,10 +2,15 @@ define HELP_MESSAGE
 Usage: make [COMMAND]
 
 Commands:
-	build  Build the project. (default)
-	test   Run the tests.
-	clean  Remove the build folder.
-	help   Display this help message.
+  build              Build the project. (default)
+  test               Run the tests.
+  clean              Remove the build folder.
+  validate-fonts     Validate the fonts.
+  build-fonts        Build the fonts.
+  install-git-hooks  Install the git hooks.
+  lint               Run the linter.
+  lint-fix           Run the linter and fix the issues.
+  help               Display this help message.
 endef
 
 export HELP_MESSAGE

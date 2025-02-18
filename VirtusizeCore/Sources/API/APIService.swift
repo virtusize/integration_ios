@@ -176,6 +176,7 @@ open class APIService {
 			let jsonString = String(data: data, encoding: String.Encoding.utf8)
 			return .success(result, jsonString)
 		} catch {
+			VirtusizeLogger.debug("Failed to parse JSON response: \(error)")
 			return .failure(apiResponse?.code, VirtusizeError.jsonDecodingFailed(String(describing: type), error))
 		}
 	}

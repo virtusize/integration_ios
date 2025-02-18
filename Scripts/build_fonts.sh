@@ -7,6 +7,7 @@ SOURCE_FONT_DIR=./Fonts
 SDK_FONT_DIR=./Virtusize/Sources/Resources/Fonts
 LOCALIZATION_DIR=./VirtusizeCore/Sources/Resources/Localizations
 TMP_DIR=./.build/tmp/font
+BYPASS_CACHE=$RANDOM
 
 # Rename the font file name and it's metadata to ensure they match.
 # The inner font name change is important, so it can be loaded as:
@@ -49,7 +50,7 @@ generate_subset_font() {
   # Merge local strings with remote json-strings and use this merged file for validation
   local text_file="$TMP_DIR/strings_$language.txt"
   cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
-  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}" >> $text_file
+  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}?random=$BYPASS_CACHE" >> $text_file
 
   # create subset font
   pyftsubset $SOURCE_FONT_DIR/$font \
