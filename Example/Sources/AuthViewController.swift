@@ -25,6 +25,7 @@
 
 import UIKit
 import WebKit
+import VirtusizeCore
 import VirtusizeAuth
 
 class AuthViewController: UIViewController {
@@ -74,7 +75,10 @@ class AuthViewController: UIViewController {
         ])
 
         // Method 2: Use WKWebView
-        webView.load(URLRequest(url: URL(string: "https://demo.virtusize.com")!))
+		let url = VirtusizeBranch.applyBranch(
+			to: URL(string: "https://demo.virtusize.com")!,
+			branch: "test-branch")
+		webView.load(URLRequest(url: url))
     }
 }
 
