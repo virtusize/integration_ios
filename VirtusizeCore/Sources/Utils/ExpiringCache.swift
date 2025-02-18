@@ -67,10 +67,7 @@ public class ExpiringCache {
 		if let cached = cache[key] {
 			let lifeTime = Date().timeIntervalSince(cached.createdAt)
 			if lifeTime < ttl {
-				print("> hit cache: .ready for '\(key)' (to live or another \(ttl - lifeTime) sec)")
 				return cached.value
-			} else {
-				print("> hit cache: .expired for '\(key)' (outdated for \(lifeTime - ttl) sec)")
 			}
 		}
 
