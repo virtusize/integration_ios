@@ -34,22 +34,22 @@ public actor ExpiringCache {
 	private var cache = [String: CacheEntry]()
 
 	/// Remove all cached values
-	public func clearAll() {
+	internal func clearAll() {
 		cache.removeAll()
 	}
 
 	/// Remove value for specified key
-	public func clear(_ key: String) {
+	internal func clear(_ key: String) {
 		cache.removeValue(forKey: key)
 	}
 
 	/// Put value into cache by specified key
-	public func set(_ value: Any, forKey key: String) {
+	internal func set(_ value: Any, forKey key: String) {
 		cache[key] = .ready(Date(), value)
 	}
 
 	/// Return cached value if exists, no matter if it's expired or not
-	public func get(_ key: String) async throws -> Any? {
+	internal func get(_ key: String) async throws -> Any? {
 		switch cache[key] {
 		case .inProgress(let task):
 			return try await task.value
@@ -63,7 +63,7 @@ public actor ExpiringCache {
 	/// Return cached value if it's withing defind TTL (Time To Live) value
 	/// Return "in progress" task, if it's already in progress for the same key
 	/// Fetch, return and cache value, if it's is expired or not yet cached
-	public func getOrFetch(
+	internal func getOrFetch(
 		_ key: String,
 		ttl: TimeInterval,
 		fetch: @escaping @Sendable () async throws -> Any
@@ -103,13 +103,17 @@ extension ExpiringCache {
 	///   - key: a string key to lookup and store the value
 	///   - ttl: Time To Live in seconds. If the cached value is too old, the new value is loaded using `fetch` action
 	///   - fetch: a function to execute if no value found or expired. Loaded result is stored into the cache
-	public func getOrFetch<Value>(
+	internal func getOrFetch<Value>(
 		_ key: String,
 		ttl: TimeInterval,
 		fetch: @escaping @Sendable () async throws -> Value
-	) async throws -> Value {
+	) async throws -> Value? {
 		let resultObj: Any = try await getOrFetch(key, ttl: ttl) { try await fetch() }
-		return resultObj as! Value // swiftlint:disable:this force_cast
+		guard let result = resultObj as? Value else {
+			VirtusizeLogger.warn("Type mismatch: Expected \(Value.self), but got \(type(of: resultObj))")
+			return nil
+		}
+		return result
 	}
 
 	/// Return cached value or load and cache
@@ -121,13 +125,13 @@ extension ExpiringCache {
 		_ typeAsKey: Any.Type,
 		ttl: TimeInterval,
 		fetch: @escaping @Sendable () async throws -> Value
-	) async throws -> Value {
+	) async throws -> Value? {
 		let key = String(describing: typeAsKey)
 		return try await getOrFetch(key, ttl: ttl, fetch: fetch)
 	}
 
 	/// Return cached value if exists, irrelevant of expiration date
-	public func get<Value>(_ key: String) async throws -> Value? {
+	internal func get<Value>(_ key: String) async throws -> Value? {
 		return try await get(key) as? Value
 	}
 
@@ -136,7 +140,7 @@ extension ExpiringCache {
 		clear(key)
 	}
 
-	public func set<Value>(_ value: Value, forKey typeAsKey: Any.Type) {
+	internal func set<Value>(_ value: Value, forKey typeAsKey: Any.Type) {
 		let key = String(describing: typeAsKey)
 		set(value, forKey: key)
 	}

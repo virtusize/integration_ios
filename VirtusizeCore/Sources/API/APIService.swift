@@ -28,6 +28,12 @@ import Foundation
 /// This class is to handle API requests to the Virtusize server
 open class APIService {
 
+	/// A closure that is called when the operation completes
+	public typealias CompletionHandler = (Data?) -> Void
+
+	/// A closure that is called when the operation fails
+	public typealias ErrorHandler = (VirtusizeError) -> Void
+
 	/// A default session configuration object for a URL session.
 	private static let sessionConfiguration = URLSessionConfiguration.default
 
@@ -37,6 +43,69 @@ open class APIService {
 		delegate: nil,
 		delegateQueue: nil
 	)
+
+	/// Performs an API request.
+	///
+	/// - Parameters:
+	///   - request: A URL load request for an API request
+	///   - completionHandler: A callback to pass data back when an API request is successful
+	///   - error: A callback to pass `VirtusizeError` back when an API request is unsuccessful
+	public static func perform(
+		_ request: URLRequest,
+		completion completionHandler: CompletionHandler? = nil,
+		error errorHandler: ErrorHandler? = nil
+	) {
+		let task: URLSessionDataTask
+		task = APIService.session.dataTask(with: request) { (data, response, error) in
+			guard error == nil else {
+				DispatchQueue.main.async {
+					errorHandler?(VirtusizeError.apiRequestError(request.url, error!.localizedDescription))
+				}
+				return
+			}
+			if let httpResponse = response as? HTTPURLResponse, !httpResponse.isSuccessful() {
+				var errorDebugDescription = VirtusizeError.unknownError.debugDescription
+				if let data = data, let asUtf8 = String(data: data, encoding: .utf8) {
+					errorDebugDescription = asUtf8
+				}
+				DispatchQueue.main.async {
+					errorHandler?(VirtusizeError.apiRequestError(request.url, errorDebugDescription))
+				}
+			} else {
+				DispatchQueue.main.async {
+					completionHandler?(data)
+				}
+			}
+		}
+		task.resume()
+		URLSession.shared.finishTasksAndInvalidate()
+	}
+
+	/// Gets the result of an API request
+	///
+	/// - Parameters:
+	///   - request: A URL load request for an API request
+	///   - onSuccess: A callback to pass back the data in a generic type when an API request is successful
+	///   - onError: A callback to pass `VirtusizeError` back when an API request is unsuccessful
+	private static func getAPIResult<T: Decodable>(
+		request: URLRequest,
+		onSuccess: ((T) -> Void)? = nil,
+		onError: ((VirtusizeError) -> Void)? = nil
+	) {
+		perform(request, completion: { data in
+			guard let data = data else {
+				return
+			}
+			do {
+				let result = try JSONDecoder().decode(T.self, from: data)
+				onSuccess?(result)
+			} catch {
+				onError?(VirtusizeError.jsonDecodingFailed(String(describing: T.self), error))
+			}
+		}, error: { error in
+			onError?(error)
+		})
+	}
 
 	/// Performs an API request asynchronously
 	///
@@ -95,6 +164,7 @@ open class APIService {
 			let jsonString = String(data: data, encoding: String.Encoding.utf8)
 			return .success(result, jsonString)
 		} catch {
+			VirtusizeLogger.debug("Failed to parse JSON response: \(error)")
 			return .failure(apiResponse.code, VirtusizeError.jsonDecodingFailed(String(describing: type), error))
 		}
 	}

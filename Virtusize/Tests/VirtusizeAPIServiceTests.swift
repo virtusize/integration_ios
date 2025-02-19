@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
 import XCTest
 @testable import Virtusize
 @testable import VirtusizeCore
@@ -549,6 +550,19 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertNotNil(actualRecommendedSizes)
         XCTAssertEqual(actualRecommendedSizes?.first?.sizeName, "35")
     }
+
+	func testGetUserBodyRecommendedSize_inseamAsNumber() throws {
+		let json =
+		// swiftlint:disable line_length
+"""
+[{"extProductId":"vs_pants","virtualItem":{"bust":null,"inseam":720.0,"sleeve":null}, "willFitForSizes":{"32":true,"31":true},"silhouetteGapLabels":null}]
+"""
+		// swiftlint:enable line_length
+		let data = json.data(using: .utf8)!
+		let result = try JSONDecoder().decode(BodyProfileRecommendedSizeArray.self, from: data)
+
+		XCTAssertEqual(result.first?.virtualItem?.inseam, 720)
+	}
 }
 
 extension VirtusizeAPIServiceTests {
