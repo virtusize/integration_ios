@@ -46,7 +46,7 @@ internal enum APIEndpoints {
     // MARK: - Properties
     var hostname: String {
 		switch self {
-		case .productCheck, .productTypes:
+		case .productCheck, .productTypes, .storeProducts:
 			return Virtusize.environment.servicesUrl()
 		case  .getSize:
 			return Virtusize.environment.getSizeUrl()
@@ -108,7 +108,8 @@ internal enum APIEndpoints {
 			components.path = "/a/api/v3/orders"
 
 		case .storeProducts(let productId):
-			components.path = "/a/api/v3/store-products/\(productId)"
+			let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+			components.path = "\(envPathForServicesAPI)/a/api/v3/store-products/\(productId)"
 			components.queryItems = jsonFormatQueryItems()
 
 		case .productTypes:

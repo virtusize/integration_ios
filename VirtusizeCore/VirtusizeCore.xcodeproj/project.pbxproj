@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		523242472D1AC8AE00290069 /* VirtusizeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523242462D1AC89F00290069 /* VirtusizeLogger.swift */; };
 		5232424C2D1D93A100290069 /* VirtusizeLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */; };
+		524E5AC02D5CCAFC0046F887 /* ExpiringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524E5ABF2D5CCAD60046F887 /* ExpiringCache.swift */; };
+		524E5AC42D5CE1970046F887 /* ExpiringCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524E5AC32D5CE18F0046F887 /* ExpiringCacheTests.swift */; };
 		528C8CC32D3FC33200BAE9E6 /* VirtusizeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C8CC22D3FC32300BAE9E6 /* VirtusizeConstants.swift */; };
 		528C8CC62D3FC53700BAE9E6 /* VirtusizeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C8CC52D3FC53700BAE9E6 /* VirtusizeError.swift */; };
 		528C8CC72D3FC53700BAE9E6 /* SnsHosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C8CC42D3FC53700BAE9E6 /* SnsHosts.swift */; };
@@ -60,6 +62,8 @@
 /* Begin PBXFileReference section */
 		523242462D1AC89F00290069 /* VirtusizeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLogger.swift; sourceTree = "<group>"; };
 		5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLoggerTests.swift; sourceTree = "<group>"; };
+		524E5ABF2D5CCAD60046F887 /* ExpiringCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringCache.swift; sourceTree = "<group>"; };
+		524E5AC32D5CE18F0046F887 /* ExpiringCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringCacheTests.swift; sourceTree = "<group>"; };
 		528C8CC22D3FC32300BAE9E6 /* VirtusizeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeConstants.swift; sourceTree = "<group>"; };
 		528C8CC42D3FC53700BAE9E6 /* SnsHosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsHosts.swift; sourceTree = "<group>"; };
 		528C8CC52D3FC53700BAE9E6 /* VirtusizeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeError.swift; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 		5232424A2D1D938000290069 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				524E5AC32D5CE18F0046F887 /* ExpiringCacheTests.swift */,
 				5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */,
 			);
 			path = Utils;
@@ -180,6 +185,7 @@
 		9C35061727278B7C003BEF82 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				524E5ABF2D5CCAD60046F887 /* ExpiringCache.swift */,
 				528C8CC22D3FC32300BAE9E6 /* VirtusizeConstants.swift */,
 				523242462D1AC89F00290069 /* VirtusizeLogger.swift */,
 				9C35067427280396003BEF82 /* HTTPURLResponse+Extensions.swift */,
@@ -394,6 +400,7 @@
 				9C35062F2727B782003BEF82 /* BundleLoaderProtocal.swift in Sources */,
 				9C35067527280396003BEF82 /* HTTPURLResponse+Extensions.swift in Sources */,
 				528C8CC62D3FC53700BAE9E6 /* VirtusizeError.swift in Sources */,
+				524E5AC02D5CCAFC0046F887 /* ExpiringCache.swift in Sources */,
 				528C8CC72D3FC53700BAE9E6 /* SnsHosts.swift in Sources */,
 				9CAD1F4C2CF4AB6E00AC104E /* APICache.swift in Sources */,
 				9C35062E2727B781003BEF82 /* VirtusizeCoreBundleLoader.swift in Sources */,
@@ -412,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C6E36C72739616E00608640 /* UserDefaultsHelperTests.swift in Sources */,
+				524E5AC42D5CE1970046F887 /* ExpiringCacheTests.swift in Sources */,
 				5232424C2D1D93A100290069 /* VirtusizeLoggerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

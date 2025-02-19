@@ -28,10 +28,7 @@ import VirtusizeCore
 /// This class is used to handle the logic required to access remote and local data sources
 internal class VirtusizeRepository: NSObject {
 
-	static let shared: VirtusizeRepository = {
-		let instance = VirtusizeRepository()
-		return instance
-	}()
+	static let shared = VirtusizeRepository()
 
 	/// The session API response as a string
 	var userSessionResponse: String = ""
@@ -46,6 +43,7 @@ internal class VirtusizeRepository: NSObject {
 	private var userBodyProfile: VirtusizeUserBodyProfile?
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
     private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+	private var hasSessionBodyMeasurement: Bool = false
 
 	/// A set to cache the store product information of all the visited products
 	private var serverStoreProductSet: Set<VirtusizeServerProduct> = []
@@ -128,23 +126,37 @@ internal class VirtusizeRepository: NSObject {
             return
 		}
 
-		let serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
+		var serverStoreProduct: VirtusizeServerProduct?
+
+		let dispatchGroup = DispatchGroup()
+
+		dispatchGroup.enter()
+		DispatchQueue.global().async {
+			serverStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId).success
+			dispatchGroup.leave()
+		}
+
+		dispatchGroup.enter()
+		DispatchQueue.global().async {
+			self.productTypes = VirtusizeAPIService.getProductTypesAsync().success
+			dispatchGroup.leave()
+		}
+
+		dispatchGroup.enter()
+		DispatchQueue.global().async {
+			self.i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
+			dispatchGroup.leave()
+		}
+
+		dispatchGroup.wait()
 
 		guard let storeProduct = serverStoreProduct else {
 			Virtusize.inPageError = (true, externalProductId)
             return
 		}
-
 		self.serverStoreProductSet.insert(storeProduct)
 
-		productTypes = VirtusizeAPIService.getProductTypesAsync().success
-		if productTypes == nil {
-			Virtusize.inPageError = (true, externalProductId)
-            return
-		}
-
-		i18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
-		if i18nLocalization == nil {
+		guard productTypes != nil && i18nLocalization != nil else {
 			Virtusize.inPageError = (true, externalProductId)
             return
 		}
@@ -157,7 +169,7 @@ internal class VirtusizeRepository: NSObject {
 	/// - Parameters:
 	///   - selectedUserProductId: the selected product Id from the web view
 	///   to decide a specific user product to compare with the store product
-	internal func fetchDataForInPageRecommendation(
+	internal func fetchDataForInPageRecommendation( // swiftlint:disable:this function_body_length cyclomatic_complexity
 		storeProduct: VirtusizeServerProduct? = nil,
 		selectedUserProductId: Int? = nil,
 		shouldUpdateUserProducts: Bool = true,
@@ -174,8 +186,30 @@ internal class VirtusizeRepository: NSObject {
 			storeProduct = product
 		}
 
+		var userProductsResponse: APIResult<[VirtusizeServerProduct]>?
+		var userBodyProfileResponse: APIResult<VirtusizeUserBodyProfile>?
+
+		let dispatchGroup = DispatchGroup()
+
 		if shouldUpdateUserProducts {
-			let userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
+			dispatchGroup.enter()
+			DispatchQueue.global().async {
+				userProductsResponse = VirtusizeAPIService.getUserProductsAsync()
+				dispatchGroup.leave()
+			}
+		}
+
+		if shouldUpdateBodyProfile && hasSessionBodyMeasurement {
+			dispatchGroup.enter()
+			DispatchQueue.global().async {
+				userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
+				dispatchGroup.leave()
+			}
+ 		}
+
+		dispatchGroup.wait()
+
+		if let userProductsResponse = userProductsResponse {
 			if userProductsResponse.isSuccessful {
 				userProducts = userProductsResponse.success
 			} else if userProductsResponse.errorCode != 404 {
@@ -184,15 +218,16 @@ internal class VirtusizeRepository: NSObject {
 			}
 		}
 
-		if shouldUpdateBodyProfile {
-			let userBodyProfileResponse = VirtusizeAPIService.getUserBodyProfileAsync()
+		if let userBodyProfileResponse = userBodyProfileResponse {
 			if userBodyProfileResponse.isSuccessful {
 				userBodyProfile = userBodyProfileResponse.success
 			} else if userBodyProfileResponse.errorCode != 404 {
 				Virtusize.inPageError = (true, storeProduct.externalId)
 				return
 			}
- 		}
+		} else if !hasSessionBodyMeasurement {
+			userBodyProfile = nil // reset body measurements if the user-session defines so
+		}
 
 		if let userBodyProfile = userBodyProfile {
             bodyProfileRecommendedSize = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
@@ -216,7 +251,9 @@ internal class VirtusizeRepository: NSObject {
 	internal func clearUserData() {
 		_ = VirtusizeAPIService.deleteUserDataAsync()
 		UserDefaultsHelper.current.authToken = ""
+		ExpiringCache.shared.clear(UserSessionInfo.self)
 
+		userSessionResponse = ""
 		userProducts = nil
 		sizeComparisonRecommendedSize = nil
 		userBodyProfile = nil
@@ -224,18 +261,24 @@ internal class VirtusizeRepository: NSObject {
 	}
 
 	/// Updates the user session by calling the session API
-	internal func updateUserSession() {
+	internal func updateUserSession(forceUpdate: Bool = false) {
 		var updateUserSessionResponse = userSessionResponse
-		let userSessionInfoResponse = VirtusizeAPIService.getUserSessionInfoAsync()
-		if let accessToken = userSessionInfoResponse.success?.accessToken {
+
+		let ttl: TimeInterval = forceUpdate ? .zero : .short
+		let userSessionInfoResponse = ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: ttl) {
+			VirtusizeAPIService.getUserSessionInfoAsync()
+		}
+
+		if let accessToken = userSessionInfoResponse?.success?.accessToken {
 			UserDefaultsHelper.current.accessToken = accessToken
 		}
-		if let authToken = userSessionInfoResponse.success?.authToken, !authToken.isEmpty {
+		if let authToken = userSessionInfoResponse?.success?.authToken, !authToken.isEmpty {
 			UserDefaultsHelper.current.authToken = authToken
 		}
-		if let sessionResponse = userSessionInfoResponse.string {
+		if let sessionResponse = userSessionInfoResponse?.string {
 			updateUserSessionResponse = sessionResponse
 		}
+		hasSessionBodyMeasurement = userSessionInfoResponse?.success?.status.hasBodyMeasurement ?? false
 
 		userSessionResponse = updateUserSessionResponse
 	}
