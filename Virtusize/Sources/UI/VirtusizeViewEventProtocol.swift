@@ -102,9 +102,9 @@ extension VirtusizeViewEventProtocol {
 		}
 	}
 
-    public func handleUserClosedWidget() {
-        Task {
+	public func handleUserClosedWidget() {
+		Task {
 			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
-        }
-    }
+		}
+	}
 }

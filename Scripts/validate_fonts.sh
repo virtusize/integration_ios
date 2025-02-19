@@ -4,6 +4,7 @@ FONTS_DIR=./Virtusize/Sources/Resources/Fonts
 LOCALIZATION_DIR=./VirtusizeCore/Sources/Resources/Localizations
 TMP_DIR=./.build/tmp/font
 SKIP_CHARS=("0000c6d0") # skip '%' symbol, as it breaks the parsing
+BYPASS_CACHE=$RANDOM
 
 # Strategy:
 #   1. Fetch all the glyphs from the font file
@@ -83,7 +84,7 @@ validate_font() {
   # Merge local strings with remote json-strings and use this merged file for validation
   local text_file="$TMP_DIR/strings_$language.txt"
   cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
-  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}" >> $text_file
+  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}?random=$BYPASS_CACHE" >> $text_file
 
   validate_font_symbols "$FONTS_DIR/$font" $text_file
 

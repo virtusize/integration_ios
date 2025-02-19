@@ -67,11 +67,7 @@ public extension UIApplication {
 }
 extension UIWindow {
     static var key: UIWindow? {
-        if #available(iOS 13, *) {
-            return UIApplication.safeShared?.windows.first { $0.isKeyWindow }
-        } else {
-            return UIApplication.safeShared?.keyWindow
-        }
+		return UIApplication.safeShared?.windows.first { $0.isKeyWindow }
     }
 }
 #endif

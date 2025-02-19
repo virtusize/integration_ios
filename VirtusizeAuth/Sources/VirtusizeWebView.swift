@@ -190,30 +190,6 @@ extension VirtusizeWebView: WKUIDelegate {
 		}
 	}
 
-    @available(iOS, introduced: 10.0, deprecated: 13.0)
-	public func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
-		wkUIDelegate?.webView?(webView, shouldPreviewElement: elementInfo) ?? false
-	}
-
-    @available(iOS, introduced: 10.0, deprecated: 13.0)
-	public func webView(
-		_ webView: WKWebView,
-		previewingViewControllerForElement elementInfo: WKPreviewElementInfo,
-		defaultActions previewActions: [WKPreviewActionItem]
-	) -> UIViewController? {
-		return wkUIDelegate?.webView?(
-			webView,
-			previewingViewControllerForElement: elementInfo,
-			defaultActions: previewActions
-		)
-	}
-
-    @available(iOS, introduced: 10.0, deprecated: 13.0)
-	public func webView(_ webView: WKWebView, commitPreviewingViewController previewingViewController: UIViewController) {
-		wkUIDelegate?.webView?(webView, commitPreviewingViewController: previewingViewController)
-	}
-
-	@available(iOS 13.0, *)
 	public func webView(
 		_ webView: WKWebView,
 		contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
@@ -228,12 +204,10 @@ extension VirtusizeWebView: WKUIDelegate {
 		}
 	}
 
-	@available(iOS 13.0, *)
 	public func webView(_ webView: WKWebView, contextMenuWillPresentForElement elementInfo: WKContextMenuElementInfo) {
 		wkUIDelegate?.webView?(webView, contextMenuWillPresentForElement: elementInfo)
 	}
 
-	@available(iOS 13.0, *)
 	public func webView(
 		_ webView: WKWebView,
 		contextMenuForElement elementInfo: WKContextMenuElementInfo,
@@ -242,7 +216,6 @@ extension VirtusizeWebView: WKUIDelegate {
 		wkUIDelegate?.webView?(webView, contextMenuForElement: elementInfo, willCommitWithAnimator: animator)
 	}
 
-	@available(iOS 13.0, *)
 	public func webView(_ webView: WKWebView, contextMenuDidEndForElement elementInfo: WKContextMenuElementInfo) {
 		wkUIDelegate?.webView?(webView, contextMenuDidEndForElement: elementInfo)
 	}
@@ -272,7 +245,6 @@ extension VirtusizeWebView: WKNavigationDelegate {
 		}
 	}
 
-	@available(iOS 13.0, *)
 	public func webView(
 		_ webView: WKWebView,
 		decidePolicyFor navigationAction: WKNavigationAction,

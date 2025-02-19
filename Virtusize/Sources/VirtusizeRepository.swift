@@ -137,10 +137,10 @@ internal class VirtusizeRepository: NSObject {
 
 		guard productTypes != nil && i18nLocalization != nil else {
 			Virtusize.inPageError = (true, externalProductId)
-            return nil
+			return nil
 		}
 
-        return storeProduct
+		return storeProduct
 	}
 
 	/// Fetches data for InPage recommendation
@@ -154,14 +154,14 @@ internal class VirtusizeRepository: NSObject {
 		shouldUpdateUserProducts: Bool = true,
 		shouldUpdateBodyProfile: Bool = true
 	) async {
-        guard var storeProduct = storeProduct ?? lastProductOnVirtusizeWebView else {
-            return
-        }
+		guard var storeProduct = storeProduct ?? lastProductOnVirtusizeWebView else {
+			return
+		}
 
-        let productId = storeProduct.id
+		let productId = storeProduct.id
 		if let product = serverStoreProductSet.filter({ product in
 			product.id == productId
-		   }).first {
+		}).first {
 			storeProduct = product
 		}
 
@@ -231,6 +231,7 @@ internal class VirtusizeRepository: NSObject {
 		let userSessionInfoResponse = try? await ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: ttl) {
 			await VirtusizeAPIService.getUserSessionInfoAsync()
 		}
+		hasSessionBodyMeasurement = userSessionInfoResponse?.success?.status.hasBodyMeasurement ?? false
 
 		if let sessionResponse = userSessionInfoResponse?.string {
 			userSessionResponse = sessionResponse

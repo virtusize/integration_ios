@@ -52,29 +52,13 @@ class WebViewController: UIViewController {
 		self.webView = webView
 
 		webView.translatesAutoresizingMaskIntoConstraints = false
-		if #available(iOS 11.0, *) {
-			let layoutGuide = view.safeAreaLayoutGuide
-			NSLayoutConstraint.activate([
-				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-				webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
-				webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
-			])
-		} else {
-			let views = ["webView": webView]
-			let verticalConstraints = NSLayoutConstraint.constraints(
-				withVisualFormat: "V:|-20-[webView]-0-|",
-				options: .alignAllTop,
-				metrics: nil,
-				views: views)
-			let horizontalConstraints = NSLayoutConstraint.constraints(
-				withVisualFormat: "|-0-[webView]-0-|",
-				options: .alignAllLeft,
-				metrics: nil,
-				views: views)
-
-			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
-		}
+		let layoutGuide = view.safeAreaLayoutGuide
+		NSLayoutConstraint.activate([
+			webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+			webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+			webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+			webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+		])
 
 		webView.load(URLRequest(url: URL(string: "https://demo.virtusize.com")!))
 	}

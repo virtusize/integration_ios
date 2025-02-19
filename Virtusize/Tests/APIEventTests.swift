@@ -52,8 +52,8 @@ class APIEventTests: XCTestCase {
                        UIDevice.current.orientation.isLandscape ? "landscape" : "portrait"
         )
         XCTAssertEqual(payloadJson?["browserResolution"], "\(Int(screenSize.height))x\(Int(screenSize.width))")
-        XCTAssertEqual(payloadJson?["integrationVersion"], "2.8.1")
-        XCTAssertEqual(payloadJson?["snippetVersion"], "2.8.1")
+        XCTAssertEqual(payloadJson?["integrationVersion"], "2.9.0")
+        XCTAssertEqual(payloadJson?["snippetVersion"], "2.9.0")
     }
 
     func testAPIEvent_alignProductCheckDataContext_hasExpectedPayload() {
