@@ -30,8 +30,8 @@ class GoogleAPIService: APIService {
 	///
 	/// - Parameter accessToken: The access token
 	/// - Returns: A `APIResult` containing the user's Google account information
-	static func getUserInfoAsync(accessToken: String) -> APIResult<GoogleUser> {
+	static func getUserInfoAsync(accessToken: String) async -> APIResult<GoogleUser> {
 		let request = APIRequest.getGoogleUser(accessToken: accessToken)
-		return getAPIResultAsync(request: request, type: GoogleUser.self)
+		return await getAPIResultAsync(request: request, type: GoogleUser.self)
 	}
 }

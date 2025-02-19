@@ -26,19 +26,19 @@
 /// The protocol that all SNS Auth providers must conform to.
 protocol VirtusizeAuthProvider {
 	/// Gets the user's information from the provider with an access token.
-	func getUserInfo(accessToken: String) -> VirtusizeUser?
+	func getUserInfo(accessToken: String) async -> VirtusizeUser?
 }
 
 /// Facebook Auth Provider
 class FacebookAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) -> VirtusizeUser? {
-		return FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
+	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
+		return await FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
 	}
 }
 
 /// Google Auth Provider
 class GoogleAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) -> VirtusizeUser? {
-		return GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
+		return await GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
 	}
 }

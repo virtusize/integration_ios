@@ -28,52 +28,52 @@ import Testing
 
 struct ExpiringCacheTests {
 	init() async {
-		ExpiringCache.shared.clearAll()
+		await ExpiringCache.shared.clearAll()
 	}
 
-	@Test func returnEmptySync() {
-		let result = ExpiringCache.shared.get("foo")
+	@Test func returnEmptySync() async throws {
+		let result = try await ExpiringCache.shared.get("foo")
 		#expect(result == nil)
 	}
 
-	@Test func hitCachedSync() {
-		ExpiringCache.shared.set("bar", forKey: "foo")
-		let result: String? = ExpiringCache.shared.get("foo")
+	@Test func hitCachedSync() async throws {
+		await ExpiringCache.shared.set("bar", forKey: "foo")
+		let result: String? = try await ExpiringCache.shared.get("foo")
 		#expect(result == "bar")
 	}
 
-	@Test func hitCached() {
-		ExpiringCache.shared.set("bar", forKey: "foo")
-		let result = ExpiringCache.shared.getOrFetch("foo", ttl: 1) {
-			return "baz"
+	@Test func hitCached() async throws {
+		await ExpiringCache.shared.set("bar", forKey: "foo")
+		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: 1) {
+			"baz"
 		}
 		#expect(result == "bar")
 	}
 
 	@Test func fetchExpired() async throws {
 		// put task in cache queue
-		_ = ExpiringCache.shared.getOrFetch("foo", ttl: 1) {
-			return "bar"
+		async let _ = ExpiringCache.shared.getOrFetch("foo", ttl: 1) {
+			"bar"
 		}
 
 		try await Task.sleep(nanoseconds: 50 * 1000_000) // wait for 50 ms - let some time pass
 
-		let result = ExpiringCache.shared.getOrFetch("foo", ttl: 0) {
-			return "baz"
+		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: 0) {
+			"baz"
 		}
 		#expect(result == "baz")
 	}
 
-	@Test func fetchWhenEmpty() {
-		let result = ExpiringCache.shared.getOrFetch("foo", ttl: .short) {
-			return "bar"
+	@Test func fetchWhenEmpty() async throws {
+		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: .short) {
+			"bar"
 		}
 		#expect(result == "bar")
 	}
 
-	@Test func typeMismatch() {
-		ExpiringCache.shared.set(1, forKey: "foo")
-		let result = ExpiringCache.shared.getOrFetch("foo", ttl: .short) {
+	@Test func typeMismatch() async throws {
+		await ExpiringCache.shared.set(1, forKey: "foo")
+		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: .short) {
 			return "bar"
 		}
 		#expect(result == nil)
