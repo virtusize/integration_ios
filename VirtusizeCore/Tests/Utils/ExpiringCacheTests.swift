@@ -52,13 +52,13 @@ struct ExpiringCacheTests {
 
 	@Test func fetchExpired() async throws {
 		// put task in cache queue
-		async let _ = ExpiringCache.shared.getOrFetch("foo", ttl: 1) {
+		async let _ = ExpiringCache.shared.getOrFetch("foo", ttl: .short) {
 			"bar"
 		}
 
-		try await Task.sleep(nanoseconds: 50 * 1000_000) // wait for 50 ms - let some time pass
+		try await Task.sleep(nanoseconds: 50_000_000) // 50ms
 
-		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: 0) {
+		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: .zero) {
 			"baz"
 		}
 		#expect(result == "baz")

@@ -45,22 +45,21 @@ class VirtusizeAPIService: APIService {
 	/// - Parameters:
 	///   - product: `VirtusizeProduct` whose image needs to be sent to the Virtusize server
 	///   - storeId: An integer that represents the store id from the product data
-	///   - completion: A callback to pass the value of `JSONObject` back when the request is successful
+	/// - Returns: `JSONObject` for successful reponse, otherwise nil
 	internal static func sendProductImage(
 		of product: VirtusizeProduct,
-		forStore storeId: Int,
-		completion completionHandler: ((JSONObject?) -> Void)? = nil
-	) {
+		forStore storeId: Int
+	) async -> JSONObject? {
 		guard let request = try? APIRequest.sendProductImage(of: product, forStore: storeId) else {
-			return
+			return nil
 		}
-		VirtusizeAPIService.perform(request, completion: { data in
-			guard let data = data else {
-				return
-			}
-			let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
-			completionHandler?(jsonObject)
-		})
+
+		let response = await VirtusizeAPIService.performAsync(request)
+		guard response.virtusizeError == nil, let data = response.data else {
+			// failed to perform request
+			return nil
+		}
+		return try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 	}
 
 	/// The API request for logging an event and sending it to the Virtusize server
@@ -68,22 +67,21 @@ class VirtusizeAPIService: APIService {
 	/// - Parameters:
 	///   - event: An event to be sent to the Virtusize server
 	///   - context: The product data from the response of the `productCheck` request
-	///   - completionHandler: A callback to pass `JSONObject` back when an API request is successful
+	/// - Returns: `JSONObject` for successful reponse, otherwise nil
 	internal static func sendEvent(
 		_ event: VirtusizeEvent,
-		withContext context: JSONObject? = nil,
-		completion completionHandler: ((JSONObject?) -> Void)? = nil
-	) {
+		withContext context: JSONObject? = nil
+	) async -> JSONObject? {
 		guard let request = APIRequest.sendEvent(event, withContext: context) else {
-			return
+			return nil
 		}
-		VirtusizeAPIService.perform(request, completion: { data in
-			guard let data = data else {
-				return
-			}
-			let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
-			completionHandler?(jsonObject)
-		})
+
+		let response = await VirtusizeAPIService.performAsync(request)
+		guard response.virtusizeError == nil, let data = response.data else {
+			// failed to perform request
+			return nil
+		}
+		return try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 	}
 
 	/// The API request for retrieving the specific store info from the API key
