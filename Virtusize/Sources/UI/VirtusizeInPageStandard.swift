@@ -51,14 +51,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	private var views: [String: UIView] = [:]
 	private var metrics: [String: CGFloat] = [:]
 	private var allConstraints: [NSLayoutConstraint] = []
-	private let inPageStandardView: UIView = UIView()
+	internal let inPageStandardView: UIView = UIView()
 	private let vsIconImageView: UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
 	private let userProductImageView: VirtusizeProductImageView = VirtusizeProductImageView()
 	private let storeProductImageView: VirtusizeProductImageView = VirtusizeProductImageView()
 	private let messageStackView: UIStackView = UIStackView()
 	private let topMessageLabel: UILabel = UILabel()
 	private let bottomMessageLabel: UILabel = UILabel()
-	private let checkSizeButton: UIButton = UIButton()
+	internal let checkSizeButton: UIButton = UIButton()
 	private let vsSignatureImageView: UIImageView = UIImageView()
 	private let privacyPolicyLink: UILabel = UILabel()
 	private let errorImageView: UIImageView = UIImageView()

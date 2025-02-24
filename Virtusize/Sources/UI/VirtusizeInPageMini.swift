@@ -57,8 +57,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	private let verticalMargin: CGFloat = 5
 
 	private let inPageMiniImageView: UIImageView = UIImageView()
-	private let inPageMiniMessageLabel: UILabel = UILabel()
-	private let inPageMiniSizeCheckButton: UIButton = UIButton()
+	internal let inPageMiniMessageLabel: UILabel = UILabel()
+	internal let inPageMiniSizeCheckButton: UIButton = UIButton()
 
 	internal override func setup() {
 		addSubviews()
