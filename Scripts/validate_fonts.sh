@@ -87,7 +87,6 @@ prepare_strings() {
 
   # remote store specific texts
   for store_name in "${SUPPORTED_STORE_NAMES[@]}"; do
-    echo $store_name
     curl "https://integration.virtusize.jp/staging/$store_name/customText.json" >> $text_file
   done
 }
