@@ -1,8 +1,8 @@
 //
-//  JSON+Exensions.swift
+//  I18nFixtures.swift
 //  Virtusize
 //
-//  Copyright (c) 2025 Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +23,53 @@
 //  THE SOFTWARE.
 //
 
-internal extension JSONObject {
-	mutating func deepMerge(source: JSONObject) {
-		for (key, value) in source {
-			if let newJson = value as? JSONObject, let existingJson = self[key] as? JSONObject {
-				// update
-				var mergedDict = existingJson
-				mergedDict.deepMerge(source: newJson)
-				self[key] = mergedDict
-			} else if let newArray = value as? [Any], let existingArray = self[key] as? [Any] {
-				// attach
-				self[key] = existingArray + newArray
-			} else {
-				// set
-				self[key] = value
-			}
+extension TestFixtures {
+	static let i18nEN =
+"""
+{
+  "language": "en",
+  "apiVersion": "1.0.0",
+  "bundle": "aoyama",
+  "id": "aoyama.en",
+  "keys": {
+	"apps": {
+	  "aoyama": {
+		"inpage": {
+		  "bodydataEmpty": "Find your right size",
+		  "sizeCheck": "Show me",
+		  "willFitResult": "Your recommended size is "
 		}
+	  }
 	}
+  }
+}
+"""
+
+	static let storeI18n =
+"""
+{
+  "desktop": {
+	"ja": {
+	  "apps": {
+		"aoyama": {
+		  "inpage": {
+			"willFitResult": "あなたの体型に人気のサイズ"
+		  }
+		}
+	  }
+	}
+  },
+  "mobile": {
+	"ja": {
+	  "apps": {
+		"aoyama": {
+		  "inpage": {
+			"willFitResult": "あなたの体型に人気のサイズ"
+		  }
+		}
+	  }
+	}
+  }
+}
+"""
 }

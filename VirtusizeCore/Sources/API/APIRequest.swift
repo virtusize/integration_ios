@@ -26,7 +26,7 @@
 import Foundation
 
 public typealias JSONObject = [String: Any]
-public typealias JSONArray = [JSONObject]
+internal typealias JSONArray = [JSONObject]
 
 /// This enum contains supported HTTP request methods
 public enum APIMethod: String {

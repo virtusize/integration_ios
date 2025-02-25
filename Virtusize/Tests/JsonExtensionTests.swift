@@ -1,5 +1,5 @@
 //
-//  JSON+Exensions.swift
+//  JsonExtensionTests.swift
 //  Virtusize
 //
 //  Copyright (c) 2025 Virtusize KK
@@ -23,21 +23,31 @@
 //  THE SOFTWARE.
 //
 
-internal extension JSONObject {
-	mutating func deepMerge(source: JSONObject) {
-		for (key, value) in source {
-			if let newJson = value as? JSONObject, let existingJson = self[key] as? JSONObject {
-				// update
-				var mergedDict = existingJson
-				mergedDict.deepMerge(source: newJson)
-				self[key] = mergedDict
-			} else if let newArray = value as? [Any], let existingArray = self[key] as? [Any] {
-				// attach
-				self[key] = existingArray + newArray
-			} else {
-				// set
-				self[key] = value
-			}
-		}
+import Testing
+@testable import Virtusize
+
+struct JsonExtensionTests {
+	@Test func addNew() {
+		var json: JSONObject = ["a": 1]
+		json.deepMerge(source: ["b": 2])
+		#expect(json as NSDictionary == ["a": 1, "b": 2])
+	}
+
+	@Test func updateExisting() {
+		var json: JSONObject = ["a": 1]
+		json.deepMerge(source: ["a": 2])
+		#expect(json as NSDictionary == ["a": 2])
+	}
+
+	@Test func updateDeepObject() {
+		var json: JSONObject = ["a": 1, "b": ["c": 2, "d": 3]]
+		json.deepMerge(source: ["b": ["c": 4]])
+		#expect(json as NSDictionary == ["a": 1, "b": ["c": 4, "d": 3]])
+	}
+
+	@Test func mergeArrays() {
+		var json: JSONObject = ["a": [1, 2]]
+		json.deepMerge(source: ["a": [3]])
+		#expect(json as NSDictionary == ["a": [1, 2, 3]])
 	}
 }

@@ -191,10 +191,10 @@ class VirtusizeAPIService: APIService {
 	/// The API request for getting i18n localization texts
 	///
 	/// - Returns: the i18 localization texts as JSON object
-	internal static func getI18nAsync() async -> APIResult<JSONObject> {
-		guard let virtusizeParams = Virtusize.params,
+	internal static func getI18nAsync(language: VirtusizeLanguage? = nil) async -> APIResult<JSONObject> {
+		guard let lang = language ?? Virtusize.params?.language,
 			  let request = APIRequest.getI18n(
-				langCode: virtusizeParams.language.rawValue
+				langCode: lang.rawValue
 			  ) else {
 			return .failure(nil)
 		}

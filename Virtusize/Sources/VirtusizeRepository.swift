@@ -346,8 +346,8 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	/// Fetch i18n Localization as a merge of shared i18n texts and the store specific texts
 	///
 	/// - Returns: `VirtusizeI18nLocalization` if loaded successfully
-	internal func fetchLocalization() async -> VirtusizeI18nLocalization? {
-		async let i18nTask = VirtusizeAPIService.getI18nAsync()
+	internal func fetchLocalization(language: VirtusizeLanguage? = nil) async -> VirtusizeI18nLocalization? {
+		async let i18nTask = VirtusizeAPIService.getI18nAsync(language: language)
 
 		async let storeI18nTask: Task<APIResult<JSONObject>?, Error> = Task {
 			if store == nil {
@@ -389,8 +389,8 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 
 		let storeI18n = storeI18nResponse.success?["mobile"] as? JSONObject
-		if let lang = Virtusize.params?.language.rawValue,
-		   let langJson = storeI18n?[lang] as? JSONObject,
+		if let lang = language ?? Virtusize.params?.language,
+		   let langJson = storeI18n?[lang.rawValue] as? JSONObject,
 		   var i18nMergeRoot = i18nJson["keys"] as? JSONObject {
 
 			i18nMergeRoot.deepMerge(source: langJson)
@@ -399,4 +399,4 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 
 		return Deserializer.i18n(json: i18nJson)
 	}
-}
+} // swiftlint:disable:this file_length

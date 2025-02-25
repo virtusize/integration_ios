@@ -401,7 +401,8 @@ class VirtusizeAPIServiceTests: XCTestCase {
         )
 
         let task = Task {
-            actualI18nLocalization = await VirtusizeAPIService.getI18nTextsAsync().success
+            let i18nJson = await VirtusizeAPIService.getI18nAsync().success
+			actualI18nLocalization = Deserializer.i18n(json: i18nJson)
 			expectation.fulfill()
         }
 
@@ -563,51 +564,4 @@ class VirtusizeAPIServiceTests: XCTestCase {
 
 		XCTAssertEqual(result.first?.virtualItem?.inseam, 720)
 	}
-}
-
-extension VirtusizeAPIServiceTests {
-
-    typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
-
-    class MockURLSession: APISessionProtocol {
-
-        var request: URLRequest?
-        private let dataTask: MockTask
-
-        init(data: Data?, urlResponse: URLResponse?, error: Error?) {
-            dataTask = MockTask(
-				data: data,
-				urlResponse: urlResponse ?? HTTPURLResponse(
-					url: URL(string: "https://virtusize.com")!, statusCode: 200, httpVersion: nil, headerFields: [:]),
-				error: error
-			)
-        }
-
-        func dataTask(with request: URLRequest,
-                      completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-            self.request = request
-            dataTask.completionHandler = completionHandler
-            return dataTask
-        }
-    }
-
-    class MockTask: URLSessionDataTask, @unchecked Sendable {
-        private let data: Data?
-        private let urlResponse: URLResponse?
-        private let responseError: Error?
-
-        var completionHandler: CompletionHandler?
-
-        init(data: Data?, urlResponse: URLResponse?, error: Error?) {
-            self.data = data
-            self.urlResponse = urlResponse
-            self.responseError = error
-        }
-
-        override func resume() {
-            DispatchQueue.main.async {
-                self.completionHandler?(self.data, self.urlResponse, self.responseError)
-            }
-        }
-    }
 } // swiftlint:disable:this file_length
