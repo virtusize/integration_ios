@@ -118,12 +118,19 @@ public final class VirtusizeWebViewController: UIViewController {
 			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
 		}
 
-        // If the request is invalid, the controller should be dismissed
-        guard let request = getWebViewURL() else {
-            reportError(error: .invalidRequest)
-            return
-        }
-		webView.load(request)
+		loadUrl()
+	}
+
+	@MainActor
+	private func loadUrl() {
+		Task {
+			// If the request is invalid, the controller should be dismissed
+			guard let request = await getWebViewURL() else {
+				reportError(error: .invalidRequest)
+				return
+			}
+			webView?.load(request)
+		}
 	}
 
 	// MARK: Rotation Lock
@@ -146,11 +153,11 @@ public final class VirtusizeWebViewController: UIViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
-    private func getWebViewURL() -> URLRequest? {
+    private func getWebViewURL() async -> URLRequest? {
         if let productStoreId = product?.productCheckData?.storeId, StoreId(value: productStoreId).isUnitedArrows {
             return APIRequest.virtusizeWebViewForSpecificClients()
         } else {
-            guard let version = VirtusizeAPIService.fetchLatestAoyamaVersion().success else {
+            guard let version = await VirtusizeAPIService.fetchLatestAoyamaVersion().success else {
                 return nil
             }
             return APIRequest.virtusizeWebView(version: version)
@@ -168,8 +175,8 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return
 		}
 		webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
-        if let showSNSButtons = Virtusize.params?.showSNSButtons, showSNSButtons {
-            webView.evaluateJavaScript("window.virtusizeSNSEnabled = true;", completionHandler: nil)
+        if let showSNSButtons = Virtusize.params?.showSNSButtons {
+            webView.evaluateJavaScript("window.virtusizeSNSEnabled = \(showSNSButtons);", completionHandler: nil)
         }
 		checkAndUpdateBrowserID()
 	}

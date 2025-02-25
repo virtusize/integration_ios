@@ -8,7 +8,7 @@ env:
   COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
 jobs:
-  build:
+  release:
     runs-on: macos-latest
 
     steps:

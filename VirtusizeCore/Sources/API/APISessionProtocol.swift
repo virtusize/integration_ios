@@ -43,3 +43,22 @@ protocol APISessionProtocol {
 		completionHandler: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void)
 	-> URLSessionDataTask
 }
+
+extension APISessionProtocol {
+	/// Convenience method to load data using a URLRequest, creates and resumes a URLSessionDataTask internally.
+	///
+	/// - Parameter request: The URLRequest for which to load data.
+	/// - Returns: Data and response.
+	public func data(for request: URLRequest) async throws -> (Data, URLResponse) {
+		return try await withCheckedThrowingContinuation { continuation in
+			let task = dataTask(with: request, completionHandler: { data, response, error in
+				if let error = error {
+					continuation.resume(throwing: error)
+				} else {
+					continuation.resume(returning: (data!, response!))
+				}
+			})
+			task.resume()
+		}
+	}
+}

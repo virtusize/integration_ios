@@ -128,8 +128,8 @@ class APIEndpointsTests: XCTestCase {
     func testStoreProductsEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.storeProducts(productId: 7110384)
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
-        XCTAssertEqual(endpoint.components.path, "/a/api/v3/store-products/7110384")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/stg/a/api/v3/store-products/7110384")
 
         XCTAssertEqual(endpoint.components.queryItems?.count, 1)
 
@@ -150,8 +150,8 @@ class APIEndpointsTests: XCTestCase {
     func testProductTypesEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.productTypes
 
-        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
-        XCTAssertEqual(endpoint.components.path, "/a/api/v3/product-types")
+        XCTAssertEqual(endpoint.components.host, "services.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/stg/a/api/v3/product-types")
 
         XCTAssertNil(endpoint.components.queryItems)
     }

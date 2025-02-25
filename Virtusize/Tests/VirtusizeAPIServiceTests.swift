@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
 import XCTest
 @testable import Virtusize
 @testable import VirtusizeCore
@@ -35,49 +36,35 @@ class VirtusizeAPIServiceTests: XCTestCase {
         Virtusize.environment = .STAGING
     }
 
-    func testFetchLatestAoyamaVersion() throws {
+    func testFetchLatestAoyamaVersion() async throws {
 		throw XCTSkip("AoyamaVersion changes too often. Temporary disable. TODO: refactor the approach")
 
         let expectation = self.expectation(description: "Virtusize.fetchLatestAoyamaVersion reaches the callback")
         var actualVersion: String?
-        DispatchQueue.global().async {
-
-            actualVersion = VirtusizeAPIService.fetchLatestAoyamaVersion().success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualVersion = await VirtusizeAPIService.fetchLatestAoyamaVersion().success
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualVersion, VirtusizeConfiguration.defaultAoyamaVersion)
     }
 
-    func testProductCheck_hasExpectedCallbackData() {
+    func testProductCheck_hasExpectedCallbackData() async {
         let expectation = self.expectation(description: "Virtusize.productCheck reaches the callback")
         var actualProduct: VirtusizeProduct?
         VirtusizeAPIService.session = MockURLSession(data: TestFixtures.productCheckJsonResponse.data(using: .utf8),
                                                      urlResponse: nil,
                                                      error: nil)
-        DispatchQueue.global().async {
-
-            actualProduct = VirtusizeAPIService.productCheckAsync(product: TestFixtures.virtusizeProduct).success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualProduct = await VirtusizeAPIService.productCheckAsync(product: TestFixtures.virtusizeProduct).success
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         let productCheckData = actualProduct?.productCheckData
 
@@ -92,23 +79,20 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(productCheckData?.validProduct, true)
     }
 
-    func testSendProductImage_hasExpectedCallbackData() {
+    func testSendProductImage_hasExpectedCallbackData() async {
         let expectation = self.expectation(description: "Virtusize.sendProductImage reaches the callback")
         var actualObject: JSONObject?
         VirtusizeAPIService.session = MockURLSession(
 			data: TestFixtures.productMetaDataHintsJsonResponse.data(using: .utf8),
 			urlResponse: nil,
 			error: nil)
-        VirtusizeAPIService.sendProductImage(of: TestFixtures.virtusizeProduct, forStore: 2) { jsonObject in
-            actualObject = jsonObject
-            expectation.fulfill()
-        }
+		let task = Task {
+			actualObject = await VirtusizeAPIService.sendProductImage(of: TestFixtures.virtusizeProduct, forStore: 2)
+			expectation.fulfill()
+		}
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualObject?["apiKey"] as? String ?? "", Virtusize.APIKey)
         XCTAssertTrue(actualObject?["cloudinaryPublicId"] is String)
@@ -116,7 +100,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(actualObject?["imageUrl"] as? String ?? "", TestFixtures.productImageUrl)
     }
 
-    func testSendEvent_UserSawProduct_hasExpectedCallbackData() {
+    func testSendEvent_UserSawProduct_hasExpectedCallbackData() async {
         let expectation = self.expectation(description: "Virtusize.sendEvent reaches the callback")
         var actualObject: JSONObject?
         VirtusizeAPIService.session = MockURLSession(
@@ -125,51 +109,41 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        VirtusizeAPIService.sendEvent(
-            VirtusizeEvent(name: "user-saw-product",
-                           data: nil),
-            withContext: nil) { jsonObject in
-                actualObject = jsonObject
-                expectation.fulfill()
-            }
+		let task = Task {
+			actualObject = await VirtusizeAPIService.sendEvent(
+				VirtusizeEvent(name: "user-saw-product",
+							   data: nil),
+				withContext: nil)
+			expectation.fulfill()
+		}
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualObject?["apiKey"] as? String ?? "", Virtusize.APIKey)
         XCTAssertEqual(actualObject?["browserId"] as? String ?? "", TestFixtures.browserID)
         XCTAssertEqual(actualObject?["name"] as? String ?? "", "user-saw-product")
     }
 
-    func testRetrieveFullStoreInfo_success_hasExpectedRegion() {
+    func testRetrieveFullStoreInfo_success_hasExpectedRegion() async {
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualRegion: String?
         VirtusizeAPIService.session = MockURLSession(data: TestFixtures.fullStoreInfoJsonResponse.data(using: .utf8),
                                                      urlResponse: nil,
                                                      error: nil)
 
-        DispatchQueue.global().async {
-
-            actualRegion = VirtusizeAPIService.retrieveStoreInfoAsync().success?.region
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualRegion = await VirtusizeAPIService.retrieveStoreInfoAsync().success?.region
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualRegion ?? "", "KR")
     }
 
-    func testRetrieveStoreInfoWithSomeNullValues_success_hasExpectedRegion() {
+    func testRetrieveStoreInfoWithSomeNullValues_success_hasExpectedRegion() async {
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualRegion: String?
         VirtusizeAPIService.session = MockURLSession(
@@ -177,25 +151,18 @@ class VirtusizeAPIServiceTests: XCTestCase {
             urlResponse: nil,
             error: nil)
 
-        DispatchQueue.global().async {
-
-            actualRegion = VirtusizeAPIService.retrieveStoreInfoAsync().success?.region
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualRegion = await VirtusizeAPIService.retrieveStoreInfoAsync().success?.region
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualRegion, nil)
     }
 
-    func testRetrieveStoreInfo_withWrongAPIKey_hasExpectedError() {
+    func testRetrieveStoreInfo_withWrongAPIKey_hasExpectedError() async {
         Virtusize.APIKey = "wrongAPIKey"
         let expectation = self.expectation(description: "Virtusize.retrieveStoreInfo reaches the callback")
         var actualError: VirtusizeError?
@@ -209,20 +176,13 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualError = VirtusizeAPIService.retrieveStoreInfoAsync().failure
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualError = await VirtusizeAPIService.retrieveStoreInfoAsync().failure
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertNotNil(actualError)
         XCTAssertEqual(
@@ -233,36 +193,29 @@ class VirtusizeAPIServiceTests: XCTestCase {
         )
     }
 
-    func testSendOrder_withValidOrder_hasSuccessCallback() {
+    func testSendOrder_withValidOrder_hasSuccessCallback() async {
         let expectation = self.expectation(description: "Virtusize.sendOrder reaches the callback")
         var isSuccessful: Bool = false
 
-        VirtusizeAPIService.session = MockURLSession(data: nil,
+		VirtusizeAPIService.session = MockURLSession(data: Data(),
                                                      urlResponse: nil,
                                                      error: nil)
 
         TestFixtures.virtusizeOrder.externalUserId = "123"
         TestFixtures.virtusizeOrder.region = "JP"
 
-        DispatchQueue.global().async {
-
-            isSuccessful = VirtusizeAPIService.sendOrderWithRegionAsync(TestFixtures.virtusizeOrder).isSuccessful
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            isSuccessful = await VirtusizeAPIService.sendOrderWithRegionAsync(TestFixtures.virtusizeOrder).isSuccessful
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertTrue(isSuccessful)
     }
 
-    func testGetStoreProductInfo_withValidProductId_hasExpectedStoreProduct() {
+    func testGetStoreProductInfo_withValidProductId_hasExpectedStoreProduct() async {
         let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
         var actualStoreProduct: VirtusizeServerProduct?
 
@@ -272,20 +225,14 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualStoreProduct = VirtusizeAPIService.getStoreProductInfoAsync(productId: TestFixtures.productId).success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualStoreProduct = await VirtusizeAPIService.getStoreProductInfoAsync(
+				productId: TestFixtures.productId).success
+			expectation.fulfill()
         }
 
-        self.waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualStoreProduct?.id, TestFixtures.productId)
         XCTAssertEqual(actualStoreProduct?.sizes.count, 3)
@@ -302,7 +249,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(actualStoreProduct?.storeProductMeta?.additionalInfo?.brandSizing?.compare, "large")
     }
 
-    func testGetStoreProductInfo_productNotFound_hasExpectedErrorMessage() {
+    func testGetStoreProductInfo_productNotFound_hasExpectedErrorMessage() async {
         let storeProductId = 123456789
         let storeProductUrl = "https://staging.virtusize.com/a/api/v3/store-products/\(storeProductId)?format=json"
         let notFoundURLResponse = HTTPURLResponse(url: URL(string: storeProductUrl)!,
@@ -319,26 +266,19 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            virtusizeError = VirtusizeAPIService.getStoreProductInfoAsync(productId: storeProductId).failure
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            virtusizeError = await VirtusizeAPIService.getStoreProductInfoAsync(productId: storeProductId).failure
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertNotNil(virtusizeError?.debugDescription)
         XCTAssertTrue(virtusizeError!.debugDescription.contains(TestFixtures.notFoundResponse))
     }
 
-    func testGetUserProducts_hasExpectedUserProductList() {
+    func testGetUserProducts_hasExpectedUserProductList() async {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
         var actualUserProductList: [VirtusizeServerProduct]?
 
@@ -348,20 +288,13 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualUserProductList = VirtusizeAPIService.getUserProductsAsync().success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualUserProductList = await VirtusizeAPIService.getUserProductsAsync().success
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualUserProductList?.count, 2)
         XCTAssertEqual(actualUserProductList?[0].id, 123456)
@@ -383,7 +316,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(actualUserProductList?[1].isFavorite, true)
     }
 
-    func testGetUserProducts_userHasAnEmptyWardrobe_hasExpectedEmptyUserProductList() {
+    func testGetUserProducts_userHasAnEmptyWardrobe_hasExpectedEmptyUserProductList() async {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
         var actualUserProductList: [VirtusizeServerProduct]?
 
@@ -393,25 +326,18 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualUserProductList = VirtusizeAPIService.getUserProductsAsync().success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualUserProductList = await VirtusizeAPIService.getUserProductsAsync().success
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualUserProductList?.count, 0)
     }
 
-    func testGetUserProducts_userWardrobeDoesNotExist_return404Error() {
+    func testGetUserProducts_userWardrobeDoesNotExist_return404Error() async {
         let expectation = self.expectation(description: "Virtusize.getUserProducts reaches the callback")
         var actualError: VirtusizeError?
 
@@ -427,26 +353,19 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualError = VirtusizeAPIService.getUserProductsAsync().failure
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualError = await VirtusizeAPIService.getUserProductsAsync().failure
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertNotNil(actualError)
         XCTAssertTrue(actualError!.debugDescription.contains("{\"detail\": \"No wardrobe found\"}"))
     }
 
-    func testGetProductTypes_hasExpectedProductTypes() {
+    func testGetProductTypes_hasExpectedProductTypes() async {
         let expectation = self.expectation(description: "Virtusize.getStoreProductInfo reaches the callback")
         var actualProductTypes: [VirtusizeProductType] = []
 
@@ -456,20 +375,13 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualProductTypes = VirtusizeAPIService.getProductTypesAsync().success ?? []
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualProductTypes = await VirtusizeAPIService.getProductTypesAsync().success ?? []
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualProductTypes.count, 4)
         XCTAssertEqual(actualProductTypes[0].id, 1)
@@ -478,7 +390,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertEqual(actualProductTypes[3].weights, ["depth": 1, "width": 2, "height": 1])
     }
 
-    func testGetI18nTexts_hasExpectedI18nLocalization() {
+    func testGetI18nTexts_hasExpectedI18nLocalization() async {
         let expectation = self.expectation(description: "Virtusize.getI18nTexts reaches the callback")
         var actualI18nLocalization: VirtusizeI18nLocalization?
 
@@ -488,20 +400,13 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualI18nLocalization = VirtusizeAPIService.getI18nTextsAsync().success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualI18nLocalization = await VirtusizeAPIService.getI18nTextsAsync().success
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         let localizedLang = VirtusizeLanguage.KOREAN
 
@@ -515,7 +420,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         )
     }
 
-    func testGetUserBodyProfile_whenRecieveValidUserBodyProfile_hasExpectedUserBodyProfile() {
+    func testGetUserBodyProfile_whenRecieveValidUserBodyProfile_hasExpectedUserBodyProfile() async {
         let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
         var actualUserBodyProfile: VirtusizeUserBodyProfile?
 
@@ -525,20 +430,13 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualUserBodyProfile = VirtusizeAPIService.getUserBodyProfileAsync().success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualUserBodyProfile = await VirtusizeAPIService.getUserBodyProfileAsync().success
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertEqual(actualUserBodyProfile?.gender, "female")
         XCTAssertEqual(actualUserBodyProfile?.age, 32)
@@ -572,7 +470,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         )
     }
 
-    func testGetUserBodyProfile_whenRecieveEmptyUserBodyProfile_hasExpectedUserBodyProfile() {
+    func testGetUserBodyProfile_whenRecieveEmptyUserBodyProfile_hasExpectedUserBodyProfile() async {
         let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
         var actualUserBodyProfile: VirtusizeUserBodyProfile?
 
@@ -582,20 +480,13 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualUserBodyProfile = VirtusizeAPIService.getUserBodyProfileAsync().success
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualUserBodyProfile = await VirtusizeAPIService.getUserBodyProfileAsync().success
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertNotNil(actualUserBodyProfile)
         XCTAssertEqual(actualUserBodyProfile?.gender, "")
@@ -605,7 +496,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         XCTAssertNil(actualUserBodyProfile?.bodyData)
     }
 
-    func testGetUserBodyProfile_userWardrobeDoesNotExist_return404Error() {
+    func testGetUserBodyProfile_userWardrobeDoesNotExist_return404Error() async {
         let expectation = self.expectation(description: "Virtusize.getUserBodyProfile reaches the callback")
         var actualError: VirtusizeError?
 
@@ -621,26 +512,19 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-
-            actualError = VirtusizeAPIService.getUserBodyProfileAsync().failure
-
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+        let task = Task {
+            actualError = await VirtusizeAPIService.getUserBodyProfileAsync().failure
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertNotNil(actualError)
         XCTAssertTrue(actualError!.debugDescription.contains("{\"detail\": \"No wardrobe found\"}"))
     }
 
-    func testGetUserBodyRecommendedSize() {
+    func testGetUserBodyRecommendedSize() async {
         let expectation = self.expectation(description: "Virtusize.getUserBodyRecommendedSize reaches the callback")
         var actualRecommendedSizes: BodyProfileRecommendedSizeArray?
 
@@ -650,27 +534,35 @@ class VirtusizeAPIServiceTests: XCTestCase {
             error: nil
         )
 
-        DispatchQueue.global().async {
-            actualRecommendedSizes = VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
+        let task = Task {
+            actualRecommendedSizes = await VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
                 productTypes: TestFixtures.getProductTypes(),
                 storeProduct: TestFixtures.getStoreProduct(gender: "female")!,
                 userBodyProfile: TestFixtures.getUserBodyProfile()!
             ).success
 
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
+			expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 5) { error in
-            if let error = error {
-                XCTFail("waitForExpectations error: \(error)")
-            }
-        }
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
 
         XCTAssertNotNil(actualRecommendedSizes)
         XCTAssertEqual(actualRecommendedSizes?.first?.sizeName, "35")
     }
+
+	func testGetUserBodyRecommendedSize_inseamAsNumber() throws {
+		let json =
+		// swiftlint:disable line_length
+"""
+[{"extProductId":"vs_pants","virtualItem":{"bust":null,"inseam":720.0,"sleeve":null}, "willFitForSizes":{"32":true,"31":true},"silhouetteGapLabels":null}]
+"""
+		// swiftlint:enable line_length
+		let data = json.data(using: .utf8)!
+		let result = try JSONDecoder().decode(BodyProfileRecommendedSizeArray.self, from: data)
+
+		XCTAssertEqual(result.first?.virtualItem?.inseam, 720)
+	}
 }
 
 extension VirtusizeAPIServiceTests {
@@ -683,7 +575,12 @@ extension VirtusizeAPIServiceTests {
         private let dataTask: MockTask
 
         init(data: Data?, urlResponse: URLResponse?, error: Error?) {
-            dataTask = MockTask(data: data, urlResponse: urlResponse, error: error)
+            dataTask = MockTask(
+				data: data,
+				urlResponse: urlResponse ?? HTTPURLResponse(
+					url: URL(string: "https://virtusize.com")!, statusCode: 200, httpVersion: nil, headerFields: [:]),
+				error: error
+			)
         }
 
         func dataTask(with request: URLRequest,

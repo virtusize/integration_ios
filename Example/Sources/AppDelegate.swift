@@ -59,6 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			.setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
             // By default, Virtusize disables the SNS buttons
             .setShowSNSButtons(true)
+			// Target the specific environment branch by it's name
+			// .setBranch("branch-name")
 			.build()
 
 		return true

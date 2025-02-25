@@ -46,7 +46,7 @@ internal enum APIEndpoints {
     // MARK: - Properties
     var hostname: String {
 		switch self {
-		case .productCheck:
+		case .productCheck, .productTypes, .storeProducts:
 			return Virtusize.environment.servicesUrl()
 		case  .getSize:
 			return Virtusize.environment.getSizeUrl()
@@ -81,10 +81,24 @@ internal enum APIEndpoints {
 			components.path = "/a/aoyama/latest.txt"
 
 		case .virtusizeWebView(let version):
-			components.path = "/a/aoyama/\(version)/sdk-webview.html"
+			switch Virtusize.params?.branch {
+			case .none:
+				components.path = "/a/aoyama/\(version)/sdk-webview.html"
+			case .some("staging"):
+				components.path = "/a/aoyama/staging/sdk-webview.html"
+			case .some(let branch):
+				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
+			}
 
 		case .virtusizeWebViewForSpecificClients:
-			components.path = "/a/aoyama/testing/privacy-policy-phase2-vue/sdk-webview.html"
+			switch Virtusize.params?.branch {
+			case .none:
+				components.path = "/a/aoyama/testing/privacy-policy-phase2-vue/sdk-webview.html"
+			case .some("staging"):
+				components.path = "/a/aoyama/staging/sdk-webview.html"
+			case .some(let branch):
+				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
+			}
 
 		case .storeViewApiKey:
 			components.path = "/a/api/v3/stores/api-key/\(apiKey)"
@@ -94,11 +108,13 @@ internal enum APIEndpoints {
 			components.path = "/a/api/v3/orders"
 
 		case .storeProducts(let productId):
-			components.path = "/a/api/v3/store-products/\(productId)"
+			let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+			components.path = "\(envPathForServicesAPI)/a/api/v3/store-products/\(productId)"
 			components.queryItems = jsonFormatQueryItems()
 
 		case .productTypes:
-			components.path = "/a/api/v3/product-types"
+			let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+			components.path = "\(envPathForServicesAPI)/a/api/v3/product-types"
 
 		case .sessions:
 			components.path = "/a/api/v3/sessions"
