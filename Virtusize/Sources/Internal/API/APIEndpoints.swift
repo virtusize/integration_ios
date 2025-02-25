@@ -42,6 +42,7 @@ internal enum APIEndpoints {
 	case userBodyMeasurements
 	case getSize
 	case i18n(langCode: String)
+	case storeI18n(storeName: String)
 
     // MARK: - Properties
     var hostname: String {
@@ -56,6 +57,8 @@ internal enum APIEndpoints {
 			return Virtusize.environment.i18nUrl()
 		case .events:
 			return Virtusize.environment.eventApiUrl()
+		case .storeI18n:
+			return Virtusize.environment.integrationUrl()
 		default:
 			return Virtusize.environment.rawValue
 		}
@@ -133,8 +136,12 @@ internal enum APIEndpoints {
 
 		case .i18n(let langCode):
 			components.path = "/bundle-payloads/aoyama/\(langCode)"
-		}
 
+		case .storeI18n(let storeName):
+			let envPath = Virtusize.environment.isProdEnv ? "/production" : "/staging"
+			components.path = "\(envPath)/\(storeName)/customText.json"
+
+		}
         return components
     }
 

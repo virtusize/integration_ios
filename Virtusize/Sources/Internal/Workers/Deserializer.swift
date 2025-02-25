@@ -68,10 +68,21 @@ internal struct Deserializer {
 	/// - Parameter data: The data for the localization texts
 	/// - Returns: `VirtusizeI18nLocalization`
 	static func i18n(data: Data?) -> VirtusizeI18nLocalization {
-		let i18nLocalization = VirtusizeI18nLocalization()
 		guard let data = data,
 			  let rootObject = try? JSONSerialization.jsonObject(with: data, options: []),
-			  let root = rootObject as? JSONObject,
+			  let root = rootObject as? JSONObject else {
+			return VirtusizeI18nLocalization()
+		}
+		return i18n(json: root)
+	}
+
+	/// Decodes `VirtusizeI18nLocalization` from the JSON data
+	///
+	/// - Parameter json: The JSON data for the localization texts
+	/// - Returns: `VirtusizeI18nLocalization`
+	static func i18n(json: JSONObject?) -> VirtusizeI18nLocalization {
+		let i18nLocalization = VirtusizeI18nLocalization()
+		guard let root = json,
 			  let keysJSONObject = root["keys"] as? JSONObject,
 			  let appsJSONObject = keysJSONObject["apps"] as? JSONObject,
 			  let aoyamaJSONObject = appsJSONObject["aoyama"] as? JSONObject else {
@@ -95,7 +106,7 @@ internal struct Deserializer {
 		i18nLocalization.oneSizeWillFitResultText = inpageJSONObject?["oneSizeWillFitResult"] as? String
 		i18nLocalization.sizeComparisonMultiSizeText = multiSizeJSONObject?["sizeComparison"] as? String
 		i18nLocalization.willFitResultText = inpageJSONObject?["willFitResult"] as? String
-        i18nLocalization.willNotFitResultText = inpageJSONObject?["willNotFitResult"] as? String
+		i18nLocalization.willNotFitResultText = inpageJSONObject?["willNotFitResult"] as? String
 		i18nLocalization.bodyDataEmptyText = inpageJSONObject?["bodydataEmpty"] as? String
 
 		return i18nLocalization

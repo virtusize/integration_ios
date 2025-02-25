@@ -188,10 +188,10 @@ class VirtusizeAPIService: APIService {
 		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
 	}
 
-	/// The API request for getting i18 localization texts
+	/// The API request for getting i18n localization texts
 	///
-	/// - Returns: the i18 localization texts in the type of `VirtusizeI18nLocalization`
-	internal static func getI18nTextsAsync() async -> APIResult<VirtusizeI18nLocalization> {
+	/// - Returns: the i18 localization texts as JSON object
+	internal static func getI18nAsync() async -> APIResult<JSONObject> {
 		guard let virtusizeParams = Virtusize.params,
 			  let request = APIRequest.getI18n(
 				langCode: virtusizeParams.language.rawValue
@@ -206,7 +206,27 @@ class VirtusizeAPIService: APIService {
 			return .failure(apiResponse.code, apiResponse.virtusizeError)
 		}
 
-		return .success(Deserializer.i18n(data: data))
+		let json = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
+		return .success(json)
+	}
+
+	/// The API request for getting store specific i18n localization texts
+	///
+	/// - Returns: the i18 localization texts as JSON object
+	internal static func getStoreI18nAsync(storeName: String) async -> APIResult<JSONObject> {
+		guard let request = APIRequest.getStoreI18n(storeName: storeName) else {
+			return .failure(nil)
+		}
+
+		let apiResponse = await VirtusizeAPIService.performAsync(request)
+
+		guard apiResponse.virtusizeError == nil,
+			  let data = apiResponse.data else {
+			return .failure(apiResponse.code, apiResponse.virtusizeError)
+		}
+
+		let json = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
+		return .success(json)
 	}
 
 	// The API request for loading an image from a URL
