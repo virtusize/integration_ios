@@ -4,6 +4,7 @@ FONTS_DIR=./Virtusize/Sources/Resources/Fonts
 LOCALIZATION_DIR=./VirtusizeCore/Sources/Resources/Localizations
 TMP_DIR=./.build/tmp/font
 SKIP_CHARS=("0000c6d0") # skip '%' symbol, as it breaks the parsing
+SUPPORTED_STORE_NAMES=("united_arrows")
 BYPASS_CACHE=$RANDOM
 
 # Strategy:
@@ -73,6 +74,24 @@ validate_font_symbols() {
 
 }
 
+# Merge local strings with remote json-strings and use this merged file for validation
+prepare_strings() {
+  local language=$1
+  local text_file=$2
+
+  # local texts
+  cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
+
+  # shared remote i18n texts
+  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}?random=$BYPASS_CACHE" >> $text_file
+
+  # remote store specific texts
+  for store_name in "${SUPPORTED_STORE_NAMES[@]}"; do
+    echo $store_name
+    curl "https://integration.virtusize.jp/staging/$store_name/customText.json" >> $text_file
+  done
+}
+
 # Wrapper function 
 validate_font() {
   local font=$1
@@ -83,8 +102,7 @@ validate_font() {
 
   # Merge local strings with remote json-strings and use this merged file for validation
   local text_file="$TMP_DIR/strings_$language.txt"
-  cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
-  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}?random=$BYPASS_CACHE" >> $text_file
+  prepare_strings $language $text_file
 
   validate_font_symbols "$FONTS_DIR/$font" $text_file
 
