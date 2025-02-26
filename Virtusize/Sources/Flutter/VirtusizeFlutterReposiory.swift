@@ -107,8 +107,8 @@ public class VirtusizeFlutterRepository: NSObject {
 	}
 
 	public func getI18nLocalization() async -> VirtusizeI18nLocalization? {
-		let response = await VirtusizeAPIService.getI18nTextsAsync()
-		return response.isSuccessful ? response.success : nil
+		let response = await VirtusizeAPIService.getI18nAsync()
+		return response.isSuccessful ? Deserializer.i18n(json: response.success) : nil
 	}
 
 	public func getUserSessionResponse() async -> String? {

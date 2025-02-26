@@ -1,7 +1,8 @@
 //
-//  VirtusizeStore.swift
+//  I18nFixtures.swift
+//  Virtusize
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +23,53 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+extension TestFixtures {
+	static let i18nEN =
+"""
+{
+  "language": "en",
+  "apiVersion": "1.0.0",
+  "bundle": "aoyama",
+  "id": "aoyama.en",
+  "keys": {
+	"apps": {
+	  "aoyama": {
+		"inpage": {
+		  "bodydataEmpty": "Find your right size",
+		  "sizeCheck": "Show me",
+		  "willFitResult": "Your recommended size is "
+		}
+	  }
+	}
+  }
+}
+"""
 
-/// This structure represents the response of the request that retrieves the specific store info
-internal struct VirtusizeStore: Codable {
-	private let id: Int
-	private let surveyLink: String?
-	private let name: String
-	internal let shortName: String
-	private let lengthUnitId: Int
-	private let apiKey: String
-	private let created: String
-	private let updated: String
-	private let disabled: String?
-	private let typemapperEnabled: Bool
-	internal var region: String?
+	static let storeI18n =
+"""
+{
+  "desktop": {
+	"ja": {
+	  "apps": {
+		"aoyama": {
+		  "inpage": {
+			"willFitResult": "あなたの体型に人気のサイズ"
+		  }
+		}
+	  }
+	}
+  },
+  "mobile": {
+	"ja": {
+	  "apps": {
+		"aoyama": {
+		  "inpage": {
+			"willFitResult": "あなたの体型に人気のサイズ"
+		  }
+		}
+	  }
+	}
+  }
+}
+"""
 }
