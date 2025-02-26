@@ -64,25 +64,10 @@ internal class VirtusizeAuthStringHelper {
 	///	  - key: The key of the query parameter to update
 	///	  - value: The new value of the query parameter
 	internal static func updateQueryParameterTo(urlString: String, name: String, value: String) -> String {
-        guard var urlComponents = URLComponents(string: urlString) else {
+		guard let url = URL(string: urlString) else {
 			return urlString
 		}
-
-        var queryItems = urlComponents.queryItems ?? []
-
-        if let itemIndex = queryItems.firstIndex(where: { $0.name == name }) {
-			queryItems[itemIndex].value = value
-        } else {
-            queryItems.append(URLQueryItem(name: name, value: value))
-        }
-
-        urlComponents.queryItems = queryItems
-
-		guard let updateUrlString =  urlComponents.url?.absoluteString else {
-			return urlString
-		}
-
-		return updateUrlString
+		return url.addOrUpdate(name: name, value: value).absoluteString
 	}
 
     /// Removes the whole parameter from URL
@@ -106,6 +91,7 @@ internal class VirtusizeAuthStringHelper {
         return result
     }
 
+	/// Create Virtusize RedirectUrl based on the `region` and `env` params
 	internal static func getRedirectUrl(region: String?, env: String?) -> String {
 		return "https://static.api.virtusize.\(region ?? "com")/a/sns-proxy/\(env ?? "production")/sns-auth.html"
 	}

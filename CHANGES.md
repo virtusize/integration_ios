@@ -18,6 +18,7 @@ Use list notation, and following prefixes:
 - Refactor: Introduce Swift async/await usage
 - Feature: Load and apply store specific i18n texts runtime
 - Feature: Build and validate fonts taking into account store specific i18n texts
+- Feature: Allow to specify custom branch for WebView-native apps
 
 ### 2.9.0
 - Feature: Allow to target specific testing environment by branch name `Virtusize.setTestingBranch("branch-name")`

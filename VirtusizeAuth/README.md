@@ -39,6 +39,16 @@ If both files (`AppDelegate` and `SceneDelegate`) are present, use `SceneDelegat
 2. If you have multiple app targets, add the URL type for all of them.
 
 
+### (Optional) Configure custom branch
+
+You can test custom environment branch by updating the URL loaded by a WebView:
+
+```Swift
+    let url = VirtusizeBranch.applyBranch(
+        to: URL(string: "https://demo.virtusize.com")!,
+ 	    branch: "branch-name")
+    webView.load(URLRequest(url: url))
+```
 
 # Enable SNS Login in Virtusize for Native Webview Apps
 
