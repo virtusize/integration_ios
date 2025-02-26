@@ -16,6 +16,7 @@ Use list notation, and following prefixes:
 ### Next Release
 - Refactor: Optimize product loading time by concurrent loading, memory cache and avoiding unecessary reloading of body measurements
 - Refactor: Introduce Swift async/await usage
+- Feature: Allow to specify custom branch for WebView-native apps
 
 ### 2.9.0
 - Feature: Allow to target specific testing environment by branch name `Virtusize.setTestingBranch("branch-name")`
