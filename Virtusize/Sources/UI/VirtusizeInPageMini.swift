@@ -49,8 +49,10 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	/// The function to set the horizontal margin between the edges of the app screen and the InPage Mini view
-	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
-		setHorizontalMargins(view: view, margin: margin)
+	public func setHorizontalMargin(view: UIView? = nil, margin: CGFloat) {
+		if let parent = view ?? superview {
+			setHorizontalMargins(view: parent, margin: margin)
+		}
 	}
 
 	private let messageAndButtonMargin: CGFloat = 8
@@ -236,5 +238,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			stopLoadingTextAnimation()
 		}
 		inPageMiniSizeCheckButton.isHidden = loading ? true: false
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
+		}
 	}
 }

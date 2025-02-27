@@ -54,10 +54,6 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	public func makeUIViewController(context: Context) -> VirtusizeWebViewController {
 		let repository = VirtusizeRepository.shared
 
-		// update last product
-
-		// fetch client product
-
 		repository.lastProductOnVirtusizeWebView = repository.serverStoreProductSet
 			.filter({ product in
 				product.externalId == clientProduct.externalId

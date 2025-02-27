@@ -26,7 +26,6 @@
 import SwiftUI
 
 #if (arch(arm64) || arch(x86_64))
-@available(iOS 13.0, *)
 public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 
 	private var product: VirtusizeProduct
@@ -72,16 +71,13 @@ public struct SwiftUIVirtusizeButton: UIViewRepresentable {
 			uiView.style = virtusizeDefaultStyle
 		}
 
-		if self.uiView != nil {
-			self.uiView!(uiView)
-		}
+		self.uiView?(uiView)
 
 		uiView.setContentHuggingPriority(.required, for: .horizontal)
 		uiView.setContentHuggingPriority(.required, for: .vertical)
 	}
 }
 
-@available(iOS 13.0, *)
 extension SwiftUIVirtusizeButton {
 	public class Coordinator {
 		var action: (() -> Void)?

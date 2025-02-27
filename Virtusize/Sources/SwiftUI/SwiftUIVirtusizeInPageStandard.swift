@@ -123,11 +123,11 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 			for: .touchUpInside
 		)
 
-		if self.uiView != nil {
-			self.uiView!(uiView)
+		if let uiViewConfig = self.uiView {
+			uiViewConfig(uiView)
 
 			if uiView.userSetMargin == 0 {
-//				uiView.setHorizontalMargin(margin: 0)
+				uiView.setHorizontalMargin(margin: 0)
 			}
 		}
 

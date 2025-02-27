@@ -85,8 +85,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	private(set) var bestFitUserProduct: VirtusizeServerProduct?
 
 	/// The function to set the horizontal margin between the edges of the app screen and the InPage Standard view
-	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
-		setHorizontalMargins(view: view, margin: margin)
+	public func setHorizontalMargin(view: UIView? = nil, margin: CGFloat) {
+		if let parent = view ?? superview {
+			setHorizontalMargins(view: parent, margin: margin)
+		}
 	}
 
 	deinit {
@@ -207,6 +209,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	private func finishLoading() {
 		setRecommendationTexts()
 		setLoadingScreen(loading: false)
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
+		}
 	}
 
 	private func addSubviews() {
@@ -578,6 +583,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 			)
 		} else {
 			stopLoadingTextAnimation()
+		}
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
 		}
 	}
 } // swiftlint:disable:this file_length

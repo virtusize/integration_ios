@@ -118,9 +118,7 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 			for: .touchUpInside
 		)
 
-		if uiKitView != nil {
-			uiKitView!(uiView)
-		}
+		uiKitView?(uiView)
 
 		uiView.setContentViewListener(listener: { view in
 			if let label = (view as? VirtusizeInPageMini)?.inPageMiniMessageLabel {

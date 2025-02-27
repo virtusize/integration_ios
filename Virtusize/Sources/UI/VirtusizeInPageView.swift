@@ -144,6 +144,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	internal func setup() {}
 
 	internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
+		userSetMargin = margin
 		view.addConstraint(
 			NSLayoutConstraint(
 				item: self,
