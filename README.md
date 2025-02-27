@@ -38,6 +38,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
   - [Virtusize InPage](#2-virtusize-inpage)
     - [InPage Standard](#2-inpage-standard)
     - [InPage Mini](#3-inpage-mini)
+- [SwiftUI](#swiftui)
 - [The Order API](#the-order-api)
   - [Initialization](#1-initialization)
   - [Create a _VirtusizeOrder_ structure for order data](#2-create-a-virtusizeorder-structure-for-order-data)
@@ -548,6 +549,215 @@ This is a mini version of InPage which can be placed in your application. The di
     - change the font.
     - change the CTA button shape.
     - change messages.
+
+
+## SwiftUI
+
+### 1. Set up the SDK in the App delegate's  `application(_:didFinishLaunchingWithOptions:)` method.
+
+Check the [Set Up](#1-initialization) section for the example code
+
+```Swift
+@main
+struct ExampleApp: App {
+	init() {
+		// Initialize Virtusize
+		Virtusize.APIKey = "api-key"
+		Virtusize.params = VirtusizeParamsBuilder()
+			// ... conifgure Virtusize parameters
+			.build()
+	}
+
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
+				.onOpenURL(perform: { url in
+          // Handle Virtusize SNS callback
+					_ = Virtusize.handleUrl(url)
+				})
+    }
+  }
+}
+```
+
+### 2. Set up the product details in your product SwiftUI view
+
+```Swift
+struct ProductView: View {
+	init() {
+		// Set up the product information in order to populate the Virtusize view
+		Virtusize.product = VirtusizeProduct(
+			externalId: "vs_dress",
+			imageURL: URL(string: "http://www.example.com/image.jpg")
+		)
+	}
+	
+	...
+}
+```
+
+### 3. There are three Virtusize SwiftUI components that you can use:
+
+- **SwiftUIVirtusizeButton:** is equivalent to [Virtusize Button](#1-virtusize-button)
+
+```Swift
+struct ProductView: View {
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeButton(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// (Optional) You can customize the button by accessing it here
+				uiView: { virtusizeButton in
+						virtusizeButton.setTitle("Check size", for: .normal)
+						virtusizeButton.backgroundColor = .vsBlackColor
+				},
+				// (Optional) You can use our default styles: either Black or Teal for the button.
+				// If you want to customize the button on your own, please omit defaultStyle
+				defaultStyle: .BLACK
+			)
+		}
+	}
+}	
+```
+
+- **SwiftUIVirtusizeInPageStandard**: is equivalent to [InPage Standard](#2-inpage-standard)
+
+```Swift
+struct ProductView: View {
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeInPageStandard(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// (Optional): You can customize the button by accessing it here
+				uiView: { virtusizeInPageStandard in
+					virtusizeInPageStandard.buttonFontSize = 12
+					virtusizeInPageStandard.messageFontSize = 12
+					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsBlackColor
+					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
+				},
+				// (Optional): You can use our default styles either Black or Teal for the InPage Standard view.
+				// The default is set to .BLACK.
+				defaultStyle: .BLACK
+			)
+		}
+	}
+}
+```
+
+- **SwiftUIVirtusizeInPageMini**: is equivalent to [InPage Mini](#3-inpage-mini)
+
+```Swift
+struct ProductView: View {
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeInPageMini(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				// (Optional): You can customize the button by accessing it here
+				uiView: { virtusizeInPageMini in
+					virtusizeInPageMini.messageFontSize = 12
+					virtusizeInPageMini.buttonFontSize = 10
+					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
+					virtusizeInPageMini.setHorizontalMargin(margin: 16)
+				},
+				// (Optional): You can use our default styles either Black or Teal for the InPage Mini view.
+				// The default is set to .BLACK.
+				defaultStyle: .TEAL
+			)
+		}
+	}
+}
+```
+
+### 4. Use **SwiftUIVirtusizeViewController** to open the Virtusize web view when any of the above components are clicked. 
+
+```Swift
+struct ProductView: View {
+	// Declare a Boolean state to control when to open the Virtusize web view
+	@State var showVirtusizeWebView = false
+
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeButton(
+				action: {
+					// Set showVirtusizeWebView to true when the button is clicked
+					showVirtusizeWebView = true
+				},
+				...
+			)
+		}
+		// MARK: SwiftUIVirtusizeViewController
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				// (Optional): Set up WKProcessPool to allow cookie sharing
+				processPool: WKProcessPool(),
+				// (Optional): You can use this callback closure to receive Virtusize events
+				didReceiveEvent: { event in
+					print(event)
+					switch event.name {
+					case "user-opened-widget":
+						return
+					case "user-opened-panel-compare":
+						return
+					default:
+						return
+					}
+				},
+				// (Optional): You can use this callback closure to receive Virtusize SDK errors
+				didReceiveError: { error in
+					print(error)
+				}
+			)
+		}
+	}
+}
+```
+
+### 5. Listen to Product Data Check (Optional) 
+
+You can set up NotificationCenter listeners with the *onReceive* modifier to debug the product data check
+
+```Swift
+struct ProductView: View {
+	var body: some View {
+		VStack {
+			SwiftUIVirtusizeButton(
+				...
+			)
+		}
+		.sheet(isPresented: $showVirtusizeWebView) {
+			SwiftUIVirtusizeViewController(
+				...
+			)
+		}
+    // (Optional): You can set up NotificationCenter listeners to debug the product data check
+		// - `Virtusize.productDataCheckDidFail`, the `UserInfo` will contain a message with the cause of the failure
+		// - `Virtusize.productDataCheckDidSucceed`
+		.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidSucceed)) { notification in
+			print(notification)
+		}
+		.onReceive(NotificationCenter.default.publisher(for: Virtusize.productDataCheckDidFail)) { notification in
+			print(notification)
+		}
+  }
+}
+```
+
+
+### 6. For integrating the other optional features listed below, you can check out the [ExampleSwiftUI](/ExampleSwiftUI) for a detailed implementation.
+
+- Allow cookie sharing
+- Hide the space of the Virtusize SwiftUI components
+- Make the Virtusize web view full screen
+
 
 ## The Order API
 
