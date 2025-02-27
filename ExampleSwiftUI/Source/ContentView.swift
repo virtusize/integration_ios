@@ -39,7 +39,7 @@ struct ContentView: View {
 	init() {
 		// Set up the product information in order to populate the Virtusize view
 		product = VirtusizeProduct(
-			externalId: "vs_dress",
+			externalId: "vs_pants",
 			imageURL: URL(string: "http://www.example.com/image.jpg")
 		)
 
