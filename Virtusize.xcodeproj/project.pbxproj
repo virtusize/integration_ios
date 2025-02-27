@@ -359,6 +359,8 @@
 				52221C482D6738A100CDD1A4 /* SwiftUIVirtusizeViewController.swift */,
 			);
 			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		52D1E09C2D6DCEDF0073737B /* Repository */ = {
 			isa = PBXGroup;
 			children = (
