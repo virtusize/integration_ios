@@ -1,7 +1,8 @@
 //
-//  VirtusizeStore.swift
+//  URL+Extensions.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +25,21 @@
 
 import Foundation
 
-/// This structure represents the response of the request that retrieves the specific store info
-internal struct VirtusizeStore: Codable {
-	private let id: Int
-	private let surveyLink: String?
-	private let name: String
-	internal let shortName: String
-	private let lengthUnitId: Int
-	private let apiKey: String
-	private let created: String
-	private let updated: String
-	private let disabled: String?
-	private let typemapperEnabled: Bool
-	internal var region: String?
+extension URL {
+	public func addOrUpdate(name: String, value: String) -> URL {
+		guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+			return self
+		}
+
+		var items = components.queryItems ?? []
+
+		if let itemIndex = items.firstIndex(where: { $0.name == name }) {
+			items[itemIndex].value = value
+		} else {
+			items.append(URLQueryItem(name: name, value: value))
+		}
+
+		components.queryItems = items
+		return components.url ?? self
+	}
 }

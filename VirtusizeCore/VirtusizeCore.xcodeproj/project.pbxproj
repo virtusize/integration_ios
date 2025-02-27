@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		521DCA7A2D4CE6A200C1931C /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DCA792D4CE69000C1931C /* URL+Extensions.swift */; };
 		523242472D1AC8AE00290069 /* VirtusizeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523242462D1AC89F00290069 /* VirtusizeLogger.swift */; };
 		5232424C2D1D93A100290069 /* VirtusizeLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */; };
 		524E5AC02D5CCAFC0046F887 /* ExpiringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524E5ABF2D5CCAD60046F887 /* ExpiringCache.swift */; };
@@ -14,6 +15,8 @@
 		528C8CC32D3FC33200BAE9E6 /* VirtusizeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C8CC22D3FC32300BAE9E6 /* VirtusizeConstants.swift */; };
 		528C8CC62D3FC53700BAE9E6 /* VirtusizeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C8CC52D3FC53700BAE9E6 /* VirtusizeError.swift */; };
 		528C8CC72D3FC53700BAE9E6 /* SnsHosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528C8CC42D3FC53700BAE9E6 /* SnsHosts.swift */; };
+		52DA58F22D4D557100DECAB2 /* URL+ExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA58F12D4D556400DECAB2 /* URL+ExtensionsTest.swift */; };
+		52DA58F62D4D57B100DECAB2 /* VirtusizeBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA58F52D4D57A800DECAB2 /* VirtusizeBranch.swift */; };
 		52EED1CF2D24034900A10359 /* Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52EED1CE2D24034900A10359 /* Testing.framework */; platformFilter = ios; };
 		52EED1D02D24034A00A10359 /* Testing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52EED1CE2D24034900A10359 /* Testing.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84CF03B72BD7A2BA00C08920 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 84CF03B62BD7A2BA00C08920 /* PrivacyInfo.xcprivacy */; };
@@ -60,6 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		521DCA792D4CE69000C1931C /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		523242462D1AC89F00290069 /* VirtusizeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLogger.swift; sourceTree = "<group>"; };
 		5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeLoggerTests.swift; sourceTree = "<group>"; };
 		524E5ABF2D5CCAD60046F887 /* ExpiringCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringCache.swift; sourceTree = "<group>"; };
@@ -67,6 +71,8 @@
 		528C8CC22D3FC32300BAE9E6 /* VirtusizeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeConstants.swift; sourceTree = "<group>"; };
 		528C8CC42D3FC53700BAE9E6 /* SnsHosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsHosts.swift; sourceTree = "<group>"; };
 		528C8CC52D3FC53700BAE9E6 /* VirtusizeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeError.swift; sourceTree = "<group>"; };
+		52DA58F12D4D556400DECAB2 /* URL+ExtensionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ExtensionsTest.swift"; sourceTree = "<group>"; };
+		52DA58F52D4D57A800DECAB2 /* VirtusizeBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeBranch.swift; sourceTree = "<group>"; };
 		52EED1CE2D24034900A10359 /* Testing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Testing.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/Testing.framework; sourceTree = DEVELOPER_DIR; };
 		84CF03B62BD7A2BA00C08920 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9C2B0D57273AB660004B10BB /* VirtusizeCore.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = VirtusizeCore.podspec; path = ../VirtusizeCore.podspec; sourceTree = "<group>"; };
@@ -115,6 +121,7 @@
 		5232424A2D1D938000290069 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				52DA58F12D4D556400DECAB2 /* URL+ExtensionsTest.swift */,
 				524E5AC32D5CE18F0046F887 /* ExpiringCacheTests.swift */,
 				5232424B2D1D939B00290069 /* VirtusizeLoggerTests.swift */,
 			);
@@ -185,6 +192,7 @@
 		9C35061727278B7C003BEF82 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				521DCA792D4CE69000C1931C /* URL+Extensions.swift */,
 				524E5ABF2D5CCAD60046F887 /* ExpiringCache.swift */,
 				528C8CC22D3FC32300BAE9E6 /* VirtusizeConstants.swift */,
 				523242462D1AC89F00290069 /* VirtusizeLogger.swift */,
@@ -236,6 +244,7 @@
 		9C35066D272802F8003BEF82 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				52DA58F52D4D57A800DECAB2 /* VirtusizeBranch.swift */,
 				528C8CC42D3FC53700BAE9E6 /* SnsHosts.swift */,
 				528C8CC52D3FC53700BAE9E6 /* VirtusizeError.swift */,
 			);
@@ -399,6 +408,7 @@
 				523242472D1AC8AE00290069 /* VirtusizeLogger.swift in Sources */,
 				9C35062F2727B782003BEF82 /* BundleLoaderProtocal.swift in Sources */,
 				9C35067527280396003BEF82 /* HTTPURLResponse+Extensions.swift in Sources */,
+				52DA58F62D4D57B100DECAB2 /* VirtusizeBranch.swift in Sources */,
 				528C8CC62D3FC53700BAE9E6 /* VirtusizeError.swift in Sources */,
 				524E5AC02D5CCAFC0046F887 /* ExpiringCache.swift in Sources */,
 				528C8CC72D3FC53700BAE9E6 /* SnsHosts.swift in Sources */,
@@ -409,6 +419,7 @@
 				9CAD1F4E2CF4DA8800AC104E /* VirtusizeStoreRepository.swift in Sources */,
 				528C8CC32D3FC33200BAE9E6 /* VirtusizeConstants.swift in Sources */,
 				9C35066B27280222003BEF82 /* APIService.swift in Sources */,
+				521DCA7A2D4CE6A200C1931C /* URL+Extensions.swift in Sources */,
 				9C35061927279586003BEF82 /* UIApplication+Extensions.swift in Sources */,
 				9C35067327280367003BEF82 /* APIResponse.swift in Sources */,
 			);
@@ -421,6 +432,7 @@
 				9C6E36C72739616E00608640 /* UserDefaultsHelperTests.swift in Sources */,
 				524E5AC42D5CE1970046F887 /* ExpiringCacheTests.swift in Sources */,
 				5232424C2D1D93A100290069 /* VirtusizeLoggerTests.swift in Sources */,
+				52DA58F22D4D557100DECAB2 /* URL+ExtensionsTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,7 +595,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

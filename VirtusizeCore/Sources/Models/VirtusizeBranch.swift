@@ -1,7 +1,8 @@
 //
-//  VirtusizeStore.swift
+//  VirtusizeBranch.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +23,9 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-/// This structure represents the response of the request that retrieves the specific store info
-internal struct VirtusizeStore: Codable {
-	private let id: Int
-	private let surveyLink: String?
-	private let name: String
-	internal let shortName: String
-	private let lengthUnitId: Int
-	private let apiKey: String
-	private let created: String
-	private let updated: String
-	private let disabled: String?
-	private let typemapperEnabled: Bool
-	internal var region: String?
+public class VirtusizeBranch {
+	/// Update `URL` with the `branch` name to test specific Virtusize environments
+	public static func applyBranch(to url: URL, branch: String) -> URL {
+		return url.addOrUpdate(name: "vs-branch", value: branch)
+	}
 }

@@ -26,7 +26,7 @@ import Foundation
 import VirtusizeCore
 
 /// This class is used to handle the logic required to access remote and local data sources
-internal class VirtusizeRepository: NSObject {
+internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_body_length
 
 	static let shared = VirtusizeRepository()
 
@@ -44,6 +44,9 @@ internal class VirtusizeRepository: NSObject {
 	private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
     private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	private var hasSessionBodyMeasurement: Bool = false
+
+	private var store: VirtusizeStore?
+	private var shouldReloadStoreI18n: Bool = true
 
 	/// A set to cache the store product information of all the visited products
 	internal var serverStoreProductSet: Set<VirtusizeServerProduct> = []
@@ -129,11 +132,11 @@ internal class VirtusizeRepository: NSObject {
 
 		async let serverStoreProductTask = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
 		async let productTypesTask = VirtusizeAPIService.getProductTypesAsync()
-		async let i18nTask = VirtusizeAPIService.getI18nTextsAsync()
+		async let i18nTask = fetchLocalization()
 
 		let serverStoreProduct = await serverStoreProductTask.success
 		productTypes = await productTypesTask.success
-		i18nLocalization = await i18nTask.success
+		i18nLocalization = await i18nTask
 
 		guard let storeProduct = serverStoreProduct else {
 			Virtusize.inPageError = (true, externalProductId)
@@ -322,11 +325,16 @@ internal class VirtusizeRepository: NSObject {
 		var mutualOrder = order
 		mutualOrder.externalUserId = externalUserId
 
-		let retrieveStoreInfoResponse = await VirtusizeAPIService.retrieveStoreInfoAsync()
-		if let storeInfo = retrieveStoreInfoResponse.success {
-			mutualOrder.region = storeInfo.region ?? "JP"
+		if let store = store {
+			mutualOrder.region = store.region ?? "JP"
 		} else {
-			throw retrieveStoreInfoResponse.failure ?? .unknownError
+			let retrieveStoreInfoResponse = await VirtusizeAPIService.retrieveStoreInfoAsync()
+			if let storeInfo = retrieveStoreInfoResponse.success {
+				mutualOrder.region = storeInfo.region ?? "JP"
+				store = storeInfo
+			} else {
+				throw retrieveStoreInfoResponse.failure ?? .unknownError
+			}
 		}
 
 		let sendOrderWithRegionResponse = await VirtusizeAPIService.sendOrderWithRegionAsync(mutualOrder)
@@ -334,4 +342,61 @@ internal class VirtusizeRepository: NSObject {
 			throw sendOrderWithRegionResponse.failure ?? .unknownError
 		}
 	}
-}
+
+	/// Fetch i18n Localization as a merge of shared i18n texts and the store specific texts
+	///
+	/// - Returns: `VirtusizeI18nLocalization` if loaded successfully
+	internal func fetchLocalization(language: VirtusizeLanguage? = nil) async -> VirtusizeI18nLocalization? {
+		async let i18nTask = VirtusizeAPIService.getI18nAsync(language: language)
+
+		async let storeI18nTask: Task<APIResult<JSONObject>?, Error> = Task {
+			if store == nil {
+				store = await VirtusizeAPIService.retrieveStoreInfoAsync().success
+			}
+
+			guard shouldReloadStoreI18n else {
+				return nil
+			}
+
+			guard let store = store else {
+				VirtusizeLogger.warn("Failed to load Store Info")
+				return nil
+			}
+
+			return await VirtusizeAPIService.getStoreI18nAsync(storeName: store.shortName)
+		}
+
+		let i18nResponse = await i18nTask
+		guard var i18nJson = i18nResponse.success else {
+			VirtusizeLogger.warn("Failed to load i18n: \(i18nResponse.failure?.debugDescription ?? "???")")
+			return nil
+		}
+
+		guard let storeI18nResponse = try? await storeI18nTask.value else {
+			// there is no i18n texts for the current store, simply return default i18n
+			return Deserializer.i18n(json: i18nJson)
+		}
+
+		if storeI18nResponse.errorCode == 403 {
+			shouldReloadStoreI18n = false
+			VirtusizeLogger.debug("There is no i18n for current store. Skip trying.")
+			return Deserializer.i18n(json: i18nJson)
+		}
+
+		guard storeI18nResponse.isSuccessful else {
+			VirtusizeLogger.warn("Failed to load store specific texts: \(storeI18nResponse.failure?.debugDescription ?? "???")")
+			return nil
+		}
+
+		let storeI18n = storeI18nResponse.success?["mobile"] as? JSONObject
+		if let lang = language ?? Virtusize.params?.language,
+		   let langJson = storeI18n?[lang.rawValue] as? JSONObject,
+		   var i18nMergeRoot = i18nJson["keys"] as? JSONObject {
+
+			i18nMergeRoot.deepMerge(source: langJson)
+			i18nJson["keys"] = i18nMergeRoot
+		}
+
+		return Deserializer.i18n(json: i18nJson)
+	}
+} // swiftlint:disable:this file_length

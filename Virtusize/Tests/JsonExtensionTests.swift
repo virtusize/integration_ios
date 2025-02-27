@@ -1,7 +1,8 @@
 //
-//  VirtusizeStore.swift
+//  JsonExtensionTests.swift
+//  Virtusize
 //
-//  Copyright (c) 2018-present Virtusize KK
+//  Copyright (c) 2025 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +23,31 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import Testing
+@testable import Virtusize
 
-/// This structure represents the response of the request that retrieves the specific store info
-internal struct VirtusizeStore: Codable {
-	private let id: Int
-	private let surveyLink: String?
-	private let name: String
-	internal let shortName: String
-	private let lengthUnitId: Int
-	private let apiKey: String
-	private let created: String
-	private let updated: String
-	private let disabled: String?
-	private let typemapperEnabled: Bool
-	internal var region: String?
+struct JsonExtensionTests {
+	@Test func addNew() {
+		var json: JSONObject = ["a": 1]
+		json.deepMerge(source: ["b": 2])
+		#expect(json as NSDictionary == ["a": 1, "b": 2])
+	}
+
+	@Test func updateExisting() {
+		var json: JSONObject = ["a": 1]
+		json.deepMerge(source: ["a": 2])
+		#expect(json as NSDictionary == ["a": 2])
+	}
+
+	@Test func updateDeepObject() {
+		var json: JSONObject = ["a": 1, "b": ["c": 2, "d": 3]]
+		json.deepMerge(source: ["b": ["c": 4]])
+		#expect(json as NSDictionary == ["a": 1, "b": ["c": 4, "d": 3]])
+	}
+
+	@Test func mergeArrays() {
+		var json: JSONObject = ["a": [1, 2]]
+		json.deepMerge(source: ["a": [3]])
+		#expect(json as NSDictionary == ["a": [1, 2, 3]])
+	}
 }

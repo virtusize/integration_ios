@@ -206,6 +206,15 @@ extension APIRequest {
 		return apiRequest(components: endpoint.components)
 	}
 
+	/// Gets the `URLRequest` for the request to get store specific i18n texts
+	///
+	/// - Parameter storeName: The store name
+	/// - Returns: A `URLRequest` for the request to get i18n texts
+	internal static func getStoreI18n(storeName: String) -> URLRequest? {
+		let endpoint = APIEndpoints.storeI18n(storeName: storeName)
+		return apiRequest(components: endpoint.components)
+	}
+
 	/// Gets the `URLRequest` for the request to load an image via a URL
 	///
 	/// - Parameter url: The URL of the image

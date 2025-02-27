@@ -16,6 +16,10 @@ Use list notation, and following prefixes:
 ### Next Release
 - Refactor: Optimize product loading time by concurrent loading, memory cache and avoiding unecessary reloading of body measurements
 - Refactor: Introduce Swift async/await usage
+- Refactor: Optimize build time for local development by using `ENABLE_MODULE_VERIFIER = NO` for Debug configuration
+- Feature: Load and apply store specific i18n texts runtime
+- Feature: Build and validate fonts taking into account store specific i18n texts
+- Feature: Allow to specify custom branch for WebView-native apps
 
 ### 2.9.0
 - Feature: Allow to target specific testing environment by branch name `Virtusize.setTestingBranch("branch-name")`
