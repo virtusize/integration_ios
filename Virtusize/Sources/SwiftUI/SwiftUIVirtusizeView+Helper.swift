@@ -18,6 +18,5 @@ extension UIViewRepresentable {
 		mutableView.messageHandler = self as? VirtusizeMessageHandler
 		mutableView.presentingViewController = self as? UIViewController
 		mutableView.clientProduct = product
-//		mutableView.setVirtusizeEventHandler()
 	}
 }

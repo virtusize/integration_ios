@@ -62,7 +62,7 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 		guard let virtusizeViewController = VirtusizeWebViewController(
 			product: clientProduct,
 			messageHandler: context.coordinator,
-//			eventHandler: Virtusize.virtusizeEventHandler,
+			eventHandler: Virtusize.virtusizeEventHandler,
 			processPool: processPool
 		) else {
 			fatalError("Cannot load VirtusizeViewController")
