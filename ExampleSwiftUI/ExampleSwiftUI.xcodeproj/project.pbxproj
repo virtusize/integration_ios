@@ -36,12 +36,13 @@
 		52221C4E2D67391D00CDD1A4 /* Virtusize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Virtusize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52221C4F2D67391D00CDD1A4 /* VirtusizeAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52221C502D67391D00CDD1A4 /* VirtusizeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		52ACB08E2D707EA10011E51E /* ExampleSwiftUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ExampleSwiftUI-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		52221C292D67372A00CDD1A4 /* ExampleSwiftUI */ = {
+		52221C292D67372A00CDD1A4 /* Source */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ExampleSwiftUI;
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -63,7 +64,8 @@
 		52221C1E2D67372A00CDD1A4 = {
 			isa = PBXGroup;
 			children = (
-				52221C292D67372A00CDD1A4 /* ExampleSwiftUI */,
+				52ACB08E2D707EA10011E51E /* ExampleSwiftUI-Info.plist */,
+				52221C292D67372A00CDD1A4 /* Source */,
 				52221C4D2D67391D00CDD1A4 /* Frameworks */,
 				52221C282D67372A00CDD1A4 /* Products */,
 			);
@@ -104,7 +106,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				52221C292D67372A00CDD1A4 /* ExampleSwiftUI */,
+				52221C292D67372A00CDD1A4 /* Source */,
 			);
 			name = ExampleSwiftUI;
 			packageProductDependencies = (
@@ -294,9 +296,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ExampleSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Source/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ExampleSwiftUI-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -323,9 +326,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ExampleSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Source/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ExampleSwiftUI-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

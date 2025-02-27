@@ -82,7 +82,7 @@ struct ContentView: View {
 					virtusizeInPageStandard.buttonFontSize = 12
 					virtusizeInPageStandard.messageFontSize = 12
 					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsGray900Color
-//					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
+					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
 				},
 				// (Optional): You can use our default styles: either Black or Teal for the InPage Standard view.
 				// The default is set to .BLACK.
@@ -102,7 +102,7 @@ struct ContentView: View {
 					virtusizeInPageMini.messageFontSize = 12
 					virtusizeInPageMini.buttonFontSize = 10
 					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
-//					virtusizeInPageMini.setHorizontalMargin(margin: 16)
+					virtusizeInPageMini.setHorizontalMargin(margin: 16)
 				},
 				// (Optional): You can use our default styles: either Black or Teal for the InPage Mini view.
 				// The default is set to .BLACK.
