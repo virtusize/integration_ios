@@ -54,4 +54,21 @@ internal extension String {
 			.replacingOccurrences(of: "%{boldStart}", with: trimType.rawValue)
 			.replacingOccurrences(of: "%{boldEnd}", with: "")
 	}
+
+	/// Calculate the expected text height based on the width and the font of the string
+	///
+	/// - Parameters:
+	///   - withConstrainedWidth: the text width
+	///   - font: the text font
+	/// - Returns: the ceiling of the expected text height
+	func height(width: CGFloat, font: UIFont) -> CGFloat {
+		let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+		let boundingRect = self.boundingRect(
+			with: constraintRect,
+			options: .usesLineFragmentOrigin,
+			attributes: [.font: font],
+			context: nil
+		)
+		return floor(boundingRect.height)
+	}
 }

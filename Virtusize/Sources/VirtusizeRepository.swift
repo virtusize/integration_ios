@@ -49,7 +49,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	private var shouldReloadStoreI18n: Bool = true
 
 	/// A set to cache the store product information of all the visited products
-	private var serverStoreProductSet: Set<VirtusizeServerProduct> = []
+	internal var serverStoreProductSet: Set<VirtusizeServerProduct> = []
 
 	/// Checks if the product in `VirtusizeProduct` is valid and post notifications
 	///

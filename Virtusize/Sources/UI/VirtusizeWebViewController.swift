@@ -64,10 +64,10 @@ public final class VirtusizeWebViewController: UIViewController {
         self.processPool = processPool
         self.userSessionResponse = VirtusizeRepository.shared.userSessionResponse
 
-		guard product?.productCheckData != nil else {
-			reportError(error: .invalidProduct)
-			return nil
-		}
+//		guard product?.productCheckData != nil else {
+//			reportError(error: .invalidProduct)
+//			return nil
+//		}
 	}
 
 	public override func viewDidLoad() {

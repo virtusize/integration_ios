@@ -41,6 +41,9 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	internal let defaultMargin: CGFloat = 8
 	internal var loadingTextTimer: Timer?
 
+	internal var contentViewListener: ((VirtusizeInPageView) -> Void)?
+	internal var userSetMargin: CGFloat = 0
+
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		virtusizeEventHandler = self
@@ -141,6 +144,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	internal func setup() {}
 
 	internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
+		userSetMargin = margin
 		view.addConstraint(
 			NSLayoutConstraint(
 				item: self,
@@ -236,4 +240,8 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
     public func userClosedWidget() {
         handleUserClosedWidget()
     }
+
+	internal func setContentViewListener(listener: ((VirtusizeInPageView) -> Void)?) {
+		contentViewListener = listener
+	}
 }

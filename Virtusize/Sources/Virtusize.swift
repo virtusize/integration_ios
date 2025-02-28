@@ -59,7 +59,9 @@ public class Virtusize {
 	public static var productCheckDidSucceed = Notification.Name("VirtusizeProductCheckDidSucceed")
 
 	/// The singleton instance of `VirtusizeRepository`
-	private static var virtusizeRepository = VirtusizeRepository.shared
+	private static let virtusizeRepository = VirtusizeRepository.shared
+
+	internal static let virtusizeEventHandler = DefaultEventHandler()
 
 	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
 

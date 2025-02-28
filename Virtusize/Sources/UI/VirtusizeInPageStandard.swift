@@ -51,14 +51,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	private var views: [String: UIView] = [:]
 	private var metrics: [String: CGFloat] = [:]
 	private var allConstraints: [NSLayoutConstraint] = []
-	private let inPageStandardView: UIView = UIView()
+	internal let inPageStandardView: UIView = UIView()
 	private let vsIconImageView: UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
 	private let userProductImageView: VirtusizeProductImageView = VirtusizeProductImageView()
 	private let storeProductImageView: VirtusizeProductImageView = VirtusizeProductImageView()
 	private let messageStackView: UIStackView = UIStackView()
 	private let topMessageLabel: UILabel = UILabel()
 	private let bottomMessageLabel: UILabel = UILabel()
-	private let checkSizeButton: UIButton = UIButton()
+	internal let checkSizeButton: UIButton = UIButton()
 	private let vsSignatureImageView: UIImageView = UIImageView()
 	private let privacyPolicyLink: UILabel = UILabel()
 	private let errorImageView: UIImageView = UIImageView()
@@ -85,8 +85,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	private(set) var bestFitUserProduct: VirtusizeServerProduct?
 
 	/// The function to set the horizontal margin between the edges of the app screen and the InPage Standard view
-	public func setHorizontalMargin(view: UIView, margin: CGFloat) {
-		setHorizontalMargins(view: view, margin: margin)
+	public func setHorizontalMargin(view: UIView? = nil, margin: CGFloat) {
+		if let parent = view ?? superview {
+			setHorizontalMargins(view: parent, margin: margin)
+		}
 	}
 
 	deinit {
@@ -207,6 +209,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	private func finishLoading() {
 		setRecommendationTexts()
 		setLoadingScreen(loading: false)
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
+		}
 	}
 
 	private func addSubviews() {
@@ -578,6 +583,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 			)
 		} else {
 			stopLoadingTextAnimation()
+		}
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
 		}
 	}
 } // swiftlint:disable:this file_length
