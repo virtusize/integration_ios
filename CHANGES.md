@@ -13,7 +13,7 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### Next Release
+### 2.10.0
 - Refactor: Optimize product loading time by concurrent loading, memory cache and avoiding unecessary reloading of body measurements
 - Refactor: Introduce Swift async/await usage
 - Refactor: Optimize build time for local development by using `ENABLE_MODULE_VERIFIER = NO` for Debug configuration
