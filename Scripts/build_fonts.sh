@@ -8,6 +8,7 @@ SDK_FONT_DIR=./Virtusize/Sources/Resources/Fonts
 LOCALIZATION_DIR=./VirtusizeCore/Sources/Resources/Localizations
 TMP_DIR=./.build/tmp/font
 BYPASS_CACHE=$RANDOM
+SUPPORTED_STORE_NAMES=("united_arrows")
 
 # Rename the font file name and it's metadata to ensure they match.
 # The inner font name change is important, so it can be loaded as:
@@ -38,6 +39,23 @@ rename_font() {
   echo "Font renamed: $new_name"
 }
 
+# Merge local strings with remote json-strings and use this merged file for validation
+prepare_strings() {
+  local language=$1
+  local text_file=$2
+
+  # local texts
+  cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
+
+  # shared remote i18n texts
+  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}?random=$BYPASS_CACHE" >> $text_file
+
+  # remote store specific texts
+  for store_name in "${SUPPORTED_STORE_NAMES[@]}"; do
+    curl "https://integration.virtusize.jp/staging/$store_name/customText.json" >> $text_file
+  done
+}
+
 # Reduce font size by using only the characters from the localization files.
 # The font is copied into the Virtusize Resources directory
 # The font is also renamed (file and metadata), to ensure it's properly loaded by the iOS
@@ -47,10 +65,12 @@ generate_subset_font() {
 
   echo "Processing '$font' ..."
 
+  # Make TMP directory to save intermidiate files
+  mkdir -p $TMP_DIR
+
   # Merge local strings with remote json-strings and use this merged file for validation
   local text_file="$TMP_DIR/strings_$language.txt"
-  cp "$LOCALIZATION_DIR/$language.lproj/VirtusizeLocalizable.strings" $text_file
-  curl "https://i18n.virtusize.com/stg/bundle-payloads/aoyama/${language}?random=$BYPASS_CACHE" >> $text_file
+  prepare_strings $language $text_file
 
   # create subset font
   pyftsubset $SOURCE_FONT_DIR/$font \

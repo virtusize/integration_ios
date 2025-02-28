@@ -1,8 +1,8 @@
 //
-//  VirtusizeAuthProvider.swift
-//  VirtusizeAuth
+//  JsonExtensionTests.swift
+//  Virtusize
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,31 @@
 //  THE SOFTWARE.
 //
 
-/// The protocol that all SNS Auth providers must conform to.
-protocol VirtusizeAuthProvider {
-	/// Gets the user's information from the provider with an access token.
-	func getUserInfo(accessToken: String) async -> VirtusizeUser?
-}
+import Testing
+@testable import Virtusize
 
-/// Facebook Auth Provider
-class FacebookAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
+struct JsonExtensionTests {
+	@Test func addNew() {
+		var json: JSONObject = ["a": 1]
+		json.deepMerge(source: ["b": 2])
+		#expect(json as NSDictionary == ["a": 1, "b": 2])
 	}
-}
 
-/// Google Auth Provider
-class GoogleAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+	@Test func updateExisting() {
+		var json: JSONObject = ["a": 1]
+		json.deepMerge(source: ["a": 2])
+		#expect(json as NSDictionary == ["a": 2])
+	}
+
+	@Test func updateDeepObject() {
+		var json: JSONObject = ["a": 1, "b": ["c": 2, "d": 3]]
+		json.deepMerge(source: ["b": ["c": 4]])
+		#expect(json as NSDictionary == ["a": 1, "b": ["c": 4, "d": 3]])
+	}
+
+	@Test func mergeArrays() {
+		var json: JSONObject = ["a": [1, 2]]
+		json.deepMerge(source: ["a": [3]])
+		#expect(json as NSDictionary == ["a": [1, 2, 3]])
 	}
 }

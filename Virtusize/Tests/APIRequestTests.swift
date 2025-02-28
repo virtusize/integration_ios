@@ -87,7 +87,7 @@ class APIRequestTests: XCTestCase {
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://staging.virtusize.com/a/api/v3/store-products/\(TestFixtures.productId)?format=json"
+            "https://services.virtusize.com/stg/a/api/v3/store-products/\(TestFixtures.productId)?format=json"
         )
     }
 

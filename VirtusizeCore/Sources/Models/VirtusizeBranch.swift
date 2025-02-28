@@ -1,8 +1,8 @@
 //
-//  VirtusizeAuthProvider.swift
-//  VirtusizeAuth
+//  VirtusizeBranch.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,9 @@
 //  THE SOFTWARE.
 //
 
-/// The protocol that all SNS Auth providers must conform to.
-protocol VirtusizeAuthProvider {
-	/// Gets the user's information from the provider with an access token.
-	func getUserInfo(accessToken: String) async -> VirtusizeUser?
-}
-
-/// Facebook Auth Provider
-class FacebookAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
-	}
-}
-
-/// Google Auth Provider
-class GoogleAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+public class VirtusizeBranch {
+	/// Update `URL` with the `branch` name to test specific Virtusize environments
+	public static func applyBranch(to url: URL, branch: String) -> URL {
+		return url.addOrUpdate(name: "vs-branch", value: branch)
 	}
 }

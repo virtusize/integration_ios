@@ -29,7 +29,7 @@ internal struct VirtusizeStore: Codable {
 	private let id: Int
 	private let surveyLink: String?
 	private let name: String
-	private let shortName: String
+	internal let shortName: String
 	private let lengthUnitId: Int
 	private let apiKey: String
 	private let created: String

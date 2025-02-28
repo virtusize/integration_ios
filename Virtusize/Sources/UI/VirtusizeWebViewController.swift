@@ -94,20 +94,43 @@ public final class VirtusizeWebViewController: UIViewController {
 		self.webView = webView
 
 		webView.translatesAutoresizingMaskIntoConstraints = false
-		let layoutGuide = view.safeAreaLayoutGuide
-		NSLayoutConstraint.activate([
-			webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-			webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-			webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
-			webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
-		])
+		if #available(iOS 11.0, *) {
+			let layoutGuide = view.safeAreaLayoutGuide
+			NSLayoutConstraint.activate([
+				webView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+				webView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+				webView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+				webView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+			])
+		} else {
+			let views = ["webView": webView]
+			let verticalConstraints = NSLayoutConstraint.constraints(
+				withVisualFormat: "V:|-20-[webView]-0-|",
+				options: .alignAllTop,
+				metrics: nil,
+				views: views)
+			let horizontalConstraints = NSLayoutConstraint.constraints(
+				withVisualFormat: "|-0-[webView]-0-|",
+				options: .alignAllLeft,
+				metrics: nil,
+				views: views)
 
-        // If the request is invalid, the controller should be dismissed
-        guard let request = getWebViewURL() else {
-            reportError(error: .invalidRequest)
-            return
-        }
-		webView.load(request)
+			NSLayoutConstraint.activate(verticalConstraints + horizontalConstraints)
+		}
+
+		loadUrl()
+	}
+
+	@MainActor
+	private func loadUrl() {
+		Task {
+			// If the request is invalid, the controller should be dismissed
+			guard let request = await getWebViewURL() else {
+				reportError(error: .invalidRequest)
+				return
+			}
+			webView?.load(request)
+		}
 	}
 
 	// MARK: Rotation Lock
@@ -130,11 +153,11 @@ public final class VirtusizeWebViewController: UIViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
-    private func getWebViewURL() -> URLRequest? {
+    private func getWebViewURL() async -> URLRequest? {
         if let productStoreId = product?.productCheckData?.storeId, StoreId(value: productStoreId).isUnitedArrows {
             return APIRequest.virtusizeWebViewForSpecificClients()
         } else {
-            guard let version = VirtusizeAPIService.fetchLatestAoyamaVersion().success else {
+            guard let version = await VirtusizeAPIService.fetchLatestAoyamaVersion().success else {
                 return nil
             }
             return APIRequest.virtusizeWebView(version: version)
@@ -186,7 +209,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return nil
 		}
 
-		if VirtusizeURLCheck.isExternalLinkFromVirtusize(url: url.absoluteString) {
+		if isExternalLinks(url: url.absoluteString) {
 			if let sharedApplication = UIApplication.safeShared {
 				sharedApplication.safeOpenURL(url)
 				return nil
@@ -211,6 +234,11 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 		return nil
 	}
 
+	/// Checks if a URL is an external link to be open on the Safari browser
+	private func isExternalLinks(url: String?) -> Bool {
+		return url != nil && (url!.contains("survey") || url!.contains("privacy"))
+	}
+
 	public func webViewDidClose(_ webView: WKWebView) {
 		webView.removeFromSuperview()
 	}
@@ -218,16 +246,26 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 	/// Checks if the bid in the web cookies  is different from the bid saved locally.
 	/// If it is, update and store the new bid.
 	private func checkAndUpdateBrowserID() {
-		WKWebsiteDataStore.default().httpCookieStore.getAllCookies({ cookies in
-			for cookie in cookies {
-				if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
-					if cookie.name == VirtusizeWebViewController.cookieBidKey &&
-						cookieValue != UserDefaultsHelper.current.identifier {
-						UserDefaultsHelper.current.identifier = cookie.value
+		if #available(iOS 11.0, *) {
+			WKWebsiteDataStore.default().httpCookieStore.getAllCookies({ cookies in
+				for cookie in cookies {
+					if let cookieValue = cookie.properties?[HTTPCookiePropertyKey(rawValue: "Value")] as? String {
+						if cookie.name == VirtusizeWebViewController.cookieBidKey &&
+							cookieValue != UserDefaultsHelper.current.identifier {
+							UserDefaultsHelper.current.identifier = cookie.value
+						}
 					}
 				}
+			})
+		} else {
+			if let cookies = HTTPCookieStorage.shared.cookies {
+				for cookie in cookies
+				where cookie.name == VirtusizeWebViewController.cookieBidKey &&
+					cookie.value != UserDefaultsHelper.current.identifier {
+					UserDefaultsHelper.current.identifier = cookie.value
+				}
 			}
-		})
+		}
 	}
 }
 

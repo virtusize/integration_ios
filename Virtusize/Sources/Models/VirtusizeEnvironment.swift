@@ -50,6 +50,21 @@ public enum VirtusizeEnvironment: String, CaseIterable {
 		}
 	}
 
+	internal func integrationUrl() -> String {
+		switch self {
+		case .TESTING:
+			return "integration.virtusize.jp"
+		case .STAGING:
+			return "integration.virtusize.com"
+		case .GLOBAL:
+			return "integration.virtusize.com"
+		case .JAPAN:
+			return "integration.virtusize.jp"
+		case .KOREA:
+			return "integration.virtusize.kr"
+		}
+	}
+
     /// Gets the services URL for the ``getSize` requests
     internal func getSizeUrl() -> String {
 		switch self {

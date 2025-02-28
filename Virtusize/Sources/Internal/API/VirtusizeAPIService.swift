@@ -33,9 +33,9 @@ class VirtusizeAPIService: APIService {
 	/// - Parameters:
 	///   - product: `VirtusizeProduct` for which check needs to be performed
 	/// - Returns: the product check data in the type of `VirtusizeProduct`
-	internal static func productCheckAsync(product: VirtusizeProduct) -> APIResult<VirtusizeProduct> {
+	internal static func productCheckAsync(product: VirtusizeProduct) async -> APIResult<VirtusizeProduct> {
 		let request = APIRequest.productCheck(product: product)
-		let result = getAPIResultAsync(request: request, type: VirtusizeProduct.self)
+		let result = await getAPIResultAsync(request: request, type: VirtusizeProduct.self)
         APICache.shared.currentStoreId = result.success?.productCheckData?.storeId
         return result
 	}
@@ -45,22 +45,21 @@ class VirtusizeAPIService: APIService {
 	/// - Parameters:
 	///   - product: `VirtusizeProduct` whose image needs to be sent to the Virtusize server
 	///   - storeId: An integer that represents the store id from the product data
-	///   - completion: A callback to pass the value of `JSONObject` back when the request is successful
+	/// - Returns: `JSONObject` for successful reponse, otherwise nil
 	internal static func sendProductImage(
 		of product: VirtusizeProduct,
-		forStore storeId: Int,
-		completion completionHandler: ((JSONObject?) -> Void)? = nil
-	) {
+		forStore storeId: Int
+	) async -> JSONObject? {
 		guard let request = try? APIRequest.sendProductImage(of: product, forStore: storeId) else {
-			return
+			return nil
 		}
-		VirtusizeAPIService.perform(request, completion: { data in
-			guard let data = data else {
-				return
-			}
-			let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
-			completionHandler?(jsonObject)
-		})
+
+		let response = await VirtusizeAPIService.performAsync(request)
+		guard response.virtusizeError == nil, let data = response.data else {
+			// failed to perform request
+			return nil
+		}
+		return try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 	}
 
 	/// The API request for logging an event and sending it to the Virtusize server
@@ -68,44 +67,43 @@ class VirtusizeAPIService: APIService {
 	/// - Parameters:
 	///   - event: An event to be sent to the Virtusize server
 	///   - context: The product data from the response of the `productCheck` request
-	///   - completionHandler: A callback to pass `JSONObject` back when an API request is successful
+	/// - Returns: `JSONObject` for successful reponse, otherwise nil
 	internal static func sendEvent(
 		_ event: VirtusizeEvent,
-		withContext context: JSONObject? = nil,
-		completion completionHandler: ((JSONObject?) -> Void)? = nil
-	) {
+		withContext context: JSONObject? = nil
+	) async -> JSONObject? {
 		guard let request = APIRequest.sendEvent(event, withContext: context) else {
-			return
+			return nil
 		}
-		VirtusizeAPIService.perform(request, completion: { data in
-			guard let data = data else {
-				return
-			}
-			let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
-			completionHandler?(jsonObject)
-		})
+
+		let response = await VirtusizeAPIService.performAsync(request)
+		guard response.virtusizeError == nil, let data = response.data else {
+			// failed to perform request
+			return nil
+		}
+		return try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
 	}
 
 	/// The API request for retrieving the specific store info from the API key
 	/// that is unique to the client
 	///
 	/// - Returns: the store data in the type of `VirtusizeStore`
-	internal static func retrieveStoreInfoAsync() -> APIResult<VirtusizeStore> {
+	internal static func retrieveStoreInfoAsync() async -> APIResult<VirtusizeStore> {
 		guard let request = APIRequest.retrieveStoreInfo() else {
 			return .failure()
 		}
-		return getAPIResultAsync(request: request, type: VirtusizeStore.self)
+		return await getAPIResultAsync(request: request, type: VirtusizeStore.self)
 	}
 
 	/// The API request for sending an order to the Virtusize server
 	/// - Parameters:
 	///   - order: An order in `VirtusizeOrder` type
 	/// - Returns: the order info in the type of `String`
-	internal static func sendOrderWithRegionAsync(_ order: VirtusizeOrder) -> APIResult<String> {
+	internal static func sendOrderWithRegionAsync(_ order: VirtusizeOrder) async -> APIResult<String> {
 		guard let request = APIRequest.sendOrder(order) else {
 			return .failure()
 		}
-		return getAPIResultAsync(request: request, type: String.self)
+		return await getAPIResultAsync(request: request, type: String.self)
 	}
 
 	/// The API request for getting the store product info from the Virtusize server
@@ -113,58 +111,58 @@ class VirtusizeAPIService: APIService {
 	/// - Parameters:
 	///   - productId: The internal product ID from the Virtusize server
 	/// - Returns: the store product info in the type of `VirtusizeServerProduct`
-	internal static func getStoreProductInfoAsync(productId: Int) -> APIResult<VirtusizeServerProduct> {
+	internal static func getStoreProductInfoAsync(productId: Int) async -> APIResult<VirtusizeServerProduct> {
 		guard let request = APIRequest.getStoreProductInfo(productId: productId) else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: VirtusizeServerProduct.self)
+		return await getAPIResultAsync(request: request, type: VirtusizeServerProduct.self)
 	}
 
 	/// The API request for getting the list of all the product types from the Virtusize server
 	///
 	/// - Returns: the product type list where its each element is in the type of `VirtusizeProductType`
-	internal static func getProductTypesAsync() -> APIResult<[VirtusizeProductType]> {
+	internal static func getProductTypesAsync() async -> APIResult<[VirtusizeProductType]> {
 		guard let request = APIRequest.getProductTypes() else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: [VirtusizeProductType].self)
+		return await getAPIResultAsync(request: request, type: [VirtusizeProductType].self)
 	}
 
 	/// The API request for getting the user session data from the Virtusize server
 	///
 	/// - Returns: the user session data in the type of `UserSessionInfo`
-	internal static func getUserSessionInfoAsync() -> APIResult<UserSessionInfo> {
+	internal static func getUserSessionInfoAsync() async -> APIResult<UserSessionInfo> {
 		guard let request = APIRequest.getSessions() else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: UserSessionInfo.self)
+		return await getAPIResultAsync(request: request, type: UserSessionInfo.self)
 	}
 
-	internal static func deleteUserDataAsync() -> APIResult<String> {
+	internal static func deleteUserDataAsync() async -> APIResult<String> {
 		guard let request = APIRequest.deleteUserData() else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: nil)
+		return await getAPIResultAsync(request: request, type: nil)
 	}
 
 	/// The API request for getting the list of user products from the Virtusize server
 	///
 	/// - Returns: the user product data in the type of `VirtusizeServerProduct`
-	internal static func getUserProductsAsync() -> APIResult<[VirtusizeServerProduct]> {
+	internal static func getUserProductsAsync() async -> APIResult<[VirtusizeServerProduct]> {
 		guard let request = APIRequest.getUserProducts() else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: [VirtusizeServerProduct].self)
+		return await getAPIResultAsync(request: request, type: [VirtusizeServerProduct].self)
 	}
 
 	/// The API request for getting the user body profile data from the Virtusize server
 	///
 	/// - Returns: the user body profile data in the type of `VirtusizeUserBodyProfile`
-	internal static func getUserBodyProfileAsync() -> APIResult<VirtusizeUserBodyProfile> {
+	internal static func getUserBodyProfileAsync() async -> APIResult<VirtusizeUserBodyProfile> {
 		guard let request = APIRequest.getUserBodyProfile() else {
 			return .failure(nil)
 		}
-		return getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
+		return await getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
 	}
 
 	/// The API request for retrieving the recommended sizes based on the user body profile
@@ -178,7 +176,7 @@ class VirtusizeAPIService: APIService {
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
-	) -> APIResult<BodyProfileRecommendedSizeArray> {
+	) async -> APIResult<BodyProfileRecommendedSizeArray> {
 		guard let request = APIRequest.getBodyProfileRecommendedSize(
 				productTypes: productTypes,
 				storeProduct: storeProduct,
@@ -187,28 +185,48 @@ class VirtusizeAPIService: APIService {
 			return .failure(nil)
 		}
 
-		return getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
+		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
 	}
 
-	/// The API request for getting i18 localization texts
+	/// The API request for getting i18n localization texts
 	///
-	/// - Returns: the i18 localization texts in the type of `VirtusizeI18nLocalization`
-	internal static func getI18nTextsAsync() -> APIResult<VirtusizeI18nLocalization> {
-		guard let virtusizeParams = Virtusize.params,
+	/// - Returns: the i18 localization texts as JSON object
+	internal static func getI18nAsync(language: VirtusizeLanguage? = nil) async -> APIResult<JSONObject> {
+		guard let lang = language ?? Virtusize.params?.language,
 			  let request = APIRequest.getI18n(
-				langCode: virtusizeParams.language.rawValue
+				langCode: lang.rawValue
 			  ) else {
 			return .failure(nil)
 		}
 
-		let apiResponse = VirtusizeAPIService.performAsync(request)
+		let apiResponse = await VirtusizeAPIService.performAsync(request)
 
-		guard apiResponse?.virtusizeError == nil,
-			  let data = apiResponse?.data else {
-			return .failure(apiResponse?.code, apiResponse?.virtusizeError)
+		guard apiResponse.virtusizeError == nil,
+			  let data = apiResponse.data else {
+			return .failure(apiResponse.code, apiResponse.virtusizeError)
 		}
 
-		return .success(Deserializer.i18n(data: data))
+		let json = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
+		return .success(json)
+	}
+
+	/// The API request for getting store specific i18n localization texts
+	///
+	/// - Returns: the i18 localization texts as JSON object
+	internal static func getStoreI18nAsync(storeName: String) async -> APIResult<JSONObject> {
+		guard let request = APIRequest.getStoreI18n(storeName: storeName) else {
+			return .failure(nil)
+		}
+
+		let apiResponse = await VirtusizeAPIService.performAsync(request)
+
+		guard apiResponse.virtusizeError == nil,
+			  let data = apiResponse.data else {
+			return .failure(apiResponse.code, apiResponse.virtusizeError)
+		}
+
+		let json = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONObject
+		return .success(json)
 	}
 
 	// The API request for loading an image from a URL
@@ -216,7 +234,7 @@ class VirtusizeAPIService: APIService {
 	/// - Parameters:
 	///   - url: The image of the URL
 	/// - Returns: the loaded image in the type of `UIImage`
-	internal static func loadImageAsync(url: URL?) -> APIResult<UIImage> {
+	internal static func loadImageSync(url: URL?) -> APIResult<UIImage> {
 		guard url != nil, let data = try? Data(contentsOf: url!),
 			  let image = UIImage(data: data)
 		else {
@@ -228,12 +246,12 @@ class VirtusizeAPIService: APIService {
     // The API request for fetching the latest version of Aoyama from a txt URL
     ///
     /// - Returns: the version in `String`
-    internal static func fetchLatestAoyamaVersion() -> APIResult<String> {
+    internal static func fetchLatestAoyamaVersion() async -> APIResult<String> {
         let request = APIRequest.fetchLatestAoyamaVersion()
-        let apiResponse = VirtusizeAPIService.performAsync(request)
-        guard let data = apiResponse?.data,
+        let apiResponse = await VirtusizeAPIService.performAsync(request)
+        guard let data = apiResponse.data,
               let version = String(data: data, encoding: .utf8) else {
-            return .failure(apiResponse?.code, apiResponse?.virtusizeError)
+            return .failure(apiResponse.code, apiResponse.virtusizeError)
         }
         let trimmedVersion = version.trimmingCharacters(in: .whitespacesAndNewlines)
         return .success(trimmedVersion, nil)

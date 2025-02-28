@@ -1,8 +1,8 @@
 //
-//  VirtusizeAuthProvider.swift
-//  VirtusizeAuth
+//  JSON+Exensions.swift
+//  Virtusize
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,21 @@
 //  THE SOFTWARE.
 //
 
-/// The protocol that all SNS Auth providers must conform to.
-protocol VirtusizeAuthProvider {
-	/// Gets the user's information from the provider with an access token.
-	func getUserInfo(accessToken: String) async -> VirtusizeUser?
-}
-
-/// Facebook Auth Provider
-class FacebookAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
-	}
-}
-
-/// Google Auth Provider
-class GoogleAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+internal extension JSONObject {
+	mutating func deepMerge(source: JSONObject) {
+		for (key, value) in source {
+			if let newJson = value as? JSONObject, let existingJson = self[key] as? JSONObject {
+				// update
+				var mergedDict = existingJson
+				mergedDict.deepMerge(source: newJson)
+				self[key] = mergedDict
+			} else if let newArray = value as? [Any], let existingArray = self[key] as? [Any] {
+				// attach
+				self[key] = existingArray + newArray
+			} else {
+				// set
+				self[key] = value
+			}
+		}
 	}
 }

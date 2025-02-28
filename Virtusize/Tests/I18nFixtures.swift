@@ -1,8 +1,8 @@
 //
-//  VirtusizeAuthProvider.swift
-//  VirtusizeAuth
+//  I18nFixtures.swift
+//  Virtusize
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,53 @@
 //  THE SOFTWARE.
 //
 
-/// The protocol that all SNS Auth providers must conform to.
-protocol VirtusizeAuthProvider {
-	/// Gets the user's information from the provider with an access token.
-	func getUserInfo(accessToken: String) async -> VirtusizeUser?
-}
-
-/// Facebook Auth Provider
-class FacebookAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
+extension TestFixtures {
+	static let i18nEN =
+"""
+{
+  "language": "en",
+  "apiVersion": "1.0.0",
+  "bundle": "aoyama",
+  "id": "aoyama.en",
+  "keys": {
+	"apps": {
+	  "aoyama": {
+		"inpage": {
+		  "bodydataEmpty": "Find your right size",
+		  "sizeCheck": "Show me",
+		  "willFitResult": "Your recommended size is "
+		}
+	  }
 	}
+  }
 }
+"""
 
-/// Google Auth Provider
-class GoogleAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+	static let storeI18n =
+"""
+{
+  "desktop": {
+	"ja": {
+	  "apps": {
+		"aoyama": {
+		  "inpage": {
+			"willFitResult": "あなたの体型に人気のサイズ"
+		  }
+		}
+	  }
 	}
+  },
+  "mobile": {
+	"ja": {
+	  "apps": {
+		"aoyama": {
+		  "inpage": {
+			"willFitResult": "あなたの体型に人気のサイズ"
+		  }
+		}
+	  }
+	}
+  }
+}
+"""
 }

@@ -1,8 +1,8 @@
 //
-//  VirtusizeAuthProvider.swift
-//  VirtusizeAuth
+//  URL+Extensions.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2025-present Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,23 @@
 //  THE SOFTWARE.
 //
 
-/// The protocol that all SNS Auth providers must conform to.
-protocol VirtusizeAuthProvider {
-	/// Gets the user's information from the provider with an access token.
-	func getUserInfo(accessToken: String) async -> VirtusizeUser?
-}
+import Foundation
 
-/// Facebook Auth Provider
-class FacebookAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
-	}
-}
+extension URL {
+	public func addOrUpdate(name: String, value: String) -> URL {
+		guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+			return self
+		}
 
-/// Google Auth Provider
-class GoogleAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+		var items = components.queryItems ?? []
+
+		if let itemIndex = items.firstIndex(where: { $0.name == name }) {
+			items[itemIndex].value = value
+		} else {
+			items.append(URLQueryItem(name: name, value: value))
+		}
+
+		components.queryItems = items
+		return components.url ?? self
 	}
 }

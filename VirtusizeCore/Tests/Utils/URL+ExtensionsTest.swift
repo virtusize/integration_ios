@@ -1,8 +1,8 @@
 //
-//  VirtusizeAuthProvider.swift
-//  VirtusizeAuth
+//  URL+ExtensionsTest.swift
+//  VirtusizeCore
 //
-//  Copyright (c) 2021-present Virtusize KK
+//  Copyright (c) 2024 Virtusize KK
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,25 @@
 //  THE SOFTWARE.
 //
 
-/// The protocol that all SNS Auth providers must conform to.
-protocol VirtusizeAuthProvider {
-	/// Gets the user's information from the provider with an access token.
-	func getUserInfo(accessToken: String) async -> VirtusizeUser?
-}
+import Testing
+@testable import VirtusizeCore
 
-/// Facebook Auth Provider
-class FacebookAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await FacebookAPIService.getUserInfoAsync(accessToken: accessToken).success
+struct UrlExtensionsTest {
+	@Test func addNew() {
+		let url = URL(string: "http://example.com")
+		let result = url?.addOrUpdate(name: "foo", value: "bar")
+		#expect(result?.absoluteString == "http://example.com?foo=bar")
 	}
-}
 
-/// Google Auth Provider
-class GoogleAuthProvider: VirtusizeAuthProvider {
-	func getUserInfo(accessToken: String) async -> VirtusizeUser? {
-		return await GoogleAPIService.getUserInfoAsync(accessToken: accessToken).success
+	@Test func addNewToTail() {
+		let url = URL(string: "http://example.com?code=1")
+		let result = url?.addOrUpdate(name: "foo", value: "bar")
+		#expect(result?.absoluteString == "http://example.com?code=1&foo=bar")
+	}
+
+	@Test func updateExisting() {
+		let url = URL(string: "http://example.com?foo=car")
+		let result = url?.addOrUpdate(name: "foo", value: "bar")
+		#expect(result?.absoluteString == "http://example.com?foo=bar")
 	}
 }
