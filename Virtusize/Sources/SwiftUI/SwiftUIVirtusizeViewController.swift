@@ -72,13 +72,7 @@ public struct SwiftUIVirtusizeViewController: UIViewControllerRepresentable {
 	}
 
 	public func updateUIViewController(_ uiViewController: VirtusizeWebViewController, context: Context) {
-//		if uiViewController.isViewWillAppeared {
-//			uiViewController.isViewWillAppeared = false
-//			if uiViewController.isVirtusizeClosed {
-//				uiViewController.isVirtusizeClosed = false
-//				uiViewController.loadWebView()
-//			}
-//		}
+		// nothing
 	}
 }
 
