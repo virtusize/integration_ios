@@ -560,21 +560,21 @@ Check the [Set Up](#1-initialization) section for the example code
 ```Swift
 @main
 struct ExampleApp: App {
-	init() {
-		// Initialize Virtusize
-		Virtusize.APIKey = "api-key"
-		Virtusize.params = VirtusizeParamsBuilder()
-			// ... conifgure Virtusize parameters
-			.build()
-	}
+  init() {
+    // Initialize Virtusize
+    Virtusize.APIKey = "api-key"
+    Virtusize.params = VirtusizeParamsBuilder()
+      // ... conifgure Virtusize parameters
+      .build()
+  }
 
   var body: some Scene {
     WindowGroup {
       ContentView()
-				.onOpenURL(perform: { url in
+        .onOpenURL(perform: { url in
           // Handle Virtusize SNS callback
-					_ = Virtusize.handleUrl(url)
-				})
+          _ = Virtusize.handleUrl(url)
+        })
     }
   }
 }

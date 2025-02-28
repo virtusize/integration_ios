@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### Next Release
+- Feature: SwiftUI Support
+
 ### 2.10.0
 - Refactor: Optimize product loading time by concurrent loading, memory cache and avoiding unecessary reloading of body measurements
 - Refactor: Introduce Swift async/await usage
@@ -20,7 +23,6 @@ Use list notation, and following prefixes:
 - Feature: Load and apply store specific i18n texts runtime
 - Feature: Build and validate fonts taking into account store specific i18n texts
 - Feature: Allow to specify custom branch for WebView-native apps
-- Feature: SwiftUI Support
 
 ### 2.9.0
 - Feature: Allow to target specific testing environment by branch name `Virtusize.setTestingBranch("branch-name")`
