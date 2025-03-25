@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
+### 2.11.0
+- Feature: SwiftUI Support
+
 ### 2.10.0
 - Refactor: Optimize product loading time by concurrent loading, memory cache and avoiding unecessary reloading of body measurements
 - Refactor: Introduce Swift async/await usage
