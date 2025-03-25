@@ -13,7 +13,7 @@ Use list notation, and following prefixes:
 
 ## NEXT RELEASE for Version 2.x.x
 
-### Next Release
+### 2.11.0
 - Feature: SwiftUI Support
 
 ### 2.10.0
