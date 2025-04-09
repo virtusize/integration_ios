@@ -28,6 +28,9 @@ import Foundation
 public protocol VirtusizeFlutterProductEventHandler {
     func onProductCheckData(externalId: String, isValid: Bool)
     func onSizeRecommendationData(
+        externalId: String,
+        clientProductImageURL: String?,
+        storeProduct: VirtusizeServerProduct,
         bestUserProduct: VirtusizeServerProduct?,
         recommendationText: String
     )

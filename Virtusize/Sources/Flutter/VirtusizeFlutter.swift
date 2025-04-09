@@ -135,7 +135,9 @@ public class VirtusizeFlutter: Virtusize {
         }
         
         let serverProduct = sizeRecData.serverProduct
-        let bestUserProduct = sizeRecData.sizeComparisonRecommendedSize?.bestUserProduct ?? serverProduct
+        let clientProductImageURL = self.storeProductSet.first(where: {product in product.externalId == serverProduct.externalId})?.imageURL
+        
+        let bestUserProduct = sizeRecData.sizeComparisonRecommendedSize?.bestUserProduct
         let recommendationText = serverProduct.getRecommendationText(
             VirtusizeRepository.shared.i18nLocalization!,
             sizeRecData.sizeComparisonRecommendedSize,
@@ -143,6 +145,9 @@ public class VirtusizeFlutter: Virtusize {
             VirtusizeI18nLocalization.TrimType.MULTIPLELINES
         )
         flutterHandler?.onSizeRecommendationData(
+            externalId: serverProduct.externalId,
+            clientProductImageURL: clientProductImageURL?.absoluteString,
+            storeProduct: serverProduct,
             bestUserProduct: bestUserProduct,
             recommendationText: recommendationText
         )
