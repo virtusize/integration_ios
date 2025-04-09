@@ -57,6 +57,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	///   - product: `VirtusizeProduct`
 	/// - Returns: a valid`VirtusizeProduct` with the PDC data or nil if check failed
 	internal func checkProductValidity(product: VirtusizeProduct) async -> VirtusizeProduct? {
+        let imageURL = product.imageURL
 		let productResponse = await VirtusizeAPIService.productCheckAsync(product: product)
 		guard let product = productResponse.success else {
 			NotificationCenter.default.post(
@@ -71,6 +72,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		mutableProduct.name = product.name
 		mutableProduct.externalId = product.externalId
 		mutableProduct.productCheckData = product.productCheckData
+        mutableProduct.imageURL = imageURL
 
 		// Send the API event where the user saw the product
 		Task { // should NOT be awaited, to not block the main flow
@@ -91,10 +93,10 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 
 		if let sendImageToBackend = mutableProduct.productCheckData?.fetchMetaData,
 		   sendImageToBackend,
-		   product.imageURL != nil,
+           imageURL != nil,
 		   let storeId = mutableProduct.productCheckData?.storeId {
 			Task { // should NOT be awaited, to not block the main flow
-				await VirtusizeAPIService.sendProductImage(of: product, forStore: storeId)
+				await VirtusizeAPIService.sendProductImage(of: mutableProduct, forStore: storeId)
 			}
 		}
 
