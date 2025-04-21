@@ -11,7 +11,7 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 
-## NEXT RELEASE for Version 2.x.x
+### 2.12.0
 - Feature: Update Flutter SDK implementation to be compatible with latest changes
 
 ### 2.11.0
