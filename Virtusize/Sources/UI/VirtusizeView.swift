@@ -42,6 +42,7 @@ extension VirtusizeView {
 		serverProduct: VirtusizeServerProduct? = nil,
 		eventHandler: VirtusizeEventHandler? = nil
 	) {
+        // if changed update the same method in VirtusizeFlutter.swift
 		VirtusizeRepository.shared.lastProductOnVirtusizeWebView = self.serverProduct
 		if let virtusize = VirtusizeWebViewController(
 			product: product,
