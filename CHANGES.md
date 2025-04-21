@@ -12,6 +12,7 @@ Use list notation, and following prefixes:
 
 
 ## NEXT RELEASE for Version 2.x.x
+- Feature: Update Flutter SDK implementation to be compatible with latest changes
 
 ### 2.11.0
 - Feature: SwiftUI Support
