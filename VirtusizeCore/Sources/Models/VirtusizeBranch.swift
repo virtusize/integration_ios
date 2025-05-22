@@ -23,6 +23,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 public class VirtusizeBranch {
 	/// Update `URL` with the `branch` name to test specific Virtusize environments
 	public static func applyBranch(to url: URL, branch: String) -> URL {
