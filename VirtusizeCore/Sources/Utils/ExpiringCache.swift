@@ -23,6 +23,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 private enum CacheEntry {
 	case inProgress(Task<Any, Error>)
 	case ready(Date, Any)

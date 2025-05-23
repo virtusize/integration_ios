@@ -11,6 +11,9 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 
+### 2.12.1
+- Fix: Add missing Foundation imports
+
 ### 2.12.0
 - Feature: Update Flutter SDK implementation to be compatible with latest changes
 
