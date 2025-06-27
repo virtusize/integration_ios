@@ -10,6 +10,8 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Future release
+- Fix: Add loading animation for VirtusizeInPageViews
 
 ### 2.12.1
 - Fix: Add missing Foundation imports
