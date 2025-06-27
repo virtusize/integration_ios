@@ -28,7 +28,7 @@ jobs:
         run: pod lib lint --include-podspecs="Virtusize*.podspec" --allow-warnings
 
   test:
-    runs-on: macos-15
+    runs-on: macos-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -36,11 +36,6 @@ jobs:
         run: |
           pip install --upgrade fonttools
           make validate-fonts
-      # This step should be removed after 6 Jan, 2025 when macos-latest updates XCode from 16.0 to 16.2
-      - name: Latest XCode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
       - name: Print Installed Simulators
         run: xcrun simctl list
       - name: Run VirtusizeCoreTests
