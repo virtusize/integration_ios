@@ -89,8 +89,9 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	internal override func didReceiveInPageError(_ notification: Notification) {
+		showLoadingGif(false)
 		shouldShowInPageErrorScreen(notification) {
-			backgroundColor = .white
+			contentContainerView.backgroundColor = .white
 			stopLoadingTextAnimation()
 			inPageMiniImageView.image = VirtusizeAssets.errorHanger
 			inPageMiniMessageLabel.textColor = .vsGray700Color
@@ -103,9 +104,9 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	private func addSubviews() {
-		addSubview(inPageMiniImageView)
-		addSubview(inPageMiniMessageLabel)
-		addSubview(inPageMiniSizeCheckButton)
+		contentContainerView.addSubview(inPageMiniImageView)
+		contentContainerView.addSubview(inPageMiniMessageLabel)
+		contentContainerView.addSubview(inPageMiniSizeCheckButton)
 	}
 
 	private func setConstraints() {
@@ -162,7 +163,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	private func setStyle() {
-		backgroundColor = getBackgroundColor()
+		contentContainerView.backgroundColor = getBackgroundColor()
 
 		inPageMiniImageView.contentMode = .scaleAspectFit
 
@@ -225,7 +226,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	internal override func setLoadingScreen(loading: Bool) {
-		backgroundColor = loading ? .white : getBackgroundColor()
+		contentContainerView.backgroundColor = loading ? .white : getBackgroundColor()
 		inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
 		inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
 		setupTextsStyle(messageLabelIsBold: loading)
