@@ -25,10 +25,10 @@ extension UIImage {
         let count = CGImageSourceGetCount(source)
         var images: [UIImage] = []
         var duration: Double = 0
-        for i in 0..<count {
-            if let cgImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
+        for index in 0..<count {
+            if let cgImage = CGImageSourceCreateImageAtIndex(source, index, nil) {
                 images.append(UIImage(cgImage: cgImage))
-                let properties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [String: Any]
+                let properties = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? [String: Any]
                 let gifProperties = properties?[kCGImagePropertyGIFDictionary as String] as? [String: Any]
                 let frameDuration = (gifProperties?[kCGImagePropertyGIFUnclampedDelayTime as String] as? Double) ?? (gifProperties?[kCGImagePropertyGIFDelayTime as String] as? Double) ?? 0.1
                 duration += frameDuration
