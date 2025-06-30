@@ -47,7 +47,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		virtusizeEventHandler = self
-		isHidden = true
+		isLoading = true
+		addSubviews()
 		setup()
 		addNotificationObserver()
 	}
@@ -55,9 +56,48 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	public override init(frame: CGRect) {
 		super.init(frame: .zero)
 		virtusizeEventHandler = self
-		isHidden = true
+		isLoading = true
+		addSubviews()
 		setup()
 		addNotificationObserver()
+	}
+
+	// Container for all current content
+	internal let contentContainerView: UIView = UIView()
+	// Loading GIF image view
+	private let loadingGifImageView: UIImageView = UIImageView()
+	private var isLoading: Bool = false
+
+	private func addSubviews() {
+		// Add loading GIF image view
+		addSubview(loadingGifImageView)
+		loadingGifImageView.translatesAutoresizingMaskIntoConstraints = false
+		loadingGifImageView.contentMode = .scaleAspectFit
+        loadingGifImageView.image = UIImage.animatedGif(named: "virtusize_loading")
+		NSLayoutConstraint.activate([
+			loadingGifImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+			loadingGifImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+			loadingGifImageView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor),
+			loadingGifImageView.heightAnchor.constraint(equalToConstant: 40)
+		])
+		loadingGifImageView.isHidden = false
+
+		// Add content container view
+		addSubview(contentContainerView)
+		contentContainerView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			contentContainerView.topAnchor.constraint(equalTo: topAnchor),
+			contentContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+			contentContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			contentContainerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+		])
+		contentContainerView.isHidden = true
+	}
+
+	internal func showLoadingGif(_ show: Bool) {
+		isHidden = false
+		loadingGifImageView.isHidden = !show
+		contentContainerView.isHidden = show
 	}
 
 	/// Add observers to listen to notification data from the sender (Virtusize.self)
@@ -94,7 +134,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	@objc internal func didReceiveProductCheckData(_ notification: Notification) {
 		shouldUpdateProductCheckData(notification) { productWithPDCData in
 			self.clientProduct = productWithPDCData
-			isHidden = false
+			showLoadingGif(false)
 			setLoadingScreen(loading: true)
 		}
 	}
