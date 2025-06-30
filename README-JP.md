@@ -199,45 +199,237 @@ override func viewDidLoad() {
 }
 ```
 
+### 3. SNS認証を有効にする
 
+SNS認証フローでは、ユーザーがSNSアカウントでログインできるように、`SFSafariViewController`を使って認証用の に切り替えてユーザーがSNSアカウントでログインするためのWebページを表示します。読み込みます。ログイン後、`SFSafariViewController` からアプリに戻すためには、カスタムURLスキームを定義するしておく必要があります。
 
-### 3. Enable SNS authentication
+#### ステップ1: URLタイプを登録する
 
-The SNS authentication flow requires switching to a SFSafariViewController, which will load a web page for the user to login with their SNS account. A custom URL scheme must be defined to return the login response to your app from a SFSafariViewController.
+Xcodeで、プロジェクトの **Info** タブをクリックし、**URL Types** を選択します。
 
- You must register a URL type and send it to the `VirtusizeAuth.setAppBundleId` method.
-
-**(1) Register a URL type**
-
-In Xcode, click on your project's **Info** tab and select **URL Types**.
-
-Add a new URL type and set the URL Schemes and identifier to `com.your-company.your-app.virtusize`
+新しいURLタイプを追加し、URL Schemes と identifier の両方にを、 `com.your-company.your-app.virtusize` をに設定してくださいします。
 
 ![Screen Shot 2021-11-10 at 21 36 31](https://user-images.githubusercontent.com/7802052/141114271-373fb239-91f8-4176-830b-5bc505e45017.png)
 
-**(2) Set the app's bundle ID**
+#### ステップ2: アプリケーションのコールバックハンドラーを設定する
 
-In the App Delegate's `application(_:didFinishLaunchingWithOptions:)` method, call the `VirtusizeAuth.setAppBundleId` method with the app's bundle ID.
+古いプロジェクトの場合、AppDelegate の `application(_:open:options)` メソッドを実装します：
 
-``` Swift
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-	// Virtusize initialization omitted for brevity
-
-	// Set the app bundle ID
-	VirtusizeAuth.setAppBundleId("com.your-company.your-app")
-
-	return true
+```Swift
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    return Virtusize.handleUrl(url)
 }
 ```
 
-**❗IMPORTANT**	
+新しいプロジェクトでは、SceneDelegate の `scene(_:openURLContexts)` メソッドを実装します：
 
-1. The URL type must include your app's bundle ID and **end with .virtusize**.
+```Swift
+func scene(_ scene: UIScene, openURLContexts: Set<UIOpenURLContext>) {
+    if let urlContext = openURLContexts.first {
+        _ = Virtusize.handleUrl(urlContext.url)
+    }
+}
+```
 
-2. If you have multiple app targets, add the URL type for all of them.
+`AppDelegate` と `SceneDelegate` の両方のファイルがある場合、SNSコールバックの処理には `SceneDelegate` を使用してください。
+
+#### ❗重要
+
+1. URLタイプには、アプリのバンドルIDが含まれ、**末尾に `.virtusize` を付ける必要があります**。
+2. 複数のアプリターゲットがある場合は、すべてにURLタイプを追加してください。
 
 
+#### (オプション) カスタムブランチを設定する
 
+WebViewで読み込むURLを更新することで、カスタムの環境ブランチをテストできます：
+
+```Swift
+let url = VirtusizeBranch.applyBranch(
+    to: URL(string: "https://demo.virtusize.com")!,
+    branch: "branch-name")
+webView.load(URLRequest(url: url))
+```
+
+### ネイティブWebViewアプリでVirtusizeのSNSログインを有効にする
+
+VirtusizeのSNSログインをWebView内で有効にするには、以下のいずれかの方法を実装 使用してください。
+
+#### 方法1: VirtusizeWebViewを使用する
+
+#### Virtusizeを読み込む`WKWebView`を`VirtusizeWebView`に置き換える
+
+Webビュー内でのVirtusize連携のWeb版において、VirtusizeのSNSログインを有効にするには、以下のメソッドを使用してください。
+
+1. UIを純粋にUIKitで構築している場合は、Swiftファイル内の `WKWebView` を **`VirtusizeWebView`** に置き換えてください。
+また、`WKWebViewConfiguration` オブジェクトを使ってWebビューを設定している場合は、以下の例のようにクロージャ内でアクセスしてください。
+
+   - Swift
+
+   ```diff
+   - var webView: WKWebView
+   + var webView: VirtusizeWebView
+   ```
+
+   ```swift
+   webView = VirtusizeWebView(frame: .zero) { configuration in
+       // WKWebViewConfigurationオブジェクトにアクセスしてカスタマイズ可能
+       
+       // 複数のVirtusizeWebView間でCookieを共有したい場合
+       configuration.processPool = WKProcessPool()
+   }
+   ```
+
+2. UIをXcodeのInterface Builderで構築している場合は、IdentityインスペクタでWebビューのCustom Classを **`VirtusizeWebView`** に設定してください。
+
+   - Swift
+
+   ```diff
+   - @IBOutlet weak var webview: WKWebView!
+   + @IBOutlet weak var webview: VirtusizeWebView!
+   ```
+
+   - Interface Builder
+
+     ![img](https://user-images.githubusercontent.com/7802052/121308895-87e3b500-c93c-11eb-8745-f4bf22bccdba.png)
+
+#### 方法2: WKWebViewを使用する
+
+#### ステップ1: `javaScriptCanOpenWindowsAutomatically` をtrueに設定
+
+```swift
+yourWebView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+```
+
+#### ステップ2: Google SDKが動作するように `customUserAgent` を設定
+
+```swift
+yourWebView.customUserAgent = VirtusizeAuthConstants.userAgent
+```
+
+#### ステップ3: ViewController が `WKNavigationDelegate` に準拠していることを確認し、SNSログインボタンを有効にする処理化コードを実装
+
+```swift
+class YourViewController: UIViewController {
+    
+    private var yourWebView: WKWebView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // ... その他のコード
+        
+        yourWebView.navigationDelegate = self
+    }
+}
+
+extension ViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.evaluateJavaScript("window.virtusizeSNSEnabled = true;")
+    }
+}
+```
+
+#### ステップ4: ViewController が`WKUIDelegate` に準拠していることを確認し、以下のコードを実装
+
+```swift
+class YourViewController: UIViewController {
+    
+    private var yourWebView: WKWebView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // ... the other code
+        
+        yourWebView.uiDelegate = self
+    }
+}
+
+extension YourViewController: WKUIDelegate {
+    func webView(
+        _ webView: WKWebView,
+        createWebViewWith configuration: WKWebViewConfiguration,
+        for navigationAction: WKNavigationAction,
+        windowFeatures: WKWindowFeatures
+    ) -> WKWebView? {
+        guard let url = navigationAction.request.url else {
+            return nil
+        }
+        
+        if VirtusizeURLCheck.isExternalLinkFromVirtusize(url: url.absoluteString) {
+            UIApplication.shared.open(url, options: [:])
+            return nil
+        }
+        
+        if VirtusizeAuthorization.isSNSAuthURL(viewController: self, webView: webView, url: url) {
+            return nil
+        }
+        
+        if navigationAction.targetFrame == nil && VirtusizeURLCheck.isLinkFromSNSAuth(url: url.absoluteString) {
+            // デフォルトでは、GoogleのサインインページはWebビュー内でアクセスすると 403エラー：disallowed_useragent を表示します。
+            // User Agent を設定することで、GoogleはWebビューをSafariブラウザとして認識します。
+            configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
+            let popupWebView = WKWebView(frame: webView.frame, configuration: configuration)
+            popupWebView.uiDelegate = self
+            webView.addSubview(popupWebView)
+            popupWebView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                popupWebView.topAnchor.constraint(equalTo: webView.topAnchor),
+                popupWebView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+                popupWebView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+                popupWebView.bottomAnchor.constraint(equalTo: webView.bottomAnchor)
+            ])
+            return popupWebView
+        }
+        
+        // 残りのコードはそのままで構いません。
+        
+        return nil
+    }
+    
+    func webViewDidClose(_ webView: WKWebView) {
+        webView.removeFromSuperview()
+    }
+}
+```
+
+### マイグレーションガイド（バージョン2.x → 2.8.0）
+
+#### ステップ1: AppDelegate または SceneDelegate にコールバックURLハンドラを設定
+
+```Swift
+// 古いアプリ - SceneDelegate が使われていない場合は AppDelegate に追加
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    return Virtusize.handleUrl(url)
+}
+```
+
+```Swift
+// 新しいアプリ - SceneDelegate を更新
+func scene(_ scene: UIScene, openURLContexts: Set<UIOpenURLContext>) {
+    if let urlContext = openURLContexts.first {
+        _ = Virtusize.handleUrl(urlContext.url)
+    }
+}
+```
+
+#### ステップ2: `setAppBundleId` 関数呼び出しを削除
+
+```diff
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  // Virtusize の初期化は省略
+-   VirtusizeAuth.setAppBundleId("com.your-company.your-app")
+  return true
+}
+```
+
+#### ステップ3: (オプション) ネイティブWebViewアプリでは `customUserAgent` を設定
+
+
+```swift
+// yourWebViewがWKWebViewの場合
+yourWebView.customUserAgent = VirtusizeAuthConstants.userAgent
+```
 
 ### 4. VirtusizeMessageHandlerの実装（オプション）
 
