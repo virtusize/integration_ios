@@ -136,6 +136,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	}
 
 	internal override func didReceiveInPageError(_ notification: Notification) {
+		showLoadingGif(false)
 		shouldShowInPageErrorScreen(notification) {
 			inPageStandardView.layer.shadowOpacity = 0
 			inPageStandardView.isUserInteractionEnabled = false
@@ -215,9 +216,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	}
 
 	private func addSubviews() {
-		addSubview(inPageStandardView)
-		addSubview(vsSignatureImageView)
-		addSubview(privacyPolicyLink)
+		contentContainerView.addSubview(inPageStandardView)
+		contentContainerView.addSubview(vsSignatureImageView)
+		contentContainerView.addSubview(privacyPolicyLink)
 		inPageStandardView.addSubview(userProductImageView)
 		inPageStandardView.addSubview(storeProductImageView)
 		inPageStandardView.addSubview(vsIconImageView)
