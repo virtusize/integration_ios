@@ -12,6 +12,7 @@ Use list notation, and following prefixes:
 
 ### Future release
 - Fix: Add loading animation for VirtusizeInPageViews
+- Fix: Make sns buttons show by default
 
 ### 2.12.1
 - Fix: Add missing Foundation imports
