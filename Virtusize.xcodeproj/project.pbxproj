@@ -27,6 +27,8 @@
 		52FDA2882D3A5C8F007F5AC8 /* VirtusizeAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */; };
 		741DD0692DA3D06B007DF2C3 /* VirtusizeFlutter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741DD0682DA3D06B007DF2C3 /* VirtusizeFlutter.swift */; };
 		741DD06D2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741DD06C2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift */; };
+		74F8E3BE2E0D5B7A002CAE98 /* virtusize_loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 74F8E3BD2E0D5B7A002CAE98 /* virtusize_loading.gif */; };
+		74F8E3D02E0EA477002CAE98 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F8E3CF2E0EA473002CAE98 /* UIImageViewExtensions.swift */; };
 		8455FFD42B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */; };
 		84CF03B92BD7A64A00C08920 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */; };
 		9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */; };
@@ -157,6 +159,8 @@
 		52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VirtusizeAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		741DD0682DA3D06B007DF2C3 /* VirtusizeFlutter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeFlutter.swift; sourceTree = "<group>"; };
 		741DD06C2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeFlutterProductEventHandler.swift; sourceTree = "<group>"; };
+		74F8E3BD2E0D5B7A002CAE98 /* virtusize_loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = virtusize_loading.gif; sourceTree = "<group>"; };
+		74F8E3CF2E0EA473002CAE98 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeItemsParam.swift; sourceTree = "<group>"; };
 		84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImage.swift; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 		4DED8D1E205755C3001CA7DF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				74F8E3CF2E0EA473002CAE98 /* UIImageViewExtensions.swift */,
 				52221C442D67388700CDD1A4 /* SwiftUI */,
 				9C01389026AE916A007F5392 /* Flutter */,
 				4D6C5794205FB9FC00DA910E /* Internal */,
@@ -403,6 +408,7 @@
 		9C35F96625F02AC30004E9CD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				74F8E3BD2E0D5B7A002CAE98 /* virtusize_loading.gif */,
 				84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */,
 				9C35F99C25F02CAD0004E9CD /* VirtusizeAssets.xcassets */,
 				9C35F97925F02BA70004E9CD /* Fonts */,
@@ -717,6 +723,7 @@
 				52CB715D2D32034500E18E57 /* Subset-NotoSansKR-Regular.ttf in Resources */,
 				52CB715E2D32034500E18E57 /* Subset-NotoSansJP-Regular.ttf in Resources */,
 				52CB715F2D32034500E18E57 /* Subset-NotoSansKR-Bold.ttf in Resources */,
+				74F8E3BE2E0D5B7A002CAE98 /* virtusize_loading.gif in Resources */,
 				9C35F9D825F0350B0004E9CD /* VirtusizeAssets.xcassets in Resources */,
 				84CF03B92BD7A64A00C08920 /* PrivacyInfo.xcprivacy in Resources */,
 				9C4B38A126BBA84B00B73FE5 /* LICENSE in Resources */,
@@ -778,6 +785,7 @@
 				9C4B38A326BBC26300B73FE5 /* VirtusizeButton.swift in Sources */,
 				9CEAB7B824D940CE00F969E1 /* VirtusizeServerProductAdditionalInfo.swift in Sources */,
 				9C5956CF2484F9F50014DF51 /* VirtusizeStore.swift in Sources */,
+				74F8E3D02E0EA477002CAE98 /* UIImageViewExtensions.swift in Sources */,
 				9C5956C9247E730A0014DF51 /* VirtusizeOrder.swift in Sources */,
 				9C1169342521F270006827B9 /* VirtusizeGetSizeParams.swift in Sources */,
 				9C11691F2521DEB1006827B9 /* VirtusizeAnyCodable.swift in Sources */,
@@ -917,7 +925,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.12.1;
+				CURRENT_PROJECT_VERSION = 2.12.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -987,7 +995,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.12.1;
+				CURRENT_PROJECT_VERSION = 2.12.2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
