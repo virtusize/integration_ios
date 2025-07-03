@@ -30,7 +30,7 @@ public class VirtusizeParamsBuilder {
 	private var virtusizeProduct: VirtusizeProduct?
 	private var showSGI: Bool = false
 	private var detailsPanelCards: [VirtusizeInfoCategory] = VirtusizeInfoCategory.allCases
-    private var showSNSButtons: Bool = false
+    private var showSNSButtons: Bool = true
 	private var branch: String?
 
 	public init() {}

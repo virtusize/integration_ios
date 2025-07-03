@@ -13,6 +13,7 @@ Use list notation, and following prefixes:
 ### Future release
 - Fix: Add loading animation for VirtusizeInPageViews
 - Fix: Change inpage buttons text to be the same as in web version
+- Fix: Make sns buttons show by default
 
 ### 2.12.1
 - Fix: Add missing Foundation imports

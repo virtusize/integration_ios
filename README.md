@@ -140,7 +140,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
         // By default, Virtusize displays all the possible info categories in the Product Details tab,
         // including "modelInfo", "generalFit", "brandSizing" and "material".
         .setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT])
-        // By default, Virtusize disables the SNS buttons
+        // By default, Virtusize enables the SNS buttons
         .setShowSNSButtons(true)
         // Target the specific environment branch by its name
         .setBranch("branch-name")
@@ -162,7 +162,7 @@ You can set up the `Virtusize.params` by using **VirtusizeParamsBuilder** to cha
 | setShowSGI | Boolean | setShowSGI(true) | Determines whether the integration will fetch SGI and use SGI flow for users to add user generated items to their wardrobe. | No. By default, ShowSGI is set to false |
 | setAllowedLanguages  | A list of `VirtusizeLanguage` | setAllowedLanguages([VirtusizeLanguage.ENGLISH, VirtusizeLanguage.JAPANESE]) | The languages that the user can switch to using the Language Selector | No. By default, the integration allows all the possible languages to be displayed, including English, Japanese and Korean. |
 | setDetailsPanelCards | A list of `VirtusizeInfoCategory` | setDetailsPanelCards([VirtusizeInfoCategory.BRANDSIZING, VirtusizeInfoCategory.GENERALFIT]) | The info categories which will be displayed in the Product Details tab. Possible categories are: `VirtusizeInfoCategory.MODELINFO`, `VirtusizeInfoCategory.GENERALFIT`, `VirtusizeInfoCategory.BRANDSIZING` and `VirtusizeInfoCategory.MATERIAL` | No. By default, the integration displays all the possible info categories in the Product Details tab. |
-| setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to false |
+| setShowSNSButtons | Boolean | setShowSNSButtons(true)| Determines whether the integration will show SNS buttons | No. By default, ShowSNSButtons is set to true |
 | setBranch | String | setBranch("branch-name")| Targets specific environment branch | No. By default, production environment is targeted. `staging` - staging environment is targeted. `<branch-name>` a specific branch is targeted |
 
 
