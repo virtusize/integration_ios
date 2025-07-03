@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Future release
+### 2.12.2
 - Fix: Add loading animation for VirtusizeInPageViews
 - Fix: Change inpage buttons text to be the same as in web version
 - Fix: Make sns buttons show by default
