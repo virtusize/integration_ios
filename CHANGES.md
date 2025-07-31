@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Future release
+### 2.12.3
 - Fix: Display proper size recommendation text
 
 ### 2.12.2
