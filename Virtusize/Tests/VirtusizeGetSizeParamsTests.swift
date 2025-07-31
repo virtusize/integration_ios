@@ -41,6 +41,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                 "userGender": "female",
                 "userHeight": 1630,
                 "userWeight": 50,
+                "userAge": 32,
                 "items": [
                     {
                         "additionalInfo": {
@@ -71,6 +72,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                                 "waist": 56,
                                 "height": 165
                             },
+                            "style": "fashionable"
                         },
                         "itemSizesOrig": {
                             "35": {
@@ -235,7 +237,8 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             "fit": "regular",
                             "sizes": {},
                             "modelInfo": null,
-                            "gender": null
+                            "gender": null,
+                            "style": "fashionable"
                         },
                         "itemSizesOrig": {},
                         "productType": "",

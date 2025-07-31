@@ -169,7 +169,7 @@ class APIRequestTests: XCTestCase {
         XCTAssertNotNil(apiRequest?.httpBody)
         let actualParams = try? JSONDecoder().decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
         XCTAssertNotNil(actualParams)
-        XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 5)
+        XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 6)
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["gender"]?.value as? String, "female")
         XCTAssertEqual(
             actualParams?.items.first?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
