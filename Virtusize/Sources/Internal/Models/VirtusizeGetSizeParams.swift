@@ -34,6 +34,8 @@ internal struct VirtusizeGetSizeParams: Codable {
     var userHeight: Int?
     /// The user's weight
     var userWeight: Float?
+    /// The user's age
+    var userAge: Int?
     /// The user's items
     var items: [VirtusizeGetSizeItemsParam]
 
@@ -62,7 +64,10 @@ internal struct VirtusizeGetSizeParams: Codable {
             "modelInfo": VirtusizeAnyCodable(getModelInfoDict(storeProduct: storeProduct)),
             "gender": VirtusizeAnyCodable(
                 userBodyProfile?.gender ?? nil
-            )
+            ),
+            "style": VirtusizeAnyCodable(
+                storeProduct.storeProductMeta?.additionalInfo?.style ?? "regular"
+            ),
         ]
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
         let itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
@@ -75,6 +80,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         if let weight = userBodyProfile?.weight {
             userWeight = Float(weight)
         }
+        userAge = userBodyProfile?.age
 
         items = [
             VirtusizeGetSizeItemsParam(
