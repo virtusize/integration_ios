@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### 2.12.3
+- Fix: Display proper size recommendation text
+
 ### 2.12.2
 - Fix: Add loading animation for VirtusizeInPageViews
 - Fix: Change inpage buttons text to be the same as in web version
