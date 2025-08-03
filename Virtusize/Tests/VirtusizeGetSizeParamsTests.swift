@@ -38,6 +38,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         let expectedGetSizeParamsData = Data(
             """
             {
+                "appOrigin": 2,
                 "userGender": "female",
                 "userHeight": 1630,
                 "userWeight": 50,
@@ -100,15 +101,15 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "value": 300,
                         "predicted": true
                     },
-                    "bustWidth": {
+                    "bust_width": {
                         "value": 245,
                         "predicted": true
                     },
-                    "sleeveLength": {
+                    "sleeve_length": {
                         "value": 520,
                         "predicted": true
                     },
-                    "shoulderWidth": {
+                    "shoulder_width": {
                         "value": 340,
                         "predicted": true
                     },
@@ -116,7 +117,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "value": 630,
                         "predicted": true
                     },
-                    "waistHeight": {
+                    "waist_height": {
                         "value": 920,
                         "predicted": true
                     },
@@ -132,15 +133,15 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "value": 755,
                         "predicted": true
                     },
-                    "shoulderHeight": {
+                    "shoulder_height": {
                         "value": 1240,
                         "predicted": true
                     },
-                    "waistWidth": {
+                    "waist_width": {
                         "value": 225,
                         "predicted": true
                     },
-                    "hipHeight": {
+                    "hip_height": {
                         "value": 750,
                         "predicted": true
                     },
@@ -156,19 +157,19 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "value": 215,
                         "predicted": true
                     },
-                    "headHeight": {
+                    "head_height": {
                         "value": 215,
                         "predicted": true
                     },
-                    "kneeHeight": {
+                    "knee_height": {
                         "value": 395,
                         "predicted": true
                     },
-                    "armpitHeight": {
+                    "armpit_height": {
                         "value": 1130,
                         "predicted": true
                     },
-                    "hipWidth": {
+                    "hip_width": {
                         "value": 300,
                         "predicted": true
                     },
@@ -229,6 +230,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         let expectedGetSizeParamsData = Data(
             """
             {
+                "appOrigin": 2,
                 "bodyData": {},
                 "items": [
                     {
@@ -237,7 +239,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             "fit": "regular",
                             "sizes": {},
                             "modelInfo": null,
-                            "gender": null,
+                            "gender": "null",
                             "style": "fashionable"
                         },
                         "itemSizesOrig": {},
