@@ -205,8 +205,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 
 		if let userBodyProfile = userBodyProfile {
-            if storeProduct.productType == 17 {
-				// If the product type is 17, we need to fetch the shoe size recommendations
+            if storeProduct.isShoe() {
 				bodyProfileRecommendedSize = await VirtusizeAPIService.getBodyProfileRecommendedShoeSizeAsync(
 					productTypes: productTypes!,
 					storeProduct: storeProduct,
