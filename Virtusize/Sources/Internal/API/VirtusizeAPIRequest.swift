@@ -185,17 +185,60 @@ extension APIRequest {
 		userBodyProfile: VirtusizeUserBodyProfile
 	) -> URLRequest? {
 		let endpoint = APIEndpoints.getSize
-		guard let jsonData = try? JSONEncoder().encode(
-			VirtusizeGetSizeParams(
-				productTypes: productTypes,
-				storeProduct: storeProduct,
-				userBodyProfile: userBodyProfile
-			)
+		let codable = VirtusizeGetSizeParams(
+			productTypes: productTypes,
+			storeProduct: storeProduct,
+			userBodyProfile: userBodyProfile
+		)
+		
+		let encoder = JSONEncoder()
+		encoder.keyEncodingStrategy = .convertToSnakeCase
+		guard let jsonData = try? encoder.encode(
+		    codable
 		) else {
-			return nil
+		    return nil
 		}
+        
+        // Convert jsonData to String for debugging
+        if let jsonString = String(data: jsonData, encoding: .utf8) {
+            print("getBodyProfileRecommendedSize payload: \(jsonString)")
+        }
 		return apiRequest(components: endpoint.components, withPayload: jsonData)
 	}
+    
+    /// Gets the `URLRequest` for the `getSizeShoe` request
+    ///
+    /// - Parameters:
+    ///   - productTypes: The list of available `ProductType`s
+    ///   - storeProduct: The store product info whose data type is `VirtusizeServerProduct`
+    ///   - userBodyProfile: The user body profile whose data type is  `VirtusizeUserBodyProfile`
+    /// - Returns: A `URLRequest` for the `getShoeSize` request
+    internal static func getBodyProfileRecommendedShoeSize(
+        productTypes: [VirtusizeProductType],
+        storeProduct: VirtusizeServerProduct,
+        userBodyProfile: VirtusizeUserBodyProfile
+    ) -> URLRequest? {
+        let endpoint = APIEndpoints.getShoeSize
+        let codable = VirtusizeGetSizeParamsShoe(
+            productTypes: productTypes,
+            storeProduct: storeProduct,
+            userBodyProfile: userBodyProfile
+        )
+        
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        guard let jsonData = try? encoder.encode(
+            codable
+        ) else {
+            return nil
+        }
+        
+        // Convert jsonData to String for debugging
+        if let jsonString = String(data: jsonData, encoding: .utf8) {
+            print("getBodyProfileRecommendedSize payload: \(jsonString)")
+        }
+        return apiRequest(components: endpoint.components, withPayload: jsonData)
+    }
 
 	/// Gets the `URLRequest` for the request to get i18n texts
 	///

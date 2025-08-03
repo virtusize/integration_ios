@@ -141,7 +141,7 @@ public class VirtusizeFlutter: Virtusize {
         let recommendationText = serverProduct.getRecommendationText(
             VirtusizeRepository.shared.i18nLocalization!,
             sizeRecData.sizeComparisonRecommendedSize,
-            sizeRecData.bodyProfileRecommendedSize?.sizeName,
+            sizeRecData.bodyProfileRecommendedSize?.getSizeName,
             VirtusizeI18nLocalization.TrimType.MULTIPLELINES
         )
         flutterHandler?.onSizeRecommendationData(

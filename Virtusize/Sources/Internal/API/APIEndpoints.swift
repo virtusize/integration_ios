@@ -41,6 +41,7 @@ internal enum APIEndpoints {
 	case userProducts
 	case userBodyMeasurements
 	case getSize
+    case getShoeSize
 	case i18n(langCode: String)
 	case storeI18n(storeName: String)
 
@@ -49,8 +50,10 @@ internal enum APIEndpoints {
 		switch self {
 		case .productCheck, .productTypes, .storeProducts:
 			return Virtusize.environment.servicesUrl()
-		case  .getSize:
+		case .getSize:
 			return Virtusize.environment.getSizeUrl()
+        case .getShoeSize:
+            return Virtusize.environment.getSizeUrl()
 		case .latestAoyamaVersion, .virtusizeWebView, .virtusizeWebViewForSpecificClients:
 			return Virtusize.environment.virtusizeStaticApiUrl()
 		case .i18n:
@@ -133,6 +136,9 @@ internal enum APIEndpoints {
 
 		case .getSize:
 			components.path =  "/item"
+
+		case .getShoeSize:
+			components.path =  "/shoe"
 
 		case .i18n(let langCode):
 			components.path = "/bundle-payloads/aoyama/\(langCode)"
