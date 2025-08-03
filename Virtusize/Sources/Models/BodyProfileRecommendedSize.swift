@@ -55,11 +55,11 @@ public struct BodyProfileRecommendedSize: Codable {
     // swiftlint:enable line_length
 
     public var getSizeName: String? {
-        if let sn = sizeName, !sn.isEmpty {
-            return sn
+        if let validSizeName = sizeName, !validSizeName.isEmpty {
+            return validSizeName
         }
-        if let s = size, !s.isEmpty {
-            return s.replacingOccurrences(of: "&#46;", with: ".")
+        if let validSize = size, !validSize.isEmpty {
+            return validSize.replacingOccurrences(of: "&#46;", with: ".")
         }
         return ""
     }
