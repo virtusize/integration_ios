@@ -54,6 +54,10 @@ public struct BodyProfileRecommendedSize: Codable {
     }
     // swiftlint:enable line_length
 
+    /// Returns the recommended size name for the body profile.
+    /// - Returns: A `String` representing the size name if available and not empty.
+    ///   If `sizeName` is unavailable or empty, returns the `size`.
+    ///   If neither is available, returns an empty string.
     public var getSizeName: String? {
         if let validSizeName = sizeName, !validSizeName.isEmpty {
             return validSizeName
