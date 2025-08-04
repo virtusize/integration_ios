@@ -34,4 +34,6 @@ public class VirtusizeUserBodyProfile: Codable {
 	let weight: String?
 	/// The user's body measurement data, such as hip, bust, waist and so on.
 	let bodyData: [String: Int?]?
+	/// The user's footwear data, such as shoe size and width
+    let footwearData: [String: VirtusizeAnyCodable]?
 }

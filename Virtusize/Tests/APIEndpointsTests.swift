@@ -175,7 +175,7 @@ class APIEndpointsTests: XCTestCase {
     }
 
     func testGetSizeEndpoint_returnExpectedComponents() {
-        let endpoint = APIEndpoints.getSize
+        let endpoint = APIEndpoints.getItemSizeRecommendation
 
         XCTAssertEqual(endpoint.components.host, "size-recommendation.virtusize.com")
         XCTAssertEqual(endpoint.components.path, "/item")

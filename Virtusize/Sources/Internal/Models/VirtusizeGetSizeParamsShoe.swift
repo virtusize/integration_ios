@@ -1,5 +1,5 @@
 //
-//  VirtusizeGetSizeParams.swift
+//  VirtusizeGetSizeParamsShoe.swift
 //
 //  Copyright (c) 2020 Virtusize KK
 //
@@ -24,8 +24,7 @@
 
 // swiftlint:disable:next line_length
 /// The structure that wraps the parameters for the API request to get the recommended size based on a user's body profile
-internal struct VirtusizeGetSizeParams: Codable {
-    var appOrigin: Int = 2
+internal struct VirtusizeGetSizeParamsShoe: Codable {
     /// The user body data
     var bodyData: [String: [String: VirtusizeAnyCodable]] = [:]
     /// The user's gender
@@ -36,10 +35,20 @@ internal struct VirtusizeGetSizeParams: Codable {
     var userWeight: Float?
     /// The user's age
     var userAge: Int?
-    /// The user's items
-    var items: [VirtusizeGetSizeItemsParam]
+    /// The product name
+    var productName: String = ""
+    /// The additional information about the product
+    var additionalInfo: [String: VirtusizeAnyCodable] = [:]
+    /// The item sizes
+    var itemSizesOrig: [String: [String: Int?]] = [:]
+    /// The product type
+    var productType: String
+    /// The external product ID
+    var extProductId: String
+    
+    var footwearData: [String: VirtusizeAnyCodable] = [:]
 
-    /// Initializes the VirtusizeGetSizeParams structure
+    /// Initializes the VirtusizeGetSizeParamsShoe structure
     ///
     /// - Parameters:
     ///   - productTypes: The list of available `VirtusizeProductType`
@@ -51,7 +60,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         userBodyProfile: VirtusizeUserBodyProfile?
 
     ) {
-       let additionalInfo = [
+        additionalInfo = [
             "brand": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
             ),
@@ -70,8 +79,10 @@ internal struct VirtusizeGetSizeParams: Codable {
             ),
         ]
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
-        let itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
-        var productType = ""
+        itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
+        productType = ""
+        extProductId = storeProduct.externalId
+
         if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
             productType = productTypes[index].name
         }
@@ -81,16 +92,8 @@ internal struct VirtusizeGetSizeParams: Codable {
             userWeight = Float(weight)
         }
         userAge = userBodyProfile?.age
-
-        items = [
-            VirtusizeGetSizeItemsParam(
-                additionalInfo: additionalInfo,
-                itemSizesOrig: itemSizesOrig,
-                productType: productType,
-                extProductId: storeProduct.externalId
-            )
-        ]
-
+        productName = storeProduct.name
+        footwearData = userBodyProfile?.footwearData ?? [:]
     }
 }
 

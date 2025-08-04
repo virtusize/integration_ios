@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Future release
+- Fix: Align mobile SDK size recommendation API requests with web implementation
+
 ### 2.12.3
 - Fix: Display proper size recommendation text
 

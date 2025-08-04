@@ -167,10 +167,12 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
         XCTAssertNotNil(apiRequest?.httpBody)
-        let actualParams = try? JSONDecoder().decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let actualParams = try? decoder.decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
         XCTAssertNotNil(actualParams)
         XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 6)
-        XCTAssertEqual(actualParams?.items.first?.additionalInfo["gender"]?.value as? String, "female")
+        XCTAssertEqual(actualParams?.items.first?.additionalInfo["gender"]?.value as? String, "male")
         XCTAssertEqual(
             actualParams?.items.first?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
             ["37": [
