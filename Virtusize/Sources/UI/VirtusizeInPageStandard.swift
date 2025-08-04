@@ -550,7 +550,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		let recommendationText = serverProduct!.getRecommendationText(
 			VirtusizeRepository.shared.i18nLocalization!,
 			sizeComparisonRecommendedSize,
-			bodyProfileRecommendedSize?.sizeName,
+			bodyProfileRecommendedSize?.getSizeName,
 			trimType
 		)
 		let recommendationTextArray = recommendationText.components(separatedBy: trimType.rawValue)

@@ -172,30 +172,73 @@ extension APIRequest {
 		return apiRequestWithAuthorization(components: endpoint.components)
 	}
 
-	/// Gets the `URLRequest` for the `getSize` request
+	/// Gets the `URLRequest` for the `getItemSizeRecommendation` request
 	///
 	/// - Parameters:
 	///   - productTypes: The list of available `ProductType`s
 	///   - storeProduct: The store product info whose data type is `VirtusizeServerProduct`
 	///   - userBodyProfile: The user body profile whose data type is  `VirtusizeUserBodyProfile`
-	/// - Returns: A `URLRequest` for the `getSize` request
+	/// - Returns: A `URLRequest` for the `getItemSizeRecommendation` request
 	internal static func getBodyProfileRecommendedSize(
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
 	) -> URLRequest? {
-		let endpoint = APIEndpoints.getSize
-		guard let jsonData = try? JSONEncoder().encode(
-			VirtusizeGetSizeParams(
-				productTypes: productTypes,
-				storeProduct: storeProduct,
-				userBodyProfile: userBodyProfile
-			)
+		let endpoint = APIEndpoints.getItemSizeRecommendation
+		let params = VirtusizeGetSizeParams(
+			productTypes: productTypes,
+			storeProduct: storeProduct,
+			userBodyProfile: userBodyProfile
+		)
+		
+		let encoder = JSONEncoder()
+		encoder.keyEncodingStrategy = .convertToSnakeCase
+		guard let jsonData = try? encoder.encode(
+		    params
 		) else {
-			return nil
+		    return nil
 		}
+        
+        // Convert jsonData to String for debugging
+        if let jsonString = String(data: jsonData, encoding: .utf8) {
+            print("getBodyProfileRecommendedSize payload: \(jsonString)")
+        }
 		return apiRequest(components: endpoint.components, withPayload: jsonData)
 	}
+    
+    /// Gets the `URLRequest` for the `getShoeSizeRecommendation` request
+    ///
+    /// - Parameters:
+    ///   - productTypes: The list of available `ProductType`s
+    ///   - storeProduct: The store product info whose data type is `VirtusizeServerProduct`
+    ///   - userBodyProfile: The user body profile whose data type is  `VirtusizeUserBodyProfile`
+    /// - Returns: A `URLRequest` for the `getShoeSizeRecommendation` request
+    internal static func getBodyProfileRecommendedShoeSize(
+        productTypes: [VirtusizeProductType],
+        storeProduct: VirtusizeServerProduct,
+        userBodyProfile: VirtusizeUserBodyProfile
+    ) -> URLRequest? {
+        let endpoint = APIEndpoints.getShoeSizeRecommendation
+        let params = VirtusizeGetSizeParamsShoe(
+            productTypes: productTypes,
+            storeProduct: storeProduct,
+            userBodyProfile: userBodyProfile
+        )
+        
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        guard let jsonData = try? encoder.encode(
+            params
+        ) else {
+            return nil
+        }
+        
+        // Convert jsonData to String for debugging
+        if let jsonString = String(data: jsonData, encoding: .utf8) {
+            print("getBodyProfileRecommendedSize payload: \(jsonString)")
+        }
+        return apiRequest(components: endpoint.components, withPayload: jsonData)
+    }
 
 	/// Gets the `URLRequest` for the request to get i18n texts
 	///

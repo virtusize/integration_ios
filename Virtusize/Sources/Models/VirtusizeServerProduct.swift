@@ -178,6 +178,11 @@ public class VirtusizeServerProduct: Codable {
 		return productType == 18 || productType == 19 || productType == 25 || productType == 26
 	}
 
+	/// Checks if the product is a shoe
+    internal func isShoe() -> Bool {
+		return productType == 17
+	}
+
 	/// Gets the Cloudinary image URL
 	internal func getCloudinaryImageUrl() -> URL? {
 		guard let imageUrlString = cloudinaryImageUrlString else {

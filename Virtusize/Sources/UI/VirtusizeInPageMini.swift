@@ -81,7 +81,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 					sizeRecData.serverProduct.getRecommendationText(
 						VirtusizeRepository.shared.i18nLocalization!,
 						sizeRecData.sizeComparisonRecommendedSize,
-						sizeRecData.bodyProfileRecommendedSize?.sizeName,
+						sizeRecData.bodyProfileRecommendedSize?.getSizeName,
 						VirtusizeI18nLocalization.TrimType.ONELINE
 					)
 			).lineSpacing(self.verticalMargin/2)

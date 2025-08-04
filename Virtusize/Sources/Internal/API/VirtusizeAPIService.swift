@@ -165,14 +165,14 @@ class VirtusizeAPIService: APIService {
 		return await getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
 	}
 
-	/// The API request for retrieving the recommended sizes based on the user body profile
+	/// The API request for retrieving the recommended item sizes based on the user body profile
 	///
 	/// - Parameters:
 	///   - productTypes: A list of product types
 	///   - storeProduct: The store product data
 	///   - userBodyProfile: the user body profile data
-	/// - Returns: the user body profile recommended size array in the type of `BodyProfileRecommendedSize`
-	internal static func getBodyProfileRecommendedSizesAsync(
+	/// - Returns: the user body profile recommended item size array in the type of `BodyProfileRecommendedSize`
+	internal static func getBodyProfileRecommendedItemSizesAsync(
 		productTypes: [VirtusizeProductType],
 		storeProduct: VirtusizeServerProduct,
 		userBodyProfile: VirtusizeUserBodyProfile
@@ -186,6 +186,29 @@ class VirtusizeAPIService: APIService {
 		}
 
 		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
+	}
+
+	/// The API request for retrieving the recommended shoe size based on the user body profile
+	///
+	/// - Parameters:
+	///   - productTypes: A list of product types
+	///   - storeProduct: The store product data
+	///   - userBodyProfile: the user body profile data
+	/// - Returns: the user body profile recommended shoe size in the type of `BodyProfileRecommendedSize`
+	internal static func getBodyProfileRecommendedShoeSizeAsync(
+		productTypes: [VirtusizeProductType],
+		storeProduct: VirtusizeServerProduct,
+		userBodyProfile: VirtusizeUserBodyProfile
+	) async -> APIResult<BodyProfileRecommendedSize> {
+		guard let request = APIRequest.getBodyProfileRecommendedShoeSize(
+				productTypes: productTypes,
+				storeProduct: storeProduct,
+				userBodyProfile: userBodyProfile)
+        else {
+			return .failure(nil)
+		}
+
+		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
 	}
 
 	/// The API request for getting i18n localization texts

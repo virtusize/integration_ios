@@ -27,6 +27,7 @@
 public struct BodyProfileRecommendedSize: Codable {
     let extProductId: String?
     let sizeName: String?
+    let size: String?
     let secondSize: String?
     let fitScore: Double?
     let secondFitScore: Double?
@@ -37,9 +38,10 @@ public struct BodyProfileRecommendedSize: Codable {
     let scenario: String?
     let willFitForSizes: WillFitForSizes?
     // swiftlint:disable line_length
-    init(extProductId: String? = nil, sizeName: String, secondSize: String? = nil, fitScore: Double? = nil, secondFitScore: Double? = nil, fitScoreDifference: Double? = nil, virtualItem: VirtualItem? = nil, willFit: Bool? = nil, thresholdFitScore: Double? = nil, scenario: String? = nil, willFitForSizes: WillFitForSizes? = nil ) {
+    init(extProductId: String? = nil, sizeName: String, size: String = "", secondSize: String? = nil, fitScore: Double? = nil, secondFitScore: Double? = nil, fitScoreDifference: Double? = nil, virtualItem: VirtualItem? = nil, willFit: Bool? = nil, thresholdFitScore: Double? = nil, scenario: String? = nil, willFitForSizes: WillFitForSizes? = nil ) {
         self.extProductId = extProductId
         self.sizeName = sizeName
+        self.size = size
         self.secondSize = secondSize
         self.fitScore = fitScore
         self.secondFitScore = secondFitScore
@@ -51,6 +53,20 @@ public struct BodyProfileRecommendedSize: Codable {
         self.willFitForSizes = willFitForSizes
     }
     // swiftlint:enable line_length
+
+    /// Returns the recommended size name for the body profile.
+    /// - Returns: A `String` representing the size name if available and not empty.
+    ///   If `sizeName` is unavailable or empty, returns the `size`.
+    ///   If neither is available, returns an empty string.
+    public var getSizeName: String? {
+        if let validSizeName = sizeName, !validSizeName.isEmpty {
+            return validSizeName
+        }
+        if let validSize = size, !validSize.isEmpty {
+            return validSize.replacingOccurrences(of: "&#46;", with: ".")
+        }
+        return ""
+    }
 }
 
 public typealias BodyProfileRecommendedSizeArray = [BodyProfileRecommendedSize]

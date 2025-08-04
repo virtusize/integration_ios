@@ -536,7 +536,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
         )
 
         let task = Task {
-            actualRecommendedSizes = await VirtusizeAPIService.getBodyProfileRecommendedSizesAsync(
+            actualRecommendedSizes = await VirtusizeAPIService.getBodyProfileRecommendedItemSizesAsync(
                 productTypes: TestFixtures.getProductTypes(),
                 storeProduct: TestFixtures.getStoreProduct(gender: "female")!,
                 userBodyProfile: TestFixtures.getUserBodyProfile()!
@@ -549,7 +549,7 @@ class VirtusizeAPIServiceTests: XCTestCase {
 		task.cancel()
 
         XCTAssertNotNil(actualRecommendedSizes)
-        XCTAssertEqual(actualRecommendedSizes?.first?.sizeName, "35")
+        XCTAssertEqual(actualRecommendedSizes?.first?.getSizeName, "35")
     }
 
 	func testGetUserBodyRecommendedSize_inseamAsNumber() throws {
