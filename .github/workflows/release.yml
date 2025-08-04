@@ -1,8 +1,11 @@
 name: Release
 
 on:
-  release:
-    types: [released]
+  # release:
+  #   types: [released]
+  push:
+    branches:
+      - fix/fix-release-2.12.4
 
 env:
   COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
@@ -26,9 +29,9 @@ jobs:
       # `pod trunk push` automatically validates pod version compatability
       # so there is no need for extra `pod spec lint` call
       # see https://guides.cocoapods.org/making/getting-setup-with-trunk#deploying-a-library
-      - name: Push VirtusizeCore to CocoaPods
-        run: |
-          pod trunk push VirtusizeCore.podspec --allow-warnings --synchronous
+      # - name: Push VirtusizeCore to CocoaPods
+      #   run: |
+      #     pod trunk push VirtusizeCore.podspec --allow-warnings --synchronous
 
       # --synchronous flag ensure the local repo is updated to lint and verify dependant packages
       - name: Push VirtusizeAuth to CocoaPods
