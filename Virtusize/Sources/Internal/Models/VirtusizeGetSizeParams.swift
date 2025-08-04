@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 // swiftlint:disable:next line_length
 /// The structure that wraps the parameters for the API request to get the recommended size based on a user's body profile
 internal struct VirtusizeGetSizeParams: Codable {
