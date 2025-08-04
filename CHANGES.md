@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Future release
+### 2.12.5
 - Fix: Compilation error when packages added via Swift Package Manager, due to missing explicit `import Foundation`
 
 ### 2.12.4
