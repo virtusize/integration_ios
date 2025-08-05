@@ -123,7 +123,8 @@ public class Virtusize {
 			let productWithPDCData = await virtusizeRepository.checkProductValidity(product: product)
 
 			guard let productWithPDCData = productWithPDCData else {
-				return
+                inPageError = (true, product.externalId)
+                return
 			}
 
 			await virtusizeRepository.updateUserSession()
@@ -141,6 +142,7 @@ public class Virtusize {
 			)
 
 			guard let serverProduct = serverProduct else {
+                inPageError = (true, product.externalId)
 				return
 			}
 
