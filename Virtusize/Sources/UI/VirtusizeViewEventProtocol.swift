@@ -107,4 +107,10 @@ extension VirtusizeViewEventProtocol {
 			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 		}
 	}
+
+	public func handleUserClickedLanguage(language: VirtusizeLanguage) {
+		Task {
+            await Virtusize.setDisplayLanguage(language: language)
+		}
+	}
 }

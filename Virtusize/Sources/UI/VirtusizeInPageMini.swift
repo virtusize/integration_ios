@@ -57,6 +57,9 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
 	private let messageAndButtonMargin: CGFloat = 8
 	private let verticalMargin: CGFloat = 5
+    
+    private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
+    private var sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?
 
 	private let inPageMiniImageView: UIImageView = UIImageView()
 	internal let inPageMiniMessageLabel: UILabel = UILabel()
@@ -72,16 +75,20 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	internal override func didReceiveSizeRecommendationData(_ notification: Notification) {
+        super.didReceiveSizeRecommendationData(notification)
 		shouldUpdateInPageRecommendation(notification) { sizeRecData in
 			serverProduct = sizeRecData.serverProduct
+
+            self.sizeComparisonRecommendedSize = sizeRecData.sizeComparisonRecommendedSize
+            self.bodyProfileRecommendedSize = sizeRecData.bodyProfileRecommendedSize
 
 			setLoadingScreen(loading: false)
 			inPageMiniMessageLabel.attributedText = NSAttributedString(
 				string:
 					sizeRecData.serverProduct.getRecommendationText(
 						VirtusizeRepository.shared.i18nLocalization!,
-						sizeRecData.sizeComparisonRecommendedSize,
-						sizeRecData.bodyProfileRecommendedSize?.getSizeName,
+						sizeComparisonRecommendedSize,
+						bodyProfileRecommendedSize?.getSizeName,
 						VirtusizeI18nLocalization.TrimType.ONELINE
 					)
 			).lineSpacing(self.verticalMargin/2)
@@ -89,6 +96,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	}
 
 	internal override func didReceiveInPageError(_ notification: Notification) {
+        super.didReceiveInPageError(notification)
 		showLoadingGif(false)
 		shouldShowInPageErrorScreen(notification) {
 			contentContainerView.backgroundColor = .white
@@ -102,6 +110,35 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			isUserInteractionEnabled = false
 		}
 	}
+    
+    internal override func didReceiveSetLanguageEvent(_ notification: Notification) {
+        guard let notificationData = notification.userInfo as? [String: Any],
+              let language = notificationData[NotificationKey.setLanguage] as? VirtusizeLanguage else {
+            return
+        }
+        
+        inPageMiniSizeCheckButton.setTitle(Localization.shared.localize("check_size", language: language), for: .normal)
+        if isLoading{
+            startLoadingTextAnimation(
+                label: inPageMiniMessageLabel,
+                text: Localization.shared.localize("inpage_loading_text", language: language)
+            )
+        } else if isError{
+            inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text", language: language)
+        } else {
+            if let product = serverProduct {
+                inPageMiniMessageLabel.attributedText = NSAttributedString(
+                    string:
+                        product.getRecommendationText(
+                            VirtusizeRepository.shared.i18nLocalization!,
+                            sizeComparisonRecommendedSize,
+                            bodyProfileRecommendedSize?.getSizeName,
+                            VirtusizeI18nLocalization.TrimType.ONELINE
+                        )
+                ).lineSpacing(self.verticalMargin/2)
+            }
+        }
+    }
 
 	private func addSubviews() {
 		contentContainerView.addSubview(inPageMiniImageView)

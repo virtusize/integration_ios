@@ -198,4 +198,18 @@ public class Virtusize {
 	public class func handleUrl(_ url: URL) -> Bool {
 		return VirtusizeAuthorization.shared.handleUrl(url)
 	}
+
+	/// Sets the display language for the Virtusize views
+	///
+	/// - Parameter language: VirtusizeLanguage to be set for the views
+	public class func setDisplayLanguage(language: VirtusizeLanguage) async {
+		await virtusizeRepository.setDisplayLanguage(language: language)
+        DispatchQueue.main.async {
+			NotificationCenter.default.post(
+				name: .setLanguage,
+				object: Virtusize.self,
+				userInfo: [NotificationKey.setLanguage: language]
+			)
+		}
+	}
 }
