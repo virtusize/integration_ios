@@ -80,6 +80,13 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 			name: .storeProduct,
 			object: Virtusize.self
 		)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveSetLanguageEvent(_:)),
+            name: .setLanguage,
+            object: Virtusize.self
+        )
 	}
 
 	@objc func didReceiveProductCheckData(_ notification: Notification) {
@@ -94,6 +101,15 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 			self.serverProduct = storeProduct
 		}
 	}
+    
+    @objc func didReceiveSetLanguageEvent(_ notification: Notification) {
+        guard let notificationData = notification.userInfo as? [String: Any],
+              let language = notificationData[NotificationKey.setLanguage] as? VirtusizeLanguage else {
+            return
+        }
+        
+        setTitle(Localization.shared.localize("check_size", language: language), for: .normal)
+    }
 
 	/// Set up the style of `VirtusizeButton`
 	private func setStyle() {
@@ -175,4 +191,8 @@ extension VirtusizeButton: VirtusizeEventHandler {
     public func userClosedWidget() {
         handleUserClosedWidget()
     }
+
+	public func userClickedLanguageSelector(language: VirtusizeLanguage) {
+		handleUserClickedLanguageSelector(language: language)
+	}
 }

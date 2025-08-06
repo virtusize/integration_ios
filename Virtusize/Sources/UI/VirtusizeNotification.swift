@@ -29,6 +29,7 @@ extension Notification.Name {
 	static let storeProduct = Notification.Name(NotificationKey.storeProduct)
 	static let sizeRecommendationData = Notification.Name(NotificationKey.sizeRecommendationData)
 	static let inPageError = Notification.Name(NotificationKey.inPageError)
+    static let setLanguage = Notification.Name(NotificationKey.setLanguage)
 }
 
 struct NotificationKey {
@@ -36,4 +37,5 @@ struct NotificationKey {
 	static let storeProduct = "storeProduct"
 	static let sizeRecommendationData = "sizeRecommendationData"
 	static let inPageError = "inPageError"
+    static let setLanguage = "setLanguage"
 }

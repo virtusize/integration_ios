@@ -309,6 +309,13 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 			case .userClosedWidget:
 				eventHandler?.userClosedWidget()
 				shouldClose()
+			case .userClickedLanguageSelector:
+				let language = eventData?["language"] as? String
+                if let language = language{
+                    if let validLanguage = VirtusizeLanguage(rawValue: language) {
+                        eventHandler?.userClickedLanguageSelector(language: validLanguage)
+                    }
+                }
 			default:
 				break
 			}

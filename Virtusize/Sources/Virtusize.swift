@@ -123,7 +123,8 @@ public class Virtusize {
 			let productWithPDCData = await virtusizeRepository.checkProductValidity(product: product)
 
 			guard let productWithPDCData = productWithPDCData else {
-				return
+                inPageError = (true, product.externalId)
+                return
 			}
 
 			await virtusizeRepository.updateUserSession()
@@ -141,6 +142,7 @@ public class Virtusize {
 			)
 
 			guard let serverProduct = serverProduct else {
+                inPageError = (true, product.externalId)
 				return
 			}
 
@@ -197,5 +199,19 @@ public class Virtusize {
 	///   - url: OAuth callback URL
 	public class func handleUrl(_ url: URL) -> Bool {
 		return VirtusizeAuthorization.shared.handleUrl(url)
+	}
+
+	/// Sets the display language for the Virtusize views
+	///
+	/// - Parameter language: VirtusizeLanguage to be set for the views
+	public class func setVsWidgetLanguage(language: VirtusizeLanguage) async {
+		await virtusizeRepository.setVsWidgetLanguage(language: language)
+        DispatchQueue.main.async {
+			NotificationCenter.default.post(
+				name: .setLanguage,
+				object: Virtusize.self,
+				userInfo: [NotificationKey.setLanguage: language]
+			)
+		}
 	}
 }
