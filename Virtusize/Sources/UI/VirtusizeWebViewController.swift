@@ -92,6 +92,12 @@ public final class VirtusizeWebViewController: UIViewController {
 		webView.uiDelegate = self
 		view.addSubview(webView)
 		self.webView = webView
+        
+//        if #available(iOSApplicationExtension 16.4, *) {
+//            webView.isInspectable = true
+//        } else {
+//            // Fallback on earlier versions
+//        }
 
 		webView.translatesAutoresizingMaskIntoConstraints = false
 		if #available(iOS 11.0, *) {
@@ -309,6 +315,13 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 			case .userClosedWidget:
 				eventHandler?.userClosedWidget()
 				shouldClose()
+			case .userClickedLanguageSelector:
+				let language = eventData?["language"] as? String
+                if let language = language{
+                    if let validLanguage = VirtusizeLanguage(rawValue: language) {
+                        eventHandler?.userClickedLanguageSelector(language: validLanguage)
+                    }
+                }
 			default:
 				break
 			}
