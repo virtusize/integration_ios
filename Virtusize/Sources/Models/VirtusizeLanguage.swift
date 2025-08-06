@@ -23,7 +23,7 @@
 //
 
 /// This enum contains all the possible display languages of the Virtusize web app
-public enum VirtusizeLanguage: String, CaseIterable {
+public enum VirtusizeLanguage: String, CaseIterable, Sendable {
 	case ENGLISH = "en"
 	case JAPANESE = "ja"
 	case KOREAN = "ko"

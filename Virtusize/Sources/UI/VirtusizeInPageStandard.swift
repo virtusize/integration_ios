@@ -116,6 +116,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	}
 
 	internal override func didReceiveSizeRecommendationData(_ notification: Notification) {
+        super.didReceiveSizeRecommendationData(notification)
 		shouldUpdateInPageRecommendation(notification) { sizeRecData in
 			serverProduct = sizeRecData.serverProduct
 
@@ -136,6 +137,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	}
 
 	internal override func didReceiveInPageError(_ notification: Notification) {
+        super.didReceiveInPageError(notification)
 		showLoadingGif(false)
 		shouldShowInPageErrorScreen(notification) {
 			inPageStandardView.layer.shadowOpacity = 0
@@ -153,6 +155,30 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 			errorText.textAlignment = .center
 		}
 	}
+    
+    internal override func didReceiveSetLanguageEvent(_ notification: Notification) {
+        guard let notificationData = notification.userInfo as? [String: Any],
+              let language = notificationData[NotificationKey.setLanguage] as? VirtusizeLanguage else {
+            return
+        }
+        
+        checkSizeButton.setTitle(Localization.shared.localize("check_size", language: language), for: .normal)
+        privacyPolicyLink.text = Localization.shared.localize("privacy_policy", language: language)
+        setRecommendationTexts()
+        
+        if isLoading{
+            startLoadingTextAnimation(
+                label: bottomMessageLabel,
+                text: Localization.shared.localize("inpage_loading_text", language: language)
+            )
+        } else if isError{
+            errorText.attributedText = NSAttributedString(
+                string: Localization.shared.localize("inpage_error_long_text", language: language)
+            ).lineSpacing(self.messageLineSpacing)
+        } else {
+            setRecommendationTexts()
+        }
+    }
 
 	private func bind(to viewModel: VirtusizeInPageStandardViewModel) {
 		viewModel.userProductImageObservable.observe(on: self) { [weak self] userProductImage in

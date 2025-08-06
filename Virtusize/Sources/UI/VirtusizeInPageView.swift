@@ -47,7 +47,6 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		virtusizeEventHandler = self
-		isLoading = true
 		addSubviews()
 		setup()
 		addNotificationObserver()
@@ -56,7 +55,6 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	public override init(frame: CGRect) {
 		super.init(frame: .zero)
 		virtusizeEventHandler = self
-		isLoading = true
 		addSubviews()
 		setup()
 		addNotificationObserver()
@@ -66,7 +64,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	internal let contentContainerView: UIView = UIView()
 	// Loading GIF image view
 	private let loadingGifImageView: UIImageView = UIImageView()
-	private var isLoading: Bool = false
+    internal var isLoading: Bool = false
+    internal var isError: Bool = false
 
 	private func addSubviews() {
 		// Add loading GIF image view
@@ -96,6 +95,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 
 	internal func showLoadingGif(_ show: Bool) {
 		isHidden = false
+        isLoading = show
 		loadingGifImageView.isHidden = !show
 		contentContainerView.isHidden = show
 	}
@@ -129,13 +129,23 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 			name: .inPageError,
 			object: Virtusize.self
 		)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveSetLanguageEvent(_:)),
+            name: .setLanguage,
+            object: Virtusize.self
+        )
 	}
-
+    
+    @objc internal func didReceiveSetLanguageEvent(_ notification: Notification) {}
+    
 	@objc internal func didReceiveProductCheckData(_ notification: Notification) {
 		shouldUpdateProductCheckData(notification) { productWithPDCData in
 			self.clientProduct = productWithPDCData
 			showLoadingGif(false)
 			setLoadingScreen(loading: true)
+            isLoading = true
 		}
 	}
 
@@ -146,7 +156,10 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	}
 
 	/// A parent function to set up InPage recommendation
-	@objc internal func didReceiveSizeRecommendationData(_ notification: Notification) {}
+	@objc internal func didReceiveSizeRecommendationData(_ notification: Notification) {
+        isLoading = false
+        isError = false
+    }
 
 	internal func shouldUpdateInPageRecommendation(
 		_ notification: Notification,
@@ -173,13 +186,17 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	}
 
 	/// A parent function for showing the error screen
-	@objc internal func didReceiveInPageError(_ notification: Notification) {}
+	@objc internal func didReceiveInPageError(_ notification: Notification) {
+        isError = true
+    }
 
 	/// Sets up the styles for the loading screen and the screen after finishing loading
 	///
 	/// - Parameters:
 	///   - loading: Pass true when it's loading, and pass false when finishing loading
-	internal func setLoadingScreen(loading: Bool) {}
+	internal func setLoadingScreen(loading: Bool) {
+        isError = false
+    }
 
 	internal func setup() {}
 
@@ -279,6 +296,10 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
 
     public func userClosedWidget() {
         handleUserClosedWidget()
+    }
+    
+    public func userClickedLanguageSelector(language: VirtusizeLanguage) {
+        handleUserClickedLanguageSelector(language: language)
     }
 
 	internal func setContentViewListener(listener: ((VirtusizeInPageView) -> Void)?) {

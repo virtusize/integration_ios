@@ -35,4 +35,5 @@ public protocol VirtusizeEventHandler {
 	func userUpdatedBodyMeasurements(recommendedSize: String?)
 	func userChangedRecommendationType(changedType: SizeRecommendationType?)
     func userClosedWidget()
+	func userClickedLanguageSelector(language: VirtusizeLanguage)
 }

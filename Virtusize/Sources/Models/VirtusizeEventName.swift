@@ -37,4 +37,5 @@ public enum VirtusizeEventName: String {
 	case userLoggedIn = "user-logged-in"
 	case userLoggedOut = "user-logged-out"
 	case userDeletedData = "user-deleted-data"
+	case userClickedLanguageSelector = "user-clicked-language"
 }
