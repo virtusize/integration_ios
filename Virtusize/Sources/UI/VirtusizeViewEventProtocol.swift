@@ -108,9 +108,9 @@ extension VirtusizeViewEventProtocol {
 		}
 	}
 
-	public func handleUserClickedLanguage(language: VirtusizeLanguage) {
+	public func handleUserClickedLanguageSelector(language: VirtusizeLanguage) {
 		Task {
-            await Virtusize.setDisplayLanguage(language: language)
+            await Virtusize.setVsWidgetLanguage(language: language)
 		}
 	}
 }

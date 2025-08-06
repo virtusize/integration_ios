@@ -410,7 +410,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		return Deserializer.i18n(json: i18nJson)
 	}
 
-	internal func setDisplayLanguage(language: VirtusizeLanguage) async {
+	internal func setVsWidgetLanguage(language: VirtusizeLanguage) async {
 		async let i18nTask = fetchLocalization(language: language)
 		i18nLocalization = await i18nTask
 	}

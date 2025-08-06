@@ -298,8 +298,8 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
         handleUserClosedWidget()
     }
     
-    public func userClickedLanguage(language: VirtusizeLanguage) {
-        handleUserClickedLanguage(language: language)
+    public func userClickedLanguageSelector(language: VirtusizeLanguage) {
+        handleUserClickedLanguageSelector(language: language)
     }
 
 	internal func setContentViewListener(listener: ((VirtusizeInPageView) -> Void)?) {

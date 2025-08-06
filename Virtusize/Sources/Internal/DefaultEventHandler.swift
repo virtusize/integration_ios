@@ -66,7 +66,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 		handleUserClosedWidget()
 	}
 
-	public func userClickedLanguage(language: VirtusizeLanguage) {
-		handleUserClickedLanguage(language: language)
+	public func userClickedLanguageSelector(language: VirtusizeLanguage) {
+		handleUserClickedLanguageSelector(language: language)
 	}
 }
