@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Future release
+### 2.12.6
 - Feature: Add event listener to handle language change on web in Virtusize widgets
 - Fix: Display error state of VirtusizeInPageStandard widget
 
