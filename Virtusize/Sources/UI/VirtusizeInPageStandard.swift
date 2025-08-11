@@ -133,6 +133,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 				clientProductImageURL: clientProduct?.imageURL,
 				storeProduct: sizeRecData.serverProduct
 			)
+			invalidateIntrinsicContentSize()
+			DispatchQueue.main.async {
+				self.contentViewListener?(self)
+			}
 		}
 	}
 
@@ -153,6 +157,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 				string: Localization.shared.localize("inpage_error_long_text")
 			).lineSpacing(self.messageLineSpacing)
 			errorText.textAlignment = .center
+			invalidateIntrinsicContentSize()
+			DispatchQueue.main.async {
+				self.contentViewListener?(self)
+			}
 		}
 	}
     
@@ -454,11 +462,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 
 		errorImageView.image = VirtusizeAssets.errorHanger
 		errorImageView.contentMode = .scaleAspectFit
-		errorImageView.isHidden = true
+		errorImageView.isHidden = !isError
 
 		errorText.numberOfLines = 0
 		errorText.textColor = .vsGray700Color
-		errorText.isHidden = true
+		errorText.isHidden = !isError
 
 		let displayLanguage = Virtusize.params?.language
 		let messageTextSize = messageFontSize ?? 12
@@ -497,6 +505,12 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		   let url = URL(string: Localization.shared.localize("privacy_policy_link")) {
 			sharedApplication.safeOpenURL(url)
 		}
+	}
+
+	public override var intrinsicContentSize: CGSize {
+	    layoutIfNeeded()
+	    var contentHeight = contentContainerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+	    return CGSize(width: UIView.noIntrinsicMetric, height: contentHeight)
 	}
 
 	private func adjustProductImageViewPosition(userProductImageSize: CGFloat, productImageViewOffset: CGFloat) {
