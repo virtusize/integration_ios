@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Next release
+### 2.12.7
 - Fix: Sizing of VirtusizeInPageStandard widget in error state
 
 ### 2.12.6
