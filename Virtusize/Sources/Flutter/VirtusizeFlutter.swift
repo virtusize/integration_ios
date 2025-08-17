@@ -99,6 +99,13 @@ public class VirtusizeFlutter: Virtusize {
             name: .sizeRecommendationData,
             object: Virtusize.self
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveSetLanguageEvent(_:)),
+            name: .setLanguage,
+            object: Virtusize.self
+        )
 
         NotificationCenter.default.addObserver(
             self,
@@ -151,6 +158,17 @@ public class VirtusizeFlutter: Virtusize {
             bestUserProduct: bestUserProduct,
             recommendationText: recommendationText
         )
+    }
+    
+    @objc private static func didReceiveSetLanguageEvent(_ notification: Notification) {
+        guard let notificationData = notification.userInfo as? [String: Any],
+              let language = notificationData[NotificationKey.setLanguage] as? VirtusizeLanguage else {
+            return
+        }
+        flutterHandler?.onLanguageClick(language: language)
+        Task {
+            await VirtusizeRepository.shared.fetchDataForInPageRecommendation(shouldUpdateUserProducts: false)
+        }
     }
     
     @objc private static func didReceiveInPageError(_ notification: Notification) {

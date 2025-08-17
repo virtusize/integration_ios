@@ -34,5 +34,6 @@ public protocol VirtusizeFlutterProductEventHandler {
         bestUserProduct: VirtusizeServerProduct?,
         recommendationText: String
     )
+    func onLanguageClick(language: VirtusizeLanguage)
     func onInPageError(externalId: String)
 }
