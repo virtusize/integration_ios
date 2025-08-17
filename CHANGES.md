@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Future release
+- Feature: Update Flutter SDK implementation to be compatible with latest changes
+
 ### 2.12.7
 - Fix: Sizing of VirtusizeInPageStandard widget in error state
 
