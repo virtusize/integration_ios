@@ -11,7 +11,10 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 ### Future release
-- Feature: Update Flutter SDK implementation to be compatible with latest changes
+- Feature: SDK version and SDK platform parameters added
+
+### 2.12.9
+- Feature: SDK version and SDK platform parameters added
 
 ### 2.12.7
 - Fix: Sizing of VirtusizeInPageStandard widget in error state
