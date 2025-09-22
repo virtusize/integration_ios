@@ -26,4 +26,5 @@ struct VirtusizeGetSizeItemsParam: Codable {
     var itemSizesOrig: [String: [String: Int?]] = [:]
     var productType: String
     var extProductId: String
+    var clientSizeOrder: [String] = []
 }

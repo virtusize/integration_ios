@@ -89,7 +89,8 @@ internal struct VirtusizeGetSizeParams: Codable {
                 additionalInfo: additionalInfo,
                 itemSizesOrig: itemSizesOrig,
                 productType: productType,
-                extProductId: storeProduct.externalId
+                extProductId: storeProduct.externalId,
+                clientSizeOrder: getClientSizeOrder(storeProduct: storeProduct)
             )
         ]
 
@@ -146,6 +147,11 @@ private func getItemSizesDict(storeProduct: VirtusizeServerProduct) -> [String: 
 		itemSizesDict[productSize.name ?? ""] = productSize.measurements
 	}
 	return itemSizesDict
+}
+
+/// Gets the array of the client size order
+private func getClientSizeOrder(storeProduct: VirtusizeServerProduct) -> [String] {
+	return storeProduct.sizes.compactMap { $0.name }
 }
 
 private func camelCaseToSnakeCase(_ string: String) -> String {
