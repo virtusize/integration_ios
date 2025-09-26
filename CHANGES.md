@@ -10,7 +10,10 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Future release
+### 2.12.9
+- Fix: Crash upon selecting language inside Virtusize web view
+
+### 2.12.8
 - Feature: Update Flutter SDK implementation to be compatible with latest changes
 
 ### 2.12.7
