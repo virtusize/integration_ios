@@ -586,9 +586,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	}
 
 	private func setRecommendationTexts() {
+		guard let serverProduct = serverProduct,
+		      let i18nLocalization = VirtusizeRepository.shared.i18nLocalization else {
+			return
+		}
+
 		let trimType = VirtusizeI18nLocalization.TrimType.MULTIPLELINES
-		let recommendationText = serverProduct!.getRecommendationText(
-			VirtusizeRepository.shared.i18nLocalization!,
+		let recommendationText = serverProduct.getRecommendationText(
+			i18nLocalization,
 			sizeComparisonRecommendedSize,
 			bodyProfileRecommendedSize?.getSizeName,
 			trimType
