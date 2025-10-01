@@ -372,7 +372,6 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 	public func userContentController(
 		_ userContentController: WKUserContentController,
 		didReceive message: WKScriptMessage) {
-        print(">>>>> Message received: \(message.name)")
 		guard message.name == "eventHandler" else {
 			return
 		}
