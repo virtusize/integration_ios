@@ -60,6 +60,11 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 		addNotificationObserver()
 	}
 
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+		loadingTextTimer?.invalidate()
+	}
+
 	// Container for all current content
 	internal let contentContainerView: UIView = UIView()
 	// Loading GIF image view

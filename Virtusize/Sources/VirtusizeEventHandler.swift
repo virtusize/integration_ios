@@ -24,7 +24,7 @@
 
 /// The virtusize user event callback to receive event data from the web view,
 /// and make UI changes based on the event data
-public protocol VirtusizeEventHandler {
+public protocol VirtusizeEventHandler: AnyObject {
 	func userOpenedWidget()
 	func userAuthData(bid: String?, auth: String?)
 	func userLoggedIn()
