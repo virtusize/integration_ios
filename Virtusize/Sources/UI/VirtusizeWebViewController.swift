@@ -75,6 +75,7 @@ public final class VirtusizeWebViewController: UIViewController {
 	}
 
     deinit {
+        // Debug: temporary observer log to confirm deinit calls
         print("VirtusizeWebViewController: deinit called")
     }
 
@@ -87,9 +88,6 @@ public final class VirtusizeWebViewController: UIViewController {
 
         let config = WKWebViewConfiguration()
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
-//        if #available(iOS 16.4, *) {
-//            config.preferences.shouldPrintBackgrounds = true
-//        }
         config.userContentController = contentController
 
         if let processPool = self.processPool {
@@ -101,9 +99,7 @@ public final class VirtusizeWebViewController: UIViewController {
         webView.customUserAgent = VirtusizeAuthConstants.userAgent
         webView.navigationDelegate = self
         webView.uiDelegate = self
-//        if #available(iOS 16.4, *) {
-//            webView.isInspectable = true
-//        }
+
 		view.addSubview(webView)
 		self.webView = webView
 
@@ -288,10 +284,12 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			return
 		}
 
+        // HotFix: temporary fix log to solve webview race condition related to vsParamsFromSDK
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) { [weak self] in
 
             webView.evaluateJavaScript(vsParamsFromSDKScript) { response, error in
                 if let error = error {
+                    // Debug: temporary observer log to detect JS exception
                     print("Evaluate JavaScript exception: \(error.localizedDescription)")
                 }
             }
@@ -299,6 +297,7 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
             if let showSNSButtons = Virtusize.params?.showSNSButtons {
                 webView.evaluateJavaScript("window.virtusizeSNSEnabled = \(showSNSButtons);") { response, error in
                     if let error = error {
+                        // Debug: temporary observer log to detect JS exception
                         print("Evaluate JavaScript exception: \(error.localizedDescription)")
                     }
                 }

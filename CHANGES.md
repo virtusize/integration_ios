@@ -10,8 +10,10 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### 2.12.11
-- Fix: resolve WebView leak, cleanup observers/listeners, fix initialization race condition
+#### Fixes
+- resolve WebView leak
+- cleanup observers/listeners
+- fix initialization race condition related to vsParamsFromSDK
 
 ### 2.12.10
 - Fix: Added close button on error loading webview
