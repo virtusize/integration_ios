@@ -40,7 +40,7 @@ public final class VirtusizeWebViewController: UIViewController {
 	private var userSessionResponse: String = ""
 
 	public weak var messageHandler: VirtusizeMessageHandler?
-	internal var eventHandler: VirtusizeEventHandler?
+	internal weak var eventHandler: VirtusizeEventHandler?
 
 	private var webView: WKWebView?
 	private var popupWebView: WKWebView?
@@ -74,26 +74,36 @@ public final class VirtusizeWebViewController: UIViewController {
 //		}
 	}
 
-	public override func viewDidLoad() {
-		super.viewDidLoad()
-		view.backgroundColor = .white
+    deinit {
+        print("VirtusizeWebViewController: deinit called")
+    }
 
-		let contentController = WKUserContentController()
-		contentController.add(self, name: "eventHandler")
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
 
-		let config = WKWebViewConfiguration()
+        let contentController = WKUserContentController()
+        contentController.add(self, name: "eventHandler")
+
+        let config = WKWebViewConfiguration()
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
-		config.userContentController = contentController
+//        if #available(iOS 16.4, *) {
+//            config.preferences.shouldPrintBackgrounds = true
+//        }
+        config.userContentController = contentController
 
-		if let processPool = self.processPool {
-			config.processPool = processPool
-		}
+        if let processPool = self.processPool {
+            config.processPool = processPool
+        }
 
-		let webView = WKWebView(frame: .zero, configuration: config)
-		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
-		webView.customUserAgent = VirtusizeAuthConstants.userAgent
-		webView.navigationDelegate = self
-		webView.uiDelegate = self
+        let webView = WKWebView(frame: .zero, configuration: config)
+        // Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
+        webView.customUserAgent = VirtusizeAuthConstants.userAgent
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+//        if #available(iOS 16.4, *) {
+//            webView.isInspectable = true
+//        }
 		view.addSubview(webView)
 		self.webView = webView
 
@@ -134,6 +144,7 @@ public final class VirtusizeWebViewController: UIViewController {
 	public override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		// Clean up timer when view disappears
+        deinitListeners()
 		stopCloseButtonTimer()
 	}
 
@@ -234,7 +245,11 @@ public final class VirtusizeWebViewController: UIViewController {
 		closeButtonTimer?.invalidate()
 		closeButtonTimer = nil
 	}
-	
+
+    private func deinitListeners() {
+        webView?.configuration.userContentController.removeScriptMessageHandler(forName: "eventHandler")
+    }
+
 	private func showCloseButton() {
 		UIView.animate(withDuration: 0.3, animations: {
 			self.closeButton?.isHidden = false
@@ -263,6 +278,7 @@ public final class VirtusizeWebViewController: UIViewController {
 }
 
 extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript(
 			externalProductId: product?.externalId,
@@ -271,11 +287,25 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			reportError(error: .invalidVsParamScript)
 			return
 		}
-		webView.evaluateJavaScript(vsParamsFromSDKScript, completionHandler: nil)
-        if let showSNSButtons = Virtusize.params?.showSNSButtons {
-            webView.evaluateJavaScript("window.virtusizeSNSEnabled = \(showSNSButtons);", completionHandler: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) { [weak self] in
+
+            webView.evaluateJavaScript(vsParamsFromSDKScript) { response, error in
+                if let error = error {
+                    print("Evaluate JavaScript exception: \(error.localizedDescription)")
+                }
+            }
+
+            if let showSNSButtons = Virtusize.params?.showSNSButtons {
+                webView.evaluateJavaScript("window.virtusizeSNSEnabled = \(showSNSButtons);") { response, error in
+                    if let error = error {
+                        print("Evaluate JavaScript exception: \(error.localizedDescription)")
+                    }
+                }
+            }
+
+            self?.checkAndUpdateBrowserID()
         }
-		checkAndUpdateBrowserID()
 	}
 
 	public func webView(

@@ -65,6 +65,10 @@ public class VirtusizeButton: UIButton, VirtusizeView, VirtusizeViewEventProtoco
 		addNotificationObserver()
 	}
 
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+
 	/// Add observers to listen to notification data from the sender (Virtusize.self)
 	private func addNotificationObserver() {
 		NotificationCenter.default.addObserver(
