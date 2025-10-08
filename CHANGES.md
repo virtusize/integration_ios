@@ -11,6 +11,9 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 #### Fixes
+- Fixed LINE redirect url issue for WebView
+
+### 2.12.11
 - resolve WebView leak
 - cleanup observers/listeners
 - fix initialization race condition related to vsParamsFromSDK
