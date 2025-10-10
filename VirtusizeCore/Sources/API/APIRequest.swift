@@ -30,7 +30,7 @@ internal typealias JSONArray = [JSONObject]
 
 /// This enum contains supported HTTP request methods
 public enum APIMethod: String {
-	case get = "GET", post = "POST", delete = "DELETE"
+	case get = "GET", post = "POST", put = "PUT", delete = "DELETE"
 }
 
 /// A structure to get `URLRequest`s for Virtusize API requests
@@ -82,6 +82,24 @@ public struct APIRequest {
 		return request
 	}
 
+    /// Gets the `URLRequest` for the HTTP request that gets user sessions
+    ///
+    /// - Parameters:
+    ///   - components: `URLComponents` to obtain the `URL`
+    /// - Returns: A `URLRequest` for this HTTP request
+    public static func apiRequestWithAuthHeader(
+        components: URLComponents,
+        withPayload payload: Data,
+        method: APIMethod = .post
+    ) -> URLRequest {
+        var request = apiRequest(components: components, method: method)
+        request.addValue(UserDefaultsHelper.current.authToken ?? "", forHTTPHeaderField: "x-vs-auth")
+        request.addValue("", forHTTPHeaderField: "Cookie")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = payload
+        return request
+    }
+
 	/// Gets the `URLRequest` for the HTTP request that requires authentication
 	///
 	/// - Parameters:
@@ -96,17 +114,20 @@ public struct APIRequest {
 		request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")
 		return request
 	}
-
-	/// Gets the `URLRequest` for the HTTP request where the request body is added
-	///
-	/// - Parameters:
-	///   - components: `URLComponents` to obtain the `URL`
-	///   - payload: A `Data` that is sent as the message body of the request
-	/// - Returns: A `URLRequest` for this HTTP request
-	public static func apiRequest(components: URLComponents, withPayload payload: Data) -> URLRequest {
-		var request = apiRequest(components: components, method: .post)
-		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-		request.httpBody = payload
-		return request
-	}
+    /// Gets the `URLRequest` for the HTTP request where the request body is added
+    ///
+    /// - Parameters:
+    ///   - components: `URLComponents` to obtain the `URL`
+    ///   - payload: A `Data` that is sent as the message body of the request
+    /// - Returns: A `URLRequest` for this HTTP request
+    public static func apiRequest(
+        components: URLComponents,
+        withPayload payload: Data,
+        method: APIMethod = .post
+    ) -> URLRequest {
+        var request = apiRequest(components: components, method: method)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = payload
+        return request
+    }
 }

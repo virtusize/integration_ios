@@ -31,6 +31,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTheFitButton: VirtusizeButton!
     @IBOutlet weak var inPageMini: VirtusizeInPageMini!
 
+    /// Set up the product information
+    let product1 = VirtusizeProduct(
+        externalId: "JTJ05"
+    )
+
+    /// Set up the product information
+    let product2 = VirtusizeProduct(
+        externalId: "JTJ05"
+    )
+
     // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,22 +63,6 @@ class ViewController: UIViewController {
             name: Virtusize.productCheckDidSucceed,
             object: Virtusize.self
         )
-
-        /// Set up the product information
-        let product1 = VirtusizeProduct(
-            externalId: "vs_dress",
-            imageURL: URL(string: "http://www.example.com/image.jpg")
-        )
-        /// Loads the product in order to populate the Virtusize views associated with `product1`
-        Virtusize.load(product: product1)
-
-        /// Set up the product information
-        let product2 = VirtusizeProduct(
-            externalId: "vs_pants",
-            imageURL: URL(string: "http://www.example.com/image.jpg")
-        )
-        /// Loads the product in order to populate the Virtusize views associated with `product2`
-        Virtusize.load(product: product2)
 
         // Optional: Set up WKProcessPool to allow cookie sharing.
         Virtusize.processPool = WKProcessPool()
@@ -133,6 +127,18 @@ class ViewController: UIViewController {
 
         // MARK: The Order API
         sendOrderSample()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+
+        /// Loads the product in order to populate the Virtusize views associated with `product1`
+        Virtusize.load(product: product1)
+
+
+        /// Loads the product in order to populate the Virtusize views associated with `product2`
+        Virtusize.load(product: product2)
     }
 
     /// Demonstrates how to send an order to the Virtusize server

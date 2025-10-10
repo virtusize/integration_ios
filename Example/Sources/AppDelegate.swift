@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// }
 
 		// Virtusize.APIKey is required
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
+		Virtusize.APIKey = "fc3165757dadee62df86f7a6a260bda855efc704"
 		// For using the Order API, Virtusize.userID is required
 		Virtusize.userID = "123"
 		// By default, the Virtusize environment will be set to .JAPAN
