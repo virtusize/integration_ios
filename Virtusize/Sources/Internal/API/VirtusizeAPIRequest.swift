@@ -172,6 +172,73 @@ extension APIRequest {
 		return apiRequestWithAuthorization(components: endpoint.components)
 	}
 
+	/// Gets the `URLRequest` for updating the user body measurements
+	///
+	/// - Parameter userBodyProfile: The user body profile to update
+	/// - Returns: A `URLRequest` for the update request
+	internal static func updateUserBodyProfile(userBodyProfile: VirtusizeUserBodyProfile) -> URLRequest? {
+		let endpoint = APIEndpoints.userBodyMeasurements
+
+		var payload: [String: Any] = [:]
+
+		// Add bra_size if available
+		if let braSize = userBodyProfile.braSize {
+			var braSizeDict: [String: Any] = [:]
+			for (key, value) in braSize {
+				if let anyCodable = value {
+					braSizeDict[key] = anyCodable.value
+				}
+			}
+			payload["bra_size"] = braSizeDict
+		}
+
+		// Add body_data
+		var bodyDataDict: [String: Any] = [:]
+		if let bodyData = userBodyProfile.bodyData {
+			for (key, value) in bodyData {
+				if let measurement = value {
+					bodyDataDict[key] = measurement
+				}
+			}
+		}
+		payload["body_data"] = bodyDataDict
+
+		// Add footwear_data if available
+		if let footwearData = userBodyProfile.footwearData {
+			var footwearDict: [String: Any] = [:]
+			for (key, value) in footwearData {
+				footwearDict[key] = value.value
+			}
+			payload["footwear_data"] = footwearDict
+		}
+
+		// Add concern_areas (default to zeros)
+		payload["concern_areas"] = [
+			"shoulder": 0,
+			"bust": 0,
+			"waist": 0,
+			"hip": 0
+		]
+
+		// Add other profile fields
+		if let age = userBodyProfile.age {
+			payload["age"] = age
+		}
+		if let height = userBodyProfile.height {
+			payload["height"] = height
+		}
+		if let weight = userBodyProfile.weight {
+			payload["weight"] = weight
+		}
+		payload["gender"] = userBodyProfile.gender
+
+		guard let jsonData = try? JSONSerialization.data(withJSONObject: payload, options: []) else {
+			return nil
+		}
+
+        return apiRequestWithAuthHeader(components: endpoint.components, withPayload: jsonData, method: .put)
+	}
+
 	/// Gets the `URLRequest` for the `getItemSizeRecommendation` request
 	///
 	/// - Parameters:
