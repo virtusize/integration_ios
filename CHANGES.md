@@ -11,9 +11,12 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 #### Fixes
-- resolve WebView leak
-- cleanup observers/listeners
-- fix initialization race condition related to vsParamsFromSDK
+- Fix: bra body measurements - suggested size issue fixed
+
+### 2.12.11
+- Fix: WebView memory leak
+- Fix: observers/listeners memory management
+- Fix: Initialization race condition related to vsParamsFromSDK
 
 ### 2.12.10
 - Fix: Added close button on error loading webview
