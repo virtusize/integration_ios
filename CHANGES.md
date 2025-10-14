@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 #### Fixes
 - Fix: bra body measurements - suggested size issue fixed
 
+### 2.12.12
+- Fix: LINE redirect url issue for WebView
+
 ### 2.12.11
 - Fix: WebView memory leak
 - Fix: observers/listeners memory management
