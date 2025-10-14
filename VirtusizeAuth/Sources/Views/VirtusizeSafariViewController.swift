@@ -81,13 +81,11 @@ final class VirtusizeSafariViewController: SFSafariViewController {
 		case .google:
 			authProvider = GoogleAuthProvider()
 		case .line:
-			let redirectUri = VirtusizeAuthStringHelper.getRedirectUrl(region: region, env: env)
 			self.webView?.evaluateJavaScript(
 				"""
 					sdkSnsLogin({
 						code: '\(accessToken)',
-						snsType: 'line',
-						redirectUri: '\(redirectUri)'
+						snsType: 'line'
 					})
 				""",
 				completionHandler: { _, err in
