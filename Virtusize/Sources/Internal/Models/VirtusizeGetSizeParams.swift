@@ -136,6 +136,27 @@ private func getBodyDataDict(
 			}
 		}
 	}
+
+    if let braSize = userBodyProfile?.braSize {
+        for (name, anyCodable) in braSize {
+            let snakeKey = camelCaseToSnakeCase(name)
+            if let anyCodable = anyCodable {
+                if snakeKey == "band" {
+                    if let bandValue = anyCodable.value as? Int {
+                        bodyDataDict["bra_\(snakeKey)"] = [
+                            "value": VirtusizeAnyCodable(bandValue * 10),
+                            "predicted": VirtusizeAnyCodable(true)
+                        ]
+                    }
+                } else {
+                    bodyDataDict["bra_\(snakeKey)"] = [
+                        "value": anyCodable,
+                        "predicted": VirtusizeAnyCodable(true)
+                    ]
+                }
+            }
+        }
+    }
 	return bodyDataDict
 }
 
