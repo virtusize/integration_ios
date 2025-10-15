@@ -165,6 +165,17 @@ class VirtusizeAPIService: APIService {
 		return await getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
 	}
 
+	/// The API request for updating the user body profile data
+	///
+	/// - Parameter userBodyProfile: The user body profile to update
+	/// - Returns: the updated user body profile data in the type of `VirtusizeUserBodyProfile`
+	internal static func updateUserBodyProfileAsync(userBodyProfile: VirtusizeUserBodyProfile) async -> APIResult<VirtusizeUserBodyProfile> {
+		guard let request = APIRequest.updateUserBodyProfile(userBodyProfile: userBodyProfile) else {
+			return .failure(nil)
+		}
+		return await getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
+	}
+
 	/// The API request for retrieving the recommended item sizes based on the user body profile
 	///
 	/// - Parameters:
