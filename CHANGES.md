@@ -10,8 +10,22 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+#### Fixes
+- Fix: SDK version and SDK platform parameters added
+
+### 2.12.13
+- Fix: bra body measurements - suggested size issue fixed
+
+### 2.12.12
+- Fix: LINE redirect url issue for WebView
+
+### 2.12.11
+- Fix: WebView memory leak
+- Fix: observers/listeners memory management
+- Fix: Initialization race condition related to vsParamsFromSDK
+
 ### 2.12.10
-- Feature: SDK version and SDK platform parameters added
+- Fix: Added close button on error loading webview
 
 ### 2.12.9
 - Fix: Crash upon selecting language inside Virtusize web view
