@@ -11,6 +11,9 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 #### Fixes
+- Fix: SDK version and SDK platform parameters added
+
+### 2.12.13
 - Fix: bra body measurements - suggested size issue fixed
 
 ### 2.12.12
