@@ -207,6 +207,9 @@ extension VirtusizeServerProduct: Hashable {
 
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(id)
-		hasher.combine(externalId)
+		// Use UTF-8 bytes instead of String to avoid Unicode normalization issues
+		// that can crash with malformed Unicode sequences
+        // TODO: find Unicode externalId error
+		hasher.combine(externalId.utf8.map { $0 })
 	}
 }
