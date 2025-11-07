@@ -11,6 +11,9 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 #### Fixes
+- Fix: Added concurrent queue lock to fix race condition crashes
+
+### 2.12.13
 - Fix: bra body measurements - suggested size issue fixed
 
 ### 2.12.12
