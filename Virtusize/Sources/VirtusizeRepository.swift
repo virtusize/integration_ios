@@ -45,11 +45,45 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
     private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	private var hasSessionBodyMeasurement: Bool = false
 
-	private var store: VirtusizeStore?
+	private var _store: VirtusizeStore?
+	private let storeLock = NSLock()
+	private var store: VirtusizeStore? {
+		get {
+			storeLock.lock()
+			defer { storeLock.unlock() }
+			return _store
+		}
+		set {
+			storeLock.lock()
+			defer { storeLock.unlock() }
+			_store = newValue
+		}
+	}
 	private var shouldReloadStoreI18n: Bool = true
 
 	/// A set to cache the store product information of all the visited products
-	internal var serverStoreProductSet: Set<VirtusizeServerProduct> = []
+	private var _serverStoreProductSet: Set<VirtusizeServerProduct> = []
+	private let productSetLock = NSLock()
+
+	internal var serverStoreProductSet: Set<VirtusizeServerProduct> {
+		get {
+			productSetLock.lock()
+			defer { productSetLock.unlock() }
+			return _serverStoreProductSet
+		}
+		set {
+			productSetLock.lock()
+			defer { productSetLock.unlock() }
+			_serverStoreProductSet = newValue
+		}
+	}
+
+	/// Thread-safe insert into serverStoreProductSet
+	private func insertIntoProductSet(_ product: VirtusizeServerProduct) {
+		productSetLock.lock()
+		defer { productSetLock.unlock() }
+		_serverStoreProductSet.insert(product)
+	}
 
 	/// Checks if the product in `VirtusizeProduct` is valid and post notifications
 	///
@@ -60,11 +94,14 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
         let imageURL = product.imageURL
 		let productResponse = await VirtusizeAPIService.productCheckAsync(product: product)
 		guard let product = productResponse.success else {
-			NotificationCenter.default.post(
-				name: Virtusize.productCheckDidFail,
-				object: Virtusize.self,
-				userInfo: ["message": productResponse.string ?? VirtusizeError.unknownError.debugDescription]
-			)
+            let errorMessage = productResponse.string ?? VirtusizeError.unknownError.debugDescription
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(
+                    name: Virtusize.productCheckDidFail,
+                    object: Virtusize.self,
+                    userInfo: ["message": errorMessage]
+                )
+            }
 			return nil
 		}
 
@@ -83,11 +120,13 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 
 		guard mutableProduct.productCheckData?.productDataId != nil else {
-			NotificationCenter.default.post(
-				name: Virtusize.productCheckDidFail,
-				object: Virtusize.self,
-				userInfo: ["message": mutableProduct.dictionary]
-			)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(
+                    name: Virtusize.productCheckDidFail,
+                    object: Virtusize.self,
+                    userInfo: ["message": mutableProduct.dictionary]
+                )
+            }
 			return nil
 		}
 
@@ -107,12 +146,15 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 				withContext: mutableProduct.jsonObject
 			)
 		}
-
-		NotificationCenter.default.post(
-			name: Virtusize.productCheckDidSucceed,
-			object: Virtusize.self,
-			userInfo: ["message": mutableProduct.dictionary]
-		)
+		
+		// Post notification on main thread
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(
+				name: Virtusize.productCheckDidSucceed,
+				object: Virtusize.self,
+				userInfo: ["message": mutableProduct.dictionary]
+			)
+		}
 
 		return mutableProduct
 	}
@@ -144,7 +186,8 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			Virtusize.inPageError = (true, externalProductId)
             return nil
 		}
-		self.serverStoreProductSet.insert(storeProduct)
+
+		self.insertIntoProductSet(storeProduct)
 
 		guard productTypes != nil && i18nLocalization != nil else {
 			Virtusize.inPageError = (true, externalProductId)
@@ -170,6 +213,8 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 
 		let productId = storeProduct.id
+		// Cache externalId early to avoid potential deallocation issues with malformed Unicode
+		let externalId = storeProduct.externalId
 		if let product = serverStoreProductSet.filter({ product in
 			product.id == productId
 		}).first {
@@ -188,7 +233,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			if userProductsResponse.isSuccessful {
 				userProducts = userProductsResponse.success
 			} else if userProductsResponse.errorCode != 404 {
-				Virtusize.inPageError = (true, storeProduct.externalId)
+				Virtusize.inPageError = (true, externalId)
 				return
 			}
 		}
@@ -197,7 +242,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			if userBodyProfileResponse.isSuccessful {
 				userBodyProfile = userBodyProfileResponse.success
 			} else if userBodyProfileResponse.errorCode != 404 {
-				Virtusize.inPageError = (true, storeProduct.externalId)
+				Virtusize.inPageError = (true, externalId)
 				return
 			}
 		} else if !hasSessionBodyMeasurement {
@@ -359,21 +404,29 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	internal func fetchLocalization(language: VirtusizeLanguage? = nil) async -> VirtusizeI18nLocalization? {
 		async let i18nTask = VirtusizeAPIService.getI18nAsync(language: language)
 
+		// Capture store value early to avoid concurrent access issues
+		let currentStore = store
+		let shouldReload = shouldReloadStoreI18n
+
 		async let storeI18nTask: Task<APIResult<JSONObject>?, Error> = Task {
-			if store == nil {
-				store = await VirtusizeAPIService.retrieveStoreInfoAsync().success
+			var storeToUse = currentStore
+			if storeToUse == nil {
+				let storeInfo = await VirtusizeAPIService.retrieveStoreInfoAsync().success
+				storeToUse = storeInfo
+				// Update instance property in a thread-safe manner
+				self.store = storeInfo
 			}
 
-			guard shouldReloadStoreI18n else {
+			guard shouldReload else {
 				return nil
 			}
 
-			guard let store = store else {
+			guard let storeValue = storeToUse else {
 				VirtusizeLogger.warn("Failed to load Store Info")
 				return nil
 			}
 
-			return await VirtusizeAPIService.getStoreI18nAsync(storeName: store.shortName)
+			return await VirtusizeAPIService.getStoreI18nAsync(storeName: storeValue.shortName)
 		}
 
 		let i18nResponse = await i18nTask
