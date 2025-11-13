@@ -73,7 +73,9 @@ internal enum APIEndpoints {
         components.host = hostname
 		switch self {
 		case .productCheck(let externalId):
-			let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+			// Store local copy to avoid repeated access during string interpolation
+			let isProd = Virtusize.environment.isProdEnv
+			let envPathForServicesAPI = isProd ? "" : "/stg"
 			components.path = "\(envPathForServicesAPI)/product/check"
 			components.queryItems = dataCheckQueryItems(externalId: externalId)
 
@@ -87,23 +89,25 @@ internal enum APIEndpoints {
 			components.path = "/a/aoyama/latest.txt"
 
 		case .virtusizeWebView(let version):
-			switch Virtusize.params?.branch {
+			let branch = Virtusize.params?.branch
+			switch branch {
 			case .none:
 				components.path = "/a/aoyama/\(version)/sdk-webview.html"
 			case .some("staging"):
 				components.path = "/a/aoyama/staging/sdk-webview.html"
-			case .some(let branch):
-				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
+			case .some(let branchName):
+				components.path = "/a/aoyama/testing/\(branchName)/sdk-webview.html"
 			}
 
 		case .virtusizeWebViewForSpecificClients:
-			switch Virtusize.params?.branch {
+			let branch = Virtusize.params?.branch
+			switch branch {
 			case .none:
 				components.path = "/a/aoyama/testing/privacy-policy-phase2-vue/sdk-webview.html"
 			case .some("staging"):
 				components.path = "/a/aoyama/staging/sdk-webview.html"
-			case .some(let branch):
-				components.path = "/a/aoyama/testing/\(branch)/sdk-webview.html"
+			case .some(let branchName):
+				components.path = "/a/aoyama/testing/\(branchName)/sdk-webview.html"
 			}
 
 		case .storeViewApiKey:
@@ -114,12 +118,16 @@ internal enum APIEndpoints {
 			components.path = "/a/api/v3/orders"
 
 		case .storeProducts(let productId):
-			let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+			// Store local copy to avoid repeated access during string interpolation
+			let isProd = Virtusize.environment.isProdEnv
+			let envPathForServicesAPI = isProd ? "" : "/stg"
 			components.path = "\(envPathForServicesAPI)/a/api/v3/store-products/\(productId)"
 			components.queryItems = jsonFormatQueryItems()
 
 		case .productTypes:
-			let envPathForServicesAPI = Virtusize.environment.isProdEnv ? "" : "/stg"
+			// Store local copy to avoid repeated access during string interpolation
+			let isProd = Virtusize.environment.isProdEnv
+			let envPathForServicesAPI = isProd ? "" : "/stg"
 			components.path = "\(envPathForServicesAPI)/a/api/v3/product-types"
 
 		case .sessions:
@@ -144,8 +152,11 @@ internal enum APIEndpoints {
 			components.path = "/bundle-payloads/aoyama/\(langCode)"
 
 		case .storeI18n(let storeName):
-			let envPath = Virtusize.environment.isProdEnv ? "/production" : "/staging"
-			components.path = "\(envPath)/\(storeName)/customText.json"
+			// Store local copies to avoid repeated access during string interpolation
+			let isProd = Virtusize.environment.isProdEnv
+			let envPath = isProd ? "/production" : "/staging"
+			let storeNameValue = storeName.isEmpty ? "unknown" : storeName
+			components.path = "\(envPath)/\(storeNameValue)/customText.json"
 
 		}
         return components
