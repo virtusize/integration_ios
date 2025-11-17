@@ -53,6 +53,8 @@ struct ExampleApp: App {
 			.setShowSNSButtons(true)
 			// Target the specific environment branch by it's name
 			// .setBranch("branch-name")
+            // By default, Virtusize shows Privacy Policy
+            .setShowPrivacyPolicy(true)
 			.build()
 	}
 

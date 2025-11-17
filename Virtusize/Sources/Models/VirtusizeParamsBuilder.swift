@@ -31,6 +31,7 @@ public class VirtusizeParamsBuilder {
 	private var showSGI: Bool = false
 	private var detailsPanelCards: [VirtusizeInfoCategory] = VirtusizeInfoCategory.allCases
     private var showSNSButtons: Bool = true
+    private var showPrivacyPolicy: Bool = true
 	private var branch: String?
 
 	public init() {}
@@ -64,6 +65,11 @@ public class VirtusizeParamsBuilder {
 		branch = value
 		return self
 	}
+    
+    public func setShowPrivacyPolicy(_ value: Bool) -> VirtusizeParamsBuilder {
+        showPrivacyPolicy = value
+        return self
+    }
 
 	public func build() -> VirtusizeParams {
 		/// Assigns the region value to a default one corresponding the Virtusize environment
@@ -75,7 +81,8 @@ public class VirtusizeParamsBuilder {
 			showSGI: showSGI,
 			detailsPanelCards: detailsPanelCards,
             showSNSButtons: showSNSButtons,
-			branch: branch
+			branch: branch,
+            showPrivacyPolicy: showPrivacyPolicy
 		)
 	}
 }
