@@ -91,6 +91,8 @@ public class VirtusizeParams {
 		paramsScript += "\(ParamKey.detailsPanelCards): \(detailsPanelCards.map { category in category.rawValue }), "
 		paramsScript += "\(ParamKey.language): '\(language.rawValue)', "
 		paramsScript += "\(ParamKey.region): '\(region.rawValue)', "
+		paramsScript += "\(ParamKey.sdkVersion): '\(VirtusizeConfiguration.SDKVersion)', "
+		paramsScript += "\(ParamKey.sdkPlatform): 'ios', "
 		paramsScript += "\(ParamKey.environment): '\(Virtusize.environment.isProdEnv ? "production" : "staging")'})"
 		return paramsScript
 	}
@@ -123,5 +125,7 @@ public class VirtusizeParams {
 		static let showSGI = "showSGI"
 		static let allowedLanguages = "allowedLanguages"
 		static let detailsPanelCards = "detailsPanelCards"
+		static let sdkVersion = "sdkVersion"
+		static let sdkPlatform = "sdkPlatform"
 	}
 }

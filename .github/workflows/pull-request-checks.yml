@@ -28,7 +28,7 @@ jobs:
         run: pod lib lint --include-podspecs="Virtusize*.podspec" --allow-warnings
 
   test:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - name: Check out code
         uses: actions/checkout@v4
