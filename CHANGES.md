@@ -10,7 +10,11 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-#### Fixes
+#### Changes
+- Feature: Add optional configuration for show/hide privacy policy in inpage standard
+- Fix: Fixed sendOrder VirtusizeOrder API key parameter
+
+### 2.12.15
 - Fix: Added concurrent queue lock to fix race condition crashes
 
 ### 2.12.13
