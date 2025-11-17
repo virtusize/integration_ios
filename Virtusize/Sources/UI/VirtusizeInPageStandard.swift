@@ -616,8 +616,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	}
 
 	internal override func setLoadingScreen(loading: Bool) {
+        let showPrivacyPolicy = Virtusize.params?.showPrivacyPolicy ?? true
 		vsSignatureImageView.isHidden = loading ? true : false
-		privacyPolicyLink.isHidden = loading ? true : false
+        privacyPolicyLink.isHidden = loading ? true : (showPrivacyPolicy ? false : true)
 		topMessageLabel.isHidden = loading ? true : false
 		vsIconImageView.isHidden = loading ? false : true
 		userProductImageView.isHidden = (loading || bestFitUserProduct == nil) ? true : false
