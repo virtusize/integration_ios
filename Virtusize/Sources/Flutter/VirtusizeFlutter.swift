@@ -61,11 +61,14 @@ public class VirtusizeFlutter: Virtusize {
         _ orderDict: [String : Any?],
         onSuccess: (() -> Void)? = nil,
         onError: ((VirtusizeError) -> Void)? = nil) {
-            guard let order = VirtusizeOrder.convertToObjectBy(dictionary: orderDict) else {
+            guard var order = VirtusizeOrder.convertToObjectBy(dictionary: orderDict) else {
                 onError?(VirtusizeError.encodingError)
                 return
             }
-            
+
+            // set API key parameter to order
+            order.apiKey = Virtusize.APIKey
+
             sendOrder(order, onSuccess: onSuccess, onError: onError)
     }
     

@@ -41,7 +41,9 @@ public class VirtusizeParams {
     internal let showSNSButtons: Bool
 	/// The branch name of testing environment. When specified, overrides the default endpoint of the Virtusize web app.
 	internal let branch: String?
-
+    /// The Boolean value to determine whether to show or hide the privacy policy
+    internal let showPrivacyPolicy: Bool
+    
 	/// Initializes the VirtusizeParams class
 	init(
 		region: VirtusizeRegion,
@@ -50,7 +52,8 @@ public class VirtusizeParams {
 		showSGI: Bool,
 		detailsPanelCards: [VirtusizeInfoCategory],
 		showSNSButtons: Bool,
-		branch: String?
+		branch: String?,
+        showPrivacyPolicy: Bool
 	) {
 		self.region = region
 		self.language = language
@@ -59,6 +62,7 @@ public class VirtusizeParams {
 		self.detailsPanelCards = detailsPanelCards
         self.showSNSButtons = showSNSButtons
 		self.branch = branch
+        self.showPrivacyPolicy = showPrivacyPolicy
 	}
 
 	/// Gets the script in JavaScript to be called to pass params to the Virtusize web app

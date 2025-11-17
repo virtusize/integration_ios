@@ -61,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .setShowSNSButtons(true)
 			// Target the specific environment branch by it's name
 			// .setBranch("branch-name")
+            // By default, Virtusize shows Privacy Policy
+            .setShowPrivacyPolicy(true)
 			.build()
 
 		return true
