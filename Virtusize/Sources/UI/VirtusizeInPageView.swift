@@ -71,6 +71,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	private let loadingGifImageView: UIImageView = UIImageView()
     internal var isLoading: Bool = false
     internal var isError: Bool = false
+    internal var invalidProduct: Bool = false
 
 	private func addSubviews() {
 		// Add loading GIF image view
@@ -99,7 +100,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	}
 
 	internal func showLoadingGif(_ show: Bool) {
-		isHidden = false
+		isHidden = invalidProduct
         isLoading = show
 		loadingGifImageView.isHidden = !show
 		contentContainerView.isHidden = show
@@ -141,6 +142,12 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
             name: .setLanguage,
             object: Virtusize.self
         )
+        NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(productCheckDidFail(_:)),
+                    name: Virtusize.productCheckDidFail,
+                    object: Virtusize.self
+                )
 	}
     
     @objc internal func didReceiveSetLanguageEvent(_ notification: Notification) {}
@@ -164,6 +171,10 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	@objc internal func didReceiveSizeRecommendationData(_ notification: Notification) {
         isLoading = false
         isError = false
+    }
+    
+    @objc func productCheckDidFail(_ notification: Notification) {
+        invalidProduct = true
     }
 
 	internal func shouldUpdateInPageRecommendation(
