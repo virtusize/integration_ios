@@ -11,6 +11,10 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 #### Changes
+- Feature: Added Service Environment configurations
+- Feature: Hide component when product check returns invalid product state
+
+### 2.12.16
 - Feature: Add optional configuration for show/hide privacy policy in inpage standard
 - Fix: Fixed sendOrder VirtusizeOrder API key parameter
 
