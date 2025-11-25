@@ -48,8 +48,16 @@ internal enum APIEndpoints {
     // MARK: - Properties
     var hostname: String {
 		switch self {
-		case .productCheck, .productTypes, .storeProducts:
-			return Virtusize.environment.servicesUrl()
+        case .productCheck:
+            return Virtusize.environment.servicesUrl()
+
+        case .productTypes, .storeProducts:
+            if Virtusize.params?.serviceEnvironment == true {
+                return Virtusize.environment.servicesUrl()
+            } else {
+                return Virtusize.environment.rawValue
+            }
+
 		case .getItemSizeRecommendation:
 			return Virtusize.environment.getSizeUrl()
         case .getShoeSizeRecommendation:
@@ -120,14 +128,16 @@ internal enum APIEndpoints {
 		case .storeProducts(let productId):
 			// Store local copy to avoid repeated access during string interpolation
 			let isProd = Virtusize.environment.isProdEnv
-			let envPathForServicesAPI = isProd ? "" : "/stg"
+            let hasServiceEnvironment = Virtusize.params?.serviceEnvironment == true
+            let envPathForServicesAPI = !isProd && hasServiceEnvironment ? "/stg" : ""
 			components.path = "\(envPathForServicesAPI)/a/api/v3/store-products/\(productId)"
 			components.queryItems = jsonFormatQueryItems()
 
 		case .productTypes:
 			// Store local copy to avoid repeated access during string interpolation
 			let isProd = Virtusize.environment.isProdEnv
-			let envPathForServicesAPI = isProd ? "" : "/stg"
+            let hasServiceEnvironment = Virtusize.params?.serviceEnvironment == true
+            let envPathForServicesAPI = !isProd && hasServiceEnvironment ? "/stg" : ""
 			components.path = "\(envPathForServicesAPI)/a/api/v3/product-types"
 
 		case .sessions:
