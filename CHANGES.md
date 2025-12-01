@@ -13,6 +13,8 @@ Use list notation, and following prefixes:
 #### Changes
 - Feature: Added Service Environment configurations
 - Feature: Hide component when product check returns invalid product state
+- Fix: Migrate product types implementation locally
+
 
 ### 2.12.16
 - Feature: Add optional configuration for show/hide privacy policy in inpage standard
