@@ -238,7 +238,6 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             "brand": "",
                             "fit": "regular",
                             "sizes": {},
-                            "modelInfo": null,
                             "gender": "null",
                             "style": "fashionable"
                         },
