@@ -69,9 +69,9 @@ public enum VirtusizeEnvironment: String, CaseIterable {
     internal func getSizeUrl() -> String {
 		switch self {
 		case .TESTING:
-			return "size-recommendation.virtusize.jp"
+			return "size-recommendation.staging.virtusize.jp"
 		case .STAGING:
-			return "size-recommendation.virtusize.com"
+			return "size-recommendation.staging.virtusize.jp"
 		case .GLOBAL:
 			return "size-recommendation.virtusize.com"
 		case .JAPAN:

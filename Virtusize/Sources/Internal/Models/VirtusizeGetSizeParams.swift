@@ -53,7 +53,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         userBodyProfile: VirtusizeUserBodyProfile?
 
     ) {
-       let additionalInfo = [
+       var additionalInfo: [String: VirtusizeAnyCodable] = [
             "brand": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.brand ?? storeProduct.storeProductMeta?.brand ?? ""
             ),
@@ -63,14 +63,17 @@ internal struct VirtusizeGetSizeParams: Codable {
             "sizes": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
             ),
-            "modelInfo": VirtusizeAnyCodable(getModelInfoDict(storeProduct: storeProduct)),
             "gender": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.gender ?? "male"
             ),
             "style": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.style ?? "regular"
-            ),
+            )
         ]
+        
+        if let modelInfo = getModelInfoDict(storeProduct: storeProduct) {
+            additionalInfo["modelInfo"] = VirtusizeAnyCodable(modelInfo)
+        }
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
         let itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
         var productType = ""
