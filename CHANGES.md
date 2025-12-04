@@ -10,11 +10,13 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-#### Changes
-- Feature: Added Service Environment configurations
-- Feature: Hide component when product check returns invalid product state
+### 2.12.18
+- Fix: Recommended size for VirtusizeButton
 - Fix: Migrate product types implementation locally
 
+### 2.12.17
+- Feature: Added Service Environment configurations
+- Feature: Hide component when product check returns invalid product state
 
 ### 2.12.16
 - Feature: Add optional configuration for show/hide privacy policy in inpage standard
