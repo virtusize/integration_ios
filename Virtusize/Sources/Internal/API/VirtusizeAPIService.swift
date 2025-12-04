@@ -127,6 +127,25 @@ class VirtusizeAPIService: APIService {
 		}
 		return await getAPIResultAsync(request: request, type: [VirtusizeProductType].self)
 	}
+    
+    /// Parse product types json file
+    ///
+    /// - Returns: the product type list where its each element is in the type of `VirtusizeProductType`
+    internal static func getProductTypesLocalAsync() async -> [VirtusizeProductType] {
+        let bundle = Bundle(for: Virtusize.self)
+        if let url = bundle.url(forResource: "product_types", withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let products = try decoder.decode([VirtusizeProductType].self, from: data)
+                return products
+            } catch {
+                VirtusizeLogger.debug("Failed to parse JSON: \(error)")
+                return []
+            }
+        }
+        return []
+    }
 
 	/// The API request for getting the user session data from the Virtusize server
 	///

@@ -175,11 +175,11 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 
 		async let serverStoreProductTask = VirtusizeAPIService.getStoreProductInfoAsync(productId: productId)
-		async let productTypesTask = VirtusizeAPIService.getProductTypesAsync()
+        
 		async let i18nTask = fetchLocalization()
 
 		let serverStoreProduct = await serverStoreProductTask.success
-		productTypes = await productTypesTask.success
+		productTypes = await VirtusizeAPIService.getProductTypesLocalAsync()
 		i18nLocalization = await i18nTask
 
 		guard let storeProduct = serverStoreProduct else {
