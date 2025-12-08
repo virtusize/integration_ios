@@ -354,15 +354,18 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
 			popupWebView!.navigationDelegate = self
 			popupWebView!.uiDelegate = self
+
 			self.view.addSubview(popupWebView!)
 			return popupWebView
 		}
+
 		return nil
 	}
 
 	/// Checks if a URL is an external link to be open on the Safari browser
 	private func isExternalLinks(url: String?) -> Bool {
-		return url != nil && (url!.contains("survey") || url!.contains("privacy"))
+		return url != nil && (url!.contains("survey") || url!.contains("privacy") || url!.contains("notion") ||
+        url!.contains("surveymonkey"))
 	}
 
 	public func webViewDidClose(_ webView: WKWebView) {
