@@ -11,7 +11,7 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 
-### Changes
+### 2.12.19
 - Bugfix: VirtusizeWebView redirect url for FAQ page
 
 ### 2.12.18
