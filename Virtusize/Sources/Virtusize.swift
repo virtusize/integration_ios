@@ -63,7 +63,9 @@ public class Virtusize {
 
 	internal static let virtusizeEventHandler = DefaultEventHandler()
 
-	internal static let dispatchQueue = DispatchQueue(label: "com.virtusize.default-queue")
+	/// Task to track current product load operation for cancellation
+	private static var loadProductTask: Task<Void, Never>?
+	private static let loadProductTaskLock = NSLock()
 
 	internal typealias SizeRecommendationData = ( // swiftlint:disable:this large_tuple
 		serverProduct: VirtusizeServerProduct,
@@ -71,16 +73,10 @@ public class Virtusize {
 		bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	)
 
-	/// The private property for updating the size recommendation data for InPage views
-	private static var _sizeRecData: SizeRecommendationData?
 	/// The property to be set to updating the size recommendation data for InPage views.
 	internal static var sizeRecData: SizeRecommendationData? {
-		get {
-			return _sizeRecData
-		}
-		set {
-			_sizeRecData = newValue
-			if let sizeRecData = _sizeRecData {
+		didSet {
+			if let sizeRecData = sizeRecData {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(
 						name: .sizeRecommendationData,
@@ -95,15 +91,9 @@ public class Virtusize {
 	internal typealias InPageError = (hasError: Bool, externalProductId: String)
 
 	/// The property to be set to show the InPage error screen with the associated external product ID
-	private static var _inPageError: InPageError?
-	/// The property to be set to show the InPage error screen with the associated external product ID
 	internal static var inPageError: InPageError? {
-		get {
-			return _inPageError
-		}
-		set {
-			_inPageError = newValue
-			if let inPageError = _inPageError {
+		didSet {
+			if let inPageError = inPageError {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(
 						name: .inPageError,
@@ -119,15 +109,26 @@ public class Virtusize {
 	// MARK: - Methods
 	/// A function for clients to populate the Virtusize views by loading a product
 	public class func load(product: VirtusizeProduct) {
-		Task {
+		// Cancel previous load task if it exists
+		loadProductTaskLock.lock()
+		loadProductTask?.cancel()
+
+		// Create new task
+		let task = Task {
+			// Check if cancelled early
+			guard !Task.isCancelled else { return }
+
 			let productWithPDCData = await virtusizeRepository.checkProductValidity(product: product)
 
+			guard !Task.isCancelled else { return }
 			guard let productWithPDCData = productWithPDCData else {
                 inPageError = (true, product.externalId)
                 return
 			}
 
 			await virtusizeRepository.updateUserSession()
+
+			guard !Task.isCancelled else { return }
 			await MainActor.run {
 				NotificationCenter.default.post(
 					name: .productCheckData,
@@ -141,6 +142,7 @@ public class Virtusize {
 				productId: productWithPDCData.productCheckData?.productDataId
 			)
 
+			guard !Task.isCancelled else { return }
 			guard let serverProduct = serverProduct else {
                 inPageError = (true, product.externalId)
 				return
@@ -154,9 +156,17 @@ public class Virtusize {
 				)
 			}
 
+			guard !Task.isCancelled else { return }
 			await virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
-			virtusizeRepository.updateInPageRecommendation(product: serverProduct)
+
+			guard !Task.isCancelled else { return }
+			await MainActor.run {
+				virtusizeRepository.updateInPageRecommendation(product: serverProduct)
+			}
 		}
+
+		loadProductTask = task
+		loadProductTaskLock.unlock()
 	}
 
 	/// Sets up the VirtusizeView and adds it to `virtusizeViews`

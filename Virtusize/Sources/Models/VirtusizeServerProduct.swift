@@ -115,11 +115,15 @@ public class VirtusizeServerProduct: Codable {
 
 	/// Gets the InPage recommendation text based on the user and store product info
 	func getRecommendationText(
-		_ i18nLocalization: VirtusizeI18nLocalization,
+		_ i18nLocalization: VirtusizeI18nLocalization?,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSizeName: String?,
 		_ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
 	) -> String {
+        guard let i18nLocalization = i18nLocalization else {
+            return Localization.shared.localize("inpage_default_accessory_text")
+        }
+
 		var text = i18nLocalization.getBodyDataEmptyText()
 		if isAccessory() {
 			text = accessoryText(i18nLocalization, sizeComparisonRecommendedSize)
