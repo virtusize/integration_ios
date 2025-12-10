@@ -11,6 +11,9 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 
+### 2.12.20
+- Bugfix: Added async Task cancellation to fix concurrency crash
+
 ### 2.12.19
 - Bugfix: VirtusizeWebView redirect url for FAQ page
 
