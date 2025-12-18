@@ -45,44 +45,16 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
     private var bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	private var hasSessionBodyMeasurement: Bool = false
 
-	private var _store: VirtusizeStore?
-	private let storeLock = NSLock()
-	private var store: VirtusizeStore? {
-		get {
-			storeLock.lock()
-			defer { storeLock.unlock() }
-			return _store
-		}
-		set {
-			storeLock.lock()
-			defer { storeLock.unlock() }
-			_store = newValue
-		}
-	}
+	private var store: VirtusizeStore?
 	private var shouldReloadStoreI18n: Bool = true
 
 	/// A set to cache the store product information of all the visited products
-	private var _serverStoreProductSet: Set<VirtusizeServerProduct> = []
-	private let productSetLock = NSLock()
+	/// Note: No lock needed - protected by task cancellation in Virtusize.load()
+	internal var serverStoreProductSet: Set<VirtusizeServerProduct> = []
 
-	internal var serverStoreProductSet: Set<VirtusizeServerProduct> {
-		get {
-			productSetLock.lock()
-			defer { productSetLock.unlock() }
-			return _serverStoreProductSet
-		}
-		set {
-			productSetLock.lock()
-			defer { productSetLock.unlock() }
-			_serverStoreProductSet = newValue
-		}
-	}
-
-	/// Thread-safe insert into serverStoreProductSet
+	/// Insert into serverStoreProductSet
 	private func insertIntoProductSet(_ product: VirtusizeServerProduct) {
-		productSetLock.lock()
-		defer { productSetLock.unlock() }
-		_serverStoreProductSet.insert(product)
+		serverStoreProductSet.insert(product)
 	}
 
 	/// Checks if the product in `VirtusizeProduct` is valid and post notifications

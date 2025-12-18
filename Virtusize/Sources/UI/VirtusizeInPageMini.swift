@@ -86,7 +86,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			inPageMiniMessageLabel.attributedText = NSAttributedString(
 				string:
 					sizeRecData.serverProduct.getRecommendationText(
-						VirtusizeRepository.shared.i18nLocalization!,
+						VirtusizeRepository.shared.i18nLocalization,
 						sizeComparisonRecommendedSize,
 						bodyProfileRecommendedSize?.getSizeName,
 						VirtusizeI18nLocalization.TrimType.ONELINE
