@@ -10,6 +10,8 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Changes
+- Fix: issue with no size found text
 
 ### 2.12.21
 - Bugfix: Added async Task cancellation to fix concurrency crash
