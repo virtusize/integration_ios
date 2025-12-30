@@ -28,20 +28,6 @@ import UIKit
 /// or replacing it with a product type placeholder image when the image URL is not available
 internal class VirtusizeProductImageView: UIView {
 
-	override var isHidden: Bool {
-		get {
-			return super.isHidden
-		}
-		set(value) {
-			super.isHidden = value
-			if !value && productImageType == .USER {
-				circleBorderLayer.isHidden = false
-			} else {
-				circleBorderLayer.isHidden = true
-			}
-		}
-	}
-
 	enum ProductImageType {
 		case USER, STORE
 	}
@@ -88,13 +74,21 @@ internal class VirtusizeProductImageView: UIView {
 	}
 
 	private func setStyle() {
+        productImageView.contentMode = .scaleAspectFit
+        
 		frame = CGRect(x: 0, y: 0, width: imageSize, height: imageSize)
 		layer.cornerRadius = imageSize / 2
 
 		if productImageType == .STORE {
+            productImageView.backgroundColor = .vsGray200Color
+            productImageView.tintColor = UIColor.black
+
 			layer.borderWidth = 0.5
 			layer.borderColor = UIColor.vsGray800Color.cgColor
 		} else {
+            productImageView.backgroundColor = UIColor.white
+            productImageView.tintColor = .vsTealColor
+
 			circleBorderLayer.path = UIBezierPath(ovalIn: bounds).cgPath
 			circleBorderLayer.lineWidth = 1.0
 			circleBorderLayer.strokeColor = UIColor.vsDarkTealColor.cgColor
@@ -116,17 +110,6 @@ internal class VirtusizeProductImageView: UIView {
         productImageView.layer.cornerRadius = VirtusizeProductImageView.circleImageSize / 2
 		productImageView.layer.masksToBounds = true
 		productImageView.contentMode = .scaleAspectFill
-	}
-
-	func setProductTypeImage(image: UIImage?) {
-		if productImageType == .STORE {
-			self.productImageView.backgroundColor = .vsGray200Color
-			self.productImageView.tintColor = UIColor.black
-		} else {
-			self.productImageView.backgroundColor = UIColor.white
-			self.productImageView.tintColor = .vsTealColor
-		}
-		productImageView.contentMode = .scaleAspectFit
 	}
 }
 

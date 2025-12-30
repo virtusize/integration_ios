@@ -50,6 +50,14 @@ final public class VirtusizeAssets {
 		return UIImage(bundleNamed: "error_hanger")
 	}()
 
+    public static let bodyVsTeal: UIImage? = {
+        return UIImage(bundleNamed: "body")?.withTintColor(.vsTealColor, renderingMode: .alwaysOriginal)
+    }()
+
+    public static let bodyVsBlack: UIImage? = {
+        return UIImage(bundleNamed: "body")
+    }()
+
 	/// Gets the product placeholder image by the product type and style
 	///
 	/// - Parameters:

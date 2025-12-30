@@ -179,7 +179,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
                 label: bottomMessageLabel,
                 text: Localization.shared.localize("inpage_loading_text", language: language)
             )
-        } else if isError{
+        } else if isError {
             errorText.attributedText = NSAttributedString(
                 string: Localization.shared.localize("inpage_error_long_text", language: language)
             ).lineSpacing(self.messageLineSpacing)
@@ -192,20 +192,16 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		viewModel.userProductImageObservable.observe(on: self) { [weak self] userProductImage in
 			if userProductImage != nil {
 				self?.userProductImageView.image = userProductImage!.image
-				if userProductImage!.source == .local {
-					self?.userProductImageView.setProductTypeImage(image: userProductImage!.image)
-				}
-				self!.setProductImages()
+				self?.setProductImages()
+                self?.finishLoading()
 			}
 		}
 
 		viewModel.storeProductImageObservable.observe(on: self) { [weak self] userProductImage in
 			if userProductImage != nil {
 				self?.storeProductImageView.image = userProductImage!.image
-				if userProductImage!.source == .local {
-					self?.storeProductImageView.setProductTypeImage(image: userProductImage!.image)
-				}
-				self!.setProductImages()
+				self?.setProductImages()
+                self?.finishLoading()
 			}
 		}
 	}
@@ -216,29 +212,14 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 	}
 
 	private func setProductImages() {
-		if bestFitUserProduct != nil {
-			if viewModel.storeProductImageObservable.value != nil  && viewModel.userProductImageObservable.value != nil {
-				if inPageStandardView.frame.size.width >= smallInPageWidth {
-					adjustProductImageViewPosition(userProductImageSize: 40, productImageViewOffset: -2)
-				} else {
-					if !productImagesAreAnimating {
-						// if item to item recommendation is available, we make user and store product images fade in/out repeatedly
-						startCrossFadeProductImageViews()
-						adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
-					}
-				}
-				finishLoading()
-			}
-		} else {
-			if viewModel.storeProductImageObservable.value != nil {
-				if inPageStandardView.frame.size.width < smallInPageWidth {
-					// if item to item recommendation is not available, stop any fading animations
-					stopCrossFadeProductImageViews()
-				}
-				adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
-				finishLoading()
-			}
-		}
+
+        if inPageStandardView.frame.size.width < smallInPageWidth {
+            startCrossFadeProductImageViews()
+            adjustProductImageViewPosition(userProductImageSize: 0, productImageViewOffset: 0)
+        } else {
+            stopCrossFadeProductImageViews()
+            adjustProductImageViewPosition(userProductImageSize: 40, productImageViewOffset: -2)
+        }
 	}
 
 	private func finishLoading() {
@@ -426,7 +407,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		vsIconImageView.image = VirtusizeAssets.icon
 
 		userProductImageView.productImageType = .USER
+        userProductImageView.image = VirtusizeAssets.bodyVsTeal
+
 		storeProductImageView.productImageType = .STORE
+        storeProductImageView.image = VirtusizeAssets.bodyVsBlack
 
 		vsSignatureImageView.image = VirtusizeAssets.vsSignature
 
@@ -621,8 +605,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
         privacyPolicyLink.isHidden = loading ? true : (showPrivacyPolicy ? false : true)
 		topMessageLabel.isHidden = loading ? true : false
 		vsIconImageView.isHidden = loading ? false : true
-		userProductImageView.isHidden = (loading || bestFitUserProduct == nil) ? true : false
-		storeProductImageView.isHidden = loading ? true : false
+		userProductImageView.isHidden = loading ? true : false
+        storeProductImageView.isHidden = loading ? true : false
+
 		if loading {
 			startLoadingTextAnimation(
 				label: bottomMessageLabel,
@@ -630,6 +615,7 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 			)
 		} else {
 			stopLoadingTextAnimation()
+            setProductImages()
 		}
 		DispatchQueue.main.async {
 			self.contentViewListener?(self)
