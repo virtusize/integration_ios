@@ -179,17 +179,43 @@ class VirtusizeServerProductTests: XCTestCase {
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				nil,
-				bodyProfileRecommendedSizeName
+				bodyProfileRecommendedSizeName,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.oneSizeWillFitResultText!)
 		)
 		XCTAssertTrue(
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				nil,
-				bodyProfileRecommendedSizeName
+				bodyProfileRecommendedSizeName,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.oneSizeWillFitResultText!)
 		)
 	}
+
+    func testGetRecommendationText_oneSizeProduct_bodyProfileRecommendedSizeNotFit_returnOneSizeBodyProfileText() {
+        let bodyProfileRecommendedSizeName = "Small"
+        XCTAssertTrue(
+            oneSizeProduct!.getRecommendationText(
+                i18nLocalization,
+                nil,
+                bodyProfileRecommendedSizeName,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                false
+            ).contains(i18nLocalization.willNotFitResultText!)
+        )
+        XCTAssertTrue(
+            oneSizeProduct!.getRecommendationText(
+                i18nLocalization,
+                nil,
+                bodyProfileRecommendedSizeName,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                false
+            ).contains(i18nLocalization.willNotFitResultText!)
+        )
+    }
 
 	func testGetRecommendationText_multiSizeProduct_hasSizeComparisonRecommendedSize_returnMultiSizeComparisonText() {
 		let storeProduct1 = TestFixtures.getStoreProduct(productType: 1, gender: nil)
@@ -211,10 +237,26 @@ class VirtusizeServerProductTests: XCTestCase {
 			storeProduct4!.getRecommendationText(
 				i18nLocalization,
 				nil,
-				bodyProfileRecommendedSizeName
+				bodyProfileRecommendedSizeName,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.willFitResultText!)
 		)
 	}
+
+    func testGetRecommendationText_multiSizeProduct_bodyProfileRecommendedSizeNotFit_returnMultiSizeBodyProfileText() {
+        let storeProduct4 = TestFixtures.getStoreProduct(productType: 4, gender: nil)
+        let bodyProfileRecommendedSizeName = "S"
+        XCTAssertTrue(
+            storeProduct4!.getRecommendationText(
+                i18nLocalization,
+                nil,
+                bodyProfileRecommendedSizeName,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                false
+            ).contains(i18nLocalization.willNotFitResultText!)
+        )
+    }
 
 	func testGetRecommendationText_multiSizeProduct_noRecommendedSizes_returnBodyDataEmptyText() {
 		let storeProduct7 = TestFixtures.getStoreProduct(productType: 7, gender: nil)
