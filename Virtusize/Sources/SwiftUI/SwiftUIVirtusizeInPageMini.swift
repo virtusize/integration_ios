@@ -56,7 +56,10 @@ public struct SwiftUIVirtusizeInPageMini: View {
 			uiKitView: uiView,
 			defaultStyle: virtusizeDefaultStyle
 		)
-		.frame(width: desiredSize.width, height: max(desiredSize.height, 35), alignment: .center)
+		.frame(width: desiredSize.width, height: desiredSize.height == 0 ? 0.1 : max(desiredSize.height, 35), alignment: .center)
+		.opacity(desiredSize.height == 0 ? 0 : 1)
+		.frame(height: desiredSize.height == 0 ? 0.1 : nil)
+		.clipped()
 	}
 }
 
@@ -122,9 +125,12 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 
 		uiView.setContentViewListener(listener: { view in
 			if let label = (view as? VirtusizeInPageMini)?.inPageMiniMessageLabel {
+				// Set height to 0 if product is invalid, there's an error, or view is hidden
+				let calculatedHeight = label.text?.height(width: label.frame.width, font: label.font) ?? 35
+				let height = (view.invalidProduct || view.isError || view.isHidden) ? 0 : calculatedHeight
 				desiredSize = CGSize(
 					width: UIScreen.main.bounds.size.width - uiView.userSetMargin * 2,
-					height: label.text?.height(width: label.frame.width, font: label.font) ?? 35
+					height: height
 				)
 			}
 		})

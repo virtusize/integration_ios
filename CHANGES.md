@@ -11,7 +11,8 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 ### Changes
-- Fix: issue with no size found text
+- Bugfix: set button height to zero on error
+- Bugfix: Virtusize button state when loading a new product
 
 ### 2.12.21
 - Bugfix: Added async Task cancellation to fix concurrency crash
