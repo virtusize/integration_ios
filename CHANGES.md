@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Changes
+### 2.12.22
 - Bugfix: set button height to zero on error
 - Bugfix: Virtusize button state when loading a new product
 - Bugfix: Virtusize branch hotfix
