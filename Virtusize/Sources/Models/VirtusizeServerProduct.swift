@@ -118,7 +118,8 @@ public class VirtusizeServerProduct: Codable {
 		_ i18nLocalization: VirtusizeI18nLocalization?,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSizeName: String?,
-		_ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE
+		_ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE,
+		_ bodyProfileWillFit: Bool? = nil
 	) -> String {
         guard let i18nLocalization = i18nLocalization else {
             return Localization.shared.localize("inpage_default_accessory_text")
@@ -128,9 +129,9 @@ public class VirtusizeServerProduct: Codable {
 		if isAccessory() {
 			text = accessoryText(i18nLocalization, sizeComparisonRecommendedSize)
 		} else if self.sizes.count == 1 {
-			text = oneSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName)
+			text = oneSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName, bodyProfileWillFit)
 		} else {
-			text = multiSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName)
+			text = multiSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName, bodyProfileWillFit)
 		}
 		return text.trimI18nText(trimType)
 	}
@@ -148,14 +149,28 @@ public class VirtusizeServerProduct: Codable {
 	private func oneSizeText(
 		_ i18nLocalization: VirtusizeI18nLocalization,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
-		_ bodyProfileRecommendedSizeName: String?
+		_ bodyProfileRecommendedSizeName: String?,
+		_ bodyProfileWillFit: Bool?
 	) -> String {
-        if bodyProfileRecommendedSizeName != nil {
-            return i18nLocalization.getOneSizeBodyProfileText()
-        }
+		// Check if body data is provided (bodyProfileRecommendedSizeName is not nil means body data was provided)
+		let hasBodyData = bodyProfileRecommendedSizeName != nil
+
+		// For one-size products with body data provided
+		if hasBodyData {
+			// If willFit is true and we have a recommended size, show the will fit message
+			if bodyProfileWillFit == true {
+				return i18nLocalization.getOneSizeBodyProfileText()
+			}
+			// If willFit is false or no recommended size, show "Your size not found"
+			return i18nLocalization.getWillNotFitResultText()
+		}
+
+		// No body data provided, check for product comparison
 		if let sizeComparisonRecommendedSize = sizeComparisonRecommendedSize, sizeComparisonRecommendedSize.isValid() {
 			return i18nLocalization.getOneSizeProductComparisonText(sizeComparisonRecommendedSize)
 		}
+
+		// No data at all, show body data empty message
 		return i18nLocalization.getBodyDataEmptyText()
 	}
 
@@ -163,14 +178,28 @@ public class VirtusizeServerProduct: Codable {
 	private func multiSizeText(
 		_ i18nLocalization: VirtusizeI18nLocalization,
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
-		_ bodyProfileRecommendedSizeName: String?
+		_ bodyProfileRecommendedSizeName: String?,
+		_ bodyProfileWillFit: Bool?
 	) -> String {
-        if let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName {
-            return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
-        }
+		// Check if body data is provided
+		let hasBodyData = bodyProfileRecommendedSizeName != nil
+
+		// For multi-size products with body data provided
+		if hasBodyData {
+			// If willFit is true and we have a recommended size, show it
+			if bodyProfileWillFit == true, let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName, !bodyProfileRecommendedSizeName.isEmpty {
+				return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
+			}
+			// If willFit is false or no recommended size, show "Your size not found"
+			return i18nLocalization.getWillNotFitResultText()
+		}
+
+		// No body data provided, check for product comparison
 		if let sizeComparisonRecommendedSizeName = sizeComparisonRecommendedSize?.bestStoreProductSize?.name {
 			return i18nLocalization.getMultiSizeProductionComparisonText(sizeComparisonRecommendedSizeName)
 		}
+
+		// No data at all, show body data empty message
 		return i18nLocalization.getBodyDataEmptyText()
 	}
 

@@ -146,20 +146,23 @@ public class VirtusizeFlutter: Virtusize {
         
         let serverProduct = sizeRecData.serverProduct
         let clientProductImageURL = self.storeProductSet.first(where: {product in product.externalId == serverProduct.externalId})?.imageURL
-        
+
         let bestUserProduct = sizeRecData.sizeComparisonRecommendedSize?.bestUserProduct
+        let bodyProfileWillFit = sizeRecData.bodyProfileRecommendedSize?.willFit
         let recommendationText = serverProduct.getRecommendationText(
             VirtusizeRepository.shared.i18nLocalization!,
             sizeRecData.sizeComparisonRecommendedSize,
             sizeRecData.bodyProfileRecommendedSize?.getSizeName,
-            VirtusizeI18nLocalization.TrimType.MULTIPLELINES
+            VirtusizeI18nLocalization.TrimType.MULTIPLELINES,
+            bodyProfileWillFit
         )
         flutterHandler?.onSizeRecommendationData(
             externalId: serverProduct.externalId,
             clientProductImageURL: clientProductImageURL?.absoluteString,
             storeProduct: serverProduct,
             bestUserProduct: bestUserProduct,
-            recommendationText: recommendationText
+            recommendationText: recommendationText,
+            willFit: bodyProfileWillFit
         )
     }
     

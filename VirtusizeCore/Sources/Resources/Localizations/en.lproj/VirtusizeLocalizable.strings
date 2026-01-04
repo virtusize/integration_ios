@@ -14,7 +14,7 @@
 "inpage_multi_size_comparison_text" = "The closest size to your item is";
 "inpage_body_data_empty_text" = "Find your right size";
 "inpage_will_fit_result" = "Your recommended size is";
-"inpage_will_not_fit_result" = "Check how it fits you";
+"inpage_will_not_fit_result" = "Your size not found";
 "inpage_loading_text" = "Analyzing the size";
 "inpage_error_long_text" = "Virtusize is not available at the moment.\nPlease enjoy shopping without us.";
 "inpage_error_short_text" = "Virtusize is not available at the moment.";
