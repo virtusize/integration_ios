@@ -162,13 +162,19 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			"messageAndButtonMargin": messageAndButtonMargin
 		]
 
-		let horizontalConstraints = NSLayoutConstraint.constraints(
+		var horizontalConstraints = NSLayoutConstraint.constraints(
 			// swiftlint:disable:next line_length
 			withVisualFormat: "H:|-horizontalMargin-[inPageMiniImageView]-0-[messageLabel]-(>=messageAndButtonMargin)-[sizeCheckButton]-horizontalMargin-|",
 			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
 			metrics: metrics,
 			views: views
 		)
+		// Lower the priority of leading and trailing constraints to prevent conflicts during initial layout
+		for constraint in horizontalConstraints {
+			if constraint.firstItem === self || constraint.secondItem === self {
+				constraint.priority = UILayoutPriority(999)
+			}
+		}
 
 		let inPageMiniImageViewVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-(>=verticalMargin)-[inPageMiniImageView(18)]-(>=verticalMargin)-|",
@@ -267,6 +273,10 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
 		inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
 		setupTextsStyle(messageLabelIsBold: loading)
+
+		// Re-enable user interaction when loading valid product
+		isUserInteractionEnabled = true
+
 		if loading {
 			startLoadingTextAnimation(
 				label: inPageMiniMessageLabel,

@@ -72,6 +72,7 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
     internal var isLoading: Bool = false
     internal var isError: Bool = false
     internal var invalidProduct: Bool = false
+	private var heightConstraint: NSLayoutConstraint?
 
 	private func addSubviews() {
 		// Add loading GIF image view
@@ -104,6 +105,19 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
         isLoading = show
 		loadingGifImageView.isHidden = !show
 		contentContainerView.isHidden = show
+
+		// Set height to 0 for invalid product or error
+		if invalidProduct || isError {
+			if heightConstraint == nil {
+				heightConstraint = heightAnchor.constraint(equalToConstant: 0)
+				heightConstraint?.priority = .defaultHigh
+				heightConstraint?.isActive = true
+			}
+		} else {
+			// Remove height constraint for valid product
+			heightConstraint?.isActive = false
+			heightConstraint = nil
+		}
 	}
 
 	/// Add observers to listen to notification data from the sender (Virtusize.self)
@@ -155,6 +169,8 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	@objc internal func didReceiveProductCheckData(_ notification: Notification) {
 		shouldUpdateProductCheckData(notification) { productWithPDCData in
 			self.clientProduct = productWithPDCData
+			self.invalidProduct = false
+			self.isError = false
 			showLoadingGif(false)
 			setLoadingScreen(loading: true)
             isLoading = true
@@ -171,10 +187,18 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	@objc internal func didReceiveSizeRecommendationData(_ notification: Notification) {
         isLoading = false
         isError = false
+		// Remove height constraint when data is successfully loaded
+		heightConstraint?.isActive = false
+		heightConstraint = nil
     }
     
     @objc func productCheckDidFail(_ notification: Notification) {
         invalidProduct = true
+		showLoadingGif(false)
+		// Notify SwiftUI wrappers to update height
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
+		}
     }
 
 	internal func shouldUpdateInPageRecommendation(
@@ -204,6 +228,16 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	/// A parent function for showing the error screen
 	@objc internal func didReceiveInPageError(_ notification: Notification) {
         isError = true
+		// Update height constraint for error state
+		if heightConstraint == nil {
+			heightConstraint = heightAnchor.constraint(equalToConstant: 0)
+			heightConstraint?.priority = .defaultHigh
+			heightConstraint?.isActive = true
+		}
+		// Notify SwiftUI wrappers to update height
+		DispatchQueue.main.async {
+			self.contentViewListener?(self)
+		}
     }
 
 	/// Sets up the styles for the loading screen and the screen after finishing loading
@@ -212,6 +246,9 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 	///   - loading: Pass true when it's loading, and pass false when finishing loading
 	internal func setLoadingScreen(loading: Bool) {
         isError = false
+		// Remove height constraint when loading valid product
+		heightConstraint?.isActive = false
+		heightConstraint = nil
     }
 
 	internal func setup() {}

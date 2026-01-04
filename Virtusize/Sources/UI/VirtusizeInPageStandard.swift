@@ -310,13 +310,19 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		)
 		allConstraints += vsIconImageViewHorizontalConstraints
 
-		let inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
+		var inPageStandardViewsHorizontalConstraints = NSLayoutConstraint.constraints(
 			// swiftlint:disable:next line_length
 			withVisualFormat: "H:|-defaultMargin-[userProductImageView(==userProductImageSize)]-(productImageViewOffset)-[storeProductImageView(==40)]-defaultMargin-[messageStackView]-(>=defaultMargin)-[checkSizeButton]-defaultMargin-|",
 			options: [.alignAllCenterY],
 			metrics: metrics,
 			views: views
 		)
+		// Lower the priority of leading and trailing constraints to prevent conflicts during initial layout
+		for constraint in inPageStandardViewsHorizontalConstraints {
+			if constraint.firstItem === inPageStandardView || constraint.secondItem === inPageStandardView {
+				constraint.priority = UILayoutPriority(999)
+			}
+		}
 		allConstraints += inPageStandardViewsHorizontalConstraints
 
 		let footerHorizontalConstraints = NSLayoutConstraint.constraints(
@@ -607,6 +613,18 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		vsIconImageView.isHidden = loading ? false : true
 		userProductImageView.isHidden = loading ? true : false
         storeProductImageView.isHidden = loading ? true : false
+
+		// Hide error views when loading valid product
+		errorImageView.isHidden = true
+		errorText.isHidden = true
+
+		// Show elements that were hidden during error state
+		bottomMessageLabel.isHidden = false
+		checkSizeButton.isHidden = false
+
+		// Re-enable interaction when loading valid product
+		inPageStandardView.isUserInteractionEnabled = true
+		inPageStandardView.layer.shadowOpacity = 0.3
 
 		if loading {
 			startLoadingTextAnimation(
