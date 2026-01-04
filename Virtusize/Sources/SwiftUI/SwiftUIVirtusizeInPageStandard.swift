@@ -52,13 +52,16 @@ public struct SwiftUIVirtusizeInPageStandard: View {
 		VirtusizeInPageStandardWrapper(
 			product: product,
 			desiredSize: $desiredSize,
-            horizontalMargin: $horizontalMargin,
+			horizontalMargin: $horizontalMargin,
 			action: action,
 			uiView: uiView,
 			defaultStyle: virtusizeDefaultStyle
 		)
-        .offset(x: horizontalMargin)
-        .frame(width: desiredSize.width, height: max(desiredSize.height, 92), alignment: .center)
+		.offset(x: horizontalMargin)
+		.frame(width: desiredSize.width, height: desiredSize.height == 0 ? 0.1 : max(desiredSize.height, 92), alignment: .center)
+		.opacity(desiredSize.height == 0 ? 0 : 1)
+		.frame(height: desiredSize.height == 0 ? 0.1 : nil)
+		.clipped()
 	}
 }
 
@@ -133,9 +136,11 @@ private struct VirtusizeInPageStandardWrapper: UIViewRepresentable {
 
 		uiView.setContentViewListener(listener: { view in
             horizontalMargin = view.userSetMargin
+			// Set height to 0 if product is invalid, there's an error, or view is hidden
+			let height = (view.invalidProduct || view.isError || view.isHidden) ? 0 : view.frame.height
 			desiredSize = CGSize(
 				width: UIScreen.main.bounds.size.width,
-				height: view.frame.height
+				height: height
 			)
 		})
 	}
