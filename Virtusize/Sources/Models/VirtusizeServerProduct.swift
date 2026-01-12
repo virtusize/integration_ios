@@ -158,7 +158,7 @@ public class VirtusizeServerProduct: Codable {
 		// For one-size products with body data provided
 		if hasBodyData {
 			// If willFit is true and we have a recommended size, show the will fit message
-			if bodyProfileWillFit == true {
+			if bodyProfileWillFit != false {
 				return i18nLocalization.getOneSizeBodyProfileText()
 			}
 			// If willFit is false or no recommended size, show "Your size not found"
@@ -187,7 +187,11 @@ public class VirtusizeServerProduct: Codable {
 		// For multi-size products with body data provided
 		if hasBodyData {
 			// If willFit is true and we have a recommended size, show it
-			if bodyProfileWillFit == true, let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName, !bodyProfileRecommendedSizeName.isEmpty {
+			if
+                bodyProfileWillFit != false,
+                    let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName,
+                        !bodyProfileRecommendedSizeName.isEmpty
+            {
 				return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
 			}
 			// If willFit is false or no recommended size, show "Your size not found"
