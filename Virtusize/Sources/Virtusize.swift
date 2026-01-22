@@ -216,6 +216,7 @@ public class Virtusize {
 	/// - Parameter language: VirtusizeLanguage to be set for the views
 	public class func setVsWidgetLanguage(language: VirtusizeLanguage) async {
 		await virtusizeRepository.setVsWidgetLanguage(language: language)
+		params = params?.withLanguage(language)
         DispatchQueue.main.async {
 			NotificationCenter.default.post(
 				name: .setLanguage,
