@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Changes:
+### 2.12.24
 - Fix: fixed VirtusizeInPageStandart view transalte issue
 
 ### 2.12.23
