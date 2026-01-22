@@ -87,7 +87,7 @@ public class VirtusizeParamsBuilder {
 			showSGI: showSGI,
 			detailsPanelCards: detailsPanelCards,
             showSNSButtons: showSNSButtons,
-			branch: branch ?? "snkrdnk-line-quick-fix",
+			branch: branch,
             serviceEnvironment: serviceEnvironment,
             showPrivacyPolicy: showPrivacyPolicy
 		)
