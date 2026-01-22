@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Changes:
+- Fix: fixed VirtusizeInPageStandart view transalte issue
+
 ### 2.12.23
 - Fix: no avaialble size fix when no WillFit API parameter
 

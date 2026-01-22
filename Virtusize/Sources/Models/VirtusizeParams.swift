@@ -117,6 +117,24 @@ public class VirtusizeParams {
 		return script
 	}
 
+	/// Creates a copy of this VirtusizeParams with a different language
+	///
+	/// - Parameter language: The new language to use
+	/// - Returns: A new VirtusizeParams instance with the updated language
+	internal func withLanguage(_ language: VirtusizeLanguage) -> VirtusizeParams {
+		return VirtusizeParams(
+			region: self.region,
+			language: language,
+			allowedLanguages: self.allowedLanguages,
+			showSGI: self.showSGI,
+			detailsPanelCards: self.detailsPanelCards,
+			showSNSButtons: self.showSNSButtons,
+			branch: self.branch,
+			serviceEnvironment: self.serviceEnvironment,
+			showPrivacyPolicy: self.showPrivacyPolicy
+		)
+	}
+
 	enum ParamKey {
 		static let API = "apiKey"
 		static let browserID = "bid"
