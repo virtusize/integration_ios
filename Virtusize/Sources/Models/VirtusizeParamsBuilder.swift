@@ -22,6 +22,7 @@
 //  THE SOFTWARE.
 //
 
+import Sentry
 /// The builder patten to help initialize the `VirtusizeParams` object
 public class VirtusizeParamsBuilder {
 	private var region: VirtusizeRegion = VirtusizeRegion.JAPAN
@@ -76,10 +77,26 @@ public class VirtusizeParamsBuilder {
         serviceEnvironment = value
         return self
     }
+    
+    private func initSentry(){
+        let moduleBundle = Bundle(for: Virtusize.self)
+
+        if let dsn = moduleBundle.object(forInfoDictionaryKey: "SentryDSN") as? String {
+            SentrySDK.start { options in
+                options.dsn = dsn
+                options.tracesSampleRate = moduleBundle.object(forInfoDictionaryKey: "SentryTracesSampleRate") as? NSNumber ?? 1.0
+                options.debug = true
+            }
+        }
+    }
+    
+  
 
 	public func build() -> VirtusizeParams {
 		/// Assigns the region value to a default one corresponding the Virtusize environment
 		region = Virtusize.environment.virtusizeRegion()
+        initSentry()
+        
 		return VirtusizeParams(
 			region: region,
 			language: language ?? region.defaultLanguage(),

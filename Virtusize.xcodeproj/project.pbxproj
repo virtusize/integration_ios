@@ -24,7 +24,6 @@
 		52D1E09B2D6DCEA90073737B /* I18nTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D1E09A2D6DCEA30073737B /* I18nTests.swift */; };
 		52D1E09E2D6DD09A0073737B /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D1E09D2D6DD0940073737B /* MockURLSession.swift */; };
 		52D1E0A02D6DD5900073737B /* I18nFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D1E09F2D6DD58A0073737B /* I18nFixtures.swift */; };
-		52FDA2882D3A5C8F007F5AC8 /* VirtusizeAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */; };
 		741DD0692DA3D06B007DF2C3 /* VirtusizeFlutter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741DD0682DA3D06B007DF2C3 /* VirtusizeFlutter.swift */; };
 		741DD06D2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741DD06C2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift */; };
 		748DF81A2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsShoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF8192E3FF2A9002CA7FC /* VirtusizeGetSizeParamsShoe.swift */; };
@@ -77,7 +76,6 @@
 		9C787FCD25DB7A3D00346F2A /* SizeRecommendationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C787FCC25DB7A3D00346F2A /* SizeRecommendationType.swift */; };
 		9C84B3FD26C2566B00DDF434 /* VirtusizeViewEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C84B3FC26C2566B00DDF434 /* VirtusizeViewEventProtocol.swift */; };
 		9C84B40126C276CA00DDF434 /* VirtusizeNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C84B40026C276CA00DDF434 /* VirtusizeNotification.swift */; };
-		9C92B3A52CB2DF7F001DD4A2 /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C92B3A42CB2DF7F001DD4A2 /* VirtusizeCore.framework */; };
 		9C969FD124EB5F8A00DD642F /* VirtusizeI18nLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD024EB5F8A00DD642F /* VirtusizeI18nLocalization.swift */; };
 		9C969FD324EBE0C400DD642F /* DeserializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969FD224EBE0C300DD642F /* DeserializerTests.swift */; };
 		9C969FD824EBF71200DD642F /* i18n_en.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C969FD524EBF71200DD642F /* i18n_en.json */; };
@@ -119,8 +117,13 @@
 		9CFF40FC25B974D200B21D4E /* VirtusizeViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF40FB25B974D200B21D4E /* VirtusizeViewStyle.swift */; };
 		9CFF410D25B98D4E00B21D4E /* VirtusizeInPageStandardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF410C25B98D4E00B21D4E /* VirtusizeInPageStandardViewModel.swift */; };
 		9CFF411325B98FA900B21D4E /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF411225B98FA900B21D4E /* Observable.swift */; };
+		D760129E2F3F2A1700AF72AA /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = D760129D2F3F2A1700AF72AA /* Sentry */; };
 		D7BC74B42EDDD063004616BF /* product_types.json in Resources */ = {isa = PBXBuildFile; fileRef = D7BC74B32EDDD063004616BF /* product_types.json */; };
 		D7BC74B52EDDD063004616BF /* product_types.json in Resources */ = {isa = PBXBuildFile; fileRef = D7BC74B32EDDD063004616BF /* product_types.json */; };
+		D7C67BE72F3DC56E0007167B /* VirtusizeAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */; };
+		D7C67BE82F3DC56E0007167B /* VirtusizeAuth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52FDA2872D3A5C8F007F5AC8 /* VirtusizeAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D7C67BEA2F3DC5700007167B /* VirtusizeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C92B3A42CB2DF7F001DD4A2 /* VirtusizeCore.framework */; };
+		D7C67BEB2F3DC5700007167B /* VirtusizeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C92B3A42CB2DF7F001DD4A2 /* VirtusizeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DF71642A21A28858002C7202 /* VirtusizeEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF71642921A28858002C7202 /* VirtusizeEvent.swift */; };
 		DF71642C21A28939002C7202 /* VirtusizeEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF71642B21A28939002C7202 /* VirtusizeEnvironment.swift */; };
 		DF71642E21A28DE8002C7202 /* VirtusizeProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF71642D21A28DE8002C7202 /* VirtusizeProduct.swift */; };
@@ -138,6 +141,21 @@
 			remoteInfo = Virtusize;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D7C67BE92F3DC56E0007167B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D7C67BE82F3DC56E0007167B /* VirtusizeAuth.framework in Embed Frameworks */,
+				D7C67BEB2F3DC5700007167B /* VirtusizeCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4D6C5799205FCBE900DA910E /* VirtusizeAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeAPIRequest.swift; sourceTree = "<group>"; };
@@ -269,8 +287,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52FDA2882D3A5C8F007F5AC8 /* VirtusizeAuth.framework in Frameworks */,
-				9C92B3A52CB2DF7F001DD4A2 /* VirtusizeCore.framework in Frameworks */,
+				D7C67BE72F3DC56E0007167B /* VirtusizeAuth.framework in Frameworks */,
+				D7C67BEA2F3DC5700007167B /* VirtusizeCore.framework in Frameworks */,
+				D760129E2F3F2A1700AF72AA /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +665,7 @@
 				4DED8D19205755C3001CA7DF /* Headers */,
 				4DED8D1A205755C3001CA7DF /* Resources */,
 				DF6B5C91219BD262000B3402 /* ShellScript */,
+				D7C67BE92F3DC56E0007167B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -706,6 +726,9 @@
 				Base,
 			);
 			mainGroup = 4DED8D12205755C3001CA7DF;
+			packageReferences = (
+				D760129C2F3F2A1700AF72AA /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
 			productRefGroup = 4DED8D1D205755C3001CA7DF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1180,6 +1203,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D760129C2F3F2A1700AF72AA /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D760129D2F3F2A1700AF72AA /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D760129C2F3F2A1700AF72AA /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4DED8D13205755C3001CA7DF /* Project object */;
 }
