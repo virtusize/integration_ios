@@ -52,6 +52,9 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	/// Note: No lock needed - protected by task cancellation in Virtusize.load()
 	internal var serverStoreProductSet: Set<VirtusizeServerProduct> = []
 
+	/// The external product ID of the last product for which userSawProduct was sent
+	private var lastUserSawProductExternalId: String?
+
 	/// Insert into serverStoreProductSet
 	private func insertIntoProductSet(_ product: VirtusizeServerProduct) {
 		serverStoreProductSet.insert(product)
@@ -83,13 +86,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		mutableProduct.productCheckData = product.productCheckData
         mutableProduct.imageURL = imageURL
 
-		// Send the API event where the user saw the product
-		Task { // should NOT be awaited, to not block the main flow
-			await VirtusizeAPIService.sendEvent(
-				VirtusizeEvent(name: .userSawProduct),
-				withContext: mutableProduct.jsonObject
-			)
-		}
+		let isNewProduct = mutableProduct.externalId != lastUserSawProductExternalId
 
 		guard mutableProduct.productCheckData?.productDataId != nil else {
             DispatchQueue.main.async {
@@ -102,6 +99,17 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			return nil
 		}
 
+		if isNewProduct && mutableProduct.productCheckData?.validProduct == true {
+			lastUserSawProductExternalId = mutableProduct.externalId
+			// Send the API event where the user saw the product
+			Task { // should NOT be awaited, to not block the main flow
+				await VirtusizeAPIService.sendEvent(
+					VirtusizeEvent(name: .userSawProduct),
+					withContext: mutableProduct.jsonObject
+				)
+			}
+		}
+
 		if let sendImageToBackend = mutableProduct.productCheckData?.fetchMetaData,
 		   sendImageToBackend,
            imageURL != nil,
@@ -112,11 +120,13 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 
 		// Send the API event where the user saw the widget button
-		Task { // should NOT be awaited, to not block the main flow
-			await VirtusizeAPIService.sendEvent(
-				VirtusizeEvent(name: .userSawWidgetButton),
-				withContext: mutableProduct.jsonObject
-			)
+		if isNewProduct && mutableProduct.productCheckData?.validProduct == true {
+			Task { // should NOT be awaited, to not block the main flow
+				await VirtusizeAPIService.sendEvent(
+					VirtusizeEvent(name: .userSawWidgetButton),
+					withContext: mutableProduct.jsonObject
+				)
+			}
 		}
 		
 		// Post notification on main thread
