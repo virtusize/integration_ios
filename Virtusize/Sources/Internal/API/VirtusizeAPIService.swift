@@ -75,7 +75,6 @@ class VirtusizeAPIService: APIService {
 		guard let request = APIRequest.sendEvent(event, withContext: context) else {
 			return nil
 		}
-
 		let response = await VirtusizeAPIService.performAsync(request)
 		guard response.virtusizeError == nil, let data = response.data else {
 			// failed to perform request

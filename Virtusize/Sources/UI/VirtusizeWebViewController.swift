@@ -47,7 +47,7 @@ public final class VirtusizeWebViewController: UIViewController {
 
 	// Allow process pool passing to share cookies
 	private var processPool: WKProcessPool?
-	
+
 	// Close button and timer properties
 	private var closeButton: UIButton?
 	private var closeButtonTimer: Timer?

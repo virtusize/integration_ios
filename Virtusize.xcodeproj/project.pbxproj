@@ -31,6 +31,7 @@
 		74F8E3D02E0EA477002CAE98 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F8E3CF2E0EA473002CAE98 /* UIImageViewExtensions.swift */; };
 		8455FFD42B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */; };
 		84CF03B92BD7A64A00C08920 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */; };
+		9BE02B152F4D013000083151 /* VirtusizeSentryTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE02B142F4D013000083151 /* VirtusizeSentryTracker.swift */; };
 		9C0EBA2225BACADD00F1D746 /* VirtusizeProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */; };
 		9C106EB024FCE0C70012EE51 /* VirtusizeInPageStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EAF24FCE0C70012EE51 /* VirtusizeInPageStandard.swift */; };
 		9C106EB424FE41EC0012EE51 /* VirtusizeProductImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C106EB324FE41EC0012EE51 /* VirtusizeProductImageView.swift */; };
@@ -185,6 +186,7 @@
 		74F8E3CF2E0EA473002CAE98 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeItemsParam.swift; sourceTree = "<group>"; };
 		84CF03B82BD7A64A00C08920 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		9BE02B142F4D013000083151 /* VirtusizeSentryTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeSentryTracker.swift; sourceTree = "<group>"; };
 		9C0EBA2125BACADD00F1D746 /* VirtusizeProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImage.swift; sourceTree = "<group>"; };
 		9C106EAF24FCE0C70012EE51 /* VirtusizeInPageStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeInPageStandard.swift; sourceTree = "<group>"; };
 		9C106EB324FE41EC0012EE51 /* VirtusizeProductImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeProductImageView.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 		4D6C5794205FB9FC00DA910E /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				9BE02B142F4D013000083151 /* VirtusizeSentryTracker.swift */,
 				52ACB08F2D7083C60011E51E /* DefaultEventHandler.swift */,
 				9CEC8D88252AB8EE001CBDFB /* Models */,
 				9C106EB524FE424E0012EE51 /* Views */,
@@ -841,6 +844,7 @@
 				9C32A14B250279D00062C11D /* VirtusizeInPageView.swift in Sources */,
 				9C787FC925DB793400346F2A /* VirtusizeEventHandler.swift in Sources */,
 				9CFF40FC25B974D200B21D4E /* VirtusizeViewStyle.swift in Sources */,
+				9BE02B152F4D013000083151 /* VirtusizeSentryTracker.swift in Sources */,
 				52ACB0902D7083D10011E51E /* DefaultEventHandler.swift in Sources */,
 				9CB98B9D24B2C5B400C51F20 /* VirtusizeLanguage.swift in Sources */,
 				9C5956CD2484F6280014DF51 /* VirtusizeOrderItem.swift in Sources */,

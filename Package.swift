@@ -19,11 +19,20 @@ let package = Package(
             targets: ["VirtusizeCore"]
         )
     ],
-
+    dependencies: [
+        .package(
+            url: "https://github.com/getsentry/sentry-cocoa.git",
+            from: "8.36.0"
+        )
+    ],
     targets: [
         .target(
             name: "Virtusize",
-            dependencies: ["VirtusizeCore", "VirtusizeAuth"],
+            dependencies: [
+                "VirtusizeCore",
+                "VirtusizeAuth",
+                .product(name: "Sentry", package: "sentry-cocoa")
+            ],
             path: "Virtusize/Sources",
             exclude: ["Info.plist"],
             resources: [.process("Resources")]
