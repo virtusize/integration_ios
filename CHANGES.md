@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Changes:
+- Fix: Prevent send event userSawProduct when productValid = false or repeated product load
+
 ### 2.12.24
 - Fix: fixed VirtusizeInPageStandart view transalte issue
 
