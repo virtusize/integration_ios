@@ -26,7 +26,7 @@ import Foundation
 
 /// The virtusize flutter product event callback to receive product data from the VirtusizeFlutter,
 public protocol VirtusizeFlutterProductEventHandler {
-    func onProductCheckData(externalId: String, isValid: Bool)
+    func onProductCheckData(externalId: String, isValid: Bool, storeName: String)
     func onSizeRecommendationData(
         externalId: String,
         clientProductImageURL: String?,

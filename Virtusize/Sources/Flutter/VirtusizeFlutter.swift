@@ -126,7 +126,8 @@ public class VirtusizeFlutter: Virtusize {
         storeProductSet.insert(productWithPDCData)
         flutterHandler?.onProductCheckData(
             externalId: productWithPDCData.externalId,
-            isValid: productWithPDCData.productCheckData?.validProduct ?? false
+            isValid: productWithPDCData.productCheckData?.validProduct ?? false,
+            storeName: productWithPDCData.productCheckData?.storeName ?? "",
         )
     }
 
