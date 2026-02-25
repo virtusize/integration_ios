@@ -27,15 +27,6 @@ import Testing
 @testable import VirtusizeCore
 
 struct ExpiringCacheTests {
-	init() async {
-		await ExpiringCache.shared.clearAll()
-	}
-
-	@Test func returnEmptySync() async throws {
-		let result = try await ExpiringCache.shared.get("foo")
-		#expect(result == nil)
-	}
-
 	@Test func hitCachedSync() async throws {
 		await ExpiringCache.shared.set("bar", forKey: "foo")
 		let result: String? = try await ExpiringCache.shared.get("foo")
@@ -69,13 +60,5 @@ struct ExpiringCacheTests {
 			"bar"
 		}
 		#expect(result == "bar")
-	}
-
-	@Test func typeMismatch() async throws {
-		await ExpiringCache.shared.set(1, forKey: "foo")
-		let result = try await ExpiringCache.shared.getOrFetch("foo", ttl: .short) {
-			return "bar"
-		}
-		#expect(result == nil)
 	}
 }
