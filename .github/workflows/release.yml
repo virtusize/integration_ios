@@ -5,7 +5,7 @@ on:
     types: [released]
 
 env:
-  COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+  COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN_UPDATED }}
 
 jobs:
   release:
