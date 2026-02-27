@@ -158,7 +158,6 @@ public class Virtusize {
 			VirtusizeSentryTracker.trackProductCheck(externalProductId: product.externalId, isValid: isValidProduct, storeId: storeId)
 
 			VirtusizeSentryTracker.generateSessionId()
-			VirtusizeSentryTracker.trackSessionStart(sessionId: VirtusizeSentryTracker.currentSessionId, storeId: storeId)
 			VirtusizeSentryTracker.trackUserSawProduct(externalProductId: product.externalId, storeId: storeId)
 
 			await virtusizeRepository.updateUserSession()
