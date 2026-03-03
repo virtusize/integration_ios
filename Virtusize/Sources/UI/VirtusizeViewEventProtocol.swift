@@ -82,6 +82,13 @@ extension VirtusizeViewEventProtocol {
 		Task {
 			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
 			VirtusizeRepository.shared.updateInPageRecommendation(type: .body)
+
+            await VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+                shouldUpdateUserProducts: false,
+                shouldUpdateBodyProfile: true
+            )
+
+            VirtusizeRepository.shared.updateInPageRecommendation()
 		}
 	}
 

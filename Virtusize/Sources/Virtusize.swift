@@ -73,10 +73,26 @@ public class Virtusize {
 		bodyProfileRecommendedSize: BodyProfileRecommendedSize?
 	)
 
+	/// Lock for thread-safe access to sizeRecData
+	private static let sizeRecDataLock = NSLock()
+	
+	/// The backing storage for size recommendation data
+	private static var _sizeRecData: SizeRecommendationData?
+	
 	/// The property to be set to updating the size recommendation data for InPage views.
 	internal static var sizeRecData: SizeRecommendationData? {
-		didSet {
-			if let sizeRecData = sizeRecData {
+		get {
+			sizeRecDataLock.lock()
+			defer { sizeRecDataLock.unlock() }
+			return _sizeRecData
+		}
+		set {
+			sizeRecDataLock.lock()
+			_sizeRecData = newValue
+			let value = _sizeRecData
+			sizeRecDataLock.unlock()
+			
+			if let sizeRecData = value {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(
 						name: .sizeRecommendationData,

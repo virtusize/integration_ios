@@ -33,7 +33,7 @@ public protocol VirtusizeFlutterProductEventHandler {
         storeProduct: VirtusizeServerProduct,
         bestUserProduct: VirtusizeServerProduct?,
         recommendationText: String,
-        willFit: Bool?
+        willFit: Bool
     )
     func onLanguageClick(language: VirtusizeLanguage)
     func onInPageError(externalId: String)
