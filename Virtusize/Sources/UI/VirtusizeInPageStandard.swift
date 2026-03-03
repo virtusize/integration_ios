@@ -591,13 +591,17 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 			return
 		}
 
+        let bodyProfileWillFit = bodyProfileRecommendedSize?.willFit
+
 		let trimType = VirtusizeI18nLocalization.TrimType.MULTIPLELINES
 		let recommendationText = serverProduct.getRecommendationText(
 			i18nLocalization,
 			sizeComparisonRecommendedSize,
 			bodyProfileRecommendedSize?.getSizeName,
-			trimType
+            trimType,
+            bodyProfileWillFit ?? true
 		)
+
 		let recommendationTextArray = recommendationText.components(separatedBy: trimType.rawValue)
 		if recommendationTextArray.count == 2 {
 			self.topMessageLabel.attributedText = NSAttributedString(

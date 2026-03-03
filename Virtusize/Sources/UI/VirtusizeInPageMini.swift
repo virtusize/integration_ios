@@ -82,6 +82,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             self.sizeComparisonRecommendedSize = sizeRecData.sizeComparisonRecommendedSize
             self.bodyProfileRecommendedSize = sizeRecData.bodyProfileRecommendedSize
 
+            let bodyProfileWillFit = sizeRecData.bodyProfileRecommendedSize?.willFit
+
 			setLoadingScreen(loading: false)
 			inPageMiniMessageLabel.attributedText = NSAttributedString(
 				string:
@@ -89,7 +91,8 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 						VirtusizeRepository.shared.i18nLocalization,
 						sizeComparisonRecommendedSize,
 						bodyProfileRecommendedSize?.getSizeName,
-						VirtusizeI18nLocalization.TrimType.ONELINE
+						VirtusizeI18nLocalization.TrimType.ONELINE,
+                        bodyProfileWillFit ?? true
 					)
 			).lineSpacing(self.verticalMargin/2)
 		}
@@ -127,13 +130,15 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
             inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text", language: language)
         } else {
             if let product = serverProduct {
+                let bodyProfileWillFit = bodyProfileRecommendedSize?.willFit
                 inPageMiniMessageLabel.attributedText = NSAttributedString(
                     string:
                         product.getRecommendationText(
                             VirtusizeRepository.shared.i18nLocalization!,
                             sizeComparisonRecommendedSize,
                             bodyProfileRecommendedSize?.getSizeName,
-                            VirtusizeI18nLocalization.TrimType.ONELINE
+                            VirtusizeI18nLocalization.TrimType.ONELINE,
+                            bodyProfileWillFit ?? true
                         )
                 ).lineSpacing(self.verticalMargin/2)
             }

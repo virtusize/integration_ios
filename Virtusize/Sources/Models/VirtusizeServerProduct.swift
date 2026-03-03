@@ -119,7 +119,7 @@ public class VirtusizeServerProduct: Codable {
 		_ sizeComparisonRecommendedSize: SizeComparisonRecommendedSize?,
 		_ bodyProfileRecommendedSizeName: String?,
 		_ trimType: VirtusizeI18nLocalization.TrimType = VirtusizeI18nLocalization.TrimType.ONELINE,
-		_ bodyProfileWillFit: Bool? = nil
+		_ bodyProfileWillFit: Bool
 	) -> String {
         guard let i18nLocalization = i18nLocalization else {
             return Localization.shared.localize("inpage_default_accessory_text")
@@ -157,11 +157,11 @@ public class VirtusizeServerProduct: Codable {
 
 		// For one-size products with body data provided
 		if hasBodyData {
-			// If willFit is true and we have a recommended size, show the will fit message
-			if bodyProfileWillFit != false {
+			// If willFit is explicitly true, show the will fit message
+			if bodyProfileWillFit == true {
 				return i18nLocalization.getOneSizeBodyProfileText()
 			}
-			// If willFit is false or no recommended size, show "Your size not found"
+			// If willFit is false or nil (no willFit from API), show "Your size not found"
 			return i18nLocalization.getWillNotFitResultText()
 		}
 
@@ -186,15 +186,15 @@ public class VirtusizeServerProduct: Codable {
 
 		// For multi-size products with body data provided
 		if hasBodyData {
-			// If willFit is true and we have a recommended size, show it
+			// If willFit is explicitly true and we have a recommended size, show it
 			if
-                bodyProfileWillFit != false,
+                bodyProfileWillFit == true,
                     let bodyProfileRecommendedSizeName = bodyProfileRecommendedSizeName,
                         !bodyProfileRecommendedSizeName.isEmpty
             {
 				return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
 			}
-			// If willFit is false or no recommended size, show "Your size not found"
+			// If willFit is false or nil (no willFit from API), show "Your size not found"
 			return i18nLocalization.getWillNotFitResultText()
 		}
 

@@ -140,22 +140,25 @@ public class VirtusizeFlutter: Virtusize {
     }
     
     @objc private static func didReceiveSizeRecommendationData(_ notification: Notification) {
+
         guard let notificationData = notification.userInfo as? [String: Any],
-              let sizeRecData = notificationData[NotificationKey.sizeRecommendationData] as? Virtusize.SizeRecommendationData else {
+              let sizeRecData = notificationData[NotificationKey.sizeRecommendationData] as? Virtusize.SizeRecommendationData
+        else {
             return
         }
         
         let serverProduct = sizeRecData.serverProduct
-        let clientProductImageURL = self.storeProductSet.first(where: {product in product.externalId == serverProduct.externalId})?.imageURL
+        let clientProductImageURL = self.storeProductSet.first(where: { product in product.externalId == serverProduct.externalId })?.imageURL
 
         let bestUserProduct = sizeRecData.sizeComparisonRecommendedSize?.bestUserProduct
         let bodyProfileWillFit = sizeRecData.bodyProfileRecommendedSize?.willFit
+
         let recommendationText = serverProduct.getRecommendationText(
             VirtusizeRepository.shared.i18nLocalization!,
             sizeRecData.sizeComparisonRecommendedSize,
             sizeRecData.bodyProfileRecommendedSize?.getSizeName,
             VirtusizeI18nLocalization.TrimType.MULTIPLELINES,
-            bodyProfileWillFit
+            bodyProfileWillFit ?? true
         )
         flutterHandler?.onSizeRecommendationData(
             externalId: serverProduct.externalId,
@@ -163,7 +166,7 @@ public class VirtusizeFlutter: Virtusize {
             storeProduct: serverProduct,
             bestUserProduct: bestUserProduct,
             recommendationText: recommendationText,
-            willFit: bodyProfileWillFit
+            willFit: bodyProfileWillFit ?? true
         )
     }
     
