@@ -11,7 +11,7 @@ Use list notation, and following prefixes:
 - Docs - for any improvement to documentation
 
 ### Changes:
-- Fix: No size availble text instead max size issue
+- Fix: No size available text instead of max size issue
 - Fix: Virtusize widget recommended size incorrect
 
 ### 2.12.25
