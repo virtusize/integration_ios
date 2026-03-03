@@ -10,7 +10,7 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Changes:
+### 2.12.26
 - Fix: No size available text instead of max size issue
 - Fix: Virtusize widget recommended size incorrect
 
