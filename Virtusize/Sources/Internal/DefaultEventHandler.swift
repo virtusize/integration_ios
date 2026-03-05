@@ -33,7 +33,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
     }
 
 	public func userOpenedWidget() {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userOpenedWidget.rawValue,
             storeId: sentryStoreId
         )
@@ -41,7 +41,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userAuthData(bid: String?, auth: String?) {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userAuthData.rawValue,
             storeId: sentryStoreId
         )
@@ -49,7 +49,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userSelectedProduct(userProductId: Int?) {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userSelectedProduct.rawValue,
             storeId: sentryStoreId
         )
@@ -57,7 +57,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userAddedProduct() {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userAddedProduct.rawValue,
             storeId: sentryStoreId
         )
@@ -65,7 +65,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userDeletedProduct(userProductId: Int?) {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userDeletedProduct.rawValue,
             storeId: sentryStoreId
         )
@@ -73,7 +73,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userChangedRecommendationType(changedType: SizeRecommendationType?) {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userChangedRecommendationType.rawValue,
             storeId: sentryStoreId
         )
@@ -81,7 +81,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userUpdatedBodyMeasurements(recommendedSize: String?) {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userUpdatedBodyMeasurements.rawValue,
             storeId: sentryStoreId
         )
@@ -89,7 +89,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userLoggedIn() {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userLoggedIn.rawValue,
             storeId: sentryStoreId
         )
@@ -97,7 +97,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func clearUserData() {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: "user-clear-data",
             storeId: sentryStoreId
         )
@@ -106,7 +106,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userClosedWidget() {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userClosedWidget.rawValue,
             storeId: sentryStoreId
         )
@@ -115,7 +115,7 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
 	}
 
 	public func userClickedLanguageSelector(language: VirtusizeLanguage) {
-        VirtusizeSentryTracker.trackWebViewEvent(
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
             eventName: VirtusizeEventName.userClickedLanguageSelector.rawValue,
             storeId: sentryStoreId
         )

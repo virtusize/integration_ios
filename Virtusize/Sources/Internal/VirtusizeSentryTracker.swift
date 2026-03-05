@@ -26,27 +26,52 @@ import Foundation
 import Sentry
 
 /// Utility for Sentry metrics and structured logs tracking in the Virtusize SDK.
-internal enum VirtusizeSentryTracker {
+internal final class VirtusizeSentryTracker {
+
+    // MARK: - Singleton
+
+    static let shared = VirtusizeSentryTracker()
 
     // MARK: - Session Management
 
     /// The current active session ID, set by Virtusize.load.
-    static var currentSessionId: String = ""
+    var currentSessionId: String = ""
+
+    // MARK: - Initialization
+
+    private init() {
+        initSentry()
+    }
+
+    private func initSentry() {
+        let moduleBundle = Bundle(for: Virtusize.self)
+
+        if let dsn = moduleBundle.object(forInfoDictionaryKey: "SentryDSN") as? String {
+            SentrySDK.start { options in
+                options.dsn = dsn
+                options.tracesSampleRate = moduleBundle.object(forInfoDictionaryKey: "SentryTracesSampleRate") as? NSNumber ?? 1.0
+                options.debug = true
+                options.environment = Virtusize.environment.rawValue
+            }
+        }
+    }
+
+    // MARK: - Session Management
 
     /// Generates a new UUID session ID, stores it as the current session, and returns it.
     /// Also configures the Sentry scope so all subsequent logs are tagged with the new session ID.
     @discardableResult
-    static func generateSessionId() -> String {
+    func generateSessionId() -> String {
         currentSessionId = UUID().uuidString
         SentrySDK.configureScope { scope in
-            scope.setTag(value: currentSessionId, key: "session_id")
+            scope.setTag(value: self.currentSessionId, key: "session_id")
         }
         return currentSessionId
     }
 
     // MARK: - Metrics (Counters)
 
-    static func increment(_ key: String, tags: [String: String] = [:]) {
+    func increment(_ key: String, tags: [String: String] = [:]) {
         SentrySDK.metrics.count(
             key: key,
             value: 1,
@@ -56,28 +81,28 @@ internal enum VirtusizeSentryTracker {
 
     // MARK: - Logs
 
-    static func logInfo(_ message: String, attributes: [String: String] = [:]) {
+    func logInfo(_ message: String, attributes: [String: String] = [:]) {
         SentrySDK.logger.info(message, attributes: attributes)
     }
 
-    static func logWarning(_ message: String, attributes: [String: String] = [:]) {
+    func logWarning(_ message: String, attributes: [String: String] = [:]) {
         SentrySDK.logger.warn(message, attributes: attributes)
     }
 
-    static func logError(_ message: String, attributes: [String: String] = [:]) {
+    func logError(_ message: String, attributes: [String: String] = [:]) {
         SentrySDK.logger.error(message, attributes: attributes)
     }
 
     // MARK: - Product Check
 
-    static func trackProductCheck(externalProductId: String, isValid: Bool, storeId: String? = nil) {
+    func trackProductCheck(externalProductId: String, isValid: Bool, storeId: String? = nil) {
         var tags: [String: String] = ["external_product_id": externalProductId, "is_valid": String(isValid)]
         if let storeId { tags["store_id"] = storeId }
 
         logInfo("product-check", attributes: tags)
     }
 
-    static func trackLoadCancelled(step: String, externalProductId: String, storeId: String? = nil) {
+    func trackLoadCancelled(step: String, externalProductId: String, storeId: String? = nil) {
         var tags: [String: String] = ["external_product_id": externalProductId, "step": step]
         if let storeId { tags["store_id"] = storeId }
 
@@ -86,7 +111,7 @@ internal enum VirtusizeSentryTracker {
 
     // MARK: - WebView Events
 
-    static func trackWebViewEvent(
+    func trackWebViewEvent(
         eventName: String,
         storeId: String? = nil
     ) {
@@ -96,7 +121,7 @@ internal enum VirtusizeSentryTracker {
         logInfo("webview-\(eventName)", attributes: tags)
     }
 
-    static func trackUserSawProduct(externalProductId: String? = nil, storeId: String? = nil) {
+    func trackUserSawProduct(externalProductId: String? = nil, storeId: String? = nil) {
         var tags: [String: String] = [:]
         if let storeId { tags["store_id"] = storeId }
         if let externalProductId { tags["external_product_id"] = externalProductId }
@@ -107,7 +132,7 @@ internal enum VirtusizeSentryTracker {
 
     // MARK: - Order
 
-    static func trackSendOrder(order: VirtusizeOrder, storeId: String? = nil) {
+    func trackSendOrder(order: VirtusizeOrder, storeId: String? = nil) {
         var baseTags: [String: String] = [:]
         if let storeId { baseTags["store_id"] = storeId }
         if order.items.isEmpty {
@@ -125,7 +150,7 @@ internal enum VirtusizeSentryTracker {
 
     // MARK: - API Request
 
-    static func trackAPIRequest(endpoint: String, storeId: String? = nil) {
+    func trackAPIRequest(endpoint: String, storeId: String? = nil) {
         var tags = ["endpoint": endpoint]
         if let storeId { tags["store_id"] = storeId }
 
@@ -134,7 +159,7 @@ internal enum VirtusizeSentryTracker {
 
     // MARK: - Error
 
-    static func trackError(
+    func trackError(
         _ error: Error,
         storeId: String? = nil
     ) {
