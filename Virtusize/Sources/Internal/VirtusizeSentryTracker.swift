@@ -52,6 +52,8 @@ internal final class VirtusizeSentryTracker {
                 options.tracesSampleRate = moduleBundle.object(forInfoDictionaryKey: "SentryTracesSampleRate") as? NSNumber ?? 1.0
                 //options.debug = true
                 options.environment = Virtusize.environment.rawValue
+                options.enableLogs = true
+                options.experimental.enableMetrics = true
             }
         }
     }
