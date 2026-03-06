@@ -150,15 +150,6 @@ internal final class VirtusizeSentryTracker {
         logInfo("order-sent", attributes: baseTags)
     }
 
-    // MARK: - API Request
-
-    func trackAPIRequest(endpoint: String, storeId: String? = nil) {
-        var tags = ["endpoint": endpoint]
-        if let storeId { tags["store_id"] = storeId }
-
-        logInfo("api-request", attributes: tags)
-    }
-
     // MARK: - Error
 
     func trackError(
