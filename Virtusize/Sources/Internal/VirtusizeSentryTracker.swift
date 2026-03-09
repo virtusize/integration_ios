@@ -55,6 +55,20 @@ internal final class VirtusizeSentryTracker {
                 options.enableLogs = true
                 options.experimental.enableMetrics = true
             }
+            SentrySDK.configureScope { scope in
+                scope.setTag(value: VirtusizeConfiguration.SDKVersion, key: "sdk_version")
+                scope.setTag(value: "ios", key: "sdk_platform")
+            }
+        }
+    }
+
+    // MARK: - Platform Override
+
+    /// Overrides the `sdk_platform` Sentry scope tag. Call this when the SDK is running inside a
+    /// wrapper (e.g. Flutter) so that the tag reflects the actual integration platform.
+    func setSDKPlatform(_ platform: String) {
+        SentrySDK.configureScope { scope in
+            scope.setTag(value: platform, key: "sdk_platform")
         }
     }
 
