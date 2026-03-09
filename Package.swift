@@ -19,19 +19,12 @@ let package = Package(
             targets: ["VirtusizeCore"]
         )
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/getsentry/sentry-cocoa.git",
-            from: "9.0.0"
-        )
-    ],
     targets: [
         .target(
             name: "Virtusize",
             dependencies: [
                 "VirtusizeCore",
-                "VirtusizeAuth",
-                .product(name: "Sentry", package: "sentry-cocoa")
+                "VirtusizeAuth"
             ],
             path: "Virtusize/Sources",
             exclude: ["Info.plist"],
