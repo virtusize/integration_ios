@@ -19,6 +19,9 @@ jobs:
         continue-on-error: true
         run: gem install cocoapods
 
+      - name: Update CocoaPods Specs
+        run: pod repo update
+
       - name: Validate All Pods Locally
         continue-on-error: true
         run: |
@@ -31,15 +34,27 @@ jobs:
       - name: Push VirtusizeCore to CocoaPods
         continue-on-error: true
         run: |
-          pod trunk push VirtusizeCore.podspec --allow-warnings --synchronous
+          for i in 1 2 3; do
+            pod trunk push VirtusizeCore.podspec --allow-warnings --synchronous && break
+            echo "Attempt $i failed, retrying in 30s..."
+            sleep 30
+          done
 
       # --synchronous flag ensure the local repo is updated to lint and verify dependant packages
       - name: Push VirtusizeAuth to CocoaPods
         continue-on-error: true
         run: |
-          pod trunk push VirtusizeAuth.podspec --allow-warnings --synchronous
+          for i in 1 2 3; do
+            pod trunk push VirtusizeAuth.podspec --allow-warnings --synchronous && break
+            echo "Attempt $i failed, retrying in 30s..."
+            sleep 30
+          done
 
       - name: Push Virtusize to CocoaPods
         continue-on-error: true
         run: |
-          pod trunk push Virtusize.podspec --allow-warnings --synchronous
+          for i in 1 2 3; do
+            pod trunk push Virtusize.podspec --allow-warnings --synchronous && break
+            echo "Attempt $i failed, retrying in 30s..."
+            sleep 30
+          done
