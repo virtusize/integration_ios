@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      - name: Update Swift packages
+        run: swift package update
       - name: Clean build directory
         run: make clean
       - name: Execute build

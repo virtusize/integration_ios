@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'https://github.com/virtusize/integration_ios.git', :tag => "#{s.version}" }
 
   s.platform = :ios
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '15.0'
   s.swift_version = '5'
 
   s.static_framework = true
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/Resources/PrivacyInfo.xcprivacy"] }
 
   s.pod_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
-  s.dependency 'Sentry', '~> 8.36'
+  s.dependency 'Sentry', '~> 9.0'
   s.subspec 'VirtusizeCore' do |ss|
     ss.dependency 'VirtusizeCore', "#{s.version}"
   end

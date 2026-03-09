@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "Virtusize",
     defaultLocalization: "en",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "Virtusize",
@@ -22,7 +22,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/getsentry/sentry-cocoa.git",
-            from: "8.36.0"
+            from: "9.0.0"
         )
     ],
     targets: [

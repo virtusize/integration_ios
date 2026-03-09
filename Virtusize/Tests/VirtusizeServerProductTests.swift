@@ -81,18 +81,19 @@ class VirtusizeServerProductTests: XCTestCase {
 	func testGetRecommendationText_productIsAnAccessory_returnDefaultAccessoryText() {
 		let storeProduct18 = TestFixtures.getStoreProduct(productType: 18, gender: nil)
 		XCTAssertEqual(
-			storeProduct18?.getRecommendationText(i18nLocalization, nil, nil),
+            storeProduct18?.getRecommendationText(i18nLocalization, nil, nil, VirtusizeI18nLocalization.TrimType.ONELINE, true),
 			i18nLocalization.defaultAccessoryText
 		)
 		let storeProduct19 = TestFixtures.getStoreProduct(productType: 19, gender: nil)
 		XCTAssertEqual(
-			storeProduct19?.getRecommendationText(i18nLocalization, nil, nil),
+			storeProduct19?.getRecommendationText(i18nLocalization, nil, nil, VirtusizeI18nLocalization.TrimType.ONELINE, true),
 			i18nLocalization.defaultAccessoryText
 		)
 		let storeProduct25 = TestFixtures.getStoreProduct(productType: 25, gender: nil)
 		XCTAssertEqual(
-			storeProduct25?.getRecommendationText(i18nLocalization, nil, nil),
-			i18nLocalization.defaultAccessoryText)
+			storeProduct25?.getRecommendationText(i18nLocalization, nil, nil, VirtusizeI18nLocalization.TrimType.ONELINE, true),
+			i18nLocalization.defaultAccessoryText
+        )
 	}
 
 	func testGetRecommendationText_productIsAnAccessory_hasSizeComparisonRecommendedSize_returnHasProductAccessoryText() {
@@ -103,14 +104,18 @@ class VirtusizeServerProductTests: XCTestCase {
 			storeProduct26!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.hasProductAccessoryTopText!)
 		)
 		XCTAssertTrue(
 			storeProduct26!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.hasProductAccessoryBottomText!)
 		)
 	}
@@ -122,14 +127,18 @@ class VirtusizeServerProductTests: XCTestCase {
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.oneSizeCloseTopText!)
 		)
 		XCTAssertTrue(
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.oneSizeCloseBottomText!)
 		)
 	}
@@ -141,14 +150,18 @@ class VirtusizeServerProductTests: XCTestCase {
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true,
 			).contains(i18nLocalization.oneSizeSmallerTopText!)
 		)
 		XCTAssertTrue(
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.oneSizeSmallerBottomText!)
 		)
 	}
@@ -161,14 +174,18 @@ class VirtusizeServerProductTests: XCTestCase {
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.oneSizeLargerTopText!)
 		)
 		XCTAssertTrue(
 			oneSizeProduct!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.oneSizeLargerBottomText!)
 		)
 	}
@@ -225,7 +242,9 @@ class VirtusizeServerProductTests: XCTestCase {
 			storeProduct1!.getRecommendationText(
 				i18nLocalization,
 				sizeComparisonRecommendedSize,
-				nil
+				nil,
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                true
 			).contains(i18nLocalization.sizeComparisonMultiSizeText!)
 		)
 	}
@@ -261,7 +280,7 @@ class VirtusizeServerProductTests: XCTestCase {
 	func testGetRecommendationText_multiSizeProduct_noRecommendedSizes_returnBodyDataEmptyText() {
 		let storeProduct7 = TestFixtures.getStoreProduct(productType: 7, gender: nil)
 		XCTAssertEqual(
-			storeProduct7!.getRecommendationText(i18nLocalization, nil, nil),
+			storeProduct7!.getRecommendationText(i18nLocalization, nil, nil, VirtusizeI18nLocalization.TrimType.ONELINE, true),
             i18nLocalization.bodyDataEmptyText!
 		)
 	}
