@@ -99,6 +99,11 @@ public final class VirtusizeWebViewController: UIViewController {
         webView.customUserAgent = VirtusizeAuthConstants.userAgent
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+        } else {
+            // Fallback on earlier versions
+        }
 
 		view.addSubview(webView)
 		self.webView = webView

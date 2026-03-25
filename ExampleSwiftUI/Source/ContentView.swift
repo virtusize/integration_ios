@@ -27,6 +27,9 @@ import SwiftUI
 import Virtusize
 import WebKit
 
+private let keyJp = "fc3165757dadee62df86f7a6a260bda855efc704"
+private let keyKr = "813769e4b2e6a7479b90579fa9252d49a9cd3341"
+
 struct ContentView: View {
 	// Declare a Bool state to control when to open the Virtusize web view
 	@State var showVirtusizeWebView = false
@@ -34,80 +37,106 @@ struct ContentView: View {
 	// Optional: Declare a Boolean state to update the view based on the result of product data check
 	@State var productDataCheckCompleted = false
 
-	private var product: VirtusizeProduct
+	@State private var apiKey = keyJp
+
+	private var product: VirtusizeProduct {
+		if apiKey == keyJp {
+			return VirtusizeProduct(
+				externalId: "BSZ08",
+				imageURL: URL(string: "http://www.example.com/image.jpg")
+			)
+		} else {
+			return VirtusizeProduct(
+				externalId: "OPP90",
+				imageURL: URL(string: "http://www.example.com/image.jpg")
+			)
+		}
+	}
 
 	init() {
-		// Set up the product information in order to populate the Virtusize view
-		product = VirtusizeProduct(
-			externalId: "vs_pants",
-			imageURL: URL(string: "http://www.example.com/image.jpg")
-		)
-
-		Virtusize.load(product: product)
-
 		// MARK: The Order API
 		sendOrderSample()
 	}
 
 	var body: some View {
 		VStack {
+			// MARK: Market toggle
+			HStack {
+				Text(apiKey == keyKr ? "Now Korea" : "Now Japan")
+				Button("Change market") {
+					productDataCheckCompleted = false
+					apiKey = apiKey == keyJp ? keyKr : keyJp
+					Virtusize.changeStore(
+						apiKey: apiKey,
+						environment: apiKey == keyJp ? .JAPAN : .KOREA
+					)
+					Virtusize.load(product: product)
+				}
+			}
+			.padding()
+
 			Spacer()
-			// MARK: SwiftUIVirtusizeButton
-			SwiftUIVirtusizeButton(
-				product: product,
-				action: {
-					// Set showVirtusizeWebView to true when the button is clicked
-					showVirtusizeWebView = true
-				},
-				// (Optional) You can customize the button by accessing it here
-				uiView: { virtusizeButton in
-						virtusizeButton.setTitle("サイズチェック", for: .normal)
-						virtusizeButton.backgroundColor = .vsGray900Color
-				},
-				// (Optional) You can use our default styles: either Black or Teal for the button
-				// If you want to customize the button on your own, please omit defaultStyle
-				defaultStyle: .BLACK
-			)
-			.padding(.bottom, 16)
 
-			// MARK: SwiftUIVirtusizeInPageStandard
-			SwiftUIVirtusizeInPageStandard(
-				product: product,
-				action: {
-					// Set showVirtusizeWebView to true when the button is clicked
-					showVirtusizeWebView = true
-				},
-				// (Optional): You can customize the button by accessing it here
-				uiView: { virtusizeInPageStandard in
-					virtusizeInPageStandard.buttonFontSize = 12
-					virtusizeInPageStandard.messageFontSize = 12
-					virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsGray900Color
-					virtusizeInPageStandard.setHorizontalMargin(margin: 16)
-				},
-				// (Optional): You can use our default styles: either Black or Teal for the InPage Standard view.
-				// The default is set to .BLACK.
-				defaultStyle: .BLACK
-			)
-			.padding(.bottom, 16)
+			// MARK: Virtusize views (recreated on market change)
+			VStack {
+				// MARK: SwiftUIVirtusizeButton
+				SwiftUIVirtusizeButton(
+					product: product,
+					action: {
+						// Set showVirtusizeWebView to true when the button is clicked
+						showVirtusizeWebView = true
+					},
+					// (Optional) You can customize the button by accessing it here
+					uiView: { virtusizeButton in
+							virtusizeButton.setTitle("サイズチェック", for: .normal)
+							virtusizeButton.backgroundColor = .vsGray900Color
+					},
+					// (Optional) You can use our default styles: either Black or Teal for the button
+					// If you want to customize the button on your own, please omit defaultStyle
+					defaultStyle: .BLACK
+				)
+				.padding(.bottom, 16)
 
-			// MARK: SwiftUIVirtusizeInPageMini
-			SwiftUIVirtusizeInPageMini(
-				product: product,
-				action: {
-					// Set showVirtusizeWebView to true when the button is clicked
-					showVirtusizeWebView = true
-				},
-				// (Optional): You can customize the button by accessing it here
-				uiView: { virtusizeInPageMini in
-					virtusizeInPageMini.messageFontSize = 12
-					virtusizeInPageMini.buttonFontSize = 10
-					virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
-					virtusizeInPageMini.setHorizontalMargin(margin: 16)
-				},
-				// (Optional): You can use our default styles: either Black or Teal for the InPage Mini view.
-				// The default is set to .BLACK.
-				defaultStyle: .TEAL
-			)
+				// MARK: SwiftUIVirtusizeInPageStandard
+				SwiftUIVirtusizeInPageStandard(
+					product: product,
+					action: {
+						// Set showVirtusizeWebView to true when the button is clicked
+						showVirtusizeWebView = true
+					},
+					// (Optional): You can customize the button by accessing it here
+					uiView: { virtusizeInPageStandard in
+						virtusizeInPageStandard.buttonFontSize = 12
+						virtusizeInPageStandard.messageFontSize = 12
+						virtusizeInPageStandard.inPageStandardButtonBackgroundColor = .vsGray900Color
+						virtusizeInPageStandard.setHorizontalMargin(margin: 16)
+					},
+					// (Optional): You can use our default styles: either Black or Teal for the InPage Standard view.
+					// The default is set to .BLACK.
+					defaultStyle: .BLACK
+				)
+				.padding(.bottom, 16)
+
+				// MARK: SwiftUIVirtusizeInPageMini
+				SwiftUIVirtusizeInPageMini(
+					product: product,
+					action: {
+						// Set showVirtusizeWebView to true when the button is clicked
+						showVirtusizeWebView = true
+					},
+					// (Optional): You can customize the button by accessing it here
+					uiView: { virtusizeInPageMini in
+						virtusizeInPageMini.messageFontSize = 12
+						virtusizeInPageMini.buttonFontSize = 10
+						virtusizeInPageMini.inPageMiniBackgroundColor = .vsTealColor
+						virtusizeInPageMini.setHorizontalMargin(margin: 16)
+					},
+					// (Optional): You can use our default styles: either Black or Teal for the InPage Mini view.
+					// The default is set to .BLACK.
+					defaultStyle: .TEAL
+				)
+			}
+			.id(apiKey)
 
 			Spacer()
 		}
@@ -152,6 +181,9 @@ struct ContentView: View {
 		}
 		.onReceive(NotificationCenter.default.publisher(for: Virtusize.productCheckDidFail)) { notification in
 			print(notification)
+		}
+		.onAppear {
+			Virtusize.load(product: product)
 		}
 	}
 

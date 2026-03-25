@@ -74,6 +74,9 @@ public class Virtusize {
 	/// Tracks the last product ID loaded to detect product changes for session tracking
 	private static var lastLoadedProductId: String?
 
+	/// Tracks the last product loaded to allow re-loading on store changes
+	private static var lastLoadedProduct: VirtusizeProduct?
+
 	/// Lazy reference to the Sentry tracker singleton
 	private static var virtusizeSentryTracker = VirtusizeSentryTracker.shared
 
@@ -135,6 +138,8 @@ public class Virtusize {
 	// MARK: - Methods
 	/// A function for clients to populate the Virtusize views by loading a product
 	public class func load(product: VirtusizeProduct) {
+		lastLoadedProduct = product
+
 		// Generate a new Sentry session ID when a different product is loaded
 		if lastLoadedProductId != product.externalId {
 			lastLoadedProductId = product.externalId
@@ -181,6 +186,7 @@ public class Virtusize {
                 virtusizeSentryTracker.trackLoadCancelled(step: "user-session", externalProductId: product.externalId, storeId: storeId)
 				return
 			}
+
 			await MainActor.run {
 				NotificationCenter.default.post(
 					name: .productCheckData,
@@ -268,6 +274,21 @@ public class Virtusize {
                 virtusizeSentryTracker.trackError(error, storeId: APICache.shared.currentStoreId.map { String($0) })
 				onError?(error)
 			}
+		}
+	}
+
+	/// Changes the store to a different API key and environment, then reloads the last product
+	///
+	/// - Parameters:
+	///   - apiKey: The new API key for the target store
+	///   - environment: The new Virtusize environment for the target store
+	public class func changeStore(apiKey: String, environment: VirtusizeEnvironment) {
+		Virtusize.APIKey = apiKey
+		Virtusize.environment = environment
+        Virtusize.params?.region = environment.virtusizeRegion()
+		if let product = lastLoadedProduct {
+			lastLoadedProductId = nil
+			load(product: product)
 		}
 	}
 

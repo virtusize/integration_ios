@@ -27,11 +27,11 @@ import VirtusizeCore
 /// The class that wraps the parameters we can pass to the Virtusize web app
 public class VirtusizeParams {
 	/// The `VirtusizeRegion` that is used to set the region of the config url domains within the Virtusize web app
-	internal let region: VirtusizeRegion
+	internal var region: VirtusizeRegion
 	/// The `VirtusizeLanguage` that sets the initial language the Virtusize web app will load in
-	internal let language: VirtusizeLanguage
+	internal var language: VirtusizeLanguage
 	/// The languages that the user can switch to using the Language Selector
-	private let allowedLanguages: [VirtusizeLanguage]
+	private var allowedLanguages: [VirtusizeLanguage]
 	// swiftlint:disable:next line_length
 	/// The Boolean value to determine whether the Virtusize web app will fetch SGI and use SGI flow for users to add user generated items to their wardrobe
 	private let showSGI: Bool
