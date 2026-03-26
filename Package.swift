@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "Virtusize",
     defaultLocalization: "en",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "Virtusize",
@@ -19,11 +19,13 @@ let package = Package(
             targets: ["VirtusizeCore"]
         )
     ],
-
     targets: [
         .target(
             name: "Virtusize",
-            dependencies: ["VirtusizeCore", "VirtusizeAuth"],
+            dependencies: [
+                "VirtusizeCore",
+                "VirtusizeAuth"
+            ],
             path: "Virtusize/Sources",
             exclude: ["Info.plist"],
             resources: [.process("Resources")]

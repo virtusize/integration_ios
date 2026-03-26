@@ -80,6 +80,7 @@ public class VirtusizeFlutter: Virtusize {
         flutterHandler: VirtusizeFlutterProductEventHandler? = nil
     ) {
         self.flutterHandler = flutterHandler
+        VirtusizeSentryTracker.shared.setSDKPlatform("flutter-ios")
         NotificationCenter.default.removeObserver(self)
         
         NotificationCenter.default.addObserver(

@@ -30,7 +30,11 @@ public class Virtusize {
 	// MARK: - Properties
 
 	/// The API key that is unique and provided for Virtusize clients
-	public static var APIKey: String?
+	public static var APIKey: String? {
+		didSet {
+			_ = virtusizeSentryTracker
+		}
+	}
 
 	/// The user id that is the unique user id from the client system
 	public static var userID: String? {
@@ -66,6 +70,12 @@ public class Virtusize {
 	/// Task to track current product load operation for cancellation
 	private static var loadProductTask: Task<Void, Never>?
 	private static let loadProductTaskLock = NSLock()
+
+	/// Tracks the last product ID loaded to detect product changes for session tracking
+	private static var lastLoadedProductId: String?
+
+	/// Lazy reference to the Sentry tracker singleton
+	private static var virtusizeSentryTracker = VirtusizeSentryTracker.shared
 
 	internal typealias SizeRecommendationData = ( // swiftlint:disable:this large_tuple
 		serverProduct: VirtusizeServerProduct,
@@ -125,6 +135,12 @@ public class Virtusize {
 	// MARK: - Methods
 	/// A function for clients to populate the Virtusize views by loading a product
 	public class func load(product: VirtusizeProduct) {
+		// Generate a new Sentry session ID when a different product is loaded
+		if lastLoadedProductId != product.externalId {
+			lastLoadedProductId = product.externalId
+			virtusizeSentryTracker.generateSessionId()
+		}
+
 		// Cancel previous load task if it exists
 		loadProductTaskLock.lock()
 		loadProductTask?.cancel()
@@ -132,19 +148,39 @@ public class Virtusize {
 		// Create new task
 		let task = Task {
 			// Check if cancelled early
-			guard !Task.isCancelled else { return }
+			guard !Task.isCancelled else {
+				virtusizeSentryTracker.trackLoadCancelled(step: "start", externalProductId: product.externalId)
+				return
+			}
 
 			let productWithPDCData = await virtusizeRepository.checkProductValidity(product: product)
 
-			guard !Task.isCancelled else { return }
+			guard !Task.isCancelled else {
+                virtusizeSentryTracker.trackLoadCancelled(step: "product-check", externalProductId: product.externalId)
+				return
+			}
 			guard let productWithPDCData = productWithPDCData else {
+                virtusizeSentryTracker.trackProductCheck(externalProductId: product.externalId, isValid: false)
+                virtusizeSentryTracker.trackError(
+                    NSError(domain: "Virtusize", code: 0, userInfo: [NSLocalizedDescriptionKey: "Product check failed"]),
+                    storeId: nil
+                )
                 inPageError = (true, product.externalId)
                 return
 			}
 
+			let storeId = productWithPDCData.productCheckData.map { String($0.storeId) }
+			let isValidProduct = productWithPDCData.productCheckData?.validProduct ?? true
+            virtusizeSentryTracker.trackProductCheck(externalProductId: product.externalId, isValid: isValidProduct, storeId: storeId)
+
+            virtusizeSentryTracker.trackUserSawProduct(externalProductId: product.externalId, storeId: storeId)
+
 			await virtusizeRepository.updateUserSession()
 
-			guard !Task.isCancelled else { return }
+			guard !Task.isCancelled else {
+                virtusizeSentryTracker.trackLoadCancelled(step: "user-session", externalProductId: product.externalId, storeId: storeId)
+				return
+			}
 			await MainActor.run {
 				NotificationCenter.default.post(
 					name: .productCheckData,
@@ -158,8 +194,15 @@ public class Virtusize {
 				productId: productWithPDCData.productCheckData?.productDataId
 			)
 
-			guard !Task.isCancelled else { return }
+			guard !Task.isCancelled else {
+                virtusizeSentryTracker.trackLoadCancelled(step: "fetch-initial-data", externalProductId: product.externalId, storeId: storeId)
+				return
+			}
 			guard let serverProduct = serverProduct else {
+                virtusizeSentryTracker.trackError(
+                    NSError(domain: "Virtusize", code: 0, userInfo: [NSLocalizedDescriptionKey: "Fetch initial data failed"]),
+                    storeId: storeId
+                )
                 inPageError = (true, product.externalId)
 				return
 			}
@@ -172,10 +215,16 @@ public class Virtusize {
 				)
 			}
 
-			guard !Task.isCancelled else { return }
+			guard !Task.isCancelled else {
+                virtusizeSentryTracker.trackLoadCancelled(step: "store-product", externalProductId: product.externalId, storeId: storeId)
+				return
+			}
 			await virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
 
-			guard !Task.isCancelled else { return }
+			guard !Task.isCancelled else {
+                virtusizeSentryTracker.trackLoadCancelled(step: "fetch-recommendations", externalProductId: product.externalId, storeId: storeId)
+				return
+			}
 			await MainActor.run {
 				virtusizeRepository.updateInPageRecommendation(product: serverProduct)
 			}
@@ -211,9 +260,12 @@ public class Virtusize {
 	) {
 		Task {
 			do {
+				let storeId = APICache.shared.currentStoreId.map { String($0) }
+                virtusizeSentryTracker.trackSendOrder(order: order, storeId: storeId)
 				try await virtusizeRepository.sendOrder(order)
 				onSuccess?()
 			} catch let error as VirtusizeError {
+                virtusizeSentryTracker.trackError(error, storeId: APICache.shared.currentStoreId.map { String($0) })
 				onError?(error)
 			}
 		}

@@ -20,5 +20,9 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
+	<key>SentryDSN</key>
+	<string>https://f2ae6aac72a9ec47631fdbc4cd8589e6@o903.ingest.us.sentry.io/4510877679353856</string>
+	<key>SentryTracesSampleRate</key>
+	<real>1</real>
 </dict>
 </plist>
