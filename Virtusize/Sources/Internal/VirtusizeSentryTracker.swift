@@ -49,8 +49,8 @@ internal final class VirtusizeSentryTracker {
         if let dsn = moduleBundle.object(forInfoDictionaryKey: "SentryDSN") as? String {
             SentrySDK.start { options in
                 options.dsn = dsn
-                options.tracesSampleRate = moduleBundle.object(forInfoDictionaryKey: "SentryTracesSampleRate") as? NSNumber ?? 1.0
-                //options.debug = true
+                //options.tracesSampleRate = moduleBundle.object(forInfoDictionaryKey: "SentryTracesSampleRate") as? NSNumber ?? 1.0
+                options.debug = false
                 options.environment = Virtusize.environment.rawValue
                 options.enableLogs = true
                 options.experimental.enableMetrics = true
