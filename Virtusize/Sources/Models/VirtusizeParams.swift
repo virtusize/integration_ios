@@ -90,6 +90,10 @@ public class VirtusizeParams {
 		paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
 		paramsScript += "\(ParamKey.sessionData): \(userSessionResponse), "
 		paramsScript += "\(ParamKey.externalProductID): '\(externalProductId)', "
+		if let userId = Virtusize.userID,
+			let authToken = UserDefaultsHelper.current.authToken, !authToken.isEmpty {
+			paramsScript += "\(ParamKey.externalUserID): '\(userId)', "
+		}
 		paramsScript += "\(ParamKey.showSGI): \(showSGI), "
 		paramsScript += "\(ParamKey.allowedLanguages): \(getAllowedLanguagesScript(allowedLanguages)), "
 		paramsScript += "\(ParamKey.detailsPanelCards): \(detailsPanelCards.map { category in category.rawValue }), "
@@ -98,6 +102,7 @@ public class VirtusizeParams {
 		paramsScript += "\(ParamKey.sdkVersion): '\(VirtusizeConfiguration.SDKVersion)', "
 		paramsScript += "\(ParamKey.sdkPlatform): 'ios', "
 		paramsScript += "\(ParamKey.environment): '\(Virtusize.environment.isProdEnv ? "production" : "staging")'})"
+
 		return paramsScript
 	}
 
@@ -125,6 +130,24 @@ public class VirtusizeParams {
 		return VirtusizeParams(
 			region: self.region,
 			language: language,
+			allowedLanguages: self.allowedLanguages,
+			showSGI: self.showSGI,
+			detailsPanelCards: self.detailsPanelCards,
+			showSNSButtons: self.showSNSButtons,
+			branch: self.branch,
+			serviceEnvironment: self.serviceEnvironment,
+			showPrivacyPolicy: self.showPrivacyPolicy
+		)
+	}
+
+	/// Creates a copy of this VirtusizeParams with a different region
+	///
+	/// - Parameter region: The new region to use
+	/// - Returns: A new VirtusizeParams instance with the updated region
+	internal func withRegion(_ region: VirtusizeRegion) -> VirtusizeParams {
+		return VirtusizeParams(
+			region: region,
+			language: self.language,
 			allowedLanguages: self.allowedLanguages,
 			showSGI: self.showSGI,
 			detailsPanelCards: self.detailsPanelCards,

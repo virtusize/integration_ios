@@ -150,7 +150,7 @@ internal enum APIEndpoints {
 			components.path = "/a/api/v3/user-products"
 
 		case .userBodyMeasurements:
-			components.path = "/a/api/v3/user-body-measurements"
+			components.path = "/a/api/v3/user-body-measurements/"
 
 		case .getItemSizeRecommendation:
 			components.path =  "/item"

@@ -163,9 +163,6 @@ open class APIService {
 			let result = try JSONDecoder().decode(type!, from: data)
 			let jsonString = String(data: data, encoding: String.Encoding.utf8)
 
-            print(apiResponse.response?.url?.absoluteString ?? "Unknown URL")
-            print(">>>> Response: \(jsonString)")
-
 			return .success(result, jsonString)
 		} catch {
 			VirtusizeLogger.debug("Failed to parse JSON response: \(error)")
