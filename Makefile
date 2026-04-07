@@ -26,7 +26,7 @@ build:
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "Virtusize" \
 		-sdk "iphonesimulator" \
-		-destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=latest" \
+		-destination "platform=iOS Simulator,name=iPhone 16e,OS=latest"
 		ENABLE_MODULE_VERIFIER=YES # ensure modules are verified
 
 virtusize-test:
@@ -35,7 +35,8 @@ virtusize-test:
 		-quiet \
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "VirtusizeTests" \
-		-destination "platform=iOS Simulator,name=Any iOS Simulator Device"
+		-sdk "iphonesimulator" \
+		-destination "platform=iOS Simulator,name=iPhone 16e,OS=latest"
 
 virtusize-core-test:
 
@@ -43,7 +44,8 @@ virtusize-core-test:
 		-quiet \
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "VirtusizeCoreTests" \
-		-destination "platform=iOS Simulator,name=Any iOS Simulator Device" \
+		-sdk "iphonesimulator" \
+		-destination "platform=iOS Simulator,name=iPhone 16e,OS=latest" \
 		-parallel-testing-enabled NO
 
 test: virtusize-test virtusize-core-test

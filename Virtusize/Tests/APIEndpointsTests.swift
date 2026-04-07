@@ -191,5 +191,4 @@ class APIEndpointsTests: XCTestCase {
             result[item.name] = item.value
         }
     }
-
 }
