@@ -36,7 +36,7 @@ virtusize-test:
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "VirtusizeTests" \
 		-sdk "iphonesimulator" \
-		-destination "platform=iOS Simulator"
+		-destination "platform=iOS Simulator,name=Any iOS Simulator Device"
 
 virtusize-core-test:
 
@@ -45,7 +45,7 @@ virtusize-core-test:
 		-workspace "Virtusize.xcworkspace" \
 		-scheme "VirtusizeCoreTests" \
 		-sdk "iphonesimulator" \
-		-destination "platform=iOS Simulator" \
+		-destination "platform=iOS Simulator,name=Any iOS Simulator Device" \
 		-parallel-testing-enabled NO
 
 test: virtusize-test virtusize-core-test

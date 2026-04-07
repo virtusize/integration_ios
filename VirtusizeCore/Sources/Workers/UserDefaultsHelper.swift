@@ -69,7 +69,7 @@ final public class UserDefaultsHelper {
 			defaults.synchronize()
 		}
 	}
- 
+
 	/// The browser identifier as String
 	public var identifier: String {
 		get {
