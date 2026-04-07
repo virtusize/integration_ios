@@ -47,7 +47,7 @@ struct ContentView: View {
 			)
 		} else {
 			return VirtusizeProduct(
-				externalId: "OPP90",
+				externalId: "NL1110231",
 				imageURL: URL(string: "http://www.example.com/image.jpg")
 			)
 		}
