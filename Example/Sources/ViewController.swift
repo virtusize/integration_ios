@@ -62,14 +62,6 @@ class ViewController: UIViewController {
         /// Loads the product in order to populate the Virtusize views associated with `product1`
         Virtusize.load(product: product1)
 
-        /// Set up the product information
-        let product2 = VirtusizeProduct(
-            externalId: "vs_pants",
-            imageURL: URL(string: "http://www.example.com/image.jpg")
-        )
-        /// Loads the product in order to populate the Virtusize views associated with `product2`
-        Virtusize.load(product: product2)
-
         // Optional: Set up WKProcessPool to allow cookie sharing.
         Virtusize.processPool = WKProcessPool()
 
@@ -85,7 +77,7 @@ class ViewController: UIViewController {
         // 2. Add the VirtusizeButton programmatically
         let checkTheFitButton2 = VirtusizeButton()
         view.addSubview(checkTheFitButton2)
-        Virtusize.setVirtusizeView(self, checkTheFitButton2, product: product2)
+        Virtusize.setVirtusizeView(self, checkTheFitButton2, product: product1)
         checkTheFitButton2.style = .BLACK
         // Set up constraints if needed
         checkTheFitButton2.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +93,7 @@ class ViewController: UIViewController {
         // 2. If you add the InPageMini view programmatically
         let inPageMini2 = VirtusizeInPageMini()
         view.addSubview(inPageMini2)
-        Virtusize.setVirtusizeView(self, inPageMini2, product: product2)
+        Virtusize.setVirtusizeView(self, inPageMini2, product: product1)
         inPageMini2.inPageMiniBackgroundColor = #colorLiteral(red: 0.262745098, green: 0.5960784314, blue: 0.9882352941, alpha: 1)
         // You can set the horizontal margins by using `setHorizontalMargin`
         inPageMini2.setHorizontalMargin(view: view, margin: 16)
