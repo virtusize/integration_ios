@@ -145,7 +145,7 @@ class APIRequestTests: XCTestCase {
         XCTAssertNil(apiRequest?.httpBody)
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
-            "https://staging.virtusize.com/a/api/v3/user-body-measurements"
+            "https://staging.virtusize.com/a/api/v3/user-body-measurements/"
         )
     }
 
