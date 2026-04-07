@@ -272,7 +272,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	}
 
 	/// Updates the user session by calling the session API
-	internal func updateUserSession(forceUpdate: Bool = false) async {
+	internal func updateUserSession(forceUpdate: Bool) async {
 		let ttl: TimeInterval = forceUpdate ? .zero : .short
 		let userSessionInfoResponse = try? await ExpiringCache.shared.getOrFetch(UserSessionInfo.self, ttl: ttl) {
 			await VirtusizeAPIService.getUserSessionInfoAsync()
@@ -291,6 +291,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		if !userSessionInfo.authToken.isEmpty {
 			UserDefaultsHelper.current.authToken = userSessionInfo.authToken
 		}
+
 		hasSessionBodyMeasurement = userSessionInfo.status.hasBodyMeasurement
 	}
 

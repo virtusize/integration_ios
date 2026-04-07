@@ -135,6 +135,7 @@ public class Virtusize {
 	// MARK: - Methods
 	/// A function for clients to populate the Virtusize views by loading a product
 	public class func load(product: VirtusizeProduct) {
+        
 		// Generate a new Sentry session ID when a different product is loaded
 		if lastLoadedProductId != product.externalId {
 			lastLoadedProductId = product.externalId
@@ -175,12 +176,13 @@ public class Virtusize {
 
             virtusizeSentryTracker.trackUserSawProduct(externalProductId: product.externalId, storeId: storeId)
 
-			await virtusizeRepository.updateUserSession()
+            await virtusizeRepository.updateUserSession(forceUpdate: false)
 
 			guard !Task.isCancelled else {
                 virtusizeSentryTracker.trackLoadCancelled(step: "user-session", externalProductId: product.externalId, storeId: storeId)
 				return
 			}
+
 			await MainActor.run {
 				NotificationCenter.default.post(
 					name: .productCheckData,
@@ -269,6 +271,34 @@ public class Virtusize {
 				onError?(error)
 			}
 		}
+	}
+
+	/// Changes the store to a different API key and environment, then reloads the last product
+	///
+	/// - Parameters:
+	///   - apiKey: The new API key for the target store
+	///   - environment: The new Virtusize environment for the target store
+	public class func changeStore(apiKey: String, environment: VirtusizeEnvironment) {
+		Virtusize.APIKey = apiKey
+		Virtusize.environment = environment
+        Virtusize.params?.region = environment.virtusizeRegion()
+	}
+
+	/// Changes only the API key for the store without changing the environment
+	///
+	/// - Parameters:
+	///   - apiKey: The new API key for the target store
+	public class func changeStore(apiKey: String) {
+		Virtusize.APIKey = apiKey
+	}
+
+	/// Changes only the environment without changing the API key
+	///
+	/// - Parameters:
+	///   - environment: The new Virtusize environment
+	public class func changeEnvironment(_ environment: VirtusizeEnvironment) {
+		Virtusize.environment = environment
+		Virtusize.params?.region = environment.virtusizeRegion()
 	}
 
 	/// Handles the OAuth callback. Returns true if the URL is known and handled by the SDK

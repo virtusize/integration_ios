@@ -85,6 +85,22 @@ public final class VirtusizeWebViewController: UIViewController {
 
         let contentController = WKUserContentController()
         contentController.add(self, name: "eventHandler")
+        contentController.add(self, name: "consoleLog")
+        let consoleScript = WKUserScript(
+            source: """
+            (function() {
+                var _log = console.log.bind(console);
+                console.log = function() {
+                    var msg = Array.from(arguments).map(String).join(' ');
+                    window.webkit.messageHandlers.consoleLog.postMessage(msg);
+                    _log.apply(console, arguments);
+                };
+            })();
+            """,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: false
+        )
+        contentController.addUserScript(consoleScript)
 
         let config = WKWebViewConfiguration()
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
@@ -244,6 +260,7 @@ public final class VirtusizeWebViewController: UIViewController {
 
     private func deinitListeners() {
         webView?.configuration.userContentController.removeScriptMessageHandler(forName: "eventHandler")
+        webView?.configuration.userContentController.removeScriptMessageHandler(forName: "consoleLog")
     }
 
 	private func showCloseButton() {
@@ -404,6 +421,10 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 	public func userContentController(
 		_ userContentController: WKUserContentController,
 		didReceive message: WKScriptMessage) {
+        if message.name == "consoleLog" {
+            print("[AOYAMA] \(message.body)")
+            return
+        }
 		guard message.name == "eventHandler" else {
 			return
 		}
