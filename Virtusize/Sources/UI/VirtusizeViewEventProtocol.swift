@@ -111,7 +111,7 @@ extension VirtusizeViewEventProtocol {
 
 	public func handleUserClosedWidget() {
 		Task {
-			await VirtusizeRepository.shared.updateUserSession(forceUpdate: false)
+			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 		}
 	}
 
