@@ -169,7 +169,7 @@ class APIEndpointsTests: XCTestCase {
         let endpoint = APIEndpoints.userBodyMeasurements
 
         XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
-        XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-body-measurements")
+        XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-body-measurements/")
 
         XCTAssertNil(endpoint.components.queryItems)
     }
@@ -191,5 +191,4 @@ class APIEndpointsTests: XCTestCase {
             result[item.name] = item.value
         }
     }
-
 }

@@ -12,6 +12,10 @@ Use list notation, and following prefixes:
 
 ### Changes
 - Feature: Added Sentry logger
+- Feature: Web view logs handler
+- Bugfix: Load product on switch store changed 
+- Codefix: Re-implementation session key requests 
+- Codefix: Authorize web view fixed
 
 ### 2.12.26
 - Fix: No size available text instead of max size issue
