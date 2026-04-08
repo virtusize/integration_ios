@@ -10,12 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Changes
+### 2.12.27
 - Feature: Added Sentry logger
-- Feature: Web view logs handler
-- Bugfix: Load product on switch store changed 
-- Codefix: Re-implementation session key requests 
-- Codefix: Authorize web view fixed
+- Fix: switch between store and environments WebView authorization issue
 
 ### 2.12.26
 - Fix: No size available text instead of max size issue
