@@ -411,6 +411,11 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 		allConstraints.append(checkSizeButton.centerYAnchor.constraint(equalTo: inPageStandardView.centerYAnchor))
 		allConstraints.append(errorImageView.centerXAnchor.constraint(equalTo: inPageStandardView.centerXAnchor))
 
+		// Lower priority of all constraints to avoid conflicts with SwiftUI's temporary zero size.
+		// When the SwiftUI layout system temporarily assigns zero width/height, these constraints
+		// will be broken gracefully rather than logged as errors.
+		allConstraints.forEach { $0.priority = UILayoutPriority(999) }
+
 		NSLayoutConstraint.activate(allConstraints)
 	}
 

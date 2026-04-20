@@ -80,23 +80,28 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 		loadingGifImageView.translatesAutoresizingMaskIntoConstraints = false
 		loadingGifImageView.contentMode = .scaleAspectFit
         loadingGifImageView.image = UIImage.animatedGif(named: "virtusize_loading")
-		NSLayoutConstraint.activate([
+		let gifConstraints = [
 			loadingGifImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
 			loadingGifImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
 			loadingGifImageView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor),
 			loadingGifImageView.heightAnchor.constraint(equalToConstant: 40)
-		])
+		]
+		gifConstraints.forEach { $0.priority = UILayoutPriority(999) }
+		NSLayoutConstraint.activate(gifConstraints)
 		loadingGifImageView.isHidden = false
 
 		// Add content container view
 		addSubview(contentContainerView)
 		contentContainerView.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
+		let containerConstraints = [
 			contentContainerView.topAnchor.constraint(equalTo: topAnchor),
 			contentContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
 			contentContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			contentContainerView.trailingAnchor.constraint(equalTo: trailingAnchor)
-		])
+		]
+		// Lower priority to prevent conflicts when SwiftUI assigns a temporary zero size
+		containerConstraints.forEach { $0.priority = UILayoutPriority(999) }
+		NSLayoutConstraint.activate(containerConstraints)
 		contentContainerView.isHidden = true
 	}
 
@@ -255,28 +260,29 @@ public class VirtusizeInPageView: UIView, VirtusizeView, VirtusizeViewEventProto
 
 	internal func setHorizontalMargins(view: UIView, margin: CGFloat) {
 		userSetMargin = margin
-		view.addConstraint(
-			NSLayoutConstraint(
-				item: self,
-				attribute: .leading,
-				relatedBy: .equal,
-				toItem: view,
-				attribute: .leading,
-				multiplier: 1,
-				constant: margin
-			)
+		let leadingConstraint = NSLayoutConstraint(
+			item: self,
+			attribute: .leading,
+			relatedBy: .equal,
+			toItem: view,
+			attribute: .leading,
+			multiplier: 1,
+			constant: margin
 		)
-		view.addConstraint(
-			NSLayoutConstraint(
-				item: view,
-				attribute: .trailing,
-				relatedBy: .equal,
-				toItem: self,
-				attribute: .trailing,
-				multiplier: 1,
-				constant: margin
-			)
+		leadingConstraint.priority = UILayoutPriority(999)
+		view.addConstraint(leadingConstraint)
+
+		let trailingConstraint = NSLayoutConstraint(
+			item: view,
+			attribute: .trailing,
+			relatedBy: .equal,
+			toItem: self,
+			attribute: .trailing,
+			multiplier: 1,
+			constant: margin
 		)
+		trailingConstraint.priority = UILayoutPriority(999)
+		view.addConstraint(trailingConstraint)
 	}
 
 	@objc internal func clickInPageViewAction() {

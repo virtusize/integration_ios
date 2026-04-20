@@ -17,6 +17,9 @@ Use list notation, and following prefixes:
 - Codefix: Re-implementation session key requests 
 - Codefix: Authorize web view fixed
 
+### Changes:
+- Fix: Virtusize widget layout fixes
+
 ### 2.12.26
 - Fix: No size available text instead of max size issue
 - Fix: Virtusize widget recommended size incorrect

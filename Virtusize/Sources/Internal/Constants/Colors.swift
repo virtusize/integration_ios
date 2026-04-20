@@ -35,4 +35,11 @@ public extension UIColor {
 	static var vsTealPressedColor: UIColor { #colorLiteral(red: 0.4784313725, green: 0.8549019608, blue: 0.7490196078, alpha: 1) }
 	static var vsDarkTealColor: UIColor { #colorLiteral(red: 0.0862745098, green: 0.7764705882, blue: 0.7254901961, alpha: 1) }
 	static var vsInPageShadowColor: UIColor { #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.13) }
+
+	/// Returns true if the color's perceived luminance is light (> 0.5)
+	var isLight: Bool {
+		var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+		getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+		return 0.299 * red + 0.587 * green + 0.114 * blue > 0.5
+	}
 }
