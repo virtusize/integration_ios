@@ -34,7 +34,8 @@ public struct SwiftUIVirtusizeInPageMini: View {
 	private var uiView: ((VirtusizeInPageMini) -> Void)?
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
-	@State private var desiredSize: CGSize = CGSize()
+	@State private var desiredSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: 35)
+	@State private var horizontalMargin: CGFloat = 0
 
 	public init(
 		product: VirtusizeProduct,
@@ -52,10 +53,12 @@ public struct SwiftUIVirtusizeInPageMini: View {
 		VirtusizeInPageMiniWrapper(
 			product: product,
 			desiredSize: $desiredSize,
+			horizontalMargin: $horizontalMargin,
 			action: action,
 			uiKitView: uiView,
 			defaultStyle: virtusizeDefaultStyle
 		)
+		.offset(x: horizontalMargin)
 		.frame(width: desiredSize.width, height: desiredSize.height == 0 ? 0.1 : max(desiredSize.height, 35), alignment: .center)
 		.opacity(desiredSize.height == 0 ? 0 : 1)
 		.frame(height: desiredSize.height == 0 ? 0.1 : nil)
@@ -71,16 +74,19 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 	private var virtusizeDefaultStyle: VirtusizeViewStyle?
 
 	@Binding var desiredSize: CGSize
+	@Binding var horizontalMargin: CGFloat
 
 	public init(
 		product: VirtusizeProduct,
 		desiredSize: Binding<CGSize>,
+		horizontalMargin: Binding<CGFloat>,
 		action: (() -> Void)? = nil,
 		uiKitView: ((VirtusizeInPageMini) -> Void)? = nil,
 		defaultStyle: VirtusizeViewStyle? = nil
 	) {
 		self.product = product
 		self._desiredSize = desiredSize
+		self._horizontalMargin = horizontalMargin
 		self.action = action
 		self.uiKitView = uiKitView
 		self.virtusizeDefaultStyle = defaultStyle
@@ -124,12 +130,13 @@ private struct VirtusizeInPageMiniWrapper: UIViewRepresentable {
 		uiKitView?(uiView)
 
 		uiView.setContentViewListener(listener: { view in
+			horizontalMargin = view.userSetMargin
 			if let label = (view as? VirtusizeInPageMini)?.inPageMiniMessageLabel {
 				// Set height to 0 if product is invalid, there's an error, or view is hidden
 				let calculatedHeight = label.text?.height(width: label.frame.width, font: label.font) ?? 35
 				let height = (view.invalidProduct || view.isError || view.isHidden) ? 0 : calculatedHeight
 				desiredSize = CGSize(
-					width: UIScreen.main.bounds.size.width - uiView.userSetMargin * 2,
+					width: UIScreen.main.bounds.size.width,
 					height: height
 				)
 			}

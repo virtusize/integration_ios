@@ -66,6 +66,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	internal let inPageMiniSizeCheckButton: UIButton = UIButton()
 
 	internal override func setup() {
+		translatesAutoresizingMaskIntoConstraints = false
 		addSubviews()
 		setConstraints()
 		setStyle()
@@ -174,11 +175,9 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			metrics: metrics,
 			views: views
 		)
-		// Lower the priority of leading and trailing constraints to prevent conflicts during initial layout
+		// Lower priority of all horizontal constraints to prevent conflicts when SwiftUI sets a temporary zero size
 		for constraint in horizontalConstraints {
-			if constraint.firstItem === self || constraint.secondItem === self {
-				constraint.priority = UILayoutPriority(999)
-			}
+			constraint.priority = UILayoutPriority(999)
 		}
 
 		let inPageMiniImageViewVerticalConstraints = NSLayoutConstraint.constraints(
@@ -188,12 +187,16 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			views: views
 		)
 
-		let messageLabelVerticalConstraints = NSLayoutConstraint.constraints(
+		var messageLabelVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-verticalMargin-[messageLabel]-verticalMargin-|",
 			options: NSLayoutConstraint.FormatOptions(rawValue: 0),
 			metrics: metrics,
 			views: views
 		)
+		// Lower priority to prevent conflicts when SwiftUI sets a temporary zero height
+		for constraint in messageLabelVerticalConstraints {
+			constraint.priority = UILayoutPriority(999)
+		}
 
 		let sizeCheckButtonVerticalConstraints = NSLayoutConstraint.constraints(
 			withVisualFormat: "V:|-(>=verticalMargin)-[sizeCheckButton]-(>=verticalMargin)-|",
@@ -206,8 +209,14 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		addConstraints(inPageMiniImageViewVerticalConstraints)
 		addConstraints(messageLabelVerticalConstraints)
 		addConstraints(sizeCheckButtonVerticalConstraints)
-		addConstraint(inPageMiniImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor))
-		addConstraint(inPageMiniSizeCheckButton.centerYAnchor.constraint(equalTo: self.centerYAnchor))
+
+		let imageViewCenterY = inPageMiniImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+		imageViewCenterY.priority = UILayoutPriority(999)
+		addConstraint(imageViewCenterY)
+
+		let sizeCheckButtonCenterY = inPageMiniSizeCheckButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+		sizeCheckButtonCenterY.priority = UILayoutPriority(999)
+		addConstraint(sizeCheckButtonCenterY)
 	}
 
 	private func setStyle() {
@@ -241,6 +250,9 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			inPageMiniSizeCheckButton.imageView?.tintColor = .vsGray900Color
 		}
 		inPageMiniSizeCheckButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+		inPageMiniImageView.image = VirtusizeAssets.icon?.withRenderingMode(.alwaysTemplate)
+		inPageMiniImageView.tintColor = getBackgroundColor().isLight ? .vsGray900Color : .white
 	}
 
 	private func getBackgroundColor() -> UIColor {
@@ -275,7 +287,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 
 	internal override func setLoadingScreen(loading: Bool) {
 		contentContainerView.backgroundColor = loading ? .white : getBackgroundColor()
-		inPageMiniImageView.image = loading ? VirtusizeAssets.icon : nil
+
 		inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
 		setupTextsStyle(messageLabelIsBold: loading)
 
