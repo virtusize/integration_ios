@@ -10,15 +10,15 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### 2.12.28
+### 2.12.29
 - Hotfix: Swift Package Manager dependencies
+
+### 2.12.28
+- Fix: Virtusize widget layout fixes
 
 ### 2.12.27
 - Feature: Added Sentry logger
 - Fix: switch between store and environments WebView authorization issue
-
-### Changes:
-- Fix: Virtusize widget layout fixes
 
 ### 2.12.26
 - Fix: No size available text instead of max size issue
