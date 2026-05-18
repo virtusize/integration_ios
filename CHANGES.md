@@ -10,6 +10,10 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Changes
+- Fix: crash on externalProductId nil
+- Fix: Sentry logger for Flutter 
+
 ### 2.12.29
 - Hotfix: Swift Package Manager dependencies
 
