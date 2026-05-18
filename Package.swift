@@ -20,7 +20,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/getsentry/sentry-cocoa.git", exact: "9.13.0")
+        .package(url: "https://github.com/getsentry/sentry-cocoa.git", from: "9.13.0")
     ],
     targets: [
         .target(

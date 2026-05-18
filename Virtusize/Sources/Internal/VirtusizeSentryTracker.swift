@@ -49,7 +49,7 @@ internal final class VirtusizeSentryTracker {
             options.debug = false
             options.environment = Virtusize.environment.rawValue
             options.enableLogs = true
-            options.experimental.enableMetrics = true
+            options.enableMetrics = true
         }
         SentrySDK.configureScope { scope in
             scope.setTag(value: VirtusizeConfiguration.SDKVersion, key: "sdk_version")
