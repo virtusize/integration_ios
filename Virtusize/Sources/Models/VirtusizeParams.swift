@@ -74,17 +74,17 @@ public class VirtusizeParams {
     /// - Parameters:
     ///   - externalProductId:The external product ID provided by the client.
     ///   - userSessionResponse: The user session API response
-    /// - Returns: A string value of the script in JavaScript
+    /// - Returns: A string value of the script in JavaScript, or nil if required params are missing
     func getVsParamsFromSDKScript(
         externalProductId: String?,
         userSessionResponse: String = ""
-    ) -> String {
+    ) -> String? {
         var paramsScript = "vsParamsFromSDK("
         guard let apiKey = Virtusize.APIKey else {
-            fatalError("Please set Virtusize.APIKey")
+            return nil
         }
         guard let externalProductId = externalProductId else {
-            fatalError("The external product ID is invalid")
+            return nil
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
         paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "

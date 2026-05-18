@@ -116,10 +116,26 @@ public class Virtusize {
 
 	internal typealias InPageError = (hasError: Bool, externalProductId: String)
 
+	/// Lock for thread-safe access to inPageError
+	private static let inPageErrorLock = NSLock()
+
+	/// The backing storage for inPageError
+	private static var _inPageError: InPageError?
+
 	/// The property to be set to show the InPage error screen with the associated external product ID
 	internal static var inPageError: InPageError? {
-		didSet {
-			if let inPageError = inPageError {
+		get {
+			inPageErrorLock.lock()
+			defer { inPageErrorLock.unlock() }
+			return _inPageError
+		}
+		set {
+			inPageErrorLock.lock()
+			_inPageError = newValue
+			let value = _inPageError
+			inPageErrorLock.unlock()
+
+			if let inPageError = value {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(
 						name: .inPageError,
