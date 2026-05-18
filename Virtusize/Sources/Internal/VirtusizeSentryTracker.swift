@@ -44,21 +44,16 @@ internal final class VirtusizeSentryTracker {
     }
 
     private func initSentry() {
-        let moduleBundle = Bundle(for: Virtusize.self)
-
-        if let dsn = moduleBundle.object(forInfoDictionaryKey: "SentryDSN") as? String {
-            SentrySDK.start { options in
-                options.dsn = dsn
-                //options.tracesSampleRate = moduleBundle.object(forInfoDictionaryKey: "SentryTracesSampleRate") as? NSNumber ?? 1.0
-                options.debug = false
-                options.environment = Virtusize.environment.rawValue
-                options.enableLogs = true
-                options.experimental.enableMetrics = true
-            }
-            SentrySDK.configureScope { scope in
-                scope.setTag(value: VirtusizeConfiguration.SDKVersion, key: "sdk_version")
-                scope.setTag(value: "ios", key: "sdk_platform")
-            }
+        SentrySDK.start { options in
+            options.dsn = "https://f2ae6aac72a9ec47631fdbc4cd8589e6@o903.ingest.us.sentry.io/4510877679353856"
+            options.debug = false
+            options.environment = Virtusize.environment.rawValue
+            options.enableLogs = true
+            options.experimental.enableMetrics = true
+        }
+        SentrySDK.configureScope { scope in
+            scope.setTag(value: VirtusizeConfiguration.SDKVersion, key: "sdk_version")
+            scope.setTag(value: "ios", key: "sdk_platform")
         }
     }
 
