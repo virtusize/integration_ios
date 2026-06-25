@@ -359,16 +359,24 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
 			}
 		}
 
-		if VirtusizeAuthorization.isSNSAuthURL(viewController: self, webView: webView, url: url) {
-			return nil
-		}
-
+		// Keep the SNS sign-in (Google/Apple/LINE) inside this popup web view rather than diverting
+		// it to a separate SFSafariViewController. The aoyama SNS proxy delivers its result via
+		// `window.opener.postMessage(...)`; presenting Safari (a separate process) destroys the
+		// opener relationship and leaves a blank screen after the user picks a Google account.
+		// Creating the popup from the `configuration` WebKit passes in preserves `window.opener`,
+		// so the proxy can post the auth result straight back to the widget. This mirrors the
+		// working iceberg-native SDK (and the Android keep-in-WebView fix).
 		guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
-			// By default, The Google sign-in page shows a 403 error: disallowed_useragent
-			//   if you are visiting it within a Webview.
-			// By setting up the user agent, Google recognizes the web view as a Safari browser
-			configuration.applicationNameForUserAgent = "CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1"
+			// Present Google's sign-in inside this popup with a COMPLETE, current mobile Safari UA.
+			// Google enforces its "Use secure browsers" policy (403 disallowed_useragent) and rejects
+			// anything that looks like an embedded web view: the genuine WKWebView UA (it is missing
+			// the `Version/.. Safari/..` tokens), the SDK's stripped Safari UA, and spoofed/outdated
+			// Chrome UAs (the previous `CriOS/56…`). A full Safari UA string is indistinguishable from
+			// real Safari and is accepted. The main web view keeps its own UA so aoyama still renders.
 			popupWebView = WKWebView(frame: self.view.frame, configuration: configuration)
+			popupWebView!.customUserAgent =
+				"Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) " +
+				"AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1"
 			popupWebView!.navigationDelegate = self
 			popupWebView!.uiDelegate = self
 
