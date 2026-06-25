@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### 2.12.31
+- Fix: SNS Google login webview issue fixed
+
 ### 2.12.30
 - Fix: crash on externalProductId nil
 - Fix: Sentry logger for Flutter 
