@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Changes
+- Fix: getBodyProfileRecommendedSize API request parameters 
+
 ### 2.12.31
 - Fix: SNS Google login webview issue fixed
 
