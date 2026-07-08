@@ -52,6 +52,23 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	/// Note: No lock needed - protected by task cancellation in Virtusize.load()
 	internal var serverStoreProductSet: Set<VirtusizeServerProduct> = []
 
+	private let eventQueueLock = NSLock()
+	private var lastEventTask: Task<Void, Never>?
+
+	/// Runs webview event handling one at a time, in arrival order.
+	/// The handlers mutate shared repository state (`sizeComparisonRecommendedSize`,
+	/// `bodyProfileRecommendedSize`) across `await` points, so letting them run
+	/// concurrently makes the final InPage recommendation depend on network timing.
+	internal func enqueueEventHandling(_ operation: @escaping () async -> Void) {
+		eventQueueLock.lock()
+		defer { eventQueueLock.unlock() }
+		let previousTask = lastEventTask
+		lastEventTask = Task {
+			await previousTask?.value
+			await operation()
+		}
+	}
+
 	/// The external product ID of the last product for which userSawProduct was sent
 	private var lastUserSawProductExternalId: String?
 

@@ -214,7 +214,11 @@ class VirtusizeAPIService: APIService {
 			return .failure(nil)
 		}
 
-		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
+		let response = await getAPIResultAsync(request: request, type: BodyProfileRecommendedSizeArray.self)
+        if let jsonString = response.string {
+            print("getBodyProfileRecommendedSize response: \(jsonString)")
+        }
+		return response
 	}
 
 	/// The API request for retrieving the recommended shoe size based on the user body profile
@@ -237,7 +241,11 @@ class VirtusizeAPIService: APIService {
 			return .failure(nil)
 		}
 
-		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
+		let response = await getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
+        if let jsonString = response.string {
+            print("getBodyProfileRecommendedShoeSize response: \(jsonString)")
+        }
+		return response
 	}
 
 	/// The API request for getting i18n localization texts

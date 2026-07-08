@@ -171,7 +171,8 @@ class APIRequestTests: XCTestCase {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let actualParams = try? decoder.decode(VirtusizeGetSizeParams.self, from: apiRequest!.httpBody!)
         XCTAssertNotNil(actualParams)
-        XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 6)
+        XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 8)
+        XCTAssertEqual(actualParams?.items.first?.additionalInfo["item_measurements"]?.value as? Bool, true)
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["gender"]?.value as? String, "male")
         XCTAssertEqual(
             actualParams?.items.first?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
@@ -208,7 +209,7 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(actualParams?.items.first?.itemSizesOrig["36"]?["bust"], 645)
 		XCTAssertEqual(actualParams?.userGender, "female")
 		XCTAssertEqual(actualParams?.userHeight, 1630)
-		XCTAssertEqual(actualParams?.userWeight, 50.00)
+		XCTAssertEqual(actualParams?.userWeight, "50.00")
 		XCTAssertEqual(actualParams?.items.first?.extProductId, TestFixtures.externalProductId)
         XCTAssertEqual(actualParams?.items.first?.productType, "jacket")
 		XCTAssertEqual(
