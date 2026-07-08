@@ -33,8 +33,8 @@ internal struct VirtusizeGetSizeParamsShoe: Codable {
     var userGender: String = ""
     /// The user's height
     var userHeight: Int?
-    /// The user's weight
-    var userWeight: Float?
+    /// The user's weight, kept as the raw API string (e.g. "56.00") to match the web widget's payload
+    var userWeight: String?
     /// The user's age
     var userAge: Int?
     /// The product name
@@ -82,17 +82,20 @@ internal struct VirtusizeGetSizeParamsShoe: Codable {
         ]
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
         itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
+        // The web widget sends these two keys; the encoder does not touch dictionary keys,
+        // so they must be snake_case literals here
+        additionalInfo["item_measurements"] = VirtusizeAnyCodable(!itemSizesOrig.isEmpty)
+        additionalInfo["fit_adjust"] = VirtusizeAnyCodable(nil as String?)
         productType = ""
         extProductId = storeProduct.externalId
 
         if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
-            productType = productTypes[index].name
+            // The API returns camelCase names (e.g. "tShirt") while the web widget sends "t_shirt"
+            productType = camelCaseToSnakeCase(productTypes[index].name)
         }
         userGender = userBodyProfile?.gender ?? ""
         userHeight = userBodyProfile?.height
-        if let weight = userBodyProfile?.weight {
-            userWeight = Float(weight)
-        }
+        userWeight = userBodyProfile?.weight
         userAge = userBodyProfile?.age
         productName = storeProduct.name
         footwearData = userBodyProfile?.footwearData ?? [:]
@@ -143,10 +146,15 @@ private func getBodyDataDict(
 }
 
 /// Gets the dictionary of the store product size info
+/// Measurement names arrive camelCase from the store-products API (e.g. "bustRound"),
+/// but the get-size API expects the web widget's snake_case names ("bust_round")
 private func getItemSizesDict(storeProduct: VirtusizeServerProduct) -> [String: [String: Int?]] {
 	var itemSizesDict: [String: [String: Int?]] = [:]
 	for productSize in storeProduct.sizes {
-		itemSizesDict[productSize.name ?? ""] = productSize.measurements
+		itemSizesDict[productSize.name ?? ""] = Dictionary(
+			productSize.measurements.map { (camelCaseToSnakeCase($0.key), $0.value) },
+			uniquingKeysWith: { first, _ in first }
+		)
 	}
 	return itemSizesDict
 }

@@ -265,7 +265,7 @@ extension APIRequest {
 		) else {
 		    return nil
 		}
-        
+
         // Convert jsonData to String for debugging
         if let jsonString = String(data: jsonData, encoding: .utf8) {
             print("getBodyProfileRecommendedSize payload: \(jsonString)")
@@ -302,7 +302,7 @@ extension APIRequest {
         
         // Convert jsonData to String for debugging
         if let jsonString = String(data: jsonData, encoding: .utf8) {
-            print("getBodyProfileRecommendedSize payload: \(jsonString)")
+            print("getBodyProfileRecommendedShoeSize payload: \(jsonString)")
         }
         return apiRequest(components: endpoint.components, withPayload: jsonData)
     }

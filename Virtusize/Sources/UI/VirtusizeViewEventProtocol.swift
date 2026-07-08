@@ -27,7 +27,7 @@ internal protocol VirtusizeViewEventProtocol {
 
 extension VirtusizeViewEventProtocol {
 	public func handleUserOpenedWidget() {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation(
 				shouldUpdateUserProducts: false,
 				shouldUpdateBodyProfile: false
@@ -41,7 +41,7 @@ extension VirtusizeViewEventProtocol {
 	}
 
 	public func handleUserSelectedProduct(userProductId: Int?) {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation(
 				selectedUserProductId: userProductId,
 				shouldUpdateUserProducts: false,
@@ -52,7 +52,7 @@ extension VirtusizeViewEventProtocol {
 	}
 
 	public func handleUserAddedProduct() {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation(
 				shouldUpdateUserProducts: true,
 				shouldUpdateBodyProfile: false
@@ -62,7 +62,7 @@ extension VirtusizeViewEventProtocol {
 	}
 
 	public func handleUserDeletedProduct(userProductId: Int?) {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			VirtusizeRepository.shared.deleteUserProduct(userProductId)
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation(
 				shouldUpdateUserProducts: false,
@@ -73,13 +73,13 @@ extension VirtusizeViewEventProtocol {
 	}
 
 	public func handleUserChangedRecommendationType(changedType: SizeRecommendationType?) {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			VirtusizeRepository.shared.updateInPageRecommendation(type: changedType)
 		}
 	}
 
 	public func handleUserUpdatedBodyMeasurements(recommendedSize: String?) {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
 			VirtusizeRepository.shared.updateInPageRecommendation(type: .body)
 
@@ -93,7 +93,7 @@ extension VirtusizeViewEventProtocol {
 	}
 
 	public func handleUserLoggedIn() {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation()
 			VirtusizeRepository.shared.updateInPageRecommendation()
@@ -101,7 +101,7 @@ extension VirtusizeViewEventProtocol {
 	}
 
 	public func handleClearUserData() {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			await VirtusizeRepository.shared.clearUserData()
 			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation()
@@ -110,13 +110,13 @@ extension VirtusizeViewEventProtocol {
 	}
 
 	public func handleUserClosedWidget() {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
 			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 		}
 	}
 
 	public func handleUserClickedLanguageSelector(language: VirtusizeLanguage) {
-		Task {
+		VirtusizeRepository.shared.enqueueEventHandling {
             await Virtusize.setVsWidgetLanguage(language: language)
 		}
 	}

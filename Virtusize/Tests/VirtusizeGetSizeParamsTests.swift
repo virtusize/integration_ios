@@ -41,7 +41,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                 "appOrigin": 2,
                 "userGender": "female",
                 "userHeight": 1630,
-                "userWeight": 50,
+                "userWeight": "50.00",
                 "userAge": 32,
                 "items": [
                     {
@@ -73,7 +73,9 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                                 "waist": 56,
                                 "height": 165
                             },
-                            "style": "fashionable"
+                            "style": "fashionable",
+                            "item_measurements": true,
+                            "fit_adjust": null
                         },
                         "itemSizesOrig": {
                             "35": {
@@ -239,7 +241,9 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             "fit": "regular",
                             "sizes": {},
                             "gender": "null",
-                            "style": "fashionable"
+                            "style": "fashionable",
+                            "item_measurements": false,
+                            "fit_adjust": null
                         },
                         "itemSizesOrig": {},
                         "productType": "",
