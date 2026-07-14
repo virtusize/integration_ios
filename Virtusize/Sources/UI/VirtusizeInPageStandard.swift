@@ -125,6 +125,10 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 
 			bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
 
+            if bodyProfileRecommendedSize != nil {
+                setRecommendationTexts()
+            }
+
 			// If item to item recommendation is available, display two user and store product images side by side
 			if let bestFitUserProduct = bestFitUserProduct {
 				viewModel.loadUserProductImage(bestFitUserProduct: bestFitUserProduct)

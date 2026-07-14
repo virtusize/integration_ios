@@ -177,10 +177,10 @@ public class Virtusize {
 				return
 			}
 			guard let productWithPDCData = productWithPDCData else {
-                virtusizeSentryTracker.trackProductCheck(externalProductId: product.externalId, isValid: false)
+                virtusizeSentryTracker.trackProductCheck(externalProductId: product.externalId, isValid: false, storeId: APICache.shared.currentStoreId.map { String($0) })
                 virtusizeSentryTracker.trackError(
                     NSError(domain: "Virtusize", code: 0, userInfo: [NSLocalizedDescriptionKey: "Product check failed"]),
-                    storeId: nil
+                    storeId: APICache.shared.currentStoreId.map { String($0) }
                 )
                 inPageError = (true, product.externalId)
                 return
