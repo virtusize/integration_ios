@@ -183,6 +183,15 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNil(endpoint.components.queryItems)
     }
 
+    func testGetKidSizeEndpoint_returnExpectedComponents() {
+        let endpoint = APIEndpoints.getKidSizeRecommendation
+
+        XCTAssertEqual(endpoint.components.host, "size-recommendation.staging.virtusize.jp")
+        XCTAssertEqual(endpoint.components.path, "/kid")
+
+        XCTAssertNil(endpoint.components.queryItems)
+    }
+
     private func getQueryParametersDict(queryItems: [URLQueryItem]?) -> [String: String] {
         guard let items = queryItems else {
             return [:]

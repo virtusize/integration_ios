@@ -220,6 +220,12 @@ public class VirtusizeServerProduct: Codable {
 		return productType == 17
 	}
 
+	/// Checks if the product is a kids item
+	internal func isKid() -> Bool {
+		let gender = (storeProductMeta?.additionalInfo?.gender ?? storeProductMeta?.gender)?.lowercased()
+		return gender == "boy" || gender == "girl" || gender == "kids"
+	}
+
 	/// Gets the Cloudinary image URL
 	internal func getCloudinaryImageUrl() -> URL? {
 		guard let imageUrlString = cloudinaryImageUrlString else {

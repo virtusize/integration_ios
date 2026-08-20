@@ -69,7 +69,16 @@ class VirtusizeServerProductTests: XCTestCase {
         XCTAssertEqual(storeProduct?.storeProductMeta?.additionalInfo?.brandSizing?.itemBrand, false)
     }
 
-    func testDecoding_emptyJsonData_shouldReturnNil() {
+	func testIsKid_boyOrGirlGender_returnsTrue() {
+		let girlProduct = TestFixtures.getStoreProduct(gender: "girl")
+		XCTAssertEqual(girlProduct?.isKid(), true)
+		let boyProduct = TestFixtures.getStoreProduct(gender: "boy")
+		XCTAssertEqual(boyProduct?.isKid(), true)
+		let femaleProduct = TestFixtures.getStoreProduct(gender: "female")
+		XCTAssertEqual(femaleProduct?.isKid(), false)
+	}
+
+	func testDecoding_emptyJsonData_shouldReturnNil() {
         let storeProduct = try? JSONDecoder().decode(
 			VirtusizeServerProduct.self,
             from: Data(TestFixtures.emptyResponse.utf8)

@@ -120,45 +120,6 @@ private func getModelInfoDict(storeProduct: VirtusizeServerProduct) -> [String: 
 	return modelInfoDict.isEmpty ? nil : modelInfoDict
 }
 
-/// Gets the dictionary of the user body data
-private func getBodyDataDict(
-	userBodyProfile: VirtusizeUserBodyProfile?
-) -> [String: [String: VirtusizeAnyCodable]] {
-	var bodyDataDict: [String: [String: VirtusizeAnyCodable]] = [:]
-	if let bodyData = userBodyProfile?.bodyData {
-		for (name, measurement) in bodyData {
-            let snakeKey = camelCaseToSnakeCase(name)
-			if let measurement = measurement {
-				bodyDataDict[snakeKey] = [
-					"value": VirtusizeAnyCodable(measurement),
-					"predicted": VirtusizeAnyCodable(true)
-				]
-				if snakeKey == "bust" {
-					bodyDataDict["chest"] = [
-						"value": VirtusizeAnyCodable(measurement),
-						"predicted": VirtusizeAnyCodable(true)
-					]
-				}
-			}
-		}
-	}
-	return bodyDataDict
-}
-
-/// Gets the dictionary of the store product size info
-/// Measurement names arrive camelCase from the store-products API (e.g. "bustRound"),
-/// but the get-size API expects the web widget's snake_case names ("bust_round")
-private func getItemSizesDict(storeProduct: VirtusizeServerProduct) -> [String: [String: Int?]] {
-	var itemSizesDict: [String: [String: Int?]] = [:]
-	for productSize in storeProduct.sizes {
-		itemSizesDict[productSize.name ?? ""] = Dictionary(
-			productSize.measurements.map { (camelCaseToSnakeCase($0.key), $0.value) },
-			uniquingKeysWith: { first, _ in first }
-		)
-	}
-	return itemSizesDict
-}
-
 private func camelCaseToSnakeCase(_ string: String) -> String {
     let pattern = "([a-z0-9])([A-Z])"
     let regex = try? NSRegularExpression(pattern: pattern, options: [])

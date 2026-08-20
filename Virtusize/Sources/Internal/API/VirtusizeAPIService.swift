@@ -248,6 +248,29 @@ class VirtusizeAPIService: APIService {
 		return response
 	}
 
+	/// The API request for retrieving the recommended kids size based on the user body profile
+	///
+	/// - Parameters:
+	///   - productTypes: A list of product types
+	///   - storeProduct: The store product data
+	///   - userBodyProfile: the user body profile data
+	/// - Returns: the user body profile recommended kids size in the type of `BodyProfileRecommendedSize`
+	internal static func getBodyProfileRecommendedKidSizeAsync(
+		productTypes: [VirtusizeProductType],
+		storeProduct: VirtusizeServerProduct,
+		userBodyProfile: VirtusizeUserBodyProfile
+	) async -> APIResult<BodyProfileRecommendedSize> {
+		guard let request = APIRequest.getBodyProfileRecommendedKidSize(
+				productTypes: productTypes,
+				storeProduct: storeProduct,
+				userBodyProfile: userBodyProfile)
+		else {
+			return .failure(nil)
+		}
+
+		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
+	}
+
 	/// The API request for getting i18n localization texts
 	///
 	/// - Returns: the i18 localization texts as JSON object

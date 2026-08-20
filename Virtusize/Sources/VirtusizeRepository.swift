@@ -249,12 +249,18 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 
 		if let userBodyProfile = userBodyProfile {
-            if storeProduct.isShoe() {
+			if storeProduct.isShoe() {
 				bodyProfileRecommendedSize = await VirtusizeAPIService.getBodyProfileRecommendedShoeSizeAsync(
 					productTypes: productTypes!,
 					storeProduct: storeProduct,
 					userBodyProfile: userBodyProfile
             	).success
+			} else if storeProduct.isKid() {
+				bodyProfileRecommendedSize = await VirtusizeAPIService.getBodyProfileRecommendedKidSizeAsync(
+					productTypes: productTypes!,
+					storeProduct: storeProduct,
+					userBodyProfile: userBodyProfile
+				).success
 			} else {
 				bodyProfileRecommendedSize = await VirtusizeAPIService.getBodyProfileRecommendedItemSizesAsync(
 					productTypes: productTypes!,
