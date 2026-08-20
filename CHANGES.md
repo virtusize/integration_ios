@@ -10,7 +10,10 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Changes
+### 2.12.33
+- HotFix: update recommended size trigger
+
+### 2.12.32
 - Fix: getBodyProfileRecommendedSize API request parameters 
 
 ### 2.12.31
