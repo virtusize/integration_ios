@@ -121,7 +121,7 @@ private func getModelInfoDict(storeProduct: VirtusizeServerProduct) -> [String: 
 }
 
 /// Gets the dictionary of the user body data
-private func getBodyDataDict(
+internal func getBodyDataDict(
 	userBodyProfile: VirtusizeUserBodyProfile?
 ) -> [String: [String: VirtusizeAnyCodable]] {
 	var bodyDataDict: [String: [String: VirtusizeAnyCodable]] = [:]
@@ -169,7 +169,7 @@ private func getBodyDataDict(
 /// Gets the dictionary of the store product size info
 /// Measurement names arrive camelCase from the store-products API (e.g. "bustRound"),
 /// but the get-size API expects the web widget's snake_case names ("bust_round")
-private func getItemSizesDict(storeProduct: VirtusizeServerProduct) -> [String: [String: Int?]] {
+internal func getItemSizesDict(storeProduct: VirtusizeServerProduct) -> [String: [String: Int?]] {
 	var itemSizesDict: [String: [String: Int?]] = [:]
 	for productSize in storeProduct.sizes {
 		itemSizesDict[productSize.name ?? ""] = Dictionary(

@@ -270,7 +270,10 @@ extension APIRequest {
         if let jsonString = String(data: jsonData, encoding: .utf8) {
             print("getBodyProfileRecommendedSize payload: \(jsonString)")
         }
-		return apiRequest(components: endpoint.components, withPayload: jsonData)
+		let request = apiRequest(components: endpoint.components, withPayload: jsonData)
+        print(request.url)
+
+        return request
 	}
     
     /// Gets the `URLRequest` for the `getShoeSizeRecommendation` request
@@ -306,6 +309,32 @@ extension APIRequest {
         }
         return apiRequest(components: endpoint.components, withPayload: jsonData)
     }
+
+	/// Gets the `URLRequest` for the `getKidSizeRecommendation` request
+	///
+	/// - Parameters:
+	///   - productTypes: The list of available `ProductType`s
+	///   - storeProduct: The store product info whose data type is `VirtusizeServerProduct`
+	///   - userBodyProfile: The user body profile whose data type is  `VirtusizeUserBodyProfile`
+	/// - Returns: A `URLRequest` for the `getKidSizeRecommendation` request
+	internal static func getBodyProfileRecommendedKidSize(
+		productTypes: [VirtusizeProductType],
+		storeProduct: VirtusizeServerProduct,
+		userBodyProfile: VirtusizeUserBodyProfile
+	) -> URLRequest? {
+		let endpoint = APIEndpoints.getKidSizeRecommendation
+		let params = VirtusizeGetSizeParamsKid(
+			productTypes: productTypes,
+			storeProduct: storeProduct,
+			userBodyProfile: userBodyProfile
+		)
+
+		let encoder = JSONEncoder()
+		guard let jsonData = try? encoder.encode(params) else {
+			return nil
+		}
+		return apiRequest(components: endpoint.components, withPayload: jsonData)
+	}
 
 	/// Gets the `URLRequest` for the request to get i18n texts
 	///

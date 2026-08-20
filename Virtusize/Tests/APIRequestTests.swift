@@ -217,4 +217,41 @@ class APIRequestTests: XCTestCase {
 			"https://size-recommendation.staging.virtusize.jp/item"
 		)
     }
+
+    func testGetBodyProfileRecommendedKidSize_expectedHeadersAndHttpBody() throws {
+        guard let storeProduct = TestFixtures.getStoreProduct(gender: "girl") else {
+            return
+        }
+
+        guard let userBodyProfile = TestFixtures.getUserBodyProfile() else {
+            return
+        }
+        let apiRequest = APIRequest.getBodyProfileRecommendedKidSize(
+            productTypes: TestFixtures.getProductTypes(),
+            storeProduct: storeProduct,
+            userBodyProfile: userBodyProfile
+        )
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
+        XCTAssertNotNil(apiRequest?.httpBody)
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://size-recommendation.staging.virtusize.jp/kid"
+        )
+
+        let json = try JSONSerialization.jsonObject(with: apiRequest!.httpBody!) as? [String: Any]
+        XCTAssertEqual(json?["ext_product_id"] as? String, TestFixtures.externalProductId)
+        let product = json?["product"] as? [String: Any]
+        XCTAssertEqual(product?["gender"] as? String, "girl")
+        XCTAssertEqual(product?["brand"] as? String, "Virtusize")
+        XCTAssertEqual(product?["productType"] as? String, "jacket")
+        XCTAssertNotNil(product?["sizeNames"] as? [String])
+        XCTAssertNotNil(product?["size_measurements"] as? [String: Any])
+        let user = json?["user"] as? [String: Any]
+        XCTAssertEqual(user?["gender"] as? String, "female")
+        XCTAssertEqual((user?["height"] as? NSNumber)?.intValue, 1630)
+        XCTAssertEqual((user?["weight"] as? NSNumber)?.intValue, 50)
+        XCTAssertEqual((user?["age"] as? NSNumber)?.intValue, 32)
+        XCTAssertNotNil(user?["bodyData"] as? [String: Any])
+    }
 }

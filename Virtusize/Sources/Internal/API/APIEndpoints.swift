@@ -42,6 +42,7 @@ internal enum APIEndpoints {
 	case userBodyMeasurements
 	case getItemSizeRecommendation
     case getShoeSizeRecommendation
+    case getKidSizeRecommendation
 	case i18n(langCode: String)
 	case storeI18n(storeName: String)
 
@@ -58,10 +59,8 @@ internal enum APIEndpoints {
                 return Virtusize.environment.rawValue
             }
 
-		case .getItemSizeRecommendation:
+		case .getItemSizeRecommendation, .getShoeSizeRecommendation, .getKidSizeRecommendation:
 			return Virtusize.environment.getSizeUrl()
-        case .getShoeSizeRecommendation:
-            return Virtusize.environment.getSizeUrl()
 		case .latestAoyamaVersion, .virtusizeWebView, .virtusizeWebViewForSpecificClients:
 			return Virtusize.environment.virtusizeStaticApiUrl()
 		case .i18n:
@@ -157,6 +156,9 @@ internal enum APIEndpoints {
 
 		case .getShoeSizeRecommendation:
 			components.path =  "/shoe"
+
+		case .getKidSizeRecommendation:
+			components.path =  "/kid"
 
 		case .i18n(let langCode):
 			components.path = "/bundle-payloads/aoyama/\(langCode)"

@@ -280,4 +280,23 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         }
         XCTAssertEqual(expectedDict, actualDict)
     }
+
+    func testEncoding_kidGetSizeParams_shouldUseKidPayloadKeys() throws {
+        let actualGetSizeParams = VirtusizeGetSizeParamsKid(
+            productTypes: TestFixtures.getProductTypes(),
+            storeProduct: TestFixtures.getStoreProduct(gender: "girl")!,
+            userBodyProfile: TestFixtures.getUserBodyProfile()
+        )
+        let json = try JSONSerialization.jsonObject(
+            with: JSONEncoder().encode(actualGetSizeParams)
+        ) as? [String: Any]
+
+        XCTAssertEqual(json?["ext_product_id"] as? String, TestFixtures.externalProductId)
+        let product = json?["product"] as? [String: Any]
+        XCTAssertEqual(product?["gender"] as? String, "girl")
+        XCTAssertEqual(product?["productType"] as? String, "jacket")
+        let user = json?["user"] as? [String: Any]
+        XCTAssertEqual((user?["weight"] as? NSNumber)?.intValue, 50)
+        XCTAssertEqual((user?["height"] as? NSNumber)?.intValue, 1630)
+    }
 }
