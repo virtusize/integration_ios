@@ -28,6 +28,7 @@
 		741DD06D2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741DD06C2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift */; };
 		748DF81A2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsShoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF8192E3FF2A9002CA7FC /* VirtusizeGetSizeParamsShoe.swift */; };
 		7A8DF81C2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsKid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8DF81B2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsKid.swift */; };
+		7A8DF81E2E3FF2A9002CA7FC /* VirtusizeKidBodyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8DF81D2E3FF2A9002CA7FC /* VirtusizeKidBodyData.swift */; };
 		74F8E3BE2E0D5B7A002CAE98 /* virtusize_loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 74F8E3BD2E0D5B7A002CAE98 /* virtusize_loading.gif */; };
 		74F8E3D02E0EA477002CAE98 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F8E3CF2E0EA473002CAE98 /* UIImageViewExtensions.swift */; };
 		8455FFD42B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */; };
@@ -184,6 +185,7 @@
 		741DD06C2DA42E63007DF2C3 /* VirtusizeFlutterProductEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeFlutterProductEventHandler.swift; sourceTree = "<group>"; };
 		748DF8192E3FF2A9002CA7FC /* VirtusizeGetSizeParamsShoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeParamsShoe.swift; sourceTree = "<group>"; };
 		7A8DF81B2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsKid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeParamsKid.swift; sourceTree = "<group>"; };
+		7A8DF81D2E3FF2A9002CA7FC /* VirtusizeKidBodyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeKidBodyData.swift; sourceTree = "<group>"; };
 		74F8E3BD2E0D5B7A002CAE98 /* virtusize_loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = virtusize_loading.gif; sourceTree = "<group>"; };
 		74F8E3CF2E0EA473002CAE98 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		8455FFD32B29A0C500019B1B /* VirtusizeGetSizeItemsParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtusizeGetSizeItemsParam.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 			children = (
 				748DF8192E3FF2A9002CA7FC /* VirtusizeGetSizeParamsShoe.swift */,
 				7A8DF81B2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsKid.swift */,
+				7A8DF81D2E3FF2A9002CA7FC /* VirtusizeKidBodyData.swift */,
 				9C5956CE2484F9F50014DF51 /* VirtusizeStore.swift */,
 				9C11691E2521DEB1006827B9 /* VirtusizeAnyCodable.swift */,
 				9C633F292493C7ED009C4392 /* VirtusizeProductImageMetaData.swift */,
@@ -869,6 +872,7 @@
 				9CFF411325B98FA900B21D4E /* Observable.swift in Sources */,
 				748DF81A2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsShoe.swift in Sources */,
 				7A8DF81C2E3FF2A9002CA7FC /* VirtusizeGetSizeParamsKid.swift in Sources */,
+				7A8DF81E2E3FF2A9002CA7FC /* VirtusizeKidBodyData.swift in Sources */,
 				9C58751E24EF7D5000352474 /* VirtusizeView.swift in Sources */,
 				9C84B3FD26C2566B00DDF434 /* VirtusizeViewEventProtocol.swift in Sources */,
 				9C4378D7253444F600E8729A /* UserSessionInfo.swift in Sources */,

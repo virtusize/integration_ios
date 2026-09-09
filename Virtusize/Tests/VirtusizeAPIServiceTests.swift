@@ -564,4 +564,37 @@ class VirtusizeAPIServiceTests: XCTestCase {
 
 		XCTAssertEqual(result.first?.virtualItem?.inseam, 720)
 	}
+
+	func testPredictUserBodyProfile_whenReceivePredictedMeasurements_hasExpectedUserBodyProfile() async {
+		let expectation = self.expectation(description: "Virtusize.predictUserBodyProfile reaches the callback")
+		var actualUserBodyProfile: VirtusizeUserBodyProfile?
+
+		VirtusizeAPIService.session = MockURLSession(
+			data: Data(
+				"""
+				{"ankleHeight": 50, "armpitHeight": 760, "bust": 535, "hipWidth": 195, "sleeveLength": 345}
+				""".utf8
+			),
+			urlResponse: nil,
+			error: nil
+		)
+
+		let kidBodyData = VirtusizeKidBodyData(gender: "boy", height: 1070, weight: 17, age: 5)
+		let task = Task {
+			actualUserBodyProfile = await VirtusizeAPIService.predictUserBodyProfileAsync(kidBodyData: kidBodyData).success
+			expectation.fulfill()
+		}
+
+		await fulfillment(of: [expectation], timeout: 5)
+		task.cancel()
+
+		XCTAssertEqual(actualUserBodyProfile?.gender, "boy")
+		XCTAssertEqual(actualUserBodyProfile?.age, 5)
+		XCTAssertEqual(actualUserBodyProfile?.height, 1070)
+		XCTAssertEqual(actualUserBodyProfile?.weight, "17")
+		XCTAssertEqual(
+			actualUserBodyProfile?.bodyData,
+			["ankleHeight": 50, "armpitHeight": 760, "bust": 535, "hipWidth": 195, "sleeveLength": 345]
+		)
+	}
 } // swiftlint:disable:this file_length

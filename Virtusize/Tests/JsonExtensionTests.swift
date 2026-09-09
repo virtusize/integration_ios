@@ -39,6 +39,26 @@ struct JsonExtensionTests {
 		#expect(json as NSDictionary == ["a": 2])
 	}
 
+	@Test func sortedLikeJavaScriptObjectKeys() {
+		#expect(["M", "160", "S", "110", "L", "90"].sortedLikeJavaScriptObjectKeys() == ["90", "110", "160", "M", "S", "L"])
+		#expect(
+			["140", "130", "110", "160", "120", "150"].sortedLikeJavaScriptObjectKeys()
+				== ["110", "120", "130", "140", "150", "160"]
+		)
+		// Non-canonical numbers are not index keys in JavaScript and keep their position
+		#expect(["090", "10", "-1", "1.5"].sortedLikeJavaScriptObjectKeys() == ["10", "090", "-1", "1.5"])
+	}
+
+	@Test func orderedJSONValueSerializesAndEscapes() throws {
+		let value = OrderedJSONValue.object([
+			("b", .array([.int(1), .bool(false), .null])),
+			("a", .string("quote\" backslash\\ newline\n tab\t ctrl\u{01} 日本"))
+		])
+		#expect(value.serialized == "{\"b\":[1,false,null],\"a\":\"quote\\\" backslash\\\\ newline\\n tab\\t ctrl\\u0001 日本\"}")
+		let parsed = try JSONSerialization.jsonObject(with: value.serialized.data(using: .utf8)!) as? [String: Any]
+		#expect(parsed?["a"] as? String == "quote\" backslash\\ newline\n tab\t ctrl\u{01} 日本")
+	}
+
 	@Test func updateDeepObject() {
 		var json: JSONObject = ["a": 1, "b": ["c": 2, "d": 3]]
 		json.deepMerge(source: ["b": ["c": 4]])

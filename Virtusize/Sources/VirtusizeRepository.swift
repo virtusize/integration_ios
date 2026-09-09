@@ -220,9 +220,14 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			storeProduct = product
 		}
 
+		// Kids items have no server-side body profile: the measurements are predicted from the
+		// inputs cached from the web widget instead of being loaded from `/user-body-measurements/`
+		let kidBodyData = storeProduct.isKid() ? VirtusizeKidBodyData.cached : nil
+		let hasBodyMeasurement = storeProduct.isKid() ? kidBodyData != nil : hasSessionBodyMeasurement
+
 		async let userProductsTask = shouldUpdateUserProducts ? VirtusizeAPIService.getUserProductsAsync() : nil
-		async let userBodyProfileTask = shouldUpdateBodyProfile && hasSessionBodyMeasurement
-			? VirtusizeAPIService.getUserBodyProfileAsync()
+		async let userBodyProfileTask = shouldUpdateBodyProfile && hasBodyMeasurement
+			? fetchUserBodyProfile(kidBodyData: kidBodyData)
 			: nil
 
 		let userProductsResponse = await userProductsTask
@@ -244,8 +249,8 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 				Virtusize.inPageError = (true, externalId)
 				return
 			}
-		} else if !hasSessionBodyMeasurement {
-			userBodyProfile = nil // reset body measurements if the user-session defines so
+		} else if !hasBodyMeasurement {
+			userBodyProfile = nil // reset body measurements if the user-session (or the kids cache) defines so
 		}
 
 		if let userBodyProfile = userBodyProfile {
@@ -280,9 +285,19 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		)
 	}
 
+	/// Loads the user body profile: predicted from the cached kids inputs for kids items,
+	/// or fetched from the user body measurements API otherwise
+	private func fetchUserBodyProfile(kidBodyData: VirtusizeKidBodyData?) async -> APIResult<VirtusizeUserBodyProfile> {
+		if let kidBodyData = kidBodyData {
+			return await VirtusizeAPIService.predictUserBodyProfileAsync(kidBodyData: kidBodyData)
+		}
+		return await VirtusizeAPIService.getUserBodyProfileAsync()
+	}
+
 	/// Clear user session and the data related to size recommendations
 	internal func clearUserData() async {
 		UserDefaultsHelper.current.authToken = ""
+		VirtusizeKidBodyData.clearCache()
 
 		userSessionResponse = ""
 		userProducts = nil
@@ -330,6 +345,19 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		if let auth = auth, !auth.isEmpty {
 			UserDefaultsHelper.current.authToken = auth
 		}
+	}
+
+	/// Caches the kid's body inputs from the data of the kids events
+	/// `user-selected-gender` and `user-updated-body-measurements`.
+	/// Every value present overrides the cached one; absent values are kept.
+	///
+	/// - Parameters:
+	///   - gender: "girl" or "boy"
+	///   - age: the age in years
+	///   - height: the height in centimeters
+	///   - weight: the weight in kilograms
+	internal func updateKidBodyData(gender: String? = nil, age: Int? = nil, height: Int? = nil, weight: Int? = nil) {
+		VirtusizeKidBodyData.cache(gender: gender, age: age, height: height, weight: weight)
 	}
 
 	/// Updates the recommendation for InPage based on the recommendation type

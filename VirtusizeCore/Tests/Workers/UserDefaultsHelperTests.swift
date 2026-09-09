@@ -112,4 +112,32 @@ class UserDefaultsHelperTests: XCTestCase {
 			XCTAssertNotEqual(token, previousToken)
 		}
     }
+
+	func testKidBodyData_storedAndDeleted() {
+		let mockDefaults = MockNSUserDefaults()
+		let helper = UserDefaultsHelper(defaults: mockDefaults)
+
+		XCTAssertNil(helper.kidGender)
+		XCTAssertNil(helper.kidAge)
+		XCTAssertNil(helper.kidHeight)
+		XCTAssertNil(helper.kidWeight)
+
+		helper.kidGender = "boy"
+		helper.kidAge = 5
+		helper.kidHeight = 107
+		helper.kidWeight = 17
+
+		XCTAssertEqual(helper.kidGender, "boy")
+		XCTAssertEqual(helper.kidAge, 5)
+		XCTAssertEqual(helper.kidHeight, 107)
+		XCTAssertEqual(helper.kidWeight, 17)
+		XCTAssertEqual(mockDefaults.value(forKey: "VIRTUSIZE_KID_HEIGHT") as? Int, 107)
+
+		helper.deleteKidBodyData()
+
+		XCTAssertNil(helper.kidGender)
+		XCTAssertNil(helper.kidAge)
+		XCTAssertNil(helper.kidHeight)
+		XCTAssertNil(helper.kidWeight)
+	}
 }

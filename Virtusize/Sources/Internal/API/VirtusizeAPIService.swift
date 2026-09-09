@@ -153,6 +153,8 @@ class VirtusizeAPIService: APIService {
 		guard let request = APIRequest.getSessions() else {
 			return .failure(nil)
 		}
+
+
 		return await getAPIResultAsync(request: request, type: UserSessionInfo.self)
 	}
 
@@ -180,7 +182,34 @@ class VirtusizeAPIService: APIService {
 		guard let request = APIRequest.getUserBodyProfile() else {
 			return .failure(nil)
 		}
-		return await getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
+		let response = await getAPIResultAsync(request: request, type: VirtusizeUserBodyProfile.self)
+        if let jsonString = response.string {
+            print("getUserBodyProfile response: \(jsonString)")
+        }
+		return response
+	}
+
+	/// The API request for predicting a kid's body measurements from the inputs entered in the web widget.
+	/// The kids flow has no server-side body profile, so this replaces `getUserBodyProfileAsync` for kids items.
+	///
+	/// - Parameter kidBodyData: The kid's body inputs cached from the web widget
+	/// - Returns: the user body profile built from the predicted measurements in the type of `VirtusizeUserBodyProfile`
+	internal static func predictUserBodyProfileAsync(
+		kidBodyData: VirtusizeKidBodyData
+	) async -> APIResult<VirtusizeUserBodyProfile> {
+		guard let request = APIRequest.predictUserBodyMeasurements(kidBodyData: kidBodyData) else {
+			return .failure(nil)
+		}
+		let response = await getAPIResultAsync(request: request, type: [String: VirtusizeAnyCodable].self)
+		if let jsonString = response.string {
+			print("predictUserBodyMeasurements response: \(jsonString)")
+		}
+		switch response {
+		case let .success(predictedMeasurements, jsonString):
+			return .success(kidBodyData.bodyProfile(predictedMeasurements: predictedMeasurements ?? [:]), jsonString)
+		case let .failure(code, error):
+			return .failure(code, error)
+		}
 	}
 
 	/// The API request for updating the user body profile data
@@ -268,7 +297,11 @@ class VirtusizeAPIService: APIService {
 			return .failure(nil)
 		}
 
-		return await getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
+		let response = await getAPIResultAsync(request: request, type: BodyProfileRecommendedSize.self)
+		if let jsonString = response.string {
+			print("getBodyProfileRecommendedKidSize response: \(jsonString)")
+		}
+		return response
 	}
 
 	/// The API request for getting i18n localization texts

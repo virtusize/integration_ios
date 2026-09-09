@@ -40,6 +40,7 @@ internal enum APIEndpoints {
 	case user
 	case userProducts
 	case userBodyMeasurements
+	case userBodyMeasurementsPredict
 	case getItemSizeRecommendation
     case getShoeSizeRecommendation
     case getKidSizeRecommendation
@@ -150,6 +151,9 @@ internal enum APIEndpoints {
 
 		case .userBodyMeasurements:
 			components.path = "/a/api/v3/user-body-measurements/"
+
+		case .userBodyMeasurementsPredict:
+			components.path = "/a/api/v3/user-body-measurements-predict"
 
 		case .getItemSizeRecommendation:
 			components.path =  "/item"
