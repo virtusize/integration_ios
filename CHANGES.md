@@ -13,6 +13,9 @@ Use list notation, and following prefixes:
 ### 2.12.35
 - Feature: Kids body inputs (gender, age, height, weight) are cached from the widget events and the kids size recommendation predicts the body measurements via `user-body-measurements-predict` instead of loading `/user-body-measurements/`
 
+### 2.12.34
+- Feature: Kids implementation added
+
 ### 2.12.33
 - HotFix: update recommended size trigger
 
