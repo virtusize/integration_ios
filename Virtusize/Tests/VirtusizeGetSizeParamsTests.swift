@@ -281,6 +281,10 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         XCTAssertEqual(expectedDict, actualDict)
     }
 
+}
+
+class VirtusizeGetSizeParamsKidTests: XCTestCase {
+
     func testEncoding_kidGetSizeParams_shouldUseKidPayloadKeys() throws {
         let actualGetSizeParams = VirtusizeGetSizeParamsKid(
             productTypes: TestFixtures.getProductTypes(),
@@ -288,7 +292,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
             userBodyProfile: TestFixtures.getUserBodyProfile()
         )
         let json = try JSONSerialization.jsonObject(
-            with: JSONEncoder().encode(actualGetSizeParams)
+            with: actualGetSizeParams.jsonData()!
         ) as? [String: Any]
 
         XCTAssertEqual(json?["ext_product_id"] as? String, TestFixtures.externalProductId)
@@ -298,5 +302,104 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
         let user = json?["user"] as? [String: Any]
         XCTAssertEqual((user?["weight"] as? NSNumber)?.intValue, 50)
         XCTAssertEqual((user?["height"] as? NSNumber)?.intValue, 1630)
+    }
+
+    func testEncoding_kidGetSizeParamsFromPredictedProfile_shouldMatchWidgetPayload() throws {
+        let kidBodyData = VirtusizeKidBodyData(gender: "boy", height: 1070, weight: 17, age: 5)
+        let userBodyProfile = kidBodyData.bodyProfile(predictedMeasurements: [
+            "ankleHeight": VirtusizeAnyCodable(50),
+            "hipWidth": VirtusizeAnyCodable(195),
+            "bust": VirtusizeAnyCodable(535),
+            "sleeveLength": VirtusizeAnyCodable(345.0),
+            "unknown": VirtusizeAnyCodable(nil as Int?)
+        ])
+
+        let actualGetSizeParams = VirtusizeGetSizeParamsKid(
+            productTypes: TestFixtures.getProductTypes(),
+            storeProduct: TestFixtures.getStoreProduct(gender: "kids")!,
+            userBodyProfile: userBodyProfile
+        )
+        let json = try JSONSerialization.jsonObject(
+            with: actualGetSizeParams.jsonData()!
+        ) as? [String: Any]
+
+        let product = json?["product"] as? [String: Any]
+        XCTAssertEqual(product?["gender"] as? String, "kids")
+        // size_measurements is additionalInfo.sizes as-is, like the web widget sends it
+        let sizeMeasurements = product?["size_measurements"] as? [String: [String: Any]]
+        XCTAssertEqual(Set(sizeMeasurements?.keys.map { $0 } ?? []), ["35", "36", "37"])
+        XCTAssertEqual(
+            sizeMeasurements?["35"] as? [String: Int],
+            ["height": 740, "bust": 630, "sleeve": 805]
+        )
+        let user = json?["user"] as? [String: Any]
+        XCTAssertEqual(user?["gender"] as? String, "boy")
+        XCTAssertEqual((user?["height"] as? NSNumber)?.intValue, 1070)
+        XCTAssertEqual((user?["weight"] as? NSNumber)?.intValue, 17)
+        XCTAssertEqual((user?["age"] as? NSNumber)?.intValue, 5)
+
+        // The /kid payload keeps the camelCase names returned by the predict API and adds no "chest" alias
+        let bodyData = user?["bodyData"] as? [String: [String: Any]]
+        XCTAssertEqual(Set(bodyData?.keys.map { $0 } ?? []), ["ankleHeight", "hipWidth", "bust", "sleeveLength"])
+        XCTAssertEqual((bodyData?["hipWidth"]?["value"] as? NSNumber)?.intValue, 195)
+        XCTAssertEqual((bodyData?["sleeveLength"]?["value"] as? NSNumber)?.intValue, 345)
+        XCTAssertEqual(bodyData?["hipWidth"]?["predicted"] as? Bool, true)
+        XCTAssertNil(bodyData?["hip_width"])
+        XCTAssertNil(bodyData?["chest"])
+    }
+
+    func testKidGetSizeParams_serializesSizesInWidgetOrder() throws {
+        let actualGetSizeParams = VirtusizeGetSizeParamsKid(
+            productTypes: TestFixtures.getProductTypes(),
+            storeProduct: TestFixtures.getStoreProduct(gender: "kids")!,
+            userBodyProfile: TestFixtures.getUserBodyProfile()
+        )
+        let json = String(data: actualGetSizeParams.jsonData()!, encoding: .utf8)!
+
+        // The /kid API result depends on the order of sizeNames and size_measurements keys
+        XCTAssertTrue(json.contains("\"sizeNames\":[\"35\",\"36\",\"37\"]"), json)
+        let sizeMeasurementsStart = json.range(of: "\"size_measurements\":")!.upperBound
+        let sizeMeasurements = json[sizeMeasurementsStart...]
+        let index35 = sizeMeasurements.range(of: "\"35\":")!.lowerBound
+        let index36 = sizeMeasurements.range(of: "\"36\":")!.lowerBound
+        let index37 = sizeMeasurements.range(of: "\"37\":")!.lowerBound
+        XCTAssertTrue(index35 < index36 && index36 < index37, json)
+        XCTAssertTrue(json.hasPrefix("{\"product\":{\"brand\":"), json)
+        XCTAssertTrue(json.hasSuffix("\"ext_product_id\":\"\(TestFixtures.externalProductId)\"}"), json)
+    }
+
+    func testKidBodyData_intValue_parsesWidgetEventValues() {
+        XCTAssertEqual(VirtusizeKidBodyData.intValue("107"), 107)
+        XCTAssertEqual(VirtusizeKidBodyData.intValue(" 17 "), 17)
+        XCTAssertEqual(VirtusizeKidBodyData.intValue("17.6"), 18)
+        XCTAssertEqual(VirtusizeKidBodyData.intValue(5), 5)
+        XCTAssertEqual(VirtusizeKidBodyData.intValue(5.0), 5)
+        XCTAssertNil(VirtusizeKidBodyData.intValue("3'6\""))
+        XCTAssertNil(VirtusizeKidBodyData.intValue(""))
+        XCTAssertNil(VirtusizeKidBodyData.intValue(nil))
+    }
+
+    func testKidBodyData_cache_overridesOnlyReceivedValuesAndDefaultsToGirl() {
+        VirtusizeKidBodyData.clearCache()
+        XCTAssertNil(VirtusizeKidBodyData.cached)
+
+        VirtusizeKidBodyData.cache(age: 5, height: 107)
+        XCTAssertNil(VirtusizeKidBodyData.cached, "weight is still missing")
+
+        VirtusizeKidBodyData.cache(weight: 17)
+        XCTAssertEqual(
+            VirtusizeKidBodyData.cached,
+            VirtusizeKidBodyData(gender: "girl", height: 1070, weight: 17, age: 5)
+        )
+
+        VirtusizeKidBodyData.cache(gender: "boy")
+        VirtusizeKidBodyData.cache(height: 110)
+        XCTAssertEqual(
+            VirtusizeKidBodyData.cached,
+            VirtusizeKidBodyData(gender: "boy", height: 1100, weight: 17, age: 5)
+        )
+
+        VirtusizeKidBodyData.clearCache()
+        XCTAssertNil(VirtusizeKidBodyData.cached)
     }
 }

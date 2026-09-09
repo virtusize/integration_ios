@@ -172,6 +172,24 @@ extension APIRequest {
 		return apiRequestWithAuthorization(components: endpoint.components)
 	}
 
+	/// Gets the `URLRequest` for the `userBodyMeasurementsPredict` request,
+	/// which predicts a kid's body measurements from the gender, height, weight and age
+	///
+	/// - Parameter kidBodyData: The kid's body inputs cached from the web widget
+	/// - Returns: A `URLRequest` for the `userBodyMeasurementsPredict` request
+	internal static func predictUserBodyMeasurements(kidBodyData: VirtusizeKidBodyData) -> URLRequest? {
+		let endpoint = APIEndpoints.userBodyMeasurementsPredict
+		guard let jsonData = try? JSONEncoder().encode(kidBodyData) else {
+			return nil
+		}
+		let request = apiRequestWithAuthorization(components: endpoint.components, withPayload: jsonData)
+		print("predictUserBodyMeasurements url: \(request.url?.absoluteString ?? "")")
+		if let jsonString = String(data: jsonData, encoding: .utf8) {
+			print("predictUserBodyMeasurements payload: \(jsonString)")
+		}
+		return request
+	}
+
 	/// Gets the `URLRequest` for updating the user body measurements
 	///
 	/// - Parameter userBodyProfile: The user body profile to update
@@ -329,11 +347,21 @@ extension APIRequest {
 			userBodyProfile: userBodyProfile
 		)
 
-		let encoder = JSONEncoder()
-		guard let jsonData = try? encoder.encode(params) else {
+		// Serialized with ordered keys: the `/kid` API result depends on the size order
+		guard let jsonData = params.jsonData() else {
 			return nil
 		}
-		return apiRequest(components: endpoint.components, withPayload: jsonData)
+		// Same headers as the web widget: `Authorization: Token`, `x-vs-bid`, `x-vs-store-id`,
+		// and `x-vs-auth` when the user is logged in
+		var request = apiRequestWithAuthorization(components: endpoint.components, withPayload: jsonData)
+		if let authToken = UserDefaultsHelper.current.authToken, !authToken.isEmpty {
+			request.addValue(authToken, forHTTPHeaderField: "x-vs-auth")
+		}
+		print("getBodyProfileRecommendedKidSize url: \(request.url?.absoluteString ?? "")")
+		if let jsonString = String(data: jsonData, encoding: .utf8) {
+			print("getBodyProfileRecommendedKidSize payload: \(jsonString)")
+		}
+		return request
 	}
 
 	/// Gets the `URLRequest` for the request to get i18n texts

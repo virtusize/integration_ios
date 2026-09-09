@@ -174,6 +174,15 @@ class APIEndpointsTests: XCTestCase {
         XCTAssertNil(endpoint.components.queryItems)
     }
 
+    func testUserBodyMeasurementsPredictEndpoint_returnExpectedComponents() {
+        let endpoint = APIEndpoints.userBodyMeasurementsPredict
+
+        XCTAssertEqual(endpoint.components.host, "staging.virtusize.com")
+        XCTAssertEqual(endpoint.components.path, "/a/api/v3/user-body-measurements-predict")
+
+        XCTAssertNil(endpoint.components.queryItems)
+    }
+
     func testGetSizeEndpoint_returnExpectedComponents() {
         let endpoint = APIEndpoints.getItemSizeRecommendation
 

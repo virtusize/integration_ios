@@ -34,6 +34,7 @@ public enum VirtusizeEventName: String {
 	case userDeletedProduct = "user-deleted-product"
 	case userChangedRecommendationType = "user-changed-recommendation-type"
 	case userUpdatedBodyMeasurements = "user-updated-body-measurements"
+	case userSelectedGender = "user-selected-gender"
 	case userLoggedIn = "user-logged-in"
 	case userLoggedOut = "user-logged-out"
 	case userDeletedData = "user-deleted-data"

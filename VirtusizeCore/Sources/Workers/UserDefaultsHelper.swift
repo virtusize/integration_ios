@@ -30,6 +30,10 @@ final public class UserDefaultsHelper {
 	let authKey = "VIRTUSIZE_AUTH"
 	let tokenKey = "VIRTUSIZE_TOKEN"
 	let bidKey = "BID"
+	let kidGenderKey = "VIRTUSIZE_KID_GENDER"
+	let kidAgeKey = "VIRTUSIZE_KID_AGE"
+	let kidHeightKey = "VIRTUSIZE_KID_HEIGHT"
+	let kidWeightKey = "VIRTUSIZE_KID_WEIGHT"
     public let undefinedValue = "undefined"
 
 	/// A static instance of `UserDefaultsHelper` used inside the SDK
@@ -91,6 +95,62 @@ final public class UserDefaultsHelper {
 	/// Deletes the browser identifier from the user defaults
 	internal func deleteIdentifier() {
 		defaults.removeObject(forKey: bidKey)
+		defaults.synchronize()
+	}
+
+	// MARK: - Kids body data
+	// The kids flow keeps its inputs on the client only (the web widget uses localStorage),
+	// so the SDK caches the values received from the widget events here.
+
+	/// The kid's gender ("girl" or "boy") selected in the widget
+	public var kidGender: String? {
+		get {
+			return defaults.value(forKey: kidGenderKey) as? String
+		}
+		set {
+			defaults.setValue(newValue, forKey: kidGenderKey)
+			defaults.synchronize()
+		}
+	}
+
+	/// The kid's age in years entered in the widget
+	public var kidAge: Int? {
+		get {
+			return defaults.value(forKey: kidAgeKey) as? Int
+		}
+		set {
+			defaults.setValue(newValue, forKey: kidAgeKey)
+			defaults.synchronize()
+		}
+	}
+
+	/// The kid's height in centimeters entered in the widget
+	public var kidHeight: Int? {
+		get {
+			return defaults.value(forKey: kidHeightKey) as? Int
+		}
+		set {
+			defaults.setValue(newValue, forKey: kidHeightKey)
+			defaults.synchronize()
+		}
+	}
+
+	/// The kid's weight in kilograms entered in the widget
+	public var kidWeight: Int? {
+		get {
+			return defaults.value(forKey: kidWeightKey) as? Int
+		}
+		set {
+			defaults.setValue(newValue, forKey: kidWeightKey)
+			defaults.synchronize()
+		}
+	}
+
+	/// Deletes the cached kid's body data from the user defaults
+	public func deleteKidBodyData() {
+		for key in [kidGenderKey, kidAgeKey, kidHeightKey, kidWeightKey] {
+			defaults.removeObject(forKey: key)
+		}
 		defaults.synchronize()
 	}
 

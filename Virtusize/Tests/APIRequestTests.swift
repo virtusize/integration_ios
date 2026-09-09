@@ -149,6 +149,31 @@ class APIRequestTests: XCTestCase {
         )
     }
 
+    func testPredictUserBodyMeasurements_expectedHeadersAndHttpBody() throws {
+        let kidBodyData = VirtusizeKidBodyData(gender: "boy", height: 1070, weight: 17, age: 5)
+
+        let apiRequest = APIRequest.predictUserBodyMeasurements(kidBodyData: kidBodyData)
+
+        XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Content-Type"] ?? "", "application/json")
+        XCTAssertEqual(
+            apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "",
+            "Token \(UserDefaultsHelper.current.accessToken!)"
+        )
+        XCTAssertEqual(
+            apiRequest?.url?.absoluteString,
+            "https://staging.virtusize.com/a/api/v3/user-body-measurements-predict"
+        )
+
+        let json = try JSONSerialization.jsonObject(with: apiRequest!.httpBody!) as? [String: Any]
+        XCTAssertEqual(json?["gender"] as? String, "boy")
+        XCTAssertEqual((json?["height"] as? NSNumber)?.intValue, 1070)
+        XCTAssertEqual((json?["weight"] as? NSNumber)?.intValue, 17)
+        XCTAssertEqual((json?["age"] as? NSNumber)?.intValue, 5)
+        XCTAssertEqual(json?.count, 4)
+    }
+
     // swiftlint:disable:next function_body_length
     func testGetBodyProfileRecommendedSize_expectedHeadersAndHttpBody() {
         guard let storeProduct = TestFixtures.getStoreProduct(gender: "male") else {
@@ -237,6 +262,13 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(
             apiRequest?.url?.absoluteString,
             "https://size-recommendation.staging.virtusize.jp/kid"
+        )
+        // Same headers as the web widget
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["Content-Type"] ?? "", "application/json")
+        XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
+        XCTAssertEqual(
+            apiRequest?.allHTTPHeaderFields?["Authorization"] ?? "",
+            "Token \(UserDefaultsHelper.current.accessToken!)"
         )
 
         let json = try JSONSerialization.jsonObject(with: apiRequest!.httpBody!) as? [String: Any]

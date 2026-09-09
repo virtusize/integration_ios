@@ -115,6 +115,25 @@ public struct APIRequest {
 		request.addValue("Token \(accessToken)", forHTTPHeaderField: "Authorization")
 		return request
 	}
+
+	/// Gets the `URLRequest` for the HTTP request that requires authentication and has a request body
+	///
+	/// - Parameters:
+	///   - components: `URLComponents` to obtain the `URL`
+	///   - payload: A `Data` that is sent as the message body of the request
+	///   - method: An `APIMethod` that defaults to the `POST` HTTP method
+	/// - Returns: A `URLRequest` for this HTTP request
+	public static func apiRequestWithAuthorization(
+		components: URLComponents,
+		withPayload payload: Data,
+		method: APIMethod = .post
+	) -> URLRequest {
+		var request = apiRequestWithAuthorization(components: components, method: method)
+		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+		request.httpBody = payload
+		return request
+	}
+
     /// Gets the `URLRequest` for the HTTP request where the request body is added
     ///
     /// - Parameters:

@@ -38,9 +38,11 @@ internal class VirtusizeServerProductAdditionalInfo: Codable {
 	let style: String?
 	/// The brand sizing info
 	let brandSizing: VirtusizeBrandSizing?
+	/// Whether the `sizes` measurements should be used for the size recommendation (nil means yes)
+	let itemMeasurements: Bool?
 
 	private enum CodingKeys: String, CodingKey {
-		case brand, gender, sizes, modelInfo, fit, style, brandSizing
+		case brand, gender, sizes, modelInfo, fit, style, brandSizing, itemMeasurements
 	}
 
 	required init(from decoder: Decoder) throws {
@@ -56,5 +58,6 @@ internal class VirtusizeServerProductAdditionalInfo: Codable {
 		fit = try? values.decode(String.self, forKey: .fit)
 		style = try? values.decode(String.self, forKey: .style)
 		brandSizing = try? values.decode(VirtusizeBrandSizing.self, forKey: .brandSizing)
+		itemMeasurements = try? values.decode(Bool.self, forKey: .itemMeasurements)
 	}
 }

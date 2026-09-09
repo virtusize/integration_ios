@@ -38,4 +38,22 @@ public class VirtusizeUserBodyProfile: Codable {
     let footwearData: [String: VirtusizeAnyCodable]?
 	/// The user's bra size information
 	let braSize: [String: VirtusizeAnyCodable?]?
+
+	internal init(
+		gender: String,
+		age: Int?,
+		height: Int?,
+		weight: String?,
+		bodyData: [String: Int?]?,
+		footwearData: [String: VirtusizeAnyCodable]? = nil,
+		braSize: [String: VirtusizeAnyCodable?]? = nil
+	) {
+		self.gender = gender
+		self.age = age
+		self.height = height
+		self.weight = weight
+		self.bodyData = bodyData
+		self.footwearData = footwearData
+		self.braSize = braSize
+	}
 }

@@ -25,36 +25,33 @@
 import Foundation
 
 /// Parameters for the kids size recommendation API (`/kid`), matching the Aoyama widget payload.
-internal struct VirtusizeGetSizeParamsKid: Encodable {
-	struct Product: Encodable {
+///
+/// The `/kid` API result depends on the order of `sizeNames` and of the `size_measurements` keys,
+/// and `JSONEncoder` does not preserve dictionary key order on iOS 15/16. The payload is therefore
+/// serialized with `OrderedJSONValue`, in the order the web widget sends (see `sortedLikeJavaScriptObjectKeys`).
+internal struct VirtusizeGetSizeParamsKid {
+	struct Product {
 		var brand: String
 		var gender: String
 		var productType: String
+		/// The size names in the web widget's order
 		var sizeNames: [String]
-		var sizeMeasurements: [String: [String: Int?]]?
-
-		enum CodingKeys: String, CodingKey {
-			case brand, gender, productType, sizeNames
-			case sizeMeasurements = "size_measurements"
-		}
+		/// The `additionalInfo.sizes` measurements, keyed by size name in the web widget's order
+		var sizeMeasurements: [(name: String, measurements: [String: Int?])]?
 	}
 
-	struct User: Encodable {
+	struct User {
 		var gender: String
 		var height: Int?
 		var weight: Int?
 		var age: Int?
-		var bodyData: [String: [String: VirtusizeAnyCodable]]
+		/// The predicted body measurements keyed by camelCase measurement name
+		var bodyData: [String: Int]
 	}
 
 	var product: Product
 	var user: User
 	var extProductId: String
-
-	enum CodingKeys: String, CodingKey {
-		case product, user
-		case extProductId = "ext_product_id"
-	}
 
 	init(
 		productTypes: [VirtusizeProductType],
@@ -72,14 +69,31 @@ internal struct VirtusizeGetSizeParamsKid: Encodable {
 		let brand = storeProduct.storeProductMeta?.additionalInfo?.brand
 			?? storeProduct.storeProductMeta?.brand
 			?? ""
-		let sizeMeasurements = getItemSizesDict(storeProduct: storeProduct)
-		let sizeNames = storeProduct.sizes.compactMap { $0.name }.filter { !$0.isEmpty }
+
+		// The web widget sends `additionalInfo.sizes` as-is (e.g. only height/bust/sleeve),
+		// not the full product size list, and omits it when `itemMeasurements` is false
+		let additionalInfo = storeProduct.storeProductMeta?.additionalInfo
+		let hasItemMeasurements = additionalInfo?.itemMeasurements ?? true
+		let sizes = hasItemMeasurements ? additionalInfo?.sizes : nil
+
+		let productSizeNames = storeProduct.sizes.compactMap { $0.name }.filter { !$0.isEmpty }
+		// The widget iterates a JavaScript object keyed by size name, so the sizes go out in that order
+		let sizeNames = (productSizeNames.isEmpty ? (sizes?.keys.sorted() ?? []) : productSizeNames)
+			.sortedLikeJavaScriptObjectKeys()
+		var sizeMeasurements: [(name: String, measurements: [String: Int?])]?
+		if let sizes = sizes {
+			// Sizes known to the product first, in the web widget's order, then any extra keys
+			let extraNames = sizes.keys.filter { !sizeNames.contains($0) }.sorted()
+			sizeMeasurements = (sizeNames + extraNames).compactMap { name in
+				sizes[name].map { (name: name, measurements: $0) }
+			}
+		}
 
 		product = Product(
 			brand: brand,
 			gender: gender,
 			productType: productType,
-			sizeNames: sizeNames.isEmpty ? Array(sizeMeasurements.keys) : sizeNames,
+			sizeNames: sizeNames,
 			sizeMeasurements: sizeMeasurements
 		)
 
@@ -89,8 +103,50 @@ internal struct VirtusizeGetSizeParamsKid: Encodable {
 			height: userBodyProfile?.height,
 			weight: weight,
 			age: userBodyProfile?.age,
-			bodyData: getBodyDataDict(userBodyProfile: userBodyProfile)
+			bodyData: (userBodyProfile?.bodyData ?? [:]).compactMapValues { $0 }
 		)
 		extProductId = storeProduct.externalId
+	}
+
+	/// The payload as an ordered JSON value
+	var jsonValue: OrderedJSONValue {
+		var productPairs: [(String, OrderedJSONValue)] = [
+			("brand", .string(product.brand)),
+			("gender", .string(product.gender)),
+			("productType", .string(product.productType)),
+			("sizeNames", .array(product.sizeNames.map { .string($0) }))
+		]
+		if let sizeMeasurements = product.sizeMeasurements {
+			productPairs.append(("size_measurements", .object(sizeMeasurements.map { size in
+				(size.name, .object(size.measurements.keys.sorted().map { key in
+					(key, size.measurements[key].flatMap { $0 }.map { OrderedJSONValue.int($0) } ?? .null)
+				}))
+			})))
+		}
+
+		var userPairs: [(String, OrderedJSONValue)] = [("gender", .string(user.gender))]
+		if let height = user.height {
+			userPairs.append(("height", .int(height)))
+		}
+		if let weight = user.weight {
+			userPairs.append(("weight", .int(weight)))
+		}
+		if let age = user.age {
+			userPairs.append(("age", .int(age)))
+		}
+		userPairs.append(("bodyData", .object(user.bodyData.keys.sorted().map { name in
+			(name, .object([("value", .int(user.bodyData[name]!)), ("predicted", .bool(true))]))
+		})))
+
+		return .object([
+			("product", .object(productPairs)),
+			("user", .object(userPairs)),
+			("ext_product_id", .string(extProductId))
+		])
+	}
+
+	/// The payload serialized as JSON, with the object keys in the web widget's order
+	func jsonData() -> Data? {
+		return jsonValue.serialized.data(using: .utf8)
 	}
 }
