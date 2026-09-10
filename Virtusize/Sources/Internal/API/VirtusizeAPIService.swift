@@ -131,7 +131,9 @@ class VirtusizeAPIService: APIService {
     ///
     /// - Returns: the product type list where its each element is in the type of `VirtusizeProductType`
     internal static func getProductTypesLocalAsync() async -> [VirtusizeProductType] {
-        let bundle = Bundle(for: Virtusize.self)
+        // `Bundle(for:)` only finds the file in the framework build; under SwiftPM the
+        // processed resources live in a separate resource bundle (`Bundle.module`)
+        let bundle = VirtusizeBundleLoader.resourceBundle(bundleName: VirtusizeBundleLoader.bundleName)
         if let url = bundle.url(forResource: "product_types", withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
