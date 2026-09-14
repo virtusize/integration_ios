@@ -10,6 +10,10 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+
+### 2.12.38
+- HotFix: switch between products clean cache
+
 ### 2.12.37
 - Fix: added eventHandlers to update InPage widget changes
 
