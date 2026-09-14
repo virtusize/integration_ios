@@ -360,6 +360,13 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		VirtusizeKidBodyData.cache(gender: gender, age: age, height: height, weight: weight)
 	}
 
+	/// Clears the size recommendations computed for the previously loaded product, so they are
+	/// not shown for a newly loaded one (e.g. a kids recommendation on an adult item)
+	internal func clearRecommendations() {
+		sizeComparisonRecommendedSize = nil
+		bodyProfileRecommendedSize = nil
+	}
+
 	/// Clears the cached kid's body inputs and the body-profile recommendation
 	internal func clearKidBodyData() {
 		VirtusizeKidBodyData.clearCache()

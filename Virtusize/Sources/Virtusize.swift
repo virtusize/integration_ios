@@ -237,6 +237,7 @@ public class Virtusize {
                 virtusizeSentryTracker.trackLoadCancelled(step: "store-product", externalProductId: product.externalId, storeId: storeId)
 				return
 			}
+			virtusizeRepository.clearRecommendations()
 			await virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
 
 			guard !Task.isCancelled else {
