@@ -297,7 +297,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	/// Clear user session and the data related to size recommendations
 	internal func clearUserData() async {
 		UserDefaultsHelper.current.authToken = ""
-		VirtusizeKidBodyData.clearCache()
+		clearKidBodyData()
 
 		userSessionResponse = ""
 		userProducts = nil
@@ -358,6 +358,13 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	///   - weight: the weight in kilograms
 	internal func updateKidBodyData(gender: String? = nil, age: Int? = nil, height: Int? = nil, weight: Int? = nil) {
 		VirtusizeKidBodyData.cache(gender: gender, age: age, height: height, weight: weight)
+	}
+
+	/// Clears the cached kid's body inputs and the body-profile recommendation
+	internal func clearKidBodyData() {
+		VirtusizeKidBodyData.clearCache()
+		userBodyProfile = nil
+		bodyProfileRecommendedSize = nil
 	}
 
 	/// Updates the recommendation for InPage based on the recommendation type

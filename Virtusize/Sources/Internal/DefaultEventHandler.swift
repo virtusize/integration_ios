@@ -121,4 +121,28 @@ internal class DefaultEventHandler: VirtusizeEventHandler, VirtusizeViewEventPro
         )
 		handleUserClickedLanguageSelector(language: language)
 	}
+
+	public func userCompletedOnboarding() {
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
+            eventName: VirtusizeEventName.userCompletedOnboarding.rawValue,
+            storeId: sentryStoreId
+        )
+		handleUpdateRecommendation()
+	}
+
+	public func userEditedBody() {
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
+            eventName: VirtusizeEventName.userEditedBody.rawValue,
+            storeId: sentryStoreId
+        )
+		handleUpdateRecommendation()
+	}
+
+	public func userClickedResetButton() {
+        VirtusizeSentryTracker.shared.trackWebViewEvent(
+            eventName: VirtusizeEventName.userClickedResetButton.rawValue,
+            storeId: sentryStoreId
+        )
+		handleUserClickedResetButton()
+	}
 }

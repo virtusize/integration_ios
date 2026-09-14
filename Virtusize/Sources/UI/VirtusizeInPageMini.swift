@@ -96,6 +96,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
                         bodyProfileWillFit ?? true
 					)
 			).lineSpacing(self.verticalMargin/2)
+			setNeedsLayout()
 		}
 	}
 

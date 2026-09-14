@@ -98,6 +98,8 @@ internal struct VirtusizeKidBodyData: Encodable, Equatable {
 			return int
 		case let double as Double:
 			return Int(double.rounded())
+		case let object as [String: Any]:
+			return intValue(object["_value"]) // the widget sometimes sends a Vue ref instead of its value
 		case let string as String:
 			guard let double = Double(string.trimmingCharacters(in: .whitespaces)) else {
 				return nil

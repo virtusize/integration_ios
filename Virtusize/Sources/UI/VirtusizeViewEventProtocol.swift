@@ -109,6 +109,32 @@ extension VirtusizeViewEventProtocol {
 		}
 	}
 
+	/// Updates the recommendation: kids items predict the body profile from the cached inputs,
+	/// other items load the body measurements; then the size recommendation is fetched
+	public func handleUpdateRecommendation() {
+		VirtusizeRepository.shared.enqueueEventHandling {
+			await VirtusizeRepository.shared.fetchDataForInPageRecommendation(
+				shouldUpdateUserProducts: false,
+				shouldUpdateBodyProfile: true
+			)
+			VirtusizeRepository.shared.updateInPageRecommendation()
+		}
+	}
+
+	public func handleUserClickedResetButton() {
+		// Clear the kids data and refresh the InPage views right away, without waiting for the
+		// queued event handling or for the widget to be closed
+		VirtusizeRepository.shared.clearKidBodyData()
+		VirtusizeRepository.shared.updateInPageRecommendation()
+
+		// Clear again once the queued handlers finished, so a recommendation they were
+		// still computing does not resurface
+		VirtusizeRepository.shared.enqueueEventHandling {
+			VirtusizeRepository.shared.clearKidBodyData()
+			VirtusizeRepository.shared.updateInPageRecommendation()
+		}
+	}
+
 	public func handleUserClosedWidget() {
 		VirtusizeRepository.shared.enqueueEventHandling {
 			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)

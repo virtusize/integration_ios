@@ -449,7 +449,6 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 			let eventName = VirtusizeEventName.init(rawValue: event.name)
 			switch eventName {
 			case .userOpenedWidget:
-                eventHandler?.userOpenedWidget()
 				eventHandler?.userOpenedWidget()
 			case .userAuthData:
 				eventHandler?.userAuthData(
@@ -482,7 +481,7 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 				}
 			case .userLoggedIn:
 				eventHandler?.userLoggedIn()
-			case .userLoggedOut, .userDeletedData:
+            case .userLoggedOut, .userDeletedData:
 				eventHandler?.clearUserData()
 			case .userClosedWidget:
 				eventHandler?.userClosedWidget()
@@ -494,10 +493,16 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
                         eventHandler?.userClickedLanguageSelector(language: validLanguage)
                     }
                 }
-            case .widgetReady:
+			case .widgetReady:
 				// Stop the close button timer and hide the button when widget is ready
 				stopCloseButtonTimer()
 				hideCloseButton()
+			case .userClickedResetButton:
+				eventHandler?.userClickedResetButton()
+			case .userCompletedOnboarding:
+				eventHandler?.userCompletedOnboarding()
+			case .userEditedBody:
+				eventHandler?.userEditedBody()
 			default:
 				break
 			}

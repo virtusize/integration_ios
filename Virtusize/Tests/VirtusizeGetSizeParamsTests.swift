@@ -402,4 +402,19 @@ class VirtusizeGetSizeParamsKidTests: XCTestCase {
         VirtusizeKidBodyData.clearCache()
         XCTAssertNil(VirtusizeKidBodyData.cached)
     }
+
+	func testKidBodyDataClearCache_removesTheCachedInputs() {
+		VirtusizeKidBodyData.cache(gender: "girl", age: 7, height: 118, weight: 22)
+		XCTAssertNotNil(VirtusizeKidBodyData.cached)
+		VirtusizeKidBodyData.clearCache()
+		XCTAssertNil(VirtusizeKidBodyData.cached)
+	}
+
+	func testRepositoryClearKidBodyData_thenCachedIsNilFromBackgroundThread() async {
+		VirtusizeKidBodyData.cache(gender: "girl", age: 7, height: 118, weight: 22)
+		XCTAssertNotNil(VirtusizeKidBodyData.cached)
+		await MainActor.run { VirtusizeRepository.shared.clearKidBodyData() }
+		let cached = await Task.detached { VirtusizeKidBodyData.cached }.value
+		XCTAssertNil(cached)
+	}
 }

@@ -286,6 +286,18 @@ class VirtusizeServerProductTests: XCTestCase {
         )
     }
 
+	func testGetRecommendationText_kidProduct_bodyProfileRecommendedSizeNotFit_returnBodyDataEmptyText() {
+		let kidProduct = TestFixtures.getStoreProduct(productType: 4, gender: "girl")
+		XCTAssertEqual(
+			kidProduct!.getRecommendationText(i18nLocalization, nil, "S", VirtusizeI18nLocalization.TrimType.ONELINE, false),
+			i18nLocalization.bodyDataEmptyText!
+		)
+		XCTAssertTrue(
+			kidProduct!.getRecommendationText(i18nLocalization, nil, "S", VirtusizeI18nLocalization.TrimType.ONELINE, true)
+				.contains(i18nLocalization.willFitResultText!)
+		)
+	}
+
 	func testGetRecommendationText_multiSizeProduct_noRecommendedSizes_returnBodyDataEmptyText() {
 		let storeProduct7 = TestFixtures.getStoreProduct(productType: 7, gender: nil)
 		XCTAssertEqual(

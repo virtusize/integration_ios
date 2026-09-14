@@ -38,6 +38,7 @@ public class VirtusizeI18nLocalization {
 	var willFitResultText: String?
     var willNotFitResultText: String?
 	var bodyDataEmptyText: String?
+	var kidBodyDataEmptyText: String?
 
 	/// Initializes the VirtusizeI18nLocalization structure
 	init() {
@@ -65,6 +66,12 @@ public class VirtusizeI18nLocalization {
 	/// Gets the default text where the recommendation is not available
 	internal func getBodyDataEmptyText() -> String {
         return bodyDataEmptyText ?? Localization.shared.localize("inpage_body_data_empty_text")
+	}
+
+	/// Gets the default text for a kids item where the recommendation is not available
+	/// (the widget InPage text "Check your child's size"), falling back to the generic text
+	internal func getKidBodyDataEmptyText() -> String {
+		return kidBodyDataEmptyText ?? getBodyDataEmptyText()
 	}
 
 	/// Gets the default text for an accessory

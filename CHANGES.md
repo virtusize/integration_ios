@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Changes:
+- Fix: added eventHandlers to update InPage widget changes
+
 ### 2.12.36
 - HotFix: SwiftPM bundle package load
 

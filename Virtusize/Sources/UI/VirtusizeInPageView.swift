@@ -361,6 +361,18 @@ extension VirtusizeInPageView: VirtusizeEventHandler {
         handleUserClickedLanguageSelector(language: language)
     }
 
+	public func userCompletedOnboarding() {
+		handleUpdateRecommendation()
+	}
+
+	public func userEditedBody() {
+		handleUpdateRecommendation()
+	}
+
+	public func userClickedResetButton() {
+		handleUserClickedResetButton()
+	}
+
 	internal func setContentViewListener(listener: ((VirtusizeInPageView) -> Void)?) {
 		contentViewListener = listener
 	}

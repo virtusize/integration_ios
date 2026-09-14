@@ -125,7 +125,7 @@ public class VirtusizeServerProduct: Codable {
             return Localization.shared.localize("inpage_default_accessory_text")
         }
 
-		var text = i18nLocalization.getBodyDataEmptyText()
+		var text = bodyDataEmptyText(i18nLocalization)
 		if isAccessory() {
 			text = accessoryText(i18nLocalization, sizeComparisonRecommendedSize)
 		} else if self.sizes.count == 1 {
@@ -134,6 +134,12 @@ public class VirtusizeServerProduct: Codable {
 			text = multiSizeText(i18nLocalization, sizeComparisonRecommendedSize, bodyProfileRecommendedSizeName, bodyProfileWillFit)
 		}
 		return text.trimI18nText(trimType)
+	}
+
+	/// Gets the text where no recommendation is available: kids items use the widget's
+	/// "Check your child's size" wording instead of the generic one
+	private func bodyDataEmptyText(_ i18nLocalization: VirtusizeI18nLocalization) -> String {
+		return isKid() ? i18nLocalization.getKidBodyDataEmptyText() : i18nLocalization.getBodyDataEmptyText()
 	}
 
 	/// Gets the text for an accessory
@@ -161,8 +167,9 @@ public class VirtusizeServerProduct: Codable {
 			if bodyProfileWillFit == true {
 				return i18nLocalization.getOneSizeBodyProfileText()
 			}
-			// If willFit is false or nil (no willFit from API), show "Your size not found"
-			return i18nLocalization.getWillNotFitResultText()
+			// If willFit is false or nil (no willFit from API), show "Your size not found".
+			// Kids items have no "not found" state in the widget InPage: fall back to the empty body data text
+			return isKid() ? bodyDataEmptyText(i18nLocalization) : i18nLocalization.getWillNotFitResultText()
 		}
 
 		// No body data provided, check for product comparison
@@ -171,7 +178,7 @@ public class VirtusizeServerProduct: Codable {
 		}
 
 		// No data at all, show body data empty message
-		return i18nLocalization.getBodyDataEmptyText()
+		return bodyDataEmptyText(i18nLocalization)
 	}
 
 	/// Gets the text for a multi-size product
@@ -194,8 +201,9 @@ public class VirtusizeServerProduct: Codable {
             {
 				return i18nLocalization.getMultiSizeBodyProfileText(bodyProfileRecommendedSizeName)
 			}
-			// If willFit is false or nil (no willFit from API), show "Your size not found"
-			return i18nLocalization.getWillNotFitResultText()
+			// If willFit is false or nil (no willFit from API), show "Your size not found".
+			// Kids items have no "not found" state in the widget InPage: fall back to the empty body data text
+			return isKid() ? bodyDataEmptyText(i18nLocalization) : i18nLocalization.getWillNotFitResultText()
 		}
 
 		// No body data provided, check for product comparison
@@ -204,7 +212,7 @@ public class VirtusizeServerProduct: Codable {
 		}
 
 		// No data at all, show body data empty message
-		return i18nLocalization.getBodyDataEmptyText()
+		return bodyDataEmptyText(i18nLocalization)
 	}
 
 	/// Checks if the product is an accessory

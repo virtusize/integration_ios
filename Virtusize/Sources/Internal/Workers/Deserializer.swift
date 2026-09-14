@@ -109,6 +109,9 @@ internal struct Deserializer {
 		i18nLocalization.willNotFitResultText = inpageJSONObject?["willNotFitResult"] as? String
 		i18nLocalization.bodyDataEmptyText = inpageJSONObject?["bodydataEmpty"] as? String
 
+		let kidInpageJSONObject = (appsJSONObject["kid"] as? JSONObject)?["inpage"] as? JSONObject
+		i18nLocalization.kidBodyDataEmptyText = kidInpageJSONObject?["checkYourChildSize"] as? String
+
 		return i18nLocalization
 	}
 }

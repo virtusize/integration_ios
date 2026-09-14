@@ -125,9 +125,9 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 
 			bestFitUserProduct = sizeComparisonRecommendedSize?.bestUserProduct
 
-            if bodyProfileRecommendedSize != nil {
-                setRecommendationTexts()
-            }
+			// Always refresh the texts so a cleared recommendation (e.g. the kids reset) is not left on screen
+			setRecommendationTexts()
+			setNeedsLayout()
 
 			// If item to item recommendation is available, display two user and store product images side by side
 			if let bestFitUserProduct = bestFitUserProduct {

@@ -199,4 +199,16 @@ extension VirtusizeButton: VirtusizeEventHandler {
 	public func userClickedLanguageSelector(language: VirtusizeLanguage) {
 		handleUserClickedLanguageSelector(language: language)
 	}
+
+	public func userCompletedOnboarding() {
+		handleUpdateRecommendation()
+	}
+
+	public func userEditedBody() {
+		handleUpdateRecommendation()
+	}
+
+	public func userClickedResetButton() {
+		handleUserClickedResetButton()
+	}
 }

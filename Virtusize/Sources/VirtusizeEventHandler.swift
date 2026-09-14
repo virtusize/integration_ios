@@ -36,4 +36,7 @@ public protocol VirtusizeEventHandler: AnyObject {
 	func userChangedRecommendationType(changedType: SizeRecommendationType?)
     func userClosedWidget()
 	func userClickedLanguageSelector(language: VirtusizeLanguage)
+	func userClickedResetButton()
+	func userCompletedOnboarding()
+	func userEditedBody()
 }
