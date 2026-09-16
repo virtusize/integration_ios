@@ -56,7 +56,7 @@ class ViewController: UIViewController {
 
         /// Set up the product information
         let product1 = VirtusizeProduct(
-            externalId: "vs_dress",
+            externalId: "TE618",
             imageURL: URL(string: "http://www.example.com/image.jpg")
         )
         /// Loads the product in order to populate the Virtusize views associated with `product1`

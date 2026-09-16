@@ -39,18 +39,16 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
 
         // Method 1: Use the VirtusizeWebView
-//		webView = VirtusizeWebView(frame: .zero) { configuration in
+//		webView = VirtusizeWebView(frame: .zero) { _ in
 //			// access the WKWebViewConfiguration object here to customize it
 //
-//			// If you want to allow cookie sharing between multiple VirtusizeWebViews,
-//			// assign the same WKProcessPool object to configuration.processPool
-//			configuration.processPool = WKProcessPool()
+//			// Note: Since iOS 15, cookies are shared between all WKWebViews automatically,
+//			// so assigning a shared WKProcessPool is no longer needed.
 //		}
 
         // Method 2: Use WKWebView
 		webView = WKWebView(frame: .zero)
 		webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
-		// Required for Google SDK to work in WebView, see https://stackoverflow.com/a/73152331
 		webView.customUserAgent = VirtusizeAuthConstants.userAgent
 
 		//
@@ -58,7 +56,7 @@ class AuthViewController: UIViewController {
 		webView.uiDelegate = self
         webView.navigationDelegate = self
 
-		// For debugging purpose. Should be removed for Production builds or warpped with #if DEBUG
+//		// For debugging purpose. Should be removed for Production builds or warpped with #if DEBUG
 		if #available(iOS 16.4, *) {
 			webView.isInspectable = true
 		}
@@ -74,11 +72,7 @@ class AuthViewController: UIViewController {
             webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
 
-        // Method 2: Use WKWebView
-		let url = VirtusizeBranch.applyBranch(
-			to: URL(string: "https://demo.virtusize.com")!,
-			branch: "test-branch")
-		webView.load(URLRequest(url: url))
+		webView.load(URLRequest(url: URL(string: "https://i.lumine.jp/items/140/14026003202.html")!))
     }
 }
 

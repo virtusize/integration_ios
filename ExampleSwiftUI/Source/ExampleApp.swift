@@ -34,7 +34,7 @@ struct ExampleApp: App {
 		VirtusizeLogger.logLevel = .debug // `.none` is default
 
 		// Virtusize.APIKey is required
-		Virtusize.APIKey = "15cc36e1d7dad62b8e11722ce1a245cb6c5e6692"
+		Virtusize.APIKey = "fc3165757dadee62df86f7a6a260bda855efc704"
 		// For using the Order API, Virtusize.userID is required
 		Virtusize.userID = "123"
 		// By default, the Virtusize environment will be set to .JAPAN
@@ -53,7 +53,7 @@ struct ExampleApp: App {
 			.setShowSNSButtons(true)
 			// Target the specific environment branch by it's name
 			// .setBranch("branch-name")
-            .setBranch("nsdk-412-market-aware-body-measurements-no-idb-cache")
+            //.setBranch("nsdk-412-market-aware-body-measurements-no-idb-cache")
             // By default, Virtusize shows Privacy Policy
             .setShowPrivacyPolicy(true)
 			.build()
