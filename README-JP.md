@@ -54,7 +54,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## 対応バージョン
 
-- iOS 13.0+
+- iOS 15.0+
 - Xcode 12+
 - Swift 5.0+
 
@@ -76,7 +76,7 @@ Virtusize SDKをXcodeのCocosPodsを使ってプロジェクトに実装する�
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '13.0'
+platform :ios, '15.0'
 use_frameworks!
 
 target '<your-target-name>' do

@@ -243,6 +243,22 @@ class VirtusizeServerProductTests: XCTestCase {
         )
     }
 
+    func testGetRecommendationText_bodyProfileRecommendedSizeNotFit_usesDownloadedI18nText() {
+        let downloadedWillNotFitText = "Downloaded will-not-fit text"
+        i18nLocalization.willNotFitResultText = downloadedWillNotFitText
+
+        XCTAssertEqual(
+            oneSizeProduct!.getRecommendationText(
+                i18nLocalization,
+                nil,
+                "Small",
+                VirtusizeI18nLocalization.TrimType.ONELINE,
+                false
+            ),
+            downloadedWillNotFitText
+        )
+    }
+
 	func testGetRecommendationText_multiSizeProduct_hasSizeComparisonRecommendedSize_returnMultiSizeComparisonText() {
 		let storeProduct1 = TestFixtures.getStoreProduct(productType: 1, gender: nil)
 		var sizeComparisonRecommendedSize = SizeComparisonRecommendedSize()

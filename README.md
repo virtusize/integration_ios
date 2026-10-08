@@ -51,7 +51,7 @@ You need a unique API key and an Admin account, only available to Virtusize cust
 
 ## Requirements
 
-- iOS 13.0+
+- iOS 15.0+
 - Xcode 12+
 - Swift 5.0+
 
@@ -71,7 +71,7 @@ To integrate Virtusize SDK into your Xcode project using CocoaPods, specify it i
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '13.0'
+platform :ios, '15.0'
 use_frameworks!
 
 target '<your-target-name>' do

@@ -132,6 +132,6 @@ public class VirtusizeI18nLocalization {
 
 	/// Gets the "will not fit" text when body data is provided but no size fits
 	internal func getWillNotFitResultText() -> String {
-		return Localization.shared.localize("inpage_will_not_fit_result")
+		return willNotFitResultText ?? Localization.shared.localize("inpage_will_not_fit_result")
 	}
 }
