@@ -220,10 +220,14 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			storeProduct = product
 		}
 
-		// Kids items have no server-side body profile: the measurements are predicted from the
-		// inputs cached from the web widget instead of being loaded from `/user-body-measurements/`
-		let kidBodyData = storeProduct.isKid() ? VirtusizeKidBodyData.cached : nil
-		let hasBodyMeasurement = storeProduct.isKid() ? kidBodyData != nil : hasSessionBodyMeasurement
+		// Kids, adult and shoe share the same client-side body-input cache. Kids always predict
+		// from it; adult and shoe use it when there is no server-side body profile yet.
+		let cachedBodyData = VirtusizeKidBodyData.cached
+		let kidBodyData: VirtusizeKidBodyData? =
+			storeProduct.isKid() || (!hasSessionBodyMeasurement && cachedBodyData != nil)
+			? cachedBodyData
+			: nil
+		let hasBodyMeasurement = kidBodyData != nil || (!storeProduct.isKid() && hasSessionBodyMeasurement)
 
 		async let userProductsTask = shouldUpdateUserProducts ? VirtusizeAPIService.getUserProductsAsync() : nil
 		async let userBodyProfileTask = shouldUpdateBodyProfile && hasBodyMeasurement
@@ -285,7 +289,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		)
 	}
 
-	/// Loads the user body profile: predicted from the cached kids inputs for kids items,
+	/// Loads the user body profile: predicted from the cached body inputs when present,
 	/// or fetched from the user body measurements API otherwise
 	private func fetchUserBodyProfile(kidBodyData: VirtusizeKidBodyData?) async -> APIResult<VirtusizeUserBodyProfile> {
 		if let kidBodyData = kidBodyData {
@@ -347,12 +351,11 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 	}
 
-	/// Caches the kid's body inputs from the data of the kids events
-	/// `user-selected-gender` and `user-updated-body-measurements`.
-	/// Every value present overrides the cached one; absent values are kept.
+	/// Caches body inputs from `user-selected-gender` and `user-updated-body-measurements`
+	/// for kids, adult and shoe. Every value present overrides the cached one; absent values are kept.
 	///
 	/// - Parameters:
-	///   - gender: "girl" or "boy"
+	///   - gender: the gender reported by the widget
 	///   - age: the age in years
 	///   - height: the height in centimeters
 	///   - weight: the weight in kilograms

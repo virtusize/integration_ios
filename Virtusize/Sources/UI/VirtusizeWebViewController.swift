@@ -466,19 +466,16 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 				let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
 				eventHandler?.userChangedRecommendationType(changedType: changedType)
 			case .userUpdatedBodyMeasurements:
-				if isKidsEvent(eventData) {
-					VirtusizeRepository.shared.updateKidBodyData(
-						age: VirtusizeKidBodyData.intValue(eventData?["age"]),
-						height: VirtusizeKidBodyData.intValue(eventData?["height"]),
-						weight: VirtusizeKidBodyData.intValue(eventData?["weight"])
-					)
-				}
+				VirtusizeRepository.shared.updateKidBodyData(
+					gender: eventData?["gender"] as? String,
+					age: VirtusizeKidBodyData.intValue(eventData?["age"]),
+					height: VirtusizeKidBodyData.intValue(eventData?["height"]),
+					weight: VirtusizeKidBodyData.intValue(eventData?["weight"])
+				)
 				let sizeRecName = eventData?["sizeRecName"] as? String
 				eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
 			case .userSelectedGender:
-				if isKidsEvent(eventData) {
-					VirtusizeRepository.shared.updateKidBodyData(gender: eventData?["gender"] as? String)
-				}
+				VirtusizeRepository.shared.updateKidBodyData(gender: eventData?["gender"] as? String)
 			case .userLoggedIn:
 				eventHandler?.userLoggedIn()
             case .userLoggedOut, .userDeletedData:
@@ -512,10 +509,5 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 				reportError(error: error)
 			}
 		}
-	}
-
-	/// Checks if the widget event comes from the kids flow, whose body inputs the SDK caches
-	private func isKidsEvent(_ eventData: [String: Any]?) -> Bool {
-		return eventData?["source"] as? String == VirtusizeKidBodyData.eventSource
 	}
 }

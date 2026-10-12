@@ -403,6 +403,22 @@ class VirtusizeGetSizeParamsKidTests: XCTestCase {
         XCTAssertNil(VirtusizeKidBodyData.cached)
     }
 
+    func testKidBodyData_cache_isSharedAcrossAdultAndKidsEvents() {
+        VirtusizeKidBodyData.clearCache()
+        VirtusizeKidBodyData.cache(gender: "female", age: 30, height: 170, weight: 60)
+        XCTAssertEqual(
+            VirtusizeKidBodyData.cached,
+            VirtusizeKidBodyData(gender: "female", height: 1700, weight: 60, age: 30)
+        )
+
+        VirtusizeKidBodyData.cache(height: 110)
+        XCTAssertEqual(
+            VirtusizeKidBodyData.cached,
+            VirtusizeKidBodyData(gender: "female", height: 1100, weight: 60, age: 30)
+        )
+        VirtusizeKidBodyData.clearCache()
+    }
+
 	func testKidBodyDataClearCache_removesTheCachedInputs() {
 		VirtusizeKidBodyData.cache(gender: "girl", age: 7, height: 118, weight: 22)
 		XCTAssertNotNil(VirtusizeKidBodyData.cached)

@@ -25,28 +25,28 @@
 import Foundation
 import VirtusizeCore
 
-/// The kid's body inputs entered in the web widget, in the units expected by
+/// Client-side body inputs entered in the web widget, in the units expected by
 /// the `user-body-measurements-predict` API (height in mm, weight in kg, age in years).
 ///
 /// The widget keeps these inputs on the client only, so the SDK caches them in
-/// `UserDefaultsHelper` from the `user-selected-gender` and `user-updated-body-measurements`
-/// events whose `source` is `kids`.
+/// `UserDefaultsHelper` from `user-selected-gender` and `user-updated-body-measurements`
+/// for kids, adult (fit-illustrator) and shoe flows. The same cache is used for all three.
 internal struct VirtusizeKidBodyData: Encodable, Equatable {
-	/// The `source` value of the widget events that carry kids inputs
+	/// The `source` value of the widget events that come from the kids flow
 	static let eventSource = "kids"
 	/// The gender used when the widget has not reported one
 	static let defaultGender = "girl"
 
-	/// The kid's gender ("girl" or "boy")
+	/// The user's gender ("girl"/"boy" for kids, "male"/"female" for adult and shoe)
 	let gender: String
-	/// The kid's height in millimeters
+	/// The height in millimeters
 	let height: Int
-	/// The kid's weight in kilograms
+	/// The weight in kilograms
 	let weight: Int
-	/// The kid's age in years
+	/// The age in years
 	let age: Int
 
-	/// The cached kid's body data, or nil unless age, height and weight have all been received
+	/// The cached body data, or nil unless age, height and weight have all been received
 	static var cached: VirtusizeKidBodyData? {
 		let defaults = UserDefaultsHelper.current
 		guard let age = defaults.kidAge,
@@ -62,11 +62,11 @@ internal struct VirtusizeKidBodyData: Encodable, Equatable {
 		)
 	}
 
-	/// Overrides the cached kid's body data with the values present in a widget event.
+	/// Overrides the cached body data with the values present in a widget event.
 	/// Values that are nil keep their cached value.
 	///
 	/// - Parameters:
-	///   - gender: "girl" or "boy"
+	///   - gender: the gender reported by the widget
 	///   - age: the age in years
 	///   - height: the height in centimeters
 	///   - weight: the weight in kilograms
@@ -86,7 +86,7 @@ internal struct VirtusizeKidBodyData: Encodable, Equatable {
 		}
 	}
 
-	/// Removes the cached kid's body data
+	/// Removes the cached body data
 	static func clearCache() {
 		UserDefaultsHelper.current.deleteKidBodyData()
 	}

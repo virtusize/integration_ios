@@ -98,11 +98,11 @@ final public class UserDefaultsHelper {
 		defaults.synchronize()
 	}
 
-	// MARK: - Kids body data
-	// The kids flow keeps its inputs on the client only (the web widget uses localStorage),
+	// MARK: - Client-side body data
+	// Kids, adult and shoe keep these inputs on the client only (the web widget uses localStorage),
 	// so the SDK caches the values received from the widget events here.
 
-	/// The kid's gender ("girl" or "boy") selected in the widget
+	/// The gender selected in the widget
 	public var kidGender: String? {
 		get {
 			return defaults.value(forKey: kidGenderKey) as? String
