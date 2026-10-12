@@ -466,16 +466,20 @@ extension VirtusizeWebViewController: WKScriptMessageHandler {
 				let changedType = (recommendationType != nil) ? SizeRecommendationType.init(rawValue: recommendationType!) : nil
 				eventHandler?.userChangedRecommendationType(changedType: changedType)
 			case .userUpdatedBodyMeasurements:
-				VirtusizeRepository.shared.updateKidBodyData(
-					gender: eventData?["gender"] as? String,
-					age: VirtusizeKidBodyData.intValue(eventData?["age"]),
-					height: VirtusizeKidBodyData.intValue(eventData?["height"]),
-					weight: VirtusizeKidBodyData.intValue(eventData?["weight"])
-				)
+				if VirtusizeKidBodyProfile.isKidsEvent(eventData) {
+					VirtusizeRepository.shared.updateKidBodyData(
+						gender: eventData?["gender"] as? String,
+						age: VirtusizeKidBodyProfile.intValue(eventData?["age"]),
+						height: VirtusizeKidBodyProfile.intValue(eventData?["height"]),
+						weight: VirtusizeKidBodyProfile.intValue(eventData?["weight"])
+					)
+				}
 				let sizeRecName = eventData?["sizeRecName"] as? String
 				eventHandler?.userUpdatedBodyMeasurements(recommendedSize: sizeRecName)
 			case .userSelectedGender:
-				VirtusizeRepository.shared.updateKidBodyData(gender: eventData?["gender"] as? String)
+				if VirtusizeKidBodyProfile.isKidsEvent(eventData) {
+					VirtusizeRepository.shared.updateKidBodyData(gender: eventData?["gender"] as? String)
+				}
 			case .userLoggedIn:
 				eventHandler?.userLoggedIn()
             case .userLoggedOut, .userDeletedData:

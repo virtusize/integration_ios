@@ -80,6 +80,7 @@ extension VirtusizeViewEventProtocol {
 
 	public func handleUserUpdatedBodyMeasurements(recommendedSize: String?) {
 		VirtusizeRepository.shared.enqueueEventHandling {
+			VirtusizeRepository.shared.invalidateApiBodyProfileCache()
 			VirtusizeRepository.shared.updateUserBodyRecommendedSize(recommendedSize)
 			VirtusizeRepository.shared.updateInPageRecommendation(type: .body)
 
@@ -94,6 +95,7 @@ extension VirtusizeViewEventProtocol {
 
 	public func handleUserLoggedIn() {
 		VirtusizeRepository.shared.enqueueEventHandling {
+			VirtusizeRepository.shared.invalidateApiBodyProfileCache()
 			await VirtusizeRepository.shared.updateUserSession(forceUpdate: true)
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation()
 			VirtusizeRepository.shared.updateInPageRecommendation()
@@ -113,6 +115,7 @@ extension VirtusizeViewEventProtocol {
 	/// other items load the body measurements; then the size recommendation is fetched
 	public func handleUpdateRecommendation() {
 		VirtusizeRepository.shared.enqueueEventHandling {
+			VirtusizeRepository.shared.invalidateApiBodyProfileCache()
 			await VirtusizeRepository.shared.fetchDataForInPageRecommendation(
 				shouldUpdateUserProducts: false,
 				shouldUpdateBodyProfile: true

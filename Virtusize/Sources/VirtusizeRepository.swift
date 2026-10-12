@@ -220,18 +220,16 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			storeProduct = product
 		}
 
-		// Kids, adult and shoe share the same client-side body-input cache. Kids always predict
-		// from it; adult and shoe use it when there is no server-side body profile yet.
-		let cachedBodyData = VirtusizeKidBodyData.cached
-		let kidBodyData: VirtusizeKidBodyData? =
-			storeProduct.isKid() || (!hasSessionBodyMeasurement && cachedBodyData != nil)
-			? cachedBodyData
-			: nil
-		let hasBodyMeasurement = kidBodyData != nil || (!storeProduct.isKid() && hasSessionBodyMeasurement)
+		// Kids predict from the kids cache. Adult and shoe reuse the cached
+		// `getUserBodyProfileAsync` response when present.
+		let isKidProduct = storeProduct.isKid()
+		let hasBodyMeasurement = isKidProduct
+			? (VirtusizeKidBodyProfile.cached?.hasKidPredictInputs == true)
+			: hasSessionBodyMeasurement
 
 		async let userProductsTask = shouldUpdateUserProducts ? VirtusizeAPIService.getUserProductsAsync() : nil
 		async let userBodyProfileTask = shouldUpdateBodyProfile && hasBodyMeasurement
-			? fetchUserBodyProfile(kidBodyData: kidBodyData)
+			? (isKidProduct ? fetchKidsBodyProfile() : fetchUserBodyProfile())
 			: nil
 
 		let userProductsResponse = await userProductsTask
@@ -289,19 +287,39 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		)
 	}
 
-	/// Loads the user body profile: predicted from the cached body inputs when present,
-	/// or fetched from the user body measurements API otherwise
-	private func fetchUserBodyProfile(kidBodyData: VirtusizeKidBodyData?) async -> APIResult<VirtusizeUserBodyProfile> {
-		if let kidBodyData = kidBodyData {
-			return await VirtusizeAPIService.predictUserBodyProfileAsync(kidBodyData: kidBodyData)
+	/// Adult and shoe: return the cached `getUserBodyProfileAsync` response, or fetch and store it.
+	private func fetchUserBodyProfile() async -> APIResult<VirtusizeUserBodyProfile> {
+		if let cached = VirtusizeUserBodyProfile.cached {
+			return .success(cached, nil)
 		}
-		return await VirtusizeAPIService.getUserBodyProfileAsync()
+		let result = await VirtusizeAPIService.getUserBodyProfileAsync()
+		if let profile = result.success {
+			VirtusizeUserBodyProfile.cache(profile)
+		}
+		return result
+	}
+
+	/// Kids: return the cached predicted measurements, or predict from the widget inputs and store them.
+	private func fetchKidsBodyProfile() async -> APIResult<VirtusizeUserBodyProfile> {
+		if let cached = VirtusizeUserBodyProfile.cachedKidPrediction {
+			return .success(cached, nil)
+		}
+		guard let inputs = VirtusizeKidBodyProfile.cached, inputs.hasKidPredictInputs else {
+			return .failure(nil)
+		}
+		let result = await VirtusizeAPIService.predictUserBodyProfileAsync(kidBodyProfile: inputs)
+		if let profile = result.success {
+			VirtusizeUserBodyProfile.cacheKidPrediction(profile)
+		}
+		return result
 	}
 
 	/// Clear user session and the data related to size recommendations
 	internal func clearUserData() async {
 		UserDefaultsHelper.current.authToken = ""
-		clearKidBodyData()
+		clearUserBodyProfileCache()
+		VirtusizeKidBodyProfile.clearCache()
+		VirtusizeUserBodyProfile.clearKidPrediction()
 
 		userSessionResponse = ""
 		userProducts = nil
@@ -351,16 +369,11 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 	}
 
-	/// Caches body inputs from `user-selected-gender` and `user-updated-body-measurements`
-	/// for kids, adult and shoe. Every value present overrides the cached one; absent values are kept.
-	///
-	/// - Parameters:
-	///   - gender: the gender reported by the widget
-	///   - age: the age in years
-	///   - height: the height in centimeters
-	///   - weight: the weight in kilograms
+	/// Caches kids widget inputs (`user-selected-gender` and `user-updated-body-measurements`
+	/// whose `source` is `kids`) on `VirtusizeKidBodyProfile`.
+	/// Every value present overrides the cached one; absent values are kept.
 	internal func updateKidBodyData(gender: String? = nil, age: Int? = nil, height: Int? = nil, weight: Int? = nil) {
-		VirtusizeKidBodyData.cache(gender: gender, age: age, height: height, weight: weight)
+		VirtusizeKidBodyProfile.cacheKidsEvent(gender: gender, age: age, height: height, weight: weight)
 	}
 
 	/// Clears the size recommendations computed for the previously loaded product, so they are
@@ -370,11 +383,26 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		bodyProfileRecommendedSize = nil
 	}
 
-	/// Clears the cached kid's body inputs and the body-profile recommendation
+	/// Clears the kids inputs, the predicted kids measurements, and the body-profile recommendation.
+	/// The adult/shoe profile cache is left in place.
 	internal func clearKidBodyData() {
-		VirtusizeKidBodyData.clearCache()
+		VirtusizeKidBodyProfile.clearCache()
+		VirtusizeUserBodyProfile.clearKidPrediction()
 		userBodyProfile = nil
 		bodyProfileRecommendedSize = nil
+	}
+
+	internal func clearUserBodyProfileCache() {
+		VirtusizeUserBodyProfile.clearCache()
+		userBodyProfile = nil
+		bodyProfileRecommendedSize = nil
+	}
+
+	/// Drops the cached adult/shoe profile and the cached kids prediction
+	/// so the next fetch loads them again. Kids age, weight, gender and height stay.
+	internal func invalidateApiBodyProfileCache() {
+		VirtusizeUserBodyProfile.clearCache()
+		VirtusizeUserBodyProfile.clearKidPrediction()
 	}
 
 	/// Updates the recommendation for InPage based on the recommendation type

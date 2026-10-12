@@ -305,8 +305,12 @@ class VirtusizeGetSizeParamsKidTests: XCTestCase {
     }
 
     func testEncoding_kidGetSizeParamsFromPredictedProfile_shouldMatchWidgetPayload() throws {
-        let kidBodyData = VirtusizeKidBodyData(gender: "boy", height: 1070, weight: 17, age: 5)
-        let userBodyProfile = kidBodyData.bodyProfile(predictedMeasurements: [
+        let userBodyProfile = VirtusizeKidBodyProfile(
+            gender: "boy",
+            age: 5,
+            height: 1070,
+            weight: "17"
+        ).applyingPredictedMeasurements([
             "ankleHeight": VirtusizeAnyCodable(50),
             "hipWidth": VirtusizeAnyCodable(195),
             "bust": VirtusizeAnyCodable(535),
@@ -369,68 +373,88 @@ class VirtusizeGetSizeParamsKidTests: XCTestCase {
     }
 
     func testKidBodyData_intValue_parsesWidgetEventValues() {
-        XCTAssertEqual(VirtusizeKidBodyData.intValue("107"), 107)
-        XCTAssertEqual(VirtusizeKidBodyData.intValue(" 17 "), 17)
-        XCTAssertEqual(VirtusizeKidBodyData.intValue("17.6"), 18)
-        XCTAssertEqual(VirtusizeKidBodyData.intValue(5), 5)
-        XCTAssertEqual(VirtusizeKidBodyData.intValue(5.0), 5)
-        XCTAssertNil(VirtusizeKidBodyData.intValue("3'6\""))
-        XCTAssertNil(VirtusizeKidBodyData.intValue(""))
-        XCTAssertNil(VirtusizeKidBodyData.intValue(nil))
+        XCTAssertEqual(VirtusizeKidBodyProfile.intValue("107"), 107)
+        XCTAssertEqual(VirtusizeKidBodyProfile.intValue(" 17 "), 17)
+        XCTAssertEqual(VirtusizeKidBodyProfile.intValue("17.6"), 18)
+        XCTAssertEqual(VirtusizeKidBodyProfile.intValue(5), 5)
+        XCTAssertEqual(VirtusizeKidBodyProfile.intValue(5.0), 5)
+        XCTAssertNil(VirtusizeKidBodyProfile.intValue("3'6\""))
+        XCTAssertNil(VirtusizeKidBodyProfile.intValue(""))
+        XCTAssertNil(VirtusizeKidBodyProfile.intValue(nil))
     }
 
-    func testKidBodyData_cache_overridesOnlyReceivedValuesAndDefaultsToGirl() {
-        VirtusizeKidBodyData.clearCache()
-        XCTAssertNil(VirtusizeKidBodyData.cached)
+    func testKidBodyProfile_cache_overridesOnlyReceivedValuesAndDefaultsToGirl() {
+        VirtusizeKidBodyProfile.clearCache()
+        VirtusizeUserBodyProfile.clearCache()
+        XCTAssertNil(VirtusizeKidBodyProfile.cached)
 
-        VirtusizeKidBodyData.cache(age: 5, height: 107)
-        XCTAssertNil(VirtusizeKidBodyData.cached, "weight is still missing")
+        VirtusizeKidBodyProfile.cacheKidsEvent(age: 5, height: 107)
+        XCTAssertFalse(VirtusizeKidBodyProfile.cached?.hasKidPredictInputs == true, "weight is still missing")
+        XCTAssertNil(VirtusizeUserBodyProfile.cached)
 
-        VirtusizeKidBodyData.cache(weight: 17)
-        XCTAssertEqual(
-            VirtusizeKidBodyData.cached,
-            VirtusizeKidBodyData(gender: "girl", height: 1070, weight: 17, age: 5)
-        )
+        VirtusizeKidBodyProfile.cacheKidsEvent(weight: 17)
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.gender, "girl")
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.height, 1070)
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.weight, "17")
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.age, 5)
+        XCTAssertTrue(VirtusizeKidBodyProfile.cached?.hasKidPredictInputs == true)
 
-        VirtusizeKidBodyData.cache(gender: "boy")
-        VirtusizeKidBodyData.cache(height: 110)
-        XCTAssertEqual(
-            VirtusizeKidBodyData.cached,
-            VirtusizeKidBodyData(gender: "boy", height: 1100, weight: 17, age: 5)
-        )
+        VirtusizeKidBodyProfile.cacheKidsEvent(gender: "boy")
+        VirtusizeKidBodyProfile.cacheKidsEvent(height: 110)
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.gender, "boy")
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.height, 1100)
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.weight, "17")
+        XCTAssertEqual(VirtusizeKidBodyProfile.cached?.age, 5)
+        XCTAssertNil(VirtusizeUserBodyProfile.cached)
 
-        VirtusizeKidBodyData.clearCache()
-        XCTAssertNil(VirtusizeKidBodyData.cached)
+        VirtusizeKidBodyProfile.clearCache()
+        XCTAssertNil(VirtusizeKidBodyProfile.cached)
     }
 
-    func testKidBodyData_cache_isSharedAcrossAdultAndKidsEvents() {
-        VirtusizeKidBodyData.clearCache()
-        VirtusizeKidBodyData.cache(gender: "female", age: 30, height: 170, weight: 60)
-        XCTAssertEqual(
-            VirtusizeKidBodyData.cached,
-            VirtusizeKidBodyData(gender: "female", height: 1700, weight: 60, age: 30)
+    func testUserBodyProfile_apiCache_roundTripsWholeObject() {
+        VirtusizeUserBodyProfile.clearCache()
+        let profile = VirtusizeUserBodyProfile(
+            gender: "female",
+            age: 32,
+            height: 1630,
+            weight: "50.00",
+            bodyData: ["bust": 755, "waist": 630]
         )
+        VirtusizeUserBodyProfile.cache(profile)
 
-        VirtusizeKidBodyData.cache(height: 110)
-        XCTAssertEqual(
-            VirtusizeKidBodyData.cached,
-            VirtusizeKidBodyData(gender: "female", height: 1100, weight: 60, age: 30)
-        )
-        VirtusizeKidBodyData.clearCache()
+        XCTAssertEqual(VirtusizeUserBodyProfile.cached?.gender, "female")
+        XCTAssertEqual(VirtusizeUserBodyProfile.cached?.height, 1630)
+        XCTAssertEqual(VirtusizeUserBodyProfile.cached?.bodyData?["bust"] ?? nil, 755)
+
+        VirtusizeUserBodyProfile.clearCache()
+        XCTAssertNil(VirtusizeUserBodyProfile.cached)
     }
 
 	func testKidBodyDataClearCache_removesTheCachedInputs() {
-		VirtusizeKidBodyData.cache(gender: "girl", age: 7, height: 118, weight: 22)
-		XCTAssertNotNil(VirtusizeKidBodyData.cached)
-		VirtusizeKidBodyData.clearCache()
-		XCTAssertNil(VirtusizeKidBodyData.cached)
+		VirtusizeKidBodyProfile.cacheKidsEvent(gender: "girl", age: 7, height: 118, weight: 22)
+		XCTAssertNotNil(VirtusizeKidBodyProfile.cached)
+		VirtusizeKidBodyProfile.clearCache()
+		XCTAssertNil(VirtusizeKidBodyProfile.cached)
 	}
 
-	func testRepositoryClearKidBodyData_thenCachedIsNilFromBackgroundThread() async {
-		VirtusizeKidBodyData.cache(gender: "girl", age: 7, height: 118, weight: 22)
-		XCTAssertNotNil(VirtusizeKidBodyData.cached)
+	func testRepositoryClearKidBodyData_keepsTheUserBodyProfileCache() async {
+		VirtusizeKidBodyProfile.cacheKidsEvent(gender: "girl", age: 7, height: 118, weight: 22)
+		let userProfile = VirtusizeUserBodyProfile(
+			gender: "female",
+			age: 32,
+			height: 1630,
+			weight: "50.00",
+			bodyData: ["bust": 755]
+		)
+		VirtusizeUserBodyProfile.cache(userProfile)
+		VirtusizeUserBodyProfile.cacheKidPrediction(userProfile)
 		await MainActor.run { VirtusizeRepository.shared.clearKidBodyData() }
-		let cached = await Task.detached { VirtusizeKidBodyData.cached }.value
-		XCTAssertNil(cached)
+		let kidCached = await Task.detached { VirtusizeKidBodyProfile.cached }.value
+		let predicted = await Task.detached { VirtusizeUserBodyProfile.cachedKidPrediction }.value
+		let userCached = await Task.detached { VirtusizeUserBodyProfile.cached }.value
+		XCTAssertNil(kidCached)
+		XCTAssertNil(predicted)
+		XCTAssertEqual(userCached?.gender, "female")
+		VirtusizeUserBodyProfile.clearCache()
 	}
 }

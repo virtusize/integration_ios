@@ -113,31 +113,27 @@ class UserDefaultsHelperTests: XCTestCase {
 		}
     }
 
-	func testKidBodyData_storedAndDeleted() {
+	func testUserBodyProfile_storedAndDeleted() {
 		let mockDefaults = MockNSUserDefaults()
 		let helper = UserDefaultsHelper(defaults: mockDefaults)
 
-		XCTAssertNil(helper.kidGender)
-		XCTAssertNil(helper.kidAge)
-		XCTAssertNil(helper.kidHeight)
-		XCTAssertNil(helper.kidWeight)
+		XCTAssertNil(helper.userBodyProfileData)
 
-		helper.kidGender = "boy"
-		helper.kidAge = 5
-		helper.kidHeight = 107
-		helper.kidWeight = 17
+		let data = Data("{\"gender\":\"boy\"}".utf8)
+		helper.userBodyProfileData = data
+		XCTAssertEqual(helper.userBodyProfileData, data)
+		XCTAssertEqual(mockDefaults.value(forKey: "VIRTUSIZE_USER_BODY_PROFILE") as? Data, data)
 
-		XCTAssertEqual(helper.kidGender, "boy")
-		XCTAssertEqual(helper.kidAge, 5)
-		XCTAssertEqual(helper.kidHeight, 107)
-		XCTAssertEqual(helper.kidWeight, 17)
-		XCTAssertEqual(mockDefaults.value(forKey: "VIRTUSIZE_KID_HEIGHT") as? Int, 107)
+		helper.deleteUserBodyProfile()
+		XCTAssertNil(helper.userBodyProfileData)
 
-		helper.deleteKidBodyData()
+		let kidData = Data("{\"gender\":\"girl\"}".utf8)
+		helper.kidBodyProfileData = kidData
+		XCTAssertEqual(helper.kidBodyProfileData, kidData)
+		XCTAssertEqual(mockDefaults.value(forKey: "VIRTUSIZE_KID_BODY_PROFILE") as? Data, kidData)
+		XCTAssertEqual(helper.userBodyProfileData, nil)
 
-		XCTAssertNil(helper.kidGender)
-		XCTAssertNil(helper.kidAge)
-		XCTAssertNil(helper.kidHeight)
-		XCTAssertNil(helper.kidWeight)
+		helper.deleteKidBodyProfile()
+		XCTAssertNil(helper.kidBodyProfileData)
 	}
 }
