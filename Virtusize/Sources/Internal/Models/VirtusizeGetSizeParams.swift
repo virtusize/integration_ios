@@ -34,8 +34,8 @@ internal struct VirtusizeGetSizeParams: Codable {
     var userGender: String = ""
     /// The user's height
     var userHeight: Int?
-    /// The user's weight, kept as the raw API string (e.g. "56.00") to match the web widget's payload
-    var userWeight: String?
+    /// The user's weight as a number, matching the web widget (`57`, not `"57.00"`)
+    var userWeight: Double?
     /// The user's age
     var userAge: Int?
     /// The user's items
@@ -61,7 +61,7 @@ internal struct VirtusizeGetSizeParams: Codable {
                 storeProduct.storeProductMeta?.additionalInfo?.fit ?? "regular"
             ),
             "sizes": VirtusizeAnyCodable(
-                storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:]
+                snakeCaseSizeMeasurements(storeProduct.storeProductMeta?.additionalInfo?.sizes ?? [:])
             ),
             "gender": VirtusizeAnyCodable(
                 storeProduct.storeProductMeta?.additionalInfo?.gender ?? "male"
@@ -76,10 +76,16 @@ internal struct VirtusizeGetSizeParams: Codable {
         }
         bodyData = getBodyDataDict(userBodyProfile: userBodyProfile)
         let itemSizesOrig = getItemSizesDict(storeProduct: storeProduct)
-        // The web widget sends these two keys; the encoder does not touch dictionary keys,
+        // The web widget sends these keys; the encoder does not touch dictionary keys,
         // so they must be snake_case literals here
         additionalInfo["item_measurements"] = VirtusizeAnyCodable(!itemSizesOrig.isEmpty)
-        additionalInfo["fit_adjust"] = VirtusizeAnyCodable(nil as String?)
+        // Without this order the API walks `item_sizes_orig` in dictionary order and can return a different size
+        let sizeOrder: [Any?] = storeProduct.sizes
+            .compactMap { $0.name }
+            .filter { !$0.isEmpty }
+            .sortedLikeJavaScriptObjectKeys()
+            .map { $0 as Any? }
+        additionalInfo["client_size_order"] = VirtusizeAnyCodable(sizeOrder)
         var productType = ""
         if let index = productTypes.firstIndex(where: { $0.id == storeProduct.productType }) {
             // The API returns camelCase names (e.g. "tShirt") while the web widget sends "t_shirt"
@@ -87,7 +93,7 @@ internal struct VirtusizeGetSizeParams: Codable {
         }
         userGender = userBodyProfile?.gender ?? ""
         userHeight = userBodyProfile?.height
-        userWeight = userBodyProfile?.weight
+        userWeight = userBodyProfile?.weight.flatMap(Double.init)
         userAge = userBodyProfile?.age
 
         items = [
@@ -129,15 +135,10 @@ internal func getBodyDataDict(
 		for (name, measurement) in bodyData {
             let snakeKey = camelCaseToSnakeCase(name)
 			if let measurement = measurement {
-				bodyDataDict[snakeKey] = [
-					"value": VirtusizeAnyCodable(measurement),
-					"predicted": VirtusizeAnyCodable(true)
-				]
+				bodyDataDict[snakeKey] = measurementEntry(aoyamaMillimeters(measurement, key: snakeKey))
 				if snakeKey == "bust" {
-					bodyDataDict["chest"] = [
-						"value": VirtusizeAnyCodable(measurement),
-						"predicted": VirtusizeAnyCodable(true)
-					]
+					// Aoyama stores chest as the rounded bust and leaves bust itself unrounded
+					bodyDataDict["chest"] = measurementEntry(aoyamaMillimeters(measurement, key: "chest"))
 				}
 			}
 		}
@@ -149,21 +150,66 @@ internal func getBodyDataDict(
             if let anyCodable = anyCodable {
                 if snakeKey == "band" {
                     if let bandValue = anyCodable.value as? Int {
-                        bodyDataDict["bra_\(snakeKey)"] = [
-                            "value": VirtusizeAnyCodable(bandValue * 10),
-                            "predicted": VirtusizeAnyCodable(true)
-                        ]
+                        bodyDataDict["bra_\(snakeKey)"] = measurementEntry(bandValue * 10, predicted: false)
                     }
                 } else {
                     bodyDataDict["bra_\(snakeKey)"] = [
                         "value": anyCodable,
-                        "predicted": VirtusizeAnyCodable(true)
+                        "predicted": VirtusizeAnyCodable(false)
                     ]
                 }
             }
         }
     }
+	if userBodyProfile != nil {
+		// Aoyama always sends these, including when the profile has no bra size
+		if bodyDataDict["bra_country"] == nil {
+			bodyDataDict["bra_country"] = measurementEntry("", predicted: false)
+		}
+		if bodyDataDict["bra_cup"] == nil {
+			bodyDataDict["bra_cup"] = measurementEntry("", predicted: false)
+		}
+		if bodyDataDict["bra_band"] == nil {
+			bodyDataDict["bra_band"] = measurementEntry(0, predicted: false)
+		}
+	}
 	return bodyDataDict
+}
+
+/// Aoyama `parseBodyMeasurements` divides every measurement by 10. These names are also
+/// `Math.round`ed, which is nearest 10 mm. Every other measurement, including ones the
+/// profile JSON adds later, is sent unchanged.
+private let aoyamaRoundedBodyMeasurements: Set<String> = [
+	"shoulder", "bicep", "chest", "waist", "hip", "thigh", "inseam"
+]
+
+private func aoyamaMillimeters(_ millimeters: Int, key: String) -> Int {
+	guard aoyamaRoundedBodyMeasurements.contains(key) else { return millimeters }
+	return (millimeters + 5) / 10 * 10
+}
+
+private func measurementEntry(_ value: Any, predicted: Bool = true) -> [String: VirtusizeAnyCodable] {
+	[
+		"value": VirtusizeAnyCodable(value),
+		"predicted": VirtusizeAnyCodable(predicted)
+	]
+}
+
+/// `additionalInfo.sizes` arrives with camelCase measurement names (`frontRise`).
+/// The web widget sends those names in snake_case (`front_rise`).
+/// Returned as `[String: Any?]` so `VirtusizeAnyCodable` encodes the nested maps.
+private func snakeCaseSizeMeasurements(
+	_ sizes: [String: [String: Int?]]
+) -> [String: Any?] {
+	var result: [String: Any?] = [:]
+	for (sizeName, measurements) in sizes {
+		var measurementPayload: [String: Any?] = [:]
+		for (key, value) in measurements {
+			measurementPayload[camelCaseToSnakeCase(key)] = value
+		}
+		result[sizeName] = measurementPayload
+	}
+	return result
 }
 
 /// Gets the dictionary of the store product size info

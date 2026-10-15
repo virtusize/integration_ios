@@ -26,4 +26,46 @@ struct VirtusizeGetSizeItemsParam: Codable {
     var itemSizesOrig: [String: [String: Int?]] = [:]
     var productType: String
     var extProductId: String
+    /// The web widget sends this on the item, not inside `additionalInfo`. Always null today.
+    var fitAdjust: String? = nil
+
+    enum CodingKeys: String, CodingKey {
+        case additionalInfo, itemSizesOrig, productType, extProductId, fitAdjust
+    }
+
+    init(
+        additionalInfo: [String: VirtusizeAnyCodable] = [:],
+        itemSizesOrig: [String: [String: Int?]] = [:],
+        productType: String,
+        extProductId: String,
+        fitAdjust: String? = nil
+    ) {
+        self.additionalInfo = additionalInfo
+        self.itemSizesOrig = itemSizesOrig
+        self.productType = productType
+        self.extProductId = extProductId
+        self.fitAdjust = fitAdjust
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        additionalInfo = try container.decode([String: VirtusizeAnyCodable].self, forKey: .additionalInfo)
+        itemSizesOrig = try container.decode([String: [String: Int?]].self, forKey: .itemSizesOrig)
+        productType = try container.decode(String.self, forKey: .productType)
+        extProductId = try container.decode(String.self, forKey: .extProductId)
+        fitAdjust = try container.decodeIfPresent(String.self, forKey: .fitAdjust)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(additionalInfo, forKey: .additionalInfo)
+        try container.encode(itemSizesOrig, forKey: .itemSizesOrig)
+        try container.encode(productType, forKey: .productType)
+        try container.encode(extProductId, forKey: .extProductId)
+        if let fitAdjust {
+            try container.encode(fitAdjust, forKey: .fitAdjust)
+        } else {
+            try container.encodeNil(forKey: .fitAdjust)
+        }
+    }
 }
