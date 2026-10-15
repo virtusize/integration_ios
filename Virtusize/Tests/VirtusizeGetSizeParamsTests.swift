@@ -41,7 +41,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                 "appOrigin": 2,
                 "userGender": "female",
                 "userHeight": 1630,
-                "userWeight": "50.00",
+                "userWeight": 50.0,
                 "userAge": 32,
                 "items": [
                     {
@@ -75,7 +75,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             },
                             "style": "fashionable",
                             "item_measurements": true,
-                            "fit_adjust": null
+                            "client_size_order": ["35", "36", "37"]
                         },
                         "itemSizesOrig": {
                             "35": {
@@ -95,7 +95,8 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             }
                         },
                         "productType": "jacket",
-                        "extProductId": "694"
+                        "extProductId": "694",
+                        "fitAdjust": null
                     }
                 ],
                 "bodyData": {
@@ -243,11 +244,12 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                             "gender": "null",
                             "style": "fashionable",
                             "item_measurements": false,
-                            "fit_adjust": null
+                            "client_size_order": []
                         },
                         "itemSizesOrig": {},
                         "productType": "",
-                        "extProductId": "694"
+                        "extProductId": "694",
+                        "fitAdjust": null
                     }
                 ],
                 "userGender": ""

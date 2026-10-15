@@ -199,25 +199,14 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(actualParams?.items.first?.additionalInfo.count, 8)
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["item_measurements"]?.value as? Bool, true)
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["gender"]?.value as? String, "male")
-        XCTAssertEqual(
-            actualParams?.items.first?.additionalInfo["sizes"]?.value as? [String: [String: Int?]],
-            ["37": [
-                "sleeve": 845,
-                "bust": 660,
-                "height": 760
-            ],
-            "36": [
-                "sleeve": 825,
-                "bust": 645,
-                "height": 750
-            ],
-            "35": [
-                "sleeve": 805,
-                "bust": 630,
-                "height": 740
-            ]
-            ]
-        )
+        let sizeOrder = (actualParams?.items.first?.additionalInfo["client_size_order"]?.value as? [Any])?
+            .compactMap { $0 as? String }
+        XCTAssertEqual(sizeOrder, ["35", "36", "37"])
+        let sizes = actualParams?.items.first?.additionalInfo["sizes"]?.value as? [String: Any]
+        XCTAssertEqual((sizes?["37"] as? [String: Any])?["sleeve"] as? Int, 845)
+        XCTAssertEqual((sizes?["37"] as? [String: Any])?["bust"] as? Int, 660)
+        XCTAssertEqual((sizes?["36"] as? [String: Any])?["height"] as? Int, 750)
+        XCTAssertEqual((sizes?["35"] as? [String: Any])?["bust"] as? Int, 630)
         XCTAssertEqual(
             (actualParams?.items.first?.additionalInfo["modelInfo"]?.value as? [String: Any])?["size"] as? String,
             "38"
@@ -230,17 +219,24 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["fit"]?.value as? String, "regular")
         XCTAssertEqual(actualParams?.bodyData.count, 22)
         XCTAssertEqual((actualParams?.bodyData["chest"])?["value"]?.value as? Int, 755)
+        XCTAssertEqual((actualParams?.bodyData["bust"])?["value"]?.value as? Int, 755)
         XCTAssertEqual(actualParams?.items.first?.itemSizesOrig.count, 3)
         XCTAssertEqual(actualParams?.items.first?.itemSizesOrig["36"]?["bust"], 645)
 		XCTAssertEqual(actualParams?.userGender, "female")
 		XCTAssertEqual(actualParams?.userHeight, 1630)
-		XCTAssertEqual(actualParams?.userWeight, "50.00")
+		XCTAssertEqual(actualParams?.userWeight, 50.0)
+        XCTAssertNil(actualParams?.items.first?.fitAdjust)
 		XCTAssertEqual(actualParams?.items.first?.extProductId, TestFixtures.externalProductId)
         XCTAssertEqual(actualParams?.items.first?.productType, "jacket")
 		XCTAssertEqual(
 			apiRequest?.url?.absoluteString,
 			"https://size-recommendation.staging.virtusize.jp/item"
 		)
+        let payload = String(data: apiRequest!.httpBody!, encoding: .utf8) ?? ""
+        XCTAssertTrue(payload.contains("\"item_sizes_orig\":{\"35\":"))
+        XCTAssertTrue(payload.contains("\"sizes\":{\"35\":"))
+        assertSizeKeysInOrder(payload, objectKey: "item_sizes_orig")
+        assertSizeKeysInOrder(payload, objectKey: "sizes")
     }
 
     func testGetBodyProfileRecommendedKidSize_expectedHeadersAndHttpBody() throws {
@@ -286,4 +282,19 @@ class APIRequestTests: XCTestCase {
         XCTAssertEqual((user?["age"] as? NSNumber)?.intValue, 32)
         XCTAssertNotNil(user?["bodyData"] as? [String: Any])
     }
+}
+
+/// `35`, `36`, and `37` must appear in that order inside the size object. The size API walks that order.
+private func assertSizeKeysInOrder(_ payload: String, objectKey: String) {
+    guard let start = payload.range(of: "\"\(objectKey)\":{") else {
+        XCTFail("Missing \(objectKey)")
+        return
+    }
+    let object = payload[start.upperBound...]
+    guard let index36 = object.range(of: "\"36\":")?.lowerBound,
+          let index37 = object.range(of: "\"37\":")?.lowerBound else {
+        XCTFail("Missing size keys in \(objectKey)")
+        return
+    }
+    XCTAssertLessThan(index36, index37)
 }
