@@ -279,9 +279,8 @@ extension APIRequest {
 		
 		let encoder = JSONEncoder()
 		encoder.keyEncodingStrategy = .convertToSnakeCase
-		guard let jsonData = try? encoder.encode(
-		    params
-		) else {
+		guard let encoded = try? encoder.encode(params),
+		      let jsonData = jsonWithOrderedSizeMaps(encoded) else {
 		    return nil
 		}
 

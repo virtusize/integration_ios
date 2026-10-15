@@ -73,6 +73,7 @@ internal indirect enum OrderedJSONValue {
 	case array([OrderedJSONValue])
 	case string(String)
 	case int(Int)
+	case double(Double)
 	case bool(Bool)
 	case null
 
@@ -88,6 +89,8 @@ internal indirect enum OrderedJSONValue {
 			return "\"\(OrderedJSONValue.escape(string))\""
 		case .int(let int):
 			return String(int)
+		case .double(let double):
+			return String(double)
 		case .bool(let bool):
 			return bool ? "true" : "false"
 		case .null:
@@ -117,5 +120,53 @@ internal indirect enum OrderedJSONValue {
 			}
 		}
 		return escaped
+	}
+}
+
+/// Re-serializes JSON so `item_sizes_orig` and `additional_info.sizes` use JavaScript object-key order.
+/// `JSONEncoder` stores those maps in a dictionary, and the size API walks that order when fit scores tie.
+internal func jsonWithOrderedSizeMaps(_ data: Data) -> Data? {
+	guard let object = try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed]) else {
+		return nil
+	}
+	return OrderedJSONValue.fromJSONObject(object).serialized.data(using: .utf8)
+}
+
+extension OrderedJSONValue {
+	/// Rebuilds a `JSONSerialization` value. Size charts (`item_sizes_orig`, `sizes`) are emitted in
+	/// `sortedLikeJavaScriptObjectKeys` order. Every other object keeps the parsed key order.
+	static func fromJSONObject(_ value: Any, sizeMap: Bool = false) -> OrderedJSONValue {
+		if value is NSNull {
+			return .null
+		}
+		if let dictionary = value as? [String: Any] {
+			let keys = sizeMap
+				? Array(dictionary.keys).sortedLikeJavaScriptObjectKeys()
+				: Array(dictionary.keys)
+			return .object(keys.map { key in
+				let childIsSizeMap = key == "item_sizes_orig" || key == "sizes"
+				guard let child = dictionary[key] else {
+					return (key, .null)
+				}
+				return (key, fromJSONObject(child, sizeMap: childIsSizeMap))
+			})
+		}
+		if let array = value as? [Any] {
+			return .array(array.map { fromJSONObject($0) })
+		}
+		if let string = value as? String {
+			return .string(string)
+		}
+		if let number = value as? NSNumber {
+			if CFGetTypeID(number) == CFBooleanGetTypeID() {
+				return .bool(number.boolValue)
+			}
+			let double = number.doubleValue
+			if double.rounded() == double, double >= Double(Int.min), double <= Double(Int.max) {
+				return .int(number.intValue)
+			}
+			return .double(double)
+		}
+		return .null
 	}
 }
