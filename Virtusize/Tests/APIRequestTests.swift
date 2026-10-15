@@ -150,14 +150,9 @@ class APIRequestTests: XCTestCase {
     }
 
     func testPredictUserBodyMeasurements_expectedHeadersAndHttpBody() throws {
-        let kidBodyProfile = VirtusizeKidBodyProfile(
-            gender: "boy",
-            age: 5,
-            height: 1070,
-            weight: "17"
-        )
+        let kidBodyData = VirtusizeKidBodyData(gender: "boy", height: 1070, weight: 17, age: 5)
 
-        let apiRequest = APIRequest.predictUserBodyMeasurements(kidBodyProfile: kidBodyProfile)
+        let apiRequest = APIRequest.predictUserBodyMeasurements(kidBodyData: kidBodyData)
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
@@ -222,9 +217,12 @@ class APIRequestTests: XCTestCase {
         )
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["brand"]?.value as? String, "Virtusize")
         XCTAssertEqual(actualParams?.items.first?.additionalInfo["fit"]?.value as? String, "regular")
-        XCTAssertEqual(actualParams?.bodyData.count, 22)
-        XCTAssertEqual((actualParams?.bodyData["chest"])?["value"]?.value as? Int, 755)
+        XCTAssertEqual(actualParams?.bodyData.count, 25)
+        XCTAssertEqual((actualParams?.bodyData["chest"])?["value"]?.value as? Int, 760)
         XCTAssertEqual((actualParams?.bodyData["bust"])?["value"]?.value as? Int, 755)
+        XCTAssertEqual((actualParams?.bodyData["bra_country"])?["value"]?.value as? String, "")
+        XCTAssertEqual((actualParams?.bodyData["bra_band"])?["value"]?.value as? Int, 0)
+        XCTAssertEqual((actualParams?.bodyData["bra_band"])?["predicted"]?.value as? Bool, false)
         XCTAssertEqual(actualParams?.items.first?.itemSizesOrig.count, 3)
         XCTAssertEqual(actualParams?.items.first?.itemSizesOrig["36"]?["bust"], 645)
 		XCTAssertEqual(actualParams?.userGender, "female")

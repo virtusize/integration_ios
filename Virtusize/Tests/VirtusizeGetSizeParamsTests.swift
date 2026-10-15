@@ -133,7 +133,7 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                         "predicted": true
                     },
                     "chest": {
-                        "value": 755,
+                        "value": 760,
                         "predicted": true
                     },
                     "shoulder_height": {
@@ -187,6 +187,18 @@ class VirtusizeGetSizeParamsTests: XCTestCase {
                     "hip": {
                         "value": 830,
                         "predicted": true
+                    },
+                    "bra_country": {
+                        "value": "",
+                        "predicted": false
+                    },
+                    "bra_cup": {
+                        "value": "",
+                        "predicted": false
+                    },
+                    "bra_band": {
+                        "value": 0,
+                        "predicted": false
                     }
                 }
             }

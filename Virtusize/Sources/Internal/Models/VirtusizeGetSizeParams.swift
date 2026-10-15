@@ -135,15 +135,10 @@ internal func getBodyDataDict(
 		for (name, measurement) in bodyData {
             let snakeKey = camelCaseToSnakeCase(name)
 			if let measurement = measurement {
-				bodyDataDict[snakeKey] = [
-					"value": VirtusizeAnyCodable(measurement),
-					"predicted": VirtusizeAnyCodable(true)
-				]
+				bodyDataDict[snakeKey] = measurementEntry(aoyamaMillimeters(measurement, key: snakeKey))
 				if snakeKey == "bust" {
-					bodyDataDict["chest"] = [
-						"value": VirtusizeAnyCodable(measurement),
-						"predicted": VirtusizeAnyCodable(true)
-					]
+					// Aoyama stores chest as the rounded bust and leaves bust itself unrounded
+					bodyDataDict["chest"] = measurementEntry(aoyamaMillimeters(measurement, key: "chest"))
 				}
 			}
 		}
@@ -155,21 +150,49 @@ internal func getBodyDataDict(
             if let anyCodable = anyCodable {
                 if snakeKey == "band" {
                     if let bandValue = anyCodable.value as? Int {
-                        bodyDataDict["bra_\(snakeKey)"] = [
-                            "value": VirtusizeAnyCodable(bandValue * 10),
-                            "predicted": VirtusizeAnyCodable(true)
-                        ]
+                        bodyDataDict["bra_\(snakeKey)"] = measurementEntry(bandValue * 10, predicted: false)
                     }
                 } else {
                     bodyDataDict["bra_\(snakeKey)"] = [
                         "value": anyCodable,
-                        "predicted": VirtusizeAnyCodable(true)
+                        "predicted": VirtusizeAnyCodable(false)
                     ]
                 }
             }
         }
     }
+	if userBodyProfile != nil {
+		// Aoyama always sends these, including when the profile has no bra size
+		if bodyDataDict["bra_country"] == nil {
+			bodyDataDict["bra_country"] = measurementEntry("", predicted: false)
+		}
+		if bodyDataDict["bra_cup"] == nil {
+			bodyDataDict["bra_cup"] = measurementEntry("", predicted: false)
+		}
+		if bodyDataDict["bra_band"] == nil {
+			bodyDataDict["bra_band"] = measurementEntry(0, predicted: false)
+		}
+	}
 	return bodyDataDict
+}
+
+/// Aoyama `parseBodyMeasurements` divides every measurement by 10. These names are also
+/// `Math.round`ed, which is nearest 10 mm. Every other measurement, including ones the
+/// profile JSON adds later, is sent unchanged.
+private let aoyamaRoundedBodyMeasurements: Set<String> = [
+	"shoulder", "bicep", "chest", "waist", "hip", "thigh", "inseam"
+]
+
+private func aoyamaMillimeters(_ millimeters: Int, key: String) -> Int {
+	guard aoyamaRoundedBodyMeasurements.contains(key) else { return millimeters }
+	return (millimeters + 5) / 10 * 10
+}
+
+private func measurementEntry(_ value: Any, predicted: Bool = true) -> [String: VirtusizeAnyCodable] {
+	[
+		"value": VirtusizeAnyCodable(value),
+		"predicted": VirtusizeAnyCodable(predicted)
+	]
 }
 
 /// `additionalInfo.sizes` arrives with camelCase measurement names (`frontRise`).
