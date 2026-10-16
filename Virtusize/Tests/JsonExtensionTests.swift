@@ -49,6 +49,32 @@ struct JsonExtensionTests {
 		#expect(["090", "10", "-1", "1.5"].sortedLikeJavaScriptObjectKeys() == ["10", "090", "-1", "1.5"])
 	}
 
+	@Test func sizeMapsFollowClientSizeOrder() throws {
+		let payload: [String: Any] = [
+			"items": [[
+				"additional_info": [
+					"client_size_order": ["J/XS", "J/S", "J/M", "J/L", "J/XL"],
+					"sizes": ["S": ["bust": 380], "XL": ["bust": 435], "XS": ["bust": 360], "L": ["bust": 420], "M": ["bust": 400]]
+				],
+				"item_sizes_orig": ["J/XL": ["bust": 435], "J/S": ["bust": 380], "J/XS": ["bust": 360], "J/L": ["bust": 420], "J/M": ["bust": 400]]
+			]]
+		]
+		let data = try JSONSerialization.data(withJSONObject: payload)
+		let ordered = String(data: jsonWithOrderedSizeMaps(data)!, encoding: .utf8)!
+		#expect(ordered.contains("\"item_sizes_orig\":{\"J/XS\":"))
+		#expect(ordered.contains("\"sizes\":{\"XS\":"))
+		let itemStart = ordered.range(of: "\"item_sizes_orig\":{")!.upperBound
+		let item = ordered[itemStart...]
+		#expect(item.range(of: "\"J/XS\":")!.lowerBound < item.range(of: "\"J/S\":")!.lowerBound)
+		#expect(item.range(of: "\"J/S\":")!.lowerBound < item.range(of: "\"J/M\":")!.lowerBound)
+		#expect(item.range(of: "\"J/M\":")!.lowerBound < item.range(of: "\"J/L\":")!.lowerBound)
+		let sizesStart = ordered.range(of: "\"sizes\":{")!.upperBound
+		let sizes = ordered[sizesStart...]
+		#expect(sizes.range(of: "\"XS\":")!.lowerBound < sizes.range(of: "\"S\":")!.lowerBound)
+		#expect(sizes.range(of: "\"S\":")!.lowerBound < sizes.range(of: "\"M\":")!.lowerBound)
+		#expect(sizes.range(of: "\"M\":")!.lowerBound < sizes.range(of: "\"L\":")!.lowerBound)
+	}
+
 	@Test func orderedJSONValueSerializesAndEscapes() throws {
 		let value = OrderedJSONValue.object([
 			("b", .array([.int(1), .bool(false), .null])),
