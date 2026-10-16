@@ -22,7 +22,11 @@
 //  THE SOFTWARE.
 //
 
-/// This class represents the response of the API request to get the user body profile data
+import Foundation
+import VirtusizeCore
+
+/// This class represents a body-measurements profile.
+/// Adult and shoe responses and predicted kids measurements are cached separately.
 public class VirtusizeUserBodyProfile: Codable {
 	/// The user's gender
 	let gender: String
@@ -38,6 +42,7 @@ public class VirtusizeUserBodyProfile: Codable {
     let footwearData: [String: VirtusizeAnyCodable]?
 	/// The user's bra size information
 	let braSize: [String: VirtusizeAnyCodable?]?
+	let origin: String?
 
 	internal init(
 		gender: String,
@@ -46,7 +51,8 @@ public class VirtusizeUserBodyProfile: Codable {
 		weight: String?,
 		bodyData: [String: Int?]?,
 		footwearData: [String: VirtusizeAnyCodable]? = nil,
-		braSize: [String: VirtusizeAnyCodable?]? = nil
+		braSize: [String: VirtusizeAnyCodable?]? = nil,
+		origin: String? = nil
 	) {
 		self.gender = gender
 		self.age = age
@@ -55,5 +61,42 @@ public class VirtusizeUserBodyProfile: Codable {
 		self.bodyData = bodyData
 		self.footwearData = footwearData
 		self.braSize = braSize
+		self.origin = origin
+	}
+
+	/// The cached adult/shoe profile, if one has been stored
+	static var cached: VirtusizeUserBodyProfile? {
+		guard let data = UserDefaultsHelper.current.userBodyProfileData else {
+			return nil
+		}
+		return try? JSONDecoder().decode(VirtusizeUserBodyProfile.self, from: data)
+	}
+
+	/// Stores the whole profile in user defaults
+	static func cache(_ profile: VirtusizeUserBodyProfile) {
+		UserDefaultsHelper.current.userBodyProfileData = try? JSONEncoder().encode(profile)
+	}
+
+	/// Removes the cached adult/shoe profile
+	static func clearCache() {
+		UserDefaultsHelper.current.deleteUserBodyProfile()
+	}
+
+	/// The cached predicted kids measurements, if they have been stored
+	static var cachedKidPrediction: VirtusizeUserBodyProfile? {
+		guard let data = UserDefaultsHelper.current.kidPredictedBodyProfileData else {
+			return nil
+		}
+		return try? JSONDecoder().decode(VirtusizeUserBodyProfile.self, from: data)
+	}
+
+	/// Stores the predicted kids measurements
+	static func cacheKidPrediction(_ profile: VirtusizeUserBodyProfile) {
+		UserDefaultsHelper.current.kidPredictedBodyProfileData = try? JSONEncoder().encode(profile)
+	}
+
+	/// Removes the cached predicted kids measurements
+	static func clearKidPrediction() {
+		UserDefaultsHelper.current.deleteKidPredictedBodyProfile()
 	}
 }

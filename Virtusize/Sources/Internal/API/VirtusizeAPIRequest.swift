@@ -175,11 +175,12 @@ extension APIRequest {
 	/// Gets the `URLRequest` for the `userBodyMeasurementsPredict` request,
 	/// which predicts a kid's body measurements from the gender, height, weight and age
 	///
-	/// - Parameter kidBodyData: The kid's body inputs cached from the web widget
+	/// - Parameter kidBodyProfile: The cached kids inputs (gender, age, height, weight)
 	/// - Returns: A `URLRequest` for the `userBodyMeasurementsPredict` request
-	internal static func predictUserBodyMeasurements(kidBodyData: VirtusizeKidBodyData) -> URLRequest? {
+	internal static func predictUserBodyMeasurements(kidBodyProfile: VirtusizeKidBodyProfile) -> URLRequest? {
 		let endpoint = APIEndpoints.userBodyMeasurementsPredict
-		guard let jsonData = try? JSONEncoder().encode(kidBodyData) else {
+		guard let params = kidBodyProfile.predictParams(),
+			  let jsonData = try? JSONSerialization.data(withJSONObject: params) else {
 			return nil
 		}
 		let request = apiRequestWithAuthorization(components: endpoint.components, withPayload: jsonData)

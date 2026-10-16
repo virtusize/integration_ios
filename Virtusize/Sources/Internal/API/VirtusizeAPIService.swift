@@ -194,12 +194,12 @@ class VirtusizeAPIService: APIService {
 	/// The API request for predicting a kid's body measurements from the inputs entered in the web widget.
 	/// The kids flow has no server-side body profile, so this replaces `getUserBodyProfileAsync` for kids items.
 	///
-	/// - Parameter kidBodyData: The kid's body inputs cached from the web widget
+	/// - Parameter kidBodyProfile: The cached kids inputs (gender, age, height, weight)
 	/// - Returns: the user body profile built from the predicted measurements in the type of `VirtusizeUserBodyProfile`
 	internal static func predictUserBodyProfileAsync(
-		kidBodyData: VirtusizeKidBodyData
+		kidBodyProfile: VirtusizeKidBodyProfile
 	) async -> APIResult<VirtusizeUserBodyProfile> {
-		guard let request = APIRequest.predictUserBodyMeasurements(kidBodyData: kidBodyData) else {
+		guard let request = APIRequest.predictUserBodyMeasurements(kidBodyProfile: kidBodyProfile) else {
 			return .failure(nil)
 		}
 		let response = await getAPIResultAsync(request: request, type: [String: VirtusizeAnyCodable].self)
@@ -208,7 +208,7 @@ class VirtusizeAPIService: APIService {
 		}
 		switch response {
 		case let .success(predictedMeasurements, jsonString):
-			return .success(kidBodyData.bodyProfile(predictedMeasurements: predictedMeasurements ?? [:]), jsonString)
+			return .success(kidBodyProfile.applyingPredictedMeasurements(predictedMeasurements ?? [:]), jsonString)
 		case let .failure(code, error):
 			return .failure(code, error)
 		}

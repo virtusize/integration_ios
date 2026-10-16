@@ -23,6 +23,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 internal extension JSONObject {
 	mutating func deepMerge(source: JSONObject) {
 		for (key, value) in source {
@@ -123,7 +125,7 @@ internal indirect enum OrderedJSONValue {
 	}
 }
 
-/// Re-serializes JSON so `item_sizes_orig` and `additional_info.sizes` use JavaScript object-key order.
+/// Re-serializes JSON so `item_sizes_orig` and `additional_info.sizes` follow `client_size_order`.
 /// `JSONEncoder` stores those maps in a dictionary, and the size API walks that order when fit scores tie.
 internal func jsonWithOrderedSizeMaps(_ data: Data) -> Data? {
 	guard let object = try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed]) else {
@@ -133,22 +135,23 @@ internal func jsonWithOrderedSizeMaps(_ data: Data) -> Data? {
 }
 
 extension OrderedJSONValue {
-	/// Rebuilds a `JSONSerialization` value. Size charts (`item_sizes_orig`, `sizes`) are emitted in
-	/// `sortedLikeJavaScriptObjectKeys` order. Every other object keeps the parsed key order.
-	static func fromJSONObject(_ value: Any, sizeMap: Bool = false) -> OrderedJSONValue {
+	/// Rebuilds a `JSONSerialization` value. Size charts are emitted in `client_size_order`.
+	/// Names such as `XS` follow `J/XS`. Integer names such as `2430` follow JavaScript key order,
+	/// which is how `client_size_order` is built. Every other object keeps the parsed key order.
+	static func fromJSONObject(_ value: Any, sizeOrder: [String]? = nil) -> OrderedJSONValue {
 		if value is NSNull {
 			return .null
 		}
 		if let dictionary = value as? [String: Any] {
-			let keys = sizeMap
-				? Array(dictionary.keys).sortedLikeJavaScriptObjectKeys()
-				: Array(dictionary.keys)
+			let keys = sizeOrder.map { orderSizeKeys(Array(dictionary.keys), clientOrder: $0) }
+				?? Array(dictionary.keys)
+			let nestedOrder = clientSizeOrder(in: dictionary)
 			return .object(keys.map { key in
-				let childIsSizeMap = key == "item_sizes_orig" || key == "sizes"
 				guard let child = dictionary[key] else {
 					return (key, .null)
 				}
-				return (key, fromJSONObject(child, sizeMap: childIsSizeMap))
+				let childOrder = (key == "item_sizes_orig" || key == "sizes") ? (nestedOrder ?? sizeOrder) : nil
+				return (key, fromJSONObject(child, sizeOrder: childOrder))
 			})
 		}
 		if let array = value as? [Any] {
@@ -169,4 +172,46 @@ extension OrderedJSONValue {
 		}
 		return .null
 	}
+}
+
+/// `client_size_order` on this object, or on its `additional_info`.
+private func clientSizeOrder(in dictionary: [String: Any]) -> [String]? {
+	if let order = stringList(dictionary["client_size_order"]) {
+		return order
+	}
+	if let info = dictionary["additional_info"] as? [String: Any] {
+		return stringList(info["client_size_order"])
+	}
+	return nil
+}
+
+private func stringList(_ value: Any?) -> [String]? {
+	if let strings = value as? [String] {
+		return strings
+	}
+	guard let values = value as? [Any] else { return nil }
+	let strings = values.compactMap { $0 as? String }
+	return strings.count == values.count ? strings : nil
+}
+
+/// Size-chart key order. Exact names win. `XS` is matched to `J/XS` by the longest suffix.
+private func orderSizeKeys(_ keys: [String], clientOrder: [String]) -> [String] {
+	var remaining = Set(keys)
+	var ordered: [String] = []
+	for name in clientOrder {
+		guard let match = bestSizeKey(in: remaining, for: name) else { continue }
+		ordered.append(match)
+		remaining.remove(match)
+	}
+	ordered.append(contentsOf: Array(remaining).sortedLikeJavaScriptObjectKeys())
+	return ordered
+}
+
+private func bestSizeKey(in keys: Set<String>, for clientName: String) -> String? {
+	if keys.contains(clientName) {
+		return clientName
+	}
+	return keys
+		.filter { clientName.hasSuffix("/\($0)") || clientName.hasSuffix($0) }
+		.max { $0.count < $1.count }
 }

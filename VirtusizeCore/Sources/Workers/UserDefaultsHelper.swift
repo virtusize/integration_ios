@@ -30,10 +30,9 @@ final public class UserDefaultsHelper {
 	let authKey = "VIRTUSIZE_AUTH"
 	let tokenKey = "VIRTUSIZE_TOKEN"
 	let bidKey = "BID"
-	let kidGenderKey = "VIRTUSIZE_KID_GENDER"
-	let kidAgeKey = "VIRTUSIZE_KID_AGE"
-	let kidHeightKey = "VIRTUSIZE_KID_HEIGHT"
-	let kidWeightKey = "VIRTUSIZE_KID_WEIGHT"
+	let userBodyProfileKey = "VIRTUSIZE_USER_BODY_PROFILE"
+	let kidBodyProfileKey = "VIRTUSIZE_KID_BODY_PROFILE"
+	let kidPredictedBodyProfileKey = "VIRTUSIZE_KID_PREDICTED_BODY_PROFILE"
     public let undefinedValue = "undefined"
 
 	/// A static instance of `UserDefaultsHelper` used inside the SDK
@@ -98,59 +97,59 @@ final public class UserDefaultsHelper {
 		defaults.synchronize()
 	}
 
-	// MARK: - Kids body data
-	// The kids flow keeps its inputs on the client only (the web widget uses localStorage),
-	// so the SDK caches the values received from the widget events here.
+	// MARK: - Cached body profiles
+	// 1. `VirtusizeKidBodyProfile`: kids age, weight, gender and height from widget events.
+	// 2. `kidPredictedBodyProfileData`: predicted kids measurements.
+	// 3. `userBodyProfileData`: adult and shoe `getUserBodyProfileAsync` response.
 
-	/// The kid's gender ("girl" or "boy") selected in the widget
-	public var kidGender: String? {
+	/// The encoded user body profile, or nil if none is cached
+	public var userBodyProfileData: Data? {
 		get {
-			return defaults.value(forKey: kidGenderKey) as? String
+			return defaults.value(forKey: userBodyProfileKey) as? Data
 		}
 		set {
-			defaults.setValue(newValue, forKey: kidGenderKey)
+			defaults.setValue(newValue, forKey: userBodyProfileKey)
 			defaults.synchronize()
 		}
 	}
 
-	/// The kid's age in years entered in the widget
-	public var kidAge: Int? {
+	/// Deletes the cached user body profile
+	public func deleteUserBodyProfile() {
+		defaults.removeObject(forKey: userBodyProfileKey)
+		defaults.synchronize()
+	}
+
+	/// The encoded kids body profile, or nil if none is cached
+	public var kidBodyProfileData: Data? {
 		get {
-			return defaults.value(forKey: kidAgeKey) as? Int
+			return defaults.value(forKey: kidBodyProfileKey) as? Data
 		}
 		set {
-			defaults.setValue(newValue, forKey: kidAgeKey)
+			defaults.setValue(newValue, forKey: kidBodyProfileKey)
 			defaults.synchronize()
 		}
 	}
 
-	/// The kid's height in centimeters entered in the widget
-	public var kidHeight: Int? {
+	/// Deletes the cached kids body profile
+	public func deleteKidBodyProfile() {
+		defaults.removeObject(forKey: kidBodyProfileKey)
+		defaults.synchronize()
+	}
+
+	/// The encoded predicted kids measurements, or nil if none are cached
+	public var kidPredictedBodyProfileData: Data? {
 		get {
-			return defaults.value(forKey: kidHeightKey) as? Int
+			return defaults.value(forKey: kidPredictedBodyProfileKey) as? Data
 		}
 		set {
-			defaults.setValue(newValue, forKey: kidHeightKey)
+			defaults.setValue(newValue, forKey: kidPredictedBodyProfileKey)
 			defaults.synchronize()
 		}
 	}
 
-	/// The kid's weight in kilograms entered in the widget
-	public var kidWeight: Int? {
-		get {
-			return defaults.value(forKey: kidWeightKey) as? Int
-		}
-		set {
-			defaults.setValue(newValue, forKey: kidWeightKey)
-			defaults.synchronize()
-		}
-	}
-
-	/// Deletes the cached kid's body data from the user defaults
-	public func deleteKidBodyData() {
-		for key in [kidGenderKey, kidAgeKey, kidHeightKey, kidWeightKey] {
-			defaults.removeObject(forKey: key)
-		}
+	/// Deletes the cached predicted kids measurements
+	public func deleteKidPredictedBodyProfile() {
+		defaults.removeObject(forKey: kidPredictedBodyProfileKey)
 		defaults.synchronize()
 	}
 
