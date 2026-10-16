@@ -150,9 +150,14 @@ class APIRequestTests: XCTestCase {
     }
 
     func testPredictUserBodyMeasurements_expectedHeadersAndHttpBody() throws {
-        let kidBodyData = VirtusizeKidBodyData(gender: "boy", height: 1070, weight: 17, age: 5)
+        let kidBodyProfile = VirtusizeKidBodyProfile(
+            gender: "boy",
+            age: 5,
+            height: 1070,
+            weight: "17"
+        )
 
-        let apiRequest = APIRequest.predictUserBodyMeasurements(kidBodyData: kidBodyData)
+        let apiRequest = APIRequest.predictUserBodyMeasurements(kidBodyProfile: kidBodyProfile)
 
         XCTAssertEqual(apiRequest?.httpMethod, APIMethod.post.rawValue)
         XCTAssertEqual(apiRequest?.allHTTPHeaderFields?["x-vs-bid"] ?? "", UserDefaultsHelper.current.identifier)
