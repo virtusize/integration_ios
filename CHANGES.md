@@ -10,8 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### Changes
+### 2.12.39
 - Fix: Align SDK to Web API /item request
+- Fix: Extended caching for Adult and Shoe
 
 ### 2.12.38
 - HotFix: switch between products clean cache
