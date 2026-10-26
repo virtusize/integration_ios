@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.static_framework = true
   s.source_files = ["Virtusize/Sources/*.{swift, h}", "Virtusize/Sources/**/*.swift"]
   s.resources = "Virtusize/Sources/Resources/**/*.ttf"
-  s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/Resources/PrivacyInfo.xcprivacy"] }
+  s.resource_bundle = { 'Virtusize' => ["Virtusize/Sources/Resources/**/*.lproj", "Virtusize/Sources/Resources/PrivacyInfo.xcprivacy", "Virtusize/Sources/Resources/product_types.json"] }
 
   s.pod_target_xcconfig = { 'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES' }
   s.dependency 'Sentry', '9.13.0'
