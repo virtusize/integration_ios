@@ -238,10 +238,17 @@ public class Virtusize {
 				return
 			}
 			virtusizeRepository.clearRecommendations()
-			await virtusizeRepository.fetchDataForInPageRecommendation(storeProduct: serverProduct)
+			let didFetchRecommendationData = await virtusizeRepository.fetchDataForInPageRecommendation(
+				storeProduct: serverProduct
+			)
 
 			guard !Task.isCancelled else {
                 virtusizeSentryTracker.trackLoadCancelled(step: "fetch-recommendations", externalProductId: product.externalId, storeId: storeId)
+				return
+			}
+			// The fetch already posted an InPage error; publishing a recommendation on top of it
+			// would leave the InPage views in a half-error, half-recommendation state
+			guard didFetchRecommendationData else {
 				return
 			}
 			await MainActor.run {

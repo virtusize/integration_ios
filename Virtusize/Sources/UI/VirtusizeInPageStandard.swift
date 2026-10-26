@@ -630,6 +630,13 @@ public class VirtusizeInPageStandard: VirtusizeInPageView { // swiftlint:disable
 
 	internal override func setLoadingScreen(loading: Bool) {
         let showPrivacyPolicy = Virtusize.params?.showPrivacyPolicy ?? true
+		// Undo the error screen so a product loaded after an InPage error is not left blank
+		inPageStandardView.layer.shadowOpacity = 1
+		inPageStandardView.isUserInteractionEnabled = true
+		errorImageView.isHidden = true
+		errorText.isHidden = true
+		bottomMessageLabel.isHidden = false
+		checkSizeButton.isHidden = false
 		vsSignatureImageView.isHidden = loading ? true : false
         privacyPolicyLink.isHidden = loading ? true : (showPrivacyPolicy ? false : true)
 		topMessageLabel.isHidden = loading ? true : false

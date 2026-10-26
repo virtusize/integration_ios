@@ -201,14 +201,17 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	/// - Parameters:
 	///   - selectedUserProductId: the selected product Id from the web view
 	///   to decide a specific user product to compare with the store product
+	/// - Returns: `false` when the fetch failed and an InPage error was posted, so callers
+	///   must not publish a recommendation on top of the error screen
+	@discardableResult
 	internal func fetchDataForInPageRecommendation(
 		storeProduct: VirtusizeServerProduct? = nil,
 		selectedUserProductId: Int? = nil,
 		shouldUpdateUserProducts: Bool = true,
 		shouldUpdateBodyProfile: Bool = true
-	) async {
+	) async -> Bool {
 		guard var storeProduct = storeProduct ?? lastProductOnVirtusizeWebView else {
-			return
+			return true
 		}
 
 		let productId = storeProduct.id
@@ -240,7 +243,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 				userProducts = userProductsResponse.success
 			} else if userProductsResponse.errorCode != 404 {
 				Virtusize.inPageError = (true, externalId)
-				return
+				return false
 			}
 		}
 
@@ -249,7 +252,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 				userBodyProfile = userBodyProfileResponse.success
 			} else if userBodyProfileResponse.errorCode != 404 {
 				Virtusize.inPageError = (true, externalId)
-				return
+				return false
 			}
 		} else if !hasBodyMeasurement {
 			userBodyProfile = nil // reset body measurements if the user-session (or the kids cache) defines so
@@ -285,6 +288,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 			storeProduct: storeProduct,
 			productTypes: productTypes!
 		)
+		return true
 	}
 
 	/// Adult and shoe: return the cached `getUserBodyProfileAsync` response, or fetch and store it.

@@ -64,6 +64,9 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 	private let inPageMiniImageView: UIImageView = UIImageView()
 	internal let inPageMiniMessageLabel: UILabel = UILabel()
 	internal let inPageMiniSizeCheckButton: UIButton = UIButton()
+	/// Collapses the size check button on the error screen; deactivated again once valid data arrives
+	private lazy var sizeCheckButtonZeroWidthConstraint: NSLayoutConstraint =
+		inPageMiniSizeCheckButton.widthAnchor.constraint(equalToConstant: 0)
 
 	internal override func setup() {
 		translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +113,7 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 			inPageMiniMessageLabel.textColor = .vsGray700Color
 			inPageMiniMessageLabel.text = Localization.shared.localize("inpage_error_short_text")
 			inPageMiniSizeCheckButton.isHidden = true
-			inPageMiniSizeCheckButton.widthAnchor.constraint(equalToConstant: 0).isActive = true
+			sizeCheckButtonZeroWidthConstraint.isActive = true
 			setupTextsStyle(messageLabelIsBold: false)
 			isUserInteractionEnabled = false
 		}
@@ -292,8 +295,12 @@ public class VirtusizeInPageMini: VirtusizeInPageView {
 		inPageMiniMessageLabel.textColor = loading ? .vsGray900Color : .white
 		setupTextsStyle(messageLabelIsBold: loading)
 
-		// Re-enable user interaction when loading valid product
+		// Undo the error screen when loading a valid product: re-enable user interaction,
+		// restore the Virtusize icon and let the size check button take its natural width again
 		isUserInteractionEnabled = true
+		inPageMiniImageView.image = VirtusizeAssets.icon?.withRenderingMode(.alwaysTemplate)
+		inPageMiniImageView.tintColor = getBackgroundColor().isLight ? .vsGray900Color : .white
+		sizeCheckButtonZeroWidthConstraint.isActive = false
 
 		if loading {
 			startLoadingTextAnimation(

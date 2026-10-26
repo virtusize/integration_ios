@@ -47,6 +47,17 @@ class VirtusizeProductSizeTests: XCTestCase {
         )
     }
 
+    func testDecoding_productSizeDataWithNonIntegerMeasurements_shouldKeepOnlyIntegerValues() {
+        let productSize = try? JSONDecoder().decode(
+            VirtusizeProductSize.self,
+            from: productSizeWithNonIntegerMeasurementsFixture
+        )
+
+        XCTAssertNotNil(productSize)
+        XCTAssertEqual(productSize?.name, "M")
+        XCTAssertEqual(productSize?.measurements, ["height": 700, "bust": 500])
+    }
+
     func testDecoding_emptyJsonData_shouldReturnNil() {
         let productSize = try? JSONDecoder().decode(
             VirtusizeProductSize.self,
@@ -64,6 +75,21 @@ class VirtusizeProductSizeTests: XCTestCase {
                     "width": 150,
                     "depth": 100,
                     "height": 160
+                }
+            }
+        """.utf8
+    )
+
+    private let productSizeWithNonIntegerMeasurementsFixture = Data(
+        """
+            {
+                "name": "M",
+                "measurements": {
+                    "type": "upper_body",
+                    "height": 700,
+                    "bust": 500,
+                    "sleeve": 61.5,
+                    "waist": null
                 }
             }
         """.utf8

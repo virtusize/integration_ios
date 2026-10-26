@@ -41,9 +41,29 @@ internal class VirtusizeProductSize: Codable {
 	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		name = try? values.decode(String.self, forKey: .name)
-		measurements = try values.decode([String: Int?].self, forKey: .measurements)
-			.filter { _, value in
-				return value != nil
+		// The server may include non-numeric entries in `measurements` (e.g. a string `type`),
+		// so keep only the integer values instead of failing to decode the whole product
+		let measurementsContainer = try values.nestedContainer(keyedBy: MeasurementKey.self, forKey: .measurements)
+		var decodedMeasurements: [String: Int?] = [:]
+		for key in measurementsContainer.allKeys {
+			if let value = try? measurementsContainer.decode(Int.self, forKey: key) {
+				decodedMeasurements[key.stringValue] = value
 			}
+		}
+		measurements = decodedMeasurements
+	}
+
+	/// A coding key for the arbitrary measurement names in the `measurements` dictionary
+	private struct MeasurementKey: CodingKey {
+		let stringValue: String
+		var intValue: Int? { nil }
+
+		init?(stringValue: String) {
+			self.stringValue = stringValue
+		}
+
+		init?(intValue: Int) {
+			return nil
+		}
 	}
 }
