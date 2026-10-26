@@ -10,7 +10,10 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
-### 2.12.39
+### 2.12.40
+- Fix: Cocoapods podspec fix
+
+### 2.12.40
 - Fix: Align SDK to Web API /item request
 - Fix: Extended caching for Adult and Shoe
 
