@@ -25,10 +25,8 @@
 import UIKit
 import Virtusize
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-	var window: UIWindow?
 
 	func application(
 		_ application: UIApplication,
@@ -61,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .setShowSNSButtons(true)
 			// Target the specific environment branch by it's name
 			// .setBranch("branch-name")
-            .setBranch("nsdk-412-market-aware-body-measurements-no-idb-cache")
             // By default, Virtusize shows Privacy Policy
             .setShowPrivacyPolicy(true)
 			.build()
@@ -69,7 +66,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return true
 	}
 
-	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-		return Virtusize.handleUrl(url)
+	// MARK: UISceneSession Lifecycle
+
+	func application(
+		_ application: UIApplication,
+		configurationForConnecting connectingSceneSession: UISceneSession,
+		options: UIScene.ConnectionOptions
+	) -> UISceneConfiguration {
+		// Resolves to the "Default Configuration" entry in the scene manifest in Info.plist,
+		// which points at `SceneDelegate` and the `Main` storyboard
+		return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
 	}
+
+	// The Virtusize SNS auth callback URL is handled in `SceneDelegate.scene(_:openURLContexts:)`
 }
