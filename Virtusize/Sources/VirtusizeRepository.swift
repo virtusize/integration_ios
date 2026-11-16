@@ -343,12 +343,17 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 		}
 		hasSessionBodyMeasurement = userSessionInfoResponse?.success?.status.hasBodyMeasurement ?? false
 
-		if let sessionResponse = userSessionInfoResponse?.string {
-			userSessionResponse = sessionResponse
+		// A failed call must not be kept: `string` is then the error text, which would be injected
+		// into the web app as `sessionData`, and the cache would replay the failure for 30 minutes.
+		// Keep the last good session and let the next call ask again.
+		guard case let .success(sessionInfo, sessionResponse)? = userSessionInfoResponse,
+			  let userSessionInfo = sessionInfo else {
+			await ExpiringCache.shared.clear(UserSessionInfo.self)
+			return
 		}
 
-		guard let userSessionInfo = userSessionInfoResponse?.success else {
-			return
+		if let sessionResponse = sessionResponse, !sessionResponse.isEmpty {
+			userSessionResponse = sessionResponse
 		}
 
 		UserDefaultsHelper.current.accessToken = userSessionInfo.accessToken
@@ -365,7 +370,7 @@ internal class VirtusizeRepository: NSObject { // swiftlint:disable:this type_bo
 	///   - bid: a browser identifier
 	///   - auth: the auth token for the session API
 	internal func updateUserAuthData(bid: String?, auth: String?) {
-        if let bid = bid, bid != UserDefaultsHelper.current.undefinedValue {
+        if let bid = bid, !bid.isEmpty, bid != UserDefaultsHelper.current.undefinedValue {
 			UserDefaultsHelper.current.identifier = bid
 		}
 		if let auth = auth, !auth.isEmpty {

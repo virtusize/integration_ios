@@ -88,7 +88,12 @@ public class VirtusizeParams {
         }
         paramsScript += "{\(ParamKey.API): '\(apiKey)', "
         paramsScript += "\(ParamKey.browserID): '\(UserDefaultsHelper.current.identifier)', "
-        paramsScript += "\(ParamKey.sessionData): \(userSessionResponse), "
+        // Without a session the key is left out: `sessionData: ,` is a JavaScript syntax error and
+        // the web app would never receive its params.
+        let sessionData = userSessionResponse.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !sessionData.isEmpty {
+            paramsScript += "\(ParamKey.sessionData): \(sessionData), "
+        }
         paramsScript += "\(ParamKey.externalProductID): '\(externalProductId)', "
         if let userId = Virtusize.userID,
             let authToken = UserDefaultsHelper.current.authToken, !authToken.isEmpty {

@@ -37,7 +37,6 @@ public protocol VirtusizeMessageHandler: AnyObject {
 /// This `UIViewController` represents the Virtusize Window
 public final class VirtusizeWebViewController: UIViewController {
 	private var product: VirtusizeProduct?
-	private var userSessionResponse: String = ""
 
 	public weak var messageHandler: VirtusizeMessageHandler?
 	internal weak var eventHandler: VirtusizeEventHandler?
@@ -66,7 +65,6 @@ public final class VirtusizeWebViewController: UIViewController {
 		self.messageHandler = messageHandler
 		self.eventHandler = eventHandler
         self.processPool = processPool
-        self.userSessionResponse = VirtusizeRepository.shared.userSessionResponse
 
 //		guard product?.productCheckData != nil else {
 //			reportError(error: .invalidProduct)
@@ -301,7 +299,9 @@ extension VirtusizeWebViewController: WKNavigationDelegate, WKUIDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		guard let vsParamsFromSDKScript = Virtusize.params?.getVsParamsFromSDKScript(
 			externalProductId: product?.externalId,
-			userSessionResponse: userSessionResponse
+			// Read when the page is ready, not when this controller was created: a session refresh
+			// that finished in between carries the current `x-vs-auth`, the older one no longer works.
+			userSessionResponse: VirtusizeRepository.shared.userSessionResponse
 		) else {
 			reportError(error: .invalidVsParamScript)
 			return
