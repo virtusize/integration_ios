@@ -10,6 +10,9 @@ Use list notation, and following prefixes:
 - Bugfix - when fixing any major bug
 - Docs - for any improvement to documentation
 
+### Changes
+- Fix: Keep the login when the session call fails or is refreshed
+
 ### 2.12.40
 - Fix: Cocoapods podspec fix
 
